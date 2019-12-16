@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="MeasurmentUnits">
+<Table Name="MeasurmentUnits" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -18,12 +18,12 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="AlternateMeasurementUnitCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.MeasurmentUnits_AlternateMeasurementUnitCode" />
-  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="MeasurementUnitCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.MeasurmentUnits_MeasurementUnitCode" />
-  <Relation ParentTableName="ConsignmentPackages" ParentColumnName="GrossMassMeasureTypeCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.ConsignmentPackages_Customs.MeasurmentUnits_GrossMassMeasureTypeCode" />
-  <Relation ParentTableName="ConsignmentPackages" ParentColumnName="PackageQuantityTypeCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.ConsignmentPackages_Customs.MeasurmentUnits_PackageQuantityTypeCode" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="AdditionalQuantityType" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.MeasurmentUnits_AdditionalQuantityType" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="InvoiceQuantityType" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.MeasurmentUnits_InvoiceQuantityType" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="StatisticQuantityType" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.MeasurmentUnits_StatisticQuantityType" />
   <Relation ParentTableName="SupplierInvoiceItemsConDeclars" ParentColumnName="QuantityTypeCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsConDeclars_Customs.MeasurmentUnits_QuantityTypeCode" />
+  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="AlternateMeasurementUnitCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.MeasurmentUnits_AlternateMeasurementUnitCode" />
+  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="MeasurementUnitCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.MeasurmentUnits_MeasurementUnitCode" />
+  <Relation ParentTableName="ConsignmentPackages" ParentColumnName="GrossMassMeasureTypeCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.ConsignmentPackages_Customs.MeasurmentUnits_GrossMassMeasureTypeCode" />
+  <Relation ParentTableName="ConsignmentPackages" ParentColumnName="PackageQuantityTypeCode" ReferencedTableName="MeasurmentUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.ConsignmentPackages_Customs.MeasurmentUnits_PackageQuantityTypeCode" />
 </Table>

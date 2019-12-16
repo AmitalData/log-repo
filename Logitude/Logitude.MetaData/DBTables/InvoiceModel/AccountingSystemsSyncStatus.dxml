@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="AccountingSystemsSyncStatuses">
+<Table Name="AccountingSystemsSyncStatuses" Schema="dbo" DBType="Main">
   <Column Name="ExternalCodesLastUpdate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>

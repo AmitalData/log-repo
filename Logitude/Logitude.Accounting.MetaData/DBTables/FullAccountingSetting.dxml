@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="FullAccountingSettings">
+<Table Name="FullAccountingSettings" Schema="dbo" DBType="Main">
   <Column Name="AirExportJobControlAccountId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
@@ -27,7 +27,7 @@
   <Column Name="DefaultExternalDiffGLAccountId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DefaultTaxWithholdPercentage" Type="decimal">
+  <Column Name="DefaultTaxWithholdPercentage" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DefaultVATTypeId" Type="varchar" Size="15">

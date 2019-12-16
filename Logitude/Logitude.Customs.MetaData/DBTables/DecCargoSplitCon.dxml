@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DecCargoSplitCons">
+<Table Name="DecCargoSplitCons" Schema="Customs" DBType="Main">
   <Column Name="ConditionCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>

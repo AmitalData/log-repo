@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CourierMasters">
+<Table Name="CourierMasters" Schema="Customs" DBType="Main">
   <Column Name="AirlineId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
@@ -21,7 +21,7 @@
   <Column Name="GatewayPortCode" Type="varchar" Size="17">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="GrossMassMeasure" Type="decimal">
+  <Column Name="GrossMassMeasure" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="HAWB" Type="nvarchar" Size="35">

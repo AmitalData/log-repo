@@ -1,4 +1,5 @@
 ﻿using Logitude.DBMigrations.Helpers;
+using Logitude.DBMigrations.Models;
 using System;
 
 namespace Logitude.DBMigrations
@@ -7,35 +8,29 @@ namespace Logitude.DBMigrations
     {
         static void Main(string[] args)
         {
-            if (AppHelper.IsArgumentProvided(args, "-root"))
+            if (AppHelper.IsArgumentProvided(args, "-root"))// || true)
             {
                 string root = AppHelper.GetRoot(args);
                 //root = @"C:\Users\AbedMalakh\source\repos\log-repo\Logitude";
+                //root = @"D:\TestDXML";
 
                 if (!String.IsNullOrEmpty(root))
                 {
                     string[] DXMLFiles = AppHelper.GetDXMLFilesFromRoot(root);
                     if (DXMLFiles != null)
                     {
-                        if (AppHelper.IsConnectionStringValid("msql"))
+                        GeneratedScript generatedScript = AppHelper.GenerateScriptFromDXMLFiles(DXMLFiles);
+                        AppHelper.SaveScript(generatedScript);
+                        if (AppHelper.IsArgumentProvided(args, "-exe"))
                         {
-                            string generatedScript = AppHelper.GenerateScriptFromDXMLFiles(DXMLFiles);
-                            AppHelper.SaveScript(generatedScript);
-                            if (AppHelper.IsArgumentProvided(args, "-exe"))
+                            if (string.IsNullOrEmpty(generatedScript.GlobalScript) && string.IsNullOrEmpty(generatedScript.MainScript) && string.IsNullOrEmpty(generatedScript.SystemLogsScript))
                             {
-                                if (string.IsNullOrEmpty(generatedScript))
-                                {
-                                    Console.WriteLine("There Are No Changes To Execute");
-                                }
-                                else
-                                {
-                                    AppHelper.ExecuteScript("msql", generatedScript);
-                                }
+                                Console.WriteLine("There Are No Changes To Execute");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Cannot Connect To Database Using The Connection String");
+                            else
+                            {
+                                AppHelper.ExecuteScript(generatedScript);
+                            }
                         }
                     }
                     else

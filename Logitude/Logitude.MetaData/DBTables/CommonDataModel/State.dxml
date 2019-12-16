@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="States">
+<Table Name="States" Schema="dbo" DBType="Main">
   <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -33,7 +33,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="CountryCities" ParentColumnName="StateId" ReferencedTableName="States" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CountryCities_dbo.States_StateId" />
   <Relation ParentTableName="Ports" ParentColumnName="StateId" ReferencedTableName="States" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Ports_dbo.States_StateId" />
   <Relation ParentTableName="Addresses" ParentColumnName="StateId" ReferencedTableName="States" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Addresses_dbo.States_StateId" />
-  <Relation ParentTableName="CountryCities" ParentColumnName="StateId" ReferencedTableName="States" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CountryCities_dbo.States_StateId" />
 </Table>

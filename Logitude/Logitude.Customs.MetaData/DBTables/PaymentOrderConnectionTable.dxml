@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="PaymentOrderConnectionTables">
+<Table Name="PaymentOrderConnectionTables" Schema="Customs" DBType="Main">
   <Column Name="ConnectedEntityCode" Type="varchar" Size="1">
     <Constraints Nullable="true" />
   </Column>

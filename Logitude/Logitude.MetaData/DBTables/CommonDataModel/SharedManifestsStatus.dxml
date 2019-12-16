@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SharedManifestsStatuses">
+<Table Name="SharedManifestsStatuses" Schema="dbo" DBType="Main">
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
@@ -9,6 +9,6 @@
   <Column Name="StatusName" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="AgentSharedManifests" ParentColumnName="StatusCode" ReferencedTableName="SharedManifestsStatuses" ReferencedColumnName="StatusCode" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.SharedManifestsStatuses_StatusCode" />
   <Relation ParentTableName="AgentSharedDocuments" ParentColumnName="StatusCode" ReferencedTableName="SharedManifestsStatuses" ReferencedColumnName="StatusCode" ForeignKeyConstraintName="FK_dbo.AgentSharedDocuments_dbo.SharedManifestsStatuses_StatusCode" />
+  <Relation ParentTableName="AgentSharedManifests" ParentColumnName="StatusCode" ReferencedTableName="SharedManifestsStatuses" ReferencedColumnName="StatusCode" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.SharedManifestsStatuses_StatusCode" />
 </Table>

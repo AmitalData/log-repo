@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
+    <Compile Include="Models\DBTable.cs" />
     <Compile Include="Models\DXMLFilesGenerator.cs" />
     <Compile Include="Models\RelationDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
@@ -58,8 +59,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Errors.txt" />
     <Content Include="ExcludedTablesMap.txt" />
+    <Content Include="Errors\GlobalErrors.txt" />
+    <Content Include="Errors\MainErrors.txt" />
+    <Content Include="Errors\SystemLogsErrors.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DWQueryColumns">
+<Table Name="DWQueryColumns" Schema="dbo" DBType="Main">
   <Column Name="ColumnWidth" Type="float">
     <Constraints Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BookingPackages">
+<Table Name="BookingPackages" Schema="dbo" DBType="Main">
   <Column Name="BookingId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
@@ -21,7 +21,7 @@
   <Column Name="Harmonize" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Height" Type="decimal">
+  <Column Name="Height" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Id" Type="varchar" Size="15">
@@ -33,7 +33,7 @@
   <Column Name="IsDangerous" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Length" Type="decimal">
+  <Column Name="Length" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="MarksAndNumbers" Type="varchar" Size="250">
@@ -63,10 +63,10 @@
   <Column Name="SOC" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tare" Type="decimal">
+  <Column Name="Tare" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Temperature" Type="decimal">
+  <Column Name="Temperature" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Tenant" Type="int">
@@ -75,19 +75,19 @@
   <Column Name="UnNumber" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Ventilation" Type="decimal">
+  <Column Name="Ventilation" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Volume" Type="decimal">
+  <Column Name="Volume" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VolumetricWeight" Type="decimal">
+  <Column Name="VolumetricWeight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Weight" Type="decimal">
+  <Column Name="Weight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Width" Type="decimal">
+  <Column Name="Width" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
 </Table>

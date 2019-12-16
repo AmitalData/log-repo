@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DeclarationMamanSpecialActions" Schema="Customs" DBType="Main">
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MamanLabelText1" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MamanLabelText2" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MamanLabelText3" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MamanLabelText4" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MamanLabelText5" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MamanSpecialActionCode" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MamanSpecialActionsErrorXml" Type="nvarchar" Size="1200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MamanSpecialActionStatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Posts">
+<Table Name="Posts" Schema="dbo" DBType="Main">
   <Column Name="BodyText" Type="nvarchar" Size="4000">
     <Constraints Nullable="false" />
   </Column>

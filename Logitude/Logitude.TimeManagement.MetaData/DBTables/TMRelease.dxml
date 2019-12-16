@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TMReleases">
+<Table Name="TMReleases" Schema="dbo" DBType="Main">
   <Column Name="FromDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>

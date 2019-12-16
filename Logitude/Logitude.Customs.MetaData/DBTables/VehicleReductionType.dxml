@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="VehicleReductionTypes">
+<Table Name="VehicleReductionTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="4">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceItemVehicleMods" ParentColumnName="AdjustmentTypeCode" ReferencedTableName="VehicleReductionTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicleMods_Customs.VehicleReductionTypes_AdjustmentTypeCode" />
   <Relation ParentTableName="SupplierInvoiceItemModVehicles" ParentColumnName="AdjustmentTypeCode" ReferencedTableName="VehicleReductionTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemModVehicles_Customs.VehicleReductionTypes_AdjustmentTypeCode" />
+  <Relation ParentTableName="SupplierInvoiceItemVehicleMods" ParentColumnName="AdjustmentTypeCode" ReferencedTableName="VehicleReductionTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicleMods_Customs.VehicleReductionTypes_AdjustmentTypeCode" />
 </Table>

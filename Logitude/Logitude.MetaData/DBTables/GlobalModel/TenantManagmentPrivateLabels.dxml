@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TenantManagmentPrivateLabels" Schema="dbo" DBType="Global">
+  <Column Name="ContactUsEmail" Type="nvarchar" Size="70">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HybridPartnerId" Type="nvarchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MainLogo" Type="varbinary" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrivateLabelName" Type="nvarchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PrivateLabelShortName" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PrivateLabelUrl" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ReceiveAllStatuses" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SmallLogo" Type="varbinary" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="GlobalTenants" ParentColumnName="PrivateLabelId" ReferencedTableName="TenantManagmentPrivateLabels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GlobalTenants_dbo.TenantManagmentPrivateLabels_PrivateLabelId" />
+</Table>

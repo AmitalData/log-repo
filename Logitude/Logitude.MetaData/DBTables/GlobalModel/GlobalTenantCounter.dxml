@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="GlobalTenantCounters" Schema="dbo" DBType="Global">
+  <Column Name="Id" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LastNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

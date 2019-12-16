@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Declarations">
+<Table Name="Declarations" Schema="Customs" DBType="Main">
   <Column Name="AcceptanceStatusCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
@@ -39,7 +39,7 @@
   <Column Name="CasualSupplierName" Type="nvarchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CIFValue" Type="decimal">
+  <Column Name="CIFValue" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
@@ -48,7 +48,7 @@
   <Column Name="CorrectionsXml" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CourierCustomStatusCode" Type="nvarchar" Size="128">
+  <Column Name="CourierCustomStatusCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CourierHataraStatusCode" Type="varchar" Size="1">
@@ -81,13 +81,13 @@
   <Column Name="CustomFileNo" Type="varchar" Size="12">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DealValue" Type="decimal">
+  <Column Name="DealValue" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DealValueWithFactor" Type="decimal">
+  <Column Name="DealValueWithFactor" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DealValueWithoutFactor" Type="decimal">
+  <Column Name="DealValueWithoutFactor" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DeclarationDocumentId" Type="varchar" Size="35">
@@ -207,7 +207,7 @@
   <Column Name="ItemsProcessTypesList" Type="varchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="LoadingFactor" Type="decimal">
+  <Column Name="LoadingFactor" Type="decimal" Precision="18" Scale="10">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="MainImporterEntitlemntTypeCode" Type="varchar" Size="3">
@@ -234,7 +234,7 @@
   <Column Name="PaymentStatusCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PlatformFee" Type="decimal">
+  <Column Name="PlatformFee" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="PrimaryInvoiceCounterKey" Type="varchar" Size="15">
@@ -270,7 +270,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalTax" Type="decimal">
+  <Column Name="TotalTax" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TransferImporterAddress" Type="nvarchar" Size="236">
@@ -312,7 +312,14 @@
   <Column Name="WeightValue" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="DeclarationPayments" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationPayments_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="CourierDeclarations" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CourierDeclarations_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeclarationTaxes" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationTaxes_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeficitConnFileParagraphTypes" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeficitConnFileParagraphTypes_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="CustomsCollaterals" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="SupplierInvoices" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.SupplierInvoices_Customs.Declarations_DeclarationId" />
   <Relation ParentTableName="Vehicles" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Vehicles_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeclarationMamanSpecialActions" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationMamanSpecialActions_Customs.Declarations_DeclarationId" />
   <Relation ParentTableName="PhysicalChecks" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PhysicalChecks_Customs.Declarations_DeclarationId" />
   <Relation ParentTableName="TapagConnectionTables" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.TapagConnectionTables_Customs.Declarations_DeclarationId" />
   <Relation ParentTableName="ProceduralFaults" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ProceduralFaults_Customs.Declarations_DeclarationId" />
@@ -320,10 +327,5 @@
   <Relation ParentTableName="DeclarationCargoSplits" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationCargoSplits_Customs.Declarations_DeclarationId" />
   <Relation ParentTableName="DeclarationConsAcceptances" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationConsAcceptances_Customs.Declarations_DeclarationId" />
   <Relation ParentTableName="DeclarationConstraints" ParentColumnName="DeclarationID" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationConstraints_Customs.Declarations_DeclarationID" />
-  <Relation ParentTableName="DeclarationPayments" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationPayments_Customs.Declarations_DeclarationId" />
-  <Relation ParentTableName="DeclarationTaxes" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationTaxes_Customs.Declarations_DeclarationId" />
-  <Relation ParentTableName="DeficitConnFileParagraphTypes" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeficitConnFileParagraphTypes_Customs.Declarations_DeclarationId" />
-  <Relation ParentTableName="CourierDeclarations" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CourierDeclarations_Customs.Declarations_DeclarationId" />
-  <Relation ParentTableName="SupplierInvoices" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.SupplierInvoices_Customs.Declarations_DeclarationId" />
-  <Relation ParentTableName="CustomsCollaterals" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeclarationCourierStatuses" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationCourierStatuses_Customs.Declarations_DeclarationId" />
 </Table>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TarrifFromToes">
+<Table Name="TarrifFromToes" Schema="dbo" DBType="Main">
   <Column Name="CountryId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>

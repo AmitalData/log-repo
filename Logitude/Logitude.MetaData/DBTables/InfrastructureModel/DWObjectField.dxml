@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DWObjectFields">
+<Table Name="DWObjectFields" Schema="dbo" DBType="Main">
   <Column Name="AggregationTypeCode" Type="varchar" Size="5">
     <Constraints Nullable="true" />
   </Column>

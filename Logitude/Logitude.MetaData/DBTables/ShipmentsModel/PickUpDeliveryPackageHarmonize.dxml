@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="PickUpDeliveryPackageHarmonizes">
+<Table Name="PickUpDeliveryPackageHarmonizes" Schema="dbo" DBType="Main">
   <Column Name="Harmonize" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>

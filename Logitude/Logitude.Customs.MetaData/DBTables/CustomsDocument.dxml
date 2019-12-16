@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsDocuments">
+<Table Name="CustomsDocuments" Schema="Customs" DBType="Main">
   <Column Name="CustomRecievedDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>

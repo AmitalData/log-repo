@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Vessels">
+<Table Name="Vessels" Schema="dbo" DBType="Main">
   <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -33,10 +33,10 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageVesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Vessels_OnCarriageVesselId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageVesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Vessels_PreCarriageVesselId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageVesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Vessels_MainCarriageVesselId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment1VesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Vessels_Transshipment1VesselId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment2VesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Vessels_Transshipment2VesselId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment3VesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Vessels_Transshipment3VesselId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageVesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Vessels_OnCarriageVesselId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageVesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Vessels_PreCarriageVesselId" />
 </Table>

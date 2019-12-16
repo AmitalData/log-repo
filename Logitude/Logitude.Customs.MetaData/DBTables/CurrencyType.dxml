@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CurrencyTypes">
+<Table Name="CurrencyTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,9 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="CurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.CurrencyTypes_CurrencyTypeCode" />
-  <Relation ParentTableName="CustomsExchangeRates" ParentColumnName="CurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsExchangeRates_Customs.CurrencyTypes_CurrencyTypeCode" />
-  <Relation ParentTableName="Claims" ParentColumnName="AccountCurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Claims_Customs.CurrencyTypes_AccountCurrencyTypeCode" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="ItemPriceCurrencyCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.CurrencyTypes_ItemPriceCurrencyCode" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="NonCustomsItemPriceCurCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.CurrencyTypes_NonCustomsItemPriceCurCode" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="WholeSaleItemPriceCurrencyCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.CurrencyTypes_WholeSaleItemPriceCurrencyCode" />
@@ -27,4 +24,7 @@
   <Relation ParentTableName="SupplierInvoices" ParentColumnName="ActualPayedCurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoices_Customs.CurrencyTypes_ActualPayedCurrencyTypeCode" />
   <Relation ParentTableName="SupplierInvoiceFreightAmounts" ParentColumnName="CurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceFreightAmounts_Customs.CurrencyTypes_CurrencyTypeCode" />
   <Relation ParentTableName="SupplierInvoiceItemsMods" ParentColumnName="CurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsMods_Customs.CurrencyTypes_CurrencyTypeCode" />
+  <Relation ParentTableName="CustomsExchangeRates" ParentColumnName="CurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsExchangeRates_Customs.CurrencyTypes_CurrencyTypeCode" />
+  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="CurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.CurrencyTypes_CurrencyTypeCode" />
+  <Relation ParentTableName="Claims" ParentColumnName="AccountCurrencyTypeCode" ReferencedTableName="CurrencyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Claims_Customs.CurrencyTypes_AccountCurrencyTypeCode" />
 </Table>

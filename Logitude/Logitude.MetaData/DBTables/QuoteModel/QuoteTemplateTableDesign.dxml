@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuoteTemplateTableDesigns">
+<Table Name="QuoteTemplateTableDesigns" Schema="dbo" DBType="Main">
   <Column Name="BorderColor" Type="varchar" Size="10">
     <Constraints Nullable="false" />
   </Column>
@@ -24,9 +24,9 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="TotalPerContainersTableDesignId" ReferencedTableName="QuoteTemplateTableDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTableDesigns_TotalPerContainersTableDesignId" />
   <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="ContainserTableDesignId" ReferencedTableName="QuoteTemplateTableDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTableDesigns_ContainserTableDesignId" />
   <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="DetailsTableDesignId" ReferencedTableName="QuoteTemplateTableDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTableDesigns_DetailsTableDesignId" />
   <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="HeaderTableDesignId" ReferencedTableName="QuoteTemplateTableDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTableDesigns_HeaderTableDesignId" />
   <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PackagesTableDesignId" ReferencedTableName="QuoteTemplateTableDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTableDesigns_PackagesTableDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="TotalPerContainersTableDesignId" ReferencedTableName="QuoteTemplateTableDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTableDesigns_TotalPerContainersTableDesignId" />
 </Table>

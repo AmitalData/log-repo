@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SupplierInvoiceItemsConDeclars">
+<Table Name="SupplierInvoiceItemsConDeclars" Schema="Customs" DBType="Main">
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -24,7 +24,7 @@
   <Column Name="LineNumber" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Quantity" Type="decimal">
+  <Column Name="Quantity" Type="decimal" Precision="14" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="QuantityTypeCode" Type="varchar" Size="3">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="EventTypes">
+<Table Name="EventTypes" Schema="dbo" DBType="Main">
   <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -69,7 +69,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="FollowUps" ParentColumnName="EventTypeId" ReferencedTableName="EventTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.EventTypes_EventTypeId" />
   <Relation ParentTableName="Shipments" ParentColumnName="LastSharedEventId" ReferencedTableName="EventTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.EventTypes_LastSharedEventId" />
   <Relation ParentTableName="TraceEvents" ParentColumnName="EventTypeId" ReferencedTableName="EventTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TraceEvents_dbo.EventTypes_EventTypeId" />
+  <Relation ParentTableName="FollowUps" ParentColumnName="EventTypeId" ReferencedTableName="EventTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.EventTypes_EventTypeId" />
 </Table>

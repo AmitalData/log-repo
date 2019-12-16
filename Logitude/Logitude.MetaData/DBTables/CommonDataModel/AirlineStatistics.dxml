@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="AirlineStatistics">
+<Table Name="AirlineStatistics" Schema="dbo" DBType="Main">
   <Column Name="AirlineCode" Type="varchar" Size="3">
     <Constraints Nullable="false" />
   </Column>
@@ -15,7 +15,7 @@
   <Column Name="BookingId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ChargeableWeight" Type="decimal">
+  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
@@ -69,7 +69,7 @@
   <Column Name="Flight3Date" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="GrossWeight" Type="decimal">
+  <Column Name="GrossWeight" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
@@ -141,7 +141,7 @@
   <Column Name="UpdateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Volume" Type="decimal">
+  <Column Name="Volume" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VolumeUnitCode" Type="varchar" Size="3">

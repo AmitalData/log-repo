@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DocumentsDataProviders">
+<Table Name="DocumentsDataProviders" Schema="dbo" DBType="Main">
   <Column Name="Code" Type="varchar" Size="10">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

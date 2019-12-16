@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Tariffs">
+<Table Name="Tariffs" Schema="dbo" DBType="Main">
   <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>

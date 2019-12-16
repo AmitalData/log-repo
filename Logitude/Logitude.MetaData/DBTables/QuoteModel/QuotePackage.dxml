@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuotePackages">
+<Table Name="QuotePackages" Schema="dbo" DBType="Main">
   <Column Name="GrossWeight" Type="float">
     <Constraints Nullable="true" />
   </Column>

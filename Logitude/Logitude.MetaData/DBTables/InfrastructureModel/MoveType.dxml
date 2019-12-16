@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="MoveTypes">
+<Table Name="MoveTypes" Schema="dbo" DBType="Main">
   <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -27,6 +27,6 @@
   <Column Name="TransportModeId" Type="char" Size="1">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Quotes" ParentColumnName="MoveTypeId" ReferencedTableName="MoveTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.MoveTypes_MoveTypeId" />
   <Relation ParentTableName="Shipments" ParentColumnName="MoveTypeId" ReferencedTableName="MoveTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.MoveTypes_MoveTypeId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="MoveTypeId" ReferencedTableName="MoveTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.MoveTypes_MoveTypeId" />
 </Table>

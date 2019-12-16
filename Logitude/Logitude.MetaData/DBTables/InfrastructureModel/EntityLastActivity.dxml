@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="EntityLastActivities">
+<Table Name="EntityLastActivities" Schema="dbo" DBType="Main">
   <Column Name="ActivityDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>

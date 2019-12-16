@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DeliverySiteTypes">
+<Table Name="DeliverySiteTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="20">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Consignments" ParentColumnName="StorageSiteCode" ReferencedTableName="DeliverySiteTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Consignments_Customs.DeliverySiteTypes_StorageSiteCode" />
   <Relation ParentTableName="Declarations" ParentColumnName="StorageSiteCode" ReferencedTableName="DeliverySiteTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.DeliverySiteTypes_StorageSiteCode" />
+  <Relation ParentTableName="Consignments" ParentColumnName="StorageSiteCode" ReferencedTableName="DeliverySiteTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Consignments_Customs.DeliverySiteTypes_StorageSiteCode" />
 </Table>

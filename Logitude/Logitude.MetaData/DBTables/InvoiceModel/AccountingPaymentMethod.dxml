@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="AccountingPaymentMethods">
+<Table Name="AccountingPaymentMethods" Schema="dbo" DBType="Main">
   <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -36,6 +36,6 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="APPayments" ParentColumnName="AccountingPaymentMethodId" ReferencedTableName="AccountingPaymentMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.AccountingPaymentMethods_AccountingPaymentMethodId" />
   <Relation ParentTableName="ARPayments" ParentColumnName="AccountingPaymentMethodId" ReferencedTableName="AccountingPaymentMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.AccountingPaymentMethods_AccountingPaymentMethodId" />
+  <Relation ParentTableName="APPayments" ParentColumnName="AccountingPaymentMethodId" ReferencedTableName="AccountingPaymentMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.AccountingPaymentMethods_AccountingPaymentMethodId" />
 </Table>

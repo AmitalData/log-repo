@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ARPayments">
+<Table Name="ARPayments" Schema="dbo" DBType="Main">
   <Column Name="Account" Type="nvarchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
@@ -195,6 +195,6 @@
   <Column Name="ValueDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ARPaymentCheques" ParentColumnName="PaymentId" ReferencedTableName="ARPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPaymentCheques_dbo.ARPayments_PaymentId" />
   <Relation ParentTableName="ARInvoicePayments" ParentColumnName="ARPaymentId" ReferencedTableName="ARPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoicePayments_dbo.ARPayments_ARPaymentId" />
+  <Relation ParentTableName="ARPaymentCheques" ParentColumnName="PaymentId" ReferencedTableName="ARPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPaymentCheques_dbo.ARPayments_PaymentId" />
 </Table>

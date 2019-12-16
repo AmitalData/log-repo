@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SubCountries">
+<Table Name="SubCountries" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="6">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -18,6 +18,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomsVendors" ParentColumnName="SubCountryCode" ReferencedTableName="SubCountries" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsVendors_Customs.SubCountries_SubCountryCode" />
   <Relation ParentTableName="ClientAddresses" ParentColumnName="EnglishSubCountryCode" ReferencedTableName="SubCountries" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.ClientAddresses_Customs.SubCountries_EnglishSubCountryCode" />
+  <Relation ParentTableName="CustomsVendors" ParentColumnName="SubCountryCode" ReferencedTableName="SubCountries" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsVendors_Customs.SubCountries_SubCountryCode" />
 </Table>

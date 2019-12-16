@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ClaimsRelatedEntitiesRefunds" Schema="Customs" DBType="Main">
+  <Column Name="ClaimId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CounterKey" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InvoiceNumber" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RefundQuntity" Type="decimal" Precision="16" Scale="6">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RefundQuntityLineNo" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="SequenceNumeric" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

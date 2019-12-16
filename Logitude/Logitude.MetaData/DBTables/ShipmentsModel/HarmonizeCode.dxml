@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="HarmonizeCodes">
+<Table Name="HarmonizeCodes" Schema="dbo" DBType="Main">
   <Column Name="ChapterCode" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ObjectFields">
+<Table Name="ObjectFields" Schema="dbo" DBType="Main">
   <Column Name="AgentPermissionTypeCode" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
@@ -132,6 +132,9 @@
   <Column Name="EnableFullscreenTextBox" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="FieldCode" Type="varchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="FieldName" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
@@ -252,10 +255,6 @@
   <Column Name="ValidForQuerySection2" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ScreenFields" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ScreenFields_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="AirlineMessagingRules" ParentColumnName="RuleFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineMessagingRules_dbo.ObjectFields_RuleFieldId" />
-  <Relation ParentTableName="QueryColumns" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QueryColumns_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="CustomsRequiredFields" ParentColumnName="ObjectfieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsRequiredFields_dbo.ObjectFields_ObjectfieldId" />
   <Relation ParentTableName="ObjectFieldModifications" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFieldModifications_dbo.ObjectFields_ObjectFieldId" />
   <Relation ParentTableName="ObjectFieldValidations" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFieldValidations_dbo.ObjectFields_ObjectFieldId" />
   <Relation ParentTableName="ObjectTableRuleFields" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableRuleFields_dbo.ObjectFields_ObjectFieldId" />
@@ -263,5 +262,9 @@
   <Relation ParentTableName="AdvancedQueryFilters" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AdvancedQueryFilters_dbo.ObjectFields_ObjectFieldId" />
   <Relation ParentTableName="CustomerFieldsUpdateSettings" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerFieldsUpdateSettings_dbo.ObjectFields_ObjectFieldId" />
   <Relation ParentTableName="Restrictions" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Restrictions_dbo.ObjectFields_ObjectFieldId" />
+  <Relation ParentTableName="AirlineMessagingRules" ParentColumnName="RuleFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineMessagingRules_dbo.ObjectFields_RuleFieldId" />
   <Relation ParentTableName="RuleConditionFields" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RuleConditionFields_dbo.ObjectFields_ObjectFieldId" />
+  <Relation ParentTableName="ScreenFields" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ScreenFields_dbo.ObjectFields_ObjectFieldId" />
+  <Relation ParentTableName="QueryColumns" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QueryColumns_dbo.ObjectFields_ObjectFieldId" />
+  <Relation ParentTableName="CustomsRequiredFields" ParentColumnName="ObjectfieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsRequiredFields_dbo.ObjectFields_ObjectfieldId" />
 </Table>

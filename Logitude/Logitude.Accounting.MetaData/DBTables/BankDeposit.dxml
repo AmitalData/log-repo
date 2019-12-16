@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BankDeposits">
+<Table Name="BankDeposits" Schema="dbo" DBType="Main">
   <Column Name="AccountingDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
@@ -24,7 +24,7 @@
   <Column Name="DepositNumber" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ForeignAmount" Type="decimal">
+  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Id" Type="varchar" Size="15">
@@ -33,7 +33,7 @@
   <Column Name="IsCanceled" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalDepositAmount" Type="decimal">
+  <Column Name="LocalDepositAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="-1">

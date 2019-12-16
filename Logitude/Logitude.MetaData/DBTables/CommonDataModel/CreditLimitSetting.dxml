@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CreditLimitSettings">
+<Table Name="CreditLimitSettings" Schema="dbo" DBType="Main">
   <Column Name="AgentsInvoicesBlock" Type="bit">
     <Constraints Nullable="false" />
   </Column>

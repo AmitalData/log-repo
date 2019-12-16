@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="PaymentCheques">
+<Table Name="PaymentCheques" Schema="dbo" DBType="Main">
   <Column Name="APPaymentId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
@@ -39,10 +39,10 @@
   <Column Name="EntityId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal">
+  <Column Name="ExchangeRate" Type="decimal" Precision="5" Scale="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ForeignAmount" Type="decimal">
+  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Id" Type="varchar" Size="15">
@@ -54,7 +54,7 @@
   <Column Name="IsCancelled" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalAmount" Type="decimal">
+  <Column Name="LocalAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Notes" Type="nvarchar" Size="250">

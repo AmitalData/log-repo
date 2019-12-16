@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Queries">
+<Table Name="Queries" Schema="dbo" DBType="Main">
   <Column Name="Agent" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -90,8 +90,8 @@
   <Column Name="UserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SharedUserQueries" ParentColumnName="QueryId" ReferencedTableName="Queries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedUserQueries_dbo.Queries_QueryId" />
-  <Relation ParentTableName="QueryColumns" ParentColumnName="QueryId" ReferencedTableName="Queries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QueryColumns_dbo.Queries_QueryId" />
   <Relation ParentTableName="AdvancedQueryFilters" ParentColumnName="QueryId" ReferencedTableName="Queries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AdvancedQueryFilters_dbo.Queries_QueryId" />
   <Relation ParentTableName="Queries" ParentColumnName="OriginalQueryId" ReferencedTableName="Queries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Queries_dbo.Queries_OriginalQueryId" />
+  <Relation ParentTableName="SharedUserQueries" ParentColumnName="QueryId" ReferencedTableName="Queries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedUserQueries_dbo.Queries_QueryId" />
+  <Relation ParentTableName="QueryColumns" ParentColumnName="QueryId" ReferencedTableName="Queries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QueryColumns_dbo.Queries_QueryId" />
 </Table>

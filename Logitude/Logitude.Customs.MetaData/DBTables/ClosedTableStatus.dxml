@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ClosedTableStatus">
+<Table Name="ClosedTableStatus" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="2">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

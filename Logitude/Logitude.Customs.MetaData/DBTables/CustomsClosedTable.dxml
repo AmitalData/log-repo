@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsClosedTables">
+<Table Name="CustomsClosedTables" Schema="Customs" DBType="Main">
   <Column Name="CustomsLocalName" Type="nvarchar" Size="100">
     <Constraints Nullable="true" />
   </Column>

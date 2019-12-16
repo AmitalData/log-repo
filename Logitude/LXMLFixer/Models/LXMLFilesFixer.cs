@@ -18,82 +18,112 @@ namespace Logitude.LXMLFixer.Models
         public void ExtractLXMLFilesMistakes()
         {
             string[] lxmlFiles = GetLXMLFiles();
-            foreach (var lxmlFile in lxmlFiles)
+
+            if(lxmlFiles != null)
             {
-                string lxmlFileName = Path.GetFileName(lxmlFile);
-
-                Console.WriteLine("Extract Mistakes For " + lxmlFileName + " ...");
-
-                string data = "";
-                string entityName = lxmlFileName.Split('.')[0];
-
-                TableDefinition lxmlTableDefinition = GetTableDefinitionForLXMLFile(lxmlFile);
-                TableDefinition dxmlTableDefinition = GetTableDefinitionForDXMLFile(entityName);
-
-                if (dxmlTableDefinition != null && lxmlTableDefinition != null)
+                foreach (var lxmlFile in lxmlFiles)
                 {
-                    data += "DXML Table, LXML Table\n";
-                    data += dxmlTableDefinition.Name + "," + lxmlTableDefinition.Name;
-                    if (dxmlTableDefinition.Name != lxmlTableDefinition.Name)
+                    string lxmlFileName = Path.GetFileName(lxmlFile);
+
+                    Console.WriteLine("Extract Mistakes For " + lxmlFileName + " ...");
+
+                    string mistakesData = "";
+                    bool appendTableMistakesData = false;
+                    string entityName = lxmlFileName.Split('.')[0];
+
+                    TableDefinition lxmlTableDefinition = GetTableDefinitionForLXMLFile(lxmlFile);
+                    TableDefinition dxmlTableDefinition = GetTableDefinitionForDXMLFile(entityName);
+
+                    if (dxmlTableDefinition != null && lxmlTableDefinition != null)
                     {
-                        data += "," + "Incorrect Table Name In LXML File";
-                    }
-
-                    data += "\n";
-
-                    data += "DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
-
-                    foreach (var dxmlColumn in dxmlTableDefinition.Columns)
-                    {
-                        ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name == dxmlColumn.Name).FirstOrDefault();
-                        if (lxmlColumn == null)
+                        mistakesData += "DXML Table, LXML Table\n";
+                        mistakesData += dxmlTableDefinition.Name + "," + lxmlTableDefinition.Name;
+                        if (dxmlTableDefinition.Name != lxmlTableDefinition.Name)
                         {
-                            data += dxmlColumn.Name + ",Not Found,-,-,-" + "\n";
+                            mistakesData += "," + "Incorrect Table Name In LXML File";
+                            appendTableMistakesData = true;
                         }
-                        else
+
+                        mistakesData += "\n";
+
+                        mistakesData += "DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
+
+                        foreach (var dxmlColumn in dxmlTableDefinition.Columns)
                         {
-                            if (dxmlColumn.Type != lxmlColumn.Type)
+                            ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name == dxmlColumn.Name).FirstOrDefault();
+                            if (lxmlColumn == null)
                             {
-                                data += dxmlColumn.Name + "," + lxmlColumn.Name + ",Type," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
+                                mistakesData += dxmlColumn.Name + ",Not Found,-,-,-" + "\n";
+                                appendTableMistakesData = true;
                             }
-                            if (dxmlColumn.Size != lxmlColumn.Size)
+                            else
                             {
-                                data += dxmlColumn.Name + "," + lxmlColumn.Name + ",Size," + dxmlColumn.Size + "," + lxmlColumn.Size + "\n";
+                                if (dxmlColumn.Type != lxmlColumn.Type)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Type," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
+                                    appendTableMistakesData = true;
+                                }
+                                if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Precision != lxmlColumn.Precision)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Precision," + dxmlColumn.Precision + "," + lxmlColumn.Precision + "\n";
+                                    appendTableMistakesData = true;
+                                }
+                                if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Scale != lxmlColumn.Scale)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Scale," + dxmlColumn.Scale + "," + lxmlColumn.Scale + "\n";
+                                    appendTableMistakesData = true;
+                                }
+                                if (dxmlColumn.Size != lxmlColumn.Size)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Size," + dxmlColumn.Size + "," + lxmlColumn.Size + "\n";
+                                    appendTableMistakesData = true;
+                                }
+                                if (dxmlColumn.Constraints.PrimaryKey != lxmlColumn.Constraints.PrimaryKey)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Primary Key," + dxmlColumn.Constraints.PrimaryKey + "," + lxmlColumn.Constraints.PrimaryKey + "\n";
+                                    appendTableMistakesData = true;
+                                }
+                                if (dxmlColumn.Constraints.Nullable != lxmlColumn.Constraints.Nullable)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Nullable," + dxmlColumn.Constraints.Nullable + "," + lxmlColumn.Constraints.Nullable + "\n";
+                                    appendTableMistakesData = true;
+                                }
                             }
-                            if (dxmlColumn.Constraints.PrimaryKey != lxmlColumn.Constraints.PrimaryKey)
-                            {
-                                data += dxmlColumn.Name + "," + lxmlColumn.Name + ",Primary Key," + dxmlColumn.Constraints.PrimaryKey + "," + lxmlColumn.Constraints.PrimaryKey + "\n";
-                            }
-                            if (dxmlColumn.Constraints.Nullable != lxmlColumn.Constraints.Nullable)
-                            {
-                                data += dxmlColumn.Name + "," + lxmlColumn.Name + ",Nullable," + dxmlColumn.Constraints.Nullable + "," + lxmlColumn.Constraints.Nullable + "\n";
-                            }
+                        }
+
+                        if (appendTableMistakesData)
+                        {
+                            LXMLMistakesData += mistakesData + "\n\n";
+                        }
+                    }
+                    else
+                    {
+                        if (dxmlTableDefinition == null)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Cannot Get DXML Table Definition For " + entityName + " Entity");
+                            Console.ResetColor();
+                            DXMLFilesThatNotFound += entityName + ".dxml" + "\n";
+                        }
+                        if (lxmlTableDefinition == null)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Cannot Get LXML Table Definition For " + entityName + " Entity");
+                            Console.ResetColor();
                         }
                     }
 
-                    LXMLMistakesData += data + "\n\n";
-                }
-                else
-                {
-                    if(dxmlTableDefinition == null)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Cannot Get DXML Table Definition For " + entityName + " Entity");
-                        Console.ResetColor();
-                        DXMLFilesThatNotFound += entityName + ".dxml" + "\n";
-                    }
-                    if (lxmlTableDefinition == null)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Cannot Get LXML Table Definition For " + entityName + " Entity");
-                        Console.ResetColor();
-                    }
                 }
 
+                ExportMistakesData();
+                ExportDXMLFilesThatNotFound();
             }
-
-            ExportMistakesData();
-            ExportDXMLFilesThatNotFound();
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Cannot Find Any LXML Files");
+                Console.ResetColor();
+            }
         }
 
         private void ExportMistakesData()
@@ -167,32 +197,42 @@ namespace Logitude.LXMLFixer.Models
                 IEnumerable<XElement> dbFiledXmlElements = xmlDocument.Descendants("field").Where(x => x.Attribute("HasDataBaseField").Value == "true");
                 foreach (var field in dbFiledXmlElements)
                 {
-                    string fieldName = field.Attribute("FieldName") == null ? null : field.Attribute("FieldName").Value.Split('"')[1].Split('"')[0];
-                    string type = field.Attribute("FieldsDataType") == null ? null : field.Attribute("FieldsDataType").Value.Split('"')[1].Split('"')[0];
+                    string name = field.Attribute("FieldName") == null ? null : field.Attribute("FieldName").Value.Split('"')[1].Split('"')[0];
+                    string dataType = field.Attribute("FieldsDataType") == null ? null : field.Attribute("FieldsDataType").Value.Split('"')[1].Split('"')[0];
                     bool isMaxLength = field.Attribute("IsMaxLength") == null ? false : field.Attribute("IsMaxLength").Value == "true";
                     int size = isMaxLength ? -1 : (field.Attribute("MaxLength") == null ? 0 : Convert.ToInt32(field.Attribute("MaxLength").Value));
                     bool isPrimaryKey = field.Attribute("IsPrimaryKey") == null ? false : field.Attribute("IsPrimaryKey").Value == "true";
+                    bool isRequired = field.Attribute("IsRequired") == null ? false : field.Attribute("IsRequired").Value == "true";
                     bool isNullable = field.Attribute("IsNullable") == null ? false : field.Attribute("IsNullable").Value == "true";
                     bool isFixedLength = field.Attribute("IsFixedLength") == null ? false : field.Attribute("IsFixedLength").Value == "true";
+                    int numberOfDigits = field.Attribute("NumberOfDigits") == null ? 0 : Convert.ToInt32(field.Attribute("NumberOfDigits").Value);
+                    int digitsAfterPoint = field.Attribute("DigitsAfterPoint") == null ? 0 : Convert.ToInt32(field.Attribute("DigitsAfterPoint").Value);
 
+                    string columnDefinitionDataType = GetDataTypeForColumnDefinition(dataType, isFixedLength);
+                    bool columnDefinitionNullableConstraint = GetNullableForConstraintsDefinition(isRequired, isNullable, isPrimaryKey, columnDefinitionDataType);
+                    
                     ColumnDefinition columnDefinition = new ColumnDefinition
                     {
-                        Name = fieldName,
-                        Type = GetDataTypeForColumnDefinition(type, isFixedLength),
+                        Name = name,
+                        Type = columnDefinitionDataType,
                         Size = size,
+                        Precision = numberOfDigits,
+                        Scale = digitsAfterPoint,
                         Constraints = new ConstraintsDefinition
                         {
                             PrimaryKey = isPrimaryKey,
-                            Nullable = isNullable
+                            Nullable = columnDefinitionNullableConstraint
                         }
                     };
                     
                     columnDefinitions.Add(columnDefinition);
                 }
 
+                string dbTableName = xmlDocument.Root.Attribute("DBTableName") == null ? null : xmlDocument.Root.Attribute("DBTableName").Value.Split('"')[1].Split('"')[0];
+
                 TableDefinition lxmlTableDefinition = new TableDefinition
                 {
-                    Name = String.IsNullOrEmpty(xmlDocument.Root.Attribute("DBTableName").Value) ? null : xmlDocument.Root.Attribute("DBTableName").Value.Split('"')[1].Split('"')[0],
+                    Name = dbTableName.Contains("Customs.") ? dbTableName.Split('.')[1] : dbTableName,
                     Columns = columnDefinitions
                 };
 
@@ -237,5 +277,26 @@ namespace Logitude.LXMLFixer.Models
                     return null;
             }
         }
+
+        private bool GetNullableForConstraintsDefinition(bool isRequired, bool isNullable, bool isPrimaryKey, string columnDefinitionDataType)
+        {
+            if (isPrimaryKey)
+            {
+                return false;
+            }
+
+            if (new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(columnDefinitionDataType))
+            {
+                if (!isRequired && isNullable)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return !isRequired;
+        }
+
     }
 }

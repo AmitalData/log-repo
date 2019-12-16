@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Accounts1">
+<Table Name="Accounts1" Schema="dbo" DBType="Main">
   <Column Name="AccountTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>
@@ -27,8 +27,8 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ChargesTypes" ParentColumnName="PayableAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.Accounts1_PayableAccountId" />
-  <Relation ParentTableName="ChargesTypes" ParentColumnName="ReceivableAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.Accounts1_ReceivableAccountId" />
   <Relation ParentTableName="ARPayments" ParentColumnName="ARAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Accounts1_ARAccountId" />
   <Relation ParentTableName="ARPayments" ParentColumnName="DebitAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Accounts1_DebitAccountId" />
+  <Relation ParentTableName="ChargesTypes" ParentColumnName="PayableAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.Accounts1_PayableAccountId" />
+  <Relation ParentTableName="ChargesTypes" ParentColumnName="ReceivableAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.Accounts1_ReceivableAccountId" />
 </Table>

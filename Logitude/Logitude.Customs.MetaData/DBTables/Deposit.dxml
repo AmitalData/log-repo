@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Deposits">
+<Table Name="Deposits" Schema="Customs" DBType="Main">
   <Column Name="BirthDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DepositAmount" Type="decimal">
+  <Column Name="DepositAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DepositEssenceTypeCode" Type="varchar" Size="2">

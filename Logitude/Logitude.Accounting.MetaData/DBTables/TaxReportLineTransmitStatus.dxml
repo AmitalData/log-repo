@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TaxReportLineTransmitStatuses">
+<Table Name="TaxReportLineTransmitStatuses" Schema="dbo" DBType="Main">
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="TaxReportTransmitStatusCode" ReferencedTableName="TaxReportLineTransmitStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.TaxReportLineTransmitStatuses_TaxReportTransmitStatusCode" />
   <Relation ParentTableName="TaxReportLines" ParentColumnName="TransmitStatusCode" ReferencedTableName="TaxReportLineTransmitStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TaxReportLines_dbo.TaxReportLineTransmitStatuses_TransmitStatusCode" />
+  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="TaxReportTransmitStatusCode" ReferencedTableName="TaxReportLineTransmitStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.TaxReportLineTransmitStatuses_TaxReportTransmitStatusCode" />
 </Table>

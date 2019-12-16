@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CommunicationTypes">
+<Table Name="CommunicationTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="2">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="VendorCommunications" ParentColumnName="CommunicationTypeCode" ReferencedTableName="CommunicationTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.VendorCommunications_Customs.CommunicationTypes_CommunicationTypeCode" />
   <Relation ParentTableName="ClientsAddressCommTypes" ParentColumnName="CommunicationTypeCode" ReferencedTableName="CommunicationTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.ClientsAddressCommTypes_Customs.CommunicationTypes_CommunicationTypeCode" />
+  <Relation ParentTableName="VendorCommunications" ParentColumnName="CommunicationTypeCode" ReferencedTableName="CommunicationTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.VendorCommunications_Customs.CommunicationTypes_CommunicationTypeCode" />
 </Table>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="SessionPolicies" Schema="dbo" DBType="Global">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="WebTokenExpirationWarningInMinutes" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="WebTokenLifeTimeInMinutes" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

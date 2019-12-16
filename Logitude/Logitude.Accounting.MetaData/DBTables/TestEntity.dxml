@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TestEntities">
+<Table Name="TestEntities" Schema="dbo" DBType="Main">
   <Column Name="EnglishName" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>

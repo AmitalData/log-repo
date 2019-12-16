@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="GovernmentProcedureTypes">
+<Table Name="GovernmentProcedureTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="7">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -22,5 +22,6 @@
     <Constraints Nullable="true" />
   </Column>
   <Relation ParentTableName="Declarations" ParentColumnName="ProcedureCurrentCode" ReferencedTableName="GovernmentProcedureTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.GovernmentProcedureTypes_ProcedureCurrentCode" />
+  <Relation ParentTableName="CustomsDocumentsDefinitions" ParentColumnName="ProcessTypeCode" ReferencedTableName="GovernmentProcedureTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsDefinitions_Customs.GovernmentProcedureTypes_ProcessTypeCode" />
   <Relation ParentTableName="DecCargoSplitCons" ParentColumnName="ProcedureCurrentCode" ReferencedTableName="GovernmentProcedureTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DecCargoSplitCons_Customs.GovernmentProcedureTypes_ProcedureCurrentCode" />
 </Table>

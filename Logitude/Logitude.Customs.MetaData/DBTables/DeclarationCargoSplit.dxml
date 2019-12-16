@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DeclarationCargoSplits">
+<Table Name="DeclarationCargoSplits" Schema="Customs" DBType="Main">
   <Column Name="ActionTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>

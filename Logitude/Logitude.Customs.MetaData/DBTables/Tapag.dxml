@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Tapags">
+<Table Name="Tapags" Schema="Customs" DBType="Main">
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
@@ -45,9 +45,9 @@
   <Column Name="ValidityDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="TapagConnectionTables" ParentColumnName="TapagId" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.TapagConnectionTables_Customs.Tapags_TapagId" />
   <Relation ParentTableName="Deficits" ParentColumnName="TapagId" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Deficits_Customs.Tapags_TapagId" />
   <Relation ParentTableName="Deposits" ParentColumnName="TapagID" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Deposits_Customs.Tapags_TapagID" />
   <Relation ParentTableName="CustomsCollateralsAnswers" ParentColumnName="TapagId" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsAnswers_Customs.Tapags_TapagId" />
   <Relation ParentTableName="Guarantees" ParentColumnName="TapagID" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Guarantees_Customs.Tapags_TapagID" />
+  <Relation ParentTableName="TapagConnectionTables" ParentColumnName="TapagId" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.TapagConnectionTables_Customs.Tapags_TapagId" />
 </Table>

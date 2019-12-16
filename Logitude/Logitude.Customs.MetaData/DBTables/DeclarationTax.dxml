@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DeclarationTaxes">
+<Table Name="DeclarationTaxes" Schema="Customs" DBType="Main">
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="DeferredTaxAmount" Type="decimal">
+  <Column Name="DeferredTaxAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TaxBaseAmount" Type="decimal">
+  <Column Name="TaxBaseAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TaxTypeCode" Type="varchar" Size="3">
@@ -15,7 +15,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalAmount" Type="decimal">
+  <Column Name="TotalAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
 </Table>

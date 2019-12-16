@@ -3,6 +3,8 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
+using Oracle.DataAccess.Client;
+using System.Linq;
 
 namespace Logitude.DBMigrations.Helpers
 {
@@ -14,7 +16,7 @@ namespace Logitude.DBMigrations.Helpers
             {
                 string DXMLFilesPath = Path.Combine(root);
                 string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml", SearchOption.AllDirectories);
-                if(DXMLFiles.Length > 0)
+                if (DXMLFiles.Length > 0)
                 {
                     return DXMLFiles;
                 }
@@ -29,98 +31,90 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-        public static string GenerateScriptFromDXMLFiles(string[] DXMLFiles)
+        public static GeneratedScript GenerateScriptFromDXMLFiles(string[] DXMLFiles)
         {
-            string generatedScript = "";
-            //
-            //
+            GeneratedScript generatedScript = new GeneratedScript();
 
-            foreach (var DXMLFile in DXMLFiles)
+            foreach (var dxmlFile in DXMLFiles)
             {
-                var fileName = Path.GetFileName(DXMLFile);
-                Console.WriteLine("Generating Script For " + fileName + " ...");
-                string xmlString = File.ReadAllText(DXMLFile);
-                TableDefinition DxmlTable = xmlString.ParseXML<TableDefinition>();
-                SQLDatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(DxmlTable);
-                string DxmlTableScript = databaseMigrations.GetScript();
-                if (!String.IsNullOrEmpty(DxmlTableScript))
+                string dxmlFileName = Path.GetFileName(dxmlFile);
+                Console.WriteLine("Generating Script For " + dxmlFileName + " ...");
+
+                string xmlString = File.ReadAllText(dxmlFile);
+                TableDefinition dxmlTable = xmlString.ParseXML<TableDefinition>();
+
+                DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable);
+
+                string script = databaseMigrations.GetScript();
+
+                if (!String.IsNullOrEmpty(script))
                 {
-                    generatedScript += "/* Generated Script For " + fileName + " */\n";
-                    generatedScript += DxmlTableScript;
-                    generatedScript += "\n";
+                    generatedScript = AppendGeneratedScript(generatedScript, dxmlTable.DBType, script, dxmlFileName);
                 }
             }
 
             return generatedScript;
         }
 
-        public static void SaveScript(string generatedScript)
+        public static void SaveScript(GeneratedScript generatedScript)
         {
             Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string generatedScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\Script.sql");
-            File.WriteAllText(generatedScriptFilePath, generatedScript);
-            Console.WriteLine("The Generated Scripts Saved Successfully To /GeneratedScript/Script.sql");
-        }
-        
-        public static void ExecuteScript(string databaseType, string generatedScript)
-        {
-            Console.WriteLine("Executing The Generated Script To The Database ...");
-            switch (databaseType)
-            {
-                case "msql":
-                    try
-                    {
-                        string SQLConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
-                        SqlConnection SqlConnection = new SqlConnection(SQLConnectionString);
-                        SqlCommand SqlCommand = SqlConnection.CreateCommand();
-                        SqlCommand.CommandText = generatedScript;
-                        SqlConnection.Open();
-                        SqlCommand.ExecuteNonQuery();
-                        Console.WriteLine("The Generated Script Executed Successfully");
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.Write("Error While Executing Script: ");
-                        Console.WriteLine(exception.Message);
-                    }
-                    break;
-                case "oracle":
-                    Console.Write("Error While Executing Script");
-                    break;
-                default:
-                    Console.Write("Error While Executing Script");
-                    break;
-            }
+
+            string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
+            File.WriteAllText(globalScriptFilePath, generatedScript.GlobalScript);
+
+            string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
+            File.WriteAllText(mainScriptFilePath, generatedScript.MainScript);
+
+            string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
+            File.WriteAllText(systemLogsScriptFilePath, generatedScript.SystemLogsScript);
+
+            Console.WriteLine("The Generated Scripts Saved Successfully");
         }
 
-        public static bool IsConnectionStringValid(string databaseType)
+        public static void ExecuteScript(GeneratedScript generatedScript)
         {
-            Console.WriteLine("Checking If The Connection String Is Valid ...");
-            bool isConnectionStringValid;
-            switch (databaseType)
+            if (!String.IsNullOrEmpty(generatedScript.GlobalScript))
             {
-                case "msql":
-                    string SQLConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
-                    using (SqlConnection SqlConnection = new SqlConnection(SQLConnectionString))
-                    {
-                        try
-                        {
-                            SqlConnection.Open();
-                            isConnectionStringValid = true;
-                            SqlConnection.Close();
-                        }
-                        catch (Exception)
-                        {
-                            isConnectionStringValid = false;
-                            SqlConnection.Close();
-                        }
-                        return isConnectionStringValid;
-                    }
-                case "oracle":
-                    return false;
-                default:
-                    return false;
+                Console.WriteLine("Executing Script On Global Database ...");
+                string result = ExecuteScript(generatedScript.GlobalScript, "Global");
+                if (!String.IsNullOrEmpty(result))
+                {
+                    Console.WriteLine(result);
+                }
+                else
+                {
+                    Console.WriteLine("Scripts Executed Successfully On Global Database");
+                }
+            }
+
+            if (!String.IsNullOrEmpty(generatedScript.MainScript))
+            {
+                Console.WriteLine("Executing Script On Main Database ...");
+                string result = ExecuteScript(generatedScript.MainScript, "Main");
+                if (!String.IsNullOrEmpty(result))
+                {
+                    Console.WriteLine(result);
+                }
+                else
+                {
+                    Console.WriteLine("Scripts Executed Successfully On Main Database");
+                }
+            }
+
+            if (!String.IsNullOrEmpty(generatedScript.SystemLogsScript))
+            {
+                Console.WriteLine("Executing Script On SystemLogs Database ...");
+                string result = ExecuteScript(generatedScript.SystemLogsScript, "SystemLogs");
+                if (!String.IsNullOrEmpty(result))
+                {
+                    Console.WriteLine(result);
+                }
+                else
+                {
+                    Console.WriteLine("Scripts Executed Successfully On SystemLogs Database");
+                }
             }
         }
 
@@ -134,7 +128,7 @@ namespace Logitude.DBMigrations.Helpers
         {
             string[] arguments = Array.ConvertAll(args, a => a.ToLower());
             int indexOfRootArgument = Array.IndexOf(arguments, "-root") + 1;
-            if(indexOfRootArgument < args.Length && indexOfRootArgument >= 0)
+            if (indexOfRootArgument < args.Length && indexOfRootArgument >= 0)
             {
                 string root = args[indexOfRootArgument];
                 return root;
@@ -142,6 +136,126 @@ namespace Logitude.DBMigrations.Helpers
             else
             {
                 return null;
+            }
+        }
+
+        private static string GetConnectionString(string dbType)
+        {
+            string connectionString;
+
+            if (dbType == "Global")
+            {
+                connectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
+            }
+            else if (dbType == "Main")
+            {
+                connectionString = ConfigurationManager.AppSettings["MainConnectionString"];
+            }
+            else if (dbType == "SystemLogs")
+            {
+                connectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+            }
+            else
+            {
+                connectionString = null;
+            }
+
+            return connectionString;
+        }
+
+        private static GeneratedScript AppendGeneratedScript(GeneratedScript generatedScript, string dbType, string script, string dxmlFileName)
+        {
+            if (dbType == "Global")
+            {
+                generatedScript.GlobalScript += "/* Generated Script For " + dxmlFileName + " */\n";
+                generatedScript.GlobalScript += script;
+                generatedScript.GlobalScript += "\n";
+                return generatedScript;
+            }
+            else if (dbType == "Main")
+            {
+                generatedScript.MainScript += "/* Generated Script For " + dxmlFileName + " */\n";
+                generatedScript.MainScript += script;
+                generatedScript.MainScript += "\n";
+                return generatedScript;
+            }
+            else if (dbType == "SystemLogs")
+            {
+                generatedScript.SystemLogsScript += "/* Generated Script For " + dxmlFileName + " */\n";
+                generatedScript.SystemLogsScript += script;
+                generatedScript.SystemLogsScript += "\n";
+                return generatedScript;
+            }
+            else
+            {
+                return generatedScript;
+            }
+        }
+
+        private static DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTable)
+        {
+            string databseType = ConfigurationManager.AppSettings["DatabseType"];
+            string connectonString = GetConnectionString(dxmlTable.DBType);
+
+            if (databseType.ToLower() == "oracle")
+            {
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTable, connectonString);
+                return oracleDatabaseMigrations;
+            }
+
+            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTable, connectonString);
+            return sqlDatabaseMigrations;
+        }
+        
+        private static string ExecuteScript(string script, string dbType)
+        {
+            string databseType = ConfigurationManager.AppSettings["DatabseType"];
+            string connectionString = GetConnectionString(dbType);
+
+            if (databseType.ToLower() == "oracle")
+            {
+                OracleConnection oracleConnection = new OracleConnection(connectionString);
+
+                try
+                {
+                    string[] commands = script.Split(';');
+                    commands = commands.Take(commands.Count() - 1).ToArray();
+                    
+                    foreach (var command in commands)
+                    {
+                        OracleCommand oracleCommand = new OracleCommand();
+                        oracleCommand.Connection = oracleConnection;
+                        oracleCommand.CommandText = command;
+                        oracleConnection.Open();
+                        oracleCommand.ExecuteNonQuery();
+                        oracleConnection.Close();
+                    }
+                    return null;
+                }
+                catch (Exception exception)
+                {
+                    oracleConnection.Close();
+                    return "Error: " + exception.Message;
+                }
+            }
+            else
+            {
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+                try
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandText = script;
+                    sqlConnection.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                    return null;
+                }
+                catch (Exception exception)
+                {
+                    sqlConnection.Close();
+                    return "Error: " + exception.Message;
+                }
             }
         }
     }

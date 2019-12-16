@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Claims">
+<Table Name="Claims" Schema="Customs" DBType="Main">
   <Column Name="AccountBranchCode" Type="varchar" Size="6">
     <Constraints Nullable="true" />
   </Column>

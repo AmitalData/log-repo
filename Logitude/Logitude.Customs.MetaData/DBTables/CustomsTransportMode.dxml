@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsTransportModes">
+<Table Name="CustomsTransportModes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="1">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,6 +15,7 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomsHouseTypeAdditionals" ParentColumnName="TransportModeId" ReferencedTableName="CustomsTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsHouseTypeAdditionals_Customs.CustomsTransportModes_TransportModeId" />
   <Relation ParentTableName="Declarations" ParentColumnName="TransportModeId" ReferencedTableName="CustomsTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.CustomsTransportModes_TransportModeId" />
+  <Relation ParentTableName="CustomsDocumentsDefinitions" ParentColumnName="TransportationTypeCode" ReferencedTableName="CustomsTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsDefinitions_Customs.CustomsTransportModes_TransportationTypeCode" />
+  <Relation ParentTableName="CustomsHouseTypeAdditionals" ParentColumnName="TransportModeId" ReferencedTableName="CustomsTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsHouseTypeAdditionals_Customs.CustomsTransportModes_TransportModeId" />
 </Table>

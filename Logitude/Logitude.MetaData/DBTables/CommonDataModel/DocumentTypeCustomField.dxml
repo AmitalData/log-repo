@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DocumentTypeCustomFields1">
+<Table Name="DocumentTypeCustomFields1" Schema="dbo" DBType="Main">
   <Column Name="DefaultValue" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>

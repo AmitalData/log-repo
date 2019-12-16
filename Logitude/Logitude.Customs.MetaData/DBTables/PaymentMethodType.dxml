@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="PaymentMethodTypes">
+<Table Name="PaymentMethodTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="TypeCode" ReferencedTableName="PaymentMethodTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.PaymentMethodTypes_TypeCode" />
   <Relation ParentTableName="DeclarationPaymentMethods" ParentColumnName="MethodTypeCode" ReferencedTableName="PaymentMethodTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentMethods_Customs.PaymentMethodTypes_MethodTypeCode" />
+  <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="TypeCode" ReferencedTableName="PaymentMethodTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.PaymentMethodTypes_TypeCode" />
 </Table>
