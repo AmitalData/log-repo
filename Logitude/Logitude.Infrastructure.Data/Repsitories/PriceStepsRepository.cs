@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Infrastructure.Data.Repsitories
 {
-   public partial class PriceStepsRepository:IRepository<PriceSteps>
+   public partial class PriceStepRepository:IRepository<PriceStep>
    {
         
-		public List<PriceSteps> GetMulti(EntityKeyFields entityKeys)
+		public List<PriceStep> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

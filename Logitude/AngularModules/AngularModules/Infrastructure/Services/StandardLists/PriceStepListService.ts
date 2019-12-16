@@ -17,17 +17,17 @@ import {SessionLocator} from '../../Utilities/SessionLocator';
 import {SessionInfo} from '../../Utilities/SessionInfo';
 import {LocalStorageManager} from '../../Utilities/LocalStorageManager';
 import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
-import {PriceStepsList} from '../../EntityLists/PriceStepsList';
+import {PriceStepList} from '../../EntityLists/PriceStepList';
 
 @Injectable()
 
-export class PriceStepsListService {
+export class PriceStepListService {
 	private _http: Http;
     private _apiUrl: string;   
-	public static CachedData: Array<PriceStepsList> = [];
+	public static CachedData: Array<PriceStepList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/pricestepsviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/pricestepviews';  
     }
 
     getSingle(id: string) {
@@ -40,7 +40,7 @@ export class PriceStepsListService {
 
                 var list = response.json();
                     
-                var entity: PriceStepsList;
+                var entity: PriceStepList;
 				if(list)
 				{
                    entity = this.MapJsonToEntityList(list);
@@ -51,7 +51,7 @@ export class PriceStepsListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceSteps", "GetSingleList", 'id=' + id); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceStep", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -67,11 +67,11 @@ export class PriceStepsListService {
             return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
-              var _mappedListsArray: Array< PriceStepsList> = [];
+              var _mappedListsArray: Array< PriceStepList> = [];
 		      if(allLists)
 			  {
 				for (var key in  allLists) {				
-				   var entity: PriceStepsList;
+				   var entity: PriceStepList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
 				 }
@@ -82,7 +82,7 @@ export class PriceStepsListService {
                 serviceResponse.Result = _mappedListsArray;
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceSteps", "GetAllLists", ""); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceStep", "GetAllLists", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -132,12 +132,12 @@ export class PriceStepsListService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array< PriceStepsList> = [];
+                var _mappedListsArray: Array< PriceStepList> = [];
 				if(serviceResponse.Result)
 				{
                 for (var key in serviceResponse.Result) {
 				
-				   var entity: PriceStepsList;
+				   var entity: PriceStepList;
                    entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
 				   _mappedListsArray.push(entity);
 
@@ -147,7 +147,7 @@ export class PriceStepsListService {
                 serviceResponse.Result = _mappedListsArray;       
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceSteps", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceStep", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -157,8 +157,8 @@ export class PriceStepsListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: PriceStepsList;
-            entityList = new PriceStepsList();
+            var entityList: PriceStepList;
+            entityList = new PriceStepList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

@@ -177,8 +177,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                             }).FirstOrDefault();
 
                 IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
-                PriceSteps airPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.AirDefaultStepsId select d).FirstOrDefault();
-                PriceSteps lclPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.LCLDefaultStepsId select d).FirstOrDefault();
+                PriceStep airPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.AirDefaultStepsId select d).FirstOrDefault();
+                PriceStep lclPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.LCLDefaultStepsId select d).FirstOrDefault();
                 entityPM.AirDefaultSteps = airPriceSteps != null ? airPriceSteps.Steps : null;
                 entityPM.LCLDefaultSteps = lclPriceSteps != null ? lclPriceSteps.Steps : null;
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);

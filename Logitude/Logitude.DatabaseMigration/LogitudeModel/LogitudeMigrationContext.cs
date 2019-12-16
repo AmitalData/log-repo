@@ -3702,7 +3702,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
-        public IDbSet<PriceSteps> PricesSteps
+        public IDbSet<PriceStep> PriceSteps
         {
             get;
             set;
@@ -4438,7 +4438,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
             modelBuilder.Configurations.Add(new BIReportFolderMap());
-            modelBuilder.Configurations.Add(new PriceStepsMap());
+            modelBuilder.Configurations.Add(new PriceStepMap());
             #endregion
 
             modelBuilder.Configurations.Add(new BlobFileMap());

@@ -17,7 +17,7 @@ using Logitude.Infrastructure.Data;
 namespace Logitude.Infrastructure.BL.EntityDataMappings
 {
    
-   public partial class PriceStepsDataMapping: IMapping<PriceStepsPM, PriceSteps>,IMappingEncodeBase64NVARCHARFields<PriceStepsPM>
+   public partial class PriceStepDataMapping: IMapping<PriceStepPM, PriceStep>,IMappingEncodeBase64NVARCHARFields<PriceStepPM>
    {
           public enum POCOPropertyNames
           { 
@@ -55,7 +55,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(PriceStepsPM entityPM, PriceSteps entityPOCO)
+	    public void PMToPOCO(PriceStepPM entityPM, PriceStep entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
@@ -106,7 +106,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
-		public void POCOToPM(PriceStepsPM entityPM, PriceSteps entityPOCO)
+		public void POCOToPM(PriceStepPM entityPM, PriceStep entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
@@ -161,7 +161,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(PriceStepsPM entityPM, PriceStepsPM oldEntityPM)
+		public void PMToOldPM(PriceStepPM entityPM, PriceStepPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -212,7 +212,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(PriceStepsPM entityPM)
+	    public void EncodeBase64NVARCHARFields(PriceStepPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
@@ -241,7 +241,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
 		
-		private void BuildSearchFieldsGenerated(PriceStepsPM entityPM, PriceSteps entityPOCO, bool isNewEntity)
+		private void BuildSearchFieldsGenerated(PriceStepPM entityPM, PriceStep entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
 			

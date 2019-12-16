@@ -17,48 +17,48 @@ using Logitude.Infrastructure.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Infrastructure.BL.EntityQueryServices
 { 
-   public partial class PriceStepsQueryService: EntityQueryService<PriceSteps,PriceStepsKeys,PriceStepsPM,object,PriceStepsKeys>
+   public partial class PriceStepQueryService: EntityQueryService<PriceStep,PriceStepKeys,PriceStepPM,object,PriceStepKeys>
    {
    
-        PriceStepsRepository repository;
+        PriceStepRepository repository;
 		IInfrastructureContext  context;
-        public PriceStepsQueryService(int tenant)
+        public PriceStepQueryService(int tenant)
         {
 		    context = InfrastructureContext.GetContext(tenant);
             MainContext = context;
-            repository = new PriceStepsRepository(context);
+            repository = new PriceStepRepository(context);
             Repository = repository;
-            mapping = new PriceStepsDataMapping();
+            mapping = new PriceStepDataMapping();
         }
 
-        public PriceStepsQueryService(PriceStepsRepository repository)
+        public PriceStepQueryService(PriceStepRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new PriceStepsDataMapping();
+            mapping = new PriceStepDataMapping();
         }
 
-        public PriceStepsQueryService(IInfrastructureContext context)
+        public PriceStepQueryService(IInfrastructureContext context)
         {
-            this.repository = new PriceStepsRepository(context);
+            this.repository = new PriceStepRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new PriceStepsDataMapping();
+            mapping = new PriceStepDataMapping();
         }
 		 
-		public  PriceStepsPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  PriceStepPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new PriceStepsKeys(){ Id = id };
+             EntityKeys = new PriceStepKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(PriceSteps entityPOCO)
+	    protected override EntityKeyFields GetKeys(PriceStep entityPOCO)
         {
-            PriceStepsKeys entityKeys = new PriceStepsKeys() { Id = entityPOCO.Id,  };
+            PriceStepKeys entityKeys = new PriceStepKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      
