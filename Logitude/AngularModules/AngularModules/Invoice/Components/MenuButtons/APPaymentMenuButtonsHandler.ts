@@ -541,6 +541,7 @@ export class APPaymentMenuButtonsHandler {
                         this.entityArgs.EditComponent.SaveChanges();
                     }
                 });
+    
                 confirmVoid.Show(confirmMsg);
             }
         }
