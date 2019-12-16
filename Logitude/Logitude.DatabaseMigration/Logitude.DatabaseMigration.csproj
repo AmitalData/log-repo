@@ -1786,6 +1786,14 @@
     <Compile Include="Migrations\201912151336564_DeleteTaxReportHeaderScreensMigration.Designer.cs">
       <DependentUpon>201912151336564_DeleteTaxReportHeaderScreensMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912051433469_AddPricesStepsTableMigration.cs" />
+    <Compile Include="Migrations\201912051433469_AddPricesStepsTableMigration.Designer.cs">
+      <DependentUpon>201912051433469_AddPricesStepsTableMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs" />
+    <Compile Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.Designer.cs">
+      <DependentUpon>201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -3063,6 +3071,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912151336564_DeleteTaxReportHeaderScreensMigration.resx">
       <DependentUpon>201912151336564_DeleteTaxReportHeaderScreensMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912051433469_AddPricesStepsTableMigration.resx">
+      <DependentUpon>201912051433469_AddPricesStepsTableMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.resx">
+      <DependentUpon>201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
