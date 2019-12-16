@@ -2067,6 +2067,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                              CreatedByPartner = entity.CreatedByPartner,
+                             SATXML = entity.SATXML,
                          };
 
             return result;
