@@ -29,6 +29,9 @@ namespace Logitude.Update.PatchDistribution
         private PatchDistributionMatchModel _PatchDistributionMatchModel;
 
         public bool StartEnabled { get => this.doItToolStripMenuItem.Enabled; set => this.doItToolStripMenuItem.Enabled = value; }
+        public bool AproveEnabled { get; private set; }
+
+        private PatchDistributionException _MyPatchDistributionException;
 
         public PatchDistributionForm()
         {
@@ -43,7 +46,23 @@ namespace Logitude.Update.PatchDistribution
 
         private void doItToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _PatchDistributionManager.Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+            try
+            {
+                _PatchDistributionManager.Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+            }
+            catch   (PatchDistributionException myPatchDistributionException)
+            {
+                StartEnabled = false;
+                AproveEnabled = true;
+                _MyPatchDistributionException = myPatchDistributionException;
+                MessageBox.Show(myPatchDistributionException.ToString());
+            }
+            catch (Exception ee)
+            {
+                StartEnabled = false;
+                MessageBox.Show(ee.ToString());
+            }
+            
         }
 
 

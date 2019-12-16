@@ -89,13 +89,16 @@
             <div class="TableHolder">
                 <table>
                     <tr>
-                        <td style="height:26px;width:53px; ">
+                    
+                    </tr>
+                    <tr style="height:25px">
+                        <td style="height:26px; ">
                             <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
                                 <table>
                                     <tr>
                                         <td>
                                             <div class="ActionButton" style="width: 35px;height:23px; ">
-                                                <CheckBox [IsChecked]="IsSelected && CourierMasterService.connectedSelectAll" (Checked)="IsSelected = $event "></CheckBox>
+                                                <CheckBox style="pointer-events:none;" [IsChecked]="IsSelected && CourierMasterService.connectedSelectAll" (Checked)="IsSelected = $event "></CheckBox>
 
                                             </div>
                                         </td>
@@ -106,8 +109,8 @@
 
                                                 <img src="./Images/ToggleIcon.png" style="float:left;" />
                                                 <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
-                                                    <button style="text-align:right" (click)="OnAllBtnClicked()">{{'Customs.CourierMaster.O.All' | TextCodeTranslationPipe}}</button>
-                                                    <button style="text-align:right" (click)="OnNoneBtnClicked()">{{'Customs.CourierMaster.O.None' | TextCodeTranslationPipe}}</button>
+                                                    <button style="text-align:right" (click)="OnAllBtnClicked(false)">{{'General.O.All' | TextCodeTranslationPipe}}</button>
+                                                    <button style="text-align:right" (click)="OnNoneBtnClicked()">{{'General.O.None' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                             </div>
                                         </td>
@@ -118,20 +121,18 @@
 
 
                         </td>
-                    </tr>
-                    <tr style="height:25px">
-                        <td class="TabTitleRow" style="width:250px">
+
+                        <td class="TabTitleRow"  style="width:1250px" >
                             {{'General.O.ConnectedDeclarations' | TextCodeTranslationPipe}}
                             <span *ngIf="TotalConnected != null"> {{' (' + TotalConnected + ')' }} </span>
                         </td>
-                        <td><div></div></td>
                         <td style="width:250px">
                             <SearchTextBox [PlaceHolder]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"
                                            [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="ConnectedSearchCompleted($event)"></SearchTextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="height: 40%; padding: 5px;">
+                        <td colspan="4" style="height: 40%; padding: 5px;">
                             <div class="GeneratedGridContainer" style="padding:5px" *ngIf="IsVisibile">
                                 <logitude-grid GridWidth="100%" GridHeight="100%"
                                                [ObjectTable]="ObjectTableName"
@@ -151,6 +152,7 @@
 
                     </tr>
 
+                    
                     <tr>
                         <td style="height:26px;width:53px; ">
                             <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
@@ -158,7 +160,7 @@
                                     <tr>
                                         <td>
                                             <div class="ActionButton" style="width: 35px;height:23px; ">
-                                                <CheckBox [IsChecked]="IsSelectedNot && CourierMasterService.disconnectedSelectAll" (Checked)="IsSelectedNot = $event "></CheckBox>
+                                                <CheckBox style="pointer-events:none;" [IsChecked]="IsSelectedNot && CourierMasterService.disconnectedSelectAll" (Checked)="IsSelectedNot = $event "></CheckBox>
 
                                             </div>
                                         </td>
@@ -181,20 +183,17 @@
 
 
                         </td>
-                    </tr>
-                    <tr>
                         <td class="TabTitleRow" style="width:250px">
                             {{'General.O.NotConnectedDeclarations' | TextCodeTranslationPipe}}
                             <span *ngIf="TotalDisconnected != null"> {{' (' + TotalDisconnected + ')' }} </span>
                         </td>
-                        <td><div></div></td>
-                        <td style="width:250px">
+                         <td style="width:250px">
                             <SearchTextBox [PlaceHolder]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"
                                            [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="NotConnectedSearchCompleted($event)"></SearchTextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="height: 60%; padding: 5px;">
+                        <td colspan="4" style="height: 60%; padding: 5px;">
 
                             <div class="GeneratedGridContainer" style="padding:5px" *ngIf="IsVisibile">
                                 <logitude-grid GridWidth="100%" GridHeight="100%"
