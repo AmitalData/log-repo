@@ -209,12 +209,17 @@ export class AccountingWorkspaceComponent {
                             if (this.Page_Receivable == null) {
                                 this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
                                     this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {
-
-                                        SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Receivable/ReceivablePageComponent", myLocation.viewContainerRef)
-                                            .then(cmpRef => {
-                                                this.Page_Receivable = cmpRef.instance;
-                                                this.Page_Receivable.InitComponent();
+                                        this._entityResourceService.getEntityResourceByTableName("GLAccountInterestPeriod",0).subscribe((response: any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
+                                                SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Receivable/ReceivablePageComponent", myLocation.viewContainerRef)
+                                                    .then(cmpRef => {
+                                                        this.Page_Receivable = cmpRef.instance;
+                                                        this.Page_Receivable.InitComponent();
+                                                    });
                                             });
+
+                                        });
+                               
                                     });
                                 });
                             }

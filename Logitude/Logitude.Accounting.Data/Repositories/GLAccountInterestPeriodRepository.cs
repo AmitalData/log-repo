@@ -14,14 +14,34 @@ namespace Logitude.Accounting.Data.Repositories
 {
    public partial class GLAccountInterestPeriodRepository:IRepository<GLAccountInterestPeriod>
    {
-        
-		public List<GLAccountInterestPeriod> GetMulti(EntityKeyFields entityKeys)
+
+        public List<GLAccountInterestPeriod> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            GLAccountKeys myEntityKeys = entityKeys as GLAccountKeys;
+            return (from a in context.GLAccountInterestPeriods where a.GLAccountId == myEntityKeys.Id select a).ToList();
         }
 
-   }
+        public GLAccountInterestPeriod GetSingleByPeriodStartDateeAndnterestGLAccountId(DateTime PeriodStartDate, string GLAccountId, int Tenant)
+        {
+
+            GLAccountInterestPeriod Period = (from a in context.GLAccountInterestPeriods
+                                          where a.PeriodStartDate == PeriodStartDate && a.GLAccountId == GLAccountId && a.Tenant == Tenant
+                                          select a).FirstOrDefault();
+
+            return Period;
+        }
+
+        public GLAccountInterestPeriod GetSingleByGLAccountIdAndTenant( string GLAccountId, int Tenant)
+        {
+
+            GLAccountInterestPeriod Period = (from a in context.GLAccountInterestPeriods
+                                              where a.GLAccountId == GLAccountId && a.Tenant == Tenant
+                                              select a).FirstOrDefault();
+
+            return Period;
+        }
+
+    }
 
 }
    

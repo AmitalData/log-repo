@@ -97,6 +97,31 @@ export class GLAccountInterestPeriodPM {
     public set CreateDateTime(newValue: Date) { if (this.createDateTime != newValue) { this.createDateTime = newValue; this.MarkAsDirty("CreateDateTime"); } }
        
 	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private exceptionalInterestRateName: string;
+    public get ExceptionalInterestRateName() { return this.exceptionalInterestRateName; }
+    public set ExceptionalInterestRateName(newValue: string) { if (this.exceptionalInterestRateName != newValue) { this.exceptionalInterestRateName = newValue; this.MarkAsDirty("ExceptionalInterestRateName"); } }
+       
+	 
+    private creditInterestRateBaseName: string;
+    public get CreditInterestRateBaseName() { return this.creditInterestRateBaseName; }
+    public set CreditInterestRateBaseName(newValue: string) { if (this.creditInterestRateBaseName != newValue) { this.creditInterestRateBaseName = newValue; this.MarkAsDirty("CreditInterestRateBaseName"); } }
+       
+	 
+    private standardInterestRateBaseName: string;
+    public get StandardInterestRateBaseName() { return this.standardInterestRateBaseName; }
+    public set StandardInterestRateBaseName(newValue: string) { if (this.standardInterestRateBaseName != newValue) { this.standardInterestRateBaseName = newValue; this.MarkAsDirty("StandardInterestRateBaseName"); } }
+       
+	 
 
     public OldEntityPM: GLAccountInterestPeriodPM;
 	

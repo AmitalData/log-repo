@@ -38,9 +38,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountKeys gLAccountKeys = entityKeys as GLAccountKeys;
 
             GLAccountWithholdingTaxQueryService gLAccountWithholdingTaxQueryService = new GLAccountWithholdingTaxQueryService(context);
-
-
             entityPM.GLAccountWithholdingTaxes = gLAccountWithholdingTaxQueryService.GetMulti(gLAccountKeys, true);
+
+            GLAccountInterestPeriodQueryService gLAccountInterestPeriodQueryService = new GLAccountInterestPeriodQueryService(context);
+            entityPM.GLAccountInterestPeriods = gLAccountInterestPeriodQueryService.GetMulti(gLAccountKeys, true);
 
             if (entityPM.GLAccountWithholdingTaxes.Count > 0)
             {

@@ -2378,12 +2378,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool activeForInterest ;
+	  private bool? activeForInterest ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool ActiveForInterest  
+       public bool? ActiveForInterest  
 	   {
 	    
 	     get
@@ -2394,7 +2394,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(activeForInterest != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterest",OldValue=activeForInterest,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterest",OldValue=activeForInterest,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   activeForInterest=value;
 		   }
@@ -2424,12 +2424,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool activeForInterestCreditInvoice ;
+	  private bool? activeForInterestCreditInvoice ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool ActiveForInterestCreditInvoice  
+       public bool? ActiveForInterestCreditInvoice  
 	   {
 	    
 	     get
@@ -2440,19 +2440,19 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(activeForInterestCreditInvoice != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterestCreditInvoice",OldValue=activeForInterestCreditInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterestCreditInvoice",OldValue=activeForInterestCreditInvoice,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   activeForInterestCreditInvoice=value;
 		   }
 			
 		 }
 	   }
-	  private decimal minimumInterestInvoiceBilling ;
+	  private decimal? minimumInterestInvoiceBilling ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal MinimumInterestInvoiceBilling  
+       public decimal? MinimumInterestInvoiceBilling  
 	   {
 	    
 	     get
@@ -2463,7 +2463,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(minimumInterestInvoiceBilling != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   minimumInterestInvoiceBilling=value;
 		   }
