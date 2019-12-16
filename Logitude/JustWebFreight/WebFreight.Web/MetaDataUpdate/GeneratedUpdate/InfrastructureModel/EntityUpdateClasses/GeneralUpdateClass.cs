@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "a359",
+			      				    Code =  "a21b",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -555,10 +555,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_Menu_Occasions = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Menu.Occasions", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Menu.Occasions", NameTextCodeDefaultText = @"Occasions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature GeneralFeature_PRICESTEPS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRICESTEPS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Menu.PriceSteps", NameTextCodeDefaultText = @"Prices Steps" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
-	    
+		   Feature GeneralFeature_AllowCustomersInAgentsLOV = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowCustomersInAgentsLOV", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AllowCustomersInAgentsLOV", NameTextCodeDefaultText = @"Allow Shippers/Consignees in Agents LOV" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature GeneralFeature_PRICESTEPS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRICESTEPS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Menu.PriceSteps", NameTextCodeDefaultText = @"Prices Steps" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);   
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
@@ -2113,7 +2111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralONo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.No", DefaultText = "No",LocalDefaultText = @"לא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralOShowNewRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ShowNewRelease", DefaultText = "New Version is online , for more details",LocalDefaultText = @"גרסה חדשה עלתה לאוויר - לפירוט השינויים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralOShowNewRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ShowNewRelease", DefaultText = "New Version is online, for more details",LocalDefaultText = @"גרסה חדשה עלתה לאוויר - לפירוט השינויים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralBPressHere = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.PressHere", DefaultText = "Press Here",LocalDefaultText = @"לחץ כאן", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2128,6 +2126,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Warning", DefaultText = "Warning",LocalDefaultText = @"אזהרה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHOccasions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Occasions", DefaultText = "Occasions",LocalDefaultText = @"Occasions", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Interest", DefaultText = "Interest",LocalDefaultText = @"ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.InterestBases", DefaultText = "Interest Bases",LocalDefaultText = @"בסיסי ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralONewInterestBaseType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBaseType", DefaultText = "New Interest Base Type",LocalDefaultText = @"בסיס ריבית חדש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOAbaseperiodwiththesamestartdateexists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Abaseperiodwiththesamestartdateexists", DefaultText = "A base period with the same start date exists  ",LocalDefaultText = @"קיימת תקופה עם תאריך התחלה זהה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOAbasetypewiththesamecodeexists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Abasetypewiththesamecodeexists", DefaultText = "A base type with the same code exists",LocalDefaultText = @"קיים בסיס עם קוד זהה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOTheratepercentageshouldbeformattedas0000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Theratepercentageshouldbeformattedas00.00", DefaultText = "The rate percentage should be formatted as 00.00",LocalDefaultText = @"האחוז צריך להיות מוגדר בפורמט 00.00", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOAbaseperiodwiththesamestartdateisalreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded", DefaultText = "A base period with the same start date is already Added",LocalDefaultText = @"כבר קיימת תקופה עם תאריך התחלה זהה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralORecordwassettoInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RecordwassettoInactive", DefaultText = "Record was set to Inactive",LocalDefaultText = @"הרשומה הוגדרה כלא פעילה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCOthersPriceSteps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.PriceSteps", DefaultText = "Prices Steps",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
