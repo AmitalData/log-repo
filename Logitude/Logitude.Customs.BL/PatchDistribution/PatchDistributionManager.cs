@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
@@ -81,11 +82,11 @@ namespace Logitude.Customs.BL.PatchDistribution
             var qsDBMigration = new DBMigrationQueryService(customContext);
             var repoDBMigration = new DBMigrationRepository(customContext);
             var repoDBMigrationLine = new DBMigrationLineRepository(customContext);
-
+            DBMigrationLine dBMigrationLine = null;
             using (var scope = TransactionFactory.GetNewTransaction())
             {
 
-
+                Debug.WriteLine($"ExecDBMigrationLine({myPatchDistribution.MajorVersionYYPRR}.{script.ScriptCounter})");
                 var myDBMigration = repoDBMigration.GetAll()
 .Where(dbMigration => dbMigration.MajorVersion == myPatchDistribution.MajorVersionYYPRR)
 .Where(dbMigration => dbMigration.MinorVersion == myPatchDistribution.PatchCounter_Minor)
@@ -115,16 +116,17 @@ namespace Logitude.Customs.BL.PatchDistribution
 
                 try
                 {
-                    repoDBMigrationLine.Add(new Customs.Data.EntityPOCOs.DBMigrationLine()
+                    dBMigrationLine = new DBMigrationLine()
                     {
                         DBMigrationId = myDBMigration.Id,
                         CounterKey = script.ScriptCounter,
                         SqlScript = script.SqlScript.Substring(0, Math.Min(1024, script.SqlScript.Length)),
-                    });
+                    };
+                    repoDBMigrationLine.Add(dBMigrationLine);
                     customContext.SaveChanges();
 
                     var sqlDDL_NoNeedCommit = script.SqlScript;
-                    
+
                     (customContext as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
     (dr) =>
     {
@@ -133,7 +135,7 @@ namespace Logitude.Customs.BL.PatchDistribution
         return 0;
     });
 
-                   
+
                     customContext.SaveChanges();
                     scope.Complete();
                     Debug.WriteLine("DBMigrationLine:{myDBMigration.Id}.{CounterKey }");
@@ -141,7 +143,7 @@ namespace Logitude.Customs.BL.PatchDistribution
                 catch (Exception eee)
                 {
                     Debug.WriteLine(eee.ToString());
-                    throw new Exception(eee.ToString());
+                    throw new PatchDistributionException("PatchDistributionException",eee, dBMigrationLine);
                 }
 
             }
@@ -213,5 +215,13 @@ namespace Logitude.Customs.BL.PatchDistribution
 
         }
 
+    }
+
+    public class PatchDistributionException : Exception
+    {
+
+        public DBMigrationLine MyDBMigrationLine { get;  }
+        
+        public PatchDistributionException(string message, Exception inner, DBMigrationLine myDBMigrationLine) : base(message, inner) { MyDBMigrationLine = myDBMigrationLine; }
     }
 }
