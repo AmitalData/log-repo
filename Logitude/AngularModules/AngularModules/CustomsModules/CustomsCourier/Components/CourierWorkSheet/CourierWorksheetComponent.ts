@@ -1253,7 +1253,7 @@ implements OnDestroy
             }
         }
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
+            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
         }
         if (AppTool.IsNullOrEmpty(filters.SortBy)) {
             filters.SortBy = "CourierHawb";
