@@ -22,44 +22,44 @@ using Logitude.Infrastructure.Data;
 
 namespace Logitude.Infrastructure.BL.EntityUpdateServices
 { 
-   public partial class PriceStepsUpdateService:EntityUpdateService<PriceSteps,PriceStepsPM,EntityPM>
+   public partial class PriceStepUpdateService:EntityUpdateService<PriceStep,PriceStepPM,EntityPM>
    {
    
-        PriceStepsRepository entityRepository;
-        public PriceStepsUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        PriceStepRepository entityRepository;
+        public PriceStepUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             IInfrastructureContext  context = mainContext as InfrastructureContext;
             context = context ??mainContext as IInfrastructureContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new PriceStepsDataMapping();
-            Repository = new PriceStepsRepository(context);
+            Mapping = new PriceStepDataMapping();
+            Repository = new PriceStepRepository(context);
         }
 
        
         private IInfrastructureContext currentContext;
-        public PriceStepsUpdateService(int tenant)
+        public PriceStepUpdateService(int tenant)
         {
             currentContext = InfrastructureContext.GetContext(tenant);
         }
 
-        public PriceStepsUpdateService(IInfrastructureContext context)
+        public PriceStepUpdateService(IInfrastructureContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(PriceStepsPM entityPM)
+		protected override EntityKeyFields GetKeys(PriceStepPM entityPM)
         {
-            PriceStepsKeys entityKeys = new PriceStepsKeys() { Id = entityPM.Id };
+            PriceStepKeys entityKeys = new PriceStepKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(PriceStepsPM entityPM)
+		protected override void FillDefaultValuesOnCreate(PriceStepPM entityPM)
         {     
   
 		
-		    entityPM.Id = IdCounter.GetNumber("PriceSteps", entityPM.Tenant); 
+		    entityPM.Id = IdCounter.GetNumber("PriceStep", entityPM.Tenant); 
 					
 			DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 							
@@ -87,7 +87,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
 					
 	    }
         
-		protected override void FillDefaultValuesOnUpdate(PriceStepsPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(PriceStepPM entityPM)
         {       
            
 		    DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);

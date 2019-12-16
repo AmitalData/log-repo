@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.Infrastructure.Data.EntityKeys
 {
-   public partial class PriceStepsKeys : EntityKeyFields
+   public partial class PriceStepKeys : EntityKeyFields
    {
    	  public string Id  { get; set; }
 	  
@@ -25,7 +25,7 @@ namespace Logitude.Infrastructure.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "PriceStepsPM";
+          return "PriceStepPM";
       }
 	 
    }
