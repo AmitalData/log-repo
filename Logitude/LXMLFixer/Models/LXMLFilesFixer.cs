@@ -40,6 +40,7 @@ namespace Logitude.LXMLFixer.Models
                     {
                         mistakesData += "DXML Table, LXML Table\n";
                         mistakesData += dxmlTableDefinition.Name + "," + lxmlTableDefinition.Name;
+
                         if (dxmlTableDefinition.Name != lxmlTableDefinition.Name)
                         {
                             mistakesData += "," + "Incorrect Table Name In LXML File";
@@ -47,6 +48,20 @@ namespace Logitude.LXMLFixer.Models
                         }
 
                         mistakesData += "\n";
+
+                        if (dxmlTableDefinition.DBType != lxmlTableDefinition.DBType)
+                        {
+                            mistakesData += "DXML DBType, LXML DBType\n";
+                            mistakesData += dxmlTableDefinition.DBType + "," + lxmlTableDefinition.DBType + "\n";
+                            appendTableMistakesData = true;
+                        }
+
+                        if (dxmlTableDefinition.Schema != lxmlTableDefinition.Schema)
+                        {
+                            mistakesData += "DXML Schema, LXML Schema\n";
+                            mistakesData += dxmlTableDefinition.Schema + "," + lxmlTableDefinition.Schema + "\n";
+                            appendTableMistakesData = true;
+                        }
 
                         mistakesData += "DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
 
@@ -203,20 +218,20 @@ namespace Logitude.LXMLFixer.Models
                             {
                                 if (dxmlColumn.Type != lxmlColumn.Type)
                                 {
-                                    //LXMLAttribute attribute = new LXMLAttribute
-                                    //{
-                                    //    ElementName = "field",
-                                    //    AttributeName = "FieldsDataType",
-                                    //    AttributeValue = GetStringValue(""),
-                                    //    OldAttributeValue = "",
-                                    //    AttributeFilter = new LXMLAttributeFilter
-                                    //    {
-                                    //        Name = "FieldName",
-                                    //        Value = GetStringValue(dxmlColumn.Name)
-                                    //    }
-                                    //};
+                                    LXMLAttribute attribute = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "FieldsDataType",
+                                        AttributeValue = GetStringValue(GetLXMLDataType(dxmlColumn.Type)),
+                                        OldAttributeValue = lxmlColumn.Type,
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(dxmlColumn.Name)
+                                        }
+                                    };
 
-                                    //attributes.Add(attribute);
+                                    attributes.Add(attribute);
                                 }
 
                                 if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Precision != lxmlColumn.Precision)
@@ -566,7 +581,7 @@ namespace Logitude.LXMLFixer.Models
                     int numberOfDigits = field.Attribute("NumberOfDigits") == null ? 0 : Convert.ToInt32(field.Attribute("NumberOfDigits").Value);
                     int digitsAfterPoint = field.Attribute("DigitsAfterPoint") == null ? 0 : Convert.ToInt32(field.Attribute("DigitsAfterPoint").Value);
 
-                    string columnDefinitionDataType = GetDataTypeForColumnDefinition(dataType, isFixedLength);
+                    string columnDefinitionDataType = GetColumnDefinitionDataType(dataType, isFixedLength);
                     bool columnDefinitionNullableConstraint = GetNullableForConstraintsDefinition(isRequired, isNullable, isPrimaryKey, columnDefinitionDataType);
                     
                     ColumnDefinition columnDefinition = new ColumnDefinition
@@ -606,7 +621,7 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
-        private string GetDataTypeForColumnDefinition(string type, bool isFixedLength)
+        private string GetColumnDefinitionDataType(string type, bool isFixedLength)
         {
             switch (type)
             {
@@ -640,8 +655,38 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
-        
-        
+        private string GetLXMLDataType(string type)
+        {
+            switch (type)
+            {
+                case "int":
+                    return "Integer";
+                case "decimal":
+                    return "Decimal";
+                case "timestamp":
+                    return "Text";
+                case "varbinary":
+                    return "Text";
+                case "varchar":
+                    return "Text";
+                case "datetime":
+                    return "DateTime";
+                case "time":
+                    return "DateTime";
+                case "float":
+                    return "Double";
+                case "char":
+                    return "LookUp";
+                case "bigint":
+                    return "Integer";
+                case "nvarchar":
+                    return "nText";
+                case "bit":
+                    return "Boolean";
+                default:
+                    return null;
+            }
+        }
 
         private bool GetNullableForConstraintsDefinition(bool isRequired, bool isNullable, bool isPrimaryKey, string columnDefinitionDataType)
         {
@@ -674,29 +719,35 @@ namespace Logitude.LXMLFixer.Models
 
                 foreach (var attr in lxmlFileFixer.Attributes)
                 {
-                    XElement element;
-
-                    if (attr.AttributeFilter == null)
+                    if (!String.IsNullOrEmpty(attr.AttributeValue))
                     {
-                        element = doc.Descendants(attr.ElementName).Single();
-                    }
-                    else
-                    {
-                        element = doc.Descendants(attr.ElementName).Where(x => x.Attribute(attr.AttributeFilter.Name).Value == attr.AttributeFilter.Value).Single();
-                    }
+                        XElement element;
 
-                    element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
+                        if (attr.AttributeFilter == null)
+                        {
+                            element = doc.Descendants(attr.ElementName).Single();
+                        }
+                        else
+                        {
+                            element = doc.Descendants(attr.ElementName).Where(x => x.Attribute(attr.AttributeFilter.Name).Value == attr.AttributeFilter.Value).Single();
+                        }
 
-                    string elementText = attr.ElementName;
-                    if(attr.AttributeFilter != null)
-                    {
-                        elementText += "[" + attr.AttributeFilter.Name + "='" + attr.AttributeFilter.Value + "']";
+                        element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
+
+                        string elementText = attr.ElementName;
+                        if (attr.AttributeFilter != null)
+                        {
+                            elementText += "[" + attr.AttributeFilter.Name + "='" + attr.AttributeFilter.Value + "']";
+                        }
+
+                        fixedMistakesData += elementText + "," + attr.AttributeName + "," + attr.OldAttributeValue + "," + attr.AttributeValue + "\n";
                     }
-
-                    fixedMistakesData += elementText + "," + attr.AttributeName + "," + attr.OldAttributeValue + "," + attr.AttributeValue + "\n";
                 }
 
-                LXMLFixedMistakesData += fixedMistakesData;
+                if(lxmlFileFixer.Attributes.Where(a => !String.IsNullOrEmpty(a.AttributeValue)).Any())
+                {
+                    LXMLFixedMistakesData += fixedMistakesData;
+                }
 
                 doc.Save(lxmlFileFixer.FilePath);
             }
@@ -713,6 +764,5 @@ namespace Logitude.LXMLFixer.Models
                 return null;
             }
         }
-
     }
 }
