@@ -3,6 +3,7 @@
   <Screen Name="&quot;GeneralHeaderScreen&quot;" ObjectTableName="&quot;General&quot;" IsReadOnly="true" IsHeaderScreen="true" NumberOfColumns="2" NumberOfRows="1">
     <ScreenFields />
   </Screen>
+
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;General&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;General&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
@@ -776,10 +777,14 @@
     <TextCode Code="&quot;Accounting.General.O.Theratepercentageshouldbeformattedas00.00&quot;" DefaultText="&quot;The rate percentage should be formatted as 00.00&quot;" LocalDefaultText="&quot;האחוז צריך להיות מוגדר בפורמט 00.00&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded&quot;" DefaultText="&quot;A base period with the same start date is already Added&quot;" LocalDefaultText="&quot;כבר קיימת תקופה עם תאריך התחלה זהה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.RecordwassettoInactive&quot;" DefaultText="&quot;Record was set to Inactive&quot;" LocalDefaultText="&quot;הרשומה הוגדרה כלא פעילה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+
+    <TextCode Code="&quot;General.MC.Others.PriceSteps&quot;" DefaultText="&quot;Prices Steps&quot;" TextCodeTypeCode="&quot;MC&quot;" IsSpellChecked="false" />
+
     <TextCode Code="&quot;Accounting.General.O.DeleteExistInterestperiods&quot;" DefaultText="&quot;You must delete the Interest periods record before Deactivating the customer&quot;" LocalDefaultText="&quot;יש למחוק הגדרת תקופות ריבית לפני חסימת לקוח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.LineDateExist&quot;" DefaultText="&quot;Line with the same date already exist&quot;" LocalDefaultText="&quot;קיימת כבר שורה עם תאריך זהה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.FieldInterestCalculationStartDateismandatory&quot;" DefaultText="&quot;Field Interest Calculation Start Date is mandatory&quot;" LocalDefaultText="&quot;שדה תאריך הוא חובה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired&quot;" DefaultText="&quot;At least one GLAccount Interest Periods record is required&quot;" LocalDefaultText="&quot;חובה להזין לפחות רשומה אחת של תקופת ריבית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;DASHBOARD&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;General.Features.Dashboard&quot;" FeatureDefaultText="&quot;Dashboard&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
@@ -975,5 +980,6 @@
     <Feature Code="&quot;General.Features.TenantAdditionalData&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;General.Features.General.Features.TenantAdditionalData&quot;" FeatureDefaultText="&quot;Payment Gateway Definition&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;Menu.Occasions&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;General.Features.Menu.Occasions&quot;" FeatureDefaultText="&quot;Occasions&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;AllowCustomersInAgentsLOV&quot;" FeatureTypeCode="&quot;OTH&quot;" FeatureTextCodeCode="&quot;General.Features.AllowCustomersInAgentsLOV&quot;" FeatureDefaultText="&quot;Allow Shippers/Consignees in Agents LOV&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;PRICESTEPS&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;General.Features.Menu.PriceSteps&quot;" FeatureDefaultText="&quot;Prices Steps&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
