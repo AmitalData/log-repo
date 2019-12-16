@@ -110,7 +110,7 @@ export class TariffPriceStepsComponent extends BaseComponent {
         this.ValidationErrorsList = this.ValidationErrorsList.concat(errors);
 
         if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindowEmit(this.DefaultPriceSteps);
         }
     }
 }

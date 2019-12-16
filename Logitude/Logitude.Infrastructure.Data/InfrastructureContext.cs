@@ -86,6 +86,8 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new LBPTeamMemberMap());
 	
+            modelBuilder.Configurations.Add(new PriceStepsMap());
+	
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
 	
             modelBuilder.Configurations.Add(new TeamMap());
@@ -429,6 +431,12 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<LBPTeamMember> LBPTeamMembers 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PriceSteps> PricesSteps 
 	 {
 	      get; set;
 	 

@@ -88,6 +88,8 @@ import { TaskSchedulerHistoryListService } from './Services/StandardLists/TaskSc
 import { SchedulerProcedureListService } from './Services/StandardLists/SchedulerProcedureListService';
 import { TasksSchedulerListService } from './Services/StandardLists/TasksSchedulerListService';
 import { BluesnapTransactionListService } from './Services/StandardLists/BluesnapTransactionListService';
+import { PriceStepsListService } from './Services/StandardLists/PriceStepsListService';
+import { PriceStepsPMService } from './Services/StandardPMs/PriceStepsPMService';
 
 export class ModuleProviders {
     
@@ -182,8 +184,8 @@ export class ModuleProviders {
             case "SchedulerProcedureListService": { myResult = new SchedulerProcedureListService(); break; }
             case "TasksSchedulerListService": { myResult = new TasksSchedulerListService(); break; }
             case "BluesnapTransactionListService": { myResult = new BluesnapTransactionListService(); break; }
-
-                
+            case "PriceStepsListService": { myResult = new PriceStepsListService(); break; }
+            case "PriceStepsPMService": { myResult = new PriceStepsPMService(); break; }
         }
 
         return myResult;

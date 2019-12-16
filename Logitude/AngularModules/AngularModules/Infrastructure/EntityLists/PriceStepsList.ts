@@ -6,13 +6,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class TariffSettingList {
+export class PriceStepsList {
    
 	Id: string;
 	Tenant: number;
-	DefaultWarningPercentage: number;
-	AirDefaultStepsId: string;
-	LCLDefaultStepsId: string;
+	CreateDate: Date;
+	CreatedByUserId: string;
+	UpdateDate: Date;
+	UpdatedByUserId: string;
+	SearchFields: string;
+	Name: string;
+	Inactive: boolean;
+	Steps: string;
+	CreatedByUserName: string;
+	UpdatedByUserName: string;
 	
 }
  

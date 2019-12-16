@@ -3694,6 +3694,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+        public IDbSet<PriceSteps> PricesSteps
+        {
+            get;
+            set;
+        }
         #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -4419,6 +4424,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
             modelBuilder.Configurations.Add(new BIReportFolderMap());
+            modelBuilder.Configurations.Add(new PriceStepsMap());
             #endregion
 
             modelBuilder.Configurations.Add(new BlobFileMap());

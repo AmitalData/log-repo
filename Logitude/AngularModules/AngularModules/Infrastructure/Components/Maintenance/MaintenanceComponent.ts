@@ -574,7 +574,17 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
+        //if (FeatureLocator.HasFeaturePermession("General", "PRICESTEPS")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "List"
+            item.Code = "MTPS";
+            item.ObjectTableName = "Price Steps";
+            item.TextCode = "General.MC.Others.PriceSteps";
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceSteps")[0].Id
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
+        //} 
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();

@@ -88,6 +88,7 @@
     <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
     <Compile Include="EntityKeys\FeatureToggleKeys.cs" />
     <Compile Include="EntityKeys\LBPTeamMemberKeys.cs" />
+    <Compile Include="EntityKeys\PriceStepsKeys.cs" />
     <Compile Include="EntityKeys\SharedLogisticsSettingKeys.cs" />
     <Compile Include="EntityKeys\TeamKeys.cs" />
     <Compile Include="EntityKeys\TeamMemberBusinessRoleKeys.cs" />
@@ -111,11 +112,13 @@
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FeatureToggleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LBPTeamMemberListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PriceStepsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TeamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TeamMemberBusinessRoleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ToggleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\LBPTeamMemberListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PriceStepsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SharedLogisticsSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamMemberBusinessRoleListQueryService.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FeatureToggleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LBPTeamMemberList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PriceStepsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SharedLogisticsSettingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
@@ -144,6 +148,7 @@
     <Compile Include="EntityMapping\BusinessRoleMap.cs" />
     <Compile Include="EntityMapping\FeatureToggleMap.cs" />
     <Compile Include="EntityMapping\LBPTeamMemberMap.cs" />
+    <Compile Include="EntityMapping\PriceStepsMap.cs" />
     <Compile Include="EntityMapping\SharedLogisticsSettingMap.cs" />
     <Compile Include="EntityMapping\TeamMap.cs" />
     <Compile Include="EntityMapping\TeamMemberBusinessRoleMap.cs" />
@@ -158,6 +163,7 @@
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
     <Compile Include="EntityPOCOs\FeatureToggle.cs" />
     <Compile Include="EntityPOCOs\LBPTeamMember.cs" />
+    <Compile Include="EntityPOCOs\PriceSteps.cs" />
     <Compile Include="EntityPOCOs\SharedLogisticsSetting.cs" />
     <Compile Include="EntityPOCOs\Team.cs" />
     <Compile Include="EntityPOCOs\TeamMemberBusinessRole.cs" />
@@ -184,11 +190,13 @@
     <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FeatureToggleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LBPTeamMemberRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PriceStepsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SharedLogisticsSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TeamMemberBusinessRoleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TeamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ToggleRepository.Generated.cs" />
     <Compile Include="Repsitories\LBPTeamMemberRepository.cs" />
+    <Compile Include="Repsitories\PriceStepsRepository.cs" />
     <Compile Include="Repsitories\SharedLogisticsSettingRepository.cs" />
     <Compile Include="Repsitories\TeamMemberBusinessRoleRepository.cs" />
     <Compile Include="Repsitories\TeamRepository.cs" />
