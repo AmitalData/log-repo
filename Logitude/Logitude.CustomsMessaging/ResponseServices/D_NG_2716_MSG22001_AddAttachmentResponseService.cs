@@ -396,8 +396,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
                     LogMessagingUtil.Instance.AppendLine($"D_NG_2716_MSG22001_AddAttachmentResponseService UpdateDeclarationCourierStatus currentDeclarationCourierStatusPM.DocumentStatusCode = {status}");
-                    currentDeclarationCourierStatusPM.DocumentStatusCode = status;
-                    currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = CourierDeclarationstatus;
+                    if(!string.IsNullOrWhiteSpace(status))currentDeclarationCourierStatusPM.DocumentStatusCode = status;
+                    if(!string.IsNullOrWhiteSpace(CourierDeclarationstatus))currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = CourierDeclarationstatus;
                     declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 }
             }
