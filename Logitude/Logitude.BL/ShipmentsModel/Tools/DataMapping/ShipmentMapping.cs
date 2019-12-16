@@ -677,16 +677,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         }
         private static DateTime? GetConcurrencyFieldValue_Date(DateTime? oiginalValue, DateTime? newValue, DateTime? serverValue)
         {
-            DateTime? myResult = null;
-
-            object myResultObject = GetConcurrencyFieldValue(oiginalValue, newValue, serverValue);
-
-            if (myResultObject != null)
+            if (oiginalValue == null && newValue == null)
             {
-                myResult = (DateTime?)myResultObject;
+                return serverValue;
             }
 
-            return myResult;
+            else if (oiginalValue != null && serverValue == null)
+            {
+                return newValue;
+            }
+
+            else if (oiginalValue == null && newValue != null)
+            {
+                return newValue;
+            }
+
+            else if (oiginalValue != null && newValue == null)
+            {
+                return newValue;
+            }
+
+            else if (oiginalValue.Value != newValue.Value)
+            {
+                return newValue;
+            }
+
+            else
+            {
+                return serverValue;
+            }
         }
         private static object GetConcurrencyFieldValue(object oiginalValue, object newValue, object serverValue)
         {
