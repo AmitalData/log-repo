@@ -1054,7 +1054,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                         }
 
                         else {
-                            if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == PERIOD || key == DECIMALPT || key == ADD || key == SUBTRACT || key == DASH || key == 173 || (this.isShiftKeyDown && (key == 187 || key == 53))) {
+                            if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == PERIOD || key == DECIMALPT || key == COMMA || key == ADD || key == SUBTRACT || key == DASH || key == 173 || (this.isShiftKeyDown && (key == 187 || key == 53))) {
 
                                 if (numChars.indexOf(keyChar) > -1) {
                                     if (!AppTool.IsNullOrEmpty(this.TextValue)) {
@@ -1081,8 +1081,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 }
 
                                 //////////////////////////////////////
-                                if (keyChar == ".") {
-                                    if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.indexOf(".") == -1) {
+                                if (keyChar == this.decimalSeparator) {
+                                    if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.indexOf(this.decimalSeparator) == -1) {
                                         if (this.TextValue.indexOf("%") > -1) {
                                             if (selectionStart(input) != this.TextValue.length) {
                                                 isOk = true;
@@ -1097,6 +1097,13 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                     else {
                                         isOk = true;
                                     }
+                                }
+
+                                if (keyChar == this.decimalSeparator) {
+                                    isOk = true;
+                                }
+                                if (keyChar == this.thousandsSeparator) {
+                                    isOk = false;
                                 }
 
                                 //////////////////////////////////////
@@ -1133,6 +1140,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     else {
                         return null;
                     }
+
                 }
                 case 'integertext':
                     {
