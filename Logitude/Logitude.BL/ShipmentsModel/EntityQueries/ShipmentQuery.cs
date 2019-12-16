@@ -11544,6 +11544,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ARInvoices = f.ARInvoices,
                                NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                                CreatedByPartner = f.CreatedByPartner,
+                               FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
                            };
             return myResult;
         }
@@ -11889,6 +11890,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Origin = f.Origin,
                     ARInvoices = f.ARInvoices,
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
+                    FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

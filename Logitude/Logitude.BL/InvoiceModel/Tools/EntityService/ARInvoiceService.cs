@@ -3716,6 +3716,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (this.isVoidingInvoice)
             {
                 this.UpdateShipmentRegistryDate();
+                this.UpdSatehipmentFirstApprovalDate();
             }
         }
         private void OnApprovingInvoice()
@@ -3738,6 +3739,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.UpdateShipmentRegistryDate();
+                this.UpdSatehipmentFirstApprovalDate();
             }
         }
         private void UpdateShipmentRegistryDate()
@@ -3780,9 +3782,54 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.RunRegistryDateProcedure(this.entityPM.MainEntityId);
             }
         }
+        private void UpdSatehipmentFirstApprovalDate()
+        {
+            if (this.entityPM.IsConsolidationInvoice)
+            {
+                #region
+                List<string> allConstituentsIds = new List<string>();
+
+                if (this.isNewEntity)
+                {
+                    allConstituentsIds = entityPM.ConstituentInvoices.Select(s => s.Id).ToList();
+                }
+
+                else
+                {
+                    allConstituentsIds = invoiceConstituentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+                }
+
+                if (allConstituentsIds.Count > 0)
+                {
+                    List<string> allConstituentsShipmentsIds
+                        = (from d in objectContext.ARInvoices
+                           where d.Tenant == this.tenant
+                           && d.MainEntityId != null
+                           && d.IsConstituentInvoice == true
+                           && allConstituentsIds.Contains(d.Id)
+                           select d.MainEntityId).ToList();
+
+                    foreach (string id in allConstituentsShipmentsIds)
+                    {
+                        this.RunFirstApprovalDateProcedure(id);
+                    }
+                }
+                #endregion
+            }
+
+            else if (this.entityPM.MainEntityId != null)
+            {
+                this.RunFirstApprovalDateProcedure(this.entityPM.MainEntityId);
+            }
+        }
+
         private void RunRegistryDateProcedure(string myShipmentId)
         {
             RunStoredProcedureClass.UpdateShipmentRegistryDate(myShipmentId, entityPM.Tenant);
+        }
+        private void RunFirstApprovalDateProcedure(string myShipmentId)
+        {
+            RunStoredProcedureClass.UpdateShipmentFirstApprovalDate(myShipmentId, entityPM.Tenant);
         }
 
         private void CheckLinesVatExcempt(ARInvoicePM invoicePM, bool isApprovingInvoice)
