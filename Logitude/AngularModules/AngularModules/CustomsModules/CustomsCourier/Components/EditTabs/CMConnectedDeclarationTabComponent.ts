@@ -105,17 +105,17 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                 if (isSaveSuccess) {
                     this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     this.CourierMasterService.isNotDirty = true;
-                     if (this.CourierMasterService.disconnectedSelectAll) {
-                       //  this.CourierMasterService.connectedSelectAll = true;
+
+                    if (this.CourierMasterService.disconnectedSelectAll) {
+                         this.CourierMasterService.connectedSelectAll = true;
                         this.IsSelected = true;
                         this.CourierMasterService.disconnectedSelectAll = false;
                     }
 
                   else if (this.CourierMasterService.connectedSelectAll) {
                         this.CourierMasterService.disconnectedSelectAll = false;
-                   //     this.CourierMasterService.connectedSelectAll = false;
+                        this.CourierMasterService.connectedSelectAll = false;
                     }
-                    this.CourierMasterService.connectedSelectAll = true;
 
                     this.LoadConnectedDeclarationGrid();
                     this.LoadNotConnectedDeclarationGrid();
