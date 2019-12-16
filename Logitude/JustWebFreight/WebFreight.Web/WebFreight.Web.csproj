@@ -1724,7 +1724,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\InboundEmailViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\LBPTeamMemberViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ObjectFieldViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\PriceStepsViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\PriceStepViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\QueueMessageMoreDetailsViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\RatesTableViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SchedulerProcedureViewsController.Generated.cs" />
@@ -1748,7 +1748,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\FeatureToggleController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\IATACodeController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\InboundEmailController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\PriceStepsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\PriceStepController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\QueueMessageMoreDetailsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\RatesTableController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\SharedLogisticsSettingController.Generated.cs" />
@@ -2717,7 +2717,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PriceStepsUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PriceStepUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageUpdateClass.cs" />
