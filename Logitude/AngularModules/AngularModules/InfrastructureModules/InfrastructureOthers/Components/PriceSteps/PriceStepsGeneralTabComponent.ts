@@ -26,7 +26,7 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     public PriceStepsText: string;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
-    private isNewEntity: boolean = false;
+    public isNewEntity: boolean = false;
 
     constructor(public entityArgs: EntityArgs) {
         super();
