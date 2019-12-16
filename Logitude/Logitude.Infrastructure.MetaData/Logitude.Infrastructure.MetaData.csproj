@@ -95,7 +95,7 @@
     <None Include="EntityFiles\BusinessRole.lxml" />
     <None Include="EntityFiles\FeatureToggle.lxml" />
     <None Include="EntityFiles\LBPTeamMember.lxml" />
-    <None Include="EntityFiles\PriceSteps.lxml" />
+    <None Include="EntityFiles\PriceStep.lxml" />
     <None Include="EntityFiles\SharedLogisticsSetting.lxml">
       <SubType>Designer</SubType>
     </None>
