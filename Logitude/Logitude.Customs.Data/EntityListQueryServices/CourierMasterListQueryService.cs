@@ -52,6 +52,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902"))
                         && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                     IsPendingCustoms = g.Count(r => r.myDeclarations.CourierCustomStatusCode == "2" && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
+                    IsSuspendedDeclarations = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false && r.myDeclarations.CourierCustomStatusCode == "2")
                 }
                 );
 
@@ -107,16 +108,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        TruckerId = a.TruckerId,
                                                        IntegratorCode = a.IntegratorCode,
                                                        IntegratorName = a.Card != null ? a.Card.LocalName : null,
-                                                       //IsAllDecClosedForFollowUp = myJoin != null ? (myJoin.IsClosedForFollowUp0 > 0 ? false : true) : true,
-                                                       //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
-                                                       //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
-
                                                        CalcClosedForFollowUp = myJoin != null ? myJoin.IsClosedForFollowUp0 : 0,
                                                        CalcMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : 0,
                                                        CalcMissingImporterId = myJoin != null ? myJoin.IsMissingImporterId : 0,
                                                        CalcPending900 = myJoin != null ? myJoin.P900 : 0,
                                                        CalcPendingCustoms = myJoin != null ? myJoin.IsPendingCustoms : 0,
-                                                       PrefixMAWB = a.CustomsAirline != null ? a.CustomsAirline.AirlinePrefix + "-" + a.MAWB : null,
+                                                       CalcSuspendedDeclarations = myJoin != null ? myJoin.IsSuspendedDeclarations : 0,
                                                    });
             return query;
 		}
@@ -135,6 +132,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             public int IsCourierMissingClassification { get; set; }
             public int IsMissingImporterId { get; set; }
             public int IsPendingCustoms { get; set; }
+            public int IsSuspendedDeclarations { get; set; }
         }
 
     }
