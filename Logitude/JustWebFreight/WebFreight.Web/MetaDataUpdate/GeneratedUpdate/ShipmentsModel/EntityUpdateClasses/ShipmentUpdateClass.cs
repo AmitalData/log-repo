@@ -40689,7 +40689,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query EBookingInProgressQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_18.Id, Code = "EBookingInProgress",  QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query EBookingInProgressQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_18.Id, Code = "EBookingInProgress",  EditWizardName = "SimulatorBookingComponent",
+			   QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn EBookingInProgressQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingTransStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
