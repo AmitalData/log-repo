@@ -258,9 +258,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
 
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
+        filters = new ApiQueryFilters();
         //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
@@ -298,7 +296,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.MAWB"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
         this.columns.push({
@@ -379,10 +378,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
-
+        filters = new ApiQueryFilters();
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;

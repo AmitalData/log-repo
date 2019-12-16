@@ -34,7 +34,8 @@ export class CourierConnectedDeclarationListTemplate {
         this.rowData = rowData;
         this.fieldName = fieldName;
         this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as CourierMasterPM;
-
+        this.entityPM.IsDirty =  !this._courierMasterService.isNotDirty;
+ 
         this.DisplayOnlyCheck();
         this.BuildDeclarationsCheckBox();       
         this.CD.detectChanges();
@@ -100,6 +101,7 @@ export class CourierConnectedDeclarationListTemplate {
         if (!this.entityPM.NotConnectedDeclarations) {
             this.entityPM.NotConnectedDeclarations = "";
         }
+ 
         this._courierMasterService.connectedSelectAll = false;
                 this.entityPM.NotConnectedDeclarations=   this.entityPM.NotConnectedDeclarations.replace("ALL", "");
 
@@ -121,7 +123,7 @@ export class CourierConnectedDeclarationListTemplate {
         if (!this.entityPM.ConnectedDeclarations) {
             this.entityPM.ConnectedDeclarations = "";
         }
-
+ 
         this._courierMasterService.disconnectedSelectAll = false;
              this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace("ALL", "");
         if ($event) {

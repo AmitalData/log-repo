@@ -55,7 +55,7 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
 
                     this.IsVisibile = true;
-                    this.OnAllBtnClicked();
+                    this.OnAllBtnClicked(true);
                     this.BuildColumns();
                     this.BuildColumns1();
                     this.LoadConnectedItems();
@@ -104,6 +104,19 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
 
                 if (isSaveSuccess) {
                     this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                    this.CourierMasterService.isNotDirty = true;
+
+                    if (this.CourierMasterService.disconnectedSelectAll) {
+                         this.CourierMasterService.connectedSelectAll = true;
+                        this.IsSelected = true;
+                        this.CourierMasterService.disconnectedSelectAll = false;
+                    }
+
+                  else if (this.CourierMasterService.connectedSelectAll) {
+                        this.CourierMasterService.disconnectedSelectAll = false;
+                        this.CourierMasterService.connectedSelectAll = false;
+                    }
+
                     this.LoadConnectedDeclarationGrid();
                     this.LoadNotConnectedDeclarationGrid();
                 }
@@ -127,10 +140,14 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         }
     }
 
-    OnAllBtnClicked() {
+    OnAllBtnClicked(isFirst: boolean) {
          this.IsSelected = true;
         this.CourierMasterService.connectedSelectAll = true;//    this.entityPM.ConnectedDeclarations = "ALL,";
         this.entityPM.NotConnectedDeclarations = "";
+        if (isFirst)
+            this.CourierMasterService.isNotDirty = true;
+   else
+        this.CourierMasterService.isNotDirty = false;
 
         this.LoadConnectedItems();
  
@@ -140,15 +157,17 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     OnAllBtnClickedNot() {
          this.IsSelectedNot = true;
         this.CourierMasterService.disconnectedSelectAll = true;
-        this.entityPM.ConnectedDeclarations = "ALL"; 
-        this.LoadNotConnectedDeclarationGrid();
+        this.entityPM.ConnectedDeclarations = "ALL";
 
+        this.LoadNotConnectedDeclarationGrid();
+         this.CourierMasterService.isNotDirty = false;
     }
 
     OnNoneBtnClickedNot() {
         this.IsSelectedNot = false;
         this.CourierMasterService.disconnectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = ""; 
+        this.CourierMasterService.isNotDirty = false;
 
         this.LoadNotConnectedDeclarationGrid();
 
@@ -158,7 +177,9 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     OnNoneBtnClicked() {
          this.IsSelected = false;
         this.CourierMasterService.connectedSelectAll = false;
-        this.entityPM.NotConnectedDeclarations = "ALL"; 
+        this.entityPM.NotConnectedDeclarations = "ALL";
+        this.CourierMasterService.isNotDirty = false;
+
         this.LoadConnectedItems();
 
 

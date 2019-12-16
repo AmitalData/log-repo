@@ -400,8 +400,9 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-             logWindow.WindowClosed.subscribe(($event: any) => {
-             this._customsCollateralAnswerSharedDataService._SelectedItems.Collection = [];
+            logWindow.WindowClosed.subscribe(($event: any) => {
+            this._customsCollateralAnswerSharedDataService._SelectedItems.Collection = [];
+            this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
             this.RefreshList();
         });
             logWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralAnswerComponent');
