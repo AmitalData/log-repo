@@ -2297,7 +2297,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipperNotExporterReference = shipment.ShipperNotExporterReference;
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
             shipmentPM.ProjectNumber = shipment.ProjectNumber;
-
+            shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
 
             bool iDangerousShipmentPackages = true;
             if (shipment.IsDangerous)
@@ -11891,6 +11891,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                     FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
+
+                    CreatedByPartner= f.CreatedByPartner,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
