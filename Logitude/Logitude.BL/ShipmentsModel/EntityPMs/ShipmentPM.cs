@@ -2435,5 +2435,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? PreCarriageETA_Original { get; set; }
         public DateTime? OnCarriageATA_Original { get; set; }
         public DateTime? OnCarriageETA_Original { get; set; }
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
     }
 }
