@@ -273,6 +273,7 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
     set StandardInterestRateBase(newValue: InterestBasesTypePM) {
         if (this.standardInterestRateBase != newValue) {
             this.standardInterestRateBase = newValue;
+            if (newValue && newValue.LocalName)
             this.StandardInterestRateBaseName = newValue.LocalName;
         }
     }
@@ -308,6 +309,7 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
     set ExceptionalInterestRateBase(newValue: InterestBasesTypePM) {
         if (this.exceptionalInterestRateBase != newValue) {
             this.exceptionalInterestRateBase = newValue;
+            if (newValue && newValue.LocalName)
             this.ExceptionalInterestRateName = newValue.LocalName;
         }
     }
@@ -342,6 +344,7 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
     set CreditInterestRateBase(newValue: InterestBasesTypePM) {
         if (this.creditInterestRateBase != newValue) {
             this.creditInterestRateBase = newValue;
+            if (newValue && newValue.LocalName)
             this.CreditInterestRateBaseName = newValue.LocalName;
         }
     }
