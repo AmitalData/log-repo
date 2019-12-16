@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class PriceStepsList {
+export class PriceStepList {
    
 	Id: string;
 	Tenant: number;

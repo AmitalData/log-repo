@@ -17,17 +17,17 @@ import {SessionInfo} from '../../Utilities/SessionInfo';
 import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
-import {PriceStepsPM} from '../../EntityPMs/PriceStepsPM';
+import {PriceStepPM} from '../../EntityPMs/PriceStepPM';
 
 
 @Injectable()
 
-export class PriceStepsPMService {
+export class PriceStepPMService {
  private _http: Http;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/pricessteps';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/pricesteps';      
     }
 
  get(id: string) {
@@ -44,7 +44,7 @@ export class PriceStepsPMService {
 
                    
 					
-                    var entity: PriceStepsPM;
+                    var entity: PriceStepPM;
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
@@ -55,7 +55,7 @@ export class PriceStepsPMService {
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceSteps", "GetSinglePM", 'id=' + id);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceStep", "GetSinglePM", 'id=' + id);
 				 
                 return serviceResponse;
 
@@ -63,7 +63,7 @@ export class PriceStepsPMService {
             });                    
     }
 
-	 insert(entityPM: PriceStepsPM) {
+	 insert(entityPM: PriceStepPM) {
  
         var callTime = new Date();        
         return Observable.defer(() => {
@@ -76,13 +76,13 @@ export class PriceStepsPMService {
                  
                 validator = new ClassLevelValidator();
                  
-                var errorsArray = validator.Validate("PriceSteps", entityPM);
+                var errorsArray = validator.Validate("PriceStep", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: PriceStepsPM;
+                    var mappedEntity: PriceStepPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
@@ -91,14 +91,14 @@ export class PriceStepsPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  PriceStepsPM;
+                               var mappedResult:  PriceStepPM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							}
 							
 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceSteps", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceStep", "SaveChanges", "");                    
 												 
                             
                             return serviceResponse;
@@ -118,7 +118,7 @@ export class PriceStepsPMService {
             );
     }
 
-    update(entityPM: PriceStepsPM) {
+    update(entityPM: PriceStepPM) {
 
             var callTime = new Date();         
             return Observable.defer(() => {
@@ -131,13 +131,13 @@ export class PriceStepsPMService {
                  
                 validator = new ClassLevelValidator();
                
-                var errorsArray = validator.Validate("PriceSteps", entityPM);
+                var errorsArray = validator.Validate("PriceStep", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: PriceStepsPM;
+                    var mappedEntity: PriceStepPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
@@ -147,13 +147,13 @@ export class PriceStepsPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  PriceStepsPM;
+                               var mappedResult:  PriceStepPM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							 }
 							 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceSteps", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PriceStep", "SaveChanges", "");                    
 					                           
                             return serviceResponse;
 
@@ -175,12 +175,12 @@ export class PriceStepsPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: PriceStepsPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: PriceStepPM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new PriceStepsPM();
+            entityPM = new PriceStepPM();
         }
 
 		var customFields: Array<string> = [];
@@ -244,8 +244,8 @@ export class PriceStepsPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: PriceStepsPM;
-			entityPM = new PriceStepsPM();
+		    var entityPM: PriceStepPM;
+			entityPM = new PriceStepPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

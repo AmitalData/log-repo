@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class PricesStepsController : ApiController
+    public partial class PriceStepsController : ApiController
     {
 	  
        
@@ -59,16 +59,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("PriceSteps", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("PriceStep", "READ", authToken.Tenant);
 	                
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
-                PriceStepsQueryService priceStepsQuery = new PriceStepsQueryService(MyContext);
-				priceStepsQuery.InitializeSettings();
-                PriceStepsPM priceStepsPM = priceStepsQuery.GetSingle(id,true,false);
+                PriceStepQueryService priceStepQuery = new PriceStepQueryService(MyContext);
+				priceStepQuery.InitializeSettings();
+                PriceStepPM priceStepPM = priceStepQuery.GetSingle(id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
-                return Request.CreateResponse(HttpStatusCode.OK, priceStepsPM);
+                return Request.CreateResponse(HttpStatusCode.OK, priceStepPM);
 			 }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
          
 		
 		
-	   public HttpResponseMessage Post(PriceStepsPM entityPM)
+	   public HttpResponseMessage Post(PriceStepPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -92,16 +92,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("PriceSteps", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("PriceSteps", entityPM.Tenant, authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("PriceStep", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("PriceStep", entityPM.Tenant, authToken.Tenant);
 	                    
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
-                        PriceStepsUpdateService service = new PriceStepsUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        PriceStepUpdateService service = new PriceStepUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         service.Update(entityPM, true);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("PriceSteps", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("PriceStep", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -128,7 +128,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        public HttpResponseMessage Put(PriceStepsPM entityPM)
+        public HttpResponseMessage Put(PriceStepPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -140,16 +140,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("PriceSteps", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("PriceSteps", entityPM.Tenant, authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("PriceStep", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("PriceStep", entityPM.Tenant, authToken.Tenant);
 	
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
-                        PriceStepsUpdateService service = new PriceStepsUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        PriceStepUpdateService service = new PriceStepUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("PriceSteps", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("PriceStep", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);

@@ -17,20 +17,20 @@ using Logitude.Infrastructure.Data.EntityLists;
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
 { 
 
-    public partial class PriceStepsListQueryService
+    public partial class PriceStepListQueryService
     {
          private IInfrastructureContext context;
-        public PriceStepsListQueryService(IInfrastructureContext context)
+        public PriceStepListQueryService(IInfrastructureContext context)
         {
             this.context = context;
         }
 
-        public List<PriceStepsList> GetList(QueryOperations queryOperations, int tenant)
+        public List<PriceStepList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<PriceSteps> iQueryable = (from a in context.PricesSteps
+            IQueryable<PriceStep> iQueryable = (from a in context.PriceSteps
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -41,20 +41,20 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<PriceSteps>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<PriceStep>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<PriceStepsList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<PriceStepList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<PriceStepsList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<PriceStepList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(PriceStepsList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> PriceStepsObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("PriceSteps",tenant).ToList();
+                PropertyInfo propInfo = typeof(PriceStepList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> PriceStepObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("PriceStep",tenant).ToList();
 
-                ObjectField objectField = (from a in PriceStepsObjectFields
+                ObjectField objectField = (from a in PriceStepObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -62,7 +62,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<PriceStepsList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<PriceStepList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -71,36 +71,36 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<PriceStepsList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<PriceStepList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<PriceStepsList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<PriceStepList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<PriceStepsList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<PriceStepList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<PriceStepsList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<PriceStepList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<PriceStepsList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<PriceStepList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<PriceStepsList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<PriceStepList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -126,21 +126,21 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
     
         }
 
-         public List<PriceStepsList> GetList(int tenant)
+         public List<PriceStepList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public PriceStepsList GetSingle(string id)
+        public PriceStepList GetSingle(string id)
         {
-            IQueryable<PriceSteps> PriceStepsQuery = (from a in context.PricesSteps
+            IQueryable<PriceStep> PriceStepQuery = (from a in context.PriceSteps
                                                        where a.Id == id
                                                        select a);
 
              
-            IQueryable<PriceStepsList> PriceStepsListQuery = GetIqueryableList( PriceStepsQuery);
-            PriceStepsList PriceStepsList = PriceStepsListQuery.FirstOrDefault();
-            return PriceStepsList;
+            IQueryable<PriceStepList> PriceStepListQuery = GetIqueryableList( PriceStepQuery);
+            PriceStepList PriceStepList = PriceStepListQuery.FirstOrDefault();
+            return PriceStepList;
            
         }
 
@@ -149,7 +149,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<PriceSteps> iQueryable = (from a in context.PricesSteps 
+            IQueryable<PriceStep> iQueryable = (from a in context.PriceSteps 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -160,11 +160,11 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<PriceSteps>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<PriceStep>(nonListQueryOperation, iQueryable);
 
-            IQueryable<PriceStepsList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<PriceStepList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<PriceStepsList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<PriceStepList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

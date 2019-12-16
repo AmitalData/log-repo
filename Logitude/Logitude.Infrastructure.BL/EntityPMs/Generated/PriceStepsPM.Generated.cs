@@ -16,7 +16,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 {
    [CustomValidation(typeof(InfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class PriceStepsPM : EntityPM
+   public partial class PriceStepPM : EntityPM
    {
    	  private string id ;
 	  

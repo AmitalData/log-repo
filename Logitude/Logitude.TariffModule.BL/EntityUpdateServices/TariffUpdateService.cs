@@ -46,12 +46,12 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     {
                         if(entityPM.TypeCode== "AFC")
                         {
-                            PriceSteps iPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.AirDefaultStepsId select d).FirstOrDefault();
+                            PriceStep iPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.AirDefaultStepsId select d).FirstOrDefault();
                             entityPM.PriceSteps = iPriceSteps!= null? iPriceSteps.Steps: null;
                         }
                         else if(entityPM.TypeCode == "OLC")
                         {
-                            PriceSteps iPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.LCLDefaultStepsId select d).FirstOrDefault();
+                            PriceStep iPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.LCLDefaultStepsId select d).FirstOrDefault();
                             entityPM.PriceSteps = iPriceSteps != null ? iPriceSteps.Steps : null;
                         }
                     }
