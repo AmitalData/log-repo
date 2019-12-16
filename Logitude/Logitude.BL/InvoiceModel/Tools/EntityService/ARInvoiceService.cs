@@ -2255,7 +2255,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
-                        if (IsFullAccountingActivated(entityPM.Tenant))
+                        if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId=="CS")
                         {
                             CreateInterestTransactionLine(null, record);
                         }
@@ -2848,7 +2848,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLineRepository.SubmitChanges();
             }
-            if (IsFullAccountingActivated(entityPM.Tenant))
+            if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS")
             {
                 CreateInterestTransactionLine(item, null);
             }

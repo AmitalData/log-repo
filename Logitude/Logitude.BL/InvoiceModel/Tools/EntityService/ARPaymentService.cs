@@ -2026,7 +2026,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 paymentPM.PaymentInvoices.Add(payInvPM);
-                if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+                if (tenantPOCO != null && tenantPOCO.AccountingActivated && paymentPM.BillToPartnerTypeId=="CS")
                 {
                     CreateInterestTransactionLine(payInvPM);
                 }
