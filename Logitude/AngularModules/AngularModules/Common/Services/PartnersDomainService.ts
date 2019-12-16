@@ -1605,13 +1605,13 @@ export class PartnersDomainService {
         });
     }   
 
-    GetCustomerCreditLimitActualAmount(myCustomerId: string) {
+    GetCustomerCreditLimitActualAmount(myCustomerId: string, invoiceId: string = null) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var myapiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
-        var url = myapiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId;
+        var url = myapiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId + "&invoiceId=" + invoiceId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {

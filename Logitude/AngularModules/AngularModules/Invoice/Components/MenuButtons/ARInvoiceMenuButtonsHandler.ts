@@ -589,36 +589,36 @@ export class ARInvoiceMenuButtonsHandler {
                     this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
-                    myService.GetCustomerCreditLimitActualAmount(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) => {
+                    myService.GetCustomerCreditLimitActualAmount(this.EntityPM.BillToId, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
 
                         this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             helper.Run(myResponse.Result);
-                        }
 
-                        if (helper.IsValid) {
-                            this.ApplyApproveClicked();
-                        }
+                            if (helper.IsValid) {
+                                this.ApplyApproveClicked();
+                            }
 
-                        else {
+                            else {
 
-                            var logWindow = new LogitudeWindow();
-                            logWindow.Width = 450;
-                            logWindow.Height = 200;
-                            logWindow.Title = TextCodeTranslator.Translate("ARInvoice.S.CreditLimit");
-                            logWindow.WindowArgs = { Errors: helper.Errors, Warnings: helper.Warnings, IsBlockingShipment: helper.IsBlockingShipment, ShipmentId: this.EntityPM.MainEntityId };
-                            logWindow.WindowClosed.subscribe(s => {
-                                if (s) {
-                                    this.ApplyApproveClicked();
-                                }
+                                var logWindow = new LogitudeWindow();
+                                logWindow.Width = 450;
+                                logWindow.Height = 200;
+                                logWindow.Title = TextCodeTranslator.Translate("ARInvoice.S.CreditLimit");
+                                logWindow.WindowArgs = { Errors: helper.Errors, Warnings: helper.Warnings, IsBlockingShipment: helper.IsBlockingShipment, ShipmentId: this.EntityPM.MainEntityId };
+                                logWindow.WindowClosed.subscribe(s => {
+                                    if (s) {
+                                        this.ApplyApproveClicked();
+                                    }
 
-                                else {
-                                    this.StopFlags();
-                                }
-                            });
+                                    else {
+                                        this.StopFlags();
+                                    }
+                                });
 
-                            logWindow.Show('./Invoice/Components/NewEntity/CreditLimitPopupComponent');
+                                logWindow.Show('./Invoice/Components/NewEntity/CreditLimitPopupComponent');
+                            }
                         }
                     });
                 }

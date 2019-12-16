@@ -563,7 +563,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCustomerCreditLimitActualAmount(string myCustomerId)
+        public HttpResponseMessage GetCustomerCreditLimitActualAmount(string myCustomerId, string invoiceId)
         {
             try
             {
@@ -573,9 +573,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
+                invoiceId = CheckNullValue(invoiceId);
+
                 ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
 
-                double? myResult = entityQuery.GetCustomerCreditLimitActualAmount(myCustomerId, tenant);
+                double? myResult = entityQuery.GetCustomerCreditLimitActualAmount(myCustomerId, tenant, invoiceId);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
