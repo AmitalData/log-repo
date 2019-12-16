@@ -1686,7 +1686,6 @@
     <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.Designer.cs">
       <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs" />
     <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.Designer.cs">
       <DependentUpon>201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs</DependentUpon>
@@ -1702,6 +1701,10 @@
     <Compile Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs" />
     <Compile Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.Designer.cs">
       <DependentUpon>201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs" />
+    <Compile Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.Designer.cs">
+      <DependentUpon>201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2918,6 +2921,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.resx">
       <DependentUpon>201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.resx">
+      <DependentUpon>201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -227,6 +227,7 @@
     <Content Include="2019.R5\12 - 2019\Day 08 [Abed] FillFromToTypeFieldOnWarehouseEntry.sql" />
     <Content Include="2019.R5\12 - 2019\Day 05 [Samar] updated dependency for Master agent field.sql" />
     <Content Include="2019.R5\12 - 2019\Day 15 [Samar] drop customer competitor from query columns.sql" />
+    <Content Include="2019.R5\12 - 2019\Day 15 [Samar] Fill First Approval Date backward.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
@@ -239,6 +240,7 @@
     <Content Include="2018.R2\06 - 2018\Day 25 [Samar] Add new event type set as potential.sql" />
     <Content Include="DataViews And Procedures\DataViews\MessagingStockDataView.sql" />
     <Content Include="DataViews And Procedures\Scripts Needs Inputs\UpdateTenantDayLightStartandEndDates.sql" />
+    <Content Include="DataViews And Procedures\Stored Procedures\ComputeShipmentFirstApprovalDate.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateAllTenantsCustomersActualData.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateConstituentShipment.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateCustomerActualData.sql" />
