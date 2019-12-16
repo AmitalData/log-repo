@@ -1,0 +1,102 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+  
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- Name -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:230px;">
+                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Steps'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="width:1px; text-align:left;">
+                                    {{PriceStepsText}}
+                                </td>
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+                                <td style="text-align:left;">
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceSteps(period)"></IconButton>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr *ngIf="!isNewEntity" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="this" (ValueChanged)="InactiveChecked($event)"></LogCheckBox>
+
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr *ngIf="isNewEntity" style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

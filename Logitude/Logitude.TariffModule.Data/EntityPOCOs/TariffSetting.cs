@@ -27,6 +27,10 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("DefaultWarningPercentage")]
 	    public double? DefaultWarningPercentage { get; set; }
+        [Column("AirDefaultStepsId")]
+	    public string AirDefaultStepsId { get; set; }
+        [Column("LCLDefaultStepsId")]
+	    public string LCLDefaultStepsId { get; set; }
     }
 }
 	 

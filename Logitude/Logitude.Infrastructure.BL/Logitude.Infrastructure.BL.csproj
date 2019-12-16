@@ -83,11 +83,13 @@
     <Compile Include="EntityDataMappings\Generated\BusinessRoleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FeatureToggleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LBPTeamMemberDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PriceStepsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedLogisticsSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TeamDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TeamMemberBusinessRoleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ToggleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\LBPTeamMemberDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PriceStepsDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedLogisticsSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\TeamDataMapping.cs" />
     <Compile Include="EntityDataMappings\TeamMemberBusinessRoleDataMapping.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="EntityPMs\Generated\BusinessRolePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FeatureTogglePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LBPTeamMemberPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PriceStepsPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SharedLogisticsSettingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TeamMemberBusinessRolePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TeamPM.Generated.cs" />
@@ -117,6 +120,7 @@
     <Compile Include="EntityQueryServices\Generated\BusinessRoleQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FeatureToggleQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LBPTeamMemberQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PriceStepsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SharedLogisticsSettingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TeamMemberBusinessRoleQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TeamQueryService.Generated.cs" />
@@ -138,11 +142,13 @@
     <Compile Include="EntityUpdateServices\Generated\BusinessRoleUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FeatureToggleUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LBPTeamMemberUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PriceStepsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedLogisticsSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TeamMemberBusinessRoleUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TeamUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ToggleUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LBPTeamMemberUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\PriceStepsUpdateClass.cs" />
     <Compile Include="EntityUpdateServices\TeamMemberBusinessRoleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TeamUpdateService.cs" />
     <Compile Include="ExtendedServices\BatchTaskExecutionsService.cs" />
