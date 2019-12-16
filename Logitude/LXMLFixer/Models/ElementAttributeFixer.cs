@@ -17,6 +17,7 @@ namespace LXMLFixer.Models
         public string ElementName { get; set; }
         public string AttributeName { get; set; }
         public string AttributeValue { get; set; }
+        public string OldAttributeValue { get; set; }
         public LXMLAttributeFilter AttributeFilter { get; set; }
     }
 

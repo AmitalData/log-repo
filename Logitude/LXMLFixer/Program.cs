@@ -14,15 +14,19 @@ namespace Logitude.LXMLFixer
             LXMLFilesFixer fixer = new LXMLFilesFixer();
 
             Console.WriteLine("Do You Want To Extract LXML Files Mistakes? y/n");
-            string result = Console.ReadLine();
-            if(result.ToLower() == "y")
+
+            bool extractMistakes = Console.ReadLine().ToLower() == "y";
+
+            if (extractMistakes)
             {
                 fixer.ExtractLXMLFilesMistakes();
             }
 
             Console.WriteLine("Do You Want To Fix LXML Files Mistakes? y/n");
-            string result2 = Console.ReadLine();
-            if (result2.ToLower() == "y")
+            
+            bool fixMistakes = Console.ReadLine().ToLower() == "y";
+
+            if (fixMistakes)
             {
                 fixer.FixLXMLFilesMistakes();
             }

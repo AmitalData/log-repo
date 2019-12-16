@@ -15,9 +15,6 @@ namespace Logitude.LXMLFixer.Models
         public string Name { get; set; }
 
         [XmlAttribute()]
-        public string ShortName { get; set; }
-
-        [XmlAttribute()]
         public string Type { get; set; }
 
         [XmlAttribute()]

@@ -15,6 +15,7 @@ namespace Logitude.LXMLFixer.Models
 
         private string LXMLMistakesData = "";
         private string DXMLFilesThatNotFound = "";
+        private string LXMLFixedMistakesData = "";
 
         public void ExtractLXMLFilesMistakes()
         {
@@ -144,137 +145,306 @@ namespace Logitude.LXMLFixer.Models
                     TableDefinition lxmlTableDefinition = GetTableDefinitionForLXMLFile(lxmlFile);
                     TableDefinition dxmlTableDefinition = GetTableDefinitionForDXMLFile(entityName);
 
-                    LXMLFileFixer lxmlFileFixer = new LXMLFileFixer();
                     List<LXMLAttribute> attributes = new List<LXMLAttribute>();
 
                     if (dxmlTableDefinition != null && lxmlTableDefinition != null)
                     {
                         if (dxmlTableDefinition.Name != lxmlTableDefinition.Name)
                         {
-                            //LXMLAttribute attribute = new LXMLAttribute
-                            //{
-                            //    ElementName = "entity",
-                            //    AttributeName = "DBTableName",
-                            //    AttributeValue = GetStringValue(dxmlTableDefinition.Schema.ToLower() == "customs" ? "Customs." + dxmlTableDefinition.Name : dxmlTableDefinition.Name),
-                            //    AttributeFilter = null
-                            //};
+                            LXMLAttribute attribute = new LXMLAttribute
+                            {
+                                ElementName = "entity",
+                                AttributeName = "DBTableName",
+                                AttributeValue = GetStringValue(dxmlTableDefinition.Schema.ToLower() == "customs" ? "Customs." + dxmlTableDefinition.Name : dxmlTableDefinition.Name),
+                                OldAttributeValue = lxmlTableDefinition.Name,
+                                AttributeFilter = null
+                            };
 
-                            //attributes.Add(attribute);
+                            attributes.Add(attribute);
+                        }
+
+                        if(dxmlTableDefinition.DBType != lxmlTableDefinition.DBType)
+                        {
+                            LXMLAttribute attribute = new LXMLAttribute
+                            {
+                                ElementName = "entity",
+                                AttributeName = "DxmlDatabaseTypeCode",
+                                AttributeValue = dxmlTableDefinition.DBType,
+                                OldAttributeValue = lxmlTableDefinition.DBType,
+                                AttributeFilter = null
+                            };
+
+                            attributes.Add(attribute);
+                        }
+
+                        if (dxmlTableDefinition.Schema != lxmlTableDefinition.Schema)
+                        {
+                            LXMLAttribute attribute = new LXMLAttribute
+                            {
+                                ElementName = "entity",
+                                AttributeName = "DxmlDatabaseSchemaCode",
+                                AttributeValue = dxmlTableDefinition.Schema,
+                                OldAttributeValue = lxmlTableDefinition.Schema,
+                                AttributeFilter = null
+                            };
+
+                            attributes.Add(attribute);
                         }
 
                         foreach (var dxmlColumn in dxmlTableDefinition.Columns)
                         {
                             ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name == dxmlColumn.Name).FirstOrDefault();
 
-                            if (dxmlColumn.Type != lxmlColumn.Type)
+                            if (lxmlColumn == null)
                             {
-                                //LXMLAttribute attribute = new LXMLAttribute
-                                //{
-                                //    ElementName = "field",
-                                //    AttributeName = "FieldsDataType",
-                                //    AttributeValue = GetStringValue(""),
-                                //    AttributeFilter = new LXMLAttributeFilter
-                                //    {
-                                //        Name = "FieldName",
-                                //        Value = GetStringValue(dxmlColumn.Name)
-                                //    }
-                                //};
 
-                                //attributes.Add(attribute);
                             }
-
-                            if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Precision != lxmlColumn.Precision)
+                            else
                             {
-                                LXMLAttribute attribute = new LXMLAttribute
+                                if (dxmlColumn.Type != lxmlColumn.Type)
                                 {
-                                    ElementName = "field",
-                                    AttributeName = "NumberOfDigits",
-                                    AttributeValue = dxmlColumn.Precision.ToString(),
-                                    AttributeFilter = new LXMLAttributeFilter
-                                    {
-                                        Name = "FieldName",
-                                        Value = GetStringValue(dxmlColumn.Name)
-                                    }
-                                };
+                                    //LXMLAttribute attribute = new LXMLAttribute
+                                    //{
+                                    //    ElementName = "field",
+                                    //    AttributeName = "FieldsDataType",
+                                    //    AttributeValue = GetStringValue(""),
+                                    //    OldAttributeValue = "",
+                                    //    AttributeFilter = new LXMLAttributeFilter
+                                    //    {
+                                    //        Name = "FieldName",
+                                    //        Value = GetStringValue(dxmlColumn.Name)
+                                    //    }
+                                    //};
 
-                                attributes.Add(attribute);
-                            }
+                                    //attributes.Add(attribute);
+                                }
 
-                            if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Scale != lxmlColumn.Scale)
-                            {
-                                LXMLAttribute attribute = new LXMLAttribute
-                                {
-                                    ElementName = "field",
-                                    AttributeName = "DigitsAfterPoint",
-                                    AttributeValue = dxmlColumn.Scale.ToString(),
-                                    AttributeFilter = new LXMLAttributeFilter
-                                    {
-                                        Name = "FieldName",
-                                        Value = GetStringValue(dxmlColumn.Name)
-                                    }
-                                };
-
-                                attributes.Add(attribute);
-                            }
-
-                            if (dxmlColumn.Size != lxmlColumn.Size)
-                            {
-                                if(dxmlColumn.Size == -1 || lxmlColumn.Size == -1)
+                                if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Precision != lxmlColumn.Precision)
                                 {
                                     LXMLAttribute attribute = new LXMLAttribute
                                     {
                                         ElementName = "field",
-                                        AttributeName = "IsMaxLength",
-                                        AttributeValue = dxmlColumn.Size == -1 ? "true" : "false",
+                                        AttributeName = "NumberOfDigits",
+                                        AttributeValue = dxmlColumn.Precision.ToString(),
+                                        OldAttributeValue = lxmlColumn.Precision.ToString(),
                                         AttributeFilter = new LXMLAttributeFilter
                                         {
                                             Name = "FieldName",
-                                            Value = GetStringValue(dxmlColumn.Name)
+                                            Value = GetStringValue(lxmlColumn.Name)
                                         }
                                     };
 
                                     attributes.Add(attribute);
                                 }
-                                else
+
+                                if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Scale != lxmlColumn.Scale)
                                 {
                                     LXMLAttribute attribute = new LXMLAttribute
                                     {
                                         ElementName = "field",
-                                        AttributeName = "MaxLength",
-                                        AttributeValue = dxmlColumn.Size.ToString(),
+                                        AttributeName = "DigitsAfterPoint",
+                                        AttributeValue = dxmlColumn.Scale.ToString(),
+                                        OldAttributeValue = lxmlColumn.Scale.ToString(),
                                         AttributeFilter = new LXMLAttributeFilter
                                         {
                                             Name = "FieldName",
-                                            Value = GetStringValue(dxmlColumn.Name)
+                                            Value = GetStringValue(lxmlColumn.Name)
                                         }
                                     };
 
                                     attributes.Add(attribute);
                                 }
-                            }
 
-                            if (dxmlColumn.Constraints.PrimaryKey != lxmlColumn.Constraints.PrimaryKey)
-                            {
-                                LXMLAttribute attribute = new LXMLAttribute
+                                if (dxmlColumn.Size != lxmlColumn.Size)
                                 {
-                                    ElementName = "field",
-                                    AttributeName = "IsPrimaryKey",
-                                    AttributeValue = dxmlColumn.Constraints.PrimaryKey ? "true" : "false",
-                                    AttributeFilter = new LXMLAttributeFilter
+                                    if (dxmlColumn.Size == -1 || lxmlColumn.Size == -1)
                                     {
-                                        Name = "FieldName",
-                                        Value = GetStringValue(dxmlColumn.Name)
+                                        LXMLAttribute attribute = new LXMLAttribute
+                                        {
+                                            ElementName = "field",
+                                            AttributeName = "IsMaxLength",
+                                            AttributeValue = dxmlColumn.Size == -1 ? "true" : "false",
+                                            OldAttributeValue = lxmlColumn.Size == -1 ? "true" : "false",
+                                            AttributeFilter = new LXMLAttributeFilter
+                                            {
+                                                Name = "FieldName",
+                                                Value = GetStringValue(lxmlColumn.Name)
+                                            }
+                                        };
+
+                                        attributes.Add(attribute);
                                     }
-                                };
+                                    else
+                                    {
+                                        LXMLAttribute attribute = new LXMLAttribute
+                                        {
+                                            ElementName = "field",
+                                            AttributeName = "MaxLength",
+                                            AttributeValue = dxmlColumn.Size.ToString(),
+                                            OldAttributeValue = lxmlColumn.Size.ToString(),
+                                            AttributeFilter = new LXMLAttributeFilter
+                                            {
+                                                Name = "FieldName",
+                                                Value = GetStringValue(lxmlColumn.Name)
+                                            }
+                                        };
 
-                                attributes.Add(attribute);
-                            }
+                                        attributes.Add(attribute);
+                                    }
+                                }
 
-                            if (dxmlColumn.Constraints.Nullable != lxmlColumn.Constraints.Nullable)
-                            {
+                                if (dxmlColumn.Constraints.PrimaryKey != lxmlColumn.Constraints.PrimaryKey)
+                                {
+                                    LXMLAttribute attribute = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "IsPrimaryKey",
+                                        AttributeValue = dxmlColumn.Constraints.PrimaryKey ? "true" : "false",
+                                        OldAttributeValue = lxmlColumn.Constraints.PrimaryKey ? "true" : "false",
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(lxmlColumn.Name)
+                                        }
+                                    };
 
+                                    attributes.Add(attribute);
+                                }
+
+                                if (dxmlColumn.Constraints.Nullable != lxmlColumn.Constraints.Nullable)
+                                {
+                                    if (dxmlColumn.Constraints.Nullable)
+                                    {
+                                        if (lxmlColumn.Constraints.PrimaryKey)
+                                        {
+                                            LXMLAttribute attribute = new LXMLAttribute
+                                            {
+                                                ElementName = "field",
+                                                AttributeName = "IsPrimaryKey",
+                                                AttributeValue = "false",
+                                                OldAttributeValue = "true",
+                                                AttributeFilter = new LXMLAttributeFilter
+                                                {
+                                                    Name = "FieldName",
+                                                    Value = GetStringValue(lxmlColumn.Name)
+                                                }
+                                            };
+
+                                            attributes.Add(attribute);
+                                        }
+                                        else if (new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(lxmlColumn.Type))
+                                        {
+                                            LXMLAttribute attribute = new LXMLAttribute
+                                            {
+                                                ElementName = "field",
+                                                AttributeName = "IsRequired",
+                                                AttributeValue = "false",
+                                                OldAttributeValue = "true",
+                                                AttributeFilter = new LXMLAttributeFilter
+                                                {
+                                                    Name = "FieldName",
+                                                    Value = GetStringValue(lxmlColumn.Name)
+                                                }
+                                            };
+
+                                            attributes.Add(attribute);
+
+                                            LXMLAttribute attribute2 = new LXMLAttribute
+                                            {
+                                                ElementName = "field",
+                                                AttributeName = "IsNullable",
+                                                AttributeValue = "true",
+                                                OldAttributeValue = "false",
+                                                AttributeFilter = new LXMLAttributeFilter
+                                                {
+                                                    Name = "FieldName",
+                                                    Value = GetStringValue(lxmlColumn.Name)
+                                                }
+                                            };
+
+                                            attributes.Add(attribute2);
+                                        }
+                                        else
+                                        {
+                                            LXMLAttribute attribute = new LXMLAttribute
+                                            {
+                                                ElementName = "field",
+                                                AttributeName = "IsRequired",
+                                                AttributeValue = "false",
+                                                OldAttributeValue = "true",
+                                                AttributeFilter = new LXMLAttributeFilter
+                                                {
+                                                    Name = "FieldName",
+                                                    Value = GetStringValue(lxmlColumn.Name)
+                                                }
+                                            };
+
+                                            attributes.Add(attribute);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(lxmlColumn.Type))
+                                        {
+                                            LXMLAttribute attribute = new LXMLAttribute
+                                            {
+                                                ElementName = "field",
+                                                AttributeName = "IsRequired",
+                                                AttributeValue = "true",
+                                                OldAttributeValue = "false",
+                                                AttributeFilter = new LXMLAttributeFilter
+                                                {
+                                                    Name = "FieldName",
+                                                    Value = GetStringValue(lxmlColumn.Name)
+                                                }
+                                            };
+
+                                            attributes.Add(attribute);
+
+                                            LXMLAttribute attribute2 = new LXMLAttribute
+                                            {
+                                                ElementName = "field",
+                                                AttributeName = "IsNullable",
+                                                AttributeValue = "false",
+                                                OldAttributeValue = "true",
+                                                AttributeFilter = new LXMLAttributeFilter
+                                                {
+                                                    Name = "FieldName",
+                                                    Value = GetStringValue(lxmlColumn.Name)
+                                                }
+                                            };
+
+                                            attributes.Add(attribute2);
+                                        }
+                                        else
+                                        {
+                                            LXMLAttribute attribute = new LXMLAttribute
+                                            {
+                                                ElementName = "field",
+                                                AttributeName = "IsRequired",
+                                                AttributeValue = "true",
+                                                OldAttributeValue = "false",
+                                                AttributeFilter = new LXMLAttributeFilter
+                                                {
+                                                    Name = "FieldName",
+                                                    Value = GetStringValue(lxmlColumn.Name)
+                                                }
+                                            };
+
+                                            attributes.Add(attribute);
+                                        }
+                                    }
+                                }
                             }
                         }
+
+                        LXMLFileFixer lxmlFileFixer = new LXMLFileFixer
+                        {
+                            FilePath = lxmlFile,
+                            Attributes = attributes
+                        };
+
+                        FixLXMLFile(lxmlFileFixer);
                     }
                     else
                     {
@@ -283,7 +453,6 @@ namespace Logitude.LXMLFixer.Models
                             Console.BackgroundColor = ConsoleColor.Red;
                             Console.WriteLine("Cannot Get DXML Table Definition For " + entityName + " Entity");
                             Console.ResetColor();
-                            DXMLFilesThatNotFound += entityName + ".dxml" + "\n";
                         }
                         if (lxmlTableDefinition == null)
                         {
@@ -292,8 +461,9 @@ namespace Logitude.LXMLFixer.Models
                             Console.ResetColor();
                         }
                     }
-
                 }
+
+                ExportFixedMistakesData();
             }
             else
             {
@@ -319,12 +489,23 @@ namespace Logitude.LXMLFixer.Models
             Console.WriteLine("DXML Files That Not Found Extracted To /Reports/DXMLFilesThatNotFound.csv\n");
         }
 
+        private void ExportFixedMistakesData()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string csvFilePath = Path.Combine(projectDirectory, @"Reports\LXMLFilesFixedMistakes.csv");
+            File.WriteAllText(csvFilePath, LXMLFixedMistakesData);
+            Console.WriteLine("\nFixed LXML Files Mistakes Extracted To /Reports/LXMLFilesFixedMistakes.csv\n");
+        }
+
         private string[] GetLXMLFiles()
         {
             try
             {
                 string LXMLFilesPath = Path.Combine(LXMLFilesRoot);
                 string[] LXMLFiles = Directory.GetFiles(LXMLFilesPath, "*.lxml", SearchOption.AllDirectories);
+
+                LXMLFiles = LXMLFiles.Where(x => !x.ToLower().Contains("logitude.customs.metadata")).ToArray();
+
                 if (LXMLFiles.Length > 0)
                 {
                     return LXMLFiles;
@@ -406,10 +587,14 @@ namespace Logitude.LXMLFixer.Models
                 }
 
                 string dbTableName = xmlDocument.Root.Attribute("DBTableName") == null ? null : xmlDocument.Root.Attribute("DBTableName").Value.Split('"')[1].Split('"')[0];
+                string dbType = xmlDocument.Root.Attribute("DxmlDatabaseTypeCode") == null ? null : xmlDocument.Root.Attribute("DxmlDatabaseTypeCode").Value;
+                string dbSchema = xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode") == null ? null : xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode").Value;
 
                 TableDefinition lxmlTableDefinition = new TableDefinition
                 {
                     Name = dbTableName.Contains("Customs.") ? dbTableName.Split('.')[1] : dbTableName,
+                    Schema = dbSchema,
+                    DBType = dbType,
                     Columns = columnDefinitions
                 };
 
@@ -455,6 +640,9 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
+        
+        
+
         private bool GetNullableForConstraintsDefinition(bool isRequired, bool isNullable, bool isPrimaryKey, string columnDefinitionDataType)
         {
             if (isPrimaryKey)
@@ -475,26 +663,43 @@ namespace Logitude.LXMLFixer.Models
             return !isRequired;
         }
 
-        private void FixLXMLElementAttribute(LXMLFileFixer lxmlFileFixer)
+        private void FixLXMLFile(LXMLFileFixer lxmlFileFixer)
         {
-            XDocument doc = XDocument.Load(lxmlFileFixer.FilePath);
-
-            foreach(var attr in lxmlFileFixer.Attributes)
+            if(lxmlFileFixer.Attributes.Count() > 0)
             {
-                XElement element;
-                if (attr.AttributeFilter == null)
-                {
-                    element = doc.Descendants(attr.ElementName).Single();
-                }
-                else
-                {
-                    element = doc.Descendants(attr.ElementName)
-                              .Where(x => x.Attribute(attr.AttributeFilter.Name).Value == attr.AttributeFilter.Value).Single();
-                }
-                element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
-            }
+                XDocument doc = XDocument.Load(lxmlFileFixer.FilePath);
 
-            doc.Save(lxmlFileFixer.FilePath);
+                string fixedMistakesData = "LXML File: " + Path.GetFileName(lxmlFileFixer.FilePath) + "\n";
+                fixedMistakesData += "Element,Attribute,Old Value,New Value\n";
+
+                foreach (var attr in lxmlFileFixer.Attributes)
+                {
+                    XElement element;
+
+                    if (attr.AttributeFilter == null)
+                    {
+                        element = doc.Descendants(attr.ElementName).Single();
+                    }
+                    else
+                    {
+                        element = doc.Descendants(attr.ElementName).Where(x => x.Attribute(attr.AttributeFilter.Name).Value == attr.AttributeFilter.Value).Single();
+                    }
+
+                    element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
+
+                    string elementText = attr.ElementName;
+                    if(attr.AttributeFilter != null)
+                    {
+                        elementText += "[" + attr.AttributeFilter.Name + "='" + attr.AttributeFilter.Value + "']";
+                    }
+
+                    fixedMistakesData += elementText + "," + attr.AttributeName + "," + attr.OldAttributeValue + "," + attr.AttributeValue + "\n";
+                }
+
+                LXMLFixedMistakesData += fixedMistakesData;
+
+                doc.Save(lxmlFileFixer.FilePath);
+            }
         }
 
         private string GetStringValue(object value)
