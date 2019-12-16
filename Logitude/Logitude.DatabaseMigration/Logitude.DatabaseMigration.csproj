@@ -1710,7 +1710,6 @@
     <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.Designer.cs">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </Compile>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
 
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.cs" />
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.Designer.cs">
@@ -1773,10 +1772,7 @@
     <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.Designer.cs">
       <DependentUpon>201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs" />
-    <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.Designer.cs">
-      <DependentUpon>201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs</DependentUpon>
-    </Compile>
+   
     <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.cs" />
     <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
@@ -1805,22 +1801,9 @@
     <Compile Include="Migrations\201912161138328_FixPricesStepsObjectTableName_Maheera.Designer.cs">
       <DependentUpon>201912161138328_FixPricesStepsObjectTableName_Maheera.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs" />
-    <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.Designer.cs">
-      <DependentUpon>201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911280911184_Journals_IsLedgerCreated.cs" />
-    <Compile Include="Migrations\201911280911184_Journals_IsLedgerCreated.Designer.cs">
-      <DependentUpon>201911280911184_Journals_IsLedgerCreated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912051433469_AddPricesStepsTableMigration.cs" />
-    <Compile Include="Migrations\201912051433469_AddPricesStepsTableMigration.Designer.cs">
-      <DependentUpon>201912051433469_AddPricesStepsTableMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs" />
-    <Compile Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.Designer.cs">
-      <DependentUpon>201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs</DependentUpon>
-    </Compile>
+
+
+
     <Compile Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs" />
     <Compile Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.Designer.cs">
       <DependentUpon>201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs</DependentUpon>
@@ -3111,22 +3094,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912161138328_FixPricesStepsObjectTableName_Maheera.resx">
       <DependentUpon>201912161138328_FixPricesStepsObjectTableName_Maheera.cs</DependentUpon>
-    </EmbeddedResource>
-
-    <EmbeddedResource Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.resx">
-      <DependentUpon>201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911280911184_Journals_IsLedgerCreated.resx">
-      <DependentUpon>201911280911184_Journals_IsLedgerCreated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.resx">
-      <DependentUpon>201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912051433469_AddPricesStepsTableMigration.resx">
-      <DependentUpon>201912051433469_AddPricesStepsTableMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.resx">
-      <DependentUpon>201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.resx">
       <DependentUpon>201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs</DependentUpon>
