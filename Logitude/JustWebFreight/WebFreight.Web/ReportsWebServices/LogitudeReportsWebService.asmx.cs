@@ -1080,6 +1080,8 @@ namespace WebFreight.Web.ReportsWebServices
                      InvoiceStatus = d.Status == null ? null : d.Status.Name,
                      InvoiceAmount = d.AmountInLocalCurrency,
                      AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
+                     InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
+                     AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue,
                      BranchId = d.BranchId,
                  }).ToList();
 
