@@ -12,13 +12,13 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Infrastructure.Data.Repsitories
 {
-   public partial class BIReportsExecutionLogRepository:IRepository<BIReportsExecutionLog>
-   {
-        
-		public List<BIReportsExecutionLog> GetMulti(EntityKeyFields entityKeys)
+    public partial class BIReportsExecutionLogRepository : IRepository<BIReportsExecutionLog>
+    {
+
+        public List<BIReportsExecutionLog> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
         public BIReportsExecutionLog GetSingleBIReportExecutionLog(string id, int tenant)
@@ -28,10 +28,9 @@ namespace Logitude.Infrastructure.Data.Repsitories
 
         public BIReportsExecutionLog GetSingleByBIReportId(string id, int tenant)
         {
-            return (from record in context.BIReportsExecutionLogs where record.BIReportId == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.BIReportsExecutionLogs where record.BIReportId == id && record.Tenant == tenant orderby record.CreateDate descending select record).FirstOrDefault();
         }
 
     }
 
 }
-   
