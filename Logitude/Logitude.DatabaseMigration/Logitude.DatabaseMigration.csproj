@@ -1763,6 +1763,7 @@
     <Compile Include="Migrations\201912151246571_TablesGlAccountInterest.Designer.cs">
       <DependentUpon>201912151246571_TablesGlAccountInterest.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201912151336564_DeleteTaxReportHeaderScreensMigration.cs" />
     <Compile Include="Migrations\201912151336564_DeleteTaxReportHeaderScreensMigration.Designer.cs">
       <DependentUpon>201912151336564_DeleteTaxReportHeaderScreensMigration.cs</DependentUpon>
@@ -1808,6 +1809,12 @@
     <Compile Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.Designer.cs">
       <DependentUpon>201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\201912151615218_Edit_Fields_In_GLAccount.cs" />
+    <Compile Include="Migrations\201912151615218_Edit_Fields_In_GLAccount.Designer.cs">
+      <DependentUpon>201912151615218_Edit_Fields_In_GLAccount.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -3097,6 +3104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.resx">
       <DependentUpon>201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912151615218_Edit_Fields_In_GLAccount.resx">
+      <DependentUpon>201912151615218_Edit_Fields_In_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
