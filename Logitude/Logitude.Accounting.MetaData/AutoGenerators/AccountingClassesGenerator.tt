@@ -73,6 +73,3 @@ GenerateAllServices("../EntityFiles","../../AngularModules/AngularModules/Accoun
 GenerateAllListServices("../EntityFiles","../../AngularModules/AngularModules/Accounting/Services/StandardLists","Accounting");
 	 
  #>
-
-
-

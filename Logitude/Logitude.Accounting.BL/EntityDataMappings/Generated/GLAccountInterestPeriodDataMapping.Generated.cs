@@ -55,7 +55,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedByUserId, 
 	         UpdateDateTime, 
 	         CreatedByUserId, 
-	         CreateDateTime,
+	         CreateDateTime, 
+	         UpdatedByUserName, 
+	         CreatedByUserName, 
+	         ExceptionalInterestRateName, 
+	         CreditInterestRateBaseName, 
+	         StandardInterestRateBaseName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

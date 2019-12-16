@@ -44,6 +44,16 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CreatedByUserId  { get; set; }
        [DataMember]
        public DateTime CreateDateTime  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string ExceptionalInterestRateName  { get; set; }
+       [DataMember]
+       public string CreditInterestRateBaseName  { get; set; }
+       [DataMember]
+       public string StandardInterestRateBaseName  { get; set; }
    }
 
 }

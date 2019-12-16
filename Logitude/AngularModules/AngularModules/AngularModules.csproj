@@ -434,6 +434,8 @@
     <TypeScriptCompile Include="Accounting\EntityLists\OpenFormatReportList.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMCustomCode\OpenFormatReportPMCustomCode.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\AccountingIntegrityCheckPM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\GLAccountIinterestPeriodPM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\GLAccountInterestPeriodPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\IntegrityCheckStatusPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestBasesPeriodPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestBasesTypePM.ts" />

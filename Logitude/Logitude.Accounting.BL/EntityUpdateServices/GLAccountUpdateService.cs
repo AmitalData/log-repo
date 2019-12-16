@@ -396,6 +396,59 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
+       
+
+            ContactPM contact = GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !contact.DontShowLocal;
+            if (entityPM.GLAccountInterestPeriods.GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.LineDateExist", entityPM.Tenant, showLocals));
+
+            }
+            if (entityPM.ActiveForInterest == true )
+            {
+                 if(entityPM.InterestCalculationStartDate == null)
+                {
+                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.FieldInterestCalculationStartDateismandatory", entityPM.Tenant, showLocals));
+                }
+                else
+                {
+                    GLAccountInterestPeriodRepository PeriodRepository = new GLAccountInterestPeriodRepository(entityPM.Tenant);
+                    GLAccountInterestPeriod Period = PeriodRepository.GetSingleByGLAccountIdAndTenant(entityPM.Id, entityPM.Tenant);
+                    if (Period == null  && entityPM.GLAccountInterestPeriods.Count == 0)
+                    {
+                        throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
+                    }
+                }
+            }
+            entityPM.ActiveForInterest = false ;
+
+            for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+            {
+                if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                {
+                    entityPM.ActiveForInterest = true;
+                }
+                
+            }
+            if (entityPM.ActiveForInterest == false)
+            {
+                for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+                {
+                    if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                    {
+                        throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.DeleteExistInterestperiods", entityPM.Tenant, showLocals));
+                    }
+
+                }
+            }
+
+
+            if (Math.Floor(Math.Log10((double)entityPM.MinimumInterestInvoiceBilling) + 1) > 2)
+            {
+                throw new Exception("Number Of Digit Before Comma Must Be Five Or Less In Minimum Interest Invoice Billing Field");
+
+            }
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             bool useLocal = !((bool)loggedUser?.DontShowLocal);
 
@@ -764,6 +817,37 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             gLAccountWithholdingTaxUpdateService.UpdateMulti(entityPM.GLAccountWithholdingTaxes, entityPM.DeletedGLAccountWithholdingTaxes, entityPM, true);
 
+            var gLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            gLAccountInterestPeriodUpdateService.UpdateMulti(entityPM.GLAccountInterestPeriods, entityPM.DeletedGLAccountInterestPeriods, entityPM, true);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountInterestPeriods.Count > 0)
+            {
+                foreach (var line in entityPM.GLAccountInterestPeriods)
+                {
+                    
+                    if (line.ChangeSetOp == ChangeSetOperation.Insert)
+                    {
+                       
+                    }
+
+                    if (line.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                         
+                    }
+
+                    if (line.ChangeSetOp == ChangeSetOperation.Delete)
+                    {
+                        entityPM.ActiveForInterest = false;
+                        for (int i =0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+                        {   if(entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                            {
+                                entityPM.ActiveForInterest = true;
+                                break;
+                            }
+                            
+                        }
+                    }
+                }
+            }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
 
@@ -1978,16 +2062,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, activityTypeCode, loggedContactId);
             }
         }
-
-
-
-
-
+ 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-
-
-
-
         public static ContactPM GetLoggedContact(int tenant)
         {
             if (OverrideGetLoggedContactFunc != null)

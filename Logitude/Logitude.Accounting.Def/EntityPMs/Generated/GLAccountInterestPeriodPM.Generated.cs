@@ -344,6 +344,121 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string updatedByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return updatedByUserName;
+		 }
+		 set
+		 {
+		   if(updatedByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return createdByUserName;
+		 }
+		 set
+		 {
+		   if(createdByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string exceptionalInterestRateName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExceptionalInterestRateName  
+	   {
+	    
+	     get
+		{
+		   return exceptionalInterestRateName;
+		 }
+		 set
+		 {
+		   if(exceptionalInterestRateName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExceptionalInterestRateName",OldValue=exceptionalInterestRateName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exceptionalInterestRateName=value;
+		   }
+			
+		 }
+	   }
+	  private string creditInterestRateBaseName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreditInterestRateBaseName  
+	   {
+	    
+	     get
+		{
+		   return creditInterestRateBaseName;
+		 }
+		 set
+		 {
+		   if(creditInterestRateBaseName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditInterestRateBaseName",OldValue=creditInterestRateBaseName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   creditInterestRateBaseName=value;
+		   }
+			
+		 }
+	   }
+	  private string standardInterestRateBaseName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StandardInterestRateBaseName  
+	   {
+	    
+	     get
+		{
+		   return standardInterestRateBaseName;
+		 }
+		 set
+		 {
+		   if(standardInterestRateBaseName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StandardInterestRateBaseName",OldValue=standardInterestRateBaseName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   standardInterestRateBaseName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
