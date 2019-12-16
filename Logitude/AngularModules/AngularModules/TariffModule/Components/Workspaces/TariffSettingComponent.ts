@@ -25,6 +25,8 @@ export class TariffSettingComponent extends BaseComponent {
     private myService: TariffSettingPMService;
     private myDomainService: TariffDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsAirEditBtnEnabled = false;
+    public IsLCLEditBtnEnabled = false;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -47,12 +49,24 @@ export class TariffSettingComponent extends BaseComponent {
 
                     this.BuildItemsSource();
                     this.IsResourcesReady = true;
+                    this.SetUIPropertiesForEditButtons();
                 }
             });
         });
     }
 
-    
+    private SetUIPropertiesForEditButtons() {
+        this.IsLCLEditBtnEnabled = false;
+        this.IsAirEditBtnEnabled = false;
+
+        if (!AppTool.IsNullOrEmpty(this.AirDefaultStepsId)) {
+            this.IsAirEditBtnEnabled = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
+            this.IsLCLEditBtnEnabled = true;
+        }
+    }
+
     get DefaultWarningPercentage() {
         if (this.EntityPM != null) {
             return this.EntityPM.DefaultWarningPercentage;
@@ -72,6 +86,7 @@ export class TariffSettingComponent extends BaseComponent {
     set LCLDefaultStepsId(value: string) {
         if (this.EntityPM.LCLDefaultStepsId != value) {
             this.EntityPM.LCLDefaultStepsId = value;
+            this.SetUIPropertiesForEditButtons();
         }
     }
 
@@ -83,6 +98,7 @@ export class TariffSettingComponent extends BaseComponent {
     set AirDefaultStepsId(value: string) {
         if (this.EntityPM.AirDefaultStepsId != value) {
             this.EntityPM.AirDefaultStepsId = value;
+            this.SetUIPropertiesForEditButtons();
         }
     }
 
@@ -90,6 +106,7 @@ export class TariffSettingComponent extends BaseComponent {
     set DefaultPriceSteps(value: string) {
         if (this.EntityPM.DefaultPriceSteps != value) {
             this.EntityPM.DefaultPriceSteps = value;
+           
         }
     }
 
@@ -166,6 +183,14 @@ export class TariffSettingComponent extends BaseComponent {
 
             if (!isValidSort) {
                 errors.push("Price steps must be sorted");
+            }
+
+            if (AppTool.IsNullOrEmpty(this.AirDefaultStepsId)) {
+                errors.push("Air Default Steps field is required");
+            }
+
+            if (AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
+                errors.push("LCL Default Steps field is required");
             }
 
             this.ValidationErrorsList =  this.ValidationErrorsList.concat(errors);
