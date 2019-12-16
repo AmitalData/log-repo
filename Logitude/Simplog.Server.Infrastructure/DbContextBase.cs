@@ -492,6 +492,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         where returnType : struct
         {
             Debug.WriteLine(sqlReturn1Row);
+            sqlReturn1Row = sqlReturn1Row.TrimEnd(" "[0]).TrimEnd(";"[0]);
             using (var command = this.Database.Connection.CreateCommand())
             {
 
@@ -502,8 +503,9 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 }
                 command.CommandText = sqlReturn1Row;
 
-
-                using (var dataReader = command.ExecuteReader(CommandBehavior.SingleResult))
+                
+                using (var dataReader = command.ExecuteReader(CommandBehavior.SingleResult)
+                    )
                 {
 
                     if (dataReader.FieldCount < 1)
@@ -530,7 +532,53 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
         }
 
+        public int  ExecuteNonQuery (string sqlReturn1Row )
+        {
 
+            
+           
+
+            Debug.WriteLine(sqlReturn1Row);
+
+
+
+            using (var connection = 
+              new OracleConnection(
+                  /*"User Id=Scott;Password=tiger;Data Source=Ora;"*/
+                  this.Database.Connection.ConnectionString)
+            )
+            {
+                using (var command = new OracleCommand(sqlReturn1Row, connection))
+                {
+                    ///AddParams(command, MyParams);
+                    command.CommandType = CommandType.Text;
+                    int  rowsAffected = command.ExecuteNonQuery();
+                    // todo get affected ????????????
+                    //For UPDATE, INSERT, and DELETE statements, the return value is the number of rows affected by the command. For all other types of statements, the return value is -1. If a rollback occurs, the return value is also -1.
+
+                    return rowsAffected;
+
+
+                }
+            }
+            
+            //using (var command = this.Database.Connection.CreateCommand())
+            //{
+
+
+            //    if (this.Database.Connection.State != System.Data.ConnectionState.Open)
+            //    {
+            //        this.Database.Connection.Open();
+            //    }
+            //    command.CommandText = sqlReturn1Row;
+
+
+            //    int affect = command.ExecuteNonQuery();
+            //    return affect;
+
+            //}
+
+        }
 
 
     }
