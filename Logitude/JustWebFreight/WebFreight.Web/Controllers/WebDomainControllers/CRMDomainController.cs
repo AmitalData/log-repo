@@ -2132,7 +2132,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 
                 if (!string.IsNullOrEmpty(args.ProductTypes))
                 {
-                    List<string> myproductsTypesList = this.GetProductsTypesCodes(args.ProductTypes, commonDataContext, authToken.Tenant);                    
+                    List<string> myproductsTypesList = this.GetList(args.ProductTypes, commonDataContext, authToken.Tenant);                    
                     if (myproductsTypesList.Count() > 0)
                     {
                         List<CardContactProduct> cardContactProducts = commonDataContext.CardContactProducts.Where(d => myproductsTypesList.Contains(d.ProductTypeCode)).ToList();
@@ -2143,7 +2143,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (!string.IsNullOrEmpty(args.AdditionalServices))
                 {
-
+                    List<string> myAdditionalServicesList = this.GetList(args.AdditionalServices, commonDataContext, authToken.Tenant);
+                    if (myAdditionalServicesList.Count() > 0)
+                    {
+                        //List<CardContactAdditionalService> cardContactAdditionalServices = commonDataContext.CardContactProducts.Where(d => myAdditionalServicesList.Contains(d.ProductTypeCode)).ToList();
+                        //List<string> cardContactsIds = cardContactAdditionalServices.Select(s => s.CardContactId).ToList();
+                        //contacts = contacts.Where(d => cardContactsIds.Contains(d.Id));
+                    }
                 }
 
                 List<OccasionContactSearchresult> myResult = new List<OccasionContactSearchresult>();
@@ -2287,30 +2293,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<string> contactsIds = occasionInvitees.Select(s => s.ContactId).ToList();
             return contactsIds;
         }
-        private List<string> GetProductsTypesCodes(string productTypes, ICommonDataContext commonDataContext, int tenant)
+        private List<string> GetList(string myString, ICommonDataContext commonDataContext, int tenant)
         {
-            List<string> myproductsTypesList = new List<string>();
+            List<string> myList = new List<string>();
 
-            productTypes = productTypes.Replace(" ", "");
+            myString = myString.Replace(" ", "");
 
-            if (productTypes.ToLower() == "all")
+            if (myString.ToLower() == "all")
             {
-                //ProductTypeRepository productTypeRepository = new ProductTypeRepository(commonDataContext);
-                //IQueryable<ProductType> iQueryable = productTypeRepository.GetActiveProductTypes(tenant);
-                //if (iQueryable.Count() > 0)
-                //{
-                //    myproductsTypesList = iQueryable.Select(s => s.Code).ToList();
-                //}
             }
 
             else
             {
-                productTypes = productTypes.Trim(',');
-                string[] myProductsTypes = productTypes.Split(',');
-                myproductsTypesList = myProductsTypes.ToList();
+                myString = myString.Trim(',');
+                myList = myList.ToList();
             }
 
-            return myproductsTypesList;
+            return myList;
         }
         private List<OccasionContactSearchresult> BuildFilteredContacts(IQueryable<CardContact> contacts, ICommonDataContext commonDataContext, int tenant)
         {
