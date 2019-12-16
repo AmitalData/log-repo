@@ -31,8 +31,13 @@ export class APPaymentMenuButtonsHandler {
     private isPrintRequested: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
-
+    private isFullAccountingGranted: boolean;
     private isOerationInProgrees: boolean = false;
+
+    constructor(){
+        this.isFullAccountingGranted = this.GetFullAccountingFeature();
+    }
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -87,6 +92,11 @@ export class APPaymentMenuButtonsHandler {
         });
     }
 
+    GetFullAccountingFeature(){
+        var table = window.ObjectTables.filter(d => d.Name === 'FullAccountingSetting')[0];
+        var fullAccountingFeature = FeatureLocator.Features.filter(f => (f.Code == "UPDATE") && f.ObjectTableId == table.Id)[0];
+        return !!fullAccountingFeature;
+    }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -337,8 +347,11 @@ export class APPaymentMenuButtonsHandler {
 
         if (isValid) {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
-            this.GetFullAccountingSettingsAndApprove();
 
+            if(this.isFullAccountingGranted)
+                this.GetFullAccountingSettingsAndApprove();
+            else
+                this.ContinueSaving(null);
         }
 
         else {
