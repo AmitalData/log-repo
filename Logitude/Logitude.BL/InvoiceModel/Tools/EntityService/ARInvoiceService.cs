@@ -2255,10 +2255,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
-                        //if (IsFullAccountingActivated(entityPM.Tenant))
-                        //{
-                        //    CreateInterestTransactionLine(null, record);
-                        //}
+                        if (IsFullAccountingActivated(entityPM.Tenant))
+                        {
+                            CreateInterestTransactionLine(null, record);
+                        }
                     }
 
                     Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
@@ -2853,40 +2853,43 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CreateInterestTransactionLine(item, null);
             }
         }
-        int InvoiceLineNumber;
-
+        int invoiceLineNumber = 0;
+        DateTime? dateForInterest;
         private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat)
         {
-            InvoiceLineNumber = invoiceLine.LineNumber;
+            ++invoiceLineNumber;
+             dateForInterest = entityPM.DateForInterest == null ? DateTime.Now : entityPM.DateForInterest;
+            InterestTransactionPM interestTransaction = new InterestTransactionPM();
             if (invoiceLine != null) {
 
-                CreateInterestTransactionLineForInvoiceLine(invoiceLine);
-               
-
+                interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine);
             }
-
-            //if (invoiceTotalVat != null) {
-
-           // CreateInterestTransactionLineForVatLine(invoiceLine);
-
-            //    InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
-            //    {
-
-            //        InterestEntityTypeCode = "ARInvoice",
-            //        EntityId = invoiceTotalVat.ARInvoiceId,
-            //        OriginalEntityLineNumber = ++InvoiceLineNumber,
-            //        LocalAmount = (decimal)invoiceTotalVat.LocalVatableAmount,
-            //        ForeignAmount = (decimal?)invoiceTotalVat.ProfitVatableAmount,
-            //        InterestValueDate = (DateTime)invoiceLine.DateForInterest,
-            //        Tenant = invoiceLine.Tenant,
-
-            //    };
-            //}
+            if (invoiceTotalVat != null)
+            {
+                interestTransaction= CreateInterestTransactionLineForVatLine(invoiceTotalVat);
+            }
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+            interestTransactionUpdateService.Create(interestTransaction);
         }
-        private void CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
+        private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat)
         {
-            DateTime? dateForInterest = invoiceLine.DateForInterest == null ? DateTime.Now : invoiceLine.DateForInterest;
+            InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
+            {
 
+                InterestEntityTypeCode = "1",
+                EntityId = invoiceTotalVat.ARInvoiceId,
+                OriginalEntityLineNumber = invoiceLineNumber,
+                LocalAmount = (decimal)invoiceTotalVat.LocalVATAmount,
+                ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
+                InterestValueDate = (DateTime)dateForInterest,
+                Tenant = entityPM.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+            return InterestTransactionVatLine;
+        }
+
+        private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
+        {
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "1",
@@ -2898,9 +2901,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Tenant = invoiceLine.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
             };
-            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
-            interestTransactionUpdateService.Create(interestTransaction);
-            
+            return interestTransaction;
         }
 
         private void UpdateInvoiceLine(ARInvoiceLinePM item)
