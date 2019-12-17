@@ -3,14 +3,14 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { PriceStepsPM } from '../../../../Infrastructure/EntityPMs/PriceStepsPM';
+import { PriceStepPM } from '../../../../Infrastructure/EntityPMs/PriceStepPM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffSettingPM } from '../../../../TariffModule/EntityPMs/TariffSettingPM';
 import { TenantPM } from "../../../../Common/EntityPMs/TenantPM";
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
-import { PriceStepsPMService } from '../../../../Infrastructure/Services/StandardPMs/PriceStepsPMService';
+import { PriceStepPMService } from '../../../../Infrastructure/Services/StandardPMs/PriceStepPMService';
 
 @Component({
     selector: 'PriceStepsGeneralTabComponent',
@@ -20,8 +20,8 @@ import { PriceStepsPMService } from '../../../../Infrastructure/Services/Standar
 
 export class PriceStepsGeneralTabComponent extends BaseComponent implements OnInit {
     public DataContext: PriceStepsGeneralTabComponent = this;
-    public ObjectTableName: string = "PriceSteps";
-    public EntityPM: PriceStepsPM;
+    public ObjectTableName: string = "PriceStep";
+    public EntityPM: PriceStepPM;
     public TenantPM: TenantPM;
     public PriceStepsText: string;
     public ValidationErrorsList: string[];
@@ -49,7 +49,7 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     }
 
     GetSinglePriceSteps(entityId: string) {
-        var service: PriceStepsPMService = new PriceStepsPMService();
+        var service: PriceStepPMService = new PriceStepPMService();
         service.get(entityId).subscribe((result: ServiceResponse) => {
             if (result) {
                 if (!result.HasError) {
@@ -62,7 +62,7 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     }
 
     InitializeNewEntity() {
-        this.EntityPM = new PriceStepsPM();
+        this.EntityPM = new PriceStepPM();
         var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreateDate = todayDate;
@@ -158,7 +158,7 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     }
 
     SubmitCreatingPriceSteps() {
-        var service: PriceStepsPMService = new PriceStepsPMService();
+        var service: PriceStepPMService = new PriceStepPMService();
 
         service.insert(this.EntityPM).subscribe((result: ServiceResponse) => {
             if (result) {

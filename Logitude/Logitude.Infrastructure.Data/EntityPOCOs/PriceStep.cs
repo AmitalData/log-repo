@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Infrastructure.Data.EntityPOCOs
 {
    
-    public class PriceSteps
+    public class PriceStep
     {
 	 string dbms;
 

@@ -15,18 +15,18 @@ using System.Threading.Tasks;
 
 namespace Logitude.Infrastructure.BL.EntityUpdateServices
 {
-    public partial class PriceStepsUpdateService
+    public partial class PriceStepUpdateService
     {
-        protected override void OnCreating(PriceStepsPM entityPM, EntityPM entityParentPM)
+        protected override void OnCreating(PriceStepPM entityPM, EntityPM entityParentPM)
         {
             
         }
 
-        protected override void OnUpdating(PriceStepsPM entityPM)
+        protected override void OnUpdating(PriceStepPM entityPM)
         {
            
         }
-        protected override void Trace(PriceStepsPM entityPM, PriceSteps entityPOCO, string changesXml)
+        protected override void Trace(PriceStepPM entityPM, PriceStep entityPOCO, string changesXml)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
@@ -36,7 +36,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                     EventTypeCode = "UPEV",
                     UserId = entityPM.UpdatedByUserId,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "PriceSteps"
+                    ObjectTableName = "PriceStep"
                 });
             }
 
@@ -48,7 +48,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                     EventTypeCode = "CREV",
                     UserId = entityPM.CreatedByUserId,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "PriceSteps"
+                    ObjectTableName = "PriceStep"
                 });
             }
 

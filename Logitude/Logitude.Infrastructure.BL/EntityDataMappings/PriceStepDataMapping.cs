@@ -17,17 +17,17 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 namespace Logitude.Infrastructure.BL.EntityDataMappings
 {
    
-   public partial class PriceStepsDataMapping: IMapping<PriceStepsPM, PriceSteps>
+   public partial class PriceStepDataMapping: IMapping<PriceStepPM, PriceStep>
    {
 
-        public void CustomPMToPOCO(PriceStepsPM entityPM, PriceSteps entityPOCO)
+        public void CustomPMToPOCO(PriceStepPM entityPM, PriceStep entityPOCO)
         {
             entityPOCO.Id = entityPM.Id;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO);
         }
 
-        public void CustomPOCOToPM(PriceStepsPM entityPM, PriceSteps entityPOCO)
+        public void CustomPOCOToPM(PriceStepPM entityPM, PriceStep entityPOCO)
         {
             Contact createdByContact = ContactRepository.GetSingleContact(entityPOCO.CreatedByUserId, entityPOCO.Tenant, true);
             if (createdByContact != null)
@@ -40,7 +40,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 entityPM.UpdatedByUserName = updatedByContact.EnglishName;
             }
         }
-        private void BuildSearchFields(PriceStepsPM entityPM, PriceSteps entityPOCO)
+        private void BuildSearchFields(PriceStepPM entityPM, PriceStep entityPOCO)
         {
             string searchFields = "";
             MethodHelper.AddToSearchFields(ref searchFields, entityPM.Name);

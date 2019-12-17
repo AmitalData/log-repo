@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class PriceStepsPM {
+export class PriceStepPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -85,7 +85,7 @@ export class PriceStepsPM {
        
 	 
 
-    public OldEntityPM: PriceStepsPM;
+    public OldEntityPM: PriceStepPM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -93,12 +93,12 @@ export class PriceStepsPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "PriceSteps");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "PriceStep");
            
         }
     }
 
-    private MyClone: PriceStepsPM;
+    private MyClone: PriceStepPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

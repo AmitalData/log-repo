@@ -17,12 +17,12 @@ using Logitude.Infrastructure.Data.EntityLists;
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
 { 
 
-    public partial class PriceStepsListQueryService
+    public partial class PriceStepListQueryService
     {
-	    private IQueryable<PriceStepsList> GetIqueryableList(IQueryable<PriceSteps> iQueryable)
+	    private IQueryable<PriceStepList> GetIqueryableList(IQueryable<PriceStep> iQueryable)
         {
-		IQueryable<PriceStepsList> query = (from a in iQueryable
-                                            select new PriceStepsList()
+		IQueryable<PriceStepList> query = (from a in iQueryable
+                                            select new PriceStepList()
 											{
                      
 					                          Id = a.Id,
@@ -53,11 +53,11 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<PriceSteps> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<PriceSteps> iQueryable, int tenant)
+		private IQueryable<PriceStep> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<PriceStep> iQueryable, int tenant)
         {
             return iQueryable;
         }
-		private IQueryable<PriceSteps> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<PriceSteps> iQueryable, int tenant)
+		private IQueryable<PriceStep> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<PriceStep> iQueryable, int tenant)
         {
 			return iQueryable;
 		}

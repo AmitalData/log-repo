@@ -14,12 +14,12 @@ using Logitude.Infrastructure.Data;
 namespace Logitude.Infrastructure.Data.EntityMapping
 {
  
-    public class PriceStepsMap : EntityTypeConfiguration<PriceSteps>
+    public class PriceStepMap : EntityTypeConfiguration<PriceStep>
     {
 	    string dbms;
-        public PriceStepsMap()
+        public PriceStepMap()
         { 
-				this.ToTable("PricesSteps");
+				this.ToTable("PriceSteps");
 		
 		    this.HasKey(t => new { t.Id });
 	 

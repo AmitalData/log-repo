@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class PriceStepsViewsController : ApiController
+    public partial class PriceStepViewsController : ApiController
     {
 	  
        
@@ -59,13 +59,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("PriceSteps", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("PriceStep", "READ", authToken.Tenant);
 	                IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
-                PriceStepsListQueryService priceStepsQuery = new PriceStepsListQueryService(MyContext);
-                PriceStepsList priceStepsList = priceStepsQuery.GetSingle(id);
+                PriceStepListQueryService priceStepQuery = new PriceStepListQueryService(MyContext);
+                PriceStepList priceStepList = priceStepQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  priceStepsList);
+                return Request.CreateResponse(HttpStatusCode.OK,  priceStepList);
             }
             catch (Exception ex)
             {
@@ -82,10 +82,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("PriceSteps", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("PriceStep", "READ", authToken.Tenant);
 	                IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
-                PriceStepsListQueryService priceStepsQuery = new PriceStepsListQueryService(MyContext);
-                List<PriceStepsList> result = priceStepsQuery.GetList(authToken.Tenant);
+                PriceStepListQueryService priceStepQuery = new PriceStepListQueryService(MyContext);
+                List<PriceStepList> result = priceStepQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -105,23 +105,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("PriceSteps", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("PriceStep", "READ", authToken.Tenant);
 	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "PriceSteps",
+                    ObjectTableName = "PriceStep",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "PriceStepss",
+                    QuerySection = "PriceSteps",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> PriceStepsObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("PriceSteps",tenant);
+				List<ObjectField> PriceStepObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("PriceStep",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -144,7 +144,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = PriceStepsObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = PriceStepObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -172,7 +172,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = PriceStepsObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = PriceStepObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -195,14 +195,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
-				PriceStepsListQueryService priceStepsQuery = new PriceStepsListQueryService(MyContext);
+				PriceStepListQueryService priceStepQuery = new PriceStepListQueryService(MyContext);
 
-                List<PriceStepsList> entityLists = priceStepsQuery.GetList(queryOperations, tenant);
+                List<PriceStepList> entityLists = priceStepQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = priceStepsQuery.GetListCount(queryOperations, tenant);
+                    int count = priceStepQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 
