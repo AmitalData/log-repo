@@ -23,6 +23,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
 		 IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; }
 		 IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; }
+		 IDbSet<AmendmentStatus> AmendmentStatuses { get; }
 		 IDbSet<ApprovedProfession> ApprovedProfessions { get; }
 		 IDbSet<AssigneeNotificationType> AssigneeNotificationTypes { get; }
 		 IDbSet<AttachmentType> AttachmentTypes { get; }

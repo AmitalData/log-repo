@@ -145,6 +145,16 @@ export class DeclarationList {
 	CargoDescription: string;
 	IsPaymentProtested: boolean;
 	FastIndividualProcessName: string;
+	AmendmentRequestNumber: string;
+	AmendmentStatus: string;
+	AmendmentissueDate: Date;
+	AmendmentRemarks: string;
+	AmendmentDeficitInitiated: boolean;
+	AmendDeficitInitiatedReasTo: string;
+	AmendmentCorrectedByUserId: string;
+	AmendmentRejectionReason: string;
+	IsAmendment: boolean;
+	AmendmentOriginalDeclartation: string;
 	
 }
  
