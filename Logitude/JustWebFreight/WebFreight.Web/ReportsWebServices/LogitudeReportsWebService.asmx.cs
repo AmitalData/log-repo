@@ -927,9 +927,11 @@ namespace WebFreight.Web.ReportsWebServices
 
             QueryFilterItem filterItem_Customer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId").FirstOrDefault();
             QueryFilterItem filterItem_DueDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DueDate").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeDraftInvoices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
 
             string customerId = null;
             DateTime? dueDate = null;
+            bool IncludeDraftInvoices = false;
 
             if (filterItem_Customer != null)
             {
@@ -947,6 +949,13 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            if (filterItem_IncludeDraftInvoices != null)
+            {
+                if (filterItem_IncludeDraftInvoices.FieldValue != null)
+                {
+                    IncludeDraftInvoices = (bool)filterItem_IncludeDraftInvoices.FieldValue;
+                }
+            }
             #endregion
 
             #region General Report Data
@@ -1002,7 +1011,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Base Data Filtered
 
-            IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidARInvoices(tenant);
+            IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidAndDraftARInvoices(tenant);
             IQueryable<APInvoice> iQueryable_APInvoice = aPInvoiceRepository.GetUnpaidAPInvoices(tenant);
             IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedARPayments(tenant);
             IQueryable<APPayment> iQueryable_APPayment = aPPaymentRepository.GetOpenedAPPayments(tenant);
@@ -1025,6 +1034,10 @@ namespace WebFreight.Web.ReportsWebServices
                 iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
             }
 
+            if (!IncludeDraftInvoices)
+            {
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "DR");
+            }
             #endregion
 
             #region Fill Statement Record Listc
@@ -1040,7 +1053,7 @@ namespace WebFreight.Web.ReportsWebServices
                 item.HouseNumber = d.HouseNumber;
                 item.Date = d.InvoiceDate.Value;
                 item.DueDate = d.DueDate.Value;
-                item.OurRefrence = d.InvoiceNumber;
+                item.OurRefrence = d.StatusCode == "DR" ? d.DraftNumber : d.InvoiceNumber;
                 item.YourRefrence = d.CustomerRef;
                 item.CurrencyId = d.InvoiceCurrencyId;
                 item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));
@@ -1602,7 +1615,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceDate = a.InvoiceDate;
                 invoicesRecored.InvoiceType = a.ARInvoiceTypeName;
                 invoicesRecored.DueDate = a.DueDate;
-                invoicesRecored.OurReference = a.InvoiceNumber;
+                invoicesRecored.OurReference = a.StatusCode == "DR" ? a.DraftNumber : a.InvoiceNumber;
                 invoicesRecored.MasterNumber = a.MasterNumber;
                 invoicesRecored.HouseNumber = a.HouseNumber;
                 invoicesRecored.YourRefrence = a.CustomerRef;
@@ -1883,9 +1896,13 @@ namespace WebFreight.Web.ReportsWebServices
             AddressQuery addressQuery = new AddressQuery(tenant);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            ARInvoiceLineRepository aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
 
             IQueryable<ARInvoiceList> iQueryable = arInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
+
+            IQueryable<ARInvoiceLine> tenantARInvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByTenant(tenant);
 
             #region Report Filters
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -2030,10 +2047,10 @@ namespace WebFreight.Web.ReportsWebServices
                 InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
                 List<ARInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.ARInvoiceId == a.Id).ToList();
                 List<VATClass> myVATS = new List<VATClass>();
-
-                //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
+                List<ARInvoiceLine> ARInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == a.Id) && (l.IsExpense == true)).ToList();
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, a, invoicesRecored);
 
+                //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
                 foreach (ARInvoiceTotalVAT vat in myTotalVats)
                 {
                     VATClass item = new VATClass()
@@ -2144,6 +2161,11 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.CreateDate = a.CreateDate;
                 invoicesRecored.DueDate = a.DueDate;
                 invoicesRecored.Salesman = a.SalesmanUserName;
+                invoicesRecored.SubTotalInLocalCurrency = a.SubTotalInLocalCurrency;
+                invoicesRecored.VATInLocalCurrency = myTotalVats.Sum(d => d.LocalVATAmount);
+                invoicesRecored.GrandTotalInLocalCurrency = invoicesRecored.SubTotalInLocalCurrency + invoicesRecored.VATInLocalCurrency;
+                invoicesRecored.ExpenseChargesInLocalCurrency = ARInvoiceLines.Sum(s => s.LocalCurrencyAmount);
+                
 
                 if (localCurrency)
                 {
@@ -2155,6 +2177,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.SubTotallocal = a.SubTotalInLocalCurrency;
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
+                    invoicesRecored.ExpenseCharges = ARInvoiceLines.Sum(s => s.LocalCurrencyAmount);
                 }
 
                 else
@@ -2167,12 +2190,25 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.vatInLocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.subInLocal = a.SubTotalInLocalCurrency;
                     invoicesRecored.LocalCurrency = a.LocalCurrencyCode;
+                    invoicesRecored.ExpenseCharges = ARInvoiceLines.Sum(s => s.InvoiceCurrencyAmount);
+                }
+                if (a.SATXML != null)
+                {
+                    Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(a.SATXML);
+                    List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                    if (timbreFiscalDigitalElement != null)
+                    {
+                        Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                        invoicesRecored.UUID = digitalTi.UUID;
+                    }
                 }
 
                 dataProvider.InvoicesReportList.Add(invoicesRecored);
                 dataProvider.InvoicesReportList_NotSorted.Add(invoicesRecored);
             }
 
+            
             dataProvider.InvoiceTotalsList = (from b in dataProvider.InvoicesReportList
                                               group b by new { b.Currency } into g
                                               select new WebFreight.Web.DataProviders.InvoiceDataProvider.InvoiceTotals()
@@ -12266,7 +12302,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             Id = item.ChartOfAcountType,
                             Number = item.ChartOfAcountType,
-                            Name =  typeName,
+                            Name = typeName,
 
                             ParentId = null,
                             LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -12321,7 +12357,7 @@ namespace WebFreight.Web.ReportsWebServices
                         ResultList record = new ResultList()
                         {
                             Id = item.ChartOfAcount5,
-                            Name =  item.ChartOfAcountName5,
+                            Name = item.ChartOfAcountName5,
                             Number = item.ChartOfAcountCode5,
                             ParentId = item.ChartOfAcount4,
                             LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -12482,7 +12518,7 @@ namespace WebFreight.Web.ReportsWebServices
                         ResultList record = new ResultList()
                         {
                             Id = item.ChartOfAcount3,
-                            Name =  item.ChartOfAcountName3,
+                            Name = item.ChartOfAcountName3,
                             Number = item.ChartOfAcountCode3,
                             ParentId = item.ChartOfAcount2,
                             LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -12768,8 +12804,9 @@ namespace WebFreight.Web.ReportsWebServices
                         ResultList record = new ResultList()
                         {
                             Id = item.GLAccountId,
-                            Name =  item.GLAccountName,
+                            Name = item.GLAccountName,
                             Number = item.GLAccountNumber,
+
                             ParentId = item.ChartOfAccountId,
                             LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                             LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
