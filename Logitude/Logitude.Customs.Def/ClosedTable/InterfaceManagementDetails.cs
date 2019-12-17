@@ -634,7 +634,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false,
             });
             //SaveCOLT_MSG8212_CollateralAnswerMsg_Out.IL941079089.2016-05-25_14-29-07-895.a8557b83-430b-419e-b328-f3a62be1ddbb.PLT
-            
+
             all.Add(
             new InterfaceManagementDetails()
             {
@@ -972,7 +972,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Description = "תשובה בדבר בקשת שינוי מועד בדיקה",
                 DcaPrefixName = "SendCH_MSG_192_ApproveChangeTimeRequest_Out.",
                 //SaveCH_MSG_191__192ChangingTimeRequest_Out.IL941079089.2016-06-15_08-58-18-134.294e63fa-b4b4-432c-84b9-11cac2141356.PLT
-                DcaPrefixName2="SaveCH_MSG_191__192ChangingTimeRequest_Out.",
+                DcaPrefixName2 = "SaveCH_MSG_191__192ChangingTimeRequest_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
@@ -1267,7 +1267,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "",
                 //      NeedSignature = false,
             });
-            
+
             //all.Add(new InterfaceManagementDetails()
             //{
             //    Code = "9000",
@@ -1504,7 +1504,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 //itzik+yaronc DcaPrefixName = ///"GetDF_MSG2755_2754_SubmitImportDeclarationRequest_Out.",//SaveDF_MSG2750_2754_ImportDeclarationRequest_Out.IL941079089.2014-07-20_20-15-27-909.1-68.TST
                 DcaPrefixName = "GetDF_Web8373_2754_RetrieveImportDeclaration_Out.",
                 //GetTSH_MSG8368_8356_MasavPaymentsToAgent_Out.IL941079089.2016-06-26_17-05-42-369.6336820c-a2d6-48f5-8b9d-4e3dcda26d8e.PLT
-                
+
 
                 DefaultSendOptionsCode = null,// Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.D.ToString(),
                 DefaultPriority = 5,
@@ -1538,9 +1538,9 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "8333",
                 InOut = InOutEnum.I.ToString(),
                 Description = "משוב לשאילתא לליקויים",
-                       //        GetDF_Web8332_8333_FaultProceduralDetails_Out.IL941079089.2016-06-23_16-56-02-910.55ef358e-fe75-4d13-889e-1431ee10dee0.PLT.xml
+                //        GetDF_Web8332_8333_FaultProceduralDetails_Out.IL941079089.2016-06-23_16-56-02-910.55ef358e-fe75-4d13-889e-1431ee10dee0.PLT.xml
                 DcaPrefixName = "GetDF_Web8332_8333_FaultProceduralDetails_Out.",
-                
+
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
@@ -1856,8 +1856,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 Description = "דוח קופה לסוכן",
                 DcaPrefixName = "SendTSH_MSG8356_MasavPaymentsToAgent_Out.",
                 //               GetTSH_MSG8368_8356_MasavPaymentsToAgent_Out.IL941079089.2016-06-26_17-05-42-369.6336820c-a2d6-48f5-8b9d-4e3dcda26d8e.PLT
-                 DcaPrefixName2="GetTSH_MSG8368_8356_MasavPaymentsToAgent_Out.",
-                
+                DcaPrefixName2 = "GetTSH_MSG8368_8356_MasavPaymentsToAgent_Out.",
+
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
@@ -1919,10 +1919,10 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "40I",
                 //     NeedSignature = false,
             });
-            
 
-            
-                all.Add(new InterfaceManagementDetails()
+
+
+            all.Add(new InterfaceManagementDetails()
             {
                 Code = "40I",
                 InOut = InOutEnum.I.ToString(),
@@ -2154,18 +2154,18 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "UIT01",
                 InOut = InOutEnum.I.ToString(),
-                Description ="UnifreightTester01",
+                Description = "UnifreightTester01",
                 DcaPrefixName = "UnifreightTester01_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
-                
+
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
             });
-           
+
 
             all.Add(new InterfaceManagementDetails()
             {
@@ -2310,7 +2310,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "1170",
                 InOut = InOutEnum.O.ToString(),
-                Description ="מסר מניפסט",
+                Description = "מסר מניפסט",
                 //odi "מסר מצהר",
                 DcaPrefixName = "",
                 DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
@@ -2454,7 +2454,7 @@ namespace Logitude.Customs.Def.ClosedTable
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService
                 InOut = InOutEnum.I.ToString(),
-                Description = "שידור הצהרות בלדר " ,// "Unifreight Courier *2750* Batch Send",
+                Description = "שידור הצהרות בלדר ",// "Unifreight Courier *2750* Batch Send",
                 DcaPrefixName = "UnifreightCourier_UCB2750_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
@@ -2502,6 +2502,25 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCB8212",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור מענה מרוכז ",// "Unifreight Courier *2750* Batch Send",
+                DcaPrefixName = "UnifreightCustoms_UCB8212_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+                //  NeedSignature = false
+
+            });
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "UCB2715",
@@ -2655,8 +2674,8 @@ namespace Logitude.Customs.Def.ClosedTable
             newPoco.DcaPrefixName = this.DcaPrefixName;
             newPoco.DcaPrefixName2 = this.DcaPrefixName2;
             newPoco.DcaPrefixName3 = this.DcaPrefixName3;
-            newPoco.DcaPrefixName4 = this.DcaPrefixName4 ;
-            
+            newPoco.DcaPrefixName4 = this.DcaPrefixName4;
+
             newPoco.DefaultSendOptionsCode = this.DefaultSendOptionsCode;
             newPoco.DefaultPriority = this.DefaultPriority;
 
