@@ -36,7 +36,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                     EventTypeCode = "UPEV",
                     UserId = entityPM.UpdatedByUserId,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "PriceSteps"
+                    ObjectTableName = "PriceStep"
                 });
             }
 
@@ -48,7 +48,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                     EventTypeCode = "CREV",
                     UserId = entityPM.CreatedByUserId,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "PriceSteps"
+                    ObjectTableName = "PriceStep"
                 });
             }
 

@@ -984,7 +984,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
-    <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepsList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerLogsList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerProcedureList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\ToggleList.ts" />
@@ -1001,7 +1001,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
-    <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepsPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SchedulerLogsPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedUserQueryPM.ts" />
@@ -1031,7 +1031,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ObjectFieldListService.ts" />
-    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\PriceStepsListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\PriceStepListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerLogsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerProcedureListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ToggleListService.ts" />
@@ -1043,7 +1043,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWSubQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\FeatureTogglePMService.ts" />
-    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepsPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SchedulerLogsPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />

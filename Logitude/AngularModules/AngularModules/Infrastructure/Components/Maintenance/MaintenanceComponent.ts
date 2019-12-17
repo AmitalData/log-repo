@@ -581,7 +581,7 @@ export class MaintenanceComponent {
             item.Code = "MTPS";
             item.ObjectTableName = "Price Steps";
             item.TextCode = "General.MC.Others.PriceSteps";
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceSteps")[0].Id
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceStep")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
         } 
