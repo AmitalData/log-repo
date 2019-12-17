@@ -143,7 +143,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationPM declarationPM = new DeclarationPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
-                DeclarationNumber = GetValueIDType(declaration.ID),
+              //  DeclarationNumber = GetValueIDType(declaration.ID),
                 DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID),
                 Tenant = tenant,
                 IsConnectedToUnifreight = true,
