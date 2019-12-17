@@ -33,6 +33,9 @@ using Logitude.Server.Tools.QueueService;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.Accounting.BL.CoreBL.InterestTrans;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -364,17 +367,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     && string.IsNullOrWhiteSpace(entityPM.QueueId))
                 {
 
-//                    if (LogitudeSettings.QueueServiceMode != "db")
-//                    {
-//                        throw new Exception(@"I talked with Ihab he said it's about time to change all environment to DB QUEUE mode 
-//Especially in Accounting ,By This our transaction will be include Opening the QUEUE (in AZURE Mode its possible only with DTC Server  )
-//");
-//                    }
+                    //                    if (LogitudeSettings.QueueServiceMode != "db")
+                    //                    {
+                    //                        throw new Exception(@"I talked with Ihab he said it's about time to change all environment to DB QUEUE mode 
+                    //Especially in Accounting ,By This our transaction will be include Opening the QUEUE (in AZURE Mode its possible only with DTC Server  )
+                    //");
+                    //                    }
 
                     ReCheckFromDBThrowIfNotValid(entityPM);
 
-                    JournalApproveService.EnqueueDB(entityPM);        
-            
+                    CreateInterestTransactionTo_RegularJournal(entityPM);
+                    JournalApproveService.EnqueueDB(entityPM);
+
 
                 }
             }
@@ -400,6 +404,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
 
+        }
+
+        public virtual void CreateInterestTransactionTo_RegularJournal(JournalPM entityPM)
+        {
+            var myRegularJournalInterestTransactionService = new RegularJournalInterestTransactionMapping();
+            myRegularJournalInterestTransactionService.CreatelInterestTransactions(entityPM);
         }
 
         protected void ReCheckFromDBThrowIfNotValid(JournalPM entityPM)
@@ -466,7 +476,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     throw new Exception("Journal id couldn't find in db" + JournalId);
                 }
                 if (_JornalPmSource.Tenant != requestTenant)
-                {
+                { 
                     throw new Exception("(Journal.Tenant!= requestTenant)");
                 }
                 if (String.IsNullOrWhiteSpace( _JornalPmSource.QueueId ))
@@ -481,7 +491,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 _JornalPmSource.ChangeSetOp = ChangeSetOperation.Update;
                 _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
                 _JornalPmSource.JournalLines.Select(d => d.Notes = stornoOverrideM.LineNotes);
-                _JornalPmSource.AccountingDate =(DateTime) stornoOverrideM.AccountingDate;
+                if (stornoOverrideM.AccountingDate.HasValue)
+                {
+                    _JornalPmSource.AccountingDate = (DateTime)stornoOverrideM.AccountingDate;
+                }
                 this.Update(_JornalPmSource, true);
                 scope.Complete();
                 return _JornalPmSource;
