@@ -500,7 +500,9 @@ namespace Logitude.DBMigrations.Models
 
         protected string FormatNameLength(string name, string shortName)
         {
-            if(name.Length <= 30)
+            int maxLength = 30;
+
+            if(name.Length <= maxLength)
             {
                 return name;
             }
@@ -512,7 +514,14 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    return name;
+                    if (name.StartsWith("Drop_"))
+                    {
+                        return name.Substring(0, maxLength);
+                    }
+                    else
+                    {
+                        return name;
+                    }
                 }
             }
         }
