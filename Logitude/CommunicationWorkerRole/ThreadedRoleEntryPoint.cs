@@ -84,7 +84,12 @@ namespace CommunicationWorkerRole
             try
             {
                 foreach (WorkerEntryPoint worker in workers)
-                    threads.Add(new Thread(worker.ProtectedRun) { Name = worker.ThreadName });
+                {
+                    Thread myThread = new Thread(worker.ProtectedRun) { Name = worker.ThreadName };
+                    worker.CurrentThread = myThread;
+                    threads.Add(myThread);
+                }
+                   
 
                 foreach (Thread thread in threads)
                     thread.Start();
@@ -364,6 +369,7 @@ namespace CommunicationWorkerRole
                     // WWB: Tell The Workers To Stop Looping
                     foreach (WorkerEntryPoint worker in workers)
                     {
+                        //worker.MaxWorkingTimeInMinutes = 0;
                         worker.OnStop();
                     }
 
@@ -403,6 +409,7 @@ namespace CommunicationWorkerRole
                     }
                     object[] ArrArgs = args.ToArray();
                     var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + Service.ClassName), ArrArgs) as WorkerEntryPoint;
+                    Item.MaxWorkingTimeInMinutes = Service.MaxWorkingTimeInMinutes;
                     workers.Add(Item);
                 }
             }
@@ -433,18 +440,36 @@ namespace CommunicationWorkerRole
         }
         private List<BatchServicesDefinitionPM> GetManagedProcessActiveBatchServiceDef()
         {
-            var Services = new List<string>();
+            var Services = new List<ServiceDefinition>();
             if (IgnoreServices)
             {
-                Services = IgnoredBatchServicesParam.Split(',').ToList();
+                var TempServicesList = IgnoredBatchServicesParam.Split(',').ToList();
+                foreach (var item in TempServicesList)
+                {
+                    ServiceDefinition ServiceDef = new ServiceDefinition();
+                    ServiceDef.SarviceName = item;
+                    Services.Add(ServiceDef);
+                }
             }
             else
             {
                 var temp = BatchServicesParam.Split(';');
                 foreach (var item in temp)
                 {
-                    var ServiceCode = item.Split('-');
-                    Services.Add(ServiceCode[0]);
+                    var ServiceParams = item.Split('-');
+                    ServiceDefinition ServiceDef = new ServiceDefinition();
+                    ServiceDef.SarviceName = ServiceParams[0];
+                    if (ServiceParams.Length > 1)
+                    {
+                        var MaxWorkingTimeInMinutesParam = ServiceParams[1];
+                        if (temp != null)
+                        {
+                            ServiceDef.MaxWorkingTimeInMinutes = int.Parse(MaxWorkingTimeInMinutesParam.Split('~')[1]);
+                        }
+
+                    }
+
+                    Services.Add(ServiceDef);
                 }
             }
             //string SpecialBatchCode = null;
@@ -469,11 +494,11 @@ namespace CommunicationWorkerRole
             //    var IsActivate = temp[1].ToLower();
             if (IgnoreServices)
             {
-                BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => !Services.Contains(a.Code)).ToList();
+                BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => !Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
             }
             else
             {
-                BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => Services.Contains(a.Code)).ToList();
+                BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
             }
             //}
             return BatchServicesDefinitionsTemp;
@@ -730,5 +755,11 @@ namespace CommunicationWorkerRole
 
 
         }
+    }
+
+    public class ServiceDefinition
+    {
+        public string SarviceName { get; set; }
+        public int MaxWorkingTimeInMinutes { get; set; }
     }
 }

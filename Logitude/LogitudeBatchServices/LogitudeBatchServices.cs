@@ -19,6 +19,8 @@ namespace LogitudeBatchServices
     {
         int MaxMemoryMB = 0;
         int MaxWorkingTimeInMinutes = 0;
+        string IncludedServicesAsArgs = "";
+        string IgnoredServicessAsArgs = "";
         private System.Timers.Timer BatchServiceTimer;
         private DateTime ProcessStartTime;
         public LogitudeBatchServices()
@@ -42,14 +44,14 @@ namespace LogitudeBatchServices
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var Arg = (string)e.Argument;
-            if (string.IsNullOrEmpty(Arg))
+            var Args = (string[])e.Argument;
+            if (Args == null)
             {
                 StartLogitudeBatchServices();
             }
             else
             {
-                StartLogitudeBatchServices(Arg);
+                StartLogitudeBatchServices(Args);
             }
 
         }
@@ -66,40 +68,64 @@ namespace LogitudeBatchServices
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry("LogitudeBatchServices Error");
-                EventLog.WriteEntry(ex.Message);
+                EventLog.WriteEntry("LogitudeBatchServices Exception : " + ex.ToString(), EventLogEntryType.Error);
+                //EventLog.WriteEntry("LogitudeBatchServices Error");
+                //EventLog.WriteEntry(ex.Message);
             }
         }
-        public void StartLogitudeBatchServices(string arg)
+        public void StartLogitudeBatchServices(string[] args)
         {
             try
             {
+               
                 ProcessStartTime = DateTime.Now;
-                if (BatchServiceTimer == null)
-                {
-                    this.BatchServiceTimer = new System.Timers.Timer();
+                StartBatchServiceInternalManager();
+                AnalyseBatchServiceParameters(args);
 
-                    TimeSpan t = new TimeSpan(0, 0, 30);
-                    BatchServiceTimer.Interval = (int)t.TotalMilliseconds;
-                    BatchServiceTimer.Stop();
-                    BatchServiceTimer.Elapsed += BatchServiceTimer_Elapsed;
-                }
-                var args = arg.Split(' ').ToList();
-
-                var IgnoredServices = args.Where(a => a.Contains("-Ignore")).FirstOrDefault();
-                var IncludedServices = args.Where(a => a.Contains("-Include")).FirstOrDefault();
-                MaxMemoryMB = int.Parse(args.Where(a => a.Contains("-MMMB")).FirstOrDefault());
-                MaxWorkingTimeInMinutes = int.Parse(args.Where(a => a.Contains("-MPWTIM")).FirstOrDefault());
                 EventLog.WriteEntry("worker_DoWork start");
-                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint(IncludedServices, IgnoredServices);
+                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint(IncludedServicesAsArgs, IgnoredServicessAsArgs);
                 d.OnStart();
+                BatchServiceTimer.Start();
                 EventLog.WriteEntry("OnStart Passed ");
                 d.Run();
             }
             catch (Exception ex)
+            { 
+                EventLog.WriteEntry("LogitudeBatchServices Exception : " + ex.ToString(), EventLogEntryType.Error);
+            }
+            
+        }
+
+        private void AnalyseBatchServiceParameters(string[] argsList)
+        {
+            string[] args = argsList;
+            if (argsList.Length == 1)
             {
-                EventLog.WriteEntry("LogitudeBatchServices Error");
-                EventLog.WriteEntry(ex.Message);
+                args = argsList[0].Split(' ');
+            }
+            var IgnoredServices = args.Where(a => a.Contains("-Ignore")).FirstOrDefault();
+            var IncludedServices = args.Where(a => a.Contains("-Include")).FirstOrDefault();
+            MaxMemoryMB = int.Parse(args.Where(a => a.Contains("-MMMB")).FirstOrDefault().Split(':')[1]);
+            var temp = args.Where(a => a.Contains("-MPWTIM")).FirstOrDefault();
+            if (temp != null)
+            {
+                MaxWorkingTimeInMinutes = int.Parse(temp.Split(':')[1]);
+                EventLog.WriteEntry("MaxWorkingTimeInMinutes  " + MaxWorkingTimeInMinutes);
+            }
+            IncludedServicesAsArgs = !string.IsNullOrEmpty(IncludedServices) ? IncludedServices.Split(':')[1] : "";
+            IgnoredServicessAsArgs = !string.IsNullOrEmpty(IgnoredServices) ? IgnoredServices.Split(':')[1] : "";
+        }
+
+        private void StartBatchServiceInternalManager()
+        {
+            if (BatchServiceTimer == null)
+            {
+                this.BatchServiceTimer = new System.Timers.Timer();
+
+                TimeSpan t = new TimeSpan(0, 0, 30);
+                BatchServiceTimer.Interval = (int)t.TotalMilliseconds;
+                BatchServiceTimer.Stop();
+                BatchServiceTimer.Elapsed += BatchServiceTimer_Elapsed;
             }
         }
 
@@ -110,12 +136,12 @@ namespace LogitudeBatchServices
             {
                 if (CheckIsMaxMemoryExceeded(CurrentProcess))
                 {
-                    RestartProcess(CurrentProcess);
+                    StopProcess(CurrentProcess);
                 }
 
                 if (CheckIsMaxWorkingTimeInMinutesExceeded(CurrentProcess))
                 {
-                    RestartProcess(CurrentProcess);
+                    StopProcess(CurrentProcess);
                 }
             }
         }
@@ -140,9 +166,9 @@ namespace LogitudeBatchServices
             return false;
         }
 
-        private void RestartProcess(Process currentProcess)
+        private void StopProcess(Process currentProcess)
         {
-            EventLog.WriteEntry("Process WIth PID : " + currentProcess.Id + " Restarted");
+            EventLog.WriteEntry("Process WIth PID : " + currentProcess.Id + " Stopped");
             currentProcess.WaitForExit((int)new TimeSpan(0, 1, 0).TotalMilliseconds);
             currentProcess.Kill();
         }
@@ -169,6 +195,7 @@ namespace LogitudeBatchServices
         {
             var worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+           
             worker.RunWorkerAsync(argument: arg);
             //Task.Factory.StartNew(() => {
             //    StartLogitudeBatchServices(arg);
