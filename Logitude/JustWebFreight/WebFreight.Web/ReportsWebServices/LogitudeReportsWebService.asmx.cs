@@ -1063,6 +1063,8 @@ namespace WebFreight.Web.ReportsWebServices
                 item.BillToVendorId = d.BillToId;
                 item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
                 item.InvoiceAmount = d.AmountInLocalCurrency;
+                item.InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency;
+                item.AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue;
                 item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
                 item.BranchId = d.BranchId;
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
@@ -1091,6 +1093,8 @@ namespace WebFreight.Web.ReportsWebServices
                      InvoiceStatus = d.Status == null ? null : d.Status.Name,
                      InvoiceAmount = d.AmountInLocalCurrency,
                      AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
+                     InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
+                     AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue,
                      BranchId = d.BranchId,
                  }).ToList();
 
