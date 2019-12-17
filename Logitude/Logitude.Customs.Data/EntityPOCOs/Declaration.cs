@@ -330,9 +330,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? AmendmentDeficitInitiated { get; set; }
         [Column("AmendDeficitInitiatedReasTo")]
 	    public string AmendDeficitInitiatedReasTo { get; set; }
-        [ForeignKey("CreatedByUser")]
+        [ForeignKey("AmendmentCorrectedByUser")]
         [Column("AmendmentCorrectedByUserId")]
 	    public string AmendmentCorrectedByUserId { get; set; }
+	      
+        public virtual User AmendmentCorrectedByUser { get; set; }
         [Column("AmendmentRejectionReason")]
 	    public string AmendmentRejectionReason { get; set; }
         [Column("IsAmendment")]

@@ -404,6 +404,14 @@
     <Compile Include="Migrations\201911181156591_ChangesHazardousSubstances1.Designer.cs">
       <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs" />
+    <Compile Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.Designer.cs">
+      <DependentUpon>201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912171544423_AmendmentStatus_LenghtName.cs" />
+    <Compile Include="Migrations\201912171544423_AmendmentStatus_LenghtName.Designer.cs">
+      <DependentUpon>201912171544423_AmendmentStatus_LenghtName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -693,6 +701,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911181156591_ChangesHazardousSubstances1.resx">
       <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.resx">
+      <DependentUpon>201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912171544423_AmendmentStatus_LenghtName.resx">
+      <DependentUpon>201912171544423_AmendmentStatus_LenghtName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

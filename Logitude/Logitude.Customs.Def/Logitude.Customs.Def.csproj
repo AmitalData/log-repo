@@ -103,6 +103,7 @@
     <Compile Include="EntityPMs\Generated\AgentTalkBackTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentRequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ApprovedProfessionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AssigneeNotificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AttachmentTypePM.Generated.cs" />
