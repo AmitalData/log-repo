@@ -646,6 +646,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         this.SelectedFiltersDataSource = temp;
                         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
+                    else {
+                        this.SelectedFiltersDataSource = [];
+                    }
                     this.LoadBIReportData();
                 }
             });
