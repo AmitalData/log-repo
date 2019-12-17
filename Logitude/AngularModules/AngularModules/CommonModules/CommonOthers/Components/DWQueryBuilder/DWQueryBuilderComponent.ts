@@ -927,33 +927,35 @@ export class DWQueryBuilderComponent extends BaseComponent {
         MyFilter.FilterItems.forEach((field) => {
             
             if (field.FilterItems.length == 0) {
-                if (field.DataTypeCode && field.TextValue && field.TextValue != "IsNull" && field.TextValue != "IsNotNull" && field.TextValue.indexOf(';') < 0) {
-                    switch (field.DataTypeCode.toLowerCase()) {
-                        case 'integer':
-                        case 'double':
-                        case 'decimal':
-                            {
-                                var val: number;
+                if (field.TextValue != true) {
+                    if (field.DataTypeCode && field.TextValue && field.TextValue != "IsNull" && field.TextValue != "IsNotNull" && field.TextValue.indexOf(';') < 0) {
+                        switch (field.DataTypeCode.toLowerCase()) {
+                            case 'integer':
+                            case 'double':
+                            case 'decimal':
+                                {
+                                    var val: number;
 
-                                if ((field.TextValue + "").indexOf(',') == -1) {
-                                    val = Number(field.TextValue);
-                                }
+                                    if ((field.TextValue + "").indexOf(',') == -1) {
+                                        val = Number(field.TextValue);
+                                    }
 
-                                if (isNaN(Number(val))) {
-                                    Valid = false;
+                                    if (isNaN(Number(val))) {
+                                        Valid = false;
+                                    }
                                 }
+                            default: {
+                                break;
                             }
-                        default: {
-                            break;
+
                         }
 
                     }
 
                 }
-
-            }
-            else {
-                this.ValidFiltersValues(field);
+                else {
+                    this.ValidFiltersValues(field);
+                }
             }
 
         });
