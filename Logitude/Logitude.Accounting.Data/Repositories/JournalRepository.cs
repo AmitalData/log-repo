@@ -238,6 +238,17 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
         }
 
+        public IQueryable<Journal> GetQueryableBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
+        {
+            fromTruncateTime = fromTruncateTime.Date;
+            toTruncateTime = toTruncateTime.Date;
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where EntityFunctions.TruncateTime(a.AccountingDate) >= fromTruncateTime && EntityFunctions.TruncateTime(a.AccountingDate) <= toTruncateTime
+                     select a);
+            return q;
+
+        }
         public IQueryable<Journal> GetQueryableApprovedBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
         {
             var q = (from a in context.Journals
