@@ -95,7 +95,8 @@ namespace Logitude.IntegrationTest.FullAccounting
          }
         private static async Task GetCountryAX()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("CountryViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22");
+            HttpResponseMessage response = await RestClientService.GetAsync("CountryViews/" + QueryFiltersPreparation.GetUrlParameters("AX"));
+           
              CountryList countryList = RestClientService.ParseResponse<CountryList>(response);
             FullAccountingVariables.CountryAXId = countryList.Id;
         }
