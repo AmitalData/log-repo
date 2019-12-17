@@ -1702,6 +1702,10 @@
     <Compile Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.Designer.cs">
       <DependentUpon>201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs" />
+    <Compile Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.Designer.cs">
+      <DependentUpon>201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912161138328_FixPricesStepsObjectTableName_Maheera.cs" />
     <Compile Include="Migrations\201912161138328_FixPricesStepsObjectTableName_Maheera.Designer.cs">
       <DependentUpon>201912161138328_FixPricesStepsObjectTableName_Maheera.cs</DependentUpon>
@@ -2920,6 +2924,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.resx">
       <DependentUpon>201912101345220_AddAirLCLStepPricesToTariffSettings_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.resx">
+      <DependentUpon>201912111208376_AddFirstARInvoiceApprovalDateToShipment_Samar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912161138328_FixPricesStepsObjectTableName_Maheera.resx">
       <DependentUpon>201912161138328_FixPricesStepsObjectTableName_Maheera.cs</DependentUpon>
