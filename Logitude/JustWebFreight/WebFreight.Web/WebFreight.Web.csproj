@@ -2965,6 +2965,10 @@
     <Content Include="Integration Test\CRM\Opportunity\Opportunities.postman_collection.json" />
     <Content Include="Integration Test\APInvoiceFromShipment\Create-EditAPInvoiceFromShipment.postman_collection.json" />
     <Content Include="Integration Test\Accounting\AP Invoice.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\Ahmad.csv" />
+    <Content Include="Integration Test\FullAccounting\FullAccountingTesting.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\PostmanDataCloud.csv" />
+    <Content Include="Integration Test\FullAccounting\PrepareFullAccountingVars.postman_collection.json" />
     <Content Include="Integration Test\LoginVars\CloudLoginVars.csv" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
@@ -6397,7 +6401,6 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
-    <Folder Include="Integration Test\FullAccounting\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
