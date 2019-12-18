@@ -5,7 +5,7 @@
         </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="false">
         <td>
             <table>
 
@@ -81,32 +81,138 @@
 
                 <!-- DWQueryId -->
                 <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td *ngIf="IsNewQuery" style="width: 57px;">
+                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
+                                </td>
+                                <td *ngIf="!IsNewQuery" s style="width: 57px;">
+                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>-->
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
         </td>
+    </tr>
+
+    <tr >
         <td>
             <table>
-                <tr>
-                    <td *ngIf="IsNewQuery" style="width: 57px;">
-                        <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
+
+                <!-- Name -->
+                <tr class="FormFieldRow">
+                    <td style="width:110px;">
+                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td *ngIf="!IsNewQuery" s style="width: 57px;">
-                        <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+
+                    <td style="width:260px;">
+                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                     </td>
                     <td>
                         <div></div>
                     </td>
                 </tr>
-            </table>
+
+                <!-- BIReportFolderId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'BIReportFolderId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'BIReportFolderId'"
+                                [SelectedValue]="BIReportFolderId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'BIReportFolder'" [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Tenant -->
+                <tr class="FormFieldRow">
+                    <td style="width:110px;">
+                        <LogLabel [ObjectFieldName]="'Tenant'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
+                    </td>
+
+                    <td style="width:260px;">
+                        <!--<LogTextBox [ObjectFieldName]="'Tenant'" [Text]="Tenant" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>-->
+                        <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Tenant'" (SearchTextChangeEvent)="OnSearchTextChangeEvent($event)"></SearchTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Tenant -->
+                <!--<tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'Tenant'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td>
+            <LogLov [ObjectFieldName]="'Tenant'"
+                    [SelectedValue]="Tenant"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Tenant'" [HideColumns]="true">
+            </LogLov>
         </td>
         <td>
             <div></div>
         </td>
     </tr>-->
 
+                <!-- Grid -->
                 <tr>
-                    <td colspan="3">
-                        <div></div>
+                    <td colspan="4">
+                        <div class="FillParent">
+                            <div class="ScrollViewer">
+                                <div class="ScrollContent">
+                                    <table>
+                                        <tr>
+                                            <td style="height: 100%;">
+                                                <div style="height: 100%; width: 100%; position: relative;">
+                                            
+
+                                                    <logitude-grid
+                                                                   [rows]="items"
+                                                                   [dataSource]="DataSource"
+                                                                   [SearchFieldchangeevent]="searchFieldChangeEvent"
+                                                                   [columns]="columns"
+                                                                   [autoLoad]="true"
+                                                                   (rowSelectedEvent)="onRowSelected($event)"
+                                                                   [IsCustomTemplate]="true">
+                                                    </logitude-grid>
+
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
 
