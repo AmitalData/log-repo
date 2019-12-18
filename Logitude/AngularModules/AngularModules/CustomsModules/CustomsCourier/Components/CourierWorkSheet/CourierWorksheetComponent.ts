@@ -33,6 +33,7 @@ import { CourierPendingReasonList } from '../../../../Customs/EntityLists/Courie
 import { element } from 'protractor';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
     moduleId: module.id,
@@ -198,11 +199,33 @@ export class CourierWorksheetComponent extends BaseComponent
 
     SetWindowArgs(windowArgs) {
         this.entityPM = windowArgs.CurrentEntity;
-        if (windowArgs.TabMode == "Pending902") {
-            this._SelectedTabFilter = this._TabFilterList[6];
-            this.PendingFilter = "902";
-            this.TabFilterClick(this._TabFilterList[6]);
+
+        if (windowArgs.TabMode != null) {
+            switch (windowArgs.TabMode) {
+                case "Pending902":
+                    {
+                        this._SelectedTabFilter = this._TabFilterList[6];
+                        this.PendingFilter = "902";
+                        this.TabFilterClick(this._TabFilterList[6]);
+                        break;
+                    }
+                case "OpenDeclarations":
+                    {
+                        this._SelectedTabFilter = this._TabFilterList[0];
+                        this._SelectedStatusValue = 'O';
+                        this.SelectedStatusValueClick('O');
+                        break;
+                    }
+                case "SuspendedDeclarations":
+                    {
+                        this._SelectedTabFilter = this._TabFilterList[0];
+                        this._SelectedCustomStatusValue = 'S';
+                        this.SelectedCustomStatusValueClick('S');
+                        break;
+                    }
+            }
         }
+
         this.CheckRequiredFields();
     }
 
@@ -524,14 +547,14 @@ export class CourierWorksheetComponent extends BaseComponent
         this._ValidationErrors2 = []
             this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
                 data => {
-                    if (data.Result != "")
-                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
+                    //if (data.Result != "")
+                    //    this._ValidationErrors2.push();
                     switch (data.Result) {
                         case "INVALID_INPROGRESS":
-                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
+                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") +' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess") )
                             break;
                         case "INVALID_PAYED":
-                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
+                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") + ' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
                             break;
                     }
                 });
@@ -1275,7 +1298,7 @@ export class CourierWorksheetComponent extends BaseComponent
             }
         }
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
+            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
         }
         if (AppTool.IsNullOrEmpty(filters.SortBy)) {
             filters.SortBy = "CourierHawb";
@@ -1843,6 +1866,20 @@ export class CourierWorksheetComponent extends BaseComponent
             this.UpdateIsReadyForInvoice();
         }
     }
+    Export2Excel() {
+        //this._IsDisableToggle = !this._IsDisableToggle;
+        
+        
+        
+
+        //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
+                            //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
+
+
+        window.open(url);
+
+    }
     UpdateIsReadyForInvoice() {
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         this.entityPM.IsReadyForInvoice = !this.entityPM.IsReadyForInvoice;
@@ -1945,14 +1982,14 @@ export class CourierWorksheetComponent extends BaseComponent
         this._ValidationErrors2=[]
         this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
             data => {
-                if (data.Result != "")
-                    this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
+                //if (data.Result != "")
+                //    this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
                 switch (data.Result) {
                     case "INVALID_INPROGRESS":
-                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
+                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") + ' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
                         break;
                     case "INVALID_PAYED":
-                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
+                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") + ' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
                         break;
                     case "":
                         {

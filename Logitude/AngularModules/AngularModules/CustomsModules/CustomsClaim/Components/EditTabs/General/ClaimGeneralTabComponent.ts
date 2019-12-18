@@ -40,11 +40,11 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     public CurrentEditComponentId: string;
     private isControlEnabled: boolean = true;
+    private IsClientPassportEnabled: boolean = false;
 
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
     public ClientPMService: ClientPMService = new ClientPMService;
-
 
     IsLoaded: boolean = false;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -61,6 +61,11 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.BuildRelatedEntitiesList();
                         this.BuildAddressesList();
+                        if (AppTool.IsNullOrEmpty(this.ClientId) &&
+                            !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
+                            this.IsClientPassportEnabled = true;
+                            this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
+                        }
                     }
                     this.Listen();
                     this.IsLoaded = true;
@@ -149,6 +154,12 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ClientId)) {
             this.ClientPMService.get(this.EntityPM.ClientId)
+                .subscribe((myResponse: ServiceResponse) => {
+                    this.GetSingleClientOp_Completed(myResponse, false);
+                });
+        }
+        else if (!AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber)) {
+            this.ClientMessagesService.GetSingleClientPMByPassportNumberOrCountry(this.EntityPM.PassportNumber, this.EntityPM.PassportCountryTypeCode)
                 .subscribe((myResponse: ServiceResponse) => {
                     this.GetSingleClientOp_Completed(myResponse, false);
                 });
@@ -341,7 +352,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         this.CurrentSearchAddressMode = "";
 
         if ((item.AddressMode == "AddressCode" && AppTool.IsNullOrEmpty(item.ClientPM.Id)
-            || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id))) {
+            || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber))) {
 
             var text: string = "ראשית חובה לבחור לקוח";
             if (item.AddressMode == "AddressCode") {
@@ -551,6 +562,43 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicator("");
 
         this.EditClaimsRelatedEntityLine(newClaimsRelatedEntityLineComponent,true);
+    }
+
+    EditClient() {
+
+        if (!AppTool.IsNullOrEmpty(this.ClientId)) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        //windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 550;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/General/PassportDetails/PassportDetailsComponent');
+    }
+
+    SetFieldsDisabled(message: string) {
+        if (message == "ok") {
+            if (AppTool.IsNullOrEmpty(this.ClientId) &&
+                !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
+                this.IsClientPassportEnabled = true;
+                this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
+            }
+            else {
+                this.IsClientPassportEnabled = false;
+                this.UIProperties.SetEnabled("ClientId", "Customs.Claim", true);
+            }
+        }
+           
     }
 
     //#endregion

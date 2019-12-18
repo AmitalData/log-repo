@@ -16,7 +16,6 @@ import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
 import { CardListService } from '../../../Common/Services/StandardLists/CardListService'
 import { CardList } from '../../../Common/EntityLists/CardList';
 
-
 declare var window: any;
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
@@ -73,9 +72,10 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         );
 
         this.firstTime = true;
+
         this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
         this.BuildAccountingCustomFilesList();
-      
+
         if (this.EntityPM.IsClosed) {
             this.IsClosed = true;
             this.DisplayOnlyMessageVisibility = true;
@@ -424,7 +424,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                                     result.forEach((item) => {
                                         this.GuaranteeDefaultList.push(item);
                                     });
-
+                                    if (this.IsGuaranteeDefaultList) this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
                                 }
                             }
                         });

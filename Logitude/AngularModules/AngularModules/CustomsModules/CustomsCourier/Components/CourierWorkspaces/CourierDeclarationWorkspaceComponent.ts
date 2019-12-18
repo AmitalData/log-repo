@@ -25,8 +25,6 @@ import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/De
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
-//import { AmitalGatewayUtil } from '../../../Utilities/AmitalGatewayUtil';
 
 @Component({
     moduleId: module.id,
@@ -40,7 +38,6 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
-    _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
     _EntityListService: EntityListService = new EntityListService();
 
     // Queries Features
@@ -58,9 +55,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
+    @Output() onQueryChangeEvent = new EventEmitter();
 
     constructor() {
-        this.LoadAllScreenData();
+        //this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => { 
@@ -75,14 +73,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
     ngAfterViewInit() {
+        
         this.LoadAllScreenData();
     }
     public IsQueryVisible_MyViewsGroup: boolean = true;
-
-    InitComponent() {
-        this.LoadAllScreenData();
-        this.SetQueriesVisibility();
-    }
 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
@@ -264,9 +258,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
 
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
+        filters = new ApiQueryFilters();
         //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
@@ -299,60 +291,73 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         this.columns = [];
 
         this.columns.push({
-            FieldName: 'MAWBP',
+            FieldName: 'PrefixMAWB',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.MAWB"),
-            Styles: { width: '120px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
         this.columns.push({
             FieldName: 'EstimatedArrivalDate',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.EstimatedArrivalDate"),
-            Styles: { width: '100px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
         this.columns.push({
             FieldName: 'CalcClosedForFollowUp',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcClosedForFollowUp"),
-            Styles: { width: '70px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
-            //HtmlListComponentName: 'CourierWorksheetListTemplate',
-            //HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
         this.columns.push({
             FieldName: 'CalcMissingImporterId',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcMissingImporterId"),
-            Styles: { width: '160px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
         this.columns.push({
             FieldName: 'CalcMissingClassification',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcMissingClassification"),
-            Styles: { width: '160px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
         this.columns.push({
             FieldName: 'CalcPendingCustoms',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcPendingCustoms"),
-            Styles: { width: '160px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
+        });
+
+        this.columns.push({
+            FieldName: 'CalcSuspendedDeclarations',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcSuspendedDeclarations"),
+            Styles: { width: '150px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
     }
@@ -373,10 +378,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
-
+        filters = new ApiQueryFilters();
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -403,6 +405,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             filters = new ApiQueryFilters();
         }
         filters.addAdditionalFilter("IsOpen", true, null, null, "Equals", false, false, false, "boolean");
+        filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
         if (AppTool.IsNullOrEmpty(filters.SortBy)) {
@@ -414,36 +417,6 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     }
 
     ViewInitCompleted($event) {
-    }
-
-    ShowCourierWorkSheetForPending902(event) {
-
-        //var selected = event.rowData;
-        var windowArgs: any = {};
-            this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
-                this._CourierMasterPMService.get("1-37").subscribe((myResponse: any) => {
-                        if (myResponse.HasError) {
-                            console.log("Error while getting EntityPM", myResponse);
-                        }
-                        else {
-                            windowArgs.CurrentEntity = myResponse.Result;
-                            windowArgs.TabMode = "Pending902";
-                            var logWindow = new LogitudeWindow();
-                            logWindow.Width = 1500;
-                            logWindow.Height = 1000;
-                            logWindow.WindowArgs = windowArgs;
-                            logWindow.ShowCloseButton = true;
-                            logWindow.IsFillScreen = true;
-                            //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
-                            logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
-                            logWindow.WindowClosed.subscribe(($event1: any) => {
-                                //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
-                                //this.isEditControlOpened = false;
-                                //this.OnBackFromEdit(selectedEntityId, $event);
-                            });
-                        }
-                });
-            });
     }
 
 }

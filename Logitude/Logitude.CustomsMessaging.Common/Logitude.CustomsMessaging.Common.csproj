@@ -76,7 +76,7 @@
     <Compile Include="RequestParams\RTGSInfoQueryRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLStorageSiteRequestParams.Shared.cs" />
-    <Compile Include="RequestParams\SendCollateralsRequestParams.Shared - Copy.cs" />
+    <Compile Include="RequestParams\SendCollateralsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendPayReadyLowRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendUnCorrectDocumentsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\StorageEntranceUnloadingRequestParams.Shared.cs" />

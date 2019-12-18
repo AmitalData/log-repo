@@ -84,7 +84,7 @@ namespace AmitalCustomsWindowsService.BL
                     // set new run time
                     lastRunTime = DateTime.UtcNow;
                 }
-                if (_TWorker.DebugMode && Environment.UserInteractive  )
+                if (_TWorker.DebugMode && (Environment.UserInteractive || this.MyType == "LoadTestWR"))
                 {
                     Logger.LogMe("_TWorker.DebugMode && Environment.UserInteractive", false);
                     return;

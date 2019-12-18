@@ -154,6 +154,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetSingleClientPMByPassportNumberOrCountry(string passportNumber, string passportCountryCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                ClientPM client = new ClientPM();
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                customContext = CustomContext.GetContext(tenant);
+                ClientQueryService clientQuery = new ClientQueryService(customContext);
+                string clientId = clientQuery.GetIdByPassportNumberOrCountry(passportNumber, passportCountryCode, tenant);
+                if (clientId != null)
+                {
+                    client = clientQuery.GetSingle(clientId, true, false);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, client);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage PutRecallClientsForCutomsRequest(ImageParameter fileUploadParamerter)
         {
             try

@@ -594,7 +594,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             Boolean ticketValidStatus = true;
 
             List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityPM.Id, "", "", "", entityPM.Tenant, "Declaration").ToList();
-            if (customsDocumentsTicketPMList == null && customsDocumentsTicketPMList.Count() < 1)
+            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
             {
 
                 var DocumentsFilingIdList = new List<string>();

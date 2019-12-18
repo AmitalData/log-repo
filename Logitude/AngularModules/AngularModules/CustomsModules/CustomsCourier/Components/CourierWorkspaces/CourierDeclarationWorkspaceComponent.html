@@ -136,14 +136,6 @@
                                                                         </td>
                                                                     </tr>
 
-
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <!-- ({{courierMasterSummary.Pending902 - for test mirit}})  -->
-                                                                            <p class="QueryLink" (click)="ShowCourierWorkSheetForPending902('Pending')"> {{'Pending 902 Test Mirit'}}  </p>
-                                                                        </td>
-                                                                    </tr>
-
                                                                     <tr>
                                                                         <td><div></div></td>
                                                                     </tr>
@@ -266,22 +258,12 @@
 
                                                 <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                     <logitude-grid GridWidth="100%" GridHeight="100%"
-                                                                   [ObjectTable]="ObjectTableName"
-                                                                   [dataSource]="DataSource"
-                                                                   (AfterViewInitCompleted)="ViewInitCompleted($event)"
-                                                                   [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                                                   [columns]="columns"
-                                                                   [SelectedRow]="SelectedRow"
-                                                                   [IsCustomTemplate]="false"
-                                                                   [RowBackGroundColor]="'#DFECF7'"
-                                                                   [ChangeColorByPropValue]="true"
-                                                                   [IgnoreRowHoverVisibilityQueryName]="true"
-                                                                   [EnableRowHoverVisibility]="true"
-                                                                   [HoverTemplateIndex]="8"
-                                                                   [rowHeight]="40"
-                                                                   [rows]="RowsItems"
-                                                                   [PassAdditionalDataToTemplates]="true"
-                                                                   [MyScrollTop]="MyScrollTop">
+                                                        [ObjectTable]="ObjectTableName"
+                                                        [dataSource]="DataSource"
+                                                        [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                                        [columns]="columns"
+                                                        [QueryChangeEvent]="onQueryChangeEvent"
+                                                        [IsCustomTemplate]="true">
                                                     </logitude-grid>
                                                 </div>
                                             </td>

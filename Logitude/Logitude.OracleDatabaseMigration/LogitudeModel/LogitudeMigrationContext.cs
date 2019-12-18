@@ -2845,6 +2845,17 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<GuaranteeCertificateType> GuaranteeCertificateTypes { get; set; }
         public IDbSet<GuaranteeCondition> GuaranteeConditions { get; set; }
 
+        public IDbSet<DBMigration> DBMigrations
+        {
+            get; set;
+
+        }
+
+        public IDbSet<DBMigrationLine> DBMigrationLines
+        {
+            get; set;
+
+        }
         public IDbSet<DebtNotificationType> DebtNotificationTypes { get; set; }
         public IDbSet<DemanderType> DemanderTypes { get; set; }
         public IDbSet<DepositCustomerActivity> DepositCustomerActivities { get; set; }
@@ -3741,6 +3752,10 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new DangerousGoodsPackingReqMap());
 
+            modelBuilder.Configurations.Add(new DBMigrationMap());
+
+            modelBuilder.Configurations.Add(new DBMigrationLineMap());
+
             modelBuilder.Configurations.Add(new DebtNotificationTypeMap());
 
             modelBuilder.Configurations.Add(new DeclarationMap());
@@ -4239,6 +4254,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Entity<GuaranteeCondition>().Property(x => x.GuaranteeAmount).HasPrecision(16, 2);
 
             modelBuilder.Entity<SupplierInvoice>().Property(x => x.InsruancePercentage).HasPrecision(7, 4);
+            modelBuilder.Entity<DBMigration>().Property(x => x.MajorVersion).HasPrecision(5, 2);
+
             modelBuilder.Entity<Declaration>().Property(x => x.LoadingFactor).HasPrecision(18, 10);
 
             modelBuilder.Entity<ProceduralFault>().Property(x => x.RansomViolationSum).HasPrecision(16, 2);

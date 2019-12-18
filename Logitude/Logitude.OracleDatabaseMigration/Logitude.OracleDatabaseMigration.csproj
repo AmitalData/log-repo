@@ -404,9 +404,17 @@
     <Compile Include="Migrations\201911181156591_ChangesHazardousSubstances1.Designer.cs">
       <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912021057043_AddDSupplierInvoiceItemsEntryFieldsChange.cs" />
-    <Compile Include="Migrations\201912021057043_AddDSupplierInvoiceItemsEntryFieldsChange.Designer.cs">
-      <DependentUpon>201912021057043_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
+    <Compile Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs" />
+    <Compile Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.Designer.cs">
+      <DependentUpon>201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912031511537_dbMigLine.cs" />
+    <Compile Include="Migrations\201912031511537_dbMigLine.Designer.cs">
+      <DependentUpon>201912031511537_dbMigLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912041514241_dbMigLineTk2.cs" />
+    <Compile Include="Migrations\201912041514241_dbMigLineTk2.Designer.cs">
+      <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -698,8 +706,14 @@
     <EmbeddedResource Include="Migrations\201911181156591_ChangesHazardousSubstances1.resx">
       <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912021057043_AddDSupplierInvoiceItemsEntryFieldsChange.resx">
-      <DependentUpon>201912021057043_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.resx">
+      <DependentUpon>201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031511537_dbMigLine.resx">
+      <DependentUpon>201912031511537_dbMigLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041514241_dbMigLineTk2.resx">
+      <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

@@ -400,9 +400,9 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            debugger;
+            logWindow.WindowClosed.subscribe(($event: any) => {
             this._customsCollateralAnswerSharedDataService._SelectedItems.Collection = [];
+            this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
             this.RefreshList();
         });
             logWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralAnswerComponent');
@@ -412,9 +412,9 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
     }
 
     RefreshList() {
-
-        setTimeout(() => {
-            this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-        }, 10);
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        //setTimeout(() => {
+         
+        //}, 10);
     }
 }

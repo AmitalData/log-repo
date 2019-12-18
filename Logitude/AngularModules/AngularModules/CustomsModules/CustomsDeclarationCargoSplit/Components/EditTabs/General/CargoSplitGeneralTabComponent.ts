@@ -237,7 +237,8 @@ public CargoIdentifiersList: ObservableCollection;
     }
 
     public SetTabArgs(args: any, valdationErrorList: any[] = null) {
-        this.EntityPM = args.EntityPM;
+        
+        if (args.EntityPM instanceof DeclarationCargoSplitPM) this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
         if (this.IsDisplayOnly != true && args.IsDisplayOnly == true) {
             this.IsDisplayOnly = args.IsDisplayOnly;
@@ -293,7 +294,7 @@ public CargoIdentifiersList: ObservableCollection;
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM)this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.RefreshEntity();
                         
                     }
@@ -302,7 +303,7 @@ public CargoIdentifiersList: ObservableCollection;
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM)this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildTabs();
                     }
                 })
@@ -340,7 +341,7 @@ public CargoIdentifiersList: ObservableCollection;
     }    
 
     SetWindowArgs(winArg: any) {
-        this.EntityPM = winArg.CurrentEntity;
+        if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM)this.EntityPM = winArg.CurrentEntity;
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
@@ -811,7 +812,7 @@ public CargoIdentifiersList: ObservableCollection;
                   this.declarationCargoSplitPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
                     if (response) {
                       if (!response.HasError) {
-                        this.EntityPM = response.Result;
+                          if (response.Result instanceof DeclarationCargoSplitPM)this.EntityPM = response.Result;
                         this.BuildTabs();
                       }
                     }
@@ -1020,7 +1021,7 @@ public CargoIdentifiersList: ObservableCollection;
                     }
 
                     else {
-                        this.EntityPM = myResponse.Result;
+                        if (myResponse.Result instanceof DeclarationCargoSplitPM)this.EntityPM = myResponse.Result;
                         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
                             var myErrors: string[] = [];
@@ -1080,7 +1081,7 @@ public CargoIdentifiersList: ObservableCollection;
                 }
 
                 else {
-                    this.EntityPM = myResponse.Result;
+                    if (myResponse.Result instanceof DeclarationCargoSplitPM)this.EntityPM = myResponse.Result;
                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
                         var myErrors: string[] = [];

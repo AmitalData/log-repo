@@ -20,6 +20,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.BL;
+using System.Diagnostics;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -62,6 +63,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
+            }
+
+            DateTime stopLogAt = new DateTime(2020, 03, 01);
+            Debug.WriteLine("DeclarationCourierStatusUpdateServiceOnUpdating");
+            string logData = "";
+            try
+            {
+                if (!String.IsNullOrWhiteSpace(entityPOCO.CourierPaymentStatusCode) && String.IsNullOrWhiteSpace(entityPM.CourierPaymentStatusCode))
+                {
+                    logData = $"CourierPaymentStatusCode was {entityPOCO.CourierPaymentStatusCode}, and changed to null";
+                    LogitudeSettings.HandleLogMe("CourierPaymentStatusCode " + logData, false, "DeclarationCourierStatus.CourierPaymentStatusCode", stopLogAt);
+                    Debug.WriteLine("CourierPaymentStatusCode==null");
+                }
+                if (!String.IsNullOrWhiteSpace(entityPOCO.DocumentStatusCode) && String.IsNullOrWhiteSpace(entityPM.DocumentStatusCode))
+                {
+                    logData += $"DocumentStatusCode was {entityPOCO.DocumentStatusCode}, and changed to null";
+                    LogitudeSettings.HandleLogMe("DocumentStatusCode " + logData, false, "DeclarationCourierStatus.DocumentStatusCode", stopLogAt);
+                    Debug.WriteLine("DocumentStatusCode==null");
+                }
+                if (!String.IsNullOrWhiteSpace(entityPOCO.CourierDeclarationStatusCode) && String.IsNullOrWhiteSpace(entityPM.CourierDeclarationStatusCode))
+                {
+                    logData += $"CourierDeclarationStatusCode was {entityPOCO.CourierDeclarationStatusCode}, and changed to null";
+                    LogitudeSettings.HandleLogMe("CourierDeclarationStatusCode " + logData, false, "DeclarationCourierStatus.CourierDeclarationStatusCode", stopLogAt);
+                    Debug.WriteLine("CourierDeclarationStatusCode==null");
+                }
+            }
+            catch (Exception E)
+            {
+
+                LogitudeSettings.HandleLogMe(E.ToString() + logData, true, "DeclarationCourierStatusUpdateServiceOnUpdating", stopLogAt);
+                throw;
+            }
+            finally
+            {
+
             }
 
             UpdateUnifreight(entityPM);

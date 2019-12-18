@@ -269,6 +269,11 @@ export class CourierMasterPM {
     public set CalcPending900(newValue: number) { if (this.calcPending900 != newValue) { this.calcPending900 = newValue; this.MarkAsDirty("CalcPending900"); } }
        
 	 
+    private calcSuspendedDeclarations: number;
+    public get CalcSuspendedDeclarations() { return this.calcSuspendedDeclarations; }
+    public set CalcSuspendedDeclarations(newValue: number) { if (this.calcSuspendedDeclarations != newValue) { this.calcSuspendedDeclarations = newValue; this.MarkAsDirty("CalcSuspendedDeclarations"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

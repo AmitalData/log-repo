@@ -162,6 +162,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 1170 per CourierMasterId
 "UCB8250",//,Batch Send 8250 per CourierMasterId
+"UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 //There is a check in Genral locks     "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
 

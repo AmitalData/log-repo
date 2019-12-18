@@ -186,6 +186,7 @@
     <Content Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.html" />
     <Content Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.html" />
+    <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\General\PassportDetails\PassportDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclAP3LoisComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclATabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.html" />
@@ -267,6 +268,7 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.html" />
+    <Content Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.html" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
     <Content Include="CRMModules\CRMActivity\Components\EditTabs\ActivityGeneralTabComponent.html" />
@@ -762,6 +764,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\PassportDetails\PassportDetailsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclAP3LoisComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclATabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.ts" />
@@ -879,6 +882,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Collateral\DeclarationCollateralsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\ModuleDeclarationTabs.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\EndDateComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.ts" />
     <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />

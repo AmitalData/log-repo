@@ -151,6 +151,8 @@
 
         private string changeInSupplierInvoiceField;
 
+        private string qUE_TYPEField;
+
         /// <remarks/>
         public string INVOICELINENO
         {
@@ -305,6 +307,19 @@
             set
             {
                 this.changeInSupplierInvoiceField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string QUE_TYPE
+        {
+            get
+            {
+                return this.qUE_TYPEField;
+            }
+            set
+            {
+                this.qUE_TYPEField = value;
             }
         }
     }

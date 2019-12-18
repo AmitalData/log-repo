@@ -39,5 +39,27 @@ namespace Unifreight.BL.EntityPMs
 
         public string GSTRING3 { get; set; }
 
+        public DateTime? INVOICEDATE { get; set; }
+
+        public decimal? INVOICEAMOUNT { get; set; }
+
+        public string CURRENCYID { get; set; }
+
+        public string CUSTOMSSUPPLIERID { get; set; }
+
+        public string INCOTERMS { get; set; }
+
+        public decimal? TAX { get; set; }
+
+        public decimal? DISCOUNT { get; set; }
+
+        public string ORIGINID { get; set; }
+
+        public string MORE { get; set; }
+
+        public decimal? ADDITIONAL { get; set; }
+
+        public string INVOICENO { get; set; }
+
     }
 }

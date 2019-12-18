@@ -4739,7 +4739,29 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"STAT_TYPE")
                     .HasMaxLength(32)
                     .HasColumnType("varchar2");
-
+            modelBuilder.Entity<CFIMSVLINE>()
+                .Property(p => p.ORIGINID)
+                    .HasColumnName(@"ORIGIN_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVLINE>()
+                .Property(p => p.ITEMPRICE)
+                    .HasColumnName(@"ITEM_PRICE")
+                    .HasColumnType("decimal")
+                    .HasPrecision(16, 4);
+            modelBuilder.Entity<CFIMSVLINE>()
+                .Property(p => p.OCRQUANTITY)
+                    .HasColumnName(@"OCR_QUANTITY")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIMSVLINE>()
+                .Property(p => p.OCRQUANTITYTYPE)
+                    .HasColumnName(@"OCR_QUANTITY_TYPE")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVLINE>()
+                .Property(p => p.LINECOUNTER)
+                    .HasColumnName(@"LINE_COUNTER")
+                    .HasColumnType("int");
             #endregion
 
             #region CFIMSVDOC
@@ -4816,7 +4838,55 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.GSTRING3)
                     .HasMaxLength(512)
                     .HasColumnType("varchar2");
-
+            modelBuilder.Entity<CFIMSVDOC>()
+                 .Property(p => p.INVOICEDATE)
+                     .HasColumnName(@"INVOICE_DATE")
+                     .HasColumnType("date");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.INVOICEAMOUNT)
+                    .HasColumnName(@"INVOICE_AMOUNT")
+                    .HasColumnType("decimal")
+                    .HasPrecision(16, 4);
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.CURRENCYID)
+                    .HasColumnName(@"CURRENCY_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.CUSTOMSSUPPLIERID)
+                    .HasColumnName(@"CUSTOMS_SUPPLIER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.INCOTERMS)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.TAX)
+                    .HasColumnType("decimal")
+                    .HasPrecision(16, 4);
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.DISCOUNT)
+                    .HasColumnType("decimal")
+                    .HasPrecision(16, 4);
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.ORIGINID)
+                    .HasColumnName(@"ORIGIN_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.MORE)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.ADDITIONAL)
+                    .HasColumnType("decimal")
+                    .HasPrecision(16, 4);
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.INVOICENO)
+                    .HasColumnName(@"INVOICE_NO")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar2");
             #endregion
 
             #region GTBDOC
@@ -5007,7 +5077,10 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.REMARK)
                     .HasMaxLength(256)
                     .HasColumnType("varchar2");
-
+            modelBuilder.Entity<CFIMSVFILE>()
+                .Property(p => p.AQOPERATION)
+                    .HasColumnName(@"AQ_OPERATION")
+                    .HasColumnType("int");
             #endregion
 
             #region CFIMSVPAGE
@@ -5475,6 +5548,47 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region CFIMSVFLINE
+
+            modelBuilder.Entity<CFIMSVFLINE>()
+                .HasKey(p => new { p.FILENO, p.COMID, p.LINENUM })
+                .ToTable("CFIMSVFLINE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CFIMSVFLINE>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int64");
+            modelBuilder.Entity<CFIMSVFLINE>()
+                .Property(p => p.COMID)
+                    .HasColumnName(@"COM_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVFLINE>()
+                .Property(p => p.LINENUM)
+                    .HasColumnName(@"LINE_NUM")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVFLINE>()
+                .Property(p => p.ITEMNAME)
+                    .HasColumnName(@"ITEM_NAME")
+                    .HasMaxLength(128)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVFLINE>()
+                .Property(p => p.ITEMVALUE)
+                    .HasColumnName(@"ITEM_VALUE")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIMSVFLINE>()
+                .Property(p => p.ITEMTYPE)
+                    .HasColumnName(@"ITEM_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar2");
+
+            #endregion
 
             #region Disabled conventions
 
@@ -5863,5 +5977,10 @@ namespace Unifreight.Data.AmitalModel
         /// There are no comments for CFIMSVREM in the schema.
         /// </summary>
         public DbSet<CFIMSVREM> CFIMSVREMs { get; set; }
+
+        /// <summary>
+        /// There are no comments for CFIMSVFLINE in the schema.
+        /// </summary>
+        public virtual DbSet<CFIMSVFLINE> CFIMSVFLINEs { get; set; }
     }
 }

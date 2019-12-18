@@ -1147,6 +1147,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int calcSuspendedDeclarations ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcSuspendedDeclarations  
+	   {
+	    
+	     get
+		{
+		   return calcSuspendedDeclarations;
+		 }
+		 set
+		 {
+		   if(calcSuspendedDeclarations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcSuspendedDeclarations",OldValue=calcSuspendedDeclarations,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcSuspendedDeclarations=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

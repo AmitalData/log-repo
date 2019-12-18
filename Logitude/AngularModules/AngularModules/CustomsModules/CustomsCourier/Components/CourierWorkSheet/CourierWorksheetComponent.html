@@ -147,7 +147,7 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.Flight' | TextCodeTranslationPipe }}</td>
+                                            <td style="width: 50px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.Flight' | TextCodeTranslationPipe }}</td>
                                             <td style="width: 30px; font-weight:bold; font-size:16px; color: black;">  >>   </td>
                                             <td style="width: 100px; font-weight:bold ; font-size:16px;">{{entityPM.AirlinePrefix}}-{{entityPM.MAWB}}</td>
                                             <td></td>
@@ -180,10 +180,26 @@
                                                         <button style="text-align:right" *ngIf="entityPM.IsCancelled==false" (click)="CancelFlight()">{{'Customs.CourierMaster.O.CancelFlight' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" *ngIf="entityPM.IsCancelled==true" (click)="OpenFlight()">{{'Customs.CourierMaster.O.OpenFlight' | TextCodeTranslationPipe }}</button>
 
+                                                        <button style="text-align:right" (click)="Export2Excel()" [disabled]="IsDisplayOnly">{{'יצא לאקסל' }}<img class="CenterCenter" title="Export To Excel" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
                                                     </div>
 
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr style="height:10px;"></tr>
+                                        <tr>
+                                            <td colspan="3" style="width: 180px;">
+                                                <table>
+                                                    <tr>
+                                                        <!--<td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.TotalFilter' | TextCodeTranslationPipe }}</td>-->
+                                                        <td colspan="2" style="font-weight:bold; font-size:16px; ">{{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
+                                                        <td *ngIf="IsFiltered || SearchFilter != null" style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים לחיתוך'}}</td>
+                                                        <td></td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <td></td>  
                                         </tr>
                                     </table>
                                 </td>
@@ -285,7 +301,7 @@
                                                           
                                                             <tr>
                                                                 <td>
-                                                                    <span style="font-size: 13px; font-weight:bold">{{_ValidationErrors2}}</span>
+                                                                    <span style="font-size: 13px">{{_ValidationErrors2}}</span>
                                                                 </td>
                                                             </tr>
                                                             <tr style="height:10px;"><td></td></tr>
