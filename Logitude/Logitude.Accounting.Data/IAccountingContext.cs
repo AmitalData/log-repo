@@ -59,6 +59,10 @@ namespace Logitude.Accounting.Data
 		 IDbSet<InterestBasesPeriod> InterestBasesPeriods { get; }
 		 IDbSet<InterestBasesType> InterestBasesTypes { get; }
 		 IDbSet<InterestEntityType> InterestEntityTypes { get; }
+		 IDbSet<InterestReport> InterestReports { get; }
+		 IDbSet<InterestReportLine> InterestReportLines { get; }
+		 IDbSet<InterestReportLinesByDate> InterestReportLinesByDates { get; }
+		 IDbSet<InterestReportStatuse> InterestReportStatuses { get; }
 		 IDbSet<InterestTransaction> InterestTransactions { get; }
 		 IDbSet<Journal> Journals { get; }
 		 IDbSet<JournalActionType> JournalActionTypes { get; }

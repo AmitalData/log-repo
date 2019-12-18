@@ -152,6 +152,14 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new InterestEntityTypeMap());
 	
+            modelBuilder.Configurations.Add(new InterestReportMap());
+	
+            modelBuilder.Configurations.Add(new InterestReportLineMap());
+	
+            modelBuilder.Configurations.Add(new InterestReportLinesByDateMap());
+	
+            modelBuilder.Configurations.Add(new InterestReportStatuseMap());
+	
             modelBuilder.Configurations.Add(new InterestTransactionMap());
 	
             modelBuilder.Configurations.Add(new JournalMap());
@@ -274,6 +282,40 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.ForeignAmountCredit).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<InterestBasesPeriod>().Property(x => x.InterestRate).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.TotalAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.OpenBalance).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.CloseBalance).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.InvoiceAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.GLAccountInterestCreditLimit).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.LineNumber).HasPrecision(6, 0);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.TotalAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.AccumulatedAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.StandardInterestPercentage).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.ExceptionalInterestPercentage).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CreditInterestPercentage).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.StandardInterestAmount).HasPrecision(19, 3);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.ExceptionalInterestAmount).HasPrecision(20, 4);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CreditInterestAmount).HasPrecision(20, 4);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CalculatedStandInterestAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CalculatedExcepInterestAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CalculatedCreditInterestAmount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<InterestTransaction>().Property(x => x.LocalAmount).HasPrecision(16, 2);
 				
@@ -861,6 +903,30 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<InterestEntityType> InterestEntityTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReport> InterestReports 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReportLine> InterestReportLines 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReportLinesByDate> InterestReportLinesByDates 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReportStatuse> InterestReportStatuses 
 	 {
 	      get; set;
 	 
