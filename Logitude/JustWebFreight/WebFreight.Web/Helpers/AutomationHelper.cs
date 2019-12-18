@@ -448,7 +448,7 @@ namespace WebFreight.Web.Helpers
                 DocumentTypeId = newDocType.Id,
                 EditorTool = tenantZeroDocumentTypeTemplate.EditorTool,
                 CountryCode = tenantZeroDocumentTypeTemplate.CountryCode,
-                Subject = tenantZeroDocumentTypeTemplate.CountryCode,
+                Subject = tenantZeroDocumentTypeTemplate.Subject,
                 Language = tenantZeroDocumentTypeTemplate.Language,
                 OriginalTemplateId = tenantZeroDocumentTypeTemplate.Id,
                 VerticalShift = tenantZeroDocumentTypeTemplate.VerticalShift,
