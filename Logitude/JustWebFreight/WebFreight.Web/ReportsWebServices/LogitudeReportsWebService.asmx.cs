@@ -10964,7 +10964,7 @@ namespace WebFreight.Web.ReportsWebServices
         public LedgerTransactionsDataProvider GetLedgerTransactionsDataProvider(byte[] xmlFilters, int tenant)
         {
             // constants
-            const int PAGE_SIZE = 100;
+            const int PAGE_SIZE = 1000*20;
             const int PAGE_RECORD_START_INDEX = 0;
           // const string ACCOUNT_TYPE_CODE = "2";
 
