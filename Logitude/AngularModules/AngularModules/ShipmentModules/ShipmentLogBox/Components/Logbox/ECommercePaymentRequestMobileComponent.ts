@@ -46,7 +46,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     DataContext: ECommercePaymentRequestMobileComponent = this;
     private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
-    AdditionalData: any = {};
+    AdditionalData: any = {
+        RequestPaymentData: {}, PaymentData: {}};
     externalDocs: any[] = [];
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
@@ -63,7 +64,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         this._ShipmentPMService = new ShipmentPMService();
-        this.AdditionalData.RequestPaymentData = {};
+        //this.AdditionalData.RequestPaymentData = {};
+        //this.AdditionalData.PaymentData = {};
+
         //this.AdditionalData.RequestPaymentData.ServiceTypes = [];
     }
 
@@ -288,6 +291,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     OnPayClick() {
         //alert("Yes");
+        document.forms["form"].action = this.TargetEnv
         document.forms["form"].submit();
     }
     IsAgreed: boolean = false;
