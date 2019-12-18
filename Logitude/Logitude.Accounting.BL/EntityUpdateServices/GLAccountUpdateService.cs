@@ -444,10 +444,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
 
-            if (Math.Floor(Math.Log10((double)entityPM.MinimumInterestInvoiceBilling) + 1) > 2)
+            if (entityPM.MinimumInterestInvoiceBilling != null && entityPM.MinimumInterestInvoiceBilling != 0)
             {
-                throw new Exception("Number Of Digit Before Comma Must Be Five Or Less In Minimum Interest Invoice Billing Field");
+                if (Math.Floor(Math.Log10((double)entityPM.MinimumInterestInvoiceBilling) + 1) > 2)
+                {
+                    throw new Exception("Number Of Digit Before Comma Must Be Five Or Less In Minimum Interest Invoice Billing Field");
 
+                }
             }
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             bool useLocal = !((bool)loggedUser?.DontShowLocal);

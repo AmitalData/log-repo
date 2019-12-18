@@ -22,17 +22,16 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     public class ChartOfAccountIntegrationTests
     {
         [TestMethod]
-        public void ChartOfAccount_Vendor1PMCFId_Put()
+        public async Task ChartOfAccount_Vendor1PMCFId_Put()
         {
-            Task.Run(async () =>
-            {
+            
                 ChartOfAccountPM entityPM = await ChartOfAccount_Vendor1PMCFId_GetSingle();
                 entityPM.LocalName = "GE:" + RestClientService.GetRandomString(5);
                 entityPM.EnglishName = "GE:" + RestClientService.GetRandomString(5);
                 HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "ChartOfAccounts");
                 ChartOfAccountPM chartOfAccountVendor1PMCFId = RestClientService.ParseResponse<ChartOfAccountPM>(response);
                 Assert.AreEqual(entityPM.Code, chartOfAccountVendor1PMCFId.Code);
-            }).GetAwaiter().GetResult();
+           
         }
         private async Task<ChartOfAccountPM> ChartOfAccount_Vendor1PMCFId_GetSingle()
         {

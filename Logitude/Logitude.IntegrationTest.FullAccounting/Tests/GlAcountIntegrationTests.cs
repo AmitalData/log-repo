@@ -30,6 +30,8 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
                 entityPM.LocalName = "GE:" + RestClientService.GetRandomString(5);
                 entityPM.EnglishName = "GE:" + RestClientService.GetRandomString(5);
                 HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "GLAccounts");
+
+
                 GLAccountPM GLAccountVendor458GLPM = RestClientService.ParseResponse<GLAccountPM>(response);
                 Assert.AreEqual(GLAccountVendor458GLPM.Id, entityPM.Id);
             }).GetAwaiter().GetResult();
