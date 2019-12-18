@@ -109,6 +109,10 @@
     <Compile Include="EntityPMs\Generated\InterestBasesPeriodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InterestBasesTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InterestEntityTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestReportLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestReportLinesByDatePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestReportPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestReportStatusePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InterestTransactionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />

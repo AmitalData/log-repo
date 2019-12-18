@@ -73,7 +73,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterest, 
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
-	         MinimumInterestInvoiceBilling,
+	         MinimumInterestInvoiceBilling, 
+	         InterestCreditLimit,
 	      }
 
 
@@ -184,7 +185,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterest, 
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
-	         MinimumInterestInvoiceBilling,
+	         MinimumInterestInvoiceBilling, 
+	         InterestCreditLimit,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -446,6 +448,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
             {
 				entityPOCO.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCreditLimit))
+            {
+				entityPOCO.InterestCreditLimit = entityPM.InterestCreditLimit;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -714,6 +721,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.MinimumInterestInvoiceBilling = entityPOCO.MinimumInterestInvoiceBilling;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestCreditLimit))
+            {
+					entityPM.InterestCreditLimit = entityPOCO.InterestCreditLimit;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -973,6 +985,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
             {
                 oldEntityPM.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCreditLimit))
+            {
+                oldEntityPM.InterestCreditLimit = entityPM.InterestCreditLimit;
             }
 			
 		}

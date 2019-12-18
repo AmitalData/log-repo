@@ -146,6 +146,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\GLAccountTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\IntegrityCheckStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\InterestEntityTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\InterestReportStatuseDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalStatusTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OpenFormatReportStatusDetails.Generated.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="CloseTables\EnumGenerated\GLAccountTotalDateTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GLAccountTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\IntegrityCheckStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InterestReportStatuseStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\PeriodTypeStruct.Generated.cs" />
@@ -355,6 +357,10 @@
     <Compile Include="EntityDataMappings\Generated\InterestBasesPeriodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestBasesTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestEntityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportLinesByDateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportStatuseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestTransactionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalActionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalAdditionalDataDataMapping.Generated.cs" />
@@ -406,6 +412,10 @@
     <Compile Include="EntityDataMappings\InterestBasesPeriodDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestBasesTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestEntityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportLinesByDateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportStatuseDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestTransactionDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalActionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalAdditionalDataDataMapping.cs" />
@@ -488,6 +498,10 @@
     <Compile Include="EntityQueryServices\Generated\InterestBasesPeriodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestBasesTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestEntityTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportLinesByDateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportStatuseQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestTransactionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalAdditionalDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalExternalReconcileQueryService.Generated.cs" />
@@ -573,6 +587,10 @@
     <Compile Include="EntityUpdateServices\Generated\InterestBasesPeriodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InterestBasesTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InterestEntityTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportLinesByDateUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportStatuseUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InterestTransactionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalAdditionalDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalExternalReconcileUpdateService.Generated.cs" />

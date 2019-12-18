@@ -619,7 +619,12 @@ export class GLAccountPM {
         }
     }
     //public GLAccountInterestPeriods: Array<GLAccountInterestPeriodPM>= [];
- 
+     private interestCreditLimit: number;
+    public get InterestCreditLimit() { return this.interestCreditLimit; }
+    public set InterestCreditLimit(newValue: number) { if (this.interestCreditLimit != newValue) { this.interestCreditLimit = newValue; this.MarkAsDirty("InterestCreditLimit"); } }
+       
+	 
+
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;
