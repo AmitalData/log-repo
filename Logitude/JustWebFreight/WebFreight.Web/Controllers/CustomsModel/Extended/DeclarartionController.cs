@@ -46,6 +46,7 @@ using System.Xml.Linq;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.Server.Tools.Models;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
