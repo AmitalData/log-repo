@@ -630,11 +630,10 @@ namespace Logitude.LXMLFixer.Models
                 case "Constant":
                 case "PickList":
                 case "List":
-                case "Emails":
                 case "Byte[]":
-                case "Text":
                     return "varchar";
                 case "Date":
+                    return "date";
                 case "DateTime":
                     return "datetime";
                 case "Decimal":
@@ -649,13 +648,15 @@ namespace Logitude.LXMLFixer.Models
                 case "nText":
                     return "nvarchar";
                 case "LookUp":
+                case "Emails":
+                case "Text":
                     return isFixedLength ? "char" : "varchar";
                 default:
                     return null;
             }
         }
 
-        private string GetLXMLDataType(string type)
+        private string GetLXMLDataType(string type)//should handle any new data types that added into the lxml tool
         {
             switch (type)
             {
