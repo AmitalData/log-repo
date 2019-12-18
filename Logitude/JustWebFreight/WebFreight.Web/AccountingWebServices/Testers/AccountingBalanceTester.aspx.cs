@@ -210,7 +210,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 ac.ReSetAccountList(param.IncludeChildAccounts, param.IncludeRelatedCurrenciesAccount);
                 
                 ac.CalculateBalance(param.OpenBalancePlease_ReCalcYearTransfer,  GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate,
-                    
+                    false,
                     param.includeAccoutingDateLTransaction,
                     
                     param.verbose);

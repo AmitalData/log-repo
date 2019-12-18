@@ -786,6 +786,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public LedgerTransactionBalanceFilterCallBack CallBack { get; set; }
         public string DateTypeCode { get; set; }
+        public bool CheckHaveAccountingQueued { get; set; }
     }
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack
     {
