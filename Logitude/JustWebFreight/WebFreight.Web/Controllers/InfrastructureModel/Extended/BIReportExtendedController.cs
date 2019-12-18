@@ -1,4 +1,5 @@
-﻿using Logitude.Infrastructure.BL.EntityQueryServices;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityListQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
@@ -43,7 +44,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
         }
 
         [HttpGet]
-        public HttpResponseMessage GetTenantReports([FromUri] ApiQueryFilters filters, int tenant)
+        public HttpResponseMessage GetTenantReports([FromUri] ApiQueryFilters filters, int copyFromTenant)
         {
             try
             {
@@ -54,6 +55,17 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 SecurityUtility.CheckContactFeature("BIReport", "READ", authToken.Tenant);
 
                 //int tenant = authToken.Tenant;
+
+                TenantQuery tenantQuery = new TenantQuery(authToken.Tenant);
+                bool tenantExist = tenantQuery.TenantExist(authToken.Tenant, copyFromTenant);
+
+                if (!tenantExist)
+                {
+                    ServiceResponse emptyResponseMessage = new ServiceResponse();
+                    emptyResponseMessage.Result = new List<BIReportList>();
+                    emptyResponseMessage.Count = 0;
+                    return Request.CreateResponse(HttpStatusCode.OK, emptyResponseMessage);
+                }
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -67,7 +79,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 };
 
 
-                List<ObjectField> BIReportObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("BIReport", tenant);
+                List<ObjectField> BIReportObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("BIReport", copyFromTenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -140,14 +152,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     }
                 }
 
-                IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(copyFromTenant);
                 BIReportListQueryService bIReportQuery = new BIReportListQueryService(MyContext);
-                List<BIReportList> entityLists = bIReportQuery.GetList(queryOperations, tenant);
+                List<BIReportList> entityLists = bIReportQuery.GetList(queryOperations, copyFromTenant);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = bIReportQuery.GetListCount(queryOperations, tenant);
+                    int count = bIReportQuery.GetListCount(queryOperations, copyFromTenant);
                     response.Count = count;
                 }
 

@@ -28,9 +28,12 @@ export class NewBIReport extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private OriginalName: string = "";
     private IsCopy: boolean = false;
+    private IsNewBIReport: boolean = true;
+    private IsTenantZero: boolean = false;
+    private IsRowSelected: boolean = false;
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() searchFieldChangeEvent = new EventEmitter();
+    @Output() textFieldChangeEvent = new EventEmitter();
     constructor() {
         super();
         this.EntityPM = new BIReportPM();
@@ -47,6 +50,7 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.TypeCode = "EXL";
         this.myService = new BIReportPMService();
         this.SetUIProperties();
+        this.CheckTenantZero();
         this.BuildColumns();
     }
 
@@ -118,31 +122,45 @@ export class NewBIReport extends BaseComponent {
 
         });
         this.columns.push({
-            FieldName: "Create Date",
+            FieldName: "CreateDate",
             DataTypeCode: 'DateTime',
             IsCustomTemplate: true,
             Display: 'Create Date',
-            Styles: { width: '150px' },
-            //HtmlListComponentName: 'CreateDateComponent',
-            //HtmlListComponentUrl: './Infrastructure/Components/Templates/CreateDateComponent',
+            Styles: { width: '200px' },
+            //HtmlListComponentName: 'InfrastructureFieldTemplateComponent',
+            //HtmlListComponentUrl: './Infrastructure/Components/Templates/InfrastructureFieldTemplateComponent',
 
         });
         this.columns.push({
-            FieldName: "Update Date",
+            FieldName: "UpdateDate",
             DataTypeCode: 'DateTime',
             IsCustomTemplate: true,
             Display: 'Update Date',
-            Styles: { width: '150px' },
-            //HtmlListComponentName: 'UpdateDateComponent',
-            //HtmlListComponentUrl: './Infrastructure/Components/Templates/UpdateDateComponent',
+            Styles: { width: '200px' },
+            //HtmlListComponentName: 'InfrastructureFieldTemplateComponent',
+            //HtmlListComponentUrl: './Infrastructure/Components/Templates/InfrastructureFieldTemplateComponent',
 
         });
     }
 
     // Tenant Search
-    OnSearchTextChangeEvent(searchText) {
-        this.BIReportTenant = searchText;
-        this.searchFieldChangeEvent.emit(searchText);
+    OnTextChangeEvent(searchText) {
+        if (searchText) {
+            this.BIReportTenant = searchText;
+        }
+        else {
+            this.BIReportTenant = 0;
+        }
+        this.textFieldChangeEvent.emit(searchText);
+    }
+
+    SetNewBIReport(value: boolean) {
+        this.IsNewBIReport = value;
+    }
+
+    CheckTenantZero() {
+        if (SessionLocator.Tenant == 0)
+            this.IsTenantZero = true;
     }
 
     onRowSelected(selected) {
@@ -152,6 +170,7 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.Name = item.Name;
         this.EntityPM.Description = item.Description;
         this.IsCopy = true;
+        this.IsRowSelected = true;
         //
     }
 
@@ -230,6 +249,10 @@ export class NewBIReport extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.BIReportFolderId)) {
             this.ValidationErrorsList.push("Folder Field is Required");
              
+        }
+
+        if (!this.IsNewBIReport && !this.IsRowSelected) {
+            this.ValidationErrorsList.push("Choose One Report");
         }
         if(this.ValidationErrorsList.length != 0) {
             return;

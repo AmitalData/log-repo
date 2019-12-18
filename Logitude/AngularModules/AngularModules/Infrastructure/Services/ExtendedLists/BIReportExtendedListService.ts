@@ -24,14 +24,14 @@ export class BIReportExtendedListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bireportsextended';
     }
 
-    GetTenantReports(filters: ApiQueryFilters, tenant: number) {
+    GetTenantReports(filters: ApiQueryFilters, copyFromTenant: number) {
                 
         return new Promise((resolve, reject) => {
-            resolve(this.getReports(filters, tenant));
+            resolve(this.getReports(filters, copyFromTenant));
         });
     }
 
-    getReports(filters: ApiQueryFilters, tenant: number) {
+    getReports(filters: ApiQueryFilters, copyFromTenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
@@ -61,7 +61,7 @@ export class BIReportExtendedListService {
             if (addtionalFiltersValues) {
                 urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
             }
-            return this._http.get(this._apiUrl + '/GetTenantReports'+ urlparameters + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetTenantReports' + urlparameters + '&copyFromTenant=' + copyFromTenant, { headers: authHeader }).map(response => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
