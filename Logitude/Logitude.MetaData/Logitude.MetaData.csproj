@@ -179,6 +179,7 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\AirlineAreasPort.lxml">
