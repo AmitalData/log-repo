@@ -177,7 +177,8 @@ export class GLAccountInterestComponent extends BaseComponent{
             return this.EntityPM.ActiveForInterest;
       }
     set ActiveForInterest(newValue: boolean) {
-            this.EntityPM.ActiveForInterest = newValue;
+        this.EntityPM.ActiveForInterest = newValue;
+        this.SetUIProperties();
     }
     get ActiveForInterestCreditInvoice() {
         return this.EntityPM.ActiveForInterestCreditInvoice;
