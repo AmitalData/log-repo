@@ -4,7 +4,7 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
-    <tr *ngIf="IsTenantZero" style="height:2px;">
+    <tr *ngIf="IsTenantZero || HasCopyFeature" style="height:2px;">
         <td>
             <table>
                 <tr>
@@ -18,7 +18,7 @@
                         <RadioButton [Name]="'CopyBIReport'" [IsChecked]="!IsNewBIReport" (Checked)="SetNewBIReport(false)"></RadioButton>
                     </td>
                     <td style="width:50px;">
-                        <label style="margin-left: 7px;">Copy From All Tenants</label>
+                        <label style="margin-left: 7px;">{{CopyFromTitle}}</label>
                     </td>
                     <td>
                         <div></div>
@@ -167,20 +167,19 @@
                                 [LookUpTableName]="'BIReportFolder'" [HideColumns]="true">
                         </LogLov>
                     </td>
-                    <td>
+                    <td colspan="2">
                         <div></div>
                     </td>
                 </tr>
 
                 <!-- Tenant -->
-                <tr class="FormFieldRow">
+                <tr *ngIf="IsTenantZero"  class="FormFieldRow">
                     <td style="width:120px;">
                         <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
                     </td>
 
                     <td style="width:200px;">
                         <LogTextBox [ObjectFieldName]="'Tenant'" [Text]="Tenant" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="OnTextChangeEvent($event)" [InputType]="'integer'" [HideColumns]="true"></LogTextBox>
-                        <!--<SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Tenant 0'" (SearchTextChangeEvent)="OnSearchTextChangeEvent($event)"></SearchTextBox>-->
                     </td>
                     <td colspan="2">
                         <div></div>

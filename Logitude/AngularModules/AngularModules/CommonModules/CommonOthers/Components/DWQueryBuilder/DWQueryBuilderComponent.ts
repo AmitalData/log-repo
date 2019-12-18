@@ -248,7 +248,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsCopyFromTenant = args.IsCopyFromTenant;
         //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
-            if (this.IsCopyFromTenant) {
+            if (this.IsCopyFromTenant || this.IsCopyFromTenant == 0) {
                 this._DWSubQueryPMService.getByQueryIdFromTenant(this.QID, this.IsCopyFromTenant).subscribe(myResult => {
                     if (!myResult.HasError) {
                         this.ID = myResult.Result.SubQueryData.Id;
@@ -1144,12 +1144,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
         });
     }
     NotExist: boolean = true;
-    EditButtonClicked(test: boolean = false) {
+    EditButtonClicked(afterInsert: boolean = false) {
         this.SelectedFieldsDataSource = [];
         this.SelectedFiltersDataSource = [];
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ..");
         if (!AppTool.IsNullOrEmpty(this.ID)) {
-            if (this.IsCopyFromTenant && !test) {
+            if ((this.IsCopyFromTenant || this.IsCopyFromTenant == 0) && !afterInsert) {
                 this._DWSubQueryPMService.getFromTenant(this.ID, this.IsCopyFromTenant).subscribe(myResult => {
                     this.BuildData(myResult);
                 });

@@ -10,6 +10,7 @@ import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/E
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { BIReportExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/BIReportExtendedListService';
 import { BIReportList } from '../../../../Infrastructure/EntityLists/BIReportList';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     moduleId: module.id,
@@ -31,11 +32,14 @@ export class NewBIReport extends BaseComponent {
     private IsNewBIReport: boolean = true;
     private IsTenantZero: boolean = false;
     private IsRowSelected: boolean = false;
+    private HasCopyFeature: boolean = false;
+    private CopyFromTitle: string;
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() textFieldChangeEvent = new EventEmitter();
     constructor() {
         super();
+        this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopyFromLibrary");
         this.EntityPM = new BIReportPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.bIReportExtendedPMService = new BIReportExtendedPMService();
@@ -159,8 +163,14 @@ export class NewBIReport extends BaseComponent {
     }
 
     CheckTenantZero() {
-        if (SessionLocator.Tenant == 0)
+        if (SessionLocator.Tenant == 0) {
             this.IsTenantZero = true;
+            this.CopyFromTitle = "Copy From All Tenants";
+        }
+        else {
+            this.BIReportTenant = 0;
+            this.CopyFromTitle = "Copy From Library";
+        }
     }
 
     onRowSelected(selected) {
