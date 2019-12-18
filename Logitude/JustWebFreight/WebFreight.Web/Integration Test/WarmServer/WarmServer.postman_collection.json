@@ -8441,6 +8441,7 @@
 							"    pm.expect(idexist);\r",
 							"\r",
 							"    pm.environment.set(\"PackageTypePP2\", idvalue);\r",
+
 							"     if (idexist) {\r",
 							"         postman.setNextRequest(\"GetZeroVatType\");\r",
 							"     }\r",
