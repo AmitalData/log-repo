@@ -421,16 +421,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
             }
-            entityPM.ActiveForInterest = false ;
-
-            for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
-            {
-                if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
-                {
-                    entityPM.ActiveForInterest = true;
-                }
-                
-            }
             if (entityPM.ActiveForInterest == false)
             {
                 for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
@@ -441,6 +431,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
 
                 }
+            }
+
+            entityPM.ActiveForInterest = false ;
+
+            for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+            {
+                if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                {
+                    entityPM.ActiveForInterest = true;
+                }
+                
             }
 
 
