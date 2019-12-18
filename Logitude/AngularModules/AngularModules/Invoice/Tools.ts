@@ -556,7 +556,7 @@ export class CreditLimitHelper {
         this.IsValid = false;
         this.IsBlockingShipment = false;
 
-        this.EntityPM.BillToCreditLimitActualAmount = loadedAmount;
+        this.EntityPM.BillToCreditLimitActualAmount = AppTool.AddAmounts(loadedAmount, this.EntityPM.AmountDueInLocalCurrency);
         this.EntityPM.BillToCreditLimitActualBalance = AppTool.AddAmounts(this.EntityPM.BillToCreditLimitOpenBalance, this.EntityPM.BillToCreditLimitActualAmount);
 
         var LimitAmount = AppTool.IsNullOrEmpty(this.EntityPM.BillToCreditLimitAmount) ? 0 : this.EntityPM.BillToCreditLimitAmount;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CorrespondencesAttachments">
+<Table Name="CorrespondencesAttachments" Schema="dbo" DBType="Main">
   <Column Name="CorrespondenceId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Ports">
+<Table Name="Ports" Schema="dbo" DBType="Main">
   <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -84,6 +84,11 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="TarrifFromToes" ParentColumnName="PortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifFromToes_dbo.Ports_PortId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageFromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_OnCarriageFromPortId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_OnCarriageToPortId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageFromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_PreCarriageFromPortId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_PreCarriageToPortId" />
   <Relation ParentTableName="AgentSharedManifests" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.Ports_FromPortId" />
   <Relation ParentTableName="AgentSharedManifests" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.Ports_ToPortId" />
   <Relation ParentTableName="Bookings" ParentColumnName="MainCarriageFinalDestinationPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Ports_MainCarriageFinalDestinationPortId" />
@@ -91,43 +96,38 @@
   <Relation ParentTableName="Bookings" ParentColumnName="MainCarriageFromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Ports_MainCarriageFromPortId" />
   <Relation ParentTableName="AirlineAreasPorts" ParentColumnName="PortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineAreasPorts_dbo.Ports_PortId" />
   <Relation ParentTableName="Bookings" ParentColumnName="MainCarriageToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Ports_MainCarriageToPortId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Ports_FromPortId" />
-  <Relation ParentTableName="WarehouseEntries" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Ports_FromPortId" />
   <Relation ParentTableName="Bookings" ParentColumnName="Transshipment1FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Ports_Transshipment1FromPortId" />
-  <Relation ParentTableName="WarehouseEntries" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Ports_ToPortId" />
   <Relation ParentTableName="Bookings" ParentColumnName="Transshipment1ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Ports_Transshipment1ToPortId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Ports_ToPortId" />
-  <Relation ParentTableName="ShipmentCarrierStatuses" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCarrierStatuses_dbo.Ports_FromPortId" />
-  <Relation ParentTableName="ShipmentCarrierStatuses" ParentColumnName="Location" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCarrierStatuses_dbo.Ports_Location" />
   <Relation ParentTableName="Bookings" ParentColumnName="Transshipment2FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Ports_Transshipment2FromPortId" />
-  <Relation ParentTableName="ShipmentCarrierStatuses" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCarrierStatuses_dbo.Ports_ToPortId" />
   <Relation ParentTableName="Bookings" ParentColumnName="Transshipment2ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Ports_Transshipment2ToPortId" />
-  <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.Ports_FromPortId" />
-  <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="Location" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.Ports_Location" />
-  <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.Ports_ToPortId" />
+  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Ports_FromPortId" />
   <Relation ParentTableName="Quotes" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Ports_FromPortId" />
-  <Relation ParentTableName="TariffLines" ParentColumnName="DestinationPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffLines_dbo.Ports_DestinationPortId" />
-  <Relation ParentTableName="TariffLines" ParentColumnName="OriginPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffLines_dbo.Ports_OriginPortId" />
+  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Ports_ToPortId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageFinalDestinationPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_MainCarriageFinalDestinationPortId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageFromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_MainCarriageFromPortId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_MainCarriageToPortId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Ports_FromPortId" />
+  <Relation ParentTableName="WarehouseEntries" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Ports_FromPortId" />
+  <Relation ParentTableName="WarehouseEntries" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Ports_ToPortId" />
+  <Relation ParentTableName="ShipmentCarrierStatuses" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCarrierStatuses_dbo.Ports_FromPortId" />
+  <Relation ParentTableName="ShipmentCarrierStatuses" ParentColumnName="Location" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCarrierStatuses_dbo.Ports_Location" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment1FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_Transshipment1FromPortId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment1ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_Transshipment1ToPortId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Ports_ToPortId" />
+  <Relation ParentTableName="ShipmentCarrierStatuses" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCarrierStatuses_dbo.Ports_ToPortId" />
+  <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.Ports_FromPortId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment2FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_Transshipment2FromPortId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment2ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_Transshipment2ToPortId" />
+  <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="Location" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.Ports_Location" />
+  <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.Ports_ToPortId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment3FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_Transshipment3FromPortId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment3ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Ports_Transshipment3ToPortId" />
+  <Relation ParentTableName="TariffLines" ParentColumnName="DestinationPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffLines_dbo.Ports_DestinationPortId" />
+  <Relation ParentTableName="TariffLines" ParentColumnName="OriginPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffLines_dbo.Ports_OriginPortId" />
   <Relation ParentTableName="Quotes" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Ports_ToPortId" />
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Ports_FromPortId" />
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Ports_ToPortId" />
   <Relation ParentTableName="FlightsSchedulesRequests" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesRequests_dbo.Ports_FromPortId" />
   <Relation ParentTableName="FlightsSchedulesRequests" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesRequests_dbo.Ports_ToPortId" />
   <Relation ParentTableName="FlightsSchedulesResponses" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesResponses_dbo.Ports_FromPortId" />
   <Relation ParentTableName="FlightsSchedulesResponses" ParentColumnName="ToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesResponses_dbo.Ports_ToPortId" />
-  <Relation ParentTableName="TarrifFromToes" ParentColumnName="PortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifFromToes_dbo.Ports_PortId" />
   <Relation ParentTableName="Shipments" ParentColumnName="FromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_FromPortId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageFromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_OnCarriageFromPortId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_OnCarriageToPortId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageFromPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_PreCarriageFromPortId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageToPortId" ReferencedTableName="Ports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Ports_PreCarriageToPortId" />
 </Table>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ClaimsRelatedEntities">
+<Table Name="ClaimsRelatedEntities" Schema="Customs" DBType="Main">
   <Column Name="AbandonmentDestructionReferenc" Type="varchar" Size="22">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ClaimAmount" Type="decimal">
+  <Column Name="ClaimAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ClaimEntityNumber" Type="varchar" Size="35">
@@ -36,16 +36,16 @@
   <Column Name="CustomsExceptions" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DecisionCode" Type="nvarchar" Size="128">
+  <Column Name="DecisionCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DecisionNote" Type="nvarchar" Size="256">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeclarationVersion" Type="decimal">
+  <Column Name="DeclarationVersion" Type="decimal" Precision="5" Scale="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DepositingAmount" Type="decimal">
+  <Column Name="DepositingAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="EilatVatRefoundDecision" Type="nvarchar" Size="256">
@@ -66,7 +66,7 @@
   <Column Name="ProceedingNumber" Type="varchar" Size="22">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="RefundAmount" Type="decimal">
+  <Column Name="RefundAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SeconderyClaimEntityCode" Type="varchar" Size="5">
@@ -86,8 +86,12 @@
   </Column>
   <Relation ParentTableName="ClaimsRelatedEntitiesAmounts" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesAmounts_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
   <Relation ParentTableName="ClaimsRelatedEntitiesReasons" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesReasons_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntitiesRefunds" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesRefunds_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntitiesSeizures" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesSeizures_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
   <Relation ParentTableName="ClaimsRelatedEntsExpDeclars" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntsExpDeclars_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
   <Relation ParentTableName="ClaimsRelatedEntitiesAmounts" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="EntityCounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesAmounts_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
   <Relation ParentTableName="ClaimsRelatedEntitiesReasons" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="EntityCounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesReasons_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntitiesRefunds" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="EntityCounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesRefunds_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntitiesSeizures" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="EntityCounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesSeizures_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
   <Relation ParentTableName="ClaimsRelatedEntsExpDeclars" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="EntityCounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntsExpDeclars_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
 </Table>

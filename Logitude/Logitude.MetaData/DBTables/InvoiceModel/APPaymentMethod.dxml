@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="APPaymentMethods">
+<Table Name="APPaymentMethods" Schema="dbo" DBType="Main">
   <Column Name="AccountingExternalId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>

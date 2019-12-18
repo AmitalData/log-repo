@@ -135,12 +135,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
                     if (!string.IsNullOrEmpty(MyEntity.MainAddress.Address1))
                     {
-                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Address1);
+                        address.Address1 = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Address1);
                     }
 
                     if (!string.IsNullOrEmpty(MyEntity.MainAddress.Address2))
                     {
-                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Address2);
+                        address.Address2 = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Address2);
                     }
 
                     temp.Addresses.Add(address);
@@ -168,14 +168,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                         address.Name = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Name);
                     }
 
-                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.Address1))
+                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Address1))
                     {
-                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address1);
+                        address.Address1 = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address1);
                     }
 
-                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.Address2))
+                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Address2))
                     {
-                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address2);
+                        address.Address2 = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address2);
                     }
 
                     temp.Addresses.Add(address);

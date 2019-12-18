@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="WebhookKeys" Schema="dbo" DBType="Global">
+  <Column Name="AccessKey" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserName" Type="varchar" Size="150">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Description" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PartnerName" Type="varchar" Size="150">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserName" Type="varchar" Size="150">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

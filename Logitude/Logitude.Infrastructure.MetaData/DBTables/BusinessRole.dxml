@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BusinessRoles">
+<Table Name="BusinessRoles" Schema="dbo" DBType="Main">
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
@@ -33,6 +33,6 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="BusinessProcessQueues" ParentColumnName="BusinessRoleId" ReferencedTableName="BusinessRoles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessProcessQueues_dbo.BusinessRoles_BusinessRoleId" />
   <Relation ParentTableName="TeamMemberBusinessRoles" ParentColumnName="BusinessRoleId" ReferencedTableName="BusinessRoles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TeamMemberBusinessRoles_dbo.BusinessRoles_BusinessRoleId" />
+  <Relation ParentTableName="BusinessProcessQueues" ParentColumnName="BusinessRoleId" ReferencedTableName="BusinessRoles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessProcessQueues_dbo.BusinessRoles_BusinessRoleId" />
 </Table>

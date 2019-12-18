@@ -155,6 +155,10 @@
     <Folder Include="TraceEvents\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
       <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
       <Name>Logitude.TariffModule.Data</Name>

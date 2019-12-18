@@ -1798,7 +1798,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     else if (myBillTo.PartnerTypeId == "AG")
                     {
                         AgentRepository myRepository = new AgentRepository(myCommonContext);
-                        Agent myAgent = myRepository.GetSingleAgent(tenant, entityPOCO.Id);
+                        Agent myAgent = myRepository.GetSingleAgent(tenant, entityPOCO.BillToId);
                         if (myAgent != null)
                         {
                             entityPM.BillToIsCreditLimitEnabled = myAgent.IsCreditLimitEnabled;
@@ -2067,12 +2067,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                              CreatedByPartner = entity.CreatedByPartner,
+                             SATXML = entity.SATXML,
                          };
 
             return result;
         }
 
-        public double? GetCustomerCreditLimitActualAmount(string myCustomerId, int tenant)
+        public double? GetCustomerCreditLimitActualAmount(string myCustomerId, int tenant, string invoiceId = null)
         {
             double? myResult = 0;
 
@@ -2082,13 +2083,30 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-                double? sumOfAmountDue = (from d in myContext.ARInvoices
-                                          where d.Tenant == tenant
-                                          && d.BillToId == myCustomerId
-                                          && d.StatusCode != "VD"
-                                          && d.StatusCode != "AR"
-                                          && d.StatusCode != "LL"
-                                          select d).Sum(s => s.AmountDueInLocalCurrency);
+                double? sumOfAmountDue = 0;
+
+                if (invoiceId == null)
+                {
+                    sumOfAmountDue = (from d in myContext.ARInvoices
+                                              where d.Tenant == tenant
+                                              && d.BillToId == myCustomerId
+                                              && d.StatusCode != "VD"
+                                              && d.StatusCode != "AR"
+                                              && d.StatusCode != "LL"
+                                              select d).Sum(s => s.AmountDueInLocalCurrency);
+                }
+
+                else
+                {
+                    sumOfAmountDue = (from d in myContext.ARInvoices
+                                      where d.Tenant == tenant
+                                      && d.BillToId == myCustomerId
+                                      && d.StatusCode != "VD"
+                                      && d.StatusCode != "AR"
+                                      && d.StatusCode != "LL"
+                                      && d.Id != invoiceId
+                                      select d).Sum(s => s.AmountDueInLocalCurrency);
+                }
 
                 double? sumOfOpenAmount = (from d in myContext.ARPayments
                                            where d.Tenant == tenant

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Competitors">
+<Table Name="Competitors" Schema="dbo" DBType="Main">
   <Column Name="AddressId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
@@ -33,8 +33,8 @@
   <Column Name="Website" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="OpportunityCompetitorProducts" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitorProducts_dbo.Competitors_CompetitorId" />
   <Relation ParentTableName="CustomerCompetitorProducts" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerCompetitorProducts_dbo.Competitors_CompetitorId" />
-  <Relation ParentTableName="OpportunityCompetitors" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitors_dbo.Competitors_CompetitorId" />
   <Relation ParentTableName="CustomerCompetitors" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerCompetitors_dbo.Competitors_CompetitorId" />
+  <Relation ParentTableName="OpportunityCompetitorProducts" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitorProducts_dbo.Competitors_CompetitorId" />
+  <Relation ParentTableName="OpportunityCompetitors" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitors_dbo.Competitors_CompetitorId" />
 </Table>

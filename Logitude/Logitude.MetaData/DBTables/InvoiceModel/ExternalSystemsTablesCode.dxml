@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ExternalSystemsTablesCodes">
+<Table Name="ExternalSystemsTablesCodes" Schema="dbo" DBType="Main">
   <Column Name="Code" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>

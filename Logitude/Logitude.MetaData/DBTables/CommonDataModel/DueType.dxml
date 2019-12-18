@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DueTypes">
+<Table Name="DueTypes" Schema="dbo" DBType="Main">
   <Column Name="Code" Type="varchar" Size="2">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -11,7 +11,7 @@
   </Column>
   <Relation ParentTableName="ShipmentAWBPrintOnlies" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentAWBPrintOnlies_dbo.DueTypes_DueTypeCode" />
   <Relation ParentTableName="ChargesTypes" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.DueTypes_DueTypeCode" />
-  <Relation ParentTableName="ShipmentPayables" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.DueTypes_DueTypeCode" />
   <Relation ParentTableName="IATACodes" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.IATACodes_dbo.DueTypes_DueTypeCode" />
+  <Relation ParentTableName="ShipmentPayables" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.DueTypes_DueTypeCode" />
   <Relation ParentTableName="ShipmentReceivables" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.DueTypes_DueTypeCode" />
 </Table>

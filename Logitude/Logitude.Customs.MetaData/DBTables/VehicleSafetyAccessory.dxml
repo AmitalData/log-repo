@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="VehicleSafetyAccessories">
+<Table Name="VehicleSafetyAccessories" Schema="Customs" DBType="Main">
   <Column Name="LineNumber" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ClientAddresses">
+<Table Name="ClientAddresses" Schema="Customs" DBType="Main">
   <Column Name="AddressId" Type="varchar" Size="9">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -63,7 +63,7 @@
   <Column Name="IsPalestinianCity" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalApartment" Type="decimal">
+  <Column Name="LocalApartment" Type="decimal" Precision="4" Scale="0">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="LocalCityCode" Type="varchar" Size="4">

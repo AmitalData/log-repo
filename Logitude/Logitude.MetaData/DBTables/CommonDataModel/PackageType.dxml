@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="PackageTypes">
+<Table Name="PackageTypes" Schema="dbo" DBType="Main">
   <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -57,26 +57,26 @@
   <Column Name="TEU" Type="float">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Volume" Type="decimal">
+  <Column Name="Volume" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="QuotePackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuotePackages_dbo.PackageTypes_PackageTypeId" />
+  <Relation ParentTableName="InsideShipmentPackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InsideShipmentPackages_dbo.PackageTypes_PackageTypeId" />
   <Relation ParentTableName="ShipmentPackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.PackageTypes_PackageTypeId" />
-  <Relation ParentTableName="WarehouseEntryPackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntryPackages_dbo.PackageTypes_PackageTypeId" />
   <Relation ParentTableName="BookingPackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingPackages_dbo.PackageTypes_PackageTypeId" />
-  <Relation ParentTableName="WarehouseReleasePackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleasePackages_dbo.PackageTypes_PackageTypeId" />
   <Relation ParentTableName="APInvoiceLines" ParentColumnName="ContainerTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoiceLines_dbo.PackageTypes_ContainerTypeId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="PackageType1Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType1Id" />
+  <Relation ParentTableName="Quotes" ParentColumnName="PackageType2Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType2Id" />
+  <Relation ParentTableName="Quotes" ParentColumnName="PackageType3Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType3Id" />
+  <Relation ParentTableName="Quotes" ParentColumnName="PackageType4Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType4Id" />
+  <Relation ParentTableName="Quotes" ParentColumnName="PackageType5Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType5Id" />
+  <Relation ParentTableName="WarehouseEntryPackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntryPackages_dbo.PackageTypes_PackageTypeId" />
+  <Relation ParentTableName="WarehouseReleasePackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleasePackages_dbo.PackageTypes_PackageTypeId" />
   <Relation ParentTableName="Tariffs" ParentColumnName="ContainerType1Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.PackageTypes_ContainerType1Id" />
   <Relation ParentTableName="Tariffs" ParentColumnName="ContainerType2Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.PackageTypes_ContainerType2Id" />
   <Relation ParentTableName="ShipmentOrderPackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentOrderPackages_dbo.PackageTypes_PackageTypeId" />
   <Relation ParentTableName="Tariffs" ParentColumnName="ContainerType3Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.PackageTypes_ContainerType3Id" />
   <Relation ParentTableName="Tariffs" ParentColumnName="ContainerType4Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.PackageTypes_ContainerType4Id" />
-  <Relation ParentTableName="Quotes" ParentColumnName="PackageType1Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType1Id" />
   <Relation ParentTableName="Tariffs" ParentColumnName="ContainerType5Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.PackageTypes_ContainerType5Id" />
-  <Relation ParentTableName="Quotes" ParentColumnName="PackageType2Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType2Id" />
-  <Relation ParentTableName="Quotes" ParentColumnName="PackageType3Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType3Id" />
-  <Relation ParentTableName="Quotes" ParentColumnName="PackageType4Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType4Id" />
-  <Relation ParentTableName="Quotes" ParentColumnName="PackageType5Id" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.PackageTypes_PackageType5Id" />
   <Relation ParentTableName="ShipmentPickUpDeliveryPackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveryPackages_dbo.PackageTypes_PackageTypeId" />
-  <Relation ParentTableName="QuotePackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuotePackages_dbo.PackageTypes_PackageTypeId" />
-  <Relation ParentTableName="InsideShipmentPackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InsideShipmentPackages_dbo.PackageTypes_PackageTypeId" />
 </Table>

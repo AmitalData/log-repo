@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CRMFilterSettings">
+<Table Name="CRMFilterSettings" Schema="dbo" DBType="Main">
   <Column Name="ControlNameSpace" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>

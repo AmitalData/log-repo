@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="FilingInboxes">
+<Table Name="FilingInboxes" Schema="dbo" DBType="Main">
   <Column Name="BodyDocumentId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>

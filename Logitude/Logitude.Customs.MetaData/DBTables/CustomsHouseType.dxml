@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsHouseTypes">
+<Table Name="CustomsHouseTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="17">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,11 +15,11 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="CustomsCollaterals" ParentColumnName="CustomsHouseTypeCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_Customs.CustomsHouseTypes_CustomsHouseTypeCode" />
+  <Relation ParentTableName="Declarations" ParentColumnName="DeclarationOfficeCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.CustomsHouseTypes_DeclarationOfficeCode" />
   <Relation ParentTableName="PaymentOrders" ParentColumnName="CustomsHouseCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrders_Customs.CustomsHouseTypes_CustomsHouseCode" />
   <Relation ParentTableName="Tapags" ParentColumnName="CustomsBranchCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Tapags_Customs.CustomsHouseTypes_CustomsBranchCode" />
   <Relation ParentTableName="CustomsHouseTypeAdditionals" ParentColumnName="Code" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsHouseTypeAdditionals_Customs.CustomsHouseTypes_Code" />
-  <Relation ParentTableName="Notifications" ParentColumnName="DeclarationOfficeCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Notifications_Customs.CustomsHouseTypes_DeclarationOfficeCode" />
   <Relation ParentTableName="ClaimsRelatedEntities" ParentColumnName="CustomsBranchCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntities_Customs.CustomsHouseTypes_CustomsBranchCode" />
-  <Relation ParentTableName="CustomsCollaterals" ParentColumnName="CustomsHouseTypeCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_Customs.CustomsHouseTypes_CustomsHouseTypeCode" />
-  <Relation ParentTableName="Declarations" ParentColumnName="DeclarationOfficeCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.CustomsHouseTypes_DeclarationOfficeCode" />
+  <Relation ParentTableName="Notifications" ParentColumnName="DeclarationOfficeCode" ReferencedTableName="CustomsHouseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Notifications_Customs.CustomsHouseTypes_DeclarationOfficeCode" />
 </Table>

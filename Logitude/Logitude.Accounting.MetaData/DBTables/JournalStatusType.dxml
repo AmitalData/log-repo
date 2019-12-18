@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="JournalStatusTypes">
+<Table Name="JournalStatusTypes" Schema="dbo" DBType="Main">
   <Column Name="EnglishName" Type="varchar" Size="20">
     <Constraints Nullable="false" />
   </Column>

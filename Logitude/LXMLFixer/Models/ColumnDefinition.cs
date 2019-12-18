@@ -23,6 +23,18 @@ namespace Logitude.LXMLFixer.Models
         [XmlIgnore]
         public bool SizeSpecified { get { return Size != 0; } }
 
+        [XmlAttribute()]
+        public int Precision { get; set; }
+
+        [XmlIgnore]
+        public bool PrecisionSpecified { get { return Type == "decimal"; } }
+
+        [XmlAttribute()]
+        public int Scale { get; set; }
+
+        [XmlIgnore]
+        public bool ScaleSpecified { get { return Type == "decimal"; } }
+
         [XmlElement]
         public ConstraintsDefinition Constraints { get; set; }
     }

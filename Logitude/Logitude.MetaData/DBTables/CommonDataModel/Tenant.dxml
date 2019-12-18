@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Tenants">
+<Table Name="Tenants" Schema="dbo" DBType="Main">
   <Column Name="AccountingActivated" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -294,9 +294,9 @@
   <Column Name="WeightMeasurementUnitCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="CommunicationLogs" ParentColumnName="Tenant" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.Tenants_Tenant" />
   <Relation ParentTableName="Participants" ParentColumnName="ForwarderTenant" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Participants_dbo.Tenants_ForwarderTenant" />
   <Relation ParentTableName="AccountingSettings" ParentColumnName="Id" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AccountingSettings_dbo.Tenants_Id" />
   <Relation ParentTableName="LogBoxTenantSettings" ParentColumnName="Id" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LogBoxTenantSettings_dbo.Tenants_Id" />
   <Relation ParentTableName="ContactTenants" ParentColumnName="TenantId" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactTenants_dbo.Tenants_TenantId" />
-  <Relation ParentTableName="CommunicationLogs" ParentColumnName="Tenant" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.Tenants_Tenant" />
 </Table>

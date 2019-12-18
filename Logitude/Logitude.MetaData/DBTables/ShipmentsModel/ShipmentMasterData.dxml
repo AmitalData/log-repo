@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ShipmentMasterDatas">
+<Table Name="ShipmentMasterDatas" Schema="dbo" DBType="Main">
   <Column Name="AdditionalHandlingInfo" Type="varchar" Size="65">
     <Constraints Nullable="true" />
   </Column>

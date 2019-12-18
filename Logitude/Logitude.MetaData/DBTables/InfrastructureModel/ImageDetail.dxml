@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ImageDetails">
+<Table Name="ImageDetails" Schema="dbo" DBType="Main">
   <Column Name="Extension" Type="varchar" Size="5">
     <Constraints Nullable="false" />
   </Column>
@@ -12,6 +12,8 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageHeaderArea2ImageDetailId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.ImageDetails_PageHeaderArea2ImageDetailId" />
+  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageHeaderArea3ImageDetailId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.ImageDetails_PageHeaderArea3ImageDetailId" />
   <Relation ParentTableName="HybridPartners" ParentColumnName="LogoId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.HybridPartners_dbo.ImageDetails_LogoId" />
   <Relation ParentTableName="HybridPartners" ParentColumnName="SmallLogoId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.HybridPartners_dbo.ImageDetails_SmallLogoId" />
   <Relation ParentTableName="Cards" ParentColumnName="ImageDetailId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.ImageDetails_ImageDetailId" />
@@ -20,6 +22,4 @@
   <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageFooterArea2ImageDetailId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.ImageDetails_PageFooterArea2ImageDetailId" />
   <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageFooterArea3ImageDetailId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.ImageDetails_PageFooterArea3ImageDetailId" />
   <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageHeaderArea1ImageDetailId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.ImageDetails_PageHeaderArea1ImageDetailId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageHeaderArea2ImageDetailId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.ImageDetails_PageHeaderArea2ImageDetailId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageHeaderArea3ImageDetailId" ReferencedTableName="ImageDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.ImageDetails_PageHeaderArea3ImageDetailId" />
 </Table>

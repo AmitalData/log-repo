@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ProceduralFaultsConnEntities">
+<Table Name="ProceduralFaultsConnEntities" Schema="Customs" DBType="Main">
   <Column Name="EntityIdKey1" Type="varchar" Size="35">
     <Constraints Nullable="true" />
   </Column>

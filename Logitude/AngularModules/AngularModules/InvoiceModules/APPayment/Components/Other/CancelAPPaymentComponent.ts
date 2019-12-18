@@ -25,7 +25,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
     public EntityPM: APPaymentPM = null;
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
-   
+
     public DataContext = this;
     public ObjectTableName: string = "APPayment";
     public ValidationErrorsList: string[] = [];
@@ -38,7 +38,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
             this.EntityPM = args.PaymentPM;
             this.PaymentDate = args.PaymentDate;
             this.AccountingCancelationDate = args.PaymentDate;
-           
+
         }
     }
 
@@ -55,22 +55,22 @@ export class CancelAPPaymentComponent extends BaseComponent {
     }
 
     SetUIProperties() {
-       
+
 
     }
-   
-    get AccountingCancelationDate() { return this.EntityPM.AccountingCancelationDate; }
+    private accountingCancelationDate: Date;
+    get AccountingCancelationDate() { return this.accountingCancelationDate; }
     set AccountingCancelationDate(value: Date) {
-        if (this.EntityPM.AccountingCancelationDate != value) {
-            this.EntityPM.AccountingCancelationDate = value;
-            var cancelationDateParts = DateTool.GetDateParts(this.EntityPM.AccountingCancelationDate).DateTicks;
+        if (this.accountingCancelationDate != value) {
+            this.accountingCancelationDate = value;
+            var cancelationDateParts = DateTool.GetDateParts(this.accountingCancelationDate).DateTicks;
             var paymentDateParts = DateTool.GetDateParts(this.PaymentDate).DateTicks;
-           
+
             if (value == null) {
                 this.UIProperties.SetRequired("AccountingCancelationDate", this.ObjectTableName, true);
 
             }
-            if (this.EntityPM.AccountingCancelationDate != null && cancelationDateParts < paymentDateParts) {
+            if (this.accountingCancelationDate != null && cancelationDateParts < paymentDateParts) {
                 this.UIProperties.SetValidity("AccountingCancelationDate", this.ObjectTableName, false, TextCodeTranslator.Translate("APPAyment.O.CancellationDateValidation"));
             }
             if (value != null) {
@@ -83,7 +83,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
     closedMonth: boolean;
     CheckClosedMonth(value: Date) {
 
-        value= DateTool.GetDateFromDate(this.EntityPM.AccountingCancelationDate, true);
+        value = DateTool.GetDateFromDate(this.AccountingCancelationDate, true);
         var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
 
         if (accountingPeriod) {
@@ -94,44 +94,46 @@ export class CancelAPPaymentComponent extends BaseComponent {
             // Valid Month => (ClosedMonth < month <= OpenMonth)
             if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
 
-               this.closedMonth= false;
+                this.closedMonth = false;
 
             } else { // invalid (closed month)
 
                 // push the error to errors list
-               this.closedMonth= true;
-              
-                
+                this.closedMonth = true;
+
+
                 return;
 
             }
         }
 
     }
-    get CancelationNotes() { return this.EntityPM.CancelationNotes; }
+    private cancelationNotes: string;
+    get CancelationNotes() { return this.cancelationNotes; }
     set CancelationNotes(value: string) {
-        if (this.EntityPM.CancelationNotes != value) {
-            this.EntityPM.CancelationNotes = value;
+        if (this.cancelationNotes != value) {
+            this.cancelationNotes = value;
             if (value == null) {
                 this.UIProperties.SetRequired("CancelationNotes", this.ObjectTableName, true);
 
             }
         }
     }
-    get DontIncludeInDeductionReport() { return this.EntityPM.DontIncludeInDeductionReport; }
+    private dontIncludeInDeductionReport: boolean;
+    get DontIncludeInDeductionReport() { return this.dontIncludeInDeductionReport; }
     set DontIncludeInDeductionReport(value: boolean) {
-        if (this.EntityPM.DontIncludeInDeductionReport != value) {
-            this.EntityPM.DontIncludeInDeductionReport = value;
+        if (this.dontIncludeInDeductionReport != value) {
+            this.dontIncludeInDeductionReport = value;
         }
     }
 
     SetDontIncludeInDeductionReport() {
-        var AccountingCancelationDate = DateTool.GetDateFromDate(this.EntityPM.AccountingCancelationDate, true);
+        var AccountingCancelationDate = DateTool.GetDateFromDate(this.AccountingCancelationDate, true);
         var RegisterDate = DateTool.GetDateFromDate(this.EntityPM.RegisterDate, true);
         if (AccountingCancelationDate.getUTCFullYear() != RegisterDate.getUTCFullYear()) {
 
-        
-             this.EntityPM.DontIncludeInDeductionReport = true;
+
+            this.DontIncludeInDeductionReport = true;
 
         }
 
@@ -145,7 +147,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.AccountingPeriods = myResponse.Result;
-               
+
                 }
             }
         });
@@ -153,11 +155,21 @@ export class CancelAPPaymentComponent extends BaseComponent {
 
     FIELD_IS_REQUIERD: string;
     OkButtonClicked() {
+
         this.ValidationErrorsList = [];
+        this.FillValidationErrorList();
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.SetEntityPMFields();
+            this.CurrentSession.CurrentWindow.Close("Ok");
+        }
+    }
+
+    private FillValidationErrorList() {
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         if (AppTool.IsNullOrEmpty(this.AccountingCancelationDate)) {
             this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("APPayment.F.AccountingCancelationDate")));
-          
+
         }
         if (AppTool.IsNullOrEmpty(this.CancelationNotes)) {
             this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("APPayment.F.CancelationNotes")));
@@ -168,16 +180,28 @@ export class CancelAPPaymentComponent extends BaseComponent {
         if (datetocompare < dateFromcompare) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("APPAyment.O.CancellationDateValidation"));
         }
-       if(this.closedMonth){
-        this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ClosedMonth"));
-        }
-        if (this.ValidationErrorsList.length == 0) {
 
-            this.CurrentSession.CurrentWindow.Close("Ok");
+        if (this.closedMonth) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ClosedMonth"));
         }
+
     }
 
+    private SetEntityPMFields() {
+         var value: Date = DateTool.GetDateFromDate(this.AccountingCancelationDate, true);
+        this.EntityPM.AccountingCancelationDate = value;
+        this.EntityPM.CancelationNotes = this.CancelationNotes;
+        this.EntityPM.DontIncludeInDeductionReport = this.DontIncludeInDeductionReport;
+    }
+
+
+    //private RejectChanges() {
+    //    this.EntityPM.AccountingCancelationDate = null;
+    //    this.EntityPM.CancelationNotes = null;
+    //    this.EntityPM.DontIncludeInDeductionReport = this.DontIncludeInDeductionReport;
+    //}
     CancelButtonClicked() {
+        //this.RejectChanges();
         this.CurrentSession.CurrentWindow.Close("Cancel");
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuoteTemplateSettings">
+<Table Name="QuoteTemplateSettings" Schema="dbo" DBType="Main">
   <Column Name="AlignRight" Type="bit">
     <Constraints Nullable="false" />
   </Column>

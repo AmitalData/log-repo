@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsBranches">
+<Table Name="CustomsBranches" Schema="Customs" DBType="Main">
   <Column Name="BankCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
@@ -21,8 +21,8 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="CustomsBranchId" ReferencedTableName="CustomsBranches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.CustomsBranches_CustomsBranchId" />
-  <Relation ParentTableName="Claims" ParentColumnName="AccountBranchCode" ReferencedTableName="CustomsBranches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Claims_Customs.CustomsBranches_AccountBranchCode" />
   <Relation ParentTableName="DeclarationPaymentMethods" ParentColumnName="CustomsBranchId" ReferencedTableName="CustomsBranches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentMethods_Customs.CustomsBranches_CustomsBranchId" />
   <Relation ParentTableName="CustomBanks" ParentColumnName="CustomsBranchId" ReferencedTableName="CustomsBranches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomBanks_Customs.CustomsBranches_CustomsBranchId" />
+  <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="CustomsBranchId" ReferencedTableName="CustomsBranches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.CustomsBranches_CustomsBranchId" />
+  <Relation ParentTableName="Claims" ParentColumnName="AccountBranchCode" ReferencedTableName="CustomsBranches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Claims_Customs.CustomsBranches_AccountBranchCode" />
 </Table>

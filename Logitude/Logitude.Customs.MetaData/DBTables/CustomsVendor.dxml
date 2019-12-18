@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsVendors">
+<Table Name="CustomsVendors" Schema="Customs" DBType="Main">
   <Column Name="CityName" Type="varchar" Size="35">
     <Constraints Nullable="true" />
   </Column>
@@ -57,9 +57,9 @@
   <Column Name="VendorTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="ImporterDespositions" ParentColumnName="VendorID" ReferencedTableName="CustomsVendors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ImporterDespositions_Customs.CustomsVendors_VendorID" />
+  <Relation ParentTableName="SupplierInvoices" ParentColumnName="VendorId" ReferencedTableName="CustomsVendors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.SupplierInvoices_Customs.CustomsVendors_VendorId" />
   <Relation ParentTableName="VendorCommissions" ParentColumnName="VendorId" ReferencedTableName="CustomsVendors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.VendorCommissions_Customs.CustomsVendors_VendorId" />
   <Relation ParentTableName="VendorCommunications" ParentColumnName="VendorId" ReferencedTableName="CustomsVendors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.VendorCommunications_Customs.CustomsVendors_VendorId" />
   <Relation ParentTableName="CustomsPartnersItems" ParentColumnName="VendorId" ReferencedTableName="CustomsVendors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsPartnersItems_Customs.CustomsVendors_VendorId" />
-  <Relation ParentTableName="SupplierInvoices" ParentColumnName="VendorId" ReferencedTableName="CustomsVendors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.SupplierInvoices_Customs.CustomsVendors_VendorId" />
-  <Relation ParentTableName="ImporterDespositions" ParentColumnName="VendorID" ReferencedTableName="CustomsVendors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ImporterDespositions_Customs.CustomsVendors_VendorID" />
 </Table>

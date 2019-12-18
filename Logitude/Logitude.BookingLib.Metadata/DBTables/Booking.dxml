@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Bookings">
+<Table Name="Bookings" Schema="dbo" DBType="Main">
   <Column Name="AccountNumber" Type="varchar" Size="14">
     <Constraints Nullable="true" />
   </Column>
@@ -60,13 +60,13 @@
   <Column Name="CASSCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ChargeableWeight" Type="decimal">
+  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ChargeableWeightEdited" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ChargeableWeightInKG" Type="decimal">
+  <Column Name="ChargeableWeightInKG" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
@@ -117,7 +117,7 @@
   <Column Name="DimensionsUnitCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DimFactor" Type="decimal">
+  <Column Name="DimFactor" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DirectionCode" Type="char" Size="1">
@@ -135,13 +135,13 @@
   <Column Name="FNAReason" Type="varchar" Size="256">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="GrossWeight" Type="decimal">
+  <Column Name="GrossWeight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="GrossWeightEdited" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="GrossWeightInKG" Type="decimal">
+  <Column Name="GrossWeightInKG" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
@@ -231,7 +231,7 @@
   <Column Name="OtherServicesInformation" Type="varchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Ratio" Type="decimal">
+  <Column Name="Ratio" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Routing" Type="varchar" Size="100">
@@ -321,10 +321,10 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Volume" Type="decimal">
+  <Column Name="Volume" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VolumetricWeight" Type="decimal">
+  <Column Name="VolumetricWeight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VolumeUnitCode" Type="varchar" Size="3">
@@ -333,7 +333,7 @@
   <Column Name="WaitingForResponse" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="BookingAnswers" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.Bookings_BookingId" />
   <Relation ParentTableName="BookingPackages" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingPackages_dbo.Bookings_BookingId" />
   <Relation ParentTableName="BookingLastRequests" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingLastRequests_dbo.Bookings_BookingId" />
-  <Relation ParentTableName="BookingAnswers" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.Bookings_BookingId" />
 </Table>

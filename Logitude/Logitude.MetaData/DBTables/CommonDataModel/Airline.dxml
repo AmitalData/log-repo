@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Airlines">
+<Table Name="Airlines" Schema="dbo" DBType="Main">
   <Column Name="AccountNumber" Type="varchar" Size="14">
     <Constraints Nullable="true" />
   </Column>

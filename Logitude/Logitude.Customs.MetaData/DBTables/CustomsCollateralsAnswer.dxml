@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsCollateralsAnswers">
-  <Column Name="AllocatedAmount" Type="decimal">
+<Table Name="CustomsCollateralsAnswers" Schema="Customs" DBType="Main">
+  <Column Name="AllocatedAmount" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="AnswerEntityTypeCode" Type="varchar" Size="2">
@@ -42,7 +42,7 @@
   <Column Name="RequestedTapagNumeral" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="RequestFileAmount" Type="decimal">
+  <Column Name="RequestFileAmount" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="RequestFileTypeCode" Type="varchar" Size="2">

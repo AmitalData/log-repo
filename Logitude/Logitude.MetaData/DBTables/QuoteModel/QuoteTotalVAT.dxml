@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuoteTotalVATs">
+<Table Name="QuoteTotalVATs" Schema="dbo" DBType="Main">
   <Column Name="ExternalTAXItemId" Type="varchar" Size="25">
     <Constraints Nullable="true" />
   </Column>

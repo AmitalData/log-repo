@@ -1063,6 +1063,8 @@ namespace WebFreight.Web.ReportsWebServices
                 item.BillToVendorId = d.BillToId;
                 item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
                 item.InvoiceAmount = d.AmountInLocalCurrency;
+                item.InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency;
+                item.AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue;
                 item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
                 item.BranchId = d.BranchId;
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
@@ -1091,6 +1093,8 @@ namespace WebFreight.Web.ReportsWebServices
                      InvoiceStatus = d.Status == null ? null : d.Status.Name,
                      InvoiceAmount = d.AmountInLocalCurrency,
                      AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
+                     InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
+                     AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue,
                      BranchId = d.BranchId,
                  }).ToList();
 
@@ -1900,7 +1904,6 @@ namespace WebFreight.Web.ReportsWebServices
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
 
             IQueryable<ARInvoiceList> iQueryable = arInvoiceQuery.GetInvoiceListByTenant(tenant);
-            IQueryable<ARInvoice> ARInvoiceIQueryable = aRInvoiceRepository.GetARInvoices(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
             IQueryable<ARInvoiceLine> tenantARInvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByTenant(tenant);
@@ -1986,36 +1989,30 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Filter Data
             iQueryable = iQueryable.Where(d => !d.IsConstituentInvoice);
-            ARInvoiceIQueryable = ARInvoiceIQueryable.Where(d => !d.IsConstituentInvoice);
 
             if (!includeDraftInvoices)
             {
                 iQueryable = iQueryable.Where(d => d.StatusCode != "DR");
-                ARInvoiceIQueryable = ARInvoiceIQueryable.Where(d => d.StatusCode != "DR");
             }
 
             if (!includeVoidInvoices)
             {
                 iQueryable = iQueryable.Where(d => d.StatusCode != "VD");
-                ARInvoiceIQueryable = ARInvoiceIQueryable.Where(d => d.StatusCode != "VD");
             }
 
             if (!string.IsNullOrEmpty(branchId))
             {
                 iQueryable = iQueryable.Where(d => d.BranchId == branchId);
-                ARInvoiceIQueryable = ARInvoiceIQueryable.Where(d => d.BranchId == branchId);
             }
 
             if (invoiceDate)
             {
                 iQueryable = iQueryable.Where(d => d.InvoiceDate >= date1 && d.InvoiceDate <= date2);
-                ARInvoiceIQueryable = ARInvoiceIQueryable.Where(d => d.InvoiceDate >= date1 && d.InvoiceDate <= date2);
             }
 
             else
             {
                 iQueryable = iQueryable.Where(d => d.CreateDate >= date1 && d.CreateDate <= date2);
-                ARInvoiceIQueryable = ARInvoiceIQueryable.Where(d => d.CreateDate >= date1 && d.CreateDate <= date2);
             }
             #endregion
 
@@ -2054,7 +2051,7 @@ namespace WebFreight.Web.ReportsWebServices
                 InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
                 List<ARInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.ARInvoiceId == a.Id).ToList();
                 List<VATClass> myVATS = new List<VATClass>();
-                List<ARInvoiceLine> ARInvoiceLines = tenantARInvoiceLines.Where(l => l.ARInvoiceId == a.Id).ToList();
+                List<ARInvoiceLine> ARInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == a.Id) && (l.IsExpense == true)).ToList();
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, a, invoicesRecored);
 
                 //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
@@ -2170,9 +2167,9 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.Salesman = a.SalesmanUserName;
                 invoicesRecored.SubTotalInLocalCurrency = a.SubTotalInLocalCurrency;
                 invoicesRecored.VATInLocalCurrency = myTotalVats.Sum(d => d.LocalVATAmount);
-                invoicesRecored.GrandTotalInLocalCurrency = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
+                invoicesRecored.GrandTotalInLocalCurrency = invoicesRecored.SubTotalInLocalCurrency + invoicesRecored.VATInLocalCurrency;
                 invoicesRecored.ExpenseChargesInLocalCurrency = ARInvoiceLines.Sum(s => s.LocalCurrencyAmount);
-
+                
 
                 if (localCurrency)
                 {
@@ -2199,28 +2196,24 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.LocalCurrency = a.LocalCurrencyCode;
                     invoicesRecored.ExpenseCharges = ARInvoiceLines.Sum(s => s.InvoiceCurrencyAmount);
                 }
+                if (a.SATXML != null)
+                {
+                    Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(a.SATXML);
+                    List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                    if (timbreFiscalDigitalElement != null)
+                    {
+                        Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                        invoicesRecored.UUID = digitalTi.UUID;
+                    }
+                }
 
                 dataProvider.InvoicesReportList.Add(invoicesRecored);
                 dataProvider.InvoicesReportList_NotSorted.Add(invoicesRecored);
             }
 
-           foreach(ARInvoice a in ARInvoiceIQueryable)
-           {
-                Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(a.SATXML);
-                List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
-                dataProvider.SATList = new List<SAT>();
-                var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-                if (timbreFiscalDigitalElement != null)
-                {
-                    Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-                    dataProvider.SATList.Add(new SAT()
-                    {
-                        UUID = digitalTi.UUID
-                    });
-                }
-                
-           }
-                dataProvider.InvoiceTotalsList = (from b in dataProvider.InvoicesReportList
+            
+            dataProvider.InvoiceTotalsList = (from b in dataProvider.InvoicesReportList
                                               group b by new { b.Currency } into g
                                               select new WebFreight.Web.DataProviders.InvoiceDataProvider.InvoiceTotals()
                                               {
@@ -11007,7 +11000,7 @@ namespace WebFreight.Web.ReportsWebServices
         public LedgerTransactionsDataProvider GetLedgerTransactionsDataProvider(byte[] xmlFilters, int tenant)
         {
             // constants
-            const int PAGE_SIZE = 100;
+            const int PAGE_SIZE = 1000*20;
             const int PAGE_RECORD_START_INDEX = 0;
           // const string ACCOUNT_TYPE_CODE = "2";
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TaxReports">
-  <Column Name="AmountForPayRefund" Type="decimal">
+<Table Name="TaxReports" Schema="dbo" DBType="Main">
+  <Column Name="AmountForPayRefund" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
@@ -9,10 +9,10 @@
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="EquipmentInputsTaxAmount" Type="decimal">
+  <Column Name="EquipmentInputsTaxAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ExemptTaxableOutput" Type="decimal">
+  <Column Name="ExemptTaxableOutput" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Id" Type="varchar" Size="15">
@@ -30,16 +30,16 @@
   <Column Name="NeedsRebulid" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="OtherInputsTaxAmount" Type="decimal">
+  <Column Name="OtherInputsTaxAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="OutputLinesCount" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OutputTaxAmount" Type="decimal">
+  <Column Name="OutputTaxAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OutputTaxAmountWithDiffPercent" Type="decimal">
+  <Column Name="OutputTaxAmountWithDiffPercent" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ProcessEndDate" Type="datetime">
@@ -57,10 +57,10 @@
   <Column Name="StatusCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TaxableOutputAmount" Type="decimal">
+  <Column Name="TaxableOutputAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TaxableOutputsWithDiffPercent" Type="decimal">
+  <Column Name="TaxableOutputsWithDiffPercent" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TaxReportMonth" Type="datetime">
@@ -81,6 +81,6 @@
   <Column Name="VatNumber" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="TaxReportId" ReferencedTableName="TaxReports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.TaxReports_TaxReportId" />
   <Relation ParentTableName="TaxReportLines" ParentColumnName="TaxReportId" ReferencedTableName="TaxReports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxReportLines_dbo.TaxReports_TaxReportId" />
+  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="TaxReportId" ReferencedTableName="TaxReports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.TaxReports_TaxReportId" />
 </Table>

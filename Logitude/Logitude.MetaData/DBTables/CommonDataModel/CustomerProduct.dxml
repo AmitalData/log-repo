@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomerProducts">
-  <Column Name="CommitmentChargeableWeight" Type="decimal">
+<Table Name="CustomerProducts" Schema="dbo" DBType="Main">
+  <Column Name="CommitmentChargeableWeight" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CommitmentNumberOfShipments" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CommitmentRevenue" Type="decimal">
+  <Column Name="CommitmentRevenue" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CommitmentTEU" Type="decimal">
+  <Column Name="CommitmentTEU" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CustomerId" Type="varchar" Size="15">
@@ -24,16 +24,16 @@
   <Column Name="NotesRightToLeft" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="PotentialChargeableWeight" Type="decimal">
+  <Column Name="PotentialChargeableWeight" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="PotentialNumberOfShipments" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PotentialRevenue" Type="decimal">
+  <Column Name="PotentialRevenue" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PotentialTEU" Type="decimal">
+  <Column Name="PotentialTEU" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="PrepaidCollectId" Type="varchar" Size="1">

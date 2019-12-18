@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="OceanInsightsRequests">
+<Table Name="OceanInsightsRequests" Schema="dbo" DBType="Main">
   <Column Name="BLNumber" Type="varchar" Size="18">
     <Constraints Nullable="true" />
   </Column>

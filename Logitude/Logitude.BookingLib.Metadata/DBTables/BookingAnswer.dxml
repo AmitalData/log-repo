@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BookingAnswers">
+<Table Name="BookingAnswers" Schema="dbo" DBType="Main">
   <Column Name="BookingId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
@@ -45,7 +45,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Weight" Type="decimal">
+  <Column Name="Weight" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="WeightUnitCode" Type="varchar" Size="3">

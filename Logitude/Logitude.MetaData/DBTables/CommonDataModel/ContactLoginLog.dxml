@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ContactLoginLogs">
+<Table Name="ContactLoginLogs" Schema="dbo" DBType="Main">
   <Column Name="Browser" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>

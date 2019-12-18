@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="FormCustomFields1">
+<Table Name="FormCustomFields1" Schema="dbo" DBType="Main">
   <Column Name="DocumentTypeId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>

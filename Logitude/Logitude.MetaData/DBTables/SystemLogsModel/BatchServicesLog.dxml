@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BatchServicesLogs" Schema="dbo" DBType="SystemLogs">
+  <Column Name="BatchServiceCode" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CPU" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DoneItemsInFiveMinutes" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DoneItemsInOneHour" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DoneItemsInOneMinute" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FailedItems" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="40">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LastActivity" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NumberOfDoneItems" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RelatedQueueMessage" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="WaitingItems" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

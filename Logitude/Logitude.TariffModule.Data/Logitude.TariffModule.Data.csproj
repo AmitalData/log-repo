@@ -155,5 +155,11 @@
   <ItemGroup>
     <Folder Include="CustomFilters\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

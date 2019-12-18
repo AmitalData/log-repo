@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Activities">
+<Table Name="Activities" Schema="dbo" DBType="Main">
   <Column Name="ActivityStatusCode" Type="varchar" Size="1">
     <Constraints Nullable="false" />
   </Column>
@@ -201,8 +201,8 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ActivityEmailRecipients" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityEmailRecipients_dbo.Activities_ActivityId" />
   <Relation ParentTableName="ActivityInvitees" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityInvitees_dbo.Activities_ActivityId" />
   <Relation ParentTableName="ActivityNotes" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityNotes_dbo.Activities_ActivityId" />
   <Relation ParentTableName="ActivityOwnerHistories" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityOwnerHistories_dbo.Activities_ActivityId" />
+  <Relation ParentTableName="ActivityEmailRecipients" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityEmailRecipients_dbo.Activities_ActivityId" />
 </Table>

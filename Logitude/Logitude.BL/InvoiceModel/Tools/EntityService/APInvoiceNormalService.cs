@@ -2273,6 +2273,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.Notes = theEntityPm.InternalNotes;
                     journalLine.CreditAccountId = glAccount.Id;
                     //journalLine.CreditControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
+                    journalLine.DebitAccountId = SetDebitAccountForSingleLineAPInvoice(theEntityPm);
+                   
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                     journal.JournalLines.Add(journalLine);
 
@@ -2370,7 +2372,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
             return accountingSettings;
         }
+        private string SetDebitAccountForSingleLineAPInvoice(APInvoicePM invoice)
+        {
+            if (invoice.InvoiceLines.Count == 1)
+            {
+                APInvoiceLinePM invoiceLine = invoice.InvoiceLines.First();
+                return invoiceLine.ChargeTypeGLAccountId;
 
-        #endregion 
+            }
+
+            else return null;
+        }
+        #endregion
     }
 }

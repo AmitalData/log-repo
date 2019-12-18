@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="GlobalDBs" Schema="dbo" DBType="Global">
+  <Column Name="DBConnection" Type="nvarchar" Size="512">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="nvarchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsBlocking" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsUpgrading" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SecondaryAzureDBConnection" Type="nvarchar" Size="512">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SharedDWConnection" Type="nvarchar" Size="512">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="GlobalTenants" ParentColumnName="GlobalDBId" ReferencedTableName="GlobalDBs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GlobalTenants_dbo.GlobalDBs_GlobalDBId" />
+  <Relation ParentTableName="ConvertProgramInfoes" ParentColumnName="GlobalDBId" ReferencedTableName="GlobalDBs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ConvertProgramInfoes_dbo.GlobalDBs_GlobalDBId" />
+</Table>

@@ -8,55 +8,62 @@ namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
-        protected readonly string ConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
+        protected string ConnectionString;
         
-        public SQLDatabaseMigrations(TableDefinition table)
+        public SQLDatabaseMigrations(TableDefinition table, string connectionString)
         {
+            ConnectionString = connectionString;
             DXMLTable = table;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
         {
-            string queryString = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @name OR TABLE_NAME = @oldName";
+            string dxmlTableOldNames = DXMLTable.OldNames;
+            string name = "'" + DXMLTable.Name + "'";
+            string oldNames = String.IsNullOrEmpty(dxmlTableOldNames) ? null : "," + (dxmlTableOldNames.Contains(",") ? string.Join(",", dxmlTableOldNames.Split(',').Select(n => "'" + n + "'").ToArray()) : "'" + dxmlTableOldNames + "'");
+            
+            string queryString = @"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME IN (" + name + oldNames + ")";
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            TableDefinition currentTable = null;
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+
+            try
             {
-                TableDefinition currentTable = null;
-                SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = null;
-                command.Parameters.AddWithValue("@name", DXMLTable.Name);
-                command.Parameters.AddWithValue("@oldName", DXMLTable.OldName ?? DXMLTable.Name);
+                connection.Open();
+                reader = command.ExecuteReader();
 
-                try
+                if (reader.HasRows)
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        reader.Read();
-                        string tableName = reader["TABLE_NAME"].ToString();
-                        currentTable = GetCurrentTableDefinitionFromDB(tableName);
-                    }
-
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception)
-                {
-                    reader.Close();
-                    connection.Close();
+                    reader.Read();
+                    string tableName = reader["TABLE_NAME"].ToString();
+                    currentTable = GetCurrentTableDefinitionFromDB(tableName);
                 }
 
-                return currentTable;
+                reader.Close();
+                connection.Close();
             }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return currentTable;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB(string tableName)
         {
             string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
                                   "FROM ( " +
-                                  "SELECT COL.COLUMN_NAME AS ColumnName, IS_NULLABLE AS Nullable, DATA_TYPE AS DataType, CHARACTER_MAXIMUM_LENGTH AS Size " +
+                                  "SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, COL.NUMERIC_PRECISION AS Precision, COL.NUMERIC_SCALE AS Scale " +
                                   "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
                                   "WHERE COL.TABLE_NAME = @tableName " +
                                   ") AS Q1 " +
@@ -67,74 +74,81 @@ namespace Logitude.DBMigrations.Models
                                   "WHERE TCON.TABLE_NAME = @tableName " +
                                   ") AS Q2 ON Q2.ColumnName = Q1.ColumnName";
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            TableDefinition currentTable = null;
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+
+            try
             {
-                TableDefinition currentTable = null;
+                connection.Open();
+                reader = command.ExecuteReader();
+
                 List<ColumnDefinition> currentTableColumns = new List<ColumnDefinition>();
-                SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = null;
-                command.Parameters.AddWithValue("@tableName", tableName);
 
-                try
+                while (reader.Read())
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    if (!currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).Any())
                     {
-                        if (!currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).Any())
+                        ColumnDefinition column = new ColumnDefinition
                         {
-                            ColumnDefinition column = new ColumnDefinition
+                            Name = reader["ColumnName"].ToString(),
+                            Type = GetColumnDefinitionDataType(reader["DataType"].ToString()),
+                            Size = GetColumnDefinitionSize(reader["Size"].ToString()),
+                            Precision = String.IsNullOrEmpty(reader["Precision"].ToString()) ? 0 : Convert.ToInt32(reader["Precision"].ToString()),
+                            Scale = String.IsNullOrEmpty(reader["Scale"].ToString()) ? 0 : Convert.ToInt32(reader["Scale"].ToString()),
+                            Constraints = new ConstraintsDefinition
                             {
-                                Name = reader["ColumnName"].ToString(),
-                                Type = GetDxmlDataType(reader["DataType"].ToString()),
-                                Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? (reader["Size"].ToString() == "-1" ? -1 : Convert.ToInt32(reader["Size"].ToString())) : 0,
-                                Constraints = new ConstraintsDefinition
-                                {
-                                    Nullable = (reader["Nullable"].ToString() == "YES")
-                                }
-                            };
-
-                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
-                            {
-                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
+                                Nullable = (reader["Nullable"].ToString().ToLower() == "yes")
                             }
+                        };
 
-                            currentTableColumns.Add(column);
+                        if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
+                        {
+                            column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
                         }
-                        else
+
+                        currentTableColumns.Add(column);
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
                         {
-                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
-                            {
-                                var column = currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).First();
-                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
-                            }
+                            var column = currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).First();
+                            column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
                         }
                     }
-
-                    reader.Close();
-                    connection.Close();
-
-                    currentTable = new TableDefinition
-                    {
-                        Name = tableName,
-                        Columns = currentTableColumns
-                    };
                 }
-                catch (Exception)
+
+                reader.Close();
+                connection.Close();
+
+                currentTable = new TableDefinition
+                {
+                    Name = tableName,
+                    Columns = currentTableColumns
+                };
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
                 {
                     reader.Close();
-                    connection.Close();
                 }
+                connection.Close();
 
-                return currentTable;
+                ExitDatabaseMigrations(exception.Message);
             }
+
+            return currentTable;
         }
 
         protected override string GetCreateTableScript()
         {
             string createTableScript = "-- Create New Table With Name " + DXMLTable.Name + "\n";
-            createTableScript += "CREATE TABLE [" + DXMLTable.Name + "](" + "\n";
+            createTableScript += "CREATE TABLE [" + DXMLTable.Schema + "].[" + DXMLTable.Name + "](" + "\n";
             foreach (var column in DXMLTable.Columns)
             {
                 createTableScript += GetCreateColumnScript(column) + "\n";
@@ -152,7 +166,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetCreateColumnScript(ColumnDefinition columnDefinition)
         {
             string columnScript = "[" + columnDefinition.Name + "]" + " ";
-            columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size);
+            columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size, columnDefinition.Precision, columnDefinition.Scale);
             columnScript += columnDefinition.Constraints.Nullable ? " NULL" : " NOT NULL";
             columnScript += ",";
             return columnScript;
@@ -176,7 +190,7 @@ namespace Logitude.DBMigrations.Models
             return alterTableScript;
         }
 
-        private string GetAlterColumnsScript()
+        protected override string GetAlterColumnsScript()
         {
             string alterColumnsScript = "";
             foreach (var columnMigration in TableMigrations.ColumnsMigrations)
@@ -186,7 +200,7 @@ namespace Logitude.DBMigrations.Models
             return alterColumnsScript;
         }
 
-        private bool CheckIfTableRenamed()
+        protected override bool CheckIfTableRenamed()
         {
             return TableMigrations.DxmlTableName != TableMigrations.CurrentTableName;
         }
@@ -223,19 +237,22 @@ namespace Logitude.DBMigrations.Models
                 case MigrationTypes.UNSETNULLABLE:
                     alterColumnScript = GetUnsetNullableScript(columnMigration);
                     return alterColumnScript;
+                case MigrationTypes.ALTERPRECISIONANDSCALE:
+                    alterColumnScript = GetAlterPrecisionAndScaleScript(columnMigration);
+                    return alterColumnScript;
                 default:
                     return alterColumnScript;
             }
         }
 
-        protected override string GetDataTypeScript(string type, int size)
+        protected override string GetDataTypeScript(string type, int size, int precision, int scale)
         {
             switch (type)
             {
                 case "int":
                     return "INT";
                 case "decimal":
-                    return "DECIMAL";
+                    return "DECIMAL(" + precision + ", " + scale + ")";
                 case "timestamp":
                     return "TIMESTAMP";
                 case "varbinary":
@@ -244,12 +261,14 @@ namespace Logitude.DBMigrations.Models
                     return "VARCHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
                 case "datetime":
                     return "DATETIME";
+                case "date":
+                    return "DATE";
                 case "time":
                     return "TIME";
                 case "float":
                     return "FLOAT";
                 case "char":
-                    return "CHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
+                    return "CHAR(" + (size == -1 ? "8000" : size.ToString()) + ")";
                 case "bigint":
                     return "BIGINT";
                 case "nvarchar":
@@ -278,7 +297,7 @@ namespace Logitude.DBMigrations.Models
             string addScript = "-- Add New Column With Name " + columnMigration.NewColumn.Name + "\n";
             addScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             addScript += "ADD " + "[" + columnMigration.NewColumn.Name + "]" + " ";
-            addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size);
+            addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
             return addScript + "\n\n";
         }
@@ -302,7 +321,7 @@ namespace Logitude.DBMigrations.Models
             string alterTypeScript = "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterTypeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             alterTypeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.CurrentColumn.Size == 0 ? 10 : columnMigration.CurrentColumn.Size);
+            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? 1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             if (!columnMigration.CurrentColumn.Constraints.Nullable)
             {
                 alterTypeScript += " NOT NULL";
@@ -316,7 +335,7 @@ namespace Logitude.DBMigrations.Models
             string alterSizeScript = "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterSizeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             alterSizeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size);
+            alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size, 0, 0);
             if (!columnMigration.CurrentColumn.Constraints.Nullable)
             {
                 alterSizeScript += " NOT NULL";
@@ -343,8 +362,9 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetSetNullableScript(ColumnMigration columnMigration)
         {
-            bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            bool IsAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
             string setNullableScript = "-- Set Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
             if (columnMigration.CurrentColumn.Constraints.PrimaryKey)
             {
@@ -352,21 +372,35 @@ namespace Logitude.DBMigrations.Models
             }
             setNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             setNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            setNullableScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (IsAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
+            setNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
             setNullableScript += " NULL";
             return setNullableScript + "\n\n";
         }
 
         protected override string GetUnsetNullableScript(ColumnMigration columnMigration)
         {
-            bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            bool IsAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
             string unsetNullableScript = "-- Unset Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
             unsetNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             unsetNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            unsetNullableScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (IsAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
+            unsetNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
             unsetNullableScript += " NOT NULL";
             return unsetNullableScript + "\n\n";
+        }
+
+        protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)
+        {
+            string alterPrecisionAndScaleScript = "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
+            alterPrecisionAndScaleScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
+            alterPrecisionAndScaleScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
+            alterPrecisionAndScaleScript += GetDataTypeScript(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+            if (!columnMigration.CurrentColumn.Constraints.Nullable)
+            {
+                alterPrecisionAndScaleScript += " NOT NULL";
+            }
+            return alterPrecisionAndScaleScript + "\n\n";
         }
 
         protected override string GetPrimaryKeyConstraintScript()

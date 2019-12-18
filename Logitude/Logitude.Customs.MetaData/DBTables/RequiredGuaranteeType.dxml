@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="RequiredGuaranteeTypes">
-  <Column Name="GuaranteeAmount" Type="decimal">
+<Table Name="RequiredGuaranteeTypes" Schema="Customs" DBType="Main">
+  <Column Name="GuaranteeAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="GuaranteeId" Type="varchar" Size="15">

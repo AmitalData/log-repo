@@ -86,15 +86,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 try
                 {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromSeconds(50)))
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Journal", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("Journal", entityPM.Tenant, authToken.Tenant);
-
+	                        SecurityUtility.AuthenticationOnEntityTenant("Journal", entityPM.Tenant, authToken.Tenant);
+	                    
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         JournalUpdateService service = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -107,7 +107,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
+                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
                         //}
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

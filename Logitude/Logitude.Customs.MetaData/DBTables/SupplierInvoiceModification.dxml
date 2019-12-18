@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SupplierInvoiceModifications">
-  <Column Name="Amount" Type="decimal">
+<Table Name="SupplierInvoiceModifications" Schema="Customs" DBType="Main">
+  <Column Name="Amount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CurrencyTypeCode" Type="varchar" Size="3">

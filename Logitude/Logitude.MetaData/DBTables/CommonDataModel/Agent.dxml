@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Agents">
+<Table Name="Agents" Schema="dbo" DBType="Main">
   <Column Name="AgentSharedLogisticsKey" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>

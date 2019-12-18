@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="FlightsSchedulesResponses">
+<Table Name="FlightsSchedulesResponses" Schema="dbo" DBType="Main">
   <Column Name="AirlineId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>

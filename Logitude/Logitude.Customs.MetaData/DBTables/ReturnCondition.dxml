@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ReturnConditions">
+<Table Name="ReturnConditions" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="2">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,8 +15,8 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomsCollateralsConditions" ParentColumnName="ConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsConditions_Customs.ReturnConditions_ConditionCode" />
   <Relation ParentTableName="DepositConditions" ParentColumnName="DepositConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DepositConditions_Customs.ReturnConditions_DepositConditionCode" />
   <Relation ParentTableName="CollateralsRequestFileConds" ParentColumnName="ConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CollateralsRequestFileConds_Customs.ReturnConditions_ConditionCode" />
   <Relation ParentTableName="GuaranteeConditions" ParentColumnName="ReturnConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.GuaranteeConditions_Customs.ReturnConditions_ReturnConditionCode" />
+  <Relation ParentTableName="CustomsCollateralsConditions" ParentColumnName="ConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsConditions_Customs.ReturnConditions_ConditionCode" />
 </Table>

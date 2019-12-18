@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DeclarationPaymentMethods">
+<Table Name="DeclarationPaymentMethods" Schema="Customs" DBType="Main">
   <Column Name="AccountNumber" Type="varchar" Size="11">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Amount" Type="decimal">
+  <Column Name="Amount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="BankCode" Type="varchar" Size="2">

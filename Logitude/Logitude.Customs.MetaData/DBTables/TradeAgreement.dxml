@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TradeAgreements">
+<Table Name="TradeAgreements" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="8">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -15,8 +15,8 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="TradeAgreementTypeCode" ReferencedTableName="TradeAgreements" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.TradeAgreements_TradeAgreementTypeCode" />
-  <Relation ParentTableName="CustomsCountries" ParentColumnName="TarriffCode" ReferencedTableName="TradeAgreements" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCountries_Customs.TradeAgreements_TarriffCode" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="TradeAgreementCode" ReferencedTableName="TradeAgreements" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.TradeAgreements_TradeAgreementCode" />
   <Relation ParentTableName="SupplierInvoices" ParentColumnName="PreferenceDocumentTypeCode" ReferencedTableName="TradeAgreements" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoices_Customs.TradeAgreements_PreferenceDocumentTypeCode" />
+  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="TradeAgreementTypeCode" ReferencedTableName="TradeAgreements" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.TradeAgreements_TradeAgreementTypeCode" />
+  <Relation ParentTableName="CustomsCountries" ParentColumnName="TarriffCode" ReferencedTableName="TradeAgreements" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCountries_Customs.TradeAgreements_TarriffCode" />
 </Table>

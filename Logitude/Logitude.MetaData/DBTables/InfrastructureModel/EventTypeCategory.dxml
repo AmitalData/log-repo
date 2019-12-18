@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="EventTypeCategories">
+<Table Name="EventTypeCategories" Schema="dbo" DBType="Main">
   <Column Name="Code" Type="nvarchar" Size="128">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

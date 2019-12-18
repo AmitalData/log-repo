@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SupplierInvoices">
+<Table Name="SupplierInvoices" Schema="Customs" DBType="Main">
   <Column Name="AccountTypeCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="AccumalationStateCode" Type="varchar" Size="3">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ActualPayedAmount" Type="decimal">
+  <Column Name="ActualPayedAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ActualPayedCurrencyTypeCode" Type="varchar" Size="3">
@@ -15,7 +15,7 @@
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal">
+  <Column Name="ExchangeRate" Type="decimal" Precision="12" Scale="10">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="FreightCurrencyTypeCode" Type="varchar" Size="3">
@@ -27,16 +27,16 @@
   <Column Name="InsruanceCurrencyTypeCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="InsruancePercentage" Type="decimal">
+  <Column Name="InsruancePercentage" Type="decimal" Precision="7" Scale="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="InsuranceAmount" Type="decimal">
+  <Column Name="InsuranceAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="InvoiceAmount" Type="decimal">
+  <Column Name="InvoiceAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="InvoiceAmountInUSD" Type="decimal">
+  <Column Name="InvoiceAmountInUSD" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="InvoiceCounterKey" Type="int">
@@ -75,25 +75,25 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalFreightInFreightCurrency" Type="decimal">
+  <Column Name="TotalFreightInFreightCurrency" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TotalFreightInNIS" Type="decimal">
+  <Column Name="TotalFreightInNIS" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="UnfInvoiceCounterKey" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VendorComissionPercentage" Type="decimal">
+  <Column Name="VendorComissionPercentage" Type="decimal" Precision="7" Scale="4">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VendorId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.SupplierInvoices_DeclarationId_CounterKey" />
   <Relation ParentTableName="SupplierInvoiceFreightAmounts" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceFreightAmounts_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
-  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
+  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="CounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.SupplierInvoices_DeclarationId_CounterKey" />
   <Relation ParentTableName="SupplierInvoiceFreightAmounts" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceFreightAmounts_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
+  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
 </Table>

@@ -2378,12 +2378,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool activeForInterest ;
+	  private bool? activeForInterest ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool ActiveForInterest  
+       public bool? ActiveForInterest  
 	   {
 	    
 	     get
@@ -2394,19 +2394,19 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(activeForInterest != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterest",OldValue=activeForInterest,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterest",OldValue=activeForInterest,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   activeForInterest=value;
 		   }
 			
 		 }
 	   }
-	  private DateTime interestCalculationStartDate ;
+	  private DateTime? interestCalculationStartDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime InterestCalculationStartDate  
+       public DateTime? InterestCalculationStartDate  
 	   {
 	    
 	     get
@@ -2417,19 +2417,19 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(interestCalculationStartDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationStartDate",OldValue=interestCalculationStartDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationStartDate",OldValue=interestCalculationStartDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   interestCalculationStartDate=value;
 		   }
 			
 		 }
 	   }
-	  private bool activeForInterestCreditInvoice ;
+	  private bool? activeForInterestCreditInvoice ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool ActiveForInterestCreditInvoice  
+       public bool? ActiveForInterestCreditInvoice  
 	   {
 	    
 	     get
@@ -2440,19 +2440,19 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(activeForInterestCreditInvoice != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterestCreditInvoice",OldValue=activeForInterestCreditInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterestCreditInvoice",OldValue=activeForInterestCreditInvoice,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   activeForInterestCreditInvoice=value;
 		   }
 			
 		 }
 	   }
-	  private decimal minimumInterestInvoiceBilling ;
+	  private decimal? minimumInterestInvoiceBilling ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal MinimumInterestInvoiceBilling  
+       public decimal? MinimumInterestInvoiceBilling  
 	   {
 	    
 	     get
@@ -2463,14 +2463,49 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(minimumInterestInvoiceBilling != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   minimumInterestInvoiceBilling=value;
 		   }
 			
 		 }
 	   }
-   }
+
+	   private List<GLAccountInterestPeriodPM> gLAccountInterestPeriods;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("GLAccountInterestPeriodGLAccount", "Id","GLAccountId")]
+	   [DataMember]
+	   public virtual List<GLAccountInterestPeriodPM> GLAccountInterestPeriods  
+	   {
+	        get
+             {
+                 if (gLAccountInterestPeriods == null)
+                 {
+                     gLAccountInterestPeriods = new List<GLAccountInterestPeriodPM>();
+                 }
+                 return gLAccountInterestPeriods;
+              }
+             set { gLAccountInterestPeriods = value; }
+	    }
+		   
+	   private List<GLAccountInterestPeriodPM>  deletedGLAccountInterestPeriods;
+	   public virtual List<GLAccountInterestPeriodPM> DeletedGLAccountInterestPeriods  
+	   {
+	        get
+             {
+                 if ( deletedGLAccountInterestPeriods == null)
+                 {
+                      deletedGLAccountInterestPeriods = new List<GLAccountInterestPeriodPM>();
+                 }
+                 return  deletedGLAccountInterestPeriods;
+              }
+             set {  deletedGLAccountInterestPeriods = value; }
+	    }
+	     }
    
 }
 	 

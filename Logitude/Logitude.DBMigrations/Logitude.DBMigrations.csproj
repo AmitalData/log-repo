@@ -15,7 +15,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=4.122.18.3, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -50,6 +51,8 @@
     <Compile Include="Models\ColumnMigration.cs" />
     <Compile Include="Models\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
+    <Compile Include="Models\GeneratedScript.cs" />
+    <Compile Include="Models\OracleDatabaseMigrations.cs" />
     <Compile Include="Models\SQLDatabaseMigrations.cs" />
     <Compile Include="Models\DatabaseMigrations.cs" />
     <Compile Include="Models\MigrationTypes.cs" />
@@ -63,10 +66,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GeneratedScript\Script.sql" />
+    <Content Include="GeneratedScript\SystemLogsScript.sql" />
+    <Content Include="GeneratedScript\MainScript.sql" />
+    <Content Include="GeneratedScript\GlobalScript.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EntityFiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

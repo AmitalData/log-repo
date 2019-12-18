@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="LogBoxTenantSettings">
+<Table Name="LogBoxTenantSettings" Schema="dbo" DBType="Main">
   <Column Name="AutoArchiveOnInvoice" Type="bit">
     <Constraints Nullable="false" />
   </Column>

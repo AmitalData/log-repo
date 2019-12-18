@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TwoFactorAuthenticationDevices">
+<Table Name="TwoFactorAuthenticationDevices" Schema="dbo" DBType="Main">
   <Column Name="AuthenticationCode" Type="varchar" Size="10">
     <Constraints Nullable="false" />
   </Column>

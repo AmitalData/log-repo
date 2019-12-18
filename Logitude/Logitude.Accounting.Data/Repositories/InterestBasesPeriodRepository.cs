@@ -23,14 +23,14 @@ namespace Logitude.Accounting.Data.Repositories
         public InterestBasesPeriod GetSingleByInterestBaseStartDateAndnterestBaseTypeId(DateTime InterestBaseStartDate , string InterestBaseTypeId ,int Tenant)
         {
 
-              InterestBasesPeriod mm = (from a in context.InterestBasesPeriods
+              InterestBasesPeriod Period = (from a in context.InterestBasesPeriods
                                         where a.InterestBaseStartDate == InterestBaseStartDate && a.InterestBaseTypeId == InterestBaseTypeId && a.Tenant == Tenant
                                         select a).FirstOrDefault();
 
-
-            return mm;
+            return Period;
         }
-    }
+
+     }
 
 }
    

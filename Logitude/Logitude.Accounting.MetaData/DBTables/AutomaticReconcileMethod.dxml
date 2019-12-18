@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="AutomaticReconcileMethods">
+<Table Name="AutomaticReconcileMethods" Schema="dbo" DBType="Main">
   <Column Name="AutomaticReconcile1" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
@@ -24,6 +24,6 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="GLAccounts" ParentColumnName="AutomaticReconcileId" ReferencedTableName="AutomaticReconcileMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.AutomaticReconcileMethods_AutomaticReconcileId" />
   <Relation ParentTableName="FullAccountingSettings" ParentColumnName="AutomaticReconcileMethodId" ReferencedTableName="AutomaticReconcileMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.AutomaticReconcileMethods_AutomaticReconcileMethodId" />
+  <Relation ParentTableName="GLAccounts" ParentColumnName="AutomaticReconcileId" ReferencedTableName="AutomaticReconcileMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.AutomaticReconcileMethods_AutomaticReconcileId" />
 </Table>

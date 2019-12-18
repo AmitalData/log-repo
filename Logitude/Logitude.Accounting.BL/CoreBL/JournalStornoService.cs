@@ -157,6 +157,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalLinePM newStornoJournalLine = new JournalLinePM();
                 newStornoJournalLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 newStornoJournalLine.AccountingDate = item.AccountingDate;
+                if (stornoOverrideM.AccountingDate.HasValue)
+                {
+                    newStornoJournalLine.AccountingDate = stornoOverrideM.AccountingDate.Value;
+                }
+
+
                 newStornoJournalLine.ActionCode = item.ActionCode;
                 newStornoJournalLine.ActionTypeCode = item.ActionTypeCode;
                 newStornoJournalLine.ActionName = item.ActionName;

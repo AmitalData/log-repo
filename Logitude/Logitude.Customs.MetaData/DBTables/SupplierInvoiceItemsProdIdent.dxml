@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SupplierInvoiceItemsProdIdents">
+<Table Name="SupplierInvoiceItemsProdIdents" Schema="Customs" DBType="Main">
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="HybridTenantThresholds">
+<Table Name="HybridTenantThresholds" Schema="dbo" DBType="Main">
   <Column Name="FailedThresold" Type="int">
     <Constraints Nullable="false" />
   </Column>

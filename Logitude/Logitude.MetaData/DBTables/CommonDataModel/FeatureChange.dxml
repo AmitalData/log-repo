@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="FeatureChanges">
+<Table Name="FeatureChanges" Schema="dbo" DBType="Main">
   <Column Name="EventDateTime" Type="datetime">
     <Constraints Nullable="true" />
   </Column>

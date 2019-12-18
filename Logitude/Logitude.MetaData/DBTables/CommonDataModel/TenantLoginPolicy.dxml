@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TenantLoginPolicies">
+<Table Name="TenantLoginPolicies" Schema="dbo" DBType="Main">
   <Column Name="AllowedIPs" Type="varchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
@@ -15,7 +15,7 @@
   <Column Name="LoginPolicyCode" Type="varchar" Size="10">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SessionTimeout" Type="decimal">
+  <Column Name="SessionTimeout" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">

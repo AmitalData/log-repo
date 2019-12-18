@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SupplierInvoiceItems">
+<Table Name="SupplierInvoiceItems" Schema="Customs" DBType="Main">
   <Column Name="ActualInvoiceLines" Type="varchar" Size="512">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AdditionalQuantity" Type="decimal">
+  <Column Name="AdditionalQuantity" Type="decimal" Precision="14" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="AdditionalQuantityType" Type="varchar" Size="3">
@@ -33,13 +33,13 @@
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="DeferredCustomsTax" Type="decimal">
+  <Column Name="DeferredCustomsTax" Type="decimal" Precision="5" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeferredPurchaseTax" Type="decimal">
+  <Column Name="DeferredPurchaseTax" Type="decimal" Precision="5" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="InvoiceQuantity" Type="decimal">
+  <Column Name="InvoiceQuantity" Type="decimal" Precision="14" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="InvoiceQuantityType" Type="varchar" Size="3">
@@ -63,7 +63,7 @@
   <Column Name="ItemHash" Type="varchar" Size="36">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ItemPrice" Type="decimal">
+  <Column Name="ItemPrice" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ItemPriceCurrencyCode" Type="varchar" Size="3">
@@ -78,7 +78,7 @@
   <Column Name="ManufactureIdentifier" Type="varchar" Size="17">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="NonCustomsItemPrice" Type="decimal">
+  <Column Name="NonCustomsItemPrice" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="NonCustomsItemPriceCurCode" Type="varchar" Size="3">
@@ -87,7 +87,7 @@
   <Column Name="NotForAccumaltion" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="OptionalTamaPercentage" Type="decimal">
+  <Column Name="OptionalTamaPercentage" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="OrderByLineNo" Type="varchar" Size="3000">
@@ -111,7 +111,7 @@
   <Column Name="SequenceNumeric" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="StatisticQuantity" Type="decimal">
+  <Column Name="StatisticQuantity" Type="decimal" Precision="14" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="StatisticQuantityType" Type="varchar" Size="3">
@@ -132,16 +132,12 @@
   <Column Name="VehicleStatus" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="WholeSaleItemPrice" Type="decimal">
+  <Column Name="WholeSaleItemPrice" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="WholeSaleItemPriceCurrencyCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceItemsProdIdents" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsProdIdents_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemsSerialNums" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsSerialNums_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemVehicles" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvioceItemCertificats" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvioceItemCertificats_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemModVehicles" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemModVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemProcesTypes" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemProcesTypes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
@@ -149,10 +145,10 @@
   <Relation ParentTableName="SupplierInvoiceItemsDescripts" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsDescripts_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemsLevies" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsLevies_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemsMods" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsMods_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemsProdIdents" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsProdIdents_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemsSerialNums" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsSerialNums_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemVehicles" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsProdIdents" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsProdIdents_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsSerialNums" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsSerialNums_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemVehicles" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvioceItemCertificats" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvioceItemCertificats_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemModVehicles" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemModVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemProcesTypes" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemProcesTypes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
@@ -160,10 +156,10 @@
   <Relation ParentTableName="SupplierInvoiceItemsDescripts" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsDescripts_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemsLevies" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsLevies_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemsMods" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsMods_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemsProdIdents" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsProdIdents_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemsSerialNums" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsSerialNums_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="LineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
-  <Relation ParentTableName="SupplierInvoiceItemVehicles" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsProdIdents" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsProdIdents_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsSerialNums" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsSerialNums_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemVehicles" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvioceItemCertificats" ParentColumnName="LineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvioceItemCertificats_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemModVehicles" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemModVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemProcesTypes" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemProcesTypes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
@@ -171,4 +167,8 @@
   <Relation ParentTableName="SupplierInvoiceItemsDescripts" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsDescripts_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemsLevies" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsLevies_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
   <Relation ParentTableName="SupplierInvoiceItemsMods" ParentColumnName="LineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsMods_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsProdIdents" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsProdIdents_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsSerialNums" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsSerialNums_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemsTaxes" ParentColumnName="LineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsTaxes_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_LineNumber" />
+  <Relation ParentTableName="SupplierInvoiceItemVehicles" ParentColumnName="InvoiceItemLineNumber" ReferencedTableName="SupplierInvoiceItems" ReferencedColumnName="LineNumber" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicles_Customs.SupplierInvoiceItems_DeclarationId_InvoiceCounterKey_InvoiceItemLineNumber" />
 </Table>

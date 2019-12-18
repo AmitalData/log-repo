@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BusinessHours">
+<Table Name="BusinessHours" Schema="dbo" DBType="Main">
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
@@ -96,6 +96,6 @@
   <Column Name="WednesdayToHour" Type="time">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="BusinessHoursHolidays" ParentColumnName="BusinessHourId" ReferencedTableName="BusinessHours" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessHoursHolidays_dbo.BusinessHours_BusinessHourId" />
   <Relation ParentTableName="SLALines" ParentColumnName="BusinessHoursId" ReferencedTableName="BusinessHours" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SLALines_dbo.BusinessHours_BusinessHoursId" />
+  <Relation ParentTableName="BusinessHoursHolidays" ParentColumnName="BusinessHourId" ReferencedTableName="BusinessHours" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessHoursHolidays_dbo.BusinessHours_BusinessHourId" />
 </Table>

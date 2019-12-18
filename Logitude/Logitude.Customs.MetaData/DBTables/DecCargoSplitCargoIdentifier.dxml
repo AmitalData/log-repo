@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DecCargoSplitCargoIdentifiers">
+<Table Name="DecCargoSplitCargoIdentifiers" Schema="Customs" DBType="Main">
   <Column Name="CargoIdentifierKey1" Type="varchar" Size="35">
     <Constraints Nullable="true" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuickbooksSyncRequestTickets">
+<Table Name="QuickbooksSyncRequestTickets" Schema="dbo" DBType="Main">
   <Column Name="ExternalTablesRequestCount" Type="int">
     <Constraints Nullable="false" />
   </Column>

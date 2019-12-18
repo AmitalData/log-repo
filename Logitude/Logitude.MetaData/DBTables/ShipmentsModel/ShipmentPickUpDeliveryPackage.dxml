@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ShipmentPickUpDeliveryPackages">
+<Table Name="ShipmentPickUpDeliveryPackages" Schema="dbo" DBType="Main">
   <Column Name="ChassisNumber" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>

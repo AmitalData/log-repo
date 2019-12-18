@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ContactMobileDevices" Schema="dbo" DBType="Global">
+  <Column Name="AppVersion" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DeviceId" Type="varchar" Size="500">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Devicetype" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Email" Type="varchar" Size="70">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSignOut" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NotificationUniqueKey" Type="varchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Platform" Type="varchar" Size="10">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Version" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

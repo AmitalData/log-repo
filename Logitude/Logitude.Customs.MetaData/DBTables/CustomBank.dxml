@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomBanks">
+<Table Name="CustomBanks" Schema="Customs" DBType="Main">
   <Column Name="AccountNumber" Type="varchar" Size="11">
     <Constraints Nullable="true" />
   </Column>
@@ -39,7 +39,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="CustomBanksCards" ParentColumnName="CustomBankId" ReferencedTableName="CustomBanks" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomBanksCards_Customs.CustomBanks_CustomBankId" />
   <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="InternalBankId" ReferencedTableName="CustomBanks" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.CustomBanks_InternalBankId" />
   <Relation ParentTableName="DeclarationPaymentMethods" ParentColumnName="InternalBankId" ReferencedTableName="CustomBanks" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentMethods_Customs.CustomBanks_InternalBankId" />
-  <Relation ParentTableName="CustomBanksCards" ParentColumnName="CustomBankId" ReferencedTableName="CustomBanks" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomBanksCards_Customs.CustomBanks_CustomBankId" />
 </Table>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsDocumentPointers">
+<Table Name="CustomsDocumentPointers" Schema="Customs" DBType="Main">
   <Column Name="Child1EntityCode" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>

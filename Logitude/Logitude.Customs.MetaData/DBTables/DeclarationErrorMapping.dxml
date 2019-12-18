@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DeclarationErrorMappings">
+<Table Name="DeclarationErrorMappings" Schema="Customs" DBType="Main">
   <Column Name="DocumentSectionCode" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>

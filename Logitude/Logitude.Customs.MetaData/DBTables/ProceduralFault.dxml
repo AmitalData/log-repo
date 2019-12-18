@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ProceduralFaults">
+<Table Name="ProceduralFaults" Schema="Customs" DBType="Main">
   <Column Name="CancellationDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
@@ -51,7 +51,7 @@
   <Column Name="ProceduralFaultStatusCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="RansomViolationSum" Type="decimal">
+  <Column Name="RansomViolationSum" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="RansomViolationTypeCode" Type="varchar" Size="2">

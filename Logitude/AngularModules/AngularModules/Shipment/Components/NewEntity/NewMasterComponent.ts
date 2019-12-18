@@ -45,6 +45,8 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     public SessionIndex: number;
     public OkButtonLabel: string;
+    public AgentDependencyProperty1: string = "AG";
+    public AgentDependencyProperty1IsList: boolean = false;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -55,6 +57,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         this.EntityPM = this.myShipmentPMService.GetNewEntityPM();
         this.EntityPM.ShipmentLevelCode = "C";
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
+
+        if (this.TenantPM.AllowCustomersInAgentsLOV) {
+            this.AgentDependencyProperty1 = "CS,AG";
+            this.AgentDependencyProperty1IsList = true;
+        }
 
         this.BuildAdditionalFields();
     }

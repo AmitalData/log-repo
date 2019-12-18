@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ShipmentPackageItems">
+<Table Name="ShipmentPackageItems" Schema="dbo" DBType="Main">
   <Column Name="Description" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="GoodsValue" Type="decimal">
+  <Column Name="GoodsValue" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="LineNumber" Type="int">

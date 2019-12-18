@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CommunicationLogs">
+<Table Name="CommunicationLogs" Schema="dbo" DBType="Main">
   <Column Name="AWBNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
@@ -123,12 +123,12 @@
   <Column Name="To" Type="varchar" Size="4000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ShipmentCustomsTransmissions" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCustomsTransmissions_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="BookingAnswers" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="OceanInsightsStatuses" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OceanInsightsStatuses_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="InboundEmailLines" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InboundEmailLines_dbo.CommunicationLogs_CommunicationLogId" />
   <Relation ParentTableName="CommunicationAttachments" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationAttachments_dbo.CommunicationLogs_CommunicationLogId" />
   <Relation ParentTableName="CommunicationLogSteps" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogSteps_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="ShipmentCustomsTransmissions" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCustomsTransmissions_dbo.CommunicationLogs_CommunicationLogId" />
   <Relation ParentTableName="CustomsRequestsSheets" ParentColumnName="RequestComminicationId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsRequestsSheets_dbo.CommunicationLogs_RequestComminicationId" />
   <Relation ParentTableName="Activities" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.CommunicationLogs_CommunicationLogId" />
-  <Relation ParentTableName="OceanInsightsStatuses" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OceanInsightsStatuses_dbo.CommunicationLogs_CommunicationLogId" />
-  <Relation ParentTableName="BookingAnswers" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.CommunicationLogs_CommunicationLogId" />
-  <Relation ParentTableName="InboundEmailLines" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InboundEmailLines_dbo.CommunicationLogs_CommunicationLogId" />
 </Table>

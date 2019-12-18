@@ -12,10 +12,10 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static void PrepareTruckersVars()
         {
-            UpsertTruckerIdHT();
-            UpsertTruckerIdHT2();
+            UpsertTruckerCodeHT();
+            UpsertTruckerCodeHT2();
         }
-        private static void UpsertTruckerIdHT()
+        private static void UpsertTruckerCodeHT()
         {
             TruckerPM truckerPM = new TruckerPM()
             {
@@ -40,9 +40,8 @@ namespace Logitude.HybridTest.WcfCallers
                 StateCode = HybridData.StateCodeAK,
             });
             Response serviceResponse = AssertResponse(truckerPM);
-            HybridData.TruckerIdHT = serviceResponse.Result;
         }
-        private static void UpsertTruckerIdHT2()
+        private static void UpsertTruckerCodeHT2()
         {
             TruckerPM truckerPM = new TruckerPM()
             {
@@ -67,7 +66,6 @@ namespace Logitude.HybridTest.WcfCallers
                 StateCode = HybridData.StateCodeAK,
             });
             Response serviceResponse = AssertResponse(truckerPM);
-            HybridData.TruckerIdHT2 = serviceResponse.Result;
         }
         private static Response AssertResponse<T>(T entityPM)
         {

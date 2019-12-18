@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ARInvoices">
+<Table Name="ARInvoices" Schema="dbo" DBType="Main">
   <Column Name="AccountingExternalCode" Type="nvarchar" Size="25">
     <Constraints Nullable="true" />
   </Column>
@@ -279,13 +279,13 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalAmountForTaxReport" Type="decimal">
+  <Column Name="TotalAmountForTaxReport" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TotalVAT" Type="decimal">
+  <Column Name="TotalVAT" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotaVatableAmountForTaxReport" Type="decimal">
+  <Column Name="TotaVatableAmountForTaxReport" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TransferError" Type="nvarchar" Size="250">
@@ -312,12 +312,12 @@
   <Column Name="VatNumber" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.ARInvoices_ARInvoiceId" />
-  <Relation ParentTableName="ARInvoiceEntities" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceEntities_dbo.ARInvoices_ARInvoiceId" />
-  <Relation ParentTableName="ARInvoices" ParentColumnName="CancelledByARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.ARInvoices_CancelledByARInvoiceId" />
-  <Relation ParentTableName="ARInvoices" ParentColumnName="CreditedByARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.ARInvoices_CreditedByARInvoiceId" />
-  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.ARInvoices_ARInvoiceId" />
   <Relation ParentTableName="ARInvoicePayments" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoicePayments_dbo.ARInvoices_ARInvoiceId" />
   <Relation ParentTableName="ARInvoiceStockLines" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceStockLines_dbo.ARInvoices_ARInvoiceId" />
   <Relation ParentTableName="ARInvoiceTotalVATs" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceTotalVATs_dbo.ARInvoices_ARInvoiceId" />
+  <Relation ParentTableName="ARInvoiceEntities" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceEntities_dbo.ARInvoices_ARInvoiceId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="CancelledByARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.ARInvoices_CancelledByARInvoiceId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="CreditedByARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.ARInvoices_CreditedByARInvoiceId" />
+  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.ARInvoices_ARInvoiceId" />
+  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.ARInvoices_ARInvoiceId" />
 </Table>

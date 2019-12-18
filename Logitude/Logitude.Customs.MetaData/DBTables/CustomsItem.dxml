@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsItems">
+<Table Name="CustomsItems" Schema="Customs" DBType="Main">
   <Column Name="ComputedCheckDigit" Type="varchar" Size="1">
     <Constraints Nullable="true" />
   </Column>

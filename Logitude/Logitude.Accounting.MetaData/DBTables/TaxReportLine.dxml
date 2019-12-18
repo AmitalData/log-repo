@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TaxReportLines">
+<Table Name="TaxReportLines" Schema="dbo" DBType="Main">
   <Column Name="IsEquipment" Type="bit">
     <Constraints Nullable="false" />
   </Column>
@@ -48,10 +48,10 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="VatableInvoiceAmount" Type="decimal">
+  <Column Name="VatableInvoiceAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VatAmount" Type="decimal">
+  <Column Name="VatAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VatNumber" Type="varchar" Size="20">

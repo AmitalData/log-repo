@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuotePriceSteps">
+<Table Name="QuotePriceSteps" Schema="dbo" DBType="Main">
   <Column Name="CostUnitPrice" Type="float">
     <Constraints Nullable="true" />
   </Column>

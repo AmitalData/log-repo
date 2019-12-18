@@ -58,8 +58,9 @@ namespace Logitude.Accounting.BL.CoreBL
         public void CalculateBalance(
             bool openBalancePlease_ReCalcYearTransfer,
             string  DateTypeCode,DateTime theDate,
-            
-            bool inclusiveTheDateLTransaction = false, bool verbose = false)
+            bool checkHaveAccountingQueued ,
+            bool inclusiveTheDateLTransaction /*= false*/, 
+            bool verbose /*= false*/)
         {
             _TheDate = theDate;
             _DateTypeCode = DateTypeCode;
@@ -132,7 +133,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         AccountBalance.verbose.TheMounthCurrencySum = theMounthCurrencySum;
                     }
-                    _HaveAccountingQueued = AnyAccountingQueued();
+                    _HaveAccountingQueued = AnyAccountingQueued(checkHaveAccountingQueued);
                     LogIt("AnyAccountingQueued");
                     AccountBalance.HaveAccountingQueued = _HaveAccountingQueued;
                     ;
@@ -242,8 +243,12 @@ namespace Logitude.Accounting.BL.CoreBL
             _StringBuilder.AppendLine(mess);
         }
 
-        private bool AnyAccountingQueued()
+        private bool AnyAccountingQueued(bool checkHaveAccountingQueued)
         {
+            if (!checkHaveAccountingQueued)
+            {
+                return false;
+            }
             var myJournalQueryService = new JournalQueryService(_AccountingContext);
             var have = myJournalQueryService
                 //.GetAnyPendingApprovedDev(_ListOfAccountId, _Tenant);

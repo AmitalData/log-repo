@@ -15,7 +15,16 @@ namespace Logitude.DBMigrations.Models
         public string Name { get; set; }
 
         [XmlAttribute()]
-        public string OldName { get; set; }
+        public string ShortName { get; set; }
+
+        [XmlAttribute()]
+        public string OldNames { get; set; }
+        
+        [XmlAttribute()]
+        public string Schema { get; set; }
+
+        [XmlAttribute()]
+        public string DBType { get; set; }
 
         [XmlElement("Column")]
         public List<ColumnDefinition> Columns { get; set; }

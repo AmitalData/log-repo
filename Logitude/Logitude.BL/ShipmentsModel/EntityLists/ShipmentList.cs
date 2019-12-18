@@ -499,6 +499,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public string INTTRABookingError { get; set; }
         public string INTTRALastBookingResponse { get; set; }
+       
 
         public string Notify1Reference { get; set; }
         public string Notify2Reference { get; set; }
@@ -525,6 +526,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ARInvoices { get; set; }
         public double? NotInvoicedReceivablesAmount { get; set; }
         public string CreatedByPartner { get; set; }
-
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
     }
 }

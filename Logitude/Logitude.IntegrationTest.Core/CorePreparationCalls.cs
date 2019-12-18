@@ -14,10 +14,10 @@ namespace Logitude.IntegrationTest.Core
     {
         public static async Task PrepareVariables()
         {
-            await GetAccountingCurriencyTenant();
+            await GetTenant();
         }
 
-        private static async Task GetAccountingCurriencyTenant()
+        private static async Task GetTenant()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("Tenants/GetSingle?id=" + IntegrationTestLoginParameters.Tenant);
             var stringResult = response.Content.ReadAsStringAsync().Result;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomerAdditionalServices">
+<Table Name="CustomerAdditionalServices" Schema="dbo" DBType="Main">
   <Column Name="AdditionalServiceId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="AdvancedQueryFilters">
+<Table Name="AdvancedQueryFilters" Schema="dbo" DBType="Main">
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -7,6 +7,9 @@
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsPredefined" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectFieldCode" Type="varchar" Size="200">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ObjectFieldId" Type="varchar" Size="15">

@@ -396,6 +396,62 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
+       
+
+            ContactPM contact = GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !contact.DontShowLocal;
+            if (entityPM.GLAccountInterestPeriods.GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.LineDateExist", entityPM.Tenant, showLocals));
+
+            }
+            if (entityPM.ActiveForInterest == true )
+            {
+                 if(entityPM.InterestCalculationStartDate == null)
+                {
+                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.FieldInterestCalculationStartDateismandatory", entityPM.Tenant, showLocals));
+                }
+                else
+                {
+                    GLAccountInterestPeriodRepository PeriodRepository = new GLAccountInterestPeriodRepository(entityPM.Tenant);
+                    GLAccountInterestPeriod Period = PeriodRepository.GetSingleByGLAccountIdAndTenant(entityPM.Id, entityPM.Tenant);
+                    if (Period == null  && entityPM.GLAccountInterestPeriods.Count == 0)
+                    {
+                        throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
+                    }
+                }
+            }
+            entityPM.ActiveForInterest = false ;
+
+            for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+            {
+                if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                {
+                    entityPM.ActiveForInterest = true;
+                }
+                
+            }
+            if (entityPM.ActiveForInterest == false)
+            {
+                for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+                {
+                    if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                    {
+                        throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.DeleteExistInterestperiods", entityPM.Tenant, showLocals));
+                    }
+
+                }
+            }
+
+
+            if (entityPM.MinimumInterestInvoiceBilling != null && entityPM.MinimumInterestInvoiceBilling != 0)
+            {
+                if (Math.Floor(Math.Log10((double)entityPM.MinimumInterestInvoiceBilling) + 1) > 2)
+                {
+                    throw new Exception("Number Of Digit Before Comma Must Be Five Or Less In Minimum Interest Invoice Billing Field");
+
+                }
+            }
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             bool useLocal = !((bool)loggedUser?.DontShowLocal);
 
@@ -764,6 +820,70 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             gLAccountWithholdingTaxUpdateService.UpdateMulti(entityPM.GLAccountWithholdingTaxes, entityPM.DeletedGLAccountWithholdingTaxes, entityPM, true);
 
+            var gLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            gLAccountInterestPeriodUpdateService.UpdateMulti(entityPM.GLAccountInterestPeriods, entityPM.DeletedGLAccountInterestPeriods, entityPM, true);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountInterestPeriods.Count > 0)
+            {
+                ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                ContactPM contactLocal = GetLoggedContact(entityPM.Tenant);
+                bool showLocals = !contactLocal.DontShowLocal;
+                foreach (var line in entityPM.GLAccountInterestPeriods)
+                {
+
+                    if (line.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        GLAccountInterestPeriodQueryService gLAccountInterestPeriodQueryService = new GLAccountInterestPeriodQueryService(line.Tenant);
+                        GLAccountInterestPeriodPM gLAccountInterestPeriodPM = gLAccountInterestPeriodQueryService.GetSingle(line.LineNumber, line.GLAccountId, false, true);
+
+                        if (line.PeriodStartDate != gLAccountInterestPeriodPM.PeriodStartDate || line.StandardInterestRateBaseId != gLAccountInterestPeriodPM.StandardInterestRateBaseId || line.StandardAddInterestPercent != gLAccountInterestPeriodPM.StandardAddInterestPercent || line.ExceptionalInterestRateBaseId != gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId || line.ExceptionalAddInterestPercent != gLAccountInterestPeriodPM.ExceptionalAddInterestPercent || line.CreditInterestRateBaseId != gLAccountInterestPeriodPM.CreditInterestRateBaseId || line.CreditAddInterestPercent != gLAccountInterestPeriodPM.CreditAddInterestPercent)
+                            {
+
+                            string notes = "";
+                            if (line.PeriodStartDate != gLAccountInterestPeriodPM.PeriodStartDate)
+                            {
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.PeriodStartDate", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.PeriodStartDate.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.PeriodStartDate.ToString() + "\n";
+                            }
+                            if (line.StandardInterestRateBaseId != gLAccountInterestPeriodPM.StandardInterestRateBaseId)
+                            {
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.StandardInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.StandardInterestRateBaseId.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.StandardInterestRateBaseId.ToString() + "\n";
+                            }
+                            if (line.StandardAddInterestPercent != gLAccountInterestPeriodPM.StandardAddInterestPercent)
+                            {
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.StandardAddInterestPercent", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.StandardAddInterestPercent.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.StandardAddInterestPercent.ToString() + "\n";
+                            }
+                            if (line.ExceptionalInterestRateBaseId != gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId)
+                            {
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.ExceptionalInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.ExceptionalInterestRateBaseId.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId.ToString() + "\n";
+                            }
+                            if (line.ExceptionalAddInterestPercent != gLAccountInterestPeriodPM.ExceptionalAddInterestPercent)
+                            {
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.ExceptionalAddInterestPercent", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.ExceptionalAddInterestPercent.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.ExceptionalAddInterestPercent.ToString() + "\n";
+                            }
+                            if (line.CreditInterestRateBaseId != gLAccountInterestPeriodPM.CreditInterestRateBaseId)
+                            {
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.CreditInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.CreditInterestRateBaseId.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.CreditInterestRateBaseId.ToString() + "\n";
+                            }
+                            if (line.CreditAddInterestPercent != gLAccountInterestPeriodPM.CreditAddInterestPercent)
+                            {
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.CreditAddInterestPercent", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.CreditAddInterestPercent.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.CreditAddInterestPercent.ToString() + "\n";
+                            }
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                EntityId = entityPM.Id,
+                                Tenant = entityPM.Tenant,
+                                UserId = contact.Id,
+                                ObjectTableName = "GLAccount",
+                                IsAddedManually = false,
+                                EventTypeCode = "LUPD",
+                                Notes = notes,
+                            });
+                        }
+                    }
+
+                }
+            }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
 
@@ -958,6 +1078,81 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     //  EntityPOCO.PreviousNumber = entityPOCO.DisplayNumber;
                     //  EntityPOCO.PreviousNumberChangeDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 }
+
+                if (entityPM.ActiveForInterest != entityPOCO.ActiveForInterest && entityPM.ActiveForInterest==true)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "AFIT",
+                    });
+                }
+
+                if (entityPM.ActiveForInterest != entityPOCO.ActiveForInterest && entityPM.ActiveForInterest == false)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "IFIT",
+                    });
+                }
+
+                if (entityPM.InterestCalculationStartDate != entityPOCO.InterestCalculationStartDate)
+                {
+                    String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + entityPOCO.InterestCalculationStartDate.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.InterestCalculationStartDate.ToString();
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "ISDT",
+                        Notes = notes,
+
+                    });
+                }
+
+                if (entityPM.ActiveForInterestCreditInvoice != entityPOCO.ActiveForInterestCreditInvoice)
+                {
+                    String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + entityPOCO.ActiveForInterestCreditInvoice.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.ActiveForInterestCreditInvoice.ToString();
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "AFIC",
+                        Notes = notes,
+
+                    });
+                }
+
+                if (entityPM.MinimumInterestInvoiceBilling != entityPOCO.MinimumInterestInvoiceBilling)
+                {
+                    String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) + entityPOCO.MinimumInterestInvoiceBilling.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) + entityPM.MinimumInterestInvoiceBilling.ToString();
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "MIIB",
+                        Notes = notes,
+
+                    });
+                }
+
                 if (entityPM.EnglishName != entityPOCO.EnglishName && (!String.IsNullOrEmpty(entityPM.EnglishName) || !String.IsNullOrEmpty(entityPOCO.EnglishName)))
                 {
 
@@ -1978,16 +2173,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, activityTypeCode, loggedContactId);
             }
         }
-
-
-
-
-
+ 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-
-
-
-
         public static ContactPM GetLoggedContact(int tenant)
         {
             if (OverrideGetLoggedContactFunc != null)
