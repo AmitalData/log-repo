@@ -10,12 +10,20 @@ namespace Logitude.DBMigrations.Helpers
 {
     public static class AppHelper
     {
+        public static string PerformanceData = "";
+
         public static string[] GetDXMLFilesFromRoot(string root)
         {
             try
             {
+                var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
                 string DXMLFilesPath = Path.Combine(root);
                 string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml", SearchOption.AllDirectories);
+
+                stopwatch.Stop();
+                PerformanceData += "Get DXML Files From Root," + stopwatch.ElapsedMilliseconds + "\n\n\n";
+
                 if (DXMLFiles.Length > 0)
                 {
                     return DXMLFiles;
@@ -244,11 +252,17 @@ namespace Logitude.DBMigrations.Helpers
 
                 try
                 {
-                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
-                    sqlCommand.CommandText = script;
-                    sqlConnection.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    sqlConnection.Close();
+                    string[] commands = script.Split(';');
+                    commands = commands.Take(commands.Count() - 1).ToArray();
+
+                    foreach (var command in commands)
+                    {
+                        SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                        sqlCommand.CommandText = command;
+                        sqlConnection.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        sqlConnection.Close();
+                    }
                     return null;
                 }
                 catch (Exception exception)
