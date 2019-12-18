@@ -2505,7 +2505,30 @@ namespace Logitude.Accounting.Def.EntityPMs
               }
              set {  deletedGLAccountInterestPeriods = value; }
 	    }
-	     }
+	  	  private decimal? interestCreditLimit ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? InterestCreditLimit  
+	   {
+	    
+	     get
+		{
+		   return interestCreditLimit;
+		 }
+		 set
+		 {
+		   if(interestCreditLimit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCreditLimit",OldValue=interestCreditLimit,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   interestCreditLimit=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
