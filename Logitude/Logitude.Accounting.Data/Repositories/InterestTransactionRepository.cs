@@ -20,13 +20,7 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
-        public bool AlreadyExist(string InterestEntityTypeCode ,string EntityId, int tenant)
-        {
-            return this.GetAll(tenant)
-                .Where(r => r.InterestEntityTypeCode == InterestEntityTypeCode)
-                .Where(r => r.EntityId == EntityId)
-                .Any();
-        }
+
    }
 
 }
