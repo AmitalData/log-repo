@@ -56,9 +56,42 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Reports\DXMLFilesThatNotFound.csv" />
-    <None Include="Reports\LXMLFilesFixedMistakes.csv" />
-    <None Include="Reports\LXMLFilesMistakes.csv" />
+    <None Include="Reports\Accounting\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\Accounting\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\Accounting\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\Accounting\LXMLFilesMistakes.csv" />
+    <None Include="Reports\Booking\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\Booking\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\Booking\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\Booking\LXMLFilesMistakes.csv" />
+    <None Include="Reports\CRM\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\CRM\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\CRM\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\CRM\LXMLFilesMistakes.csv" />
+    <None Include="Reports\Customs\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\Customs\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\Customs\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\Customs\LXMLFilesMistakes.csv" />
+    <None Include="Reports\OldModules\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\OldModules\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\OldModules\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\OldModules\LXMLFilesMistakes.csv" />
+    <None Include="Reports\Social\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\Social\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\Social\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\Social\LXMLFilesMistakes.csv" />
+    <None Include="Reports\Tarrifs\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\Tarrifs\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\Tarrifs\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\Tarrifs\LXMLFilesMistakes.csv" />
+    <None Include="Reports\TimeManagement\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\TimeManagement\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\TimeManagement\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\TimeManagement\LXMLFilesMistakes.csv" />
+    <None Include="Reports\Warehouse\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\Warehouse\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\Warehouse\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\Warehouse\LXMLFilesMistakes.csv" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

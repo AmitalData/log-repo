@@ -10,16 +10,26 @@ namespace Logitude.LXMLFixer.Models
 {
     public class LXMLFilesFixer
     {
-        private readonly string LXMLFilesRoot = ConfigurationManager.AppSettings["LXMLFilesRoot"];
-        private readonly string DXMLFilesRoot = ConfigurationManager.AppSettings["DXMLFilesRoot"];
+        private string LXMLFilesRoot;
+        private string DXMLFilesRoot;
+        private string ModuleName;
 
         private string LXMLMistakesData = "";
         private string DXMLFilesThatNotFound = "";
         private string LXMLFixedMistakesData = "";
+        private string LXMLIgnoredMistakesData = "";
+
+        public LXMLFilesFixer(int moduleNumber)
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            ModuleName = GetModuleName(moduleNumber);
+            LXMLFilesRoot = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + ConfigurationManager.AppSettings[ModuleName + "_LXMLFilesRoot"];
+            DXMLFilesRoot = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + ConfigurationManager.AppSettings[ModuleName + "_DXMLFilesRoot"];
+        }
 
         public void ExtractLXMLFilesMistakes()
         {
-            string[] lxmlFiles = GetLXMLFiles();
+            string[] lxmlFiles = GetLXMLFiles(false);
 
             if(lxmlFiles != null)
             {
@@ -145,10 +155,13 @@ namespace Logitude.LXMLFixer.Models
 
         public void FixLXMLFilesMistakes()
         {
-            string[] lxmlFiles = GetLXMLFiles();
+            string[] lxmlFiles = GetLXMLFiles(true);
 
             if (lxmlFiles != null)
             {
+                string lxmlIgnoredMistakesData = "LXML File,DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
+                bool appendIgnoredMistakesData = false;
+
                 foreach (var lxmlFile in lxmlFiles)
                 {
                     string lxmlFileName = Path.GetFileName(lxmlFile);
@@ -212,26 +225,35 @@ namespace Logitude.LXMLFixer.Models
 
                             if (lxmlColumn == null)
                             {
-
+                                lxmlIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + "Not Found" + "," + "-" + "," + "-" + "," + "-" + "\n";
+                                appendIgnoredMistakesData = true;
                             }
                             else
                             {
                                 if (dxmlColumn.Type != lxmlColumn.Type)
                                 {
-                                    LXMLAttribute attribute = new LXMLAttribute
+                                    if(dxmlColumn.Type == "char" || dxmlColumn.Type == "varchar")
                                     {
-                                        ElementName = "field",
-                                        AttributeName = "FieldsDataType",
-                                        AttributeValue = GetStringValue(GetLXMLDataType(dxmlColumn.Type)),
-                                        OldAttributeValue = lxmlColumn.Type,
-                                        AttributeFilter = new LXMLAttributeFilter
+                                        lxmlIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + lxmlColumn.Name + "," + "Type" + "," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
+                                        appendIgnoredMistakesData = true;
+                                    }
+                                    else
+                                    {
+                                        LXMLAttribute attribute = new LXMLAttribute
                                         {
-                                            Name = "FieldName",
-                                            Value = GetStringValue(dxmlColumn.Name)
-                                        }
-                                    };
+                                            ElementName = "field",
+                                            AttributeName = "FieldsDataType",
+                                            AttributeValue = GetStringValue(GetLXMLDataType(dxmlColumn.Type)),
+                                            OldAttributeValue = lxmlColumn.Type,
+                                            AttributeFilter = new LXMLAttributeFilter
+                                            {
+                                                Name = "FieldName",
+                                                Value = GetStringValue(dxmlColumn.Name)
+                                            }
+                                        };
 
-                                    attributes.Add(attribute);
+                                        attributes.Add(attribute);
+                                    }
                                 }
 
                                 if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Precision != lxmlColumn.Precision)
@@ -478,7 +500,13 @@ namespace Logitude.LXMLFixer.Models
                     }
                 }
 
+                if (appendIgnoredMistakesData)
+                {
+                    LXMLIgnoredMistakesData += lxmlIgnoredMistakesData;
+                }
+
                 ExportFixedMistakesData();
+                ExportIgnoredMistakesData();
             }
             else
             {
@@ -488,38 +516,17 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
-        private void ExportMistakesData()
-        {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string csvFilePath = Path.Combine(projectDirectory, @"Reports\LXMLFilesMistakes.csv");
-            File.WriteAllText(csvFilePath, LXMLMistakesData);
-            Console.WriteLine("\nLXML Files Mistakes Extracted To /Reports/LXMLFilesMistakes.csv\n");
-        }
-        
-        private void ExportDXMLFilesThatNotFound()
-        {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string csvFilePath = Path.Combine(projectDirectory, @"Reports\DXMLFilesThatNotFound.csv");
-            File.WriteAllText(csvFilePath, DXMLFilesThatNotFound);
-            Console.WriteLine("DXML Files That Not Found Extracted To /Reports/DXMLFilesThatNotFound.csv\n");
-        }
-
-        private void ExportFixedMistakesData()
-        {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string csvFilePath = Path.Combine(projectDirectory, @"Reports\LXMLFilesFixedMistakes.csv");
-            File.WriteAllText(csvFilePath, LXMLFixedMistakesData);
-            Console.WriteLine("\nFixed LXML Files Mistakes Extracted To /Reports/LXMLFilesFixedMistakes.csv\n");
-        }
-
-        private string[] GetLXMLFiles()
+        private string[] GetLXMLFiles(bool exceptCustomsModule)
         {
             try
             {
                 string LXMLFilesPath = Path.Combine(LXMLFilesRoot);
                 string[] LXMLFiles = Directory.GetFiles(LXMLFilesPath, "*.lxml", SearchOption.AllDirectories);
 
-                LXMLFiles = LXMLFiles.Where(x => !x.ToLower().Contains("logitude.customs.metadata")).ToArray();
+                if (exceptCustomsModule)
+                {
+                    LXMLFiles = LXMLFiles.Where(x => !x.ToLower().Contains("logitude.customs.metadata")).ToArray();
+                }
 
                 if (LXMLFiles.Length > 0)
                 {
@@ -621,7 +628,7 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
-        private string GetColumnDefinitionDataType(string type, bool isFixedLength)//should handle any new data types that added into the lxml tool
+        private string GetColumnDefinitionDataType(string type, bool isFixedLength)
         {
             switch (type)
             {
@@ -651,12 +658,20 @@ namespace Logitude.LXMLFixer.Models
                 case "Emails":
                 case "Text":
                     return isFixedLength ? "char" : "varchar";
+                case "Raw":
+                    return "timestamp";
+                case "Binary":
+                    return "varbinary";
+                case "Time":
+                    return "time";
+                case "BigInteger":
+                    return "bigint";
                 default:
                     return null;
             }
         }
 
-        private string GetLXMLDataType(string type)//should handle any new data types that added into the lxml tool
+        private string GetLXMLDataType(string type)
         {
             switch (type)
             {
@@ -665,9 +680,9 @@ namespace Logitude.LXMLFixer.Models
                 case "decimal":
                     return "Decimal";
                 case "timestamp":
-                    return "Text";
+                    return "Raw";
                 case "varbinary":
-                    return "Text";
+                    return "Binary";
                 case "varchar":
                     return "Text";
                 case "date":
@@ -675,13 +690,13 @@ namespace Logitude.LXMLFixer.Models
                 case "datetime":
                     return "DateTime";
                 case "time":
-                    return "DateTime";
+                    return "Time";
                 case "float":
                     return "Double";
                 case "char":
                     return "LookUp";
                 case "bigint":
-                    return "Integer";
+                    return "BigInteger";
                 case "nvarchar":
                     return "nText";
                 case "bit":
@@ -749,7 +764,7 @@ namespace Logitude.LXMLFixer.Models
 
                 if(lxmlFileFixer.Attributes.Where(a => !String.IsNullOrEmpty(a.AttributeValue)).Any())
                 {
-                    LXMLFixedMistakesData += fixedMistakesData;
+                    LXMLFixedMistakesData += fixedMistakesData + "\n";
                 }
 
                 doc.Save(lxmlFileFixer.FilePath);
@@ -765,6 +780,65 @@ namespace Logitude.LXMLFixer.Models
             else
             {
                 return null;
+            }
+        }
+
+        private void ExportMistakesData()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string csvFilePath = Path.Combine(projectDirectory, @"Reports\" + ModuleName + @"\LXMLFilesMistakes.csv");
+            File.WriteAllText(csvFilePath, LXMLMistakesData);
+            Console.WriteLine("\nLXML Files Mistakes Extracted To /Reports/" + ModuleName + "/LXMLFilesMistakes.csv\n");
+        }
+
+        private void ExportDXMLFilesThatNotFound()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string csvFilePath = Path.Combine(projectDirectory, @"Reports\" + ModuleName + @"\DXMLFilesThatNotFound.csv");
+            File.WriteAllText(csvFilePath, DXMLFilesThatNotFound);
+            Console.WriteLine("DXML Files That Not Found Extracted To /Reports/" + ModuleName + "/DXMLFilesThatNotFound.csv\n");
+        }
+
+        private void ExportFixedMistakesData()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string csvFilePath = Path.Combine(projectDirectory, @"Reports\" + ModuleName + @"\LXMLFilesFixedMistakes.csv");
+            File.WriteAllText(csvFilePath, LXMLFixedMistakesData);
+            Console.WriteLine("\nFixed LXML Files Mistakes Extracted To /Reports/" + ModuleName + "/LXMLFilesFixedMistakes.csv\n");
+        }
+
+        private void ExportIgnoredMistakesData()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string csvFilePath = Path.Combine(projectDirectory, @"Reports\" + ModuleName + @"\LXMLFilesIgnoredMistakes.csv");
+            File.WriteAllText(csvFilePath, LXMLIgnoredMistakesData);
+            Console.WriteLine("Ignored LXML Files Mistakes Extracted  To /Reports/" + ModuleName + "/LXMLFilesIgnoredMistakes.csv\n");
+        }
+
+        private string GetModuleName(int moduleNumber)
+        {
+            switch (moduleNumber)
+            {
+                case 1:
+                    return "Accounting";
+                case 2:
+                    return "Booking";
+                case 3:
+                    return "CRM";
+                case 4:
+                    return "Customs";
+                case 5:
+                    return "OldModules";
+                case 6:
+                    return "Social";
+                case 7:
+                    return "Tarrifs";
+                case 8:
+                    return "TimeManagement";
+                case 9:
+                    return "Warehouse";
+                default:
+                    return "OldModules";
             }
         }
     }

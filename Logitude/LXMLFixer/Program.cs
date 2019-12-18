@@ -11,9 +11,13 @@ namespace Logitude.LXMLFixer
     {
         static void Main(string[] args)
         {
-            LXMLFilesFixer fixer = new LXMLFilesFixer();
+            Console.WriteLine("Choose The Desired Modules\n1: Accounting\n2: Booking\n3: CRM\n4: Customs\n5: Old Modules\n6: Social\n7: Tarrifs\n8: Time Management\n9: Warehouse\n");
 
-            Console.WriteLine("Do You Want To Extract LXML Files Mistakes? y/n");
+            int moduleNumber = Convert.ToInt32(Console.ReadLine());
+
+            LXMLFilesFixer fixer = new LXMLFilesFixer(moduleNumber);
+
+            Console.WriteLine("\nDo You Want To Extract LXML Files Mistakes? y/n");
 
             bool extractMistakes = Console.ReadLine().ToLower() == "y";
 
@@ -22,7 +26,7 @@ namespace Logitude.LXMLFixer
                 fixer.ExtractLXMLFilesMistakes();
             }
 
-            Console.WriteLine("Do You Want To Fix LXML Files Mistakes? y/n");
+            Console.WriteLine("\nDo You Want To Fix LXML Files Mistakes? y/n");
             
             bool fixMistakes = Console.ReadLine().ToLower() == "y";
 
