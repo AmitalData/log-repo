@@ -2146,9 +2146,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     List<string> myAdditionalServicesList = this.GetList(args.AdditionalServices, commonDataContext, authToken.Tenant);
                     if (myAdditionalServicesList.Count() > 0)
                     {
-                        //List<CardContactAdditionalService> cardContactAdditionalServices = commonDataContext.CardContactProducts.Where(d => myAdditionalServicesList.Contains(d.ProductTypeCode)).ToList();
-                        //List<string> cardContactsIds = cardContactAdditionalServices.Select(s => s.CardContactId).ToList();
-                        //contacts = contacts.Where(d => cardContactsIds.Contains(d.Id));
+                        List<CardContactAdditionalService> cardContactAdditionalServices = commonDataContext.CardContactAdditionalServices.Where(d => myAdditionalServicesList.Contains(d.AdditionalServiceId)).ToList();
+                        List<string> cardContactsIds = cardContactAdditionalServices.Select(s => s.CardContactId).ToList();
+                        contacts = contacts.Where(d => cardContactsIds.Contains(d.Id));
                     }
                 }
 
@@ -2306,7 +2306,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             else
             {
                 myString = myString.Trim(',');
-                myList = myList.ToList();
+                string[] mySplitString = myString.Split(',');
+                myList = mySplitString.ToList();
             }
 
             return myList;

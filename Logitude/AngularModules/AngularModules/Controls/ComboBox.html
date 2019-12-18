@@ -166,7 +166,7 @@
             </ul>
 
             <ul class="ScrollContent" [attr.id]="ListControlId" *ngIf="WithCheckBoxes">
-                <li style="height:25px; line-height: 25px; min-height: 25px" id="{{'ComboBoxItem' | IdGeneratorPipe}}" class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource; let i = index" [class.SelectedComboboxItem]="item === SelectedItem">
+                <li id="{{'ComboBoxItem' | IdGeneratorPipe}}" class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource; let i = index" [class.SelectedComboboxItem]="item === SelectedItem">
                     <table>
                         <tr>
                             <td style="width:25px">
