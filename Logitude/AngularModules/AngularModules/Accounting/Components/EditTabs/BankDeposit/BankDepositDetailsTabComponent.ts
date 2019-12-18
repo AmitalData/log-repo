@@ -67,9 +67,11 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         } else { // view mode
             this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
-            this.GetCashBook();
             this.BankDepositLines = this.EntityPM.BankDepositLines;
             this.SetUIProperty();
+
+
+            this.CalculateDepositLinesTotal();
 
             console.log("Deposit: ", this.EntityPM);
 
@@ -84,6 +86,13 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         // Get Default Value
         this.GetDefaultValues();
+    }
+
+    private CalculateDepositLinesTotal()
+    {
+        for (let line2 of this.BankDepositLines) {
+            this.SelectedTotal += line2.ForeignAmount == null ? 0 : line2.ForeignAmount;
+        }
     }
 
     Listen(){
@@ -723,7 +732,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.GetEntityPMAndRedrawScreen();
-               
+
             }
             else {
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = mm.ErrorsArray;
