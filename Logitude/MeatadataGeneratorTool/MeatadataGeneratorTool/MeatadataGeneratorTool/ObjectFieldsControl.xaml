@@ -154,9 +154,6 @@
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="List Property Path:" />
-                            <TextBlock Grid.Row="3"
-                                   VerticalAlignment="Center"
-                                   Text="Field Short Name:" />
                         </Grid>
 
 
@@ -328,13 +325,6 @@
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding ListPropertyPath,
-                                                Mode=TwoWay}"
-                                 TextChanged="TextBox_TextChanged" />
-                            <TextBox Grid.Row="3"
-                                 Height="22"
-                                 Margin="2"
-                                 VerticalAlignment="Center"
-                                 Text="{Binding ShortName,
                                                 Mode=TwoWay}"
                                  TextChanged="TextBox_TextChanged" />
                         </Grid>
@@ -1153,6 +1143,10 @@
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Short Local Default Text:" />
+                        <TextBlock Grid.Row="7"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="DB Field Short Name:" />
 
 
                         <TextBox Grid.Row="2"
@@ -1190,8 +1184,16 @@
                                  VerticalAlignment="Center"
                                  Text="{Binding ShortLocalDefaultText,
                                                 Mode=TwoWay}" />
+                        <TextBox Grid.Row="7"
+                                 Grid.Column="1"
+                                 Height="22"
+                                 Margin="2"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding ShortName,
+                                                Mode=TwoWay}" />
 
-                        <Border Grid.Row="7"
+                        
+                        <Border Grid.Row="8"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -1206,23 +1208,23 @@
                                        Text="Display Template Settings" />
                         </Border>
 
-                        <TextBlock Grid.Row="8"
+                        <TextBlock Grid.Row="9"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Data Template Name:" />
-                        <TextBlock Grid.Row="9"
+                        <TextBlock Grid.Row="10"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Column Header Template Name:" />
 
-                        <TextBox Grid.Row="8"
+                        <TextBox Grid.Row="9"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding DataTemplateName,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="9"
+                        <TextBox Grid.Row="10"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
@@ -1230,7 +1232,7 @@
                                  Text="{Binding ColumnHeaderTemplateName,
                                                 Mode=TwoWay}" />
 
-                        <Border Grid.Row="10"
+                        <Border Grid.Row="11"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -1245,74 +1247,63 @@
                                        Text="Advanced Settings" />
                         </Border>
 
-                        <TextBlock Grid.Row="11"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="Converter Name:" />
                         <TextBlock Grid.Row="12"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Text Case:" />
+                                   Text="Converter Name:" />
                         <TextBlock Grid.Row="13"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Display Only:" />
+                                   Text="Text Case:" />
                         <TextBlock Grid.Row="14"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Display In Entity Variables:" />
+                                   Text="Display Only:" />
                         <TextBlock Grid.Row="15"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Display Long Name" />
+                                   Text="Display In Entity Variables:" />
                         <TextBlock Grid.Row="16"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="InActive:" />
+                                   Text="Display Long Name" />
                         <TextBlock Grid.Row="17"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Order:" />
+                                   Text="InActive:" />
                         <TextBlock Grid.Row="18"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Don't Create ObjectField:" />
+                                   Text="Order:" />
                         <TextBlock Grid.Row="19"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Include In Search Field:" />
+                                   Text="Don't Create ObjectField:" />
                         <TextBlock Grid.Row="20"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Allowed in Automation Conditions :" />
+                                   Text="Include In Search Field:" />
                         <TextBlock Grid.Row="21"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Automation Email Recipient :" />
+                                   Text="Allowed in Automation Conditions :" />
                         <TextBlock Grid.Row="22"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Can Automate Set Value :" />
-
+                                   Text="Automation Email Recipient :" />
                         <TextBlock Grid.Row="23"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Enable Fullscreen Textbox:" />
-                        
-                        <CheckBox Grid.Row="23"
-                                  Grid.Column="1"
-                                  Height="22"
-                                  Margin="2"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding EnableFullscreenTextBox,
-                                                      Mode=TwoWay}" />
-
+                                   Text="Can Automate Set Value :" />
                         <TextBlock Grid.Row="24"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Display In Automation As Enitity:" />
-
+                                   Text="Enable Fullscreen Textbox:" />
                         <TextBlock Grid.Row="25"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="Display In Automation As Enitity:" />
+                        <TextBlock Grid.Row="26"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Record Type:" />
@@ -1320,14 +1311,14 @@
 
 
 
-                        <TextBox Grid.Row="11"
+                        <TextBox Grid.Row="12"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding ConverterName,
                                                 Mode=TwoWay}" />
-                        <ComboBox Grid.Row="12"
+                        <ComboBox Grid.Row="13"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
@@ -1335,49 +1326,49 @@
                                   ItemsSource="{Binding TextCaseList}"
                                   SelectedItem="{Binding TextCase,
                                                          Mode=TwoWay}" />
-                        <CheckBox Grid.Row="13"
+                        <CheckBox Grid.Row="14"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding DisplayOnly,
                                                       Mode=TwoWay}" />
-                        <CheckBox Grid.Row="14"
+                        <CheckBox Grid.Row="15"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding DisplayInEntityVariables,
                                                       Mode=TwoWay}" />
-                        <CheckBox Grid.Row="15"
+                        <CheckBox Grid.Row="16"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding DisplayLongName,
                                                       Mode=TwoWay}" />
-                        <CheckBox Grid.Row="16"
+                        <CheckBox Grid.Row="17"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding InActive,
                                                       Mode=TwoWay}" />
-                        <TextBox Grid.Row="17"
+                        <TextBox Grid.Row="18"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding Order,
                                                 Mode=TwoWay}" />
-                        <CheckBox Grid.Row="18"
+                        <CheckBox Grid.Row="19"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding NoObjectField,
                                                       Mode=TwoWay}" />
-                        <CheckBox Grid.Row="19"
+                        <CheckBox Grid.Row="20"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
@@ -1385,41 +1376,42 @@
                                   IsChecked="{Binding IncludeInSearchField,
                                                       Mode=TwoWay}"
                                   IsEnabled="{Binding IsIncludeInSearchFieldsEnabled}" />
-                        <CheckBox Grid.Row="20"
+                        <CheckBox Grid.Row="21"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding AllowedinAutomationConditions,
                                                       Mode=TwoWay}"  />
-                        <CheckBox Grid.Row="21"
+                        <CheckBox Grid.Row="22"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding AutomationEmailRecipient,
                                                       Mode=TwoWay}"  />
-                        <CheckBox Grid.Row="22"
+                        <CheckBox Grid.Row="23"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding CanAutomateSetValue,
-                                 
-                     Mode=TwoWay}"  />
-
-
-
+                                  Mode=TwoWay}"  />
                         <CheckBox Grid.Row="24"
+                                  Grid.Column="1"
+                                  Height="22"
+                                  Margin="2"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding EnableFullscreenTextBox,
+                                                      Mode=TwoWay}" />
+                        <CheckBox Grid.Row="25"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding DisplayInAutomationAsEnitity,
                                                       Mode=TwoWay}"  />
-
-
-                        <TextBox Grid.Row="25"
+                        <TextBox Grid.Row="26"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
@@ -1427,8 +1419,9 @@
                                  Text="{Binding RecordType,
                                                 Mode=TwoWay}" />
 
+                        
 
-                        <Border Grid.Row="26"
+                        <Border Grid.Row="27"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -1443,15 +1436,15 @@
                                        Text="Angular html List Component" />
                         </Border>
 
-                        <TextBlock Grid.Row="27"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="HTML List Component Name:" />
                         <TextBlock Grid.Row="28"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
+                                   Text="HTML List Component Name:" />
+                        <TextBlock Grid.Row="29"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
                                    Text="HTML List Component URL:" />
-                        <Border Grid.Row="29"
+                        <Border Grid.Row="30"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -1465,38 +1458,37 @@
                                        Foreground="#FF282E30"
                                        Text="Default Values" />
                         </Border>
-                        <TextBlock Grid.Row="30"
+                        <TextBlock Grid.Row="31"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Default Value:" />
-
-						<TextBlock Grid.Row="31"
+                        <TextBlock Grid.Row="32"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Generated Component Path:" />
-						<TextBox Grid.Row="27"
+                        
+						<TextBox Grid.Row="28"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding HtmlListComponentUrl,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="28"
+                        <TextBox Grid.Row="29"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding HtmlListComponentName,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="30"
+                        <TextBox Grid.Row="31"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding DefaultValue,
                                                 Mode=TwoWay}" />
-
-						<TextBox Grid.Row="31"
+                        <TextBox Grid.Row="32"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
