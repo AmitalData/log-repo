@@ -1015,9 +1015,12 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalReconciliationLineViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalReconciliationViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountCounterViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountInterestPeriodViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountWithholdingTaxViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\IntegrityCheckStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestBasesPeriodViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestBasesTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />
@@ -1047,6 +1050,8 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountCounterController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountMoreDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountWithholdingTaxController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestBasesPeriodController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestBasesTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\OpenFormatReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\PaymentChequeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ReconcileExternalPageController.Generated.cs" />
@@ -1064,6 +1069,7 @@
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconciliationAfterConversionController.cs" />
+    <Compile Include="Controllers\AccountingModel\CashBookOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconciliationStageBController.cs" />
     <Compile Include="Controllers\AccountingModel\RevaluationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportFileController.cs" />
@@ -2679,10 +2685,15 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FullAccountingSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCounterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCurrencyUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountInterestPeriodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountMoreDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountTotalDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\IntegrityCheckStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesPeriodUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestEntityTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestTransactionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalExternalReconcileUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalMoreDataUpdateClass.cs" />
@@ -2965,6 +2976,10 @@
     <Content Include="Integration Test\CRM\Opportunity\Opportunities.postman_collection.json" />
     <Content Include="Integration Test\APInvoiceFromShipment\Create-EditAPInvoiceFromShipment.postman_collection.json" />
     <Content Include="Integration Test\Accounting\AP Invoice.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\Ahmad.csv" />
+    <Content Include="Integration Test\FullAccounting\FullAccountingTesting.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\PostmanDataCloud.csv" />
+    <Content Include="Integration Test\FullAccounting\PrepareFullAccountingVars.postman_collection.json" />
     <Content Include="Integration Test\LoginVars\CloudLoginVars.csv" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
@@ -6397,7 +6412,6 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
-    <Folder Include="Integration Test\FullAccounting\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
