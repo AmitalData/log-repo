@@ -2207,11 +2207,10 @@ namespace MeatadataGeneratorTool
                 case "Constant":
                 case "PickList":
                 case "List":
-                case "Emails":
                 case "Byte[]":
-                case "Text":
                     return "varchar";
                 case "Date":
+                    return "date";
                 case "DateTime":
                     return "datetime";
                 case "Decimal":
@@ -2226,6 +2225,8 @@ namespace MeatadataGeneratorTool
                 case "nText":
                     return "nvarchar";
                 case "LookUp":
+                case "Emails":
+                case "Text":
                     return isFixedLength ? "char" : "varchar";
                 default:
                     return null;
