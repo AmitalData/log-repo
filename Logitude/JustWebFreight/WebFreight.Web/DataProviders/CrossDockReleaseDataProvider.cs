@@ -45,6 +45,7 @@ namespace WebFreight.Web.DataProviders
         public string VolumetricWeightUnit { get; set; }
         public string WeightUnit { get; set; }
         public string VolumeUnit { get; set; }
+        public string ReleaseDateIndicator { get; set; }
 
         public List<ReleasePackage> ReleasePackages { get; set; }
         public List<ReleasePackageGroup> ReleasePackagesGroupList { get; set; }
