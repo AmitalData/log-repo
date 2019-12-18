@@ -22,9 +22,17 @@
             <div class="TableHolder">
                 <table>
                     <tr style="height:25px">
+
+
                         <td class="TabTitleRow" style="width:150px">
                             {{'General.MH.CustomsCollateral'| TextCodeTranslationPipe}}
                         </td>
+
+                        <td style="left:0px;float:left">
+                            <button style="width:100px" class="Button" *ngIf="_customsCollateralAnswerSharedDataService.IsDisplayButtonSend" (click)="OpenEditCollateralAnswerWindow()">    {{'Customs.Declaration.O.MultiCollateralsAnswer'| TextCodeTranslationPipe}}</button>
+
+                        </td>
+
                     </tr>
 
 
@@ -38,6 +46,15 @@
                                                     GridWidth="100%"
                                                     GridHeight="100%"
                                                     [ItemSource]="collateralObslist">
+                                    <log-column [header]="" [width]="'120'" [Alignment]="'right'">
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <!--<div style="text-align:right">
+                                                <span>{{item.CollateralRequestNumber}}</span>
+                                            </div>-->
+
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- CollateralRequestNumber -->
                                     <log-column [header]="'Customs.CustomsCollateral.F.CollateralRequestNumber' | TextCodeTranslationPipe" [binding]="'CollateralRequestNumber'" [width]="'120'" [Alignment]="'right'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
@@ -133,7 +150,7 @@
 
                                 </logitude-edit-grid>
 
-                                
+
                                 <logitude-grid *ngIf="NewView"
                                                (rowSelectedEvent)="OnRowSelected($event)"
                                                [dataSource]="DataSource"
@@ -141,7 +158,6 @@
                                                [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                                [columns]="columns"
                                                [QueryChangeEvent]="onQueryChangeEvent"
-                                               
                                                [IsCustomTemplate]="true">
                                 </logitude-grid>
 

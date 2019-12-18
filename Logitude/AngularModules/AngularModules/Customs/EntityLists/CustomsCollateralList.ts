@@ -7,35 +7,35 @@
 //------------------------------------------------------------------------------
 
 export class CustomsCollateralList {
-   
-	Id: string;
-	Tenant: number;
-	CollateralRequestNumber: string;
-	RequestValidityDate: Date;
-	CollateralValidityDate: Date;
-	CollateralRequestStatusCode: string;
-	RequestedCollateralTypeCode: string;
-	OrganizationUnitTypeCode: string;
-	CustomsHouseTypeCode: string;
-	WorkerName: string;
-	Remarks: string;
-	FileNo: string;
-	CustomsEntityTypeCode: string;
-	EntityIdKey1: string;
-	EntityIdKey2: string;
-	EntityIdKey3: string;
-	CollateralRequestStatusName: string;
-	RequestedCollateralTypeName: string;
-	CustomsEntityTypeName: string;
-	IncludingThirdPartyGuarantee: boolean;
-	DeclarationId: string;
-	SearchFields: string;
-	CustomsHouseTypeName: string;
-	OrganizationUnitTypeName: string;
-	CreateDateTime: Date;
-	IsClosed: boolean;
-	CustomerId: string;
-	CustomerName: string;
-	
+
+    Id: string;
+    Tenant: number;
+    CollateralRequestNumber: string;
+    RequestValidityDate: Date;
+    CollateralValidityDate: Date;
+    CollateralRequestStatusCode: string;
+    RequestedCollateralTypeCode: string;
+    OrganizationUnitTypeCode: string;
+    CustomsHouseTypeCode: string;
+    WorkerName: string;
+    Remarks: string;
+    FileNo: string;
+    CustomsEntityTypeCode: string;
+    EntityIdKey1: string;
+    EntityIdKey2: string;
+    EntityIdKey3: string;
+    CollateralRequestStatusName: string;
+    RequestedCollateralTypeName: string;
+    CustomsEntityTypeName: string;
+    IncludingThirdPartyGuarantee: boolean;
+    DeclarationId: string;
+    SearchFields: string;
+    CustomsHouseTypeName: string;
+    OrganizationUnitTypeName: string;
+    CreateDateTime: Date;
+    IsClosed: boolean;
+    CustomerId: string;
+    CustomerName: string;
+    IsAnswer: boolean;
+
 }
- 

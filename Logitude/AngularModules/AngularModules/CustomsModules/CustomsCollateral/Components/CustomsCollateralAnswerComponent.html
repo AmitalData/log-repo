@@ -1,309 +1,354 @@
 <style>
 
     .noBorder {
-           border:none !important;
+        border: none !important;
     }
 </style>
 
-<table style="background:#EEF2F3;border:  1px solid #3bb3e2;border-top:none">
-  <tr>
-      <td style="width:10px"></td>
-     <td>
-         <table>
-             <tr>
-               
-                 <td>
+<table style="background:#EEF2F3;border:  1px solid #3bb3e2" [ngStyle]="{'border-top':!IsConcentrated ? 'none' : '1px solid #3bb3e2' }">
+    <tr>
+        <td style="width:10px"></td>
+        <td>
+            <table>
+                <tr>
 
-                     <table style="width:250px; ">
-                         <tr style="height:25px">
-                             <td colspan="3">
-                                 <table>
-                                     <tr>
+                    <td>
 
-                                         <td style="width:25px;">
-                                             <RadioButton [Name]="'RequestNewFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsNewFile" (Checked)="UseRequestNewFile('')"></RadioButton>
-                                         </td>
-                                         <td>
+                        <table style="width:250px; " *ngIf="!IsConcentrated">
+                            <tr style="height:25px">
+                                <td colspan="3">
+                                    <table>
+                                        <tr>
 
-                                             <label style="font-size:12px; color:#1B90CB">{{'Customs.Declaration.O.RequestNewFile' | TextCodeTranslationPipe}}</label>
-                                         </td>
-                                     </tr>
-                                 </table>
+                                            <td style="width:25px;">
+                                                <RadioButton [Name]="'RequestNewFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsNewFile" (Checked)="UseRequestNewFile('')"></RadioButton>
+                                            </td>
+                                            <td>
 
-                             </td>
-                         </tr>
+                                                <label style="font-size:12px; color:#1B90CB">{{'Customs.Declaration.O.RequestNewFile' | TextCodeTranslationPipe}}</label>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                         <tr style="height:25px">
-                             <td width="10px;" >
-                                 <div *ngIf="RequestFileCodeRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
+                                </td>
+                            </tr>
 
-                                 </div>
-                             </td>
-                             <td style="width:120px">
-                                 <LogLabel [ObjectFieldName]="'RequestFileTypeCode'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext"></LogLabel>
-                             </td>
-                             <td>
-                                 <table>
-                                     <tr>
-                                         <td style="width:120px">
-                                             <LogLov [ObjectFieldName]="'RequestFileTypeCode'"
-                                                     [ObjectTableName]="ObjectTableName"
-                                                     [DataContext]="DataContext"
-                                                     [LookUpTableName]="'Customs.CollateralAnswerType'"
-                                                     [HideColumns]="true"
-                                                [DependencyFilter1Value]="'1,3'"
-                                                [DependencyFilter1IsList]="true"
-                                                 
+                            <tr style="height:25px">
+                                <td width="10px;">
+                                    <div *ngIf="RequestFileCodeRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
 
-                                                       [SelectedValue]="RequestFileTypeCode">
-                                             </LogLov>
-                                                     
-                                         </td>
-                                     </tr>
-                                 </table>
-                             </td>
-                         </tr>
+                                    </div>
+                                </td>
+                                <td style="width:120px">
+                                    <LogLabel [ObjectFieldName]="'RequestFileTypeCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:120px">
+                                                <LogLov [ObjectFieldName]="'RequestFileTypeCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.CollateralAnswerType'"
+                                                        [HideColumns]="true"
+                                                        [DependencyFilter1Value]="'1,3'"
+                                                        [DependencyFilter1IsList]="true"
+                                                        [SelectedValue]="RequestFileTypeCode">
+                                                </LogLov>
 
-                         <tr style="height:25px">
-                             <td width="10px;">
-                                 <div *ngIf="RequestFileRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
 
-                                 </div>
-                             </td>
-                             <td style="width:120px">
-                                 <LogLabel [ObjectFieldName]="'RequestFileAmount'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext"></LogLabel>
-                             </td>
-                             <td>
-                                 <table>
-                                     <tr>
-                                         <td style="width:120px">
-                                             <LogTextBox [ObjectFieldName]="'RequestFileAmount'" [ObjectTableName]="ObjectTableName"  [Text]="RequestFileAmount" 
-                                                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                                         </td>
-                                     </tr>
-                                 </table>
-                             </td>
-                         </tr>
-                     </table>
-                 </td>
+                            <tr style="height:25px">
+                                <td width="10px;">
+                                    <div *ngIf="RequestFileRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
 
-                 
-
-             </tr>
-
-             <tr>
-                 <td>
-                     <table>
-                         <tr style="height:25px">
-                             <td colspan="3">
-                                 <table>
-                                     <tr>
-
-                                         <td style="width:25px">
-                                             <!--<RadioButton [Name]="'RequestNewFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsTapag" (Checked)="UseExistingTapagFile('')"></RadioButton>-->
-                                             <RadioButton [Name]="'ExistingTapagFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsTapag" (Checked)="UseExistingTapagFile('')"></RadioButton>
-                                         </td>
-                                         <td>
-
-                                             <label style="font-size:12px; color:#1B90CB">{{ 'Customs.Declaration.O.UseExistingTapagFile' | TextCodeTranslationPipe}}</label>
-                                         </td>
-                                     </tr>
-                                 </table>
-                             </td>
-                             <td rowspan="4">
-                                 <div  *ngIf="DisplayOnlyMessageVisibility" style="padding:10px;  background:#FFFADC;min-height:50px; height:auto; min-width:100px; border: 1px solid #8C8C8C;">
-                                     <table>
-                                         <tr *ngIf="AnswerSentTextVisibility" >
-                                             <td colspan="2" >
-                                                 <label style="color:#282E30">
-                                                     {{'Customs.General.O.AnswerSent' |TextCodeTranslationPipe}}
-                                                 </label>
-                                             </td>
-                                             
-                                         </tr>
-                                         <tr  *ngIf="RequestNumberLabelVisibility">
-                                             <td>
-                                                 <label style="color:#282E30">{{'Customs.Declaration.O.RequestNumber' | TextCodeTranslationPipe}}</label>
-                                             </td>
-                                             <td> <span style="color:#282E30"> {{RequestNumber}}</span>  </td>
-                                         </tr>
-                                         <tr *ngIf="TapagFileLabelVisibility">
-                                             <td>
-                                                 <label style="color:#282E30">{{'Customs.CustomsCollateral.O.TapagFile' |TextCodeTranslationPipe}}</label>
-                                             </td>
-                                             <td style="color:#282E30">
-                                                 {{TapagFile}}
-                                             </td>
-                                         </tr>
-                                         <tr *ngIf="PaymentOrderVsibility">
-                                             <td style="color:#282E30">
-                                                 הוראת תשלום
-                                             </td>
-                                             <td>
-                                                 <span class="hyperlink" (click)="OpenPaymentOrder()" style="font-size:10px ;color:blue"> {{PaymentOrder}}</span>
-
-                                             </td>
-                                         </tr>
-
-                                         <tr *ngIf="AnswerForCollateralStatusVisibility">
-                                             <td style="color:#282E30" width="100px"> סטטוס מענה</td>
-                                             <td style="color:#282E30"> {{AnswerForCollateralStatusName}}</td>
-                                         </tr>
-                                         <tr>
-                                             <td style="color:#282E30" width="100px"> {{'Customs.PaymentOrder.F.PaymentStatusCode' | TextCodeTranslationPipe}}</td>
-                                             <td style="color:#282E30"> {{PaymentOrderStatus}}</td>
-                                         </tr>
-                                        
-                                     </table>
-
-                                   </div>
-
-                             </td>
-                             <td width="10px"></td>
-                         </tr>
-
-                         <tr style="height:25px">
-                             <td width="10px;">
-                                 <div *ngIf="AnswerEntityRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
-
-                                 </div>
-                             </td>
-                             <td style="width:120px">
-                                 <LogLabel [ObjectFieldName]="'AnswerEntityTypeCode'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext"></LogLabel>
-                             </td>
-                             <td>
-                                 <table style="width:120px">
-                                     <tr>
-                                         <td style="width:120px">
-                                             <LogLov [ObjectFieldName]="'AnswerEntityTypeCode'"
-                                                     [ObjectTableName]="ObjectTableName"
-                                                     [DataContext]="DataContext"
-                                                     [LookUpTableName]="'Customs.CollateralAnswerType'"
-                                                       [SelectedValue]="AnswerEntityTypeCode"
-                                                     [DependencyFilter1Value]="'2,4'"
-                                                [DependencyFilter1IsList]="true"
-                                                      
-                                                     [HideColumns]="true">
-                                             </LogLov>
-                                         </td>
-                                     </tr>
-                                 </table>
-                             </td>
-                         </tr>
-
-                         <tr style="height:25px">
-                             <td width="10px;">
-                                 <div *ngIf="AllocatedAmountRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
-
-                                 </div>
-                             </td>
-                             <td style="width:120px">
-                                 <LogLabel [ObjectFieldName]="'AllocatedAmount'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext"></LogLabel>
-                             </td>
-                             <td>
-                                 <table style="width:120px">
-                                     <tr>
-                                         <td style="width:120px">
-                                             <LogTextBox [ObjectFieldName]="'AllocatedAmount'" [ObjectTableName]="ObjectTableName"  [Text]="AllocatedAmount" 
-                                                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                                         </td>
-                                     </tr>
-                                 </table>
-                             </td>
-                         </tr>
-
-                         <tr style="height:25px">
-                             <td width="10px;">
-                                 <div *ngIf="CustomsTapgFileRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
-
-                                 </div>
-                             </td>
-                             <td style="width:120px">
-                                 <LogLabel [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext"></LogLabel>
-                             </td>
-                             <td>
-                                 <table style="width:140px">
-                                     <tr>
-                                         <td style="width:140px">
-                                             <LogTextBox [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName" [Text]="CustomsTapgFile"
-                                                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                                         </td>
-                                         <!-- *ngIf="IsGuaranteeDefaultList" -->
-                                         <td style="width: 20px; padding-right: 4px; padding-top: 3px;">
-                                             <div *ngIf="IsGuaranteeDefaultShow" style="width: 18px; float: right; height:20px;">
-                                                 <img [ngStyle]="imgNgStyle" src="./Images/LOVSearch.png" (click)="OpenGuaranteeDefaultListScreen()" title="רשימת מספרי ערבות" />
-                                             </div>
-                                         </td>
-                                     </tr>
-                                 </table>
-                             </td>
-                             
-                         </tr>
-
-                         <tr style="height:25px">
-                             <td width="10px;">
-                                 <div style="width:7px;height:7px; ">
-
-                                 </div>
-                             </td>
-                             <td style="width:120px">
-                                 <LogLabel [ObjectFieldName]="'CustomsNumeral'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext"></LogLabel>
-                             </td>
-                             <td>
-                                 <table style="width:140px">
-                                     <tr>
-                                         <td style="width:140px">
-                                             <LogTextBox [ObjectFieldName]="'CustomsNumeral'" [ObjectTableName]="ObjectTableName"  [Text]="CustomsNumeral" 
-                                                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                                         </td>
-                                     </tr>
-                                 </table>
-                             </td>
-                             <td><div></div></td>
-                         </tr>
+                                    </div>
+                                </td>
+                                <td style="width:120px">
+                                    <LogLabel [ObjectFieldName]="'RequestFileAmount'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:120px">
+                                                <LogTextBox [ObjectFieldName]="'RequestFileAmount'" [ObjectTableName]="ObjectTableName" [Text]="RequestFileAmount"
+                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
 
 
-                         <tr  style="top:0px;height:50px">
-                             <td width="10px;">
-                                 <div style="width:7px;height:7px;">
 
-                                 </div>
-                             </td>
-                             <td style="width:120px; vertical-align:top">
-                                 <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext"></LogLabel>
-                             </td>
-                             <td rowspan="2" colspan="2" style="vertical-align:top;padding-left:20px;top:2px">
-                                 <LogTextBox [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true"  [Text]="Remarks" 
-                                             [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                             </td>
-                         </tr>
-                     </table>
-                 </td>
-             </tr>
-         </table>
-     </td>
+                </tr>
 
-      <td colspan="2">
-          <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr style="height:25px">
+                                <td colspan="3">
+                                    <table>
+                                        <tr *ngIf="!IsConcentrated">
 
-              <tr>
-                  <td>
-                      <!--<div  style="background:#FFFADC;height:100px;width:100px;  border: 1px solid #8C8C8C;">
+                                            <td style="width:25px">
+                                                <!--<RadioButton [Name]="'RequestNewFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsTapag" (Checked)="UseExistingTapagFile('')"></RadioButton>-->
+                                                <RadioButton [Name]="'ExistingTapagFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsTapag" (Checked)="UseExistingTapagFile('')"></RadioButton>
+                                            </td>
+                                            <td>
 
-                      </div>-->
-                  </td>
-              </tr>
-          </table>
-      </td>
-  </tr>
-   
+                                                <label style="font-size:12px; color:#1B90CB">{{ 'Customs.Declaration.O.UseExistingTapagFile' | TextCodeTranslationPipe}}</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td rowspan="4">
+                                    <div *ngIf="DisplayOnlyMessageVisibility" style="padding:10px;  background:#FFFADC;min-height:50px; height:auto; min-width:100px; border: 1px solid #8C8C8C;">
+                                        <table>
+                                            <tr *ngIf="AnswerSentTextVisibility">
+                                                <td colspan="2">
+                                                    <label style="color:#282E30">
+                                                        {{'Customs.General.O.AnswerSent' |TextCodeTranslationPipe}}
+                                                    </label>
+                                                </td>
+
+                                            </tr>
+                                            <tr *ngIf="RequestNumberLabelVisibility">
+                                                <td>
+                                                    <label style="color:#282E30">{{'Customs.Declaration.O.RequestNumber' | TextCodeTranslationPipe}}</label>
+                                                </td>
+                                                <td> <span style="color:#282E30"> {{RequestNumber}}</span>  </td>
+                                            </tr>
+                                            <tr *ngIf="TapagFileLabelVisibility">
+                                                <td>
+                                                    <label style="color:#282E30">{{'Customs.CustomsCollateral.O.TapagFile' |TextCodeTranslationPipe}}</label>
+                                                </td>
+                                                <td style="color:#282E30">
+                                                    {{TapagFile}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="PaymentOrderVsibility">
+                                                <td style="color:#282E30">
+                                                    הוראת תשלום
+                                                </td>
+                                                <td>
+                                                    <span class="hyperlink" (click)="OpenPaymentOrder()" style="font-size:10px ;color:blue"> {{PaymentOrder}}</span>
+
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="AnswerForCollateralStatusVisibility">
+                                                <td style="color:#282E30" width="100px"> סטטוס מענה</td>
+                                                <td style="color:#282E30"> {{AnswerForCollateralStatusName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color:#282E30" width="100px"> {{'Customs.PaymentOrder.F.PaymentStatusCode' | TextCodeTranslationPipe}}</td>
+                                                <td style="color:#282E30"> {{PaymentOrderStatus}}</td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+
+                                </td>
+                                <td width="10px"></td>
+                            </tr>
+                            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                                <td colspan="4">
+                                    <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+                                </td>
+                            </tr>
+                            <tr style="height:25px">
+                                <td width="10px;">
+                                    <div *ngIf="AnswerEntityRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
+
+                                    </div>
+                                </td>
+                                <td style="width:120px">
+                                    <LogLabel [ObjectFieldName]="'AnswerEntityTypeCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <table style="width:120px">
+                                        <tr>
+                                            <td style="width:120px">
+                                                <LogLov [ObjectFieldName]="'AnswerEntityTypeCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.CollateralAnswerType'"
+                                                        [SelectedValue]="AnswerEntityTypeCode"
+                                                        [DependencyFilter1Value]="'2,4'"
+                                                        [DependencyFilter1IsList]="true"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:25px" *ngIf="!IsConcentrated">
+                                <td width="10px;">
+                                    <div *ngIf="AllocatedAmountRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
+
+                                    </div>
+                                </td>
+                                <td style="width:120px">
+                                    <LogLabel [ObjectFieldName]="'AllocatedAmount'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <table style="width:120px">
+                                        <tr>
+                                            <td style="width:120px">
+                                                <LogTextBox [ObjectFieldName]="'AllocatedAmount'" [ObjectTableName]="ObjectTableName" [Text]="AllocatedAmount"
+                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:25px">
+                                <td width="10px;">
+                                    <div *ngIf="CustomsTapgFileRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
+
+                                    </div>
+                                </td>
+
+                                <td style="width:120px">
+                                    <LogLabel [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <table style="width:140px">
+                                        <tr>
+                                            <td style="width:140px">
+                                                <LogTextBox [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName" [Text]="CustomsTapgFile"
+                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <!-- *ngIf="IsGuaranteeDefaultList" -->
+                                            <td style="width: 20px; padding-right: 4px; padding-top: 3px;">
+                                                <div *ngIf="IsGuaranteeDefaultShow" style="width: 18px; float: right; height:20px;">
+                                                    <img [ngStyle]="imgNgStyle" src="./Images/LOVSearch.png" (click)="OpenGuaranteeDefaultListScreen()" title="רשימת מספרי ערבות" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+
+                            <tr style="height:25px">
+                                <td width="10px;">
+                                    <div style="width:7px;height:7px; ">
+
+                                    </div>
+                                </td>
+                                <td style="width:120px">
+                                    <LogLabel [ObjectFieldName]="'CustomsNumeral'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <table style="width:140px">
+                                        <tr>
+                                            <td style="width:140px">
+                                                <LogTextBox [ObjectFieldName]="'CustomsNumeral'" [ObjectTableName]="ObjectTableName" [Text]="CustomsNumeral"
+                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+
+                            <tr style="top:0px;height:50px">
+                                <td width="10px;">
+                                    <div style="width:7px;height:7px;">
+
+                                    </div>
+                                </td>
+                                <td style="width:120px; vertical-align:top">
+                                    <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td rowspan="2" colspan="2" style="vertical-align:top;padding-left:20px;top:2px">
+                                    <LogTextBox [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [Text]="Remarks"
+                                                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 35px;padding-bottom:5px" *ngIf="IsConcentrated">
+                    <td>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 57px;vertical-align: bottom;">
+                                                    <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                                                </td>
+
+                                                <td style="width: 10px;vertical-align:bottom">
+                                                    <div></div>
+                                                </td>
+
+
+                                                <td style="width:110px;  vertical-align: bottom;">
+                                                    <custom-send-options #MyCustomSendOptionsComponent [AvoidDoubleClick]="true" (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+
+
+                                </tr>
+
+
+
+                            </table>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td colspan="2">
+            <table>
+
+                <tr>
+                    <td>
+                        <!--<div  style="background:#FFFADC;height:100px;width:100px;  border: 1px solid #8C8C8C;">
+
+                        </div>-->
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
 </table>
 
 

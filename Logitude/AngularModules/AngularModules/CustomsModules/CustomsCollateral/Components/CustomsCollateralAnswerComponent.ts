@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { CustomsCollateralsAnswerPM } from '../../../Customs/EntityPMs/CustomsCollateralsAnswerPM';
 import { CustomsCollateralPM } from '../../../Customs/EntityPMs/CustomsCollateralPM';
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CollateralsRequestFileCondPM } from '../../../Customs/EntityPMs/CollateralsRequestFileCondPM';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/DeclarationPMService';
@@ -16,14 +16,27 @@ import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
 import { CardListService } from '../../../Common/Services/StandardLists/CardListService'
 import { CardList } from '../../../Common/EntityLists/CardList';
 
-declare var window: any;
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 
+declare var window: any;
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
+import { forEach } from '@angular/router/src/utils/collection';
+import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { SendCollateralRequestParams } from '../../../Customs/DataContract/RequestParams/SendCollateralRequestParams';
+import { Observable } from 'rxjs';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { CustomsCollateralAnswerSharedDataService } from '../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
+import { subscribeOn } from 'rxjs/operator/subscribeOn';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsCollateralAnswerComponent.html',
+    providers: [CustomsCollateralPMService, DeclarationExtendedListService, CustomsCollateralAnswerSharedDataService]
 })
-export class CustomsCollateralAnswerComponent extends BaseComponent {
+export class CustomsCollateralAnswerComponent extends BaseComponent implements OnInit {
+
     public ObjectTableName: string = "Customs.CustomsCollateralsAnswer";
     public DataContext: any = this;
     public EntityPM: CustomsCollateralsAnswerPM;
@@ -35,16 +48,22 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
     private isGuaranteeDefaultShow: boolean = false;
     private GuaranteeDefaultList: string[] = [];
     cardListService: CardListService = new CardListService();
+    IsConcentrated: boolean;
+    collateralToSendlist: string[];
+    public ValidationErrorsList: string[] = [];
 
-    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _customsCollateralPMService: CustomsCollateralPMService, private _declarationExtendedListService: DeclarationExtendedListService) {
         super();
-
     }
+
+    ngOnInit(): void {
+    }
+
     AnswerForCollateralStatusVisibility: boolean;
     SetTabArgs(args: any) {
         this.EntityPM = args.EntityPM;
         this.collateralPM = args.Parent;
-        
+
         this.IsClosed = this.collateralPM.IsClosed;
         this.CurrentSession.SubscriptionAdd(
             this.CurrentSession.CollateralAnswerRefreshEvent.subscribe((res) => {
@@ -54,7 +73,6 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         );
 
         this.firstTime = true;
-
         this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
         this.BuildAccountingCustomFilesList();
 
@@ -101,7 +119,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
 
 
             if (!AppTool.IsNullOrEmpty(this.CustomsTapgFile) && !AppTool.IsNullOrEmpty(this.CustomsNumeral)) {
-                this.TapagFile = this.CustomsTapgFile + "/" +this.CustomsNumeral;
+                this.TapagFile = this.CustomsTapgFile + "/" + this.CustomsNumeral;
             }
 
             else if (!AppTool.IsNullOrEmpty(this.CustomsTapgFile) && AppTool.IsNullOrEmpty(this.CustomsNumeral)) {
@@ -120,10 +138,10 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
             this.PaymentOrder = this.EntityPM.PaymentOrderNumber;
             this.PaymentOrderStatus = this.EntityPM.PaymentOrderStatus;
 
-           
+
         }
 
-        
+
     }
 
     SetClosedCollateralScreesn(IsClosed: boolean) {
@@ -142,12 +160,12 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
                 this.IsNewFile = true;
             }
             else {
-              
+
                 if (this.EntityPM.AnswerEntityTypeCode != null && this.EntityPM.AllocatedAmount != null) {
                     this.IsTapag = true;
                 }
             }
-           
+
 
         }
         else {
@@ -327,7 +345,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
                 this.UIProperties.SetEnabled("AnswerEntityTypeCode", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("AllocatedAmount", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("CustomsTapgFile", this.ObjectTableName, true);
-                if (this.IsGuaranteeDefaultList && this.AnswerEntityTypeCode == "2") this.IsGuaranteeDefaultShow = true;
+                if (this.IsGuaranteeDefaultList && (this.AnswerEntityTypeCode == "2" || this.IsConcentrated)) this.IsGuaranteeDefaultShow = true;
                 this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("CustomsNumeral", this.ObjectTableName, true);
 
@@ -345,7 +363,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
             //this.RequestFileRedIconVisibility = false;
 
         }
-        
+
     }
 
     OpenGuaranteeDefaultListScreen() {
@@ -369,7 +387,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
             this.CustomsTapgFile = arg;
         }
     }
-    
+
     private BuildAccountingCustomFilesList() {
         this.GuaranteeDefaultList = [];
         var customerCode = "";
@@ -391,8 +409,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
                             });
                     }
                 }
-                if (!AppTool.IsNullOrEmpty(customerCode))
-                {
+                if (!AppTool.IsNullOrEmpty(customerCode)) {
                     var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_GUARANTEE_N", "NON", customerCode, SessionLocator.Tenant)
                         .subscribe(response => {
@@ -406,17 +423,18 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
                                     result.forEach((item) => {
                                         this.GuaranteeDefaultList.push(item);
                                     });
-                                    if (this.IsGuaranteeDefaultList)this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
+                                    if (this.IsGuaranteeDefaultList) this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
+
                                 }
                             }
                         });
                 }
             });
         }
-        
+
 
     }
-    
+
 
     //#region properties
 
@@ -425,7 +443,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
 
     public get IsGuaranteeDefaultShow() { return this.isGuaranteeDefaultShow; }
     public set IsGuaranteeDefaultShow(newValue: boolean) { this.isGuaranteeDefaultShow = newValue; }
-    
+
     private paymentOrderStatus: string;
     public get PaymentOrderStatus() { return this.paymentOrderStatus; }
     public set PaymentOrderStatus(newValue: string) {
@@ -441,8 +459,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
     firstTime: boolean;
     private isNewFile: boolean;
     public get IsNewFile() { return this.isNewFile; }
-    public set IsNewFile(newValue: boolean)
-    {
+    public set IsNewFile(newValue: boolean) {
         this.isNewFile = newValue;
         if (newValue && !this.collateralPM.IsClosed) {
 
@@ -472,13 +489,11 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
                 this.RequestFileRedIconVisibility = true;
             }
 
-          
-        //    this.firstTime = false;
 
-            if ((this.EntityPM.CollateralsRequestFileConds == null || this.EntityPM.CollateralsRequestFileConds.length == 0) && (this.collateralPM != null && this.collateralPM.CustomsCollateralsConditions != null)) 
-            {
-                for (var item of this.collateralPM.CustomsCollateralsConditions)
-                {
+            //    this.firstTime = false;
+
+            if ((this.EntityPM.CollateralsRequestFileConds == null || this.EntityPM.CollateralsRequestFileConds.length == 0) && (this.collateralPM != null && this.collateralPM.CustomsCollateralsConditions != null)) {
+                for (var item of this.collateralPM.CustomsCollateralsConditions) {
                     var collateralsRequestFileCond: CollateralsRequestFileCondPM = new CollateralsRequestFileCondPM(this.collateralPM);
                     collateralsRequestFileCond.CustomsCollateralId = this.EntityPM.CustomsCollateralId;
                     collateralsRequestFileCond.LineNumber = this.EntityPM.LineNumber;
@@ -492,57 +507,57 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
 
         }
     }
-   
 
-   private isTapag: boolean;
-     public get IsTapag() { return this.isTapag; }
-     public set IsTapag(newValue: boolean) {
-         this.isTapag = newValue;
 
-         if (newValue && !this.collateralPM.IsClosed) {
+    private isTapag: boolean;
+    public get IsTapag() { return this.isTapag; }
+    public set IsTapag(newValue: boolean) {
+        this.isTapag = newValue;
 
-             this.IsNewFile = false;
-             this.UIProperties.SetEnabled("RequestFileTypeCode", this.ObjectTableName, false);
-             this.UIProperties.SetEnabled("RequestFileAmount", this.ObjectTableName, false);
+        if (newValue && !this.collateralPM.IsClosed) {
 
-             this.UIProperties.SetEnabled("AnswerEntityTypeCode", this.ObjectTableName, true);
-             this.UIProperties.SetEnabled("AllocatedAmount", this.ObjectTableName, true);
-             this.UIProperties.SetEnabled("CustomsTapgFile", this.ObjectTableName, true);
-             if (this.IsGuaranteeDefaultList && this.AnswerEntityTypeCode == "2") this.IsGuaranteeDefaultShow = true;
-             this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, true);
-             this.UIProperties.SetEnabled("CustomsNumeral", this.ObjectTableName, true);
-             this.EntityPM.NewFileRequest = false;
+            this.IsNewFile = false;
+            this.UIProperties.SetEnabled("RequestFileTypeCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("RequestFileAmount", this.ObjectTableName, false);
 
-             if (this.EntityPM.AnswerEntityTypeCode == null) {
-                 this.AnswerEntityRedIconVisibility = true;
-             }
-             else {
-                 this.AnswerEntityRedIconVisibility = false;
-             }
+            this.UIProperties.SetEnabled("AnswerEntityTypeCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("AllocatedAmount", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("CustomsTapgFile", this.ObjectTableName, true);
+            if (this.IsGuaranteeDefaultList && (this.AnswerEntityTypeCode == "2" || this.IsConcentrated)) this.IsGuaranteeDefaultShow = true;
+            this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("CustomsNumeral", this.ObjectTableName, true);
+            this.EntityPM.NewFileRequest = false;
 
-             if (AppTool.IsNullOrEmpty(this.EntityPM.CustomsTapgFile)) {
-                 this.CustomsTapgFileRedIconVisibility = true;
-             }
-             else {
-                 this.CustomsTapgFileRedIconVisibility = false;
-             }
+            if (this.EntityPM.AnswerEntityTypeCode == null) {
+                this.AnswerEntityRedIconVisibility = true;
+            }
+            else {
+                this.AnswerEntityRedIconVisibility = false;
+            }
 
-             if (this.EntityPM.AllocatedAmount == null) {
-                 this.AllocatedAmountRedIconVisibility = true;
-             }
-             else {
-                 this.AllocatedAmountRedIconVisibility = false;
-             }
-            
-           //  this.firstTime = false;
+            if (AppTool.IsNullOrEmpty(this.EntityPM.CustomsTapgFile)) {
+                this.CustomsTapgFileRedIconVisibility = true;
+            }
+            else {
+                this.CustomsTapgFileRedIconVisibility = false;
+            }
 
-         }
-     }
- 
+            if (this.EntityPM.AllocatedAmount == null) {
+                this.AllocatedAmountRedIconVisibility = true;
+            }
+            else {
+                this.AllocatedAmountRedIconVisibility = false;
+            }
 
-     private displayOnlyMessageVisibility: boolean;
-     public get DisplayOnlyMessageVisibility() { return this.displayOnlyMessageVisibility; }
-     public set DisplayOnlyMessageVisibility(newValue: boolean) { this.displayOnlyMessageVisibility = newValue; }
+            //  this.firstTime = false;
+
+        }
+    }
+
+
+    private displayOnlyMessageVisibility: boolean;
+    public get DisplayOnlyMessageVisibility() { return this.displayOnlyMessageVisibility; }
+    public set DisplayOnlyMessageVisibility(newValue: boolean) { this.displayOnlyMessageVisibility = newValue; }
 
     private tapagFile: string;
     public get TapagFile() { return this.tapagFile; }
@@ -687,7 +702,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         });
 
 
-                        }
+    }
 
 
 
@@ -709,6 +724,86 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         });
 
     }
-    
+
+    SetWindowArgs(args: any) {
+        //  this.AnswerEntityTypeCode = "2";
+        this.IsGuaranteeDefaultList = true;
+        this.IsConcentrated = true;
+        this.collateralToSendlist = args.collateralToSendlist;
+        this.EntityPM = new CustomsCollateralsAnswerPM(null);
+        this.collateralPM = new CustomsCollateralPM();
+        this.collateralPM.DeclarationId = args.DeclarationId;
+        this.BuildAccountingCustomFilesList();
+
+    }
+
+
+    CancelButtonClicked() {
+
+
+        this.CurrentSession.CloseCurrentWindow();
+    }
+    FIELD_IS_REQUIERD: string;
+
+    GetRequierdFieldErrorText(fieldName) {
+        this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        return this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate(fieldName));
+    }
+    OnCustomSendOptionsButtonClick() {
+        var currentEntity: CustomsCollateralPM;
+        var errors: string[] = [];
+        this.ValidationErrorsList = [];
+
+        if (this.EntityPM.CustomsTapgFile == null) {
+            errors.push(this.GetRequierdFieldErrorText("Customs.CustomsCollateralsAnswer.F.CustomsTapgFile"));
+
+        }
+
+
+        this.ValidationErrorsList = errors;
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
+        let count: number = 0;
+        for (var i = 0; i < this.collateralToSendlist.length; i++) {
+            this._customsCollateralPMService.get(this.collateralToSendlist[i].toString()).subscribe(
+                data => {
+                    currentEntity = (data.Result as CustomsCollateralPM);
+                    currentEntity.AddCustomsCollateralsAnswer(this.EntityPM);
+                    this._customsCollateralPMService.update(currentEntity).subscribe(res => {
+
+
+                    });
+                }
+
+
+            );
+        }
+
+
+
+        let requestParams: SendCollateralRequestParams = new SendCollateralRequestParams();
+
+        requestParams.Collaterals = this.collateralToSendlist;
+        requestParams.Tenant = 1;
+
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe(res => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            if (res.HasError == true) {
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+            }
+
+            else {
+                this.CurrentSession.CloseCurrentWindow();
+
+            }
+        });
+
+    }
+
     //#endregion
 }
