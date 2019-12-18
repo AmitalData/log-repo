@@ -560,6 +560,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InvoiceModel\SATPaymentMethod.lxml" />
+    <None Include="EntityFiles\Master\Master.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\MarkUpType.lxml" />
     <None Include="EntityFiles\InvoiceModel\AccountingPaymentMethod.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARPaymentStatus.lxml" />
