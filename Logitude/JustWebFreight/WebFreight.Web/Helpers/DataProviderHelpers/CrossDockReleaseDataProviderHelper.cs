@@ -269,11 +269,13 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (warehouseReleasePM.ActualReleaseDate != null)
                 {
                     dataProvider.ReleaseDate = warehouseReleasePM.ActualReleaseDate;
+                    dataProvider.ReleaseDateIndicator = "(Actual)";
                 }
 
                 else if(warehouseReleasePM.ExpectedReleaseDate != null)
                 {
                     dataProvider.ReleaseDate = warehouseReleasePM.ExpectedReleaseDate;
+                    dataProvider.ReleaseDateIndicator = "(Expected)";
                 }
 
                 //Destination
