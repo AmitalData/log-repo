@@ -423,6 +423,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                                     result.forEach((item) => {
                                         this.GuaranteeDefaultList.push(item);
                                     });
+                                    if (this.IsGuaranteeDefaultList) this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
 
                                 }
                             }
@@ -517,7 +518,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
             this.IsNewFile = false;
             this.UIProperties.SetEnabled("RequestFileTypeCode", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("RequestFileAmo unt", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("RequestFileAmount", this.ObjectTableName, false);
 
             this.UIProperties.SetEnabled("AnswerEntityTypeCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AllocatedAmount", this.ObjectTableName, true);
