@@ -147,7 +147,7 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.Flight' | TextCodeTranslationPipe }}</td>
+                                            <td style="width: 50px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.Flight' | TextCodeTranslationPipe }}</td>
                                             <td style="width: 30px; font-weight:bold; font-size:16px; color: black;">  >>   </td>
                                             <td style="width: 100px; font-weight:bold ; font-size:16px;">{{entityPM.AirlinePrefix}}-{{entityPM.MAWB}}</td>
                                             <td></td>
@@ -182,6 +182,21 @@
 
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr style="height:10px;"></tr>
+                                        <tr>
+                                            <td colspan="3" style="width: 180px;">
+                                                <table>
+                                                    <tr>
+                                                        <!--<td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.TotalFilter' | TextCodeTranslationPipe }}</td>-->
+                                                        <td colspan="2" style="font-weight:bold; font-size:16px; ">{{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
+                                                        <td *ngIf="IsFiltered || SearchFilter != null" style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים לחיתוך'}}</td>
+                                                        <td></td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <td></td>  
                                         </tr>
                                     </table>
                                 </td>
