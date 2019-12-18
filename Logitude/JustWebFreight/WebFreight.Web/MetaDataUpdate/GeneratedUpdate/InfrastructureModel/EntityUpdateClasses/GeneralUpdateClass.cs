@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "eed4",
+			      				    Code =  "a359",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -142,7 +142,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> GeneralObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "General").ToList();
+		       
+	      
+
+	         Screen GeneralGeneralHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "General.HeaderScreen", Name = "GeneralHeaderScreen", ObjectTableId = GeneralObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    GeneralObjectTable.HeaderScreenId = GeneralGeneralHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 
@@ -546,6 +556,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_Menu_Occasions = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Menu.Occasions", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Menu.Occasions", NameTextCodeDefaultText = @"Occasions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_AllowCustomersInAgentsLOV = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowCustomersInAgentsLOV", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AllowCustomersInAgentsLOV", NameTextCodeDefaultText = @"Allow Shippers/Consignees in Agents LOV" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_PRICESTEPS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRICESTEPS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Menu.PriceSteps", NameTextCodeDefaultText = @"Prices Steps" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -2118,6 +2130,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Warning", DefaultText = "Warning",LocalDefaultText = @"אזהרה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHOccasions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Occasions", DefaultText = "Occasions",LocalDefaultText = @"Occasions", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCOthersPriceSteps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.PriceSteps", DefaultText = "Prices Steps",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

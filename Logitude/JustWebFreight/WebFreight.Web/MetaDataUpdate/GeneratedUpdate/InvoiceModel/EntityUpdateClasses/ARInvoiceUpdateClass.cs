@@ -7804,6 +7804,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "CreatedByPartner",
+					  						OldFieldName =  "CreatedByPartner",
+					  						AllowedinAutomationConditions =  true,
 					  						ObjectTableName =  "ARInvoice",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7824,6 +7826,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreatedByPartner",
 					  						ListPropertyPath =  "CreatedByPartner",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -7848,7 +7851,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,

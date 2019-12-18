@@ -131,6 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature depositionFeature = tenantFeatures.Where(d => d.Code == "DEPOSITIONS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature featureToggleFeature = tenantFeatures.Where(d => d.Code == "FEATURETOGGLES" && d.FeatureTypeCode == "MENU").FirstOrDefault(); 
             Feature createTenantFeature = tenantFeatures.Where(d => d.Code == "CREATETENANT" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature priceStepsFeature = tenantFeatures.Where(d => d.Code == "PRICESTEPS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             #endregion
 
             #region Main Menus
@@ -245,7 +246,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTFS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 25, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.FBLStock", Icon = "FBLStock.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "FBLStock").FirstOrDefault().Id, FeatureId = fblStockFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "FETG", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 26, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.FeatureToggle", Icon = "FeatureToggle.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "FeatureToggle").FirstOrDefault().Id, FeatureId = featureToggleFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CRTE", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 27, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.CreateTenant", Icon = "CreateTenant.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "General").FirstOrDefault().Id, FeatureId = createTenantFeature.Id }, MenusTablesRepository, tenantMenusTables);
-            
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTPS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 28, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.PriceSteps", Icon = "CreateTenant.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "PriceStep").FirstOrDefault().Id, FeatureId = priceStepsFeature.Id }, MenusTablesRepository, tenantMenusTables);
 
 
 

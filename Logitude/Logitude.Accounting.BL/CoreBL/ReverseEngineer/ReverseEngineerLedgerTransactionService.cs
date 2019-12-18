@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -49,7 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 seedDate=seedDate.AddMonths(1);
             }
         }
-
+        
         public void CheckDbIntegrity()
         {
             var sw = Stopwatch.StartNew();
@@ -70,22 +71,26 @@ namespace Logitude.Accounting.BL.CoreBL
                 using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
                 {
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
-                    
+
                     var qs = new LedgerTransactionQueryService(_AccountingContext);
-                    var res = qs.GetReportCompareToJournalLine(start, end, _Tenant);
+                    var rowsReverseEngineerLedgerTransactionService = qs.GetReportCompareToJournalLine(start, end, _Tenant);
+
+                    var journal_failed_notStreamedSlowQueue = GetJournal_failed_notStreamedSlowQueue(start, end);
+
+                    var badrows = rowsReverseEngineerLedgerTransactionService.Concat(journal_failed_notStreamedSlowQueue).ToList();
                     //calcGLATotalByMonthFromLTrans = qs.GetLedgerTransactionSumFromTo(start, end, _Tenant);
-                   CompareReport = new CompareReportM()
-                   {
-                       CompareReportName = "ReverseEngineerLedgerTransactionService",
-                       Year = _SeedDate.Date.Year,
-                       Month = _SeedDate.Date.Month,
-                       rows = res,
-                       Took = sw.Elapsed
-                   };
-                 //  xml = System.Text.Encoding.UTF8.GetString(LogitudeXmlSerializer.SerializeObject<CompareReportM>(r));
+                    CompareReport = new CompareReportM()
+                    {
+                        CompareReportName = "ReverseEngineerLedgerTransactionService",
+                        Year = _SeedDate.Date.Year,
+                        Month = _SeedDate.Date.Month,
+                        rows = badrows,
+                        Took = sw.Elapsed
+                    };
+                    //  xml = System.Text.Encoding.UTF8.GetString(LogitudeXmlSerializer.SerializeObject<CompareReportM>(r));
                     debugIt = xml;
                 }
-                
+
             }
             finally
             {
@@ -94,6 +99,66 @@ namespace Logitude.Accounting.BL.CoreBL
             //return xml;
 
         }
+
+        private List<JournalLineLedgerDTO> GetJournal_failed_notStreamedSlowQueue(DateTime start, DateTime end)
+        {
+            var JornalRepo = new JournalRepository(_AccountingContext);
+            var qApprovedBetweenJournal = JornalRepo.GetQueryableBetween(_Tenant, start, end);
+
+            ;
+
+            var failedJournal = qApprovedBetweenJournal.Where(r => r.StatusCode == "4")
+                .Select(g => new JournalLineLedgerDTO()
+                {
+                    CHANGE_TYPE = "העברה להנהח נכשלה",
+                    JournalId = g.Id,
+                    JournalLineNumber = 0,
+
+                    AccountId = "",
+                    CurrencyId = "",
+
+                    LocalAmountCredit = 0,
+                    LocalAmountDebit = 0,
+
+                    ForeignAmountCredit = 0,
+                    ForeignAmountDebit = 0,
+
+                    AccountingDate = g.AccountingDate,
+                    DueDate = g.AccountingDate,
+                    DocumentDate = g.AccountingDate,
+
+                            //DocumentDate =
+                        });
+            var notStreamedJournalSlowQueue = qApprovedBetweenJournal
+                .Where(r => r.StatusCode == "2" || r.StatusCode == "3")//approved or Voided
+                .Where(r => r.IsLedgerCreated == false)
+                .Select(g => new JournalLineLedgerDTO()
+                {
+                    CHANGE_TYPE = "לפקודה אין תנעות",
+                    JournalId = g.Id,
+                    JournalLineNumber = 0,
+
+                    AccountId = "",
+                    CurrencyId = "",
+
+                    LocalAmountCredit = 0,
+                    LocalAmountDebit = 0,
+
+                    ForeignAmountCredit = 0,
+                    ForeignAmountDebit = 0,
+
+                    AccountingDate = g.AccountingDate,
+                    DueDate = g.AccountingDate,
+                    DocumentDate = g.AccountingDate,
+
+                            //DocumentDate =
+                        })
+                ;
+
+            var failedJourna_notStreamedJournalSlowQueue = failedJournal.Concat(notStreamedJournalSlowQueue).ToList();
+            return failedJourna_notStreamedJournalSlowQueue;
+        }
+
         string GetSql()
         {
 

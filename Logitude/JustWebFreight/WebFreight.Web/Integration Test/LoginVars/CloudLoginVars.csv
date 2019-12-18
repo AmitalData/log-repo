@@ -1,0 +1,2 @@
+LogitudeURL,URL,Email,Password,Tenant,RetriesNumber
+https://cloud.amital.co.il/,https://cloud.amital.co.il/,protractor@test.com,!P123t456,78,5

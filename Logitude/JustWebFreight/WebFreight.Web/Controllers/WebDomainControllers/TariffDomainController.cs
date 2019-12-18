@@ -46,6 +46,7 @@ using WebFreight.Web.Helpers.APIHelpers;
 using System.Reflection;
 using Stimulsoft.Report.Export;
 using Logitude.BL.Helpers;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -170,9 +171,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                 Id = d.Id,
                                                 Tenant = d.Tenant,
                                                 DefaultPriceSteps = d.DefaultPriceSteps,
-                                                DefaultWarningPercentage = d.DefaultWarningPercentage
+                                                DefaultWarningPercentage = d.DefaultWarningPercentage,
+                                                AirDefaultStepsId = d.AirDefaultStepsId, 
+                                                LCLDefaultStepsId = d.LCLDefaultStepsId,
                                             }).FirstOrDefault();
 
+                IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
+                PriceStep airPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.AirDefaultStepsId select d).FirstOrDefault();
+                PriceStep lclPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.LCLDefaultStepsId select d).FirstOrDefault();
+                entityPM.AirDefaultSteps = airPriceSteps != null ? airPriceSteps.Steps : null;
+                entityPM.LCLDefaultSteps = lclPriceSteps != null ? lclPriceSteps.Steps : null;
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
             }
             catch (Exception ex)
