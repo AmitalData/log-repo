@@ -5,7 +5,7 @@ SET TotalErrors
 cd /
 cd windows
 c:
-cd C:\log-repo\Logitude\AngularModules\AngularModules
+cd C:\Program Files (x86)\Jenkins\workspace\Amital.DevOps\Logitude\AngularModules\AngularModules
 
 
 FOR /L %%A IN (1,1,1) DO (  
@@ -79,6 +79,6 @@ SETLOCAL
     cd /
     cd windows
     c:
-    cd C:\log-repo\Logitude\AngularModules\AngularModules
+    cd C:\Program Files (x86)\Jenkins\workspace\Amital.DevOps\Logitude\AngularModules\AngularModules
 
 goto:eof

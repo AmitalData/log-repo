@@ -92,7 +92,7 @@
                                             </td>
 
                                             <td style="width:200px;">
-                                                <ComboBox [WithIcons]="true" [ItemsSource]="ProductTypeComboList" [Binding]="'Name'" [SelectedItem]="SelectedProdustTypeFilter" (SelectedItemChanged)="SelectedProdustTypeFilter = $event"></ComboBox>
+                                                <ComboBox [WithIcons]="true" [WithCheckBoxes]="true" [ItemsSource]="ProductTypeComboList" [Binding]="'Name'" [SelectedItem]="SelectedProductTypeFilter" (SelectedItemChanged)="SelectedProductTypeFilter = $event"></ComboBox>
                                             </td>
                                         </tr>
 
@@ -101,8 +101,9 @@
                                                 <LogLabel [NoObjectField]="true" [ObjectFieldName]="'AdditionalServiceId'" [Text]="'Additional Service'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
-                                            <td  style="width:200px;"><div></div></td>
-
+                                            <td style="width:200px;">
+                                                <ComboBox [WithCheckBoxes]="true" [ItemsSource]="AdditionalServiceComboList" [Binding]="'Name'" [SelectedItem]="SelectedAdditionalServiceFilter" (SelectedItemChanged)="SelectedAdditionalServiceFilter = $event" (SelectedItemIds)="SelectedAdditionalServiceFilterIds = $event"></ComboBox>
+                                            </td>
                                         </tr>
 
                                         <tr class="FormFieldRow">

@@ -9,6 +9,8 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ProductTypeListService } from '../../../../Common/Services/StandardLists/ProductTypeListService';
 import { ProductTypeList } from '../../../../Common/EntityLists/ProductTypeList';
+import { AdditionalServiceListService } from '../../../../Common/Services/StandardLists/AdditionalServiceListService';
+import { AdditionalServiceList } from '../../../../Common/EntityLists/AdditionalServiceList';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 
@@ -60,11 +62,12 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
         this.EntityPM = entityPM;
 
         this.BuildProductTypesFilters();
+        this.BuildAdditionalServicesFilters();
         this.BuildColumns();
     }
     
     public ProductTypeComboList: ProductTypeItem[];
-    public SelectedProdustTypeFilter: any = "";
+    public SelectedProductTypeFilter: any = "";
     private BuildProductTypesFilters() {
         this.ProductTypeComboList = [];
 
@@ -77,7 +80,23 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             });
         });
     }
-    
+
+    public AdditionalServiceComboList: AdditionalServiceItem[];
+    public SelectedAdditionalServiceFilter: any = "";
+    public SelectedAdditionalServiceFilterIds: any = "";
+    private BuildAdditionalServicesFilters() {
+        this.AdditionalServiceComboList = [];
+
+        var additionalServiceListService: AdditionalServiceListService = new AdditionalServiceListService();
+        additionalServiceListService.getAllFromCache().subscribe((response: ServiceResponse) => {
+            var list: AdditionalServiceList[] = response.Result;
+
+            list.filter(d => !d.InActive).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach((item) => {
+                this.AdditionalServiceComboList.push(new AdditionalServiceItem(item));
+            });
+        });
+    }
+
     private customerSizeId: string;
     get CustomerSizeId() { return this.customerSizeId; }
     set CustomerSizeId(value: string) {
@@ -274,17 +293,17 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             filters.Filter5Operator = "Equals";
         }
 
-        if (!AppTool.IsNullOrEmpty(this.SelectedProdustTypeFilter)) {
+        if (!AppTool.IsNullOrEmpty(this.SelectedProductTypeFilter)) {
             filters.Filter6Name = "Products";
-            filters.Filter6Value = this.SelectedProdustTypeFilter;
+            filters.Filter6Value = this.SelectedProductTypeFilter;
             filters.Filter6Operator = "Equals";
         }
 
-        //if (!AppTool.IsNullOrEmpty()) {
-        //    filters.Filter7Name = "AdditionalServices";
-        //    filters.Filter7Value = ;
-        //    filters.Filter7Operator = "Equals";
-        //}
+        if (!AppTool.IsNullOrEmpty(this.SelectedAdditionalServiceFilterIds)) {
+            filters.Filter7Name = "AdditionalServices";
+            filters.Filter7Value = this.SelectedAdditionalServiceFilterIds;
+            filters.Filter7Operator = "Equals";
+        }
 
         this.filters = filters;
         return new Promise((resolve, reject) => { resolve(this.crmService.GetOccasionContactsByFilters(filters)) });
@@ -318,7 +337,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             errors.push("You must select 1 line at least");
         }
 
-        if (!AppTool.IsNullOrEmpty(this.SelectedProdustTypeFilter)) {
+        if (!AppTool.IsNullOrEmpty(this.SelectedProductTypeFilter)) {
             if (this.ProductTypeComboList.filter(d => d.Checked).length == 0) {
                 errors.push("Please select product type");
             }
@@ -368,6 +387,20 @@ export class ProductTypeItem {
     }
 
     get Code() { return this.entityList.Code; }
+    get Name() { return this.entityList.Name; }
+
+    private checked: boolean;
+    public get Checked() { return this.checked; }
+    public set Checked(value: boolean) { this.checked = value; }
+}
+
+export class AdditionalServiceItem {
+    public entityList: AdditionalServiceList;
+    constructor(entityList: AdditionalServiceList) {
+        this.entityList = entityList;
+    }
+
+    get Id() { return this.entityList.Id; }
     get Name() { return this.entityList.Name; }
 
     private checked: boolean;
