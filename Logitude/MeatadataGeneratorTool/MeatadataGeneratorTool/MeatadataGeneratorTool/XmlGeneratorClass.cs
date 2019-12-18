@@ -2228,6 +2228,14 @@ namespace MeatadataGeneratorTool
                 case "Emails":
                 case "Text":
                     return isFixedLength ? "char" : "varchar";
+                case "Raw":
+                    return "timestamp";
+                case "Binary":
+                    return "varbinary";
+                case "Time":
+                    return "time";
+                case "BigInteger":
+                    return "bigint";
                 default:
                     return null;
             }

@@ -10,7 +10,7 @@ namespace MeatadataGeneratorTool
 {
     public class ObjectFieldsViewModel : PropertyChangedImplementation
     {
-        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]" }; } }
+        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]", "BigInteger", "Binary", "Time", "Raw" }; } }
         public List<string> DependencyFiltersList { get { return new List<string>() { "Constant", "Path", }; } }
         public List<string> TextCaseList { get { return new List<string>() { "Lower", "Upper", }; } }
         public List<string> OperatorsList { get; set; }
