@@ -621,7 +621,7 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
-        private string GetColumnDefinitionDataType(string type, bool isFixedLength)
+        private string GetColumnDefinitionDataType(string type, bool isFixedLength)//should handle any new data types that added into the lxml tool
         {
             switch (type)
             {
@@ -670,6 +670,8 @@ namespace Logitude.LXMLFixer.Models
                     return "Text";
                 case "varchar":
                     return "Text";
+                case "date":
+                    return "Date";
                 case "datetime":
                     return "DateTime";
                 case "time":
