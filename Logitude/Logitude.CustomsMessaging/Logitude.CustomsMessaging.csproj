@@ -414,8 +414,7 @@
     <Compile Include="ResponseServices\UniCourierBatchSend1170_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2715_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
-    <Compile Include="ResponseServices\UniDecCollateralBatchSend8212_MsgResponseService.cs" />
-    <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
+     <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />
