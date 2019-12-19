@@ -240,6 +240,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.StorageStatusName = storageStatusPM.LocalName;
             }
 
+
+            //if (entityPOCO.AmendmentCorrectedByUserId != null)
+            //{
+            //    StorageStatusQueryService storageStatusQueryService = new StorageStatusQueryService(entityPOCO.Tenant);
+            //     storageStatusPM = storageStatusQueryService.GetSingle(entityPOCO.AmendmentCorrectedByUserId, false, true);
+            //    entityPM.StorageStatusName = storageStatusPM.LocalName;
+            //}
             if (entityPOCO.EntitleImporterCode != null)
             {
                 ClientQueryService clientQueryService = new ClientQueryService(entityPOCO.Tenant);

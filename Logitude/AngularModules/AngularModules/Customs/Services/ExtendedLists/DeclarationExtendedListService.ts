@@ -264,6 +264,31 @@ export class DeclarationExtendedListService {
         });
     }
 
+
+
+    GetDeclarationAmendmentListPMByCustomFileNo(customFileNo: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeclarationAmendmentListPMByCustomFileNo/?' + 'customFileNo=' + customFileNo,
+                { headers: authHeader }).map(response => {
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+                    var declarationList: DeclarationList;
+                    if (serviceResponse.Result) {
+                        var entity: DeclarationList;
+                        declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
+                    }
+
+                    serviceResponse.Result = declarationList;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+
+
+    }
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: DeclarationList;

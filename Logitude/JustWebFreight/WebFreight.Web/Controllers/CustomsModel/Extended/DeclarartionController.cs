@@ -567,5 +567,32 @@ new XElement("FileStreamError",
             }
         }
 
-    }
+
+
+        public HttpResponseMessage GetDeclarationAmendmentListPMByCustomFileNo(string customFileNo)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            string loggedUserEmail = authToken.Email;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            DeclarationList declaration = new DeclarationList();
+            ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+            try {
+                DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
+
+                var declarations=  declarationQuery.GetDeclarationAmendmentsByCustomFileNo(tenant , customFileNo);
+            return Request.CreateResponse(HttpStatusCode.OK, declarations); 
+        }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
 }
+
+
+    }
+    }

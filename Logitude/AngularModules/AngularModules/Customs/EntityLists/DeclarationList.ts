@@ -155,6 +155,8 @@ export class DeclarationList {
 	AmendmentRejectionReason: string;
 	IsAmendment: boolean;
 	AmendmentOriginalDeclartation: string;
+	AmendmentCorrectedByUserName: string;
+	AmendmentStatusName: string;
 	
 }
  

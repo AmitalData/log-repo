@@ -313,7 +313,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentCorrectedByUserId, 
 	         AmendmentRejectionReason, 
 	         IsAmendment, 
-	         AmendmentOriginalDeclartation,
+	         AmendmentOriginalDeclartation, 
+	         AmendmentCorrectedByUserName, 
+	         AmendmentStatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

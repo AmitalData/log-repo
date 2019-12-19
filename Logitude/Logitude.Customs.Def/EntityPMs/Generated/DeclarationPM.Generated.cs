@@ -4238,6 +4238,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string amendmentCorrectedByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AmendmentCorrectedByUserName  
+	   {
+	    
+	     get
+		{
+		   return amendmentCorrectedByUserName;
+		 }
+		 set
+		 {
+		   if(amendmentCorrectedByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentCorrectedByUserName",OldValue=amendmentCorrectedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   amendmentCorrectedByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string amendmentStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AmendmentStatusName  
+	   {
+	    
+	     get
+		{
+		   return amendmentStatusName;
+		 }
+		 set
+		 {
+		   if(amendmentStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentStatusName",OldValue=amendmentStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   amendmentStatusName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

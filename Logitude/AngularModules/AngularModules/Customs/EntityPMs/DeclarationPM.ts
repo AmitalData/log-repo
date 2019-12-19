@@ -1074,6 +1074,16 @@ export class DeclarationPM {
     public set AmendmentOriginalDeclartation(newValue: string) { if (this.amendmentOriginalDeclartation != newValue) { this.amendmentOriginalDeclartation = newValue; this.MarkAsDirty("AmendmentOriginalDeclartation"); } }
        
 	 
+    private amendmentCorrectedByUserName: string;
+    public get AmendmentCorrectedByUserName() { return this.amendmentCorrectedByUserName; }
+    public set AmendmentCorrectedByUserName(newValue: string) { if (this.amendmentCorrectedByUserName != newValue) { this.amendmentCorrectedByUserName = newValue; this.MarkAsDirty("AmendmentCorrectedByUserName"); } }
+       
+	 
+    private amendmentStatusName: string;
+    public get AmendmentStatusName() { return this.amendmentStatusName; }
+    public set AmendmentStatusName(newValue: string) { if (this.amendmentStatusName != newValue) { this.amendmentStatusName = newValue; this.MarkAsDirty("AmendmentStatusName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

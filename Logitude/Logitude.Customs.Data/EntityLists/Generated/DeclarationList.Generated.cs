@@ -308,6 +308,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsAmendment  { get; set; }
        [DataMember]
        public string AmendmentOriginalDeclartation  { get; set; }
+       [DataMember]
+       public string AmendmentCorrectedByUserName  { get; set; }
+       [DataMember]
+       public string AmendmentStatusName  { get; set; }
    }
 
 }

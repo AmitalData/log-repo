@@ -520,6 +520,20 @@ namespace Logitude.Customs.Data.Repsitories
                   ).OrderByDescending(x=>x.CreateDateTime)
                   .FirstOrDefault();
         }
+
+        public List<Declaration> GetDeclarationAmendmentsByCustomFileNo(int tenant, string customFileNo)
+        {
+            string id = GetIdByCustomFileNo(customFileNo ,tenant);
+          
+
+            var myQ = (from a in context.Declarations
+                       where  a.AmendmentOriginalDeclartation == id
+                       select a);
+           var list = myQ.ToList();
+            return list;
+        }
+
+
     }
     //class TotM {
 
