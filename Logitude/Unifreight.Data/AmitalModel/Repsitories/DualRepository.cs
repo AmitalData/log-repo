@@ -113,7 +113,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                     command.CommandText = sqlReturn1Row;
 
 
-                    using (var dataReader = command.ExecuteReader(CommandBehavior.SingleResult))
+                    using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult))
                     {
 
                         if (dataReader.FieldCount < 1)
