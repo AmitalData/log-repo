@@ -222,14 +222,14 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-        public IDbSet<AirlineArea> AirlineAreas
+        public IDbSet<CarrierArea> CarrierAreas
         {
             get;
             set;
         }
 
 
-        public IDbSet<AirlineAreasPort> AirlineAreasPorts
+        public IDbSet<CarrierAreasPort> CarrierAreasPorts
         {
             get;
             set;
@@ -4571,8 +4571,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
-            modelBuilder.Configurations.Add(new AirlineAreaMap());
-            modelBuilder.Configurations.Add(new AirlineAreasPortMap());
+            modelBuilder.Configurations.Add(new CarrierAreaMap());
+            modelBuilder.Configurations.Add(new CarrierAreasPortMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());

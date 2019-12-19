@@ -7,7 +7,7 @@ import { CountryList } from '../../../../Common/EntityLists/CountryList';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AreaItemClass } from '../EditTabs/AreasTabComponent';
-import { AirlineAreasPortPM } from '../../../../Common/EntityPMs/AirlineAreasPortPM';
+import { CarrierAreasPortPM } from '../../../../Common/EntityPMs/CarrierAreasPortPM';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { DateTool } from '../../../../Infrastructure/Tools';
 
@@ -20,7 +20,7 @@ export class ChooseCountryPortComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: ChooseCountryPortComponent = this;
     public ParentClass: AreaItemClass;
-    public ObjectTableName = "AirlineAreasPort";
+    public ObjectTableName = "CarrierAreasPort";
     public ValidationErrorsList: string[] = [];
     public ForceFocus: any;
     constructor() {
@@ -92,16 +92,16 @@ export class ChooseCountryPortComponent extends BaseComponent {
                 var counter = 0;
                 portsList.forEach(item => {
                     if (this.ParentClass.PortItemsList.filter(d => d.Code == item.Code).length == 0) {
-                        var newPort: AirlineAreasPortPM = new AirlineAreasPortPM(this.ParentClass.EntityPM);
+                        var newPort: CarrierAreasPortPM = new CarrierAreasPortPM(this.ParentClass.EntityPM);
                         newPort.Tenant = SessionLocator.Tenant;
-                        newPort.AirlineAreaId = this.ParentClass.EntityPM.Id;
+                        newPort.CarrierAreaId = this.ParentClass.EntityPM.Id;
                         newPort.Name = item.EnglishName;
                         newPort.Code = item.Code;
                         newPort.CountryCode = item.CountryCode;
                         newPort.PortId = item.Id;
                         newPort.AddedByUserId = SessionInfo.LoggedUserId;
                         newPort.AddedDate = DateTool.GetCurrentDateAsUtc();
-                        this.ParentClass.EntityPM.AddAirlineAreasPortPM(newPort);
+                        this.ParentClass.EntityPM.AddCarrierAreasPortPM(newPort);
                         this.ParentClass.BuildPortItemsList();
 
                         counter = counter + 1;

@@ -17,17 +17,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {AirlineAreaList} from '../../EntityLists/AirlineAreaList';
+import {CarrierAreaList} from '../../EntityLists/CarrierAreaList';
 
 @Injectable()
 
-export class AirlineAreaListService {
+export class CarrierAreaListService {
 	private _http: Http;
     private _apiUrl: string;   
-	public static CachedData: Array<AirlineAreaList> = [];
+	public static CachedData: Array<CarrierAreaList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/airlineareaviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/carrierareaviews';  
     }
 
     getSingle(id: string) {
@@ -40,7 +40,7 @@ export class AirlineAreaListService {
 
                 var list = response.json();
                     
-                var entity: AirlineAreaList;
+                var entity: CarrierAreaList;
 				if(list)
 				{
                    entity = this.MapJsonToEntityList(list);
@@ -51,7 +51,7 @@ export class AirlineAreaListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AirlineArea", "GetSingleList", 'id=' + id); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CarrierArea", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -67,11 +67,11 @@ export class AirlineAreaListService {
             return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
-              var _mappedListsArray: Array< AirlineAreaList> = [];
+              var _mappedListsArray: Array< CarrierAreaList> = [];
 		      if(allLists)
 			  {
 				for (var key in  allLists) {				
-				   var entity: AirlineAreaList;
+				   var entity: CarrierAreaList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
 				 }
@@ -82,7 +82,7 @@ export class AirlineAreaListService {
                 serviceResponse.Result = _mappedListsArray;
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AirlineArea", "GetAllLists", ""); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CarrierArea", "GetAllLists", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -132,12 +132,12 @@ export class AirlineAreaListService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array< AirlineAreaList> = [];
+                var _mappedListsArray: Array< CarrierAreaList> = [];
 				if(serviceResponse.Result)
 				{
                 for (var key in serviceResponse.Result) {
 				
-				   var entity: AirlineAreaList;
+				   var entity: CarrierAreaList;
                    entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
 				   _mappedListsArray.push(entity);
 
@@ -147,7 +147,7 @@ export class AirlineAreaListService {
                 serviceResponse.Result = _mappedListsArray;       
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AirlineArea", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CarrierArea", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -157,8 +157,8 @@ export class AirlineAreaListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: AirlineAreaList;
-            entityList = new AirlineAreaList();
+            var entityList: CarrierAreaList;
+            entityList = new CarrierAreaList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

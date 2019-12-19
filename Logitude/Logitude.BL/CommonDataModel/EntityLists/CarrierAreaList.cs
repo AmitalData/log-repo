@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class AirlineAreaList
+    public class CarrierAreaList
     {
         [Key]
         public string Id { get; set; }
@@ -14,7 +14,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? UpdateDate { get; set; }
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
-        public string AirlineId { get; set; }
+        public string CarrierId { get; set; }
         public string CreatedByUserName { get; set; }
         public string UpdatedByUserName { get; set; }
 

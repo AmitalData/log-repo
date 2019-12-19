@@ -115,7 +115,7 @@
     <Content Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.html" />
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
-    <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.html" />
+    <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditCarrierAreaComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\ChooseCountryPortComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\ChoosePortComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
@@ -459,7 +459,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
-    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\AddEditCarrierAreaComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\ChooseCountryPortComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\ChoosePortComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
@@ -494,8 +494,8 @@
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
     <TypeScriptCompile Include="Common\EntityLists\AccountingPartnerList.ts" />
-    <TypeScriptCompile Include="Common\EntityLists\AirlineAreaList.ts" />
-    <TypeScriptCompile Include="Common\EntityLists\AirlineAreasPortList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\CarrierAreaList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\CarrierAreasPortList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CheckDigitControlAlgorithmList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomerDepositionList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomsShipperList.ts" />
@@ -503,10 +503,10 @@
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
-    <TypeScriptCompile Include="Common\EntityPMs\AirlineAreaPM.ts" />
-    <TypeScriptCompile Include="Common\EntityPMs\AirlineAreasPortPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CardContactAdditionalServicePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CarrierAreaPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CarrierAreasPortPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
@@ -514,13 +514,13 @@
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CardExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\AccountingPartnerListService.ts" />
-    <TypeScriptCompile Include="Common\Services\StandardLists\AirlineAreaListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\CarrierAreaListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
-    <TypeScriptCompile Include="Common\Services\StandardPMs\AirlineAreaPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />

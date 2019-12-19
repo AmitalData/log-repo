@@ -2620,7 +2620,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<AirlineArea> AirlineAreas
+        public IDbSet<CarrierArea> CarrierAreas
         {
             get
             {
@@ -2633,7 +2633,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<AirlineAreasPort> AirlineAreasPorts
+        public IDbSet<CarrierAreasPort> CarrierAreasPorts
         {
             get
             {

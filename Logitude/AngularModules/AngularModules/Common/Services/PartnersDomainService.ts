@@ -40,9 +40,9 @@ import {CardExternalAccountsByProductPMService} from './StandardPMs/CardExternal
 import {Guid} from '../../Infrastructure/Utilities/Guid';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
 import { CardContactAdditionalServicePM } from '../EntityPMs/CardContactAdditionalServicePM';
-import { AirlineAreaList } from '../EntityLists/AirlineAreaList';
-import { AirlineAreaPM } from '../EntityPMs/AirlineAreaPM';
-import { AirlineAreasPortPM } from '../EntityPMs/AirlineAreasPortPM';
+import { CarrierAreaList } from '../EntityLists/CarrierAreaList';
+import { CarrierAreaPM } from '../EntityPMs/CarrierAreaPM';
+import { CarrierAreasPortPM } from '../EntityPMs/CarrierAreasPortPM';
 
 @Injectable()
 
@@ -1642,20 +1642,20 @@ export class PartnersDomainService {
         });
     }
 
-    GetAllArilineAreasByAirlineId(airlineId: string) {
+    GetAllCarrierAreasByCarrierId(carrierId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAllArilineAreasByAirlineId?airlineId=' + airlineId;
+        var url = this._apiUrl + '/GetAllCarrierAreasByCarrierId?carrierId=' + carrierId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
 
                 var listJason = response.json();
-                var listMapped: Array<AirlineAreaPM> = [];
+                var listMapped: Array<CarrierAreaPM> = [];
 
                 for (var itemJeson in listJason) {
-                    var itemMapped: AirlineAreaPM = this.MapAirlineAreaPM(listJason[itemJeson]);
+                    var itemMapped: CarrierAreaPM = this.MapCarrierAreaPM(listJason[itemJeson]);
                     listMapped.push(itemMapped);
                 }
 
@@ -1663,11 +1663,11 @@ export class PartnersDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    MapAirlineAreaPM(jsonList: any, mapParent: boolean = true) {
-        var entityPM: AirlineAreaPM = null;
+    MapCarrierAreaPM(jsonList: any, mapParent: boolean = true) {
+        var entityPM: CarrierAreaPM = null;
 
         if (jsonList) {
-            entityPM = new AirlineAreaPM();
+            entityPM = new CarrierAreaPM();
 
             var jsonListKeys = Object.keys(jsonList);
 
@@ -1681,24 +1681,24 @@ export class PartnersDomainService {
                 entityPM[property] = jsonList[property];
             }
 
-            var oldContactServices: AirlineAreasPortPM[] = [];
+            var oldContactServices: CarrierAreasPortPM[] = [];
             if (entityPM.OldEntityPM && !mapParent) {
-                oldContactServices = entityPM.OldEntityPM.AirlineAreasPorts;
+                oldContactServices = entityPM.OldEntityPM.CarrierAreasPorts;
             }
 
-            entityPM.AirlineAreasPorts = new Array<AirlineAreasPortPM>();
-            for (var item in jsonList.AirlineAreasPorts) {
+            entityPM.CarrierAreasPorts = new Array<CarrierAreasPortPM>();
+            for (var item in jsonList.CarrierAreasPorts) {
 
-                var jItem = jsonList.AirlineAreasPorts[item];
+                var jItem = jsonList.CarrierAreasPorts[item];
                 if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                     continue;
                 }
-                var newServicePM: AirlineAreasPortPM;
+                var newServicePM: CarrierAreasPortPM;
                 if (mapParent) {
-                    newServicePM = new AirlineAreasPortPM(entityPM);
+                    newServicePM = new CarrierAreasPortPM(entityPM);
                 }
                 else {
-                    newServicePM = new AirlineAreasPortPM(null);
+                    newServicePM = new CarrierAreasPortPM(null);
                 }
 
                 var pmKeysArray = Object.keys(jItem);
@@ -1736,17 +1736,17 @@ export class PartnersDomainService {
                 }
 
 
-                entityPM.AirlineAreasPorts.push(newServicePM);
+                entityPM.CarrierAreasPorts.push(newServicePM);
             }
 
             if (oldContactServices) {
 
                 for (var itemKey in oldContactServices) {
-                    if (entityPM.AirlineAreasPorts.filter(p => p.UniqueKey === oldContactServices[itemKey].UniqueKey).length === 0) {
+                    if (entityPM.CarrierAreasPorts.filter(p => p.UniqueKey === oldContactServices[itemKey].UniqueKey).length === 0) {
 
                         if (oldContactServices[itemKey]) {
                             oldContactServices[itemKey].ChangeSetOp = "Delete";
-                            entityPM.AirlineAreasPorts.push(oldContactServices[itemKey]);
+                            entityPM.CarrierAreasPorts.push(oldContactServices[itemKey]);
                         }
                     }
                 }
@@ -1756,9 +1756,9 @@ export class PartnersDomainService {
 
             if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-                entityPM.OldEntityPM.AirlineAreasPorts = [];
-                for (var m in entityPM.AirlineAreasPorts) {
-                    entityPM.OldEntityPM.AirlineAreasPorts.push(this.clone(entityPM.AirlineAreasPorts[m]));
+                entityPM.OldEntityPM.CarrierAreasPorts = [];
+                for (var m in entityPM.CarrierAreasPorts) {
+                    entityPM.OldEntityPM.CarrierAreasPorts.push(this.clone(entityPM.CarrierAreasPorts[m]));
                 }
             }
             else {
@@ -1769,11 +1769,11 @@ export class PartnersDomainService {
         return entityPM;
     }
 
-    RemoveAreaFromAirline(areaId: string) {
+    RemoveAreaFromCarrier(areaId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetRemoveAirlineAreaFromAirline?areaId=' + areaId;
+        var url = this._apiUrl + '/GetRemoveCarrierAreaFromCarrier?areaId=' + areaId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {

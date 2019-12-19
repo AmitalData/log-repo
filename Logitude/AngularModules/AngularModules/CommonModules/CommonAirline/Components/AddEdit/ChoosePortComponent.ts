@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { PortList } from '../../../../Common/EntityLists/PortList';
-import { AirlineAreasPortPM } from '../../../../Common/EntityPMs/AirlineAreasPortPM';
+import { CarrierAreasPortPM } from '../../../../Common/EntityPMs/CarrierAreasPortPM';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { DateTool } from '../../../../Infrastructure/Tools';
 import { AreaItemClass } from '../EditTabs/AreasTabComponent';
@@ -16,7 +16,7 @@ export class ChoosePortComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: ChoosePortComponent = this;
     public ParentClass: AreaItemClass;
-    public ObjectTableName = "AirlineAreasPort";
+    public ObjectTableName = "CarrierAreasPort";
     public ValidationErrorsList: string[] = [];
     public ForceFocus: any ;
     constructor() {
@@ -69,16 +69,16 @@ export class ChoosePortComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         
         if (errors.length == 0) {
-            var newPort: AirlineAreasPortPM = new AirlineAreasPortPM(this.ParentClass.EntityPM);
+            var newPort: CarrierAreasPortPM = new CarrierAreasPortPM(this.ParentClass.EntityPM);
             newPort.Tenant = SessionLocator.Tenant;
-            newPort.AirlineAreaId = this.ParentClass.EntityPM.Id;
+            newPort.CarrierAreaId = this.ParentClass.EntityPM.Id;
             newPort.Name = this.Port.EnglishName;
             newPort.Code = this.Port.Code;
             newPort.CountryCode = this.Port.CountryCode;
             newPort.PortId = this.PortId;
             newPort.AddedByUserId = SessionInfo.LoggedUserId;
             newPort.AddedDate = DateTool.GetCurrentDateAsUtc();
-            this.ParentClass.EntityPM.AddAirlineAreasPortPM(newPort);
+            this.ParentClass.EntityPM.AddCarrierAreasPortPM(newPort);
             this.ParentClass.BuildPortItemsList();
 
             this.ForceFocus = this.PortId;

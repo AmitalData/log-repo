@@ -1097,8 +1097,8 @@
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AccountingPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
-    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineAreaViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineMessagingRuleViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CarrierAreaViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ChargesExternalAccountsByProductViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerDepositionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerTenantAccessCardsBatchViewsController.Generated.cs" />
@@ -1121,10 +1121,10 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\UsoCFDIViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AccountingPartnerController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AgentSharedDocumentController.Generated.cs" />
-    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AirlineAreaController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AirlineMessagingRuleController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerTenantAccessStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\MetodoPagoViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CarrierAreaController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ChargesExternalAccountsByProductController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ComputingPartnerController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentsFilingViewsExtController.cs" />
@@ -2474,8 +2474,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AgentSharedDocumentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AgentSharedManifestUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AgentUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AirlineAreasPortUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AirlineAreaUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AirlineMessagingRuleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AirlineStatisticsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AirlineUpdateClass.cs" />
@@ -2489,6 +2487,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardExternalCodeByCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierAreasPortUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierAreaUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargeTypeAccountingUpdateClass.cs" />
