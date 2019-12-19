@@ -45,8 +45,8 @@ using System.Net.Http.Headers;
 using System.Xml.Linq;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.Server.Tools.Models;
-using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -544,7 +544,6 @@ new XElement("FileStreamError",
             return httpResponse;
         }
 
-
         public HttpResponseMessage PostSendCollateral8212(SendCollateralsRequestParams requestParamsData)
         {
             try
@@ -567,6 +566,5 @@ new XElement("FileStreamError",
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
     }
 }

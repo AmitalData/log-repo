@@ -341,9 +341,9 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         });
 
         this.columns.push({
-            FieldName: 'CalcPendingCustoms',
+            FieldName: 'CalcPending900',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcPendingCustoms"),
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcPending900"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
@@ -353,13 +353,12 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         this.columns.push({
             FieldName: 'CalcSuspendedDeclarations',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcSuspendedDeclarations"),
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcPendingCustoms"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
-
     }
 
     DataSource = {

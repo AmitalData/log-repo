@@ -22,7 +22,7 @@ import { debug } from 'util';
 @Component({
     moduleId: module.id,
     templateUrl: 'CustomsCollateralListTemplate.html',
- 
+
 })
 
 export class CustomsCollateralListTemplate {
@@ -37,7 +37,7 @@ export class CustomsCollateralListTemplate {
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private CD: ChangeDetectorRef, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService ) {
+    constructor(private CD: ChangeDetectorRef, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
     }
@@ -56,7 +56,7 @@ export class CustomsCollateralListTemplate {
 
     OnCheckedWithSystemEvent(eventM, id) {
         eventM.stopPropagation();
-         if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(id)) {
+        if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(id)) {
             this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(id);
         }
         else {
@@ -74,7 +74,7 @@ export class CustomsCollateralListTemplate {
         }
 
 
-         this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
+        this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
 
     }
 

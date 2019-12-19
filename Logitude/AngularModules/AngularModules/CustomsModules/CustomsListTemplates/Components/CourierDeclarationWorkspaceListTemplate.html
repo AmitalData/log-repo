@@ -25,15 +25,15 @@
         </div>
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'CalcPendingCustoms'" style="text-align:center;">
-        <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'Pending902')">
-            <span style="font-weight: bold">{{_CourierMasterList.CalcPendingCustoms}}</span>
-        </div>
-    </div>
-
     <div class="TextTrimming" *ngIf="fieldName == 'CalcSuspendedDeclarations'" style="text-align:center;">
         <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'SuspendedDeclarations')">
             <span style="font-weight: bold">{{_CourierMasterList.CalcSuspendedDeclarations}}</span>
+        </div>
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'CalcPending900'" style="text-align:center;">
+        <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'Pending900')">
+            <span style="font-weight: bold">{{_CourierMasterList.CalcPending900}}</span>
         </div>
     </div>
 
