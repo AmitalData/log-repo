@@ -69,7 +69,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string FullNameTextCodeLocalDefaultText { get; set; }
         public string ObjectTable_LookUpTableName { get; set; }
         public string ObjectTable_MultiTableName { get; set; }
-        public string HelpTextTextCodeCode { get; set; }
+        public string HelpTextCodeCode { get; set; }
         public string FullNameTextCodeCode { get; set; }
         public string ListTextCodeCode { get; set; }
         public string ShortNameTextCodeCode { get; set; }

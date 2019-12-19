@@ -192,6 +192,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public TextCode GetSingleTextCodeByCode(string code)
+        {
+            return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
+                    where a.Code == code
+                    select a).FirstOrDefault();
+        }
+
         public TextCode GetSingleTextCodeByTenant(string id, int tenant)
         {
             return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
