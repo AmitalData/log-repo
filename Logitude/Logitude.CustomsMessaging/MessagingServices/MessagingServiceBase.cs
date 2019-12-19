@@ -317,7 +317,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 var timeout = TimeSpan.FromMinutes(1);
                 var transactionScopeOption = TransactionScopeOption.Required;
-                if (this.MainInterfaceCode == "9000" || this.MainInterfaceCode == "8302" )
+                if (this.MainInterfaceCode == "9000" || this.MainInterfaceCode == "8302" || this.MainInterfaceCode == "2715")
                 {
                     LogMessagingUtil.Instance.AppendLine("GetTransaction(timeout)=TimeSpan.FromMinutes(5)");
                     timeout = TimeSpan.FromMinutes(5);

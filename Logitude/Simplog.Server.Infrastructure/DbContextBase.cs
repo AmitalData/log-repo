@@ -507,7 +507,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 command.CommandText = sqlReturn1Row;
 
                 
-                using (var dataReader = command.ExecuteReader(CommandBehavior.SingleResult)
+                using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult)
                     )
                 {
 
