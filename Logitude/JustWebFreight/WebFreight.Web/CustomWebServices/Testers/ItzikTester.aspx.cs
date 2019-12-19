@@ -45,7 +45,7 @@ namespace WebFreight.Web.CustomWebServices.Testers
                 //ExportExcel8330();
                 //ExportExcel8326();
                 var o = new CourierMasterWSheetExport();
-                var result = o.ExportReport("1-655", 1);
+                var result = o.ExportReport("1-686", 1);
                 string ShowType = "attachment";
                 string documentName = Guid.NewGuid().ToString() + ".xls";
                 HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
