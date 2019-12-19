@@ -79,7 +79,7 @@ exports.config = {
             browser.params.Login.Password = "!R123j456";
         }
         else if (browser.params.Env == "cloudStaging") {
-            browser.params.Link = "https://cloud.amital.co.il/";
+            browser.params.Link = "https://staging.amital.co.il/";
             browser.params.Login.Email = "protractor@test.com";
             browser.params.Login.Password = "!P123t456";
         }
