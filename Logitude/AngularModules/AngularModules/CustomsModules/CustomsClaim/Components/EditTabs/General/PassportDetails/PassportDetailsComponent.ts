@@ -133,16 +133,16 @@ export class PassportDetailsComponent extends BaseComponent {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("cancel");
     }
 
+    CleanDetailsButtonClicked() {
+        this.PassportTypeCode = null;
+        this.PassportNumber = null;
+        this.PassportCountryTypeCode = null;
+    }
+
     OkButtonClicked() {
 
         SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
-        //if (this.doDisable) {
-        //    SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
-        //}
-        //else {
-        //    SessionLocator.SelectedSession.CloseCurrentWindowEmit("!ok");
-        //}
 
     }
 }

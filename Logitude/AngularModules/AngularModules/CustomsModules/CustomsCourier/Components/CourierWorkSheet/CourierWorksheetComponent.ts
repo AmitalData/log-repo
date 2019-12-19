@@ -209,6 +209,13 @@ export class CourierWorksheetComponent extends BaseComponent
                         this.TabFilterClick(this._TabFilterList[6]);
                         break;
                     }
+                case "Pending900":
+                    {
+                        this._SelectedTabFilter = this._TabFilterList[6];
+                        this.PendingFilter = "900";
+                        this.TabFilterClick(this._TabFilterList[6]);
+                        break;
+                    }
                 case "OpenDeclarations":
                     {
                         this._SelectedTabFilter = this._TabFilterList[0];
@@ -221,6 +228,12 @@ export class CourierWorksheetComponent extends BaseComponent
                         this._SelectedTabFilter = this._TabFilterList[0];
                         this._SelectedCustomStatusValue = 'S';
                         this.SelectedCustomStatusValueClick('S');
+                        break;
+                    }
+                case "MissingClassification":
+                    {
+                        this._SelectedTabFilter = this._TabFilterList[2];
+                        this.TabFilterClick(this._TabFilterList[2]);
                         break;
                     }
             }
