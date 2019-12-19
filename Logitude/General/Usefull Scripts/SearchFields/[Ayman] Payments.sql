@@ -5,6 +5,11 @@ set SearchFields = SearchFields + ','+ ChequeOrPaymentRef
 where ChequeOrPaymentRef is not null
 and CHARINDEX(ChequeOrPaymentRef, SearchFields) = 0
 
+update ARPayments
+set SearchFields = SearchFields + ',' + InternalNotes
+where InternalNotes is not null
+and CHARINDEX(InternalNotes, SearchFields) = 0
+
 update APPayments
 set SearchFields = SearchFields + ','+ ChequeOrPaymentRef
 where ChequeOrPaymentRef is not null
