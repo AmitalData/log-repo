@@ -14054,6 +14054,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CollateralCondition", DefaultText = "Collateral Condition", LocalDefaultText = "פירוט הסכום המבוקש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AddAnswer", DefaultText = "Add Answer", LocalDefaultText = "הוסף מענה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCollateralsAnswer", DefaultText = "Multi Answers", LocalDefaultText = "מענה מרוכז", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.EditCustomsCollateral", DefaultText = "Edit Customs Collateral", LocalDefaultText = "בטוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CreateNewFileRequest", DefaultText = "New File Request", LocalDefaultText = "בקשה לפתיחת תיק תפ”ג", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 

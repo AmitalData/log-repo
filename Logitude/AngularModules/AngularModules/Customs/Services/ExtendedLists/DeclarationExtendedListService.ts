@@ -7,7 +7,7 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { SendCollateralRequestParams} from '../../DataContract/RequestParams/SendCollateralRequestParams';
+import { SendCollateralRequestParams } from '../../DataContract/RequestParams/SendCollateralRequestParams';
 
 @Injectable()
 
@@ -63,7 +63,7 @@ export class DeclarationExtendedListService {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = response.json();
-                  
+
                     return serviceResponse;
                 }).catch(ServiceHelper.HandleServiceError);
         });
@@ -78,25 +78,25 @@ export class DeclarationExtendedListService {
         return Observable.defer(() => {
             return this._http
                 .get(this._apiUrl + '/GetSingleDeclarationByNumber/?' + 'declarationByNumber=' + declarationByNumber + '&tenant=' + tenant,
-                { headers: authHeader }).map(response => {
+                    { headers: authHeader }).map(response => {
 
 
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
-                    var declarationList: DeclarationList;
-                    if (serviceResponse.Result) {
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response.json();
+                        var declarationList: DeclarationList;
+                        if (serviceResponse.Result) {
 
 
-                        var entity: DeclarationList;
-                        declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
+                            var entity: DeclarationList;
+                            declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
 
 
 
-                    }
+                        }
 
-                    serviceResponse.Result = declarationList;
-                    return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                        serviceResponse.Result = declarationList;
+                        return serviceResponse;
+                    }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -149,7 +149,7 @@ export class DeclarationExtendedListService {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = response.json();
-                    
+
                     return serviceResponse;
                 }).catch(ServiceHelper.HandleServiceError);
         });
@@ -209,7 +209,7 @@ export class DeclarationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-   
+
 
         return Observable.defer(() => {
             return this._http.put(this._apiUrl + '/PutCopyDeclaration/?' + 'fromDeclarationId=' + fromDeclarationId + '&toDeclarationId=' + toDeclarationId + '&tenant=' + tenant,

@@ -422,6 +422,7 @@
     <Compile Include="ResponseServices\UniCourierBatchSendUCBUD2LT_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomTableZip_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniDebug01_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniDecCollateralBatchSend8212_MsgResponseService.cs" />
     <Compile Include="ResponseServices\Unifreight_LOGISIVUGResponseService.cs" />
     <Compile Include="ResponseServices\VAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService.cs" />
     <Compile Include="ResponseServices\VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.cs" />
