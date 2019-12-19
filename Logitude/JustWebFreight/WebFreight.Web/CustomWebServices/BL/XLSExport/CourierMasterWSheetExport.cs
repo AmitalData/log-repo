@@ -18,7 +18,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         {
             ICustomContext MyContext = CustomContext.GetContext(tenant);
             DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
-
+            declarationCourierStatusQuery.RequiredFieldErrorsForCourierDeclarationIsValid = true;
             var q = declarationCourierStatusQuery.GetByCourierMasterId(courierMasterId, tenant)
                 .Select(r => new
                 {
