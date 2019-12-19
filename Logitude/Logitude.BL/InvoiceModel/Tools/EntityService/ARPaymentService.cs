@@ -598,7 +598,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         int lineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentPM payment)
         {
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated && payment.BillToPartnerTypeId == "CS")
             {
                 DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
