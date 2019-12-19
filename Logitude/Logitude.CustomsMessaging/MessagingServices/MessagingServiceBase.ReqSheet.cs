@@ -901,6 +901,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 stepRequest.TimeOutInMin = 5;
                 //transactionScopeOption = TransactionScopeOption.Suppress;
             }
+            if (this.MainInterfaceCode == "2715")
+            {
+                stepRequest.TimeOutInMin = 5;
+                //transactionScopeOption = TransactionScopeOption.Suppress;
+            }
+
             if (this.MainInterfaceCode == "US2L01")
             {
                 stepRequest.TimeOutInMin = 9;
