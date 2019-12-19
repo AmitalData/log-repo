@@ -7,259 +7,259 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {CustomsCollateralsConditionPM} from './CustomsCollateralsConditionPM';
-import {CustomsCollateralsAnswerPM} from './CustomsCollateralsAnswerPM';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomsCollateralsConditionPM } from './CustomsCollateralsConditionPM';
+import { CustomsCollateralsAnswerPM } from './CustomsCollateralsAnswerPM';
+import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
+import { Output, EventEmitter } from '@angular/core';
+import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class CustomsCollateralPM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-      public UIProperties: UIProperties;
-	  constructor() {
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
-      }
- 	 
-    
+    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+    public UIProperties: UIProperties;
+    constructor() {
+        this.UIProperties = new UIProperties(this);
+        this.IsDirty = false;
+    }
+
+
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
+
+
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
+
+
     private collateralRequestNumber: string;
     public get CollateralRequestNumber() { return this.collateralRequestNumber; }
     public set CollateralRequestNumber(newValue: string) { if (this.collateralRequestNumber != newValue) { this.collateralRequestNumber = newValue; this.MarkAsDirty("CollateralRequestNumber"); } }
-       
-	 
+
+
     private requestValidityDate: Date;
     public get RequestValidityDate() { return this.requestValidityDate; }
     public set RequestValidityDate(newValue: Date) { if (this.requestValidityDate != newValue) { this.requestValidityDate = newValue; this.MarkAsDirty("RequestValidityDate"); } }
-       
-	 
+
+
     private collateralValidityDate: Date;
     public get CollateralValidityDate() { return this.collateralValidityDate; }
     public set CollateralValidityDate(newValue: Date) { if (this.collateralValidityDate != newValue) { this.collateralValidityDate = newValue; this.MarkAsDirty("CollateralValidityDate"); } }
-       
-	 
+
+
     private collateralRequestStatusCode: string;
     public get CollateralRequestStatusCode() { return this.collateralRequestStatusCode; }
     public set CollateralRequestStatusCode(newValue: string) { if (this.collateralRequestStatusCode != newValue) { this.collateralRequestStatusCode = newValue; this.MarkAsDirty("CollateralRequestStatusCode"); } }
-       
-	 
+
+
     private requestedCollateralTypeCode: string;
     public get RequestedCollateralTypeCode() { return this.requestedCollateralTypeCode; }
     public set RequestedCollateralTypeCode(newValue: string) { if (this.requestedCollateralTypeCode != newValue) { this.requestedCollateralTypeCode = newValue; this.MarkAsDirty("RequestedCollateralTypeCode"); } }
-       
-	 
+
+
     private organizationUnitTypeCode: string;
     public get OrganizationUnitTypeCode() { return this.organizationUnitTypeCode; }
     public set OrganizationUnitTypeCode(newValue: string) { if (this.organizationUnitTypeCode != newValue) { this.organizationUnitTypeCode = newValue; this.MarkAsDirty("OrganizationUnitTypeCode"); } }
-       
-	 
+
+
     private customsHouseTypeCode: string;
     public get CustomsHouseTypeCode() { return this.customsHouseTypeCode; }
     public set CustomsHouseTypeCode(newValue: string) { if (this.customsHouseTypeCode != newValue) { this.customsHouseTypeCode = newValue; this.MarkAsDirty("CustomsHouseTypeCode"); } }
-       
-	 
+
+
     private workerName: string;
     public get WorkerName() { return this.workerName; }
     public set WorkerName(newValue: string) { if (this.workerName != newValue) { this.workerName = newValue; this.MarkAsDirty("WorkerName"); } }
-       
-	 
+
+
     private remarks: string;
     public get Remarks() { return this.remarks; }
     public set Remarks(newValue: string) { if (this.remarks != newValue) { this.remarks = newValue; this.MarkAsDirty("Remarks"); } }
-       
-	 
+
+
     private fileNo: string;
     public get FileNo() { return this.fileNo; }
     public set FileNo(newValue: string) { if (this.fileNo != newValue) { this.fileNo = newValue; this.MarkAsDirty("FileNo"); } }
-       
-	 
+
+
     private customsEntityTypeCode: string;
     public get CustomsEntityTypeCode() { return this.customsEntityTypeCode; }
     public set CustomsEntityTypeCode(newValue: string) { if (this.customsEntityTypeCode != newValue) { this.customsEntityTypeCode = newValue; this.MarkAsDirty("CustomsEntityTypeCode"); } }
-       
-	 
+
+
     private entityIdKey1: string;
     public get EntityIdKey1() { return this.entityIdKey1; }
     public set EntityIdKey1(newValue: string) { if (this.entityIdKey1 != newValue) { this.entityIdKey1 = newValue; this.MarkAsDirty("EntityIdKey1"); } }
-       
-	 
+
+
     private entityIdKey2: string;
     public get EntityIdKey2() { return this.entityIdKey2; }
     public set EntityIdKey2(newValue: string) { if (this.entityIdKey2 != newValue) { this.entityIdKey2 = newValue; this.MarkAsDirty("EntityIdKey2"); } }
-       
-	 
+
+
     private entityIdKey3: string;
     public get EntityIdKey3() { return this.entityIdKey3; }
     public set EntityIdKey3(newValue: string) { if (this.entityIdKey3 != newValue) { this.entityIdKey3 = newValue; this.MarkAsDirty("EntityIdKey3"); } }
-       
-	 
-     
-	private customsCollateralsConditions: CustomsCollateralsConditionPM[];
-    get  CustomsCollateralsConditions() {
+
+
+
+    private customsCollateralsConditions: CustomsCollateralsConditionPM[];
+    get CustomsCollateralsConditions() {
         if (this.customsCollateralsConditions == null) {
             this.customsCollateralsConditions = [];
         }
 
         return this.customsCollateralsConditions;
     }
-    set  CustomsCollateralsConditions(newValue: CustomsCollateralsConditionPM[]) {
+    set CustomsCollateralsConditions(newValue: CustomsCollateralsConditionPM[]) {
         if (this.customsCollateralsConditions != newValue) {
             this.customsCollateralsConditions = newValue;
         }
     }
     public AddCustomsCollateralsCondition(item: CustomsCollateralsConditionPM) {
         if (item != null) {
-            var index = this. CustomsCollateralsConditions.indexOf(item);
+            var index = this.CustomsCollateralsConditions.indexOf(item);
             if (index == -1) {
                 item.EntityParentPM = this;
-                this. CustomsCollateralsConditions.push(item);
+                this.CustomsCollateralsConditions.push(item);
                 this.MarkAsDirty();
             }
         }
     }
     public RemoveCustomsCollateralsCondition(item: CustomsCollateralsConditionPM) {
         if (item != null) {
-            var index = this. CustomsCollateralsConditions.indexOf(item);
+            var index = this.CustomsCollateralsConditions.indexOf(item);
             if (index > -1) {
-                this. CustomsCollateralsConditions.splice(index, 1);
+                this.CustomsCollateralsConditions.splice(index, 1);
                 this.MarkAsDirty();
             }
         }
     }
     //public CustomsCollateralsConditions: Array<CustomsCollateralsConditionPM>= [];
-      
-	private customsCollateralsAnswers: CustomsCollateralsAnswerPM[];
-    get  CustomsCollateralsAnswers() {
+
+    private customsCollateralsAnswers: CustomsCollateralsAnswerPM[];
+    get CustomsCollateralsAnswers() {
         if (this.customsCollateralsAnswers == null) {
             this.customsCollateralsAnswers = [];
         }
 
         return this.customsCollateralsAnswers;
     }
-    set  CustomsCollateralsAnswers(newValue: CustomsCollateralsAnswerPM[]) {
+    set CustomsCollateralsAnswers(newValue: CustomsCollateralsAnswerPM[]) {
         if (this.customsCollateralsAnswers != newValue) {
             this.customsCollateralsAnswers = newValue;
         }
     }
     public AddCustomsCollateralsAnswer(item: CustomsCollateralsAnswerPM) {
         if (item != null) {
-            var index = this. CustomsCollateralsAnswers.indexOf(item);
+            var index = this.CustomsCollateralsAnswers.indexOf(item);
             if (index == -1) {
                 item.EntityParentPM = this;
-                this. CustomsCollateralsAnswers.push(item);
+                this.CustomsCollateralsAnswers.push(item);
                 this.MarkAsDirty();
             }
         }
     }
     public RemoveCustomsCollateralsAnswer(item: CustomsCollateralsAnswerPM) {
         if (item != null) {
-            var index = this. CustomsCollateralsAnswers.indexOf(item);
+            var index = this.CustomsCollateralsAnswers.indexOf(item);
             if (index > -1) {
-                this. CustomsCollateralsAnswers.splice(index, 1);
+                this.CustomsCollateralsAnswers.splice(index, 1);
                 this.MarkAsDirty();
             }
         }
     }
     //public CustomsCollateralsAnswers: Array<CustomsCollateralsAnswerPM>= [];
-     private collateralRequestStatusName: string;
+    private collateralRequestStatusName: string;
     public get CollateralRequestStatusName() { return this.collateralRequestStatusName; }
     public set CollateralRequestStatusName(newValue: string) { if (this.collateralRequestStatusName != newValue) { this.collateralRequestStatusName = newValue; this.MarkAsDirty("CollateralRequestStatusName"); } }
-       
-	 
+
+
     private requestedCollateralTypeName: string;
     public get RequestedCollateralTypeName() { return this.requestedCollateralTypeName; }
     public set RequestedCollateralTypeName(newValue: string) { if (this.requestedCollateralTypeName != newValue) { this.requestedCollateralTypeName = newValue; this.MarkAsDirty("RequestedCollateralTypeName"); } }
-       
-	 
+
+
     private customsEntityTypeName: string;
     public get CustomsEntityTypeName() { return this.customsEntityTypeName; }
     public set CustomsEntityTypeName(newValue: string) { if (this.customsEntityTypeName != newValue) { this.customsEntityTypeName = newValue; this.MarkAsDirty("CustomsEntityTypeName"); } }
-       
-	 
+
+
     private includingThirdPartyGuarantee: boolean;
     public get IncludingThirdPartyGuarantee() { return this.includingThirdPartyGuarantee; }
     public set IncludingThirdPartyGuarantee(newValue: boolean) { if (this.includingThirdPartyGuarantee != newValue) { this.includingThirdPartyGuarantee = newValue; this.MarkAsDirty("IncludingThirdPartyGuarantee"); } }
-       
-	 
+
+
     private declarationId: string;
     public get DeclarationId() { return this.declarationId; }
     public set DeclarationId(newValue: string) { if (this.declarationId != newValue) { this.declarationId = newValue; this.MarkAsDirty("DeclarationId"); } }
-       
-	 
+
+
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
+
+
     private customsHouseTypeName: string;
     public get CustomsHouseTypeName() { return this.customsHouseTypeName; }
     public set CustomsHouseTypeName(newValue: string) { if (this.customsHouseTypeName != newValue) { this.customsHouseTypeName = newValue; this.MarkAsDirty("CustomsHouseTypeName"); } }
-       
-	 
+
+
     private organizationUnitTypeName: string;
     public get OrganizationUnitTypeName() { return this.organizationUnitTypeName; }
     public set OrganizationUnitTypeName(newValue: string) { if (this.organizationUnitTypeName != newValue) { this.organizationUnitTypeName = newValue; this.MarkAsDirty("OrganizationUnitTypeName"); } }
-       
-	 
+
+
     private createDateTime: Date;
     public get CreateDateTime() { return this.createDateTime; }
     public set CreateDateTime(newValue: Date) { if (this.createDateTime != newValue) { this.createDateTime = newValue; this.MarkAsDirty("CreateDateTime"); } }
-       
-	 
+
+
     private isClosed: boolean;
     public get IsClosed() { return this.isClosed; }
     public set IsClosed(newValue: boolean) { if (this.isClosed != newValue) { this.isClosed = newValue; this.MarkAsDirty("IsClosed"); } }
-       
-	 
+
+
     private customerId: string;
     public get CustomerId() { return this.customerId; }
     public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
-       
-	 
+
+
     private paymentNumber: string;
     public get PaymentNumber() { return this.paymentNumber; }
     public set PaymentNumber(newValue: string) { if (this.paymentNumber != newValue) { this.paymentNumber = newValue; this.MarkAsDirty("PaymentNumber"); } }
-       
-	 
+
+
     private paymentOrderId: string;
     public get PaymentOrderId() { return this.paymentOrderId; }
     public set PaymentOrderId(newValue: string) { if (this.paymentOrderId != newValue) { this.paymentOrderId = newValue; this.MarkAsDirty("PaymentOrderId"); } }
-       
-	 
+
+
     private customerName: string;
     public get CustomerName() { return this.customerName; }
     public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
-       
-	 
+
+
     private isAnswer: boolean;
     public get IsAnswer() { return this.isAnswer; }
     public set IsAnswer(newValue: boolean) { if (this.isAnswer != newValue) { this.isAnswer = newValue; this.MarkAsDirty("IsAnswer"); } }
-       
-	 
+
+
 
     public OldEntityPM: CustomsCollateralPM;
-		
+
     public IsDirty: boolean;
-    MarkAsDirty(propertyName:string = null) {
+    MarkAsDirty(propertyName: string = null) {
         this.IsDirty = true;
-		  	
+
         if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsCollateral");
-           
+
         }
     }
 

@@ -1153,6 +1153,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 supplierInvoicePM.SupplierInvoiceFreightAmounts = supplierInvoiceFreightAmountQueryService.GetMulti(supplierInvoiceKeys, false);
                 supplierInvoicePM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, false);
                 supplierInvoicePM.SupplierInvoiceItems = supplierInvoiceItemssQueryService.GetMulti(supplierInvoiceKeys, false);
+
             }
             if (this.Multi_LastSIWillUpdateCCU)
             {

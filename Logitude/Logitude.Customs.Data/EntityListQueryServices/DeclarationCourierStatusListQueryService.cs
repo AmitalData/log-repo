@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class DeclarationCourierStatusListQueryService
     {
-        private bool _RequiredFieldErrorsForCourierDeclarationIsValid;
+        public bool RequiredFieldErrorsForCourierDeclarationIsValid;
 
         private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
         {
@@ -109,7 +109,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                   IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
                                                                   IsACCTab = (a.StorageSiteStatusCode == "2" || a.SpecialActionStatus == "X"),
-                                                                  CourierManifestStatusCode = !_RequiredFieldErrorsForCourierDeclarationIsValid ? "M" : a.CourierManifestStatusCode,
+                                                                  CourierManifestStatusCode = !RequiredFieldErrorsForCourierDeclarationIsValid ? "M" : a.CourierManifestStatusCode,
                                                                   CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                   CourierPaymentStatusCode = a.CourierPaymentStatusCode,
                                                                   IsCourierMissingClassification = a.IsCourierMissingClassification,
@@ -217,7 +217,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             if(courierMasterIdF != null)
             {
                 string courierMasterId = (string)courierMasterIdF.FieldValue;
-                _RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
+                RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
             }
             return iQueryable;
         }
