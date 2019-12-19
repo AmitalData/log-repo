@@ -1218,10 +1218,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return result;
         }
 
-        public List<APInvoicePM> GetAPInvoicesByIds(List<string> Ids, int tenant)
+        public List<APInvoicePM> GetAPInvoicesByIds(List<string> Ids, int tenant, DateTime taxReportDate)
         {
+            DateTime beginOfMonthOfTaxReportDate = new DateTime(taxReportDate.Year, taxReportDate.Month, 1);
+            DateTime endOfMonthOfTaxReportDate = new DateTime(taxReportDate.Year, taxReportDate.Month, DateTime.DaysInMonth(taxReportDate.Year, taxReportDate.Month));
+
             List<APInvoicePM> invoicePMs = (from a in repository.context.APInvoices.Include("Branch")
-                                            where Ids.Contains(a.Id) && a.Tenant == tenant
+                                            where Ids.Contains(a.Id) && a.Tenant == tenant && !(a.StatusCode == "AC" && beginOfMonthOfTaxReportDate <= a.InvoiceDate && a.InvoiceDate <= endOfMonthOfTaxReportDate)
                                             select new APInvoicePM()
                                             {
                                                 ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
