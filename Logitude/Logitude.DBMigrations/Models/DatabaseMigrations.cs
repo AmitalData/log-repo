@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -7,6 +8,8 @@ namespace Logitude.DBMigrations.Models
 {
     public abstract class DatabaseMigrations
     {
+        protected string DatabseType = ConfigurationManager.AppSettings["DatabseType"];
+
         protected TableDefinition DXMLTable;
         protected TableDefinition CurrentTable;
         protected TableMigrations TableMigrations;
@@ -235,7 +238,7 @@ namespace Logitude.DBMigrations.Models
                 isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnName).Any();
             }
 
-            if (!isColumnInCurrentTable && dxmlColumnShortName != null && dxmlColumnName.Length > 30)
+            if (!isColumnInCurrentTable && dxmlColumnShortName != null && dxmlColumnName.Length > 30 && DatabseType == "oracle")
             {
                 isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any();
             }
@@ -266,7 +269,7 @@ namespace Logitude.DBMigrations.Models
                 isColumnInCurrentTable = true;
             }
 
-            if (!isColumnInCurrentTable && dxmlColumnShortName != null && dxmlColumnName.Length > 30 && CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any())
+            if (!isColumnInCurrentTable && dxmlColumnShortName != null && dxmlColumnName.Length > 30 && CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any() && DatabseType == "oracle")
             {
                 columnName = dxmlColumnShortName;
             }
@@ -340,9 +343,12 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            dxmlTableColumnsNames = dxmlTableColumnsNames.Concat(dxmlTableColumnsShortNames).ToList();
+            if(DatabseType == "oracle")
+            {
+                dxmlTableColumnsNames = dxmlTableColumnsNames.Concat(dxmlTableColumnsShortNames).ToList();
+            }
 
-            List<ColumnDefinition> droppedColumns = CurrentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name) && !c.Name.StartsWith("Drop_")).ToList();
+            List<ColumnDefinition> droppedColumns = CurrentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name) && !c.Name.ToLower().StartsWith("drop_")).ToList();
             return droppedColumns;
         }
 
@@ -486,7 +492,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void BuildRenameMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            if (currentTableColumn.Name != FormatNameLength(dxmlTableColumn.Name, dxmlTableColumn.ShortName))
+            if (currentTableColumn.Name != (DatabseType == "oracle" ? FormatNameLength(dxmlTableColumn.Name, dxmlTableColumn.ShortName) : dxmlTableColumn.Name))
             {
                 ColumnMigration renameMigration = GetColumnMigration(MigrationTypes.RENAME, currentTableColumn, dxmlTableColumn);
                 ColumnMigrations.Add(renameMigration);
@@ -500,7 +506,9 @@ namespace Logitude.DBMigrations.Models
 
         protected string FormatNameLength(string name, string shortName)
         {
-            if(name.Length <= 30)
+            int maxLength = 30;
+
+            if(name.Length <= maxLength)
             {
                 return name;
             }
@@ -512,8 +520,38 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    return name;
+                    if (name.ToLower().StartsWith("drop_"))
+                    {
+                        return name.Substring(0, maxLength);
+                    }
+                    else
+                    {
+                        return name;
+                    }
                 }
+            }
+        }
+
+        protected TableDefinition FormatCaseSensitiveNames(TableDefinition table)
+        {
+            if(table != null)
+            {
+                table.Name = table.Name.ToLower();
+                table.ShortName = String.IsNullOrEmpty(table.ShortName) ? null : table.ShortName.ToLower();
+                table.OldNames = String.IsNullOrEmpty(table.OldNames) ? null : table.OldNames.ToLower();
+
+                foreach (var column in table.Columns)
+                {
+                    column.Name = column.Name.ToLower();
+                    column.ShortName = String.IsNullOrEmpty(column.ShortName) ? null : column.ShortName.ToLower();
+                    column.OldNames = String.IsNullOrEmpty(column.OldNames) ? null : column.OldNames.ToLower();
+                }
+
+                return table;
+            }
+            else
+            {
+                return null;
             }
         }
 

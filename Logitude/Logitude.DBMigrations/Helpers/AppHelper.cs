@@ -5,17 +5,25 @@ using System.Data.SqlClient;
 using System.IO;
 using Oracle.DataAccess.Client;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Logitude.DBMigrations.Helpers
 {
     public static class AppHelper
     {
+        private static string PerformanceData = "Description,Time(ms)\n";
+
         public static string[] GetDXMLFilesFromRoot(string root)
         {
             try
             {
+                var stopwatch = Stopwatch.StartNew();
+
                 string DXMLFilesPath = Path.Combine(root);
                 string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml", SearchOption.AllDirectories);
+
+                AppendToPerformanceData("Get DXML Files From Root", stopwatch);
+
                 if (DXMLFiles.Length > 0)
                 {
                     return DXMLFiles;
@@ -35,6 +43,8 @@ namespace Logitude.DBMigrations.Helpers
         {
             GeneratedScript generatedScript = new GeneratedScript();
 
+            var stopwatch = Stopwatch.StartNew();
+
             foreach (var dxmlFile in DXMLFiles)
             {
                 string dxmlFileName = Path.GetFileName(dxmlFile);
@@ -53,11 +63,15 @@ namespace Logitude.DBMigrations.Helpers
                 }
             }
 
+            AppendToPerformanceData("Generate Scripts From DXML Files", stopwatch);
+
             return generatedScript;
         }
 
         public static void SaveScript(GeneratedScript generatedScript)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
@@ -71,10 +85,14 @@ namespace Logitude.DBMigrations.Helpers
             File.WriteAllText(systemLogsScriptFilePath, generatedScript.SystemLogsScript);
 
             Console.WriteLine("The Generated Scripts Saved Successfully");
+
+            AppendToPerformanceData("Save The Generated Scripts", stopwatch);
         }
 
         public static void ExecuteScript(GeneratedScript generatedScript)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             if (!String.IsNullOrEmpty(generatedScript.GlobalScript))
             {
                 Console.WriteLine("Executing Script On Global Database ...");
@@ -116,6 +134,8 @@ namespace Logitude.DBMigrations.Helpers
                     Console.WriteLine("Scripts Executed Successfully On SystemLogs Database");
                 }
             }
+
+            AppendToPerformanceData("Execute The Generated Scripts", stopwatch);
         }
 
         public static bool IsArgumentProvided(string[] args, string arg)
@@ -137,6 +157,14 @@ namespace Logitude.DBMigrations.Helpers
             {
                 return null;
             }
+        }
+
+        public static void ExportPerformanceData()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string csvFilePath = Path.Combine(projectDirectory, @"Reports\DBMigrationsPerformance.csv");
+            File.WriteAllText(csvFilePath, PerformanceData);
+            Console.WriteLine("\nPerformance Time Extracted To /Reports/DBMigrationsPerformance.csv\n");
         }
 
         private static string GetConnectionString(string dbType)
@@ -244,11 +272,17 @@ namespace Logitude.DBMigrations.Helpers
 
                 try
                 {
-                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
-                    sqlCommand.CommandText = script;
-                    sqlConnection.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    sqlConnection.Close();
+                    string[] commands = script.Split(';');
+                    commands = commands.Take(commands.Count() - 1).ToArray();
+
+                    foreach (var command in commands)
+                    {
+                        SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                        sqlCommand.CommandText = command;
+                        sqlConnection.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        sqlConnection.Close();
+                    }
                     return null;
                 }
                 catch (Exception exception)
@@ -257,6 +291,12 @@ namespace Logitude.DBMigrations.Helpers
                     return "Error: " + exception.Message;
                 }
             }
+        }
+
+        private static void AppendToPerformanceData(string description, Stopwatch stopwatch)
+        {
+            stopwatch.Stop();
+            PerformanceData += description + "," + stopwatch.ElapsedMilliseconds + "\n";
         }
     }
 }

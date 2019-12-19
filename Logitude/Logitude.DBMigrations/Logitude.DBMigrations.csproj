@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Reports\DBMigrationsPerformance.csv" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GeneratedScript\SystemLogsScript.sql" />

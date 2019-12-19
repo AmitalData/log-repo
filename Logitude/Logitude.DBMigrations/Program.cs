@@ -37,6 +37,8 @@ namespace Logitude.DBMigrations
                     {
                         Console.WriteLine("There Is No DXML Files Found Under The Specified Root");
                     }
+
+                    AppHelper.ExportPerformanceData();
                 }
                 else
                 {
