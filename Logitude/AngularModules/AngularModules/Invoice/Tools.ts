@@ -155,6 +155,10 @@ export class InvoiceTool {
             invoicePartners.push(new InvoicePartnerType("SL", "SL", "Shipping line"));
             invoicePartners.push(new InvoicePartnerType("TR", "TR", "Trucker"));
             invoicePartners.push(new InvoicePartnerType("VD", "VD", "Vendor"));
+            if (SessionLocator.TenantPM.AccountingActivated) {
+                invoicePartners.push(new InvoicePartnerType("AC", "AC", "Accounting Partner"));
+            }
+
         }
 
         return invoicePartners;
