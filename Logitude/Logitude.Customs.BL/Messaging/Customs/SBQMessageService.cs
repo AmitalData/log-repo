@@ -53,6 +53,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 var tenant = customsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
                 var InterfaceTypeCode = customsRequestsSheetService.MyCustomsRequestsSheetPM.InterfaceTypeCode;
                 var MyCustomsRequestsSheetPMId = customsRequestsSheetService.MyCustomsRequestsSheetPM.Id;
+                LogMessagingUtilWR.Instance.AppendLine($"SetCustomsRequestsSheetId({MyCustomsRequestsSheetPMId})");
                 if (LogitudeSettings.QueueServiceMode != "db" && Transaction.Current != null)
                 {
                     Transaction.Current.TransactionCompleted += (sender, e) =>
@@ -81,6 +82,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     customsRequestsSheetService.Dispose();
                 }
                 RequestSheetContext.Current.Dispose();
+                LogMessagingUtil.Instance.Clear();
             }
 
             return customsRequestsSheetId;

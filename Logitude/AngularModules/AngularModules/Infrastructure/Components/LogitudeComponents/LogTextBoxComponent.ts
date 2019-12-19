@@ -1207,7 +1207,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                             }
                             else if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1) {
                                 var txt = this.TextValue.replace('%', '');
-                                val = Number(txt) / 100;
+                                var numberValue=Number(txt);
+                                val = numberValue / 100;
                                 //val = val / 100;
 
                             }
@@ -1233,7 +1234,12 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                                     if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
                                         this.DigitsAfterPoint = 3;
                                     }
+                                    if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1){
+                                        this.TextValue = val.toFixed(4);
+                                    }
+                                    else{
                                     this.TextValue = val.toFixed(this.DigitsAfterPoint);
+                                    }
                                 }
                             }
 

@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data
 {
     public partial class CustomContext : DbContextBase, ICustomContext
     {
-        public static void CommandExecuteNonQuery(int tenant, string cmd)
+        public static void CommandExecuteNonQuery(int tenant, string cmd, int? commandTimeout=null)
         {
             var context = CustomContext.GetContext(tenant);
             var strConnString = context.GetConnection().ConnectionString;
@@ -26,7 +26,10 @@ namespace Logitude.Customs.Data
 
 
                     var command = new OracleCommand(cmd, cn);
-
+                    if (commandTimeout.HasValue)
+                    {
+                        command.CommandTimeout = commandTimeout.Value;
+                    }
                     cn.Open();
                     command.ExecuteNonQuery();
                     cn.Close();

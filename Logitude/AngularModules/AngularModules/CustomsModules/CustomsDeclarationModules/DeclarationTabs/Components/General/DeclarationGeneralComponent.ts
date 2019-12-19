@@ -434,7 +434,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
         }
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) {
+        
+        
+        if (this.EntityPM.IsCourierDeclaration) {//Task 57181: מספר יבואן - תצוגת מסך
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) { //Task 45507: (בלדרות) שינויים בלוגיקה של שדה מספר יבואן 
+                this.CalculatedImporterName = this.EntityPM.ImporterName;
+            }
+        } else {
             this.CalculatedImporterName = this.EntityPM.ImporterName;
         }
         

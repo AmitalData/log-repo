@@ -67,6 +67,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
    .ForEach(list100 =>
    {
        customResponse.ServerSplitDeclarationsList = list100;
+       customResponse.LoggingUserId = requestParams.LoggingUserId;
         //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
        CreateDCAInUCB1170_MsgMessagingService
@@ -107,7 +108,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 RequestVIA = SendRequestVIA.WebServiceBatch,
                                 DeclarationNumber = declarationPM.DeclarationNumber,
                                 DeclarationRadio = true,
-                                TesterSendOption= testerSendOption
+                                TesterSendOption= testerSendOption,
+                                
                             };
 
                             SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);

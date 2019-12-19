@@ -37,7 +37,7 @@ namespace CustomsWorkerRole
         private int _Tenant;
         protected override bool ProcessMessage_Db(Logitude.Server.Tools.QueueService.CustomDBQueueMessage message)
         {
-         
+            LogMessagingUtilWR.Instance.AppendLine("CustomsCommandAnalyzeResponseWR:ProcessMessage_Db");
             var dcaAnalyzeAggregateKey = "";
             bool success = false;
             try

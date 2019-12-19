@@ -28,7 +28,7 @@ using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
-
+using Logitude.Customs.BL.Validators;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -60,14 +60,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
               out string MessageOut)
         {
             MessageOut = "";
-            _Stopwatch = Stopwatch.StartNew();  
+            _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "SchedulerService ";
 
             DeserilazeObject(xmlLOGISCHEDULER);
-            AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
-            
+            AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
             CheckIntegrity();
-            AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString());_Stopwatch.Restart(); 
+            AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.Stage = "GetContext";
             _context = CustomContext.GetContext(ResolvedTenant());
             AppendLogLine("GetContext:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -93,6 +93,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     break;
                 case "8250":
                     SendDeclarationStatusRequest();
+                    break;
+                case "DIAMONDS":
+                    DeclarationChecksForDiamonds();
                     break;
                 case "TEST":
                     SendGenericRequest();
@@ -122,7 +125,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 }
                 else
                 {
-                    if(_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
                     {
                         AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                         return;
@@ -191,14 +194,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 }
             }
 
-            if(_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
+            if (_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
             {
                 CargoTypeCode = _MyDeclarationPM.Consignments[0].CargoTypeCode;
                 ManifestNumber = _MyDeclarationPM.Consignments[0].ManifestNumber;
                 SecondCargoID = _MyDeclarationPM.Consignments[0].SecondCargoID;
                 ThirdCargoID = _MyDeclarationPM.Consignments[0].ThirdCargoID;
             }
-            
+
             if (string.IsNullOrEmpty(CargoTypeCode) || string.IsNullOrEmpty(ManifestNumber))
             {
                 string error = TranslateTextsClass.Translate("Customs.Declaration.O.CargoDataMissing", _MyDeclarationPM.Tenant);
@@ -301,7 +304,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         private void SendCurrencyRateRequest()
         {
-           
+
             string user = this.MyCommunicationsParams.LoggingUserId;
             if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
 
@@ -337,7 +340,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("Request code is missing");
             }
 
-            if (_LogitudeScheduler.Request_Code == "2750") 
+            if (_LogitudeScheduler.Request_Code == "2750")
             {
                 requestName = "Declaration Request";
                 responseName = "Declaration Response";
@@ -356,12 +359,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             if (_LogitudeScheduler.Request_Code == "2750" && this._MyDeclarationPM != null && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomFileNo))
             {
                 ClearCCUFILEMdraftStatus();
-                if(changeDraftDate == true)
+                if (changeDraftDate == true)
                 {
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     this._MyDeclarationPM.TaxationDateTime = DateTime.Now;
                 }
-                if(this._MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Update)
+                if (this._MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     UpdateDeclaration();
                 }
@@ -392,9 +395,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         private void UpdateDeclaration()
         {
-            
+
             MyGenericResponseObj.Stage = "Update Declaration";
-            
+
             TransactionScope scope = null;
             ICustomContext context;
 
@@ -510,7 +513,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("LOGITUDE FILE is missing");
             }
             var myQueryService = new DeclarationQueryService(_context);
-            
+
             MyGenericResponseObj.Stage = "GetSingle";
             this._MyDeclarationPM = myQueryService.GetSingle(logitudeFile, true, false);
             if (this._MyDeclarationPM == null)
@@ -518,9 +521,113 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("LOGITUDE FILE is " + logitudeFile + " but not found");
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            
+
         }
-        
+
+
+        private void DeclarationChecksForDiamonds()
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+                else
+                {
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                    if (_MyDeclarationPM.IsClose)
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Is Closed " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                throw new BusinessErrorException("Declaration ID is missing");
+            }
+
+            Boolean ticketValidStatus = DeclarationTicketsStatus(_MyDeclarationPM);
+
+            Boolean mandatoryFields = SendDeclarationMandatoryFields(_MyDeclarationPM);
+
+            var responseXML = new diamonsResponseXML();
+            if(!ticketValidStatus)
+            {
+                responseXML.MISS_REFERENCE = "T";
+            }
+            if (!mandatoryFields)
+            {
+                responseXML.MAND_FIELDS = "T";
+            }
+            if(responseXML != null)
+            {
+                var xml = XmlGenericUtil<diamonsResponseXML>.SerializeObject(responseXML);
+                MyGenericResponseObj.ResponseXml = xml;
+            }
+            MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
+        }
+
+        private bool SendDeclarationMandatoryFields(DeclarationPM myDeclarationPM)
+        {
+            Boolean sendDeclarationMandatory = true;
+            CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(myDeclarationPM.Id, myDeclarationPM.Tenant, myDeclarationPM);
+            if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
+            {
+                sendDeclarationMandatory = false;
+            }
+            return sendDeclarationMandatory;
+        }
+
+        private Boolean DeclarationTicketsStatus(DeclarationPM entityPM)
+        {
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_context);
+            Boolean ticketValidStatus = true;
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityPM.Id, "", "", "", entityPM.Tenant, "Declaration").ToList();
+            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
+            {
+
+                var DocumentsFilingIdList = new List<string>();
+                foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                    {
+                        DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                    }
+                }
+                var customsDocumentPMList = new List<CustomsDocumentPM>();
+                if (DocumentsFilingIdList != null)
+                {
+                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(_context);
+                    customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, entityPM.Tenant);
+                }
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+
+                {
+                    foreach (var customsDocumentPM in customsDocumentPMList)
+                    {
+                        if (customsDocumentPM.DocumentStatusCode != "1")
+                        {
+                            ticketValidStatus = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            return ticketValidStatus;
+        }
+
+
         void DeserilazeObject(string xmlLOGISCHEDULER)
         {
 
@@ -568,7 +675,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         }
 
-        
+
 
         public override string GetAssemblyQualifiedName()
         {
@@ -607,5 +714,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
 
     }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    public class diamonsResponseXML
+    {
+        
+        public string MISS_REFERENCE;
+
+        public string MAND_FIELDS;
+    
+    }
+
 }
 

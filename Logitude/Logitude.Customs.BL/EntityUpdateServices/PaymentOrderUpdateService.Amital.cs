@@ -87,7 +87,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine("eventContextTagModel.UnifreighTaskCode = " + eventContextTagModel.UnifreighTaskCode ?? "NULL");
                 if (eventContextTagModel.UnifreighTaskCode == "LE2U")
                 {
-                    SendPPT(connectedDeclarationPM.Tenant,connectedDeclarationPM.CustomFileNo, loggingUserId);
+                    string remarks = "מספר הוראת תשלום " + dirtyEntityPM.PaymentNumber;
+                    SendPPT(connectedDeclarationPM.Tenant,connectedDeclarationPM.CustomFileNo, loggingUserId, remarks);
                 }
             }
 
@@ -655,7 +656,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         // moran 4.6.15 - Task 12424 <--
 
-        private static void SendPPT(int Tenant, string CustomFileNo, string loggedContactId)
+        private static void SendPPT(int Tenant, string CustomFileNo, string loggedContactId, string remarks)
         {
             if (string.IsNullOrWhiteSpace(loggedContactId))
             {
@@ -667,7 +668,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
             string unifrieghtEvent = "PPT";
-            string eventRemarks = "";
+            string eventRemarks = remarks;
             var MyUnifreightEventParam = new UnifreightEventParam()
             {
                 Code = unifrieghtEvent,

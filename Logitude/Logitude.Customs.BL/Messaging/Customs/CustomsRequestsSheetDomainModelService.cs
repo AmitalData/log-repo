@@ -877,18 +877,26 @@ After that Remove file  from DCA  .. ");
 
         public byte[] GetBolb(CustomsStepEnum customsRequestStep)
         {
-            if (_BlobCach.ContainsKey(customsRequestStep))
+            LogMessagingUtilWR.Instance.AppendLine("GetBolb:S");
+            try
             {
-                return _BlobCach[customsRequestStep];
+                if (_BlobCach.ContainsKey(customsRequestStep))
+                {
+                    return _BlobCach[customsRequestStep];
+                }
+                byte[] ArryByte = null;
+                var communicationLogStep = GetCommunicationLogStep(customsRequestStep);
+                if (!GetBlob(communicationLogStep.Tenant, communicationLogStep.Document, out ArryByte))
+                {
+                    throw new Exception("GetBlob(" + communicationLogStep.Document.GetBlobUrl("") + ") not found");
+                }
+                _BlobCach.Add(customsRequestStep, ArryByte);
+                return ArryByte;
             }
-            byte[] ArryByte = null;
-            var communicationLogStep = GetCommunicationLogStep(customsRequestStep);
-            if (!GetBlob(communicationLogStep.Tenant, communicationLogStep.Document, out ArryByte))
+            finally
             {
-                throw new Exception("GetBlob(" + communicationLogStep.Document.GetBlobUrl("") + ") not found");
+                LogMessagingUtilWR.Instance.AppendLine("GetBolb:E");
             }
-            _BlobCach.Add(customsRequestStep, ArryByte);
-            return ArryByte;
         }
         public void UpdateBolb(CustomsStepEnum customsRequestStep, Func<MemoryStream, MemoryStream> funcManupliateMemoryStream)
         {
@@ -2155,6 +2163,7 @@ After that Remove file  from DCA  .. ");
 
         public string GetCustomsRequestXml()
         {
+            
             var myArry = this.GetBolb(CustomsStepEnum.CustomRequest);
             string xml = Encoding.UTF8.GetString(myArry);
 

@@ -48,23 +48,23 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.9.872.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -119,6 +119,8 @@
     <Compile Include="EntityKeys\CustomsAirlineKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentsDefinitionKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
+    <Compile Include="EntityKeys\DBMigrationKeys.cs" />
+    <Compile Include="EntityKeys\DBMigrationLineKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitCargoIdentifierKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConsItemKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConKeys.cs" />
@@ -175,6 +177,8 @@
     <Compile Include="EntityListQueryServices\CustomsAirlineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentsDefinitionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DBMigrationLineListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DBMigrationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitCargoIdentifierListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConsItemListQueryService.cs" />
@@ -212,6 +216,8 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsAirlineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentsDefinitionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DBMigrationLineListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DBMigrationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitCargoIdentifierListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConsItemListQueryService.Generated.cs" />
@@ -287,6 +293,8 @@
     <Compile Include="EntityLists\Generated\CustomsAirlineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsDocumentsDefinitionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsPartnerFtpList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DBMigrationLineList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DBMigrationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitCargoIdentifierList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConsItemList.Generated.cs" />
@@ -344,6 +352,8 @@
     <Compile Include="EntityMapping\CustomsAirlineMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentsDefinitionMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
+    <Compile Include="EntityMapping\DBMigrationLineMap.cs" />
+    <Compile Include="EntityMapping\DBMigrationMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitCargoIdentifierMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConsItemMap.cs" />
@@ -400,6 +410,8 @@
     <Compile Include="EntityPOCOs\CustomsAirline.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentsDefinition.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
+    <Compile Include="EntityPOCOs\DBMigration.cs" />
+    <Compile Include="EntityPOCOs\DBMigrationLine.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitCargoIdentifier.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitCon.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitConsItem.cs" />
@@ -457,6 +469,8 @@
     <Compile Include="Repsitories\CustomsAirlineRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentsDefinitionRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
+    <Compile Include="Repsitories\DBMigrationLineRepository.cs" />
+    <Compile Include="Repsitories\DBMigrationRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitCargoIdentifierRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConsItemRepository.cs" />
@@ -494,6 +508,8 @@
     <Compile Include="Repsitories\Generated\CustomsAirlineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentsDefinitionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DBMigrationLineRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DBMigrationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitCargoIdentifierRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConsItemRepository.Generated.cs" />

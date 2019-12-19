@@ -53,6 +53,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(CourierMasterPM entityPM, CourierMaster entityPOCO)
         {
             ValidateEntity(entityPM);
+            if (entityPOCO!=null && entityPM.IsReadyForInvoice && !entityPOCO.IsReadyForInvoice)
+            {
+                BuildGGGQ_FLIGHT_CREDIT_LETTER(entityPM);
+            }
             Contact loggedContact = GetLoggedContact(entityPM.Tenant);
             ICustomContext context = MainContext as CustomContext;
             entityPM.UpdateDateTime = DateTime.Now;
@@ -169,6 +173,81 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             base.OnUpdating(entityPM, entityPOCO);
         }
 
+        private void BuildGGGQ_FLIGHT_CREDIT_LETTER(CourierMasterPM entityPM)
+        {
+
+
+
+            var sw = Stopwatch.StartNew();
+            TransactionScope scope = null;
+            var statusDateTime = DateTime.Now;
+
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
+            try
+            {
+                using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
+                {
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    
+                    var requestData = "";
+
+                    string unifreightUser = null;
+
+                    if (String.IsNullOrWhiteSpace(unifreightUser))
+                    {
+                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(entityPM.Tenant);
+                    }
+
+                    
+
+                    var myGGGQPM = new GGGQPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ORIGINQUE = "LGT", //LugitudeRequest
+                        STATUS = "1",
+                        EXPTASKTIME = 5,
+                        EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
+                        TRY = 5,
+                        PRIORITY = 8,
+                        
+                        ENTNAME = "CFIFILEM",
+                        PRIMARYNUM = "-1",
+                        FORMID = "A1468",
+                        GSTRING1= "A1468",
+                        GSTRING2 = "NONE",
+                        GSTRING3 = entityPM.Id,
+
+                        DEBUG = "F",
+                        DONEOPERATION = "A",
+                        QUEUEMANAGEMENT=true,
+
+
+                        //GSTRING1 = myYCULTASKPM.TASKID,
+                    };
+                    myGGGQUpdateService.Update(myGGGQPM, true);
+
+                    if (scope != null)
+                    {
+                        scope.Complete();
+                    }
+                }
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
+
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
+
+
+        }
 
         private CourierMasterPM GetDBEntity(string dirtyCourierMasterId, int tenant)
         {
@@ -336,8 +415,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     //string toCourierManifestStatusCode = "R";
                     string updateCourierManifestStatusCodeToR =
                         $"Update DECLARATIONCOURIERSTATUSES set CourierManifestStatusCode ='{setCourierManifestStatusCode}' where DECLARATIONID  in (select DECLARATIONID   from CourierDeclarations  where CourierMasterId ='{CourierMasterId}' and tenant ={EntityPM.Tenant} ) and CourierManifestStatusCode !='M' and CourierManifestStatusCode !='R' ";
-
-                    CustomContext.CommandExecuteNonQuery(EntityPM.Tenant, updateCourierManifestStatusCodeToR);
+                    int commandTimeout = 30;
+                    CustomContext.CommandExecuteNonQuery(EntityPM.Tenant, updateCourierManifestStatusCodeToR, commandTimeout);
 
                     //setDeclarationsList = OldNotInUse(entityPM, setCourierManifestStatusCode, setDeclarationsList);
                 }

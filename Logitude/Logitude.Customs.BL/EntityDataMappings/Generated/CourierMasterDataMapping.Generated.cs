@@ -47,7 +47,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         WeightValueCode, 
 	         StorageSiteCode, 
 	         TruckerId, 
-	         IntegratorCode,
+	         IntegratorCode, 
+	         IsReadyForInvoice,
 	      }
 
 
@@ -95,7 +96,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TruckerId, 
 	         IntegratorCode, 
 	         IntegratorName, 
-	         IntegratorNumber,
+	         IntegratorNumber, 
+	         IsReadyForInvoice,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -227,6 +229,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IntegratorCode))
             {
 				entityPOCO.IntegratorCode = entityPM.IntegratorCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadyForInvoice))
+            {
+				entityPOCO.IsReadyForInvoice = entityPM.IsReadyForInvoice;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -365,6 +372,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IntegratorCode = entityPOCO.IntegratorCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReadyForInvoice))
+            {
+					entityPM.IsReadyForInvoice = entityPOCO.IsReadyForInvoice;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -494,6 +506,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IntegratorCode))
             {
                 oldEntityPM.IntegratorCode = entityPM.IntegratorCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadyForInvoice))
+            {
+                oldEntityPM.IsReadyForInvoice = entityPM.IsReadyForInvoice;
             }
 			
 		}

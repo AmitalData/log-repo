@@ -25,12 +25,42 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Customs.Data.EntityListQueryServices;
+using WebFreight.Web.CustomWebServices.BL.XLSExport;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class CourierMasterController : ApiController
     {
 
+
+        public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId,int tenant)
+        {
+            try
+            {
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+
+                var o = new CourierMasterWSheetExport();
+                var result = o.ExportReport(CourierMasterId, tenant);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+
+                response.Content = new StreamContent(new MemoryStream(result));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName =
+                    Guid.NewGuid().ToString() + "_" + CourierMasterId + ".xls";
+                return response;
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetIfCourierMasterExists(string Id, string airlineId, string HAWB, string MAWB)
         {
             try

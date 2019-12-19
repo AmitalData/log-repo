@@ -73,6 +73,8 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Customs.BL.PatchDistribution;
+using Logitude.Update.PatchDistribution;
 
 namespace Logitude.Update
 {
@@ -234,6 +236,11 @@ namespace Logitude.Update
             Thread thread = new Thread(() =>
             {
                 UpdateModule(0, "customs", UpdateCustomslbl);
+                var repo = new CustomsSettingRepository(_SeedTenant);
+                if (repo.AnyCourierTenant())
+                {
+                    MessageBox.Show("נמצא סביבת בלדרות פעילה - וודא שאין מסרים לחתימה - שאל את איתן ענת !!!");
+                }
                 Func<string> GetConnetionStringFunc = () =>
                 {
                     string input = Microsoft.VisualBasic.Interaction.InputBox(
@@ -1857,6 +1864,8 @@ User/Pass",
         }
 
         bool buildCustomsZipFiles = false;
+        private int _SeedTenant=0;
+
         private void UpdateZipFiles()
         {
             //timer 
@@ -1913,6 +1922,9 @@ User/Pass",
 
         private void productionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var frm = new PatchDistributionForm();
+            frm.ShowDialog();
+
 
         }
 

@@ -30,6 +30,10 @@ import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsReq
 import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 import { CourierPendingReasonListService } from '../../../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { CourierPendingReasonList } from '../../../../Customs/EntityLists/CourierPendingReasonList';
+import { element } from 'protractor';
+import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
     moduleId: module.id,
@@ -88,8 +92,14 @@ implements OnDestroy
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
     _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
-    _SelectedPAYValue: string = 'C'; // Correct/InProgress/ReadyToSend
+    //_SelectedPAYValue: string = 'C'; // Correct/InProgress/ReadyToSend
     //_SelectedHOLDValue: string = 'A'; //All/Pending Codes List
+
+    //Selected tabs
+    _SelectedPAYValue: string = 'R'; // Correct/InProgress/ReadyToSend
+    _SelectedDECTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
+    _SelectedMNFTABValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
+    _SelectedDOCTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
 
     public columns: any[] = null;
 
@@ -149,10 +159,13 @@ implements OnDestroy
         this._CourierWorksheetSharedDataService._SelectedItems.Collection = [];
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
+        this._SelectedMNFTABValue = 'MX';
         this._SelectedDECValue = 'A';
+        this._SelectedDECTabValue = 'MX';
+        this._SelectedDOCTabValue = 'MX';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
-        this._SelectedPAYValue = 'C';
+        this._SelectedPAYValue = 'R';
         if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
 
         switch (item.Code) {
@@ -374,6 +387,13 @@ implements OnDestroy
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
+        if (this._InCorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "X") {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
 
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -514,15 +534,27 @@ implements OnDestroy
     _DOCTotal = 0;
     _DOC_U_Total = 0;
     _DOC_C_Total = 0;
+    _DOC_MX_Total = 0;
+    _DOC_V_Total = 0;
+    _DOC_I_Total = 0;
     _DEC_W_Total = 0;
     _DEC_C_Total = 0;
+    _DEC_MX_Total = 0;
+    _DEC_R_Total = 0;
+    _DEC_I_Total = 0;
+    _DEC_V_Total = 0;
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
+    _MNF_MX_Total = 0;
+    _MNF_R_Total = 0;
+    _MNF_I_Total = 0;
+    _MNF_V_Total = 0;
     _ACC_W_Total = 0;
     _ACC_WS_Total = 0;
     _HOLD_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
+    _InCorrectDECToBatchSend = 0;
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
@@ -573,6 +605,7 @@ implements OnDestroy
                                 this._ReadyDECToBatchSend = 0;
                             } 
                             this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSendR") + ' (' + this._ReadyDECToBatchSend + ')';
+                            this._DEC_R_Total = item.Value;
                             break;
                         }
                         case "DECR_RV": {
@@ -590,6 +623,7 @@ implements OnDestroy
                                 this._ReadyMNFToBatchSend = 0;
                             }
                             this._ReadyMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSendR") + ' (' + this._ReadyMNFToBatchSend + ')';
+                            this._MNF_R_Total = item.Value;
                             break;
                         }
                         case "MNFR_RV": {
@@ -607,6 +641,12 @@ implements OnDestroy
                             TabFilter.Total = item.Value;
                             break;
                         }
+                        case "MNF": {
+                            this._MNF_MX_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+                            break;
+                        }
                         case "MNF_W": {
                             //statements; 
                             this._MNF_W_Total = item.Value;
@@ -616,11 +656,20 @@ implements OnDestroy
                             this._MNF_C_Total = item.Value;
                             break;
                         }
+                        case "MNF_V": {
+                            this._MNF_V_Total = item.Value;
+                            break;
+                        }
+                        case "MNF_I": {
+                            this._MNF_I_Total = item.Value;
+                            break;
+                        }
                         case "DOC": {
                             //statements; 
                             this._DOCTotal = item.Value;
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
                             TabFilter.Total = item.Value;
+                            this._DOC_MX_Total = item.Value;
                             break;
                         }
                         case "DOC_U": {
@@ -632,12 +681,38 @@ implements OnDestroy
                             this._DOC_C_Total = item.Value;
                             break;
                         }
+                        case "DOC_I": {
+                            this._DOC_I_Total = item.Value;
+                            break;
+                        }
+                        case "DOC_V": {
+                            this._DOC_V_Total = item.Value;
+                            break;
+                        }
+                        case "DEC": {
+                            this._DEC_MX_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+                            break;
+                        }
                         case "DEC_C": {
                             this._DEC_C_Total = item.Value;
                             break;
                         }
                         case "DEC_W": {
                             this._DEC_W_Total = item.Value;
+                            this._InCorrectDECToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._CorrectDECToBatchSend = 0;
+                            }
+                            break;
+                        }
+                        case "DEC_V": {
+                            this._DEC_V_Total = item.Value;
+                            break;
+                        }
+                        case "DEC_I": {
+                            this._DEC_I_Total = item.Value;
                             break;
                         }
                         case "PAYReadyNotFastindividual": {
@@ -653,14 +728,25 @@ implements OnDestroy
                             this._ACC_WS_Total = item.Value;
                             break;
                         }
+                            /*
+                        case "PAY": {
+                            this._PAY_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+                            break;
+                        }
+                        */
                         case "PAY_C": {
                             //statements; 
                             this._PAY_C_Total = item.Value;
                             break;
                         }
-                        case "PAY_R": {
-                            //statements; 
+                        //case "PAY_R": {
+                        case "PAY": {
+                            //statements;
                             this._PAY_R_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
                             break;
                         }
                         case "PAY_I": {
@@ -992,36 +1078,104 @@ implements OnDestroy
             }
         }
 
-        switch (this._SelectedMNFValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "MNF") {
+            switch (this._SelectedMNFTABValue) {
+                case "I": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedMNFValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "W": {
+                            filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
-        switch (this._SelectedDECValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "DEC") {
+            switch (this._SelectedDECTabValue) {
+                case "I": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedDECValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "W": {
+                            filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
-        switch (this._SelectedDOCValue) {
-            case "C": {
-                filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "U": {
-                filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "DOC") {
+            switch (this._SelectedDOCTabValue) {
+                case "I": {
+                    filters.addAdditionalFilter("DocumentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("DocumentStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedDOCValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "U": {
+                            filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
@@ -1066,18 +1220,24 @@ implements OnDestroy
             }
         }
 
-        switch (this._SelectedPAYValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierPaymentStatusCode", "R,O", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "R": {
-                filters.addAdditionalFilter("CourierPaymentStatusCode", "R", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "I": {
-                filters.addAdditionalFilter("CourierPaymentStatusCode", "I", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "PAY") {
+            switch (this._SelectedPAYValue) {
+                case "C": {
+                    filters.addAdditionalFilter("CourierPaymentStatusCode", "R,P", null, null, "InList", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
+                case "I": {
+                    filters.addAdditionalFilter("CourierPaymentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
@@ -1093,7 +1253,7 @@ implements OnDestroy
             }
         }
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
+            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
         }
         if (AppTool.IsNullOrEmpty(filters.SortBy)) {
             filters.SortBy = "CourierHawb";
@@ -1138,10 +1298,24 @@ implements OnDestroy
         }
     }
 
+    MNFTABFilterClicked(value: string) {
+        if (this._SelectedMNFTABValue != value) {
+            this._SelectedMNFTABValue = value;
+            this.RefreshList();
+        }
+    }
+
     DECFilterClicked(value: string) {
 
         if (this._SelectedDECValue != value) {
             this._SelectedDECValue = value;
+            this.RefreshList();
+        }
+    }
+
+    DECTabFilterClicked(value: string) {
+        if (this._SelectedDECTabValue != value) {
+            this._SelectedDECTabValue = value;
             this.RefreshList();
         }
     }
@@ -1154,6 +1328,12 @@ implements OnDestroy
         }
     }
 
+    DOCTabFilterClicked(value: string) {
+        if (this._SelectedDOCTabValue != value) {
+            this._SelectedDOCTabValue = value;
+        }
+    }
+
     ACCFilterClicked(value: string) {
 
         if (this._SelectedACCValue != value) {
@@ -1162,6 +1342,13 @@ implements OnDestroy
         }
     }
 
+    PAYFilterClicked(value: string) {
+
+        if (this._SelectedPAYValue != value) {
+            this._SelectedPAYValue = value;
+            this.RefreshList();
+        }
+    }
 
     GetPending() {
         this._PendingCodes.length = 0;
@@ -1193,7 +1380,7 @@ implements OnDestroy
 
 
     getCourierPendingReasonName(courierPendingReason: string) {
-        var toolTip = courierPendingReason
+        var toolTip = courierPendingReason;
         if (!AppTool.IsNullOrEmpty(toolTip) && toolTip.indexOf(',') < 0) {
 
             var myCourierPendingReasonListService = new CourierPendingReasonListService();
@@ -1615,6 +1802,54 @@ implements OnDestroy
             this.RefreshButtonClicked();
         });
     }
+    _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
+    IsReadyForInvoiceClick() {
+
+
+        if (this.entityPM.IsReadyForInvoice) {
+            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show(text);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.UpdateIsReadyForInvoice();
+                }
+            });
+
+
+        } else {
+            this.UpdateIsReadyForInvoice();
+        }
+    }
+    Export2Excel() {
+        //this._IsDisableToggle = !this._IsDisableToggle;
+        
+        
+        
+
+        //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
+                            //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
+
+
+        window.open(url);
+
+    }
+    UpdateIsReadyForInvoice() {
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+        this.entityPM.IsReadyForInvoice = !this.entityPM.IsReadyForInvoice;
+        this._CourierMasterPMService
+            .update(this.entityPM)
+            .subscribe((response: ServiceResponse) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                if (response.HasError) {
+                    var mess
+                } else {
+                    this.entityPM = response.Result;
+                }
+            });
+    }
+
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;

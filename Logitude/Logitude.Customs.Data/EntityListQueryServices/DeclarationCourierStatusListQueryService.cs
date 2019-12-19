@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class DeclarationCourierStatusListQueryService
     {
-        private bool _RequiredFieldErrorsForCourierDeclarationIsValid;
+        public bool RequiredFieldErrorsForCourierDeclarationIsValid;
 
         private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
         {
@@ -67,6 +67,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             
             IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
+                                                              
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
                                                               join c in context.CourierDeclarations
@@ -79,6 +80,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                               into errorPlaceOuterJoin
                                                               from errorPlaceOuterJoinNullable in errorPlaceOuterJoin.DefaultIfEmpty()
 
+                                                              join cm in context.CourierMasters on c.CourierMasterId equals cm.Id
 
                                                               //join pendingListNames in qDeclarationPendingListNames
                                                               //on a.DeclarationId equals pendingListNames.DeclarationId
@@ -107,7 +109,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                   IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
                                                                   IsACCTab = (a.StorageSiteStatusCode == "2" || a.SpecialActionStatus == "X"),
-                                                                  CourierManifestStatusCode = !_RequiredFieldErrorsForCourierDeclarationIsValid ? "M" : a.CourierManifestStatusCode,
+                                                                  CourierManifestStatusCode = !RequiredFieldErrorsForCourierDeclarationIsValid ? "M" : a.CourierManifestStatusCode,
                                                                   CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                   CourierPaymentStatusCode = a.CourierPaymentStatusCode,
                                                                   IsCourierMissingClassification = a.IsCourierMissingClassification,
@@ -161,6 +163,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   StorageSiteStatusName = a.MamanStatus != null ? a.MamanStatus.LocalName : null,
                                                                   StorageSiteErrorText = a.StorageSiteErrorText,
                                                                   CourierPendingReasonList = a.CourierPendingReasonList,
+
+
+                                                                  AirlineId =cm.CustomsAirline.AirlinePrefix,
+                                                                  MAWB = cm.MAWB,
+                                                                  MasterGrossMassMeasure = cm.GrossMassMeasure,
+                                                                  MasterPackageQuantity = cm.PackageQuantity,
+                                                                  MasterCreateDateTime = cm.CreateDateTime,
+                                                                  MasterGatewayPortCode = cm.GatewayPortCode,
+                                                                  MasterEstimatedArrivalDate = cm.EstimatedArrivalDate,
+                                                                  MasterStorageSiteCode = cm.StorageSiteCode,
+                                                                  MasterHAWB = cm.HAWB,
                                                               });
 
 
@@ -204,11 +217,27 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             if(courierMasterIdF != null)
             {
                 string courierMasterId = (string)courierMasterIdF.FieldValue;
-                _RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
+                RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
             }
             return iQueryable;
         }
-	}
+
+        public IQueryable<DeclarationCourierStatusList> GetByCourierMasterId(string courierMasterId, int tenant)
+        {
+            IQueryable<DeclarationCourierStatus> DeclarationCourierStatusQuery = (from a in context.DeclarationCourierStatuses
+                                                                                  where a.Tenant  == tenant
+                                                                                  select a);
+
+
+            IQueryable<DeclarationCourierStatusList> q = GetIqueryableList(DeclarationCourierStatusQuery);
+            q = q.Where(r => r.CourierMasterId == courierMasterId);
+
+
+            return q;
+
+        }
+
+    }
 
     public class MyJoin
     {

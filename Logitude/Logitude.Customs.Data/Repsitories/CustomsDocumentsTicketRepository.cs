@@ -141,6 +141,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
+
             List<CustomsDocumentsTicket> customsDocumentsTicket;
             customsDocumentsTicket = (from a in context.CustomsDocumentsTickets
                                       where (a.DocumentsFilingId == documentsFilingId)

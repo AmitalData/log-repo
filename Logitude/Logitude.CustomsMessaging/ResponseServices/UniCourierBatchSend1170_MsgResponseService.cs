@@ -81,8 +81,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-
-                    listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
+                    if (customResponse.CourierDeclarationStatusCode == "RV")
+                    {
+                        listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode != "P")).ToList();
+                    }
+                    else
+                    {
+                        listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
+                    }
+                        
                     if (listPoco.Count == 0)
                     {
                         mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
@@ -95,6 +102,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
     .ForEach(list100 =>
     {
         customResponse.ServerSplitDeclarationsList = list100;
+        customResponse.LoggingUserId = requestParams.LoggingUserId;
+
         //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
         CreateDCAInUCB1170_MsgMessagingService
@@ -154,6 +163,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
                         Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM);
+                        
+                        string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
+                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+
                         scopeNewCRS.Complete();
                     }
                     listDeclarationIdCreateCRS.Add(itemPM.DeclarationId);
@@ -167,14 +180,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
                 }
             }
-            listDeclarationIdCreateCRS.ChunkBy(100)
-.ForEach(list100 =>
-{
-    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
-    string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+//            listDeclarationIdCreateCRS.ChunkBy(100)
+//.ForEach(list100 =>
+//{
+//    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
+//    string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
-    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-});
+//    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+//});
         }
 
         private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)

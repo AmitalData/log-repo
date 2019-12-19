@@ -50,7 +50,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    
                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
                     //using (disposableToken = ProcessLockUtil.Instance.InsertKey(key, "2470ResponseService.Update"))
-                    disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
+                    disposableToken =
+                        ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
+                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant,true, key, "2470ResponseService.Update");
                 }
                 {
 

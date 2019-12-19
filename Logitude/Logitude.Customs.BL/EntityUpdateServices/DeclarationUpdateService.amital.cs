@@ -131,7 +131,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (dirtyDeclarationPM.CurrentContextTag.ToString().Contains("Upsert"))  // moran 28.7.16 - Task 22249
             {
-                doTask = false;
+                if (dirtyDeclarationPM.CurrentContextTag != null && dirtyDeclarationPM.CurrentContextTag.ToString() == "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()+CourierMasterChange")
+                {
+                    dirtyDeclarationPM.CurrentContextTag = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()";
+                }
+                else
+                {
+                    doTask = false;
+                }
             }
             if(dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L")
             {

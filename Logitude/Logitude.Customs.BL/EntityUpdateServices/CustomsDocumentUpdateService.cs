@@ -67,6 +67,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }).ToList();
 
                 AutoSetOriginalDocumentTrue(entityPM);
+                this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
             }
         }
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
@@ -175,6 +176,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (entityPM.DocumentStatusCode == "7")
                 {
                     UpdateDeclarationCourierStatus(entityPM);
+                }
+                if(entityPM.DocumentTypeCode == "380" && string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    UpdateDeclarationCourierStatus380(entityPM);
                 }
 
             }
@@ -295,7 +300,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
-            if (ready)
+            if (_AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady)
+            {
+                if (requireddocumentTypeMetaDatas.Count == 0)
+                {
+                    ready = true;
+                }
+            }
+                if (ready)
             {
                 entityPM.IsMetaDataReady = true;
 
@@ -408,6 +420,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
 
         public bool IgnoreSendFailure = false;
+        private bool _AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady;
+
         void TrySendMessageToQueue(CustomsDocumentPM entityPM, bool forceDueLoadTest = false)
         {
             var send = false;
@@ -713,6 +727,43 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         currentDeclarationCourierStatusPM.DocumentStatusCode = status;
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     }
+                }
+            }
+        }
+
+
+
+        private void UpdateDeclarationCourierStatus380(CustomsDocumentPM entityPM)
+        {
+
+            if (entityPM.DocumentTypeCode == "380")
+            {
+                ICustomContext context = MainContext as CustomContext;
+                DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
+                if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
+                {
+                    string status = "X";
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+                    if (currentDeclarationCourierStatusPM == null)
+                    {
+                        currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
+                        {
+                            DeclarationId = connectedDeclarationPM.Id,
+                            Tenant = connectedDeclarationPM.Tenant,
+                            IsClosedForFollowUp = false,
+                            IsCourierMissingClassification = false,
+                        };
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+                    else
+                    {
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    currentDeclarationCourierStatusPM.DocumentStatusCode = status;
+                    currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 }
             }
         }

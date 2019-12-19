@@ -406,6 +406,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB2755_MsgMessagingService>
                             ((new DCAInUCB2755_MsgMessagingService()).MainInterfaceCode);
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCB8212_MsgMessagingService>
+                ((new DCAInUCB8212_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB8250_MsgMessagingService>
@@ -436,9 +439,23 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             ((new GP_1030_GatepassRequestMessageMessagingService()).MainInterfaceCode);
 
 
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInUCBStorageSite_MsgMessagingService>
+                            ((new DCAInUCBStorageSite_MsgMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCBUD2LT_MsgMessagingService>
+                ((new DCAInUCBUD2LT_MsgMessagingService()).MainInterfaceCode);
+
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInUCBCTML_MsgMessagingService>
                 ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInDE_NG_5108_DecisionMessageMessagingService>
+                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInDE_NG_5108_DecisionMessageMessagingService>
@@ -458,7 +475,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         //}
 
-        public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode,string correlationId="")
+        public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode, string correlationId = "")
         {
             MessagingServiceFactoryHelper.InitContainer();
 
@@ -480,7 +497,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             return anaO;
 
-            }
+        }
         public static void ResolveAndExecute(string mainInterfaceCode, int tenant, string correlationId,
             CustomsCommandEnum myCustomsCommandEnum, OverrideControllerModel debugModel = null)
         {
@@ -505,16 +522,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var anaO = GetMessagingService(mainInterfaceCode, correlationId);
             if (anaO == null)
             {
-                
+
                 mainInterfaceCode = GetMainInteface(mainInterfaceCode);
 
                 anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             }
 
             anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-            
+
             anaO.MyOverrideControllerModel = debugModel;
-            if (anaO.MyOverrideControllerModel!=null)
+            if (anaO.MyOverrideControllerModel != null)
             {
                 anaO.MyOverrideControllerModel.CurrentCustomsCommandWR = anaO.CurrentCustomsCommandWR;
             }
@@ -529,7 +546,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
         public static void ResolveAndReQueue(string mainInterfaceCode, int tenant, string correlationId,
-          //CustomsCommandEnum myCustomsCommandEnum, 
+            //CustomsCommandEnum myCustomsCommandEnum, 
             OverrideControllerModel debugModel = null)
         {
             MessagingServiceFactoryHelper.InitContainer();
@@ -558,7 +575,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             }
 
-            
+
             var resDat = anaO.ReQueue(tenant, correlationId);
             var responseDataBase = resDat as Logitude.CustomsMessaging.Common.ResponseData.ResponseDataBase;
             if (responseDataBase != null && responseDataBase.HasException)
@@ -598,9 +615,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public static string GetMainInteface(string interfaceTypeCode)
         {
-            
+
             var interfaceManagementDetails = new InterfaceManagementDetails();
-            var requestinterface= interfaceManagementDetails.GetAll().FirstOrDefault(r => r.ResponseInterfaceCode == interfaceTypeCode);
+            var requestinterface = interfaceManagementDetails.GetAll().FirstOrDefault(r => r.ResponseInterfaceCode == interfaceTypeCode);
             if (requestinterface == null)
             {
                 throw new System.Exception("interfaceTypeCode: " + interfaceTypeCode + "  is not not registered  !!!!");

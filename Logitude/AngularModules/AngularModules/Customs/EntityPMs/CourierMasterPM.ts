@@ -234,6 +234,11 @@ export class CourierMasterPM {
     public set IntegratorNumber(newValue: string) { if (this.integratorNumber != newValue) { this.integratorNumber = newValue; this.MarkAsDirty("IntegratorNumber"); } }
        
 	 
+    private isReadyForInvoice: boolean;
+    public get IsReadyForInvoice() { return this.isReadyForInvoice; }
+    public set IsReadyForInvoice(newValue: boolean) { if (this.isReadyForInvoice != newValue) { this.isReadyForInvoice = newValue; this.MarkAsDirty("IsReadyForInvoice"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

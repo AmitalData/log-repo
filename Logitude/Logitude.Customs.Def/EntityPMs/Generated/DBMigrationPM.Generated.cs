@@ -1,0 +1,199 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DBMigrationPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime executeDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime ExecuteDate  
+	   {
+	    
+	     get
+		{
+		   return executeDate;
+		 }
+		 set
+		 {
+		   if(executeDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExecuteDate",OldValue=executeDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   executeDate=value;
+		   }
+			
+		 }
+	   }
+	  private decimal majorVersion ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal MajorVersion  
+	   {
+	    
+	     get
+		{
+		   return majorVersion;
+		 }
+		 set
+		 {
+		   if(majorVersion != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MajorVersion",OldValue=majorVersion,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   majorVersion=value;
+		   }
+			
+		 }
+	   }
+	  private int minorVersion ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int MinorVersion  
+	   {
+	    
+	     get
+		{
+		   return minorVersion;
+		 }
+		 set
+		 {
+		   if(minorVersion != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinorVersion",OldValue=minorVersion,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   minorVersion=value;
+		   }
+			
+		 }
+	   }
+	  private string remarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Remarks  
+	   {
+	    
+	     get
+		{
+		   return remarks;
+		 }
+		 set
+		 {
+		   if(remarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Remarks",OldValue=remarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   remarks=value;
+		   }
+			
+		 }
+	   }
+	  private bool isClose ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsClose  
+	   {
+	    
+	     get
+		{
+		   return isClose;
+		 }
+		 set
+		 {
+		   if(isClose != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClose",OldValue=isClose,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isClose=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<DBMigrationLinePM> dBMigrationLines;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("MyDBMigrationLines", "Id","DBMigrationId")]
+	   [DataMember]
+	   public virtual List<DBMigrationLinePM> DBMigrationLines  
+	   {
+	        get
+             {
+                 if (dBMigrationLines == null)
+                 {
+                     dBMigrationLines = new List<DBMigrationLinePM>();
+                 }
+                 return dBMigrationLines;
+              }
+             set { dBMigrationLines = value; }
+	    }
+		   
+	   private List<DBMigrationLinePM>  deletedDBMigrationLines;
+	   public virtual List<DBMigrationLinePM> DeletedDBMigrationLines  
+	   {
+	        get
+             {
+                 if ( deletedDBMigrationLines == null)
+                 {
+                      deletedDBMigrationLines = new List<DBMigrationLinePM>();
+                 }
+                 return  deletedDBMigrationLines;
+              }
+             set {  deletedDBMigrationLines = value; }
+	    }
+	     }
+   
+}
+	 

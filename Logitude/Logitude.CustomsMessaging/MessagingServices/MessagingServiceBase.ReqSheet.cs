@@ -348,7 +348,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             TResponseData responseData = default(TResponseData);
             DCAServerUploadResponse dCAServerUploadResponse = null;
             DCAServerUploadStatus dCAServerUploadStatus = null;
-            LogMessagingUtil.Instance.Clear();
+            //LogMessagingUtil.Instance.Clear();
             Stopwatch totalStopwatch = null;
 
 
@@ -366,7 +366,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 var transitions = InitTransition();
 
-
+                
                 var CommandList = new List<CustomsRCmmand>()
                 {
                     new CustomsRCmmand(CustomsCommandEnum.CustomsCommandGetCustomRequestWR, (o) =>{ return CustomsCommandGetCustomRequest(out customsRequest);   }) ,
@@ -901,6 +901,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 stepRequest.TimeOutInMin = 5;
                 //transactionScopeOption = TransactionScopeOption.Suppress;
             }
+            if (this.MainInterfaceCode == "2715")
+            {
+                stepRequest.TimeOutInMin = 5;
+                //transactionScopeOption = TransactionScopeOption.Suppress;
+            }
+
             if (this.MainInterfaceCode == "US2L01")
             {
                 stepRequest.TimeOutInMin = 9;
@@ -915,8 +921,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             object ContextObjectTag = null;
             bool toContinueNextCommand = DoStep(stepRequest, () =>
             {
-
+                LogMessagingUtilWR.Instance.AppendLine("AnalyzeCore:b4");
                 var res = AnalyzeCore(requestParams, customsResponse, false);
+                LogMessagingUtilWR.Instance.AppendLine("AnalyzeCore:after");
                 bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
@@ -928,7 +935,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             },
             () =>
             {
+                LogMessagingUtilWR.Instance.AppendLine("GetResponseDataAfterAnalyze:b4");
                 var res = GetResponseDataAfterAnalyze(requestParams, customsResponse);
+                LogMessagingUtilWR.Instance.AppendLine("GetResponseDataAfterAnalyze:after");
                 ContextObjectTag = res.ContextObjectTag;
                 return res;
             },
@@ -1517,6 +1526,7 @@ Exception:" + ee.Message
         {
             string customsRequestsSheetPMId = "";
             CommStatusEnum stepStatusEnum = CommStatusEnum.W;
+            TRequestParams defaultRequestParamsFromCustomsResponse = null;
             try
             {
                 int tenantSave = tenant;
@@ -1545,7 +1555,7 @@ Exception:" + ee.Message
                 dcaReceivedService.ProccessIt();
                 _CorrelationId = dcaReceivedService.CorrelationId;
                 var customsResponse = dcaReceivedService.CustomsResponse ?? new TCustomsResponse();
-                TRequestParams defaultRequestParamsFromCustomsResponse = null;
+                
                 var CreateDefaultRequestParamsFromCustomsResponseFailed = true;
                 try
                 {
@@ -1815,10 +1825,21 @@ Exception:" + ee.Message
                 bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>()?? defaultRequestParamsFromCustomsResponse;
+                    if (requestParams != null)
                     {
-                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams,false);
+                        //throw new Exception("tryConcurrentKiller()--(requestParams==null)");
+
+                        var intrefaceTypeListDisplayOnly = CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList();
+                        if (intrefaceTypeListDisplayOnly == null)
+                        {
+                            throw new Exception("tryConcurrentKiller()--(intrefaceTypeListDisplayOnly==null)");
+                        }
+                        if (intrefaceTypeListDisplayOnly/*CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()*/.Contains(requestParams.InterfaceTypeCode))
+                        {
+
+                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams, false);
+                        }
                     }
                 }
                 if (stepStatusEnum == CommStatusEnum.F)

@@ -136,6 +136,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsVendor> CustomsVendors { get; }
 		 IDbSet<CustomsVerificationStatusType> CustomsVerificationStatusTypes { get; }
 		 IDbSet<DangerousGoodsPackingReq> DangerousGoodsPackingReqs { get; }
+		 IDbSet<DBMigration> DBMigrations { get; }
+		 IDbSet<DBMigrationLine> DBMigrationLines { get; }
 		 IDbSet<DebtNotificationType> DebtNotificationTypes { get; }
 		 IDbSet<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifiers { get; }
 		 IDbSet<DecCargoSplitCon> DecCargoSplitCons { get; }

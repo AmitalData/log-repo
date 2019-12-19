@@ -541,26 +541,35 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 else if (mode == "INSERT_UPDATE_DELETE" && !String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.ChangeInSupplierInvoice))
                 {
-                    if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
+                    if (this._INVOICE.QUE_TYPE == "OCR")
                     {
-                        if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
-                        var lineToSequenceNumeric = new LineToSequenceNumeric();
-                        lineToSequenceNumeric.line = int1;
-                        lineToSequenceNumeric.sequenceNumeric = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SequenceNumeric.Value;
-                        lineToSequence.Add(lineToSequenceNumeric);
-                        if (this._MySupplierInvoicePM.SequenceNumeric != int1)
+                        if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
                         {
-                            this._MySupplierInvoicePM.SequenceNumeric = int1;
+                            if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
+                            var lineToSequenceNumeric = new LineToSequenceNumeric();
+                            lineToSequenceNumeric.line = int1;
+                            lineToSequenceNumeric.sequenceNumeric = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SequenceNumeric.Value;
+                            lineToSequence.Add(lineToSequenceNumeric);
+                            if (this._MySupplierInvoicePM.SequenceNumeric != int1)
+                            {
+                                this._MySupplierInvoicePM.SequenceNumeric = int1;
+                                this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                        if (this._INVOICE.ChangeInSupplierInvoice == "2")
+                        {
+                            this._MySupplierInvoicePM.ChangeInSupplierInvoice = "2";
                             this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
                         }
-                    }
-                    if (this._INVOICE.ChangeInSupplierInvoice == "2")
-                    {
-                        this._MySupplierInvoicePM.ChangeInSupplierInvoice = "2";
-                        this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
-                    }
 
-                    return;
+                        return;
+                    }
+                    else if(this._INVOICE.QUE_TYPE == "SYS")
+                    {
+                        this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                        UpdateClassificationCodeOnly(this._INVOICE);
+                        return;
+                    }
                 }
                 else
                 {
@@ -693,6 +702,43 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 supplierInvoiceUpdateService.Update(this._MySupplierInvoicePM, true);
             }*/
         }
+
+        private void UpdateClassificationCodeOnly(INVOICE invoice)
+        {
+            foreach (var invoiceItem in invoice.INVOICEITEMS)
+            {
+                int int1 = 0;
+                SupplierInvoiceItemPM SupplierInvoiceItemPM;
+
+                if (int.TryParse(invoiceItem.LINE_ID, out int1))
+                {
+
+                }
+                else
+                {
+                    throw new BusinessErrorException("Error in parsing LINE_ID (" + invoiceItem.LINE_ID + ") into integer");
+                }
+                if (_MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault() != null &&
+                    _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SupplierInvoiceItems != null)
+                {
+                    SupplierInvoiceItemPM = _MyDeclarationPM.SupplierInvoices
+                        .Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER)
+                        .First()
+                        .SupplierInvoiceItems.Where(sii => sii.UnfInvoiceLine == int1)
+                        .FirstOrDefault();
+                    if (SupplierInvoiceItemPM != null)
+                    {
+                        SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
+                        if (invoiceItem.CLASSIFICATIONCODE != SupplierInvoiceItemPM.ClassificationCode) SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
+                        if (invoiceItem.TRADEAGREEMENTCODE != SupplierInvoiceItemPM.TradeAgreementCode)
+                        {
+                            SupplierInvoiceItemPM.TradeAgreementCode = invoiceItem.TRADEAGREEMENTCODE;
+                        }
+                    }
+                }
+            }
+        }
+
 
         private List<SupplierInvoiceItemPM> GetSupplierInvoiceItemPM(INVOICE invoice)
         {

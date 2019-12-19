@@ -46,7 +46,7 @@ namespace Simplog.Server.Infrastructure
                 (this as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = true; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
             }
 
-            
+
             ///this.Database.CommandTimeout = 240;
             InitLog();
         }
@@ -216,7 +216,7 @@ namespace Simplog.Server.Infrastructure
             {
                 return;
             }
-            
+
 
             if (DbContextBaseUtil.ToLog == null)
             {
@@ -451,7 +451,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
             private void LogMe(string mess)
             {
-                if(_StringBuilder == null)
+                if (_StringBuilder == null)
                     _StringBuilder = new StringBuilder();
                 if (mess == Environment.NewLine)
                 {
@@ -486,6 +486,101 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 LogMe(ExplainLog);
             }
         }
+
+
+        public Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
+        where returnType : struct
+        {
+            Debug.WriteLine(sqlReturn1Row);
+            sqlReturn1Row = sqlReturn1Row.TrimEnd(" "[0]).TrimEnd(";"[0]);
+            using (var command = this.Database.Connection.CreateCommand())
+            {
+
+
+                if (this.Database.Connection.State != System.Data.ConnectionState.Open)
+                {
+                    this.Database.Connection.Open();
+                }
+                command.CommandText = sqlReturn1Row;
+
+                
+                using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult)
+                    )
+                {
+
+                    if (dataReader.FieldCount < 1)
+                    {
+                        return null;
+                    }
+
+                    if (!dataReader.Read())
+                    {
+                        return null;
+                    }
+                    if (dataReader.IsDBNull(0))
+                    {
+                        return null;
+                    }
+
+
+
+                    var ReturnValue = GetReturnTypeFromReader(dataReader);
+
+                    return ReturnValue;
+                }
+            }
+
+        }
+
+        public int  ExecuteNonQuery (string sqlReturn1Row )
+        {
+
+            
+           
+
+            Debug.WriteLine(sqlReturn1Row);
+
+
+
+            using (var connection = 
+              new OracleConnection(
+                  /*"User Id=Scott;Password=tiger;Data Source=Ora;"*/
+                  this.Database.Connection.ConnectionString)
+            )
+            {
+                using (var command = new OracleCommand(sqlReturn1Row, connection))
+                {
+                    ///AddParams(command, MyParams);
+                    command.CommandType = CommandType.Text;
+                    int  rowsAffected = command.ExecuteNonQuery();
+                    // todo get affected ????????????
+                    //For UPDATE, INSERT, and DELETE statements, the return value is the number of rows affected by the command. For all other types of statements, the return value is -1. If a rollback occurs, the return value is also -1.
+
+                    return rowsAffected;
+
+
+                }
+            }
+            
+            //using (var command = this.Database.Connection.CreateCommand())
+            //{
+
+
+            //    if (this.Database.Connection.State != System.Data.ConnectionState.Open)
+            //    {
+            //        this.Database.Connection.Open();
+            //    }
+            //    command.CommandText = sqlReturn1Row;
+
+
+            //    int affect = command.ExecuteNonQuery();
+            //    return affect;
+
+            //}
+
+        }
+
+
     }
 
     public static class LogitudeExceptionExtU

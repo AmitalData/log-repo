@@ -36,6 +36,10 @@ namespace Logitude.Customs.Data.Repsitories
                    select a;
         }
 
+        public bool AnyCourierTenant()
+        {
+            return this.context.CustomsSettings.Any(r => r.CompanyType == "B");
+        }
         public AmitalRestrictOwnerModel GetMyAmitalRestrictOwnerModel(bool getFromCache, int tenant = 1, string UnifreightUserId = null)
         {
             var res = InjectionUtil.Instance.GetAmitalRestrictOwnerModel(getFromCache, tenant, UnifreightUserId);

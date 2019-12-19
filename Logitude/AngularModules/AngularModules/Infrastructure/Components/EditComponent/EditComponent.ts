@@ -182,6 +182,9 @@ export class EditComponent implements OnDestroy {
                         this.entityArgs.EditComponent = this;
                         this.SendActivityLog();
                         this.BuildComponent();
+                        if(this.IsSplitComponentOpened){
+                            this.LoadSplitComponent();
+                        }
                     }
 
                     else {
@@ -1432,7 +1435,7 @@ export class EditComponent implements OnDestroy {
 
     LoadSplitComponent() {
 
-
+       
         let locs = this.AllLocations.toArray();
         let myLocation: LocationDirective = locs.filter(f => f.Code == 'SplitComponentLocation')[0];
 
@@ -1442,7 +1445,7 @@ export class EditComponent implements OnDestroy {
             //this.myLocation.clear();
             var splitComponentPath = this.ObjectTable.SplitComponentPath;
             //var splitComponentPath = "./Customs/AngularModules/AngularModules/Customs/Components/Declaration/DeclarationSplitComponent";
-
+            myLocation.viewContainerRef.clear();
             SessionLocator.DynamicLoader.Load(splitComponentPath, myLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.SetComponentArgs({ EntityPM: this.EntityPM });
@@ -1460,6 +1463,7 @@ export class EditComponent implements OnDestroy {
         // state: opened / closed
         var defaultFilterCode: string = LastFilterClass.GetFilterValue("DeclarationEditControl", this.EntityPM.Id);
         if (defaultFilterCode == "true") {
+            if(!this.IsSplitComponentOpened)
             this.SplitButtonClicked(); // open split section
         }
 

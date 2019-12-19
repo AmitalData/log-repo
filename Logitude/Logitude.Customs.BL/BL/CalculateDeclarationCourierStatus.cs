@@ -16,6 +16,7 @@ using Logitude.Customs.BL.Validators;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.BL
 {
@@ -292,6 +293,10 @@ namespace Logitude.Customs.BL.BL
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
+            else if (IsDocumentMissing(myDeclarationCourierStatusPM))
+            {
+                myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
+            }
             else
             {
                 if (string.IsNullOrWhiteSpace(declarationPM.DeclarationStatusTypeCode) || declarationPM.IsChanged == true && myDeclarationCourierStatusPM.CourierDeclarationStatusCode == "V")
@@ -330,6 +335,20 @@ namespace Logitude.Customs.BL.BL
                 }
             }
         }
+
+        private Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == "380" && r.DocumentStatusCode == "1").ToList();
+            if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+            {
+                return true;
+            }
+
+            return false;
+        }    
+        
 
         public void CalcTotalInvoiceAmountInUSD(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
@@ -416,7 +435,7 @@ namespace Logitude.Customs.BL.BL
                 if (declarationPendingPM_902 == null)
                 {
                     declarationPendingPM_902 = new DeclarationPendingPM();
-                    declarationPendingPM_902.CourierPendingReasonCode = "900";
+                    declarationPendingPM_902.CourierPendingReasonCode = "902";
                     declarationPendingPM_902.Status = "A";
                     declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
                     myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);

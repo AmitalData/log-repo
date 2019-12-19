@@ -75,12 +75,25 @@
       <HintPath>..\..\packages\Autofac.WebApi.3.1.0\lib\net40\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
-    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
-    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle, Version=9.9.872.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
-    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
-    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+    </Reference>
     <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\DevDefined.OAuth.dll</HintPath>
       <Private>True</Private>
@@ -1381,6 +1394,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsVendorViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsVerificationStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DangerousGoodsPackingReqViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DBMigrationLineViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DBMigrationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DebtNotificationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DecCargoSplitCargoIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DecCargoSplitConsItemViewsController.Generated.cs" />
@@ -1581,6 +1596,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsRequiredFieldController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsSettingController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsVendorController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DBMigrationController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationCargoSplitController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationConsAcceptanceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationController.Generated.cs" />
@@ -1969,6 +1985,7 @@
     <Compile Include="CustomModel\DomainServices\Generated\PendingByKeywordDomainService.Generated.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\BlockListInWarehouseDetailExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\BlockListInWarehouseDetailProvider.cs" />
+    <Compile Include="CustomWebServices\BL\XLSExport\CourierMasterWSheetExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\ExchangeRateExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeRequestProvider.cs" />
@@ -2353,6 +2370,7 @@
     <Compile Include="Helpers\DepositionRequestHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
+    <Compile Include="Helpers\ExportToExcelHelper.DataTable.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FirstChanceExceptionEventArgsLogger.cs" />
@@ -2629,6 +2647,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentsDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsInsuranceCompanyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPartnerFtpUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitCargoIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConsItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConsPackDetUpdateClass.cs" />
