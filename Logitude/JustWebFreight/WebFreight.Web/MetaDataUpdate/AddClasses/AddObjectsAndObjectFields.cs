@@ -480,6 +480,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.DisplayOnLookUp = objectFieldDetails.DisplayOnLookUp;
                 newObjectField.DisplayOnLookUpLocal = objectFieldDetails.DisplayOnLookUpLocal;
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
+                newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
                 newObjectField.Code = objectFieldDetails.Code;
                 if (string.IsNullOrEmpty(newObjectField.FieldCode))
@@ -493,10 +494,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 if (helpTextTextCode != null)
                 {
                     newObjectField.HelpTextCodeId = helpTextTextCode.Id;
+                    newObjectField.HelpTextCodeCode = helpTextTextCode.Code;
                 }
                 if (listFieldLableTextCode != null)
                 {
                     newObjectField.ListTextCodeId = listFieldLableTextCode.Id;
+                    newObjectField.ListTextCodeCode = listFieldLableTextCode.Code;
                 }
                 newObjectField.Id = IdCounter.GetNumber("ObjectField", objectFieldDetails.Tenant).ToString();
                 newObjectField.IsCustom = objectFieldDetails.IsCustom;
@@ -557,6 +560,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.AutomaticField = objectFieldDetails.AutomaticField;
                 newObjectField.UniqueField = objectFieldDetails.UniqueField;
                 newObjectField.ShortNameTextCodeId = fullFieldTextCode != null ? fullFieldTextCode.Id : null;
+                newObjectField.ShortNameTextCodeCode = fullFieldTextCode != null ? fullFieldTextCode.Code : null;
                 newObjectField.DisplayInSearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
                 newObjectField.DisplayInSearchWindowListIndex = objectFieldDetails.DisplayInSearchWindowListIndex;
                 newObjectField.IsMulti = objectFieldDetails.IsMulti;
@@ -753,7 +757,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                             if (updatedObjectField.ShortNameTextCodeId == null)
                             {
                                 updatedObjectField.ShortNameTextCodeId = updatedShortNameTextCode.Id;
-
+                            }
+                            if (updatedObjectField.ShortNameTextCodeCode == null)
+                            {
+                                updatedObjectField.ShortNameTextCodeCode = updatedShortNameTextCode.Code;
                             }
                             textCodeRepository.Update(updatedShortNameTextCode);
                         }
@@ -770,11 +777,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         updatedShortNameTextCode.InActive = objectFieldDetails.InActive;
                         updatedShortNameTextCode.LocalDefaultText = objectFieldDetails.ShortLocalDefaultText;
                         updatedObjectField.ShortNameTextCodeId = updatedShortNameTextCode.Id;
+                        updatedObjectField.ShortNameTextCodeCode = updatedShortNameTextCode.Code;
                         textCodeRepository.Add(updatedShortNameTextCode);
                     }
                 }
 
-                if (updatedObjectField.HelpTextCodeId != null)
+                if (updatedObjectField.HelpTextCodeCode != null)
                 {
                     if (tenantZeroTextCodes.ContainsKey((objectFieldDetails.ObjectTableName != null ? objectFieldDetails.ObjectTableName : objectFieldDetails.ValidForQuerySection1) + "." + (objectFieldDetails.HelpTextCode != null ? objectFieldDetails.HelpTextCode : objectFieldDetails.FullFieldLable) + "HelpText" + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId))
                     {
@@ -805,6 +813,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                             helpTextTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
                             textCodeRepository.Add(helpTextTextCode);
                             updatedObjectField.HelpTextCodeId = helpTextTextCode.Id;
+                            updatedObjectField.HelpTextCodeCode = helpTextTextCode.Code;
                         }
 
                         else
@@ -820,6 +829,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                             helpTextTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
                             textCodeRepository.Add(helpTextTextCode);
                             updatedObjectField.HelpTextCodeId = helpTextTextCode.Id;
+                            updatedObjectField.HelpTextCodeCode = helpTextTextCode.Code;
                         }
                     }
                 }
@@ -841,6 +851,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         helpTextTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
                         textCodeRepository.Add(helpTextTextCode);
                         updatedObjectField.HelpTextCodeId = helpTextTextCode.Id;
+                        updatedObjectField.HelpTextCodeCode = helpTextTextCode.Code;
                     }
 
                     else
@@ -856,6 +867,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         helpTextTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
                         textCodeRepository.Add(helpTextTextCode);
                         updatedObjectField.HelpTextCodeId = helpTextTextCode.Id;
+                        updatedObjectField.HelpTextCodeCode = helpTextTextCode.Code;
                     }
                 }
 
@@ -875,6 +887,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                             {
                                 updatedObjectField.ListTextCodeId = updatedlistTextCode.Id;
                             }
+                            if (updatedObjectField.ListTextCodeCode == null)
+                            {
+                                updatedObjectField.ListTextCodeCode = updatedlistTextCode.Code;
+                            }
 
                             textCodeRepository.Update(updatedlistTextCode);
                         }
@@ -891,6 +907,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         updatedlistTextCode.TextCodeTypeCode = "CH";
                         updatedlistTextCode.InActive = objectFieldDetails.InActive;
                         updatedObjectField.ListTextCodeId = updatedlistTextCode.Id;
+                        updatedObjectField.ListTextCodeCode = updatedlistTextCode.Code;
                         updatedlistTextCode.LocalDefaultText = objectFieldDetails.ListLocalDefaultText;
                         textCodeRepository.Add(updatedlistTextCode);
                     }

@@ -1998,7 +1998,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                     if (!string.IsNullOrEmpty(fieldValue))
                     {
-                        string fieldName = textCodeRepository.GetSingleTextCodeByTenant(field.FullNameTextCodeId, tenant).DefaultText;
+                        string fieldName = textCodeRepository.GetSingleTextCodeByTenant(field.FullNameTextCodeCode, tenant).DefaultText;
                         PropertyInfo namePropInfo = element.GetType().GetProperty(objectTableName + field.FieldName + "Name");
                         namePropInfo.SetValue(element, fieldName, null);
                     }

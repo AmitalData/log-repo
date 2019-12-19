@@ -1504,24 +1504,24 @@ namespace WebFreight.Web.InfrastructureModel
 
                 TextCode zeroShortTextCode = null;
                 TextCode currentShortTextCode = null;
-                if (zeroObject.ShortNameTextCodeId != null)
+                if (zeroObject.ShortNameTextCodeCode != null)
                 {
-                    zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.ShortNameTextCodeId).FirstOrDefault();
+                    zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ShortNameTextCodeCode).FirstOrDefault();
                     currentShortTextCode = currentTenantTextCodes[zeroShortTextCode.Code + theTenant + currentObjectTable.Id];
                 }
 
-                TextCode zerofullTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.FullNameTextCodeId).FirstOrDefault();
+                TextCode zerofullTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.FullNameTextCodeCode).FirstOrDefault();
                 TextCode currentfullTextCode = currentTenantTextCodes[zerofullTextCode.Code + theTenant + currentObjectTable.Id];
 
                 TextCode zeroListTextCode = null;
                 TextCode currentListTextCode = null;
-                if (zeroObject.ListTextCodeId != null)
+                if (zeroObject.ListTextCodeCode != null)
                 {
-                    zeroListTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.ListTextCodeId).FirstOrDefault();
+                    zeroListTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ListTextCodeCode).FirstOrDefault();
                     currentListTextCode = currentTenantTextCodes[zeroListTextCode.Code + theTenant + currentObjectTable.Id];
                 }
 
-                TextCode zeroHelpTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.HelpTextCodeId).FirstOrDefault();
+                TextCode zeroHelpTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.HelpTextCodeCode).FirstOrDefault();
                 TextCode currentHelpTextCode = currentTenantTextCodes[zeroHelpTextCode.Code + theTenant + currentObjectTable.Id];
 
 
@@ -1583,6 +1583,10 @@ namespace WebFreight.Web.InfrastructureModel
                     HtmlListComponentUrl = zeroObject.HtmlListComponentUrl,
                     HtmlHeaderComponentName = zeroObject.HtmlHeaderComponentName,
                     HtmlListComponentName = zeroObject.HtmlListComponentName,
+                    FullNameTextCodeCode = currentfullTextCode.Code,
+                    HelpTextCodeCode = currentHelpTextCode != null ? currentHelpTextCode.Code : null,
+                    ListTextCodeCode = currentListTextCode != null ? currentListTextCode.Code : null,
+                    ShortNameTextCodeCode = currentShortTextCode != null ? currentShortTextCode.Code : null,
                 };
 
                 theObjectFieldsRepository.Add(newObjectField);
