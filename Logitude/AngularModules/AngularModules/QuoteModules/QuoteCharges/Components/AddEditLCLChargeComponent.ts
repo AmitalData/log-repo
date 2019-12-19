@@ -181,7 +181,7 @@ export class AddEditLCLChargeComponent {
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (this.IsHyprid) {
+        if (this.IsHyprid && this.DataContext.IsNew) {
             var quoteValidator: QuoteValidator = new QuoteValidator();
             quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
         }
