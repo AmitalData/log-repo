@@ -228,7 +228,8 @@ namespace Logitude.DXMLGenerator.Models
                                   "INNER JOIN SYS.TABLES ReferencedTable ON ReferencedTable.object_id = ForeignKeyColumns.referenced_object_id " +
                                   "INNER JOIN SYS.COLUMNS ReferencedColumn ON ReferencedColumn.column_id = ForeignKeyColumns.referenced_column_id AND ReferencedColumn.object_id = ReferencedTable.object_id " +
                                   "INNER JOIN SYS.OBJECTS SysObject ON SysObject.object_id = ForeignKeyColumns.constraint_object_id " +
-                                  "WHERE ForeignKeyColumns.referenced_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+                                  //"WHERE ForeignKeyColumns.referenced_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+                                  "WHERE ForeignKeyColumns.parent_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -246,10 +247,9 @@ namespace Logitude.DXMLGenerator.Models
                 {
                     RelationDefinition relation = new RelationDefinition
                     {
-                        ParentTableName = reader["ParentTableName"].ToString(),
-                        ParentColumnName = reader["ParentColumnName"].ToString(),
-                        ReferencedTableName = reader["ReferencedTableName"].ToString(),
-                        ReferencedColumnName = reader["ReferencedColumnName"].ToString(),
+                        ForeignKeyColumn = reader["ParentColumnName"].ToString(),
+                        ReferencedTable = reader["ReferencedTableName"].ToString(),
+                        ReferencedColumn = reader["ReferencedColumnName"].ToString(),
                         ForeignKeyConstraintName = reader["ForeignKeyConstraintName"].ToString()
                     };
                     relations.Add(relation);
