@@ -236,7 +236,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     public SetTabArgs(args: any, valdationErrorList: any[] = null) {
-
+        
         if (args.EntityPM instanceof DeclarationCargoSplitPM) this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
         if (this.IsDisplayOnly != true && args.IsDisplayOnly == true) {
@@ -293,7 +293,7 @@ export class CargoSplitGeneralTabComponent
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM) this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM)this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.RefreshEntity();
 
                     }
@@ -302,7 +302,7 @@ export class CargoSplitGeneralTabComponent
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM) this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM)this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildTabs();
                     }
                 })
@@ -340,7 +340,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     SetWindowArgs(winArg: any) {
-        if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM) this.EntityPM = winArg.CurrentEntity;
+        if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM)this.EntityPM = winArg.CurrentEntity;
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
@@ -456,7 +456,7 @@ export class CargoSplitGeneralTabComponent
 
         var tab;
         this.Tabs = [];
-
+        
         if (this.EntityPM.DecCargoSplitCons != null && this.EntityPM.DecCargoSplitCons.length > 0) {
 
             var items: DecCargoSplitConPM[] = this.EntityPM.DecCargoSplitCons.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
@@ -803,18 +803,18 @@ export class CargoSplitGeneralTabComponent
                 });
 
 
-            this.declarationMessagesService.PostSendCargoSplit(this.requestParams)
-                .subscribe((response: ServiceResponse) => {
+        this.declarationMessagesService.PostSendCargoSplit(this.requestParams)
+          .subscribe((response: ServiceResponse) => {
+            if (response) {
+              if (!response.HasError) {
+                if (response.Result.Succeeded) {
+                  this.declarationCargoSplitPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
                     if (response) {
-                        if (!response.HasError) {
-                            if (response.Result.Succeeded) {
-                                this.declarationCargoSplitPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
-                                    if (response) {
-                                        if (!response.HasError) {
-                                            if (response.Result instanceof DeclarationCargoSplitPM) this.EntityPM = response.Result;
-                                            this.BuildTabs();
-                                        }
-                                    }
+                      if (!response.HasError) {
+                          if (response.Result instanceof DeclarationCargoSplitPM)this.EntityPM = response.Result;
+                        this.BuildTabs();
+                      }
+                    }
 
                                 });
 
@@ -1017,9 +1017,9 @@ export class CargoSplitGeneralTabComponent
                     //this.SaveCompleted.emit(false);
                 }
 
-                else {
-                    if (myResponse.Result instanceof DeclarationCargoSplitPM) this.EntityPM = myResponse.Result;
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                    else {
+                        if (myResponse.Result instanceof DeclarationCargoSplitPM)this.EntityPM = myResponse.Result;
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
                         var myErrors: string[] = [];
                         myErrors.push("this.EntityPM.Id is null");
@@ -1078,7 +1078,7 @@ export class CargoSplitGeneralTabComponent
                 }
 
                 else {
-                    if (myResponse.Result instanceof DeclarationCargoSplitPM) this.EntityPM = myResponse.Result;
+                    if (myResponse.Result instanceof DeclarationCargoSplitPM)this.EntityPM = myResponse.Result;
                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
                         var myErrors: string[] = [];
