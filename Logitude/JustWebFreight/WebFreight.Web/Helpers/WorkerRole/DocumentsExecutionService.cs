@@ -43,7 +43,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 if (queueService != null && queueResponse!=null)
                 {
                     documentsExecutionLog = GetDocumentsExecutionLog();
-                    if (documentsExecutionLog != null && (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
+                    if (documentsExecutionLog != null && documentsExecutionLog.RetryNumber < 2 &&  (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
                     {
                         UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
                         ExportStimulDocumentToPDF();
@@ -62,9 +62,10 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
             {
-                AuthenticationUtil.AuthenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
+                string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
                 Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
                 {
+                    AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
                 });
@@ -87,7 +88,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 documentsExecutionLog.StartDate = documentsExecutionLogArgs.StartDate != null ? documentsExecutionLogArgs.StartDate : documentsExecutionLog.StartDate;
                 documentsExecutionLog.ExceptionMessage = documentsExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(documentsExecutionLogArgs.Exception) : documentsExecutionLog.ExceptionMessage;
                 documentsExecutionLog.DoneDate = documentsExecutionLogArgs.DoneDate != null ? documentsExecutionLogArgs.DoneDate : documentsExecutionLog.DoneDate;
-                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D")
+                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D" && documentsExecutionLogArgs.StatusCode !="P")
                 {
                     documentsExecutionLog.StatusCode = "F";
                     documentsExecutionLog.DoneDate = DateTime.Now;
@@ -100,7 +101,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         private void HandleDocumentsExecutionException(Exception exception)
         {
             ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
-            if (queueResponse != null && queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId"))
+            if (queueResponse != null)
             {
                 if (queueResponse.RetryNumber <= 1)
                 {
@@ -133,6 +134,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 contactEmail = contactQuery.GetContactEmailById(loggedContactId, tenant);
+                if (contactEmail == null && tenant != 0) contactEmail = contactQuery.GetContactEmailById(loggedContactId, 0);
             }
             return contactEmail;
         }
