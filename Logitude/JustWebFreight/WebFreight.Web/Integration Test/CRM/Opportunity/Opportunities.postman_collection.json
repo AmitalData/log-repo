@@ -1,35 +1,10 @@
 {
 	"info": {
-		"_postman_id": "f2581984-036b-41c0-9eb9-cc77fe4dc48d",
+		"_postman_id": "520c1af6-f02c-45c0-bd69-7f339265d7c8",
 		"name": "Opportunities",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "Create Opportunity stage",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n \n  \"Name\": \"Opportunity Stage\",\n  \"Probability\": 15,\n  \"SearchFields\": \",test Stage,15\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSelectable\": true,\n  \"MaxDays\": null,\n  \"InActive\": false,\n  \"ChangeSetOp\": 1,\n  \"EncodeBase64NVARCHARFieldsBy\": null\n}"
-				},
-				"url": "{{LogitudeURL}}/api/stages"
-			},
-			"response": []
-		},
 		{
 			"name": "Get Opportunity Stage",
 			"event": [
@@ -43,13 +18,14 @@
 							"    ",
 							"   ",
 							"    var idvalue1 = (pm.response.json().Result.filter(a => a.Name == 'Opportunity Stage')[0].Id);",
-							"",
 							"    var id1exist = idvalue1 !== null;",
-							"  ",
 							"    pm.expect(id1exist);",
 							"  ",
 							"    pm.environment.set(\"GetOpportunityStageId\",idvalue1);",
-							"",
+							"    ",
+							"    if (id1exist)  {",
+							"    postman.setNextRequest(\"GetOpportunityType\");  ",
+							"    } ",
 							"});"
 						],
 						"type": "text/javascript"
@@ -118,6 +94,31 @@
 						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Opportunity stage",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n \n  \"Name\": \"Opportunity Stage\",\n  \"Probability\": 15,\n  \"SearchFields\": \",test Stage,15\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSelectable\": true,\n  \"MaxDays\": null,\n  \"InActive\": false,\n  \"ChangeSetOp\": 1,\n  \"EncodeBase64NVARCHARFieldsBy\": null\n}"
+				},
+				"url": "{{LogitudeURL}}/api/stages"
 			},
 			"response": []
 		},
