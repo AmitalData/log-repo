@@ -667,8 +667,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                 }
                                 else {
                                     objectFieldAvailable = true;
-                                    if (this.ObjectField.HelpTextCodeId != null) {
-                                        this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
+                                    if (this.ObjectField.HelpTextCodeCode != null) {
+                                        this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
 
                                         if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                                             if (this.ObjectFieldHelp.length > 1) {

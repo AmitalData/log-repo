@@ -1,4 +1,4 @@
-﻿import {ObjectFieldPM} from '../../../../../Infrastructure/EntityPMs/ObjectFieldPM';
+import {ObjectFieldPM} from '../../../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 declare var System: any;
 declare var window: any;
@@ -44,7 +44,7 @@ export class DocumentObjectFieldsRowViewModel   {
                 result = objectField.FieldName;
             }
             else {
-                if (this.CurrentObjectField.ShortNameTextCodeId) {
+                if (this.CurrentObjectField.ShortNameTextCodeCode) {
                     result = TextCodeTranslator.Translate(objectField.ShortNameTextCodeCode)
 
                 }
