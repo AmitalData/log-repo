@@ -24,7 +24,7 @@ export class BIReportExtendedListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bireportsextended';
     }
 
-    GetTenantReports(filters: ApiQueryFilters, copyFromTenant: number) {
+    GetReportsByTenantNumber(filters: ApiQueryFilters, copyFromTenant: number) {
                 
         return new Promise((resolve, reject) => {
             resolve(this.getReports(filters, copyFromTenant));

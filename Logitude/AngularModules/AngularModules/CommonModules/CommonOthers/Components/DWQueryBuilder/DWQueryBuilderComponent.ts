@@ -68,7 +68,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public Height: number = 110;
     public IconSize: number = 17;
     private IsCopy: boolean = false;
-    private IsCopyFromTenant: number;
+    private CopyBIReportsFromTenant: number;
     private ComponentRef;
     mouseover(MyItem) {
         if (MyItem.HelpText) {
@@ -245,11 +245,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsCopy = args.IsCopy;
         this.ComponentRef = args.ComponentRef;
         this.BackCompleted = args.BackCompleted;
-        this.IsCopyFromTenant = args.IsCopyFromTenant;
+        this.CopyBIReportsFromTenant = args.BIReportsTenant;
         //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
-            if (this.IsCopyFromTenant || this.IsCopyFromTenant == 0) {
-                this._DWSubQueryPMService.getByQueryIdFromTenant(this.QID, this.IsCopyFromTenant).subscribe(myResult => {
+            if (this.CopyBIReportsFromTenant || this.CopyBIReportsFromTenant == 0) {
+                this._DWSubQueryPMService.getByQueryIdFromTenant(this.QID, this.CopyBIReportsFromTenant).subscribe(myResult => {
                     if (!myResult.HasError) {
                         this.ID = myResult.Result.SubQueryData.Id;
 
@@ -1144,13 +1144,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
         });
     }
     NotExist: boolean = true;
-    EditButtonClicked(afterInsert: boolean = false) {
+    EditButtonClicked(getSingle: boolean = false) {
         this.SelectedFieldsDataSource = [];
         this.SelectedFiltersDataSource = [];
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ..");
         if (!AppTool.IsNullOrEmpty(this.ID)) {
-            if ((this.IsCopyFromTenant || this.IsCopyFromTenant == 0) && !afterInsert) {
-                this._DWSubQueryPMService.getFromTenant(this.ID, this.IsCopyFromTenant).subscribe(myResult => {
+            if ((this.CopyBIReportsFromTenant || this.CopyBIReportsFromTenant == 0) && !getSingle) {
+                this._DWSubQueryPMService.getFromTenant(this.ID, this.CopyBIReportsFromTenant).subscribe(myResult => {
                     this.BuildData(myResult);
                 });
             }

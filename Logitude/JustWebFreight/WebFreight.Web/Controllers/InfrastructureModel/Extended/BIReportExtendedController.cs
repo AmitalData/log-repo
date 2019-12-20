@@ -154,12 +154,28 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(copyFromTenant);
                 BIReportListQueryService bIReportQuery = new BIReportListQueryService(MyContext);
-                List<BIReportList> entityLists = bIReportQuery.GetList(queryOperations, copyFromTenant);
+                List<BIReportList> entityLists;
+                if (filters.Filter1Value == "true")
+                {
+                    entityLists = bIReportQuery.GetAllLists(queryOperations, copyFromTenant);
+                }
+                else
+                {
+                    entityLists = bIReportQuery.GetList(queryOperations, copyFromTenant);
+                }
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = bIReportQuery.GetListCount(queryOperations, copyFromTenant);
+                    int count = 0;
+                    if (filters.Filter1Value == "true")
+                    {
+                        count = bIReportQuery.GetAllListsCount(queryOperations, copyFromTenant);
+                    }
+                    else
+                    {
+                        count = bIReportQuery.GetListCount(queryOperations, copyFromTenant);
+                    }
                     response.Count = count;
                 }
 

@@ -4,7 +4,8 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
-    <tr *ngIf="IsTenantZero || HasCopyFeature" style="height:2px;">
+
+    <tr *ngIf="IsTenantZero" style="height:2px;">
         <td>
             <table>
                 <tr>
@@ -27,6 +28,7 @@
             </table>
         </td>
     </tr>
+
     <tr *ngIf="IsNewBIReport">
         <td>
             <table>
@@ -179,7 +181,7 @@
                     </td>
 
                     <td style="width:200px;">
-                        <LogTextBox [ObjectFieldName]="'Tenant'" [Text]="Tenant" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="OnTextChangeEvent($event)" [InputType]="'integer'" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox [ObjectFieldName]="'Tenant'" [Text]="Tenant" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="OnTenantFieldChangeEvent($event)" [InputType]="'integer'" [HideColumns]="true"></LogTextBox>
                     </td>
                     <td colspan="2">
                         <div></div>
@@ -220,7 +222,7 @@
 
                                                     <logitude-grid [rows]="items"
                                                                    [dataSource]="DataSource"
-                                                                   [SearchFieldchangeevent]="textFieldChangeEvent"
+                                                                   [SearchFieldchangeevent]="TenantFieldChangeEvent"
                                                                    [columns]="columns"
                                                                    [autoLoad]="true"
                                                                    (rowSelectedEvent)="onRowSelected($event)"

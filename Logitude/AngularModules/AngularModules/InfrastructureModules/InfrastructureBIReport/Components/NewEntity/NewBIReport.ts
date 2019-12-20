@@ -24,26 +24,26 @@ export class NewBIReport extends BaseComponent {
     public DataContext: NewBIReport = this;
     public ObjectTableName: string = "BIReport";
     public IsNewQuery = true;
-    public bIReportExtendedPMService : BIReportExtendedPMService;
-    public bIReportExtendedListService : BIReportExtendedListService;
+    public BIReportExtendedPMService : BIReportExtendedPMService;
+    public BIReportExtendedListService : BIReportExtendedListService;
     private CurrentSession = SessionLocator.SelectedSession;
     private OriginalName: string = "";
     private IsCopy: boolean = false;
     private IsNewBIReport: boolean = true;
     private IsTenantZero: boolean = false;
-    private IsRowSelected: boolean = false;
+    private IsOneRowSelected: boolean = false;
     private HasCopyFeature: boolean = false;
     private CopyFromTitle: string;
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() textFieldChangeEvent = new EventEmitter();
+    @Output() TenantFieldChangeEvent = new EventEmitter();
     constructor() {
         super();
         this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopyFromLibrary");
         this.EntityPM = new BIReportPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.bIReportExtendedPMService = new BIReportExtendedPMService();
-        this.bIReportExtendedListService = new BIReportExtendedListService();
+        this.BIReportExtendedPMService = new BIReportExtendedPMService();
+        this.BIReportExtendedListService = new BIReportExtendedListService();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
         this.EntityPM.CreateDate = todayDate;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -55,7 +55,6 @@ export class NewBIReport extends BaseComponent {
         this.myService = new BIReportPMService();
         this.SetUIProperties();
         this.CheckTenantZero();
-        this.BuildColumns();
     }
 
 
@@ -66,9 +65,15 @@ export class NewBIReport extends BaseComponent {
             this.EntityPM.Name = args.Name + "/Copy";
             this.OriginalName = args.Name;
             this.EntityPM.Description = args.Description;
-            this.IsCopy = true;
+            this.IsCopy = args.IsCopy;
+            this.BIReportsTenant = SessionLocator.Tenant;
             //this.ComponentRef = args.ComponentRef;
             //this.BackCompleted = args.BackCompleted;
+        }
+        else if (args.IsCopyFromLibrary) {
+            this.IsNewBIReport = false;
+            this.EntityPM.BIReportFolderId = args.FolderId;
+            this.BuildColumns();
         }
         else {
             this.DWQueryId = args.DWQueryId;
@@ -89,6 +94,7 @@ export class NewBIReport extends BaseComponent {
             this.IsNewQuery = true;
         }
     }
+
     DataSource = {
         pageSize: 20,
         rowCount: null,
@@ -100,8 +106,6 @@ export class NewBIReport extends BaseComponent {
         },
     }
 
-     
-
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         filters = new ApiQueryFilters();
         filters.GetCount = getCount;
@@ -109,9 +113,18 @@ export class NewBIReport extends BaseComponent {
         filters.PageSize = take;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
-        filters.Tenant = this.BIReportTenant;
-        
-        return this.bIReportExtendedListService.GetTenantReports(filters, this.BIReportTenant);
+
+        if (this.BIReportsTenant != -1) {
+            filters.Tenant = this.BIReportsTenant;
+            return this.BIReportExtendedListService.GetReportsByTenantNumber(filters, this.BIReportsTenant);
+        }
+        else {
+            filters.Tenant = SessionLocator.Tenant;
+            //filters.Filter1Name = "GetAllReports";
+            filters.Filter1Value = true;
+            //Get all reports
+            return this.BIReportExtendedListService.GetReportsByTenantNumber(filters, SessionLocator.Tenant);
+        }
     }
 
     columns: any;
@@ -123,7 +136,6 @@ export class NewBIReport extends BaseComponent {
             IsCustomTemplate: true,
             Display: 'Name',
             Styles: { width: '150px' },
-
         });
         this.columns.push({
             FieldName: "CreateDate",
@@ -131,9 +143,6 @@ export class NewBIReport extends BaseComponent {
             IsCustomTemplate: true,
             Display: 'Create Date',
             Styles: { width: '200px' },
-            //HtmlListComponentName: 'InfrastructureFieldTemplateComponent',
-            //HtmlListComponentUrl: './Infrastructure/Components/Templates/InfrastructureFieldTemplateComponent',
-
         });
         this.columns.push({
             FieldName: "UpdateDate",
@@ -141,21 +150,18 @@ export class NewBIReport extends BaseComponent {
             IsCustomTemplate: true,
             Display: 'Update Date',
             Styles: { width: '200px' },
-            //HtmlListComponentName: 'InfrastructureFieldTemplateComponent',
-            //HtmlListComponentUrl: './Infrastructure/Components/Templates/InfrastructureFieldTemplateComponent',
-
         });
     }
 
     // Tenant Search
-    OnTextChangeEvent(searchText) {
-        if (searchText) {
-            this.BIReportTenant = searchText;
+    OnTenantFieldChangeEvent(copyFromTenant) {
+        if (copyFromTenant != null) {
+            this.BIReportsTenant = copyFromTenant;
         }
         else {
-            this.BIReportTenant = 0;
+            this.BIReportsTenant = -1; //This means all reports from all tenants
         }
-        this.textFieldChangeEvent.emit(searchText);
+        this.TenantFieldChangeEvent.emit(copyFromTenant);
     }
 
     SetNewBIReport(value: boolean) {
@@ -166,9 +172,11 @@ export class NewBIReport extends BaseComponent {
         if (SessionLocator.Tenant == 0) {
             this.IsTenantZero = true;
             this.CopyFromTitle = "Copy From All Tenants";
+            this.BIReportsTenant = -1;
+            this.BuildColumns();
         }
-        else {
-            this.BIReportTenant = 0;
+        else if (this.HasCopyFeature) {
+            this.BIReportsTenant = 0;
             this.CopyFromTitle = "Copy From Library";
         }
     }
@@ -176,12 +184,11 @@ export class NewBIReport extends BaseComponent {
     onRowSelected(selected) {
         let item: BIReportList = selected.rowData;
         this.EntityPM.DWQueryId = item.DWQueryId;
-        //this.EntityPM.BIReportFolderId = args.BIReportFolderId;
         this.EntityPM.Name = item.Name;
         this.EntityPM.Description = item.Description;
+        this.BIReportsTenant = item.Tenant;
         this.IsCopy = true;
-        this.IsRowSelected = true;
-        //
+        this.IsOneRowSelected = true;
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -191,8 +198,8 @@ export class NewBIReport extends BaseComponent {
         }
     }
 
-    get BIReportTenant() { return this.EntityPM.Tenant; }
-    set BIReportTenant(newValue: number) {
+    get BIReportsTenant() { return this.EntityPM.Tenant; }
+    set BIReportsTenant(newValue: number) {
         if (this.EntityPM.Tenant != newValue) {
             this.EntityPM.Tenant = newValue;
         }
@@ -261,15 +268,15 @@ export class NewBIReport extends BaseComponent {
              
         }
 
-        if (!this.IsNewBIReport && !this.IsRowSelected) {
-            this.ValidationErrorsList.push("Choose One Report");
+        if (!this.IsNewBIReport && !this.IsOneRowSelected) {
+            this.ValidationErrorsList.push("Please select one report");
         }
         if(this.ValidationErrorsList.length != 0) {
             return;
         }
             
         
-        this.bIReportExtendedPMService.DoesReportExist(this.EntityPM.Name, this.EntityPM.BIReportFolderId).subscribe(response => {
+        this.BIReportExtendedPMService.DoesReportExist(this.EntityPM.Name, this.EntityPM.BIReportFolderId).subscribe(response => {
             if (response.Result == true) {
                 this.ValidationErrorsList.push("Please use other name for your report so it is different from others");
             }
@@ -280,7 +287,7 @@ export class NewBIReport extends BaseComponent {
                 var windowArgs: any = {};
                 windowArgs.DWQueryId = this.DWQueryId;
                 windowArgs.IsCopy = this.IsCopy;
-                windowArgs.IsCopyFromTenant = this.BIReportTenant;
+                windowArgs.BIReportsTenant = this.BIReportsTenant;
                 windowArgs.ComponentRef = this.ComponentRef;
                 windowArgs.BackCompleted = this.BackCompleted;
                 windowArgs.IsBIReportWorkspace = true;
