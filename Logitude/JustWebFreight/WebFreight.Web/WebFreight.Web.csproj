@@ -1266,8 +1266,10 @@
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\SLALineViewsController.Generated.cs" />
+    <Compile Include="Controllers\CRMModel\Generated\ListControllers\SupportMailboxViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\PMControllers\OccasionController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\PMControllers\OccasionTypeController.Generated.cs" />
+    <Compile Include="Controllers\CRMModel\Generated\PMControllers\SupportMailboxController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierMasterController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierPendingReasonController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsAirlineController.cs" />
@@ -2743,6 +2745,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SprintUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SupportMailboxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSurchargesUpdateMethodUpdateClass.cs" />
