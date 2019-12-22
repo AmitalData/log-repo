@@ -2383,5 +2383,59 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? NotInvoicedReceivablesAmount { get; set; }
         public string CreatedByPartner { get; set; }
         public DateTime? FirstARInvoiceApprovalDate { get; set; }
+
+        // Fields of Champ analyzer Concurrency
+        public string FWBStatusCode_Original { get; set; }
+        public DateTime? FWBStatusDate_Original { get; set; }
+        public string FHLStatusCode_Original { get; set; }
+        public DateTime? FHLStatusDate_Original { get; set; }
+        public string CarrierLastStatusCode_Original { get; set; }
+        public DateTime? CarrierLastStatusDate_Original { get; set; }
+        public string MainCarriageToPortId_Original { get; set; }
+        public int? NumberOfPackages_Original { get; set; }
+        public double? GrossWeight_Original { get; set; }
+        public double? ChargeableWeight_Original { get; set; }
+        public string GrossWeightUnitCode_Original { get; set; }
+        public DateTime? MainCarriageATD_Original { get; set; }
+        public DateTime? MainCarriageETD_Original { get; set; }
+        public DateTime? MainCarriageSTD_Original { get; set; }
+        public DateTime? Transshipment1ATD_Original { get; set; }
+        public DateTime? Transshipment1ETD_Original { get; set; }
+        public DateTime? Transshipment1STD_Original { get; set; }
+        public DateTime? Transshipment2ATD_Original { get; set; }
+        public DateTime? Transshipment2ETD_Original { get; set; }
+        public DateTime? Transshipment2STD_Original { get; set; }
+        public DateTime? Transshipment3ATD_Original { get; set; }
+        public DateTime? Transshipment3ETD_Original { get; set; }
+        public DateTime? Transshipment3STD_Original { get; set; }
+        public DateTime? PreCarriageATD_Original { get; set; }
+        public DateTime? PreCarriageETD_Original { get; set; }
+        public DateTime? OnCarriageATD_Original { get; set; }
+        public DateTime? OnCarriageETD_Original { get; set; }
+        public DateTime? MainCarriageATA_Original { get; set; }
+        public DateTime? MainCarriageETA_Original { get; set; }
+        public DateTime? MainCarriageSTA_Original { get; set; }
+        public DateTime? Transshipment1ATA_Original { get; set; }
+        public DateTime? Transshipment1ETA_Original { get; set; }
+        public DateTime? Transshipment1STA_Original { get; set; }
+        public DateTime? Transshipment2ATA_Original { get; set; }
+        public DateTime? Transshipment2ETA_Original { get; set; }
+        public DateTime? Transshipment2STA_Original { get; set; }
+        public DateTime? Transshipment3ATA_Original { get; set; }
+        public DateTime? Transshipment3ETA_Original { get; set; }
+        public DateTime? Transshipment3STA_Original { get; set; }
+        public DateTime? PreCarriageATA_Original { get; set; }
+        public DateTime? PreCarriageETA_Original { get; set; }
+        public DateTime? OnCarriageATA_Original { get; set; }
+        public DateTime? OnCarriageETA_Original { get; set; }
+        public string INTTRABookingStatusCode_Original { get; set; }
+        public string BookingConfirmedBy_Original { get; set; }
+        public string MAN_FromPortId_Original { get; set; }
+        public string FIN_PortId_Original { get; set; }
+        public string TR3_ToPortId_Original { get; set; }
+        public string TR2_ToPortId_Original { get; set; }
+        public string TR1_ToPortId_Original { get; set; }
+        public string BookingConfNumber_Original { get; set; }
+        public string MAN_CarrierNumber_Original { get; set; }
     }
 }
