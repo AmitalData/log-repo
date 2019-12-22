@@ -348,6 +348,48 @@ namespace MetaDataGenerator
 				MessageBox.Show(error);
 			}
 		}
+
+		private void btnFormatModelLXMLs_Click(object sender, RoutedEventArgs e)
+		{
+
+			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+				DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+				string solutionDirectory = solutionDir.FullName;
+
+				string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
+				dialog.SelectedPath = dir;
+				
+				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+				if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+				{
+					 
+					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.FullName).ToArray();//.Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+					foreach (string filePath in allFiles)
+					{
+						//string filePath = directoryPath + table.Name + ".lxml";
+
+						XmlDocument doc = new XmlDocument();
+						doc.Load(filePath);
+
+
+						FileStream fileStream = new FileStream(filePath, FileMode.Truncate, FileAccess.Write);
+						XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = true, WriteEndDocumentOnClose = true };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
+						XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
+
+						doc.Save(xmlWriter);
+						xmlWriter.Close();
+						xmlWriter.Dispose();
+					}
+					 
+					MessageBox.Show("Formating all files completed successfully");
+
+				}
+			}
+		}
 	}
 }
 /*
