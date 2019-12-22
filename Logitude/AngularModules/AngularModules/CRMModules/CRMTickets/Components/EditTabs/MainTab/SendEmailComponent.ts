@@ -1,3 +1,4 @@
+
 declare var window: any;
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -30,6 +31,8 @@ import {UserListService} from '../../../../../Common/Services/StandardLists/User
 import {CorrespondencePMService} from'../../../../../CRM/Services/StandardPMs/CorrespondencePMService';
 import {TicketPMService} from '../../../../../CRM/Services/StandardPMs/TicketPMService';
 import {TicketClosureArgs} from '../../../../../CRM/Args';
+import {DownloadManager} from '../../../../../Infrastructure/Utilities/DownloadManager';
+import {QuoteDocumentVersionExtendedPMService} from '../../../../../Quote/Services/ExtendedPMs/QuoteDocumentVersionExtendedPMService';
 
 @Component({
     moduleId: './CRMModules/CRMTickets/Components/EditTabs/MainTab/',
@@ -51,9 +54,9 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     public UsersList: UserList[] = [];
     private InternalCorrespondenceLinesCount: number;
     public ValidationErrorsList: string[];
-
     @Output() OnCloseAttachmentDocsInEvent: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+    private quoteDocumentVersionExtendedPMService: QuoteDocumentVersionExtendedPMService;
     constructor(public _documentTypeListService: DocumentTypeListService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -75,9 +78,12 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     Initialize() {
         this.InitializeLists();
         this.InitializeServices();
+        this.AddQuoationAttachemnt();
         this.CreateCorrespondence();
         this.InternalExternalEmailChecking();
         this.GetDocumentType();
+
+
         if (this.IsInternal) {
             if (AppTool.IsNullOrEmpty(this.InternalUsers)) {
                 this.BuildSaveStages();
@@ -777,6 +783,37 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
             }
         }
     }
+
+
+    AddQuoationAttachemnt() {
+        if (this.Ticket) {
+            if (this.Ticket.EntityType && this.Ticket.QuoteId) {
+                var externalEntityObject: any = window.ObjectTables.filter(d => d.Id === this.Ticket.EntityType)[0];
+                if (externalEntityObject && externalEntityObject.Name == "Quote") {
+                    if (this.quoteDocumentVersionExtendedPMService == null) this.quoteDocumentVersionExtendedPMService = new QuoteDocumentVersionExtendedPMService();
+                    this.quoteDocumentVersionExtendedPMService.GetQuoteDocumentVersionByQuoteId(this.Ticket.QuoteId).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var quoteDocumentVersion: any = myResponse.Result;
+                            if (quoteDocumentVersion) {
+                                var attachment: AttachmentsArgs = new AttachmentsArgs(null);
+                                var fileName: string = "Quotation-" + this.Ticket.QuoteNumber + "-" + quoteDocumentVersion.VersionNumber;
+                                var attachment = new AttachmentsArgs(null);
+                                attachment.Tenant = SessionLocator.Tenant;
+                                attachment.FileName = fileName;
+                                attachment.FileSize = quoteDocumentVersion.FileSize;
+                                attachment.DocumentId = quoteDocumentVersion.DocumentId;
+                                attachment.FileExtension = quoteDocumentVersion.Extension;
+                                
+                                if (!this.AttachmentsList) this.AttachmentsList = [];
+                                this.AttachmentsList.push(attachment);
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
+
 }
 
 export class AttachmentsArgs {
@@ -785,22 +822,143 @@ export class AttachmentsArgs {
         this.DocumentFilingPM = documentFilingPM;
     }
 
-    get FileName() { return this.DocumentFilingPM.FileName;}
-    get FileExtension() {  return this.DocumentFilingPM.FileExtension;   }
-    get Tenant() {return this.DocumentFilingPM.Tenant;}
-    get DocumentFilingId(){ return this.DocumentFilingPM.Id; }
-    get EntityId() { return this.DocumentFilingPM.EntityId; }
-    get ObjectTableId() { return this.DocumentFilingPM.ObjectTableId; }
-    get CreatedByUserId() { return this.DocumentFilingPM.CreatedByUserId; }
-    get CreateDate() { return this.DocumentFilingPM.CreateDate; }
-    get OwnerId() { return this.DocumentFilingPM.OwnerId; }
-    get UpdatedByUserId() { return this.DocumentFilingPM.UpdatedByUserId; }
-    get UpdateDate() { return this.DocumentFilingPM.UpdateDate; }
-    get FileSize() { return this.DocumentFilingPM.FileSize; }
+
+
+    private fileName: string = null;
+    get FileName() {
+        if (this.DocumentFilingPM != null) this.fileName = this.DocumentFilingPM.FileName;
+        return this.fileName;
+    }
+    set FileName(value: string) {
+        this.fileName = value;
+    }
+
+
+    private fileExtension: string = null;
+    get FileExtension() {
+        if (this.DocumentFilingPM != null) this.fileExtension = this.DocumentFilingPM.FileExtension;
+        return this.fileExtension;
+    }
+    set FileExtension(value: string) {
+        this.fileExtension = value;
+    }
+
+
+
+    private tenant: number = null;
+    get Tenant() {
+        if (this.DocumentFilingPM != null) this.tenant = this.DocumentFilingPM.Tenant;
+        return this.tenant;
+    }
+    set Tenant(value: number) {
+        this.tenant = value;
+    }
+
+
+    private documentFilingId: string = null;
+    get DocumentFilingId() {
+        if (this.DocumentFilingPM != null) this.documentFilingId = this.DocumentFilingPM.Id;
+        return this.documentFilingId;
+    }
+    set DocumentFilingId(value: string) {
+        this.documentFilingId = value;
+    }
+
+
+
+    private entityId: string = null;
+    get EntityId() {
+        if (this.DocumentFilingPM != null) this.entityId = this.DocumentFilingPM.EntityId;
+        return this.entityId;
+    }
+    set EntityId(value: string) {
+        this.entityId = value;
+    }
+
+
+
+    private objectTableId: string = null;
+    get ObjectTableId() {
+        if (this.DocumentFilingPM != null) this.objectTableId = this.DocumentFilingPM.ObjectTableId;
+        return this.objectTableId;
+    }
+    set ObjectTableId(value: string) {
+        this.objectTableId = value;
+    }
+
+    private createdByUserId: string = null;
+    get CreatedByUserId() {
+        if (this.DocumentFilingPM != null) this.createdByUserId = this.DocumentFilingPM.CreatedByUserId;
+        return this.createdByUserId;
+    }
+    set CreatedByUserId(value: string) {
+        this.createdByUserId = value;
+    }
+
+    private ownerId: string = null;
+    get OwnerId() {
+        if (this.DocumentFilingPM != null) this.ownerId = this.DocumentFilingPM.OwnerId;
+        return this.ownerId;
+    }
+    set OwnerId(value: string) {
+        this.ownerId = value;
+    }
+
+
+    private updatedByUserId: string = null;
+    get UpdatedByUserId() {
+        if (this.DocumentFilingPM != null) this.updatedByUserId = this.DocumentFilingPM.UpdatedByUserId;
+        return this.updatedByUserId;
+    }
+    set UpdatedByUserId(value: string) {
+        this.updatedByUserId = value;
+    }
+
+    private updateDate: Date = null;
+    get UpdateDate() {
+        if (this.DocumentFilingPM != null) this.updateDate = this.DocumentFilingPM.UpdateDate;
+        return this.updateDate;
+    }
+    set UpdateDate(value: Date) {
+        this.updateDate = value;
+    }
+
+
+    private fileSize: number = null;
+    get FileSize() {
+        if (this.DocumentFilingPM != null) this.fileSize = this.DocumentFilingPM.FileSize;
+        return this.fileSize;
+    }
+    set FileSize(value: number) {
+        this.fileSize = value;
+    }
+
+    private createDate: Date = null;
+    get CreateDate() {
+        if (this.DocumentFilingPM != null) this.createDate = this.DocumentFilingPM.CreateDate;
+        return this.createDate;
+    }
+    set CreateDate(value: Date) {
+        this.createDate = value;
+    }
+
+    private documentId: string = null;
+    get DocumentId() {
+        if (this.DocumentFilingPM != null) this.documentId = this.DocumentFilingPM.DocumentId;
+        return this.documentId;
+    }
+    set DocumentId(value: string) {
+        this.documentId = value;
+    }
 
     ViewAttachment() {
-        var documentSecurity = this.DocumentFilingPM.SecurityId;
-        var link = "/WebPages/CorrespondenceDownloadpage.aspx?id=" + documentSecurity + "~" + this.Tenant;
-        window.open(ServiceHelper.GetLogitudeURL() + link);
+        if (this.DocumentFilingPM) {
+            var documentSecurity = this.DocumentFilingPM.SecurityId;
+            var link = "/WebPages/CorrespondenceDownloadpage.aspx?id=" + documentSecurity + "~" + this.Tenant;
+            window.open(ServiceHelper.GetLogitudeURL() + link);
+        }
+        else if (!AppTool.IsNullOrEmpty(this.DocumentId)) {
+            DownloadManager.DownloadPage(this.DocumentId);
+        }
     }
 }
