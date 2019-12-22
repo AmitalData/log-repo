@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Report",
-			      				    Code =  "acfb",
+			      				    Code =  "25a2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -212,7 +212,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -227,6 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "InterestReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -237,6 +238,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
+					  						ListFieldLable =  "CreatedByUserIdListLable",
+					  						ListLableDefaultText =  "CreatedByUserId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -384,7 +387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -399,6 +402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "InterestReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -409,6 +413,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountId",
 					  						DefaultText =  "GLAccount",
+					  						ListFieldLable =  "GLAccountIdListLable",
+					  						ListLableDefaultText =  "GLAccount",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -440,7 +446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -455,6 +461,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "InterestReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -465,6 +472,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReportNumber",
 					  						DefaultText =  "Report Number",
+					  						ListFieldLable =  "ReportNumberListLable",
+					  						ListLableDefaultText =  "Report Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -939,7 +948,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup InterestReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "25a2", Name = " Query Group" }, queryGroupRepository);
+						QueryGroup InterestReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2123", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable InterestReportObjectTable = objectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> InterestReportObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InterestReport").ToList();   
+
+			   TextCode InterestReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InterestReport", DefaultText = @"Interest Report",LocalDefaultText = "דוח ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature InterestReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InterestReport", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InterestReport", NameTextCodeDefaultText = "Interest Report", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query InterestReportQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestReportTextCode_0.Id, Code = "Interest Report",  QueryGroupCode = "25a2", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestReportObjectTable.Id, QuerySection = "InterestReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestReportFeature_0.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+		   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 
                 {   if(entityPM.ChangeSetOp == ChangeSetOperation.Insert || entityPM.ChangeSetOp == ChangeSetOperation.Update)
-                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.LineDateExist", entityPM.Tenant, showLocals));
+                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
                 }
             }
 
