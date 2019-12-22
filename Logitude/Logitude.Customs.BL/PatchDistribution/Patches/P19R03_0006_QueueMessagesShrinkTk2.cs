@@ -188,7 +188,7 @@ BEGIN
     WHERE
         id = v_messageid;
 
-END;"
+END"
 
             }
             };
