@@ -1806,9 +1806,28 @@
     <Compile Include="Migrations\201912151615218_Edit_Fields_In_GLAccount.Designer.cs">
       <DependentUpon>201912151615218_Edit_Fields_In_GLAccount.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.cs" />
     <Compile Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.Designer.cs">
       <DependentUpon>201912181600213_UpdateFieldsInterestInGLAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+
+    <Compile Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs" />
+    <Compile Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.Designer.cs">
+      <DependentUpon>201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912181223402_Add_MainTable_InterestReports_With_CloseTable_InterestReportStatuses.cs" />
+    <Compile Include="Migrations\201912181223402_Add_MainTable_InterestReports_With_CloseTable_InterestReportStatuses.Designer.cs">
+      <DependentUpon>201912181223402_Add_MainTable_InterestReports_With_CloseTable_InterestReportStatuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912181334124_Add_Table_InterestReportLines.cs" />
+    <Compile Include="Migrations\201912181334124_Add_Table_InterestReportLines.Designer.cs">
+      <DependentUpon>201912181334124_Add_Table_InterestReportLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.cs" />
+    <Compile Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.Designer.cs">
+      <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -3105,6 +3124,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.resx">
       <DependentUpon>201912181600213_UpdateFieldsInterestInGLAccount.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.resx">
+      <DependentUpon>201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181223402_Add_MainTable_InterestReports_With_CloseTable_InterestReportStatuses.resx">
+      <DependentUpon>201912181223402_Add_MainTable_InterestReports_With_CloseTable_InterestReportStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181334124_Add_Table_InterestReportLines.resx">
+      <DependentUpon>201912181334124_Add_Table_InterestReportLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.resx">
+      <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
