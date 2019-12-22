@@ -2286,7 +2286,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             List<string> list = new List<string>();
             foreach (var invoice in _DirtyDeclarationPM.SupplierInvoices)
             {
-                list.AddRange(invoice.SupplierInvoiceItems.Select(x=>x.ClassificationCode.Substring(0, Math.Min(8, x.ClassificationCode.Length)) + x.ClassificationCode.Substring(Math.Min(11, x.ClassificationCode.Length - 1), 1)));
+                list.AddRange(invoice.SupplierInvoiceItems.Where(r=>r.ClassificationCode != null).Select(x=>x.ClassificationCode.Substring(0, Math.Min(8, x.ClassificationCode.Length)) + x.ClassificationCode.Substring(Math.Min(11, x.ClassificationCode.Length - 1), 1)));
             }
             list = list.Where(x => x != null).OrderBy(x => x).Distinct().ToList();
             if (top!=0 && top < list.Count())
