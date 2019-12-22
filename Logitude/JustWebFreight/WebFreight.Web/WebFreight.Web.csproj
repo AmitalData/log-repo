@@ -1003,6 +1003,7 @@
     <Compile Include="Controllers\AccountingModel\AccountingOpController.cs" />
     <Compile Include="Controllers\AccountingModel\BankDepositController.cs" />
     <Compile Include="Controllers\AccountingModel\CardGLAccountConnectController.cs" />
+    <Compile Include="Controllers\AccountingModel\CashbookOpController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingIntegrityCheckViewsController.Generated.cs" />
@@ -1969,6 +1970,8 @@
     <Compile Include="Controllers\WebServices\MessageSimulatingController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Services\TotangoServiceController.cs" />
     <Compile Include="Controllers\WebServices\QueueMessagesWebServiceController.cs" />
+    <Compile Include="CRMModel\DomainServices\CRMDomainService.Occasion.cs" />
+    <Compile Include="CRMModel\DomainServices\CRMDomainService.OccasionContact.cs" />
     <Compile Include="CustomModel\CustomsRegistrations.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitCargoIdentifier.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitConsItem.cs" />

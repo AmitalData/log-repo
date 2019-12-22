@@ -102,6 +102,8 @@ import {ExternalReconciliationShortTitleComponent} from './Components/ShortTiTle
 import { TaxReportShortTitleComponent } from './Components/ShortTiTles/TaxReportShortTitleComponent';
 import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent';
 import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityCheckComponent';
+import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
+import { CashBookLineListTemplate } from './Components/ListTemplates/CashBookLineListTemplate';
 
 
 export const Components =
@@ -150,6 +152,7 @@ export const Components =
 
         //Edit Tabs
         GLAccountGeneralTabComponent,
+        CashBookGeneralTabComponent,
         GLAccountOverviewComponent,
         GLAccountTransactionsTabComponent,
         ManageReconciliationsTabComponent,
@@ -182,6 +185,8 @@ export const Components =
         ManageReconciliationListTemplate,
         TaxReportListTemplate,
         ReconciliationLineListTemplate,
+        CashBookLineListTemplate,
+
         //Others
         ReconcileComponent,
         ReconciledMessage,
@@ -263,6 +268,7 @@ export class ModuleDeclarations {
 
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
+            case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
@@ -295,6 +301,7 @@ export class ModuleDeclarations {
             case "ManageReconciliationListTemplate": { myResult = ManageReconciliationListTemplate; break; }
             case "TaxReportListTemplate": { myResult = TaxReportListTemplate; break; }
             case "ReconciliationLineListTemplate": { myResult = ReconciliationLineListTemplate; break; }
+            case "CashBookLineListTemplate": { myResult = CashBookLineListTemplate; break; }
 
             //Others
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }

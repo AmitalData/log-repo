@@ -861,6 +861,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             #endregion
 
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InternalNotes);
+
             entityPM.SearchFields = mySearchFields;
             newPayment.SearchFields = mySearchFields;
         }
@@ -1176,6 +1178,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             cashBookLine.ARPChequeId = aRPaymentCheque.Id;
             cashBookLine.ChangeSetOp = ChangeSetOperation.Insert;
             cashBookLine.IsDeposited = false;
+            cashBookLine.ChequeNumber = aRPaymentCheque.ChequeNumber;
+            cashBookLine.Bank = aRPaymentCheque.BankAccount;
 
             ICashBookLineUpdateServiceExt cashBookLineUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookLineUpdateServiceExt), "CashBookLineUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookLineUpdateServiceExt;
             cashBookLineUpdate.Update(cashBookLine);
