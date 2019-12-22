@@ -2720,6 +2720,11 @@ namespace WebFreight.Web.ReportsWebServices
                 double? sum31_45 = 0;
                 double? sum46_60 = 0;
 
+                double? sum61_75 = 0;
+                double? sum76_90 = 0;
+                double? sum91_105 = 0;
+                double? sum106_120 = 0;
+
                 List<AgingStatemantDataItem> tempList = totalList.Where(d => d.CardId == cardId).ToList();
 
                 List<AgingStatemantDataItem> currentDueItems = tempList.Where(d => d.Date >= todayDate).ToList();
@@ -2737,6 +2742,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                 List<AgingStatemantDataItem> Due31_45Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 31 && (todayDate - d.Date.Value).TotalDays <= 45).ToList();
                 List<AgingStatemantDataItem> Due46_60Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 45) && (((todayDate - d.Date.Value).TotalDays) <= 60)).ToList();
+
+                List<AgingStatemantDataItem> Due61_75Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 61 && (todayDate - d.Date.Value).TotalDays <= 75).ToList();
+                List<AgingStatemantDataItem> Due76_90Items = tempList.Where(d => ((todayDate - d.Date.Value).TotalDays >= 76) && ((todayDate - d.Date.Value).TotalDays <= 90)).ToList();
+                List<AgingStatemantDataItem> Due91_105Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 91 && (todayDate - d.Date.Value).TotalDays <= 105).ToList();
+                List<AgingStatemantDataItem> Due106_120Items = tempList.Where(d => ((todayDate - d.Date.Value).TotalDays >= 106) && ((todayDate - d.Date.Value).TotalDays <= 120)).ToList();
 
                 if (currencyType == "profit")
                 {
@@ -2756,6 +2766,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                         sum31_45 = (Due31_45Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                         sum46_60 = (Due46_60Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+
+                        sum61_75 = Due61_75Items.Sum(d => (d.Debit + d.Credit) / currencyRate);
+                        sum76_90 = Due76_90Items.Sum(d => (d.Debit + d.Credit) / currencyRate);
+                        sum91_105 = Due91_105Items.Sum(d => (d.Debit + d.Credit) / currencyRate);
+                        sum106_120 = Due106_120Items.Sum(d => (d.Debit + d.Credit) / currencyRate);
                     }
                 }
 
@@ -2775,6 +2790,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                     sum31_45 = Due31_45Items.Sum(d => (d.Debit + d.Credit));
                     sum46_60 = Due46_60Items.Sum(d => (d.Debit + d.Credit));
+
+                    sum61_75 = Due61_75Items.Sum(d => d.Debit + d.Credit);
+                    sum76_90 = Due76_90Items.Sum(d => d.Debit + d.Credit);
+                    sum91_105 = Due91_105Items.Sum(d => d.Debit + d.Credit);
+                    sum106_120 = Due106_120Items.Sum(d => d.Debit + d.Credit);
                 }
 
                 CardEntityClass cardEntity = allCardData.Where(d => d.Id == cardId).FirstOrDefault();
@@ -2800,6 +2820,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                 acountsRecored.DaysPastDue31_45 = sum31_45;
                 acountsRecored.DaysPastDue46_60 = sum46_60;
+
+                acountsRecored.DaysPastDue61_75 = sum61_75;
+                acountsRecored.DaysPastDue76_90 = sum76_90;
+                acountsRecored.DaysPastDue91_105 = sum91_105;
+                acountsRecored.DaysPastDue106_120 = sum106_120;
+
                 dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
             }
 
