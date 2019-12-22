@@ -7,12 +7,17 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Xml.Serialization;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.CRMModel.DomainServices
@@ -23,319 +28,353 @@ namespace WebFreight.Web.CRMModel.DomainServices
         public List<OccasionContactList> GetOccasionContactFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("OccasionContact", "READ", tenant);
 
             if (crmContext == null)
             {
                 crmContext = CRMContext.GetContext(tenant);
             }
-            
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
 
-            OccasionContactArgs args = this.AnalyzeOccasionFilters(filters);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            IQueryable<Customer> customers = this.GetFilteredCustomers(args, commonDataContext, tenant);
-            IQueryable<CardContact> contacts = this.GetCustomerContacts(customers, commonDataContext, tenant);
+            List<ObjectField> myObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("OccasionContact", tenant);
+            string occasionId = "";
+            string filterBy = "";
 
-            if (!string.IsNullOrEmpty(args.OccasionId))
+            if (queryOperations.QueryFilterItems != null)
             {
-                List<string> contactsIds = this.GetContactsIdsFromOccasion(args.OccasionId, tenant);
-                if (contactsIds != null)
+                foreach (QueryFilterItem filter in queryOperations.QueryFilterItems)
                 {
-                    contacts = contacts.Where(d => contactsIds.Contains(d.ContactId));
+                    if (filter.FieldName == "OccasionId")
+                    {
+                        occasionId = filter.FieldValue.ToString();
+                    }
+
+                    else if (filter.FieldName == "FilterBy")
+                    {
+                        filterBy = filter.FieldValue.ToString();
+                    }
+
+                    else
+                    {
+                        ObjectField field = myObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                        }
+
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
                 }
             }
 
-            if (!string.IsNullOrEmpty(args.ProductTypes))
+            ICRMContext MyContext = CRMContext.GetContext(tenant);
+            OccasionInviteeRepository entityRepository = new OccasionInviteeRepository(MyContext);
+            IQueryable<OccasionInvitee> entityPocos = entityRepository.GetOccasionInviteesByOccasion(occasionId, tenant);
+
+            switch (filterBy)
             {
-                List<string> myproductsTypesList = this.GetList(args.ProductTypes, commonDataContext, tenant);
-                if (myproductsTypesList.Count() > 0)
+                case "ALL":
+                    {
+                        break;
+                    }
+
+                case "INVT":
+                    {
+                        entityPocos = entityPocos.Where(d => d.Invited);
+                        break;
+                    }
+
+                case "PART":
+                    {
+                        entityPocos = entityPocos.Where(d => d.Participated);
+                        break;
+                    }
+            }
+
+            GenericFilter genericFilter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            int skippedEntities = queryOperations.PageIndex;
+
+            IQueryable<OccasionContactList> entityLists = (from f in entityPocos.Include("Contact")
+                                                           where f.Tenant == tenant
+                                                           select new OccasionContactList()
+                                                           {
+                                                               Id = f.ContactId,
+                                                               Tenant = f.Tenant,
+                                                               Name = f.Contact == null ? null : f.Contact.EnglishName,
+                                                               Email = f.Contact == null ? null : f.Contact.Email,
+                                                               BusinessPhone = f.Contact == null ? null : f.Contact.BusinessPhone,
+                                                               Mobile = f.Contact == null ? null : f.Contact.Mobile,
+                                                               Position = f.Contact == null ? null : f.Contact.Position,
+                                                               Notes = f.Contact == null ? null : f.Contact.Notes,
+                                                               Invited = f.Invited,
+                                                               Participated = f.Participated,
+                                                           });
+
+            List<OccasionContactList> tempList = entityLists.ToList();
+            foreach (OccasionContactList item in tempList)
+            {
+                item.Customers = this.BuildCustomers(item);
+            }
+
+            entityLists = tempList.AsQueryable();
+
+            entityLists = genericFilter.GetFilteredQuery<OccasionContactList>(nonListQueryOperation, entityLists);
+            entityLists = genericFilter.GetFilteredQuery<OccasionContactList>(listQueryOperation, entityLists);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(OccasionContactList).GetProperty(queryOperations.SortByColumnName);
+
+
+                ObjectField objectField = (from a in myObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
                 {
-                    List<CardContactProduct> cardContactProducts = commonDataContext.CardContactProducts.Where(d => myproductsTypesList.Contains(d.ProductTypeCode)).ToList();
-                    List<string> cardContactsIds = cardContactProducts.Select(s => s.CardContactId).ToList();
-                    contacts = contacts.Where(d => cardContactsIds.Contains(d.Id));
+                    if (objectField.IsCustom)
+                    {
+                        entityLists = sortClass.GetSorterQuery<OccasionContactList, string>(queryOperations, entityLists);
+                    }
+
+                    else
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "ntext":
+                            case "text":
+                            case "lookup":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<OccasionContactList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+
+                            case "sigdouble":
+                            case "double":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<OccasionContactList, double>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "date":
+                            case "datetime":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<OccasionContactList, DateTime>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "unsinteger":
+                            case "integer":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<OccasionContactList, int>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<OccasionContactList, bool>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "unsdecimal":
+                            case "decimal":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<OccasionContactList, decimal>(queryOperations, entityLists);
+                                    break;
+                                }
+
+                            default:
+                                {
+                                    entityLists = entityLists.OrderBy(d => d.Id);
+                                    break;
+                                }
+                        }
+                    }
                 }
             }
 
-            if (!string.IsNullOrEmpty(args.AdditionalServices))
+            else
             {
-                List<string> myAdditionalServicesList = this.GetList(args.AdditionalServices, commonDataContext, tenant);
-                if (myAdditionalServicesList.Count() > 0)
-                {
-                    List<CardContactAdditionalService> cardContactAdditionalServices = commonDataContext.CardContactAdditionalServices.Where(d => myAdditionalServicesList.Contains(d.AdditionalServiceId)).ToList();
-                    List<string> cardContactsIds = cardContactAdditionalServices.Select(s => s.CardContactId).ToList();
-                    contacts = contacts.Where(d => cardContactsIds.Contains(d.Id));
-                }
+                entityLists = entityLists.OrderBy(d => d.Id);
             }
 
-            List<OccasionContactList> myResult = new List<OccasionContactList>();
-            if (contacts != null && contacts.Count() > 0)
-            {
-                myResult = this.BuildFilteredContacts(contacts, commonDataContext, tenant);
-            }
+            entityLists = entityLists.Skip(skippedEntities);
+            entityLists = entityLists.Take(queryOperations.PageSize);
 
-            if (!string.IsNullOrEmpty(args.SearchText))
-            {
-                myResult = myResult.Where(f => f.Email != null && f.Email.ToLower().StartsWith(args.SearchText.ToLower())
-                        || f.Name != null && f.Name.ToLower().StartsWith(args.SearchText.ToLower())
-                        || f.Company != null && f.Company.ToLower().StartsWith(args.SearchText.ToLower())).ToList();
-            }
-
-            if (!queryOperations.GetAll)
-            {
-                myResult = myResult.Skip(queryOperations.PageIndex).ToList();
-                myResult = myResult.Take(queryOperations.PageSize).ToList();
-            }
-
-            return myResult;
+            List<OccasionContactList> listResult = entityLists.ToList();
+            return listResult;
         }
 
         public int GetOccasionContactFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("OccasionContact", "READ", tenant);
 
             if (crmContext == null)
             {
                 crmContext = CRMContext.GetContext(tenant);
             }
 
-            OccasionContactListQueryService queryService = new OccasionContactListQueryService(crmContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
-        }
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
-        private OccasionContactArgs AnalyzeOccasionFilters(ApiQueryFilters filters)
-        {
-            OccasionContactArgs args = new OccasionContactArgs();
+            List<ObjectField> myObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("OccasionContact", tenant);
+            string occasionId = "";
+            string filterBy = "";
 
-            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
-            for (int i = 1; i <= 10; i++)
+            if (queryOperations.QueryFilterItems != null)
             {
-                object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
-                object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
-
-                if (filterNameProp != null)
+                foreach (QueryFilterItem filter in queryOperations.QueryFilterItems)
                 {
-                    string filterName = filterNameProp.ToString();
-                    string filterValue = filterValue1 != null ? filterValue1.ToString() : null;
-
-                    switch (filterName)
+                    if (filter.FieldName == "OccasionId")
                     {
-                        case "SearchText":
-                            {
-                                args.SearchText = filterValue;
-                                break;
-                            }
+                        occasionId = filter.FieldValue.ToString();
+                    }
 
-                        case "CustomerSizeId":
-                            {
-                                args.CustomerSizeId = filterValue;
-                                break;
-                            }
+                    else if (filter.FieldName == "FilterBy")
+                    {
+                        filterBy = filter.FieldValue.ToString();
+                    }
 
-                        case "RegionId":
-                            {
-                                args.RegionId = filterValue;
-                                break;
-                            }
+                    else
+                    {
+                        ObjectField field = myObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
 
-                        case "IndustryId":
-                            {
-                                args.IndustryId = filterValue;
-                                break;
-                            }
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                        case "OccasionId":
-                            {
-                                args.OccasionId = filterValue;
-                                break;
-                            }
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                        }
 
-                        case "Products":
-                            {
-                                args.ProductTypes = filterValue;
-                                break;
-                            }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
+                }
+            }
 
-                        case "AdditionalServices":
-                            {
-                                args.AdditionalServices = filterValue;
-                                break;
-                            }
+            ICRMContext MyContext = CRMContext.GetContext(tenant);
+            OccasionInviteeRepository entityRepository = new OccasionInviteeRepository(MyContext);
+            IQueryable<OccasionInvitee> entityPocos = entityRepository.GetOccasionInviteesByOccasion(occasionId, tenant);
+
+            switch (filterBy)
+            {
+                case "ALL":
+                    {
+                        break;
+                    }
+
+                case "INVT":
+                    {
+                        entityPocos = entityPocos.Where(d => d.Invited);
+                        break;
+                    }
+
+                case "PART":
+                    {
+                        entityPocos = entityPocos.Where(d => d.Participated);
+                        break;
+                    }
+            }
+
+            GenericFilter genericFilter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            int skippedEntities = queryOperations.PageIndex;
+
+            IQueryable<OccasionContactList> entityLists = (from f in entityPocos.Include("Contact")
+                                                           where f.Tenant == tenant
+                                                           select new OccasionContactList()
+                                                           {
+                                                               Id = f.ContactId,
+                                                               Tenant = f.Tenant,
+                                                               Name = f.Contact == null ? null : f.Contact.EnglishName,
+                                                               Email = f.Contact == null ? null : f.Contact.Email,
+                                                               BusinessPhone = f.Contact == null ? null : f.Contact.BusinessPhone,
+                                                               Mobile = f.Contact == null ? null : f.Contact.Mobile,
+                                                               Position = f.Contact == null ? null : f.Contact.Position,
+                                                               Notes = f.Contact == null ? null : f.Contact.Notes,
+                                                               Invited = f.Invited,
+                                                               Participated = f.Participated,
+                                                           });
+
+            List<OccasionContactList> tempList = entityLists.ToList();
+            foreach (OccasionContactList item in tempList)
+            {
+                item.Customers = this.BuildCustomers(item);
+            }
+
+            entityLists = tempList.AsQueryable();
+
+            entityLists = genericFilter.GetFilteredQuery<OccasionContactList>(nonListQueryOperation, entityLists);
+            entityLists = genericFilter.GetFilteredQuery<OccasionContactList>(listQueryOperation, entityLists);
+            
+            entityLists = entityLists.Skip(skippedEntities);
+            entityLists = entityLists.Take(queryOperations.PageSize);
+
+            int count = entityLists.Count();
+            return count;
+        }
+        
+        private string BuildCustomers(OccasionContactList entity)
+        {
+            string result = "";
+
+            CardContactRepository cardContactRepository = new CardContactRepository(entity.Tenant);
+
+            List<CardContact> cardContacts = cardContactRepository.GetCardContactForContact(entity.Id, entity.Tenant);
+
+            if (cardContacts != null && cardContacts.Count > 0)
+            {
+                foreach (CardContact item in cardContacts)
+                {
+                    if (item.Card != null)
+                    {
+                        if (string.IsNullOrEmpty(result))
+                        {
+                            result = item.Card.EnglishName;
+                        }
+
+                        else
+                        {
+                            result = result + ", " + item.Card.EnglishName;
+                        }
                     }
                 }
             }
 
-            return args;
-        }
-        private IQueryable<Customer> GetFilteredCustomers(OccasionContactArgs args, ICommonDataContext commonDataContext, int tenant)
-        {
-            CustomerRepository customerRepository = new CustomerRepository(commonDataContext);
-            IQueryable<Customer> customers = customerRepository.GetCustomers(tenant);
-            customers = customers.Where(d => d.IsCustomer);
-
-            if (!string.IsNullOrEmpty(args.CustomerSizeId))
+            if (result.Length > 500)
             {
-                customers = customers.Where(d => d.CustomerSizeId == args.CustomerSizeId);
+                result = result.Substring(0, 500);
             }
 
-            if (!string.IsNullOrEmpty(args.RegionId))
-            {
-                customers = customers.Where(d => d.RegionId == args.RegionId);
-            }
-
-            if (!string.IsNullOrEmpty(args.IndustryId))
-            {
-                customers = customers.Where(d => d.IndustryId == args.IndustryId);
-            }
-
-            return customers;
-        }
-        private IQueryable<CardContact> GetCustomerContacts(IQueryable<Customer> customers, ICommonDataContext commonDataContext, int tenant)
-        {
-            List<string> customersIds = customers.Select(s => s.Id).ToList();
-
-            CardContactRepository cardContactRepository = new CardContactRepository(commonDataContext);
-            IQueryable<CardContact> contacts = cardContactRepository.GetCardsContactsForCustomerIds(customersIds, tenant);
-
-            return contacts;
-        }
-        private List<string> GetContactsIdsFromOccasion(string occasionId, int tenant)
-        {
-            ICRMContext cRMContext = CRMContext.GetContext(tenant);
-            OccasionRepository occasionRepository = new OccasionRepository(cRMContext);
-            OccasionInviteeRepository occasionInviteeRepository = new OccasionInviteeRepository(cRMContext);
-            IQueryable<OccasionInvitee> occasionInvitees = occasionInviteeRepository.GetOccasionInviteesByOccasion(occasionId, tenant);
-            List<string> contactsIds = occasionInvitees.Select(s => s.ContactId).ToList();
-            return contactsIds;
-        }
-        private List<string> GetList(string myString, ICommonDataContext commonDataContext, int tenant)
-        {
-            List<string> myList = new List<string>();
-
-            myString = myString.Replace(" ", "");
-
-            if (myString.ToLower() == "all")
-            {
-            }
-
-            else
-            {
-                myString = myString.Trim(',');
-                string[] mySplitString = myString.Split(',');
-                myList = mySplitString.ToList();
-            }
-
-            return myList;
-        }
-        private List<OccasionContactList> BuildFilteredContacts(IQueryable<CardContact> contacts, ICommonDataContext commonDataContext, int tenant)
-        {
-            List<OccasionContactList> myResult = new List<OccasionContactList>();
-
-            foreach (CardContact cardContact in contacts)
-            {
-                string regionName = "";
-                string industryName = "";
-                string customerSizeName = "";
-                if (cardContact.Card != null && cardContact.Card.Customer != null)
-                {
-                    if (!string.IsNullOrEmpty(cardContact.Card.Customer.RegionId))
-                    {
-                        Region region = commonDataContext.Regions.Where(d => d.Id == cardContact.Card.Customer.RegionId && d.Tenant == tenant).FirstOrDefault();
-                        if (region != null)
-                        {
-                            regionName = region.Name;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(cardContact.Card.Customer.IndustryId))
-                    {
-                        Industry industry = commonDataContext.Industries.Where(d => d.Id == cardContact.Card.Customer.IndustryId && d.Tenant == tenant).FirstOrDefault();
-                        if (industry != null)
-                        {
-                            industryName = industry.Name;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(cardContact.Card.Customer.CustomerSizeId))
-                    {
-                        CustomerSize customerSize = commonDataContext.CustomerSizes.Where(d => d.Id == cardContact.Card.Customer.CustomerSizeId && d.Tenant == tenant).FirstOrDefault();
-                        if (customerSize != null)
-                        {
-                            customerSizeName = customerSize.Name;
-                        }
-                    }
-                }
-
-                string productsNames = "";
-                CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(commonDataContext);
-                IQueryable<CardContactProduct> products = cardContactProductRepository.GetProductsByCardContactIdd(cardContact.Id, tenant);
-                if (products != null && products.Count() > 0)
-                {
-                    foreach (CardContactProduct item in products)
-                    {
-                        if (item.ProductType != null)
-                        {
-                            if (string.IsNullOrEmpty(productsNames))
-                            {
-                                productsNames = item.ProductType.Name;
-                            }
-
-                            else
-                            {
-                                productsNames = productsNames + ", " + item.ProductType.Name;
-                            }
-                        }
-                    }
-                }
-
-                myResult.Add(new OccasionContactList()
-                {
-                    Id = cardContact.ContactId,
-                    Name = cardContact.Contact == null ? null : cardContact.Contact.EnglishName,
-                    Email = cardContact.Contact == null ? null : cardContact.Contact.Email,
-                    Company = cardContact.Card == null ? null : cardContact.Card.EnglishName,
-                    Region = regionName,
-                    Industry = industryName,
-                    Product = productsNames,
-                    CustomerSize = customerSizeName,
-                    ContactMobile = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
-                    ContactPhone = cardContact.Contact == null ? null : cardContact.Contact.BusinessPhone,
-                    ContactPosition = cardContact.Contact == null ? null : cardContact.Contact.Position,
-                    ContactTel = cardContact.Contact == null ? null : cardContact.Contact.BusinessPhone,
-                });
-            }
-
-            return myResult;
+            return result;
         }
     }
-
-    public class OccasionContactArgs
-    {
-        public string CustomerSizeId { get; set; }
-        public string RegionId { get; set; }
-        public string IndustryId { get; set; }
-        public string OccasionId { get; set; }
-        public string ProductTypes { get; set; }
-        public string AdditionalServices { get; set; }
-        public string SearchText { get; set; }
-    }
-
-    //public class OccasionContactSearchresult
-    //{
-    //    public string ContactId { get; set; }
-    //    public string Name { get; set; }
-    //    public string Email { get; set; }
-    //    public string Company { get; set; }
-    //    public string Region { get; set; }
-    //    public string Industry { get; set; }
-    //    public string Product { get; set; }
-    //    public string CustomerSize { get; set; }
-    //    public string ContactPhone { get; set; }
-    //    public string ContactPosition { get; set; }
-    //    public string ContactMobile { get; set; }
-    //    public string ContactTel { get; set; }
-    //}
 }
