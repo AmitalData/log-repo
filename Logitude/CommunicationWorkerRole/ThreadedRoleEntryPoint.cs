@@ -295,9 +295,9 @@ namespace CommunicationWorkerRole
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
             if (!string.IsNullOrEmpty(SpecialBatchCode) && Environment.MachineName == "LogitudeWR2")
             {
-                BatchServicesDefinitionsTemp = new List<BatchServicesDefinitionPM>();
-                var temp1 = SpecialBatchCode.Split(';');
-                if (temp1.Length > 0)
+                var myBatchServicesDefinitions = new List<BatchServicesDefinitionPM>();
+                var temp1 = SpecialBatchCode.Split(';').ToList();
+                if (temp1.Count > 0)
                 {
                     foreach (var item in temp1)
                     {
@@ -308,17 +308,18 @@ namespace CommunicationWorkerRole
                             var IsActivate = temp[1].ToLower();
                             if (IsActivate == "true")
                             {
-                                BatchServicesDefinitionsTemp.Add(BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).FirstOrDefault());
+                                myBatchServicesDefinitions.Add(BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).FirstOrDefault());
                             }
                             else
                             {
-                                BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                                myBatchServicesDefinitions = myBatchServicesDefinitions.Concat(BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList()).ToList();
                             }
                         }
                     }
+                    BatchServicesDefinitionsTemp = myBatchServicesDefinitions;
                 }
-              
-               
+
+
             }
             if (BatchServicesDefinitions == null)
             {
