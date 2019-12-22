@@ -29,25 +29,28 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          ARPChequeId = a.ARPChequeId,
                                               ChequeNumber = a.Cheque != null ? a.Cheque.ChequeNumber : null,
 					                          IsDeposited = a.IsDeposited,
-                                              Currency = a.Cheque.Currency.Id,
+                                              Currency = a.Cheque.Currency.Code,
                                               DueDate = a.Cheque.ValueDate,
                                               LocalAmount = a.Cheque.LocalAmount,
                                               ForeignAmount = a.Cheque.ForeignAmount,
                                               Bank = a.Cheque.BankAccount,
                                               Branch = a.Cheque.BankBranch,
                                               AccountNumber = a.Cheque.BankId,
-                                              ARPaymentNumber = a.Cheque.Id,
+                                              ARPaymentNumber = a.Cheque.Payment.PaymentNo,
                                               ARPaymentId = a.Cheque.PaymentId,
-
+                                              ARPChequeStatusCode = a.Cheque.StatusCode,
+                                              ARPChequeStatusName = a.Cheque.ARPaymentChequeStatus.LocalName,
+                                              SearchFields = a.SearchFields,
+                                              
 		                    	            });
             return query;
 		}
 
 		private IQueryable<CashBookLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CashBookLine> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<CashBookLine> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CashBookLine> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<CashBookLine> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CashBookLine> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
