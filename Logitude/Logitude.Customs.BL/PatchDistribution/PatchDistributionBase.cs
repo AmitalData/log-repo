@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution
 {
-    public abstract class PatchDistributionBase : IUpScript
+    public abstract class PatchDistributionBase 
     {
         public string Branch { get; }
         public int MajorYear { get; }
@@ -19,6 +19,10 @@ namespace Logitude.Customs.BL.PatchDistribution
         public string PatchDetails { get; }
         public DateTime CreatedAt { get; }
         public string What2DOWhileCrash { get; set; }
+
+        
+        protected ScriptList UpScripts { get; }
+        protected ScriptList DownScripts { get; }
 
         public PatchDistributionBase(string patchDetails, DateTime dateTime)
         {
@@ -43,19 +47,56 @@ namespace Logitude.Customs.BL.PatchDistribution
             MajorVersionYYPRR = Decimal.Parse($"{parts[0]}.{parts[1]}");
             PatchCounter_Minor = int.Parse(partsOfClassName[1]);
             PatchName = partsOfClassName[2];
-        }
-        public abstract List<ScriptDTO> GetUpScripts();
+            UpScripts = new ScriptList();
+            CreateUpScripts();
+            DownScripts = new ScriptList();
 
-        public abstract List<ScriptDTO> GetDownScripts();
+        }
+        public abstract void CreateUpScripts();
+
+        public abstract void CreateDownScripts();
+
+        public List<ScriptDTO> GetSortedScripts()
+        {
+            return 
+            UpScripts.GetSortedScripts();
+        }
+        protected void AddUpSqlScript(string sqlScript)
+        {
+            this.UpScripts.Add(sqlScript);
+        }
 
     }
 
-    public interface IUpScript
+    
+
+
+    public class ScriptList 
     {
-        List<ScriptDTO> GetUpScripts();
+        List<ScriptDTO> _ScriptDTOs;
+        int _ListScriptCounter;
+        public ScriptList()
+        {
+            _ListScriptCounter = 1;
+            _ScriptDTOs = new List<ScriptDTO>();
+        }
+
+        internal void Add(string sqlScript)
+        {
+            _ScriptDTOs.Add(new ScriptDTO()
+            {
+                ScriptCounter = this._ListScriptCounter++,
+                SqlScript = sqlScript
+            });
+        }
+      
+        public List<ScriptDTO> GetSortedScripts() {
+            return _ScriptDTOs.OrderBy(r => r.ScriptCounter).ToList();
+        }
     }
     public class ScriptDTO
     {
+
         public int ScriptCounter { get; set; }
         public string SqlScript { get; set; }
         public string OSScript { get; set; }
@@ -66,4 +107,5 @@ namespace Logitude.Customs.BL.PatchDistribution
             return SqlScript;
         }
     }
+
 }

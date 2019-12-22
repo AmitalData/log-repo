@@ -13,21 +13,15 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
         {
 
         }
-        public override List<ScriptDTO> GetDownScripts()
+
+        public override void CreateDownScripts()
         {
             throw new NotImplementedException();
         }
 
-        public override List<ScriptDTO> GetUpScripts()
+        public override void CreateUpScripts()
         {
-            int ScriptCount = 0;
-            return new List<ScriptDTO>()
-            {
-                //Queue_DelayMessage
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = @"create or replace PROCEDURE Queue_DelayMessage(
+            this.AddUpSqlScript(@"create or replace PROCEDURE Queue_DelayMessage(
     v_MessageId    IN NUMBER,
     v_DelaySeconds IN NUMBER )
 AS
@@ -57,13 +51,9 @@ BEGIN
       WHERE Id            = v_MessageId;
     END;
   END IF;
-END"
-                },                
-                //Queue_Peek
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = @"create or replace PROCEDURE Queue_Peek(
+END");
+
+            this.AddUpSqlScript(@"create or replace PROCEDURE Queue_Peek(
     v_MessageId OUT NUMBER,
     v_MessageBody OUT VARCHAR2,
     v_RetryNumber OUT NUMBER,
@@ -125,13 +115,8 @@ BEGIN
   CLOSE c_1;
 END;
   
-END"
-                },
-                //queue_setstatus
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript =
+END");
+            this.AddUpSqlScript(
                 @"CREATE OR REPLACE PROCEDURE queue_setstatus (
     v_messageid   IN   NUMBER,
     v_statud      IN   NUMBER
@@ -188,10 +173,10 @@ BEGIN
     WHERE
         id = v_messageid;
 
-END"
+END");
 
-            }
-            };
+            
+            
         }
     }
 }

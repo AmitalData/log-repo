@@ -14,54 +14,22 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
 
         }
 
-        public override List<ScriptDTO> GetDownScripts()
+        public override void CreateDownScripts()
         {
             throw new NotImplementedException();
         }
 
-        public override List<ScriptDTO> GetUpScripts()
+        public override void CreateUpScripts()
         {
-            int ScriptCount = 0;
-            return new List<ScriptDTO>()
-            {
-                new ScriptDTO()
-                { 
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "SELECT COUNT(*) FROM QUEUEMESSAGES  WHERE  STATUS=0 "
-                },
-
-                new ScriptDTO() { 
-                    ScriptCounter = ScriptCount++, 
-                    SqlScript = "create table zzz_QUEUEMESSAGES  as SELECT * FROM QUEUEMESSAGES WHERE  STATUS=0 " 
-                },
-
-                //new ScriptDTO() { Count = ScriptCount++, SqlScript = "commit;" },
-                new ScriptDTO() { 
-                    ScriptCounter = ScriptCount++, 
-                    SqlScript = "SELECT COUNT(*) FROM zzz_QUEUEMESSAGES  " 
-                },
-
-                new ScriptDTO() {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "truncate table  QUEUEMESSAGEMOREDETAILS "
-                },
-                new ScriptDTO() {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "truncate table  QUEUEMESSAGES  "
-                },
-
-                new ScriptDTO()
-                {
-                     ScriptCounter = ScriptCount++,
-                      SqlScript ="insert into  QUEUEMESSAGES  SELECT * FROM zzz_QUEUEMESSAGES   "
-                },
-                //new ScriptDTO() { Count = ScriptCount++, SqlScript = "commit;" },
-                new ScriptDTO()
-                {
-                     ScriptCounter = ScriptCount++,
-                      SqlScript ="drop TABLE zzz_QUEUEMESSAGES   "
-                },
-        };
+            this.AddUpSqlScript("SELECT COUNT(*) FROM QUEUEMESSAGES  WHERE  STATUS=0 ");
+            this.AddUpSqlScript("create table zzz_QUEUEMESSAGES  as SELECT * FROM QUEUEMESSAGES WHERE  STATUS=0 ");
+            this.AddUpSqlScript("SELECT COUNT(*) FROM zzz_QUEUEMESSAGES  ");
+            this.AddUpSqlScript("truncate table  QUEUEMESSAGEMOREDETAILS ");
+            this.AddUpSqlScript("truncate table  QUEUEMESSAGES  ");
+            this.AddUpSqlScript("insert into  QUEUEMESSAGES  SELECT * FROM zzz_QUEUEMESSAGES   ");
+            this.AddUpSqlScript("drop TABLE zzz_QUEUEMESSAGES   ");
+                
+        
         }
     }
 }

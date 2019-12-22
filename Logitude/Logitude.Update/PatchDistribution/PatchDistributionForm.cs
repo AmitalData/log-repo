@@ -5,6 +5,7 @@ using Logitude.Customs.BL.PatchDistribution.Patches;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -71,14 +72,15 @@ namespace Logitude.Update.PatchDistribution
             var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
             var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
             var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
-            Debug.WriteLine($"assemblyVersion ={assemblyVersion}");
+            Logger.LogMe($"assemblyVersion ={assemblyVersion}", false);
 
 
             var patchDistributionMatch = new PatchDistributionMatch();
             _PatchDistributionMatchModel =patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-            Debug.WriteLine(_PatchDistributionMatchModel.Message);
-            Debug.WriteLine($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
-            Debug.WriteLine($"DB MinorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
+            Logger.LogMe(_PatchDistributionMatchModel.Message,false);
+            Logger.LogMe($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}", false);
+            Logger.LogMe($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", false);
+            //Logger.LogMe($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}", false);
 
 
             if (_PatchDistributionMatchModel.NotDistributionBranch)
@@ -107,7 +109,7 @@ namespace Logitude.Update.PatchDistribution
                     UpdateDBEnabled = true;
                     break;
                 case PatchDistributionMatch.MajorVersionMatchEnum.OK_DBAndAssemblyREqual:
-
+                    
                     var patchDistributionList = _PatchDistributionManager.GetPatchDistribution_Waiting2Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
                     if (patchDistributionList.Count == 0)
                     {
@@ -138,6 +140,7 @@ namespace Logitude.Update.PatchDistribution
             try
             {
                 _PatchDistributionManager.Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+                UpdateDBEnabled = false;
             }
             catch (PatchDistributionException myPatchDistributionException)
             {
