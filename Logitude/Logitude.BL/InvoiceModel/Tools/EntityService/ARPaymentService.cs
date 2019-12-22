@@ -886,6 +886,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             #endregion
 
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InternalNotes);
+
             entityPM.SearchFields = mySearchFields;
             newPayment.SearchFields = mySearchFields;
         }

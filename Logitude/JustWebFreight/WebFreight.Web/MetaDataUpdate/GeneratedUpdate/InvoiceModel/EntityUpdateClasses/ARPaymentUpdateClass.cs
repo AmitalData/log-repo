@@ -2119,7 +2119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search Payment # / Bill to / Reference",
+					  						DefaultText =  "Search Payment # / Bill to / Reference / Notes",
 					  						FullLocalDefaultText =  "חיפוש לפי מספר קבלה\\לקוח",
 					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1:Payment # \n2:Bill to \n3:Reference",
