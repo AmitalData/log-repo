@@ -282,10 +282,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 FeatureQuery featureQuery = new FeatureQuery(iFeatureRepository);
                 List<FeaturePM> myResult = featureQuery.GetSelectedAndUnSelectedFeatures(RoleId, allowedPackages, tenant);
 
-
+                
                 Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
                 List<string> allTextCodesIds = myResult.Where(d => d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
-                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesIds.Contains(d.Id) select d).ToList();
+                List<string> allTextCodesCodes = myResult.Where(d => d.NameTextCodeCode != null).Select(s => s.NameTextCodeCode).ToList();
+                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesCodes.Contains(d.Code) select d).ToList();
                 List<Translation> allTranslations = new List<Translation>();
 
                 if (iTenant.Language != null)
@@ -303,9 +304,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 foreach (FeaturePM item in myResult)
                 {
-                    if (!string.IsNullOrEmpty(item.NameTextCodeId))
+                    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
                     {
-                        TextCode iTextCode = allTextCodes.Where(d => d.Id == item.NameTextCodeId).FirstOrDefault();
+                        TextCode iTextCode = allTextCodes.Where(d => d.Code == item.NameTextCodeCode).FirstOrDefault();
                         if (iTextCode != null)
                         {
                             item.TranslatedName = iTextCode.DefaultText;
