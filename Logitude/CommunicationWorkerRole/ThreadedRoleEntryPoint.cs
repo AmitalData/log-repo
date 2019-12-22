@@ -295,20 +295,30 @@ namespace CommunicationWorkerRole
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
             if (!string.IsNullOrEmpty(SpecialBatchCode) && Environment.MachineName == "LogitudeWR2")
             {
-                var temp = SpecialBatchCode.Split(',');
-                if (temp.Length > 0)
+                BatchServicesDefinitionsTemp = new List<BatchServicesDefinitionPM>();
+                var temp1 = SpecialBatchCode.Split(';');
+                if (temp1.Length > 0)
                 {
-                    var BatchCode = temp[0].ToLower();
-                    var IsActivate = temp[1].ToLower();
-                    if (IsActivate == "true")
+                    foreach (var item in temp1)
                     {
-                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
-                    }
-                    else
-                    {
-                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                        var temp = item.Split(',');
+                        if (temp.Length > 0)
+                        {
+                            var BatchCode = temp[0].ToLower();
+                            var IsActivate = temp[1].ToLower();
+                            if (IsActivate == "true")
+                            {
+                                BatchServicesDefinitionsTemp.Add(BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).FirstOrDefault());
+                            }
+                            else
+                            {
+                                BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                            }
+                        }
                     }
                 }
+              
+               
             }
             if (BatchServicesDefinitions == null)
             {
