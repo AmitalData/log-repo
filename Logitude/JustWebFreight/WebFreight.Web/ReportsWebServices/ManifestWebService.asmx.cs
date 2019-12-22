@@ -25,6 +25,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.WebServices;
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -150,6 +152,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (myLoggedTenant != null)
                 {
                     manifestDataProvider.FMCNumber = myLoggedTenant.FMCNumber;
+                    manifestDataProvider.TenantVATNumber = myLoggedTenant.VatNumber != null ? myLoggedTenant.VatNumber : "";
                 }
 
                 #region IssuingCarrierAgent
@@ -328,6 +331,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 manifestDataProvider.AgentContactName = contact.EnglishName;
                             }
                         }
+                        manifestDataProvider.AgentVATNumber = agent.VatNumber != null ? agent.VatNumber : "";
                     }
                 }
                 else
@@ -896,7 +900,8 @@ namespace WebFreight.Web.ReportsWebServices
                             packageDetail.Reference3 = package.Reference3;
                             packageDetail.Reference4 = package.Reference4;
                             packageDetail.CommodityNumber = package.CommodityNumber;
-                            packageDetail.Notes = package.Notes;                        
+                            packageDetail.Notes = package.Notes;
+                            packageDetail.Harmonize = package.Harmonize;
                             newDetail.PackageDetails.Add(packageDetail);
 
                             #region commented Code
@@ -1070,6 +1075,23 @@ namespace WebFreight.Web.ReportsWebServices
                     newDetail.OpenPayablesInLocalCurrency = shipmentView.OpenPayablesInLocalCurrency;
                     newDetail.OpenPayablesInProfitCurrency = shipmentView.OpenPayablesInProfitCurrency;
 
+                    if (!string.IsNullOrEmpty(shipmentView.QuoteId))
+                    {
+                        QuoteRepository quoteRepositoy = new QuoteRepository(tenant);
+                        Quote connectedQuote = quoteRepositoy.GetSingleQuote(shipmentView.QuoteId, tenant);
+                        detail.QuoteNumberConnectedToHouse = newDetail.QuoteNumberConnectedToHouse = connectedQuote.QuoteNumber != null ? connectedQuote.QuoteNumber : "";
+                    }
+                    
+                    detail.ShipperRefernce1 = newDetail.ShipperRefernce1 = shipmentView.ShipperReference1 != null ? shipmentView.ShipperReference1 : "";
+                    detail.ValueOfGoods = newDetail.ValueOfGoods = shipmentView.ValueOfGoods;
+
+                    if (!string.IsNullOrEmpty(shipmentView.ValueOfGoodsCurrencyId))
+                    {
+                        CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
+                        Currency valueOfGoodsCurrency = currencyRepository.GetSingleCurrency(shipmentView.ValueOfGoodsCurrencyId, tenant);
+                        detail.ValueOfGoodsCurrency = newDetail.ValueOfGoodsCurrency = valueOfGoodsCurrency.Code;
+                    }
+
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentView, detail);
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentView, newDetail);
 
@@ -1077,7 +1099,7 @@ namespace WebFreight.Web.ReportsWebServices
                     manifestDataProvider.NewManifestDetails.Add(newDetail);
                     #endregion
                 }
-
+                
                 manifestDataProvider.TotalCollect = grandTotalCollect.ToString();
                 manifestDataProvider.TotalPrepaid = grandTotalPrepaid.ToString();
 
