@@ -502,7 +502,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         else {
             if (this.ComponentRef) {
                 this.BackCompleted.emit(false);
-                this.CurrentSession.FireEvent("BIRefresh");
+                this.CurrentSession.FireEvent("ReloadAllList");
                 this.ComponentRef.destroy();
             }
         }
@@ -646,6 +646,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         this.SelectedFiltersDataSource = temp;
                         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
+                    else {
+                        this.SelectedFiltersDataSource = [];
+                    }
                     this.LoadBIReportData();
                 }
             });
@@ -755,7 +758,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe(myResult => {
                         if (!myResult.HasError) {
                             if (this.ComponentRef) {
-                                this.CurrentSession.FireEvent("BIRefresh");
+                                this.BackCompleted.emit(true);
+                                this.CurrentSession.FireEvent("ReloadAllList");
                                 this.ComponentRef.destroy();
                             }
                         }
