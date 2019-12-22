@@ -1806,6 +1806,13 @@
     <Compile Include="Migrations\201912151615218_Edit_Fields_In_GLAccount.Designer.cs">
       <DependentUpon>201912151615218_Edit_Fields_In_GLAccount.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.cs" />
+    <Compile Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.Designer.cs">
+      <DependentUpon>201912181600213_UpdateFieldsInterestInGLAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+
     <Compile Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs" />
     <Compile Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.Designer.cs">
       <DependentUpon>201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs</DependentUpon>
@@ -3115,6 +3122,10 @@
     <EmbeddedResource Include="Migrations\201912151615218_Edit_Fields_In_GLAccount.resx">
       <DependentUpon>201912151615218_Edit_Fields_In_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.resx">
+      <DependentUpon>201912181600213_UpdateFieldsInterestInGLAccount.cs</DependentUpon>
+    </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.resx">
       <DependentUpon>201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
