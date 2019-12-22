@@ -2397,7 +2397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
                  
 			   TextCode ContactOccasionsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Occasions", DefaultText = "Occasions",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ContactOccasionsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Tab.Occasions", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContactFeatures.COOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ContactOccasionsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Tab.Occasions", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContactFeatures.COOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode ContactEventsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
