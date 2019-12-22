@@ -85,6 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "InterestReportLinesByDate",
 			      				    IsNew =  true,
 			      				    DBTableName =  "InterestReportLinesByDates",
+			      				    OldDBTableName =  "InterestReportLinesByDates",
 			      				    ObjectTableSingular =  "InterestReportLinesByDate",
 			      				    ObjectTablePlural =  "InterestReportLinesByDates",
 			      				    HasCustomFilter =  false,
@@ -115,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Report Lines By Date",
-			      				    Code =  "bab2",
+			      				    Code =  "1477",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -138,6 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportId",
+					  						OldFieldName =  "InterestReportId",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -157,6 +159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InterestReportId",
 					  						ListPropertyPath =  "InterestReportId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -174,6 +177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestReportId",
 					  						DefaultText =  "Interest Report",
+					  						FullLocalDefaultText =  "מזהה פנימי לדוח ריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -192,6 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineNumber",
+					  						OldFieldName =  "LineNumber",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -211,6 +216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LineNumber",
 					  						ListPropertyPath =  "LineNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -230,6 +236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LineNumber",
 					  						DefaultText =  "Line Number",
+					  						FullLocalDefaultText =  "מספר שורה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -248,6 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FromDate",
+					  						OldFieldName =  "FromDate",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -267,6 +275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FromDate",
 					  						ListPropertyPath =  "FromDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -284,6 +293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FromDate",
 					  						DefaultText =  "From Date",
+					  						FullLocalDefaultText =  "מתאריך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -302,6 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToDate",
+					  						OldFieldName =  "ToDate",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -321,6 +332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ToDate",
 					  						ListPropertyPath =  "ToDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -338,6 +350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ToDate",
 					  						DefaultText =  "To Date",
+					  						FullLocalDefaultText =  "עד תאריך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -356,6 +369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalInterestDays",
+					  						OldFieldName =  "TotalInterestDays",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -375,6 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalInterestDays",
 					  						ListPropertyPath =  "TotalInterestDays",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -392,6 +407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalInterestDays",
 					  						DefaultText =  "Total Interest Days",
+					  						FullLocalDefaultText =  "סך ימי ריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -410,6 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalAmount",
+					  						OldFieldName =  "TotalAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -429,6 +446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalAmount",
 					  						ListPropertyPath =  "TotalAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -448,6 +466,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalAmount",
 					  						DefaultText =  "Total Amount",
+					  						FullLocalDefaultText =  "סכום סה\"כ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -466,6 +485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccumulatedAmount",
+					  						OldFieldName =  "AccumulatedAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -485,6 +505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AccumulatedAmount",
 					  						ListPropertyPath =  "AccumulatedAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -504,6 +525,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccumulatedAmount",
 					  						DefaultText =  "Accumulated Amount ",
+					  						FullLocalDefaultText =  "סכום מצטבר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -522,6 +544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StandardInterestPercentage",
+					  						OldFieldName =  "StandardInterestPercentage",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -541,6 +564,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StandardInterestPercentage",
 					  						ListPropertyPath =  "StandardInterestPercentage",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -560,6 +584,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StandardInterestPercentage",
 					  						DefaultText =  "Standard Interest Percentage",
+					  						FullLocalDefaultText =  "אחוז ריבית רגילה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -578,6 +603,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExceptionalInterestPercentage",
+					  						OldFieldName =  "ExceptionalInterestPercentage",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -597,6 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExceptionalInterestPercentage",
 					  						ListPropertyPath =  "ExceptionalInterestPercentage",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -616,6 +643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExceptionalInterestPercentage",
 					  						DefaultText =  "Exceptional Interest Percentage",
+					  						FullLocalDefaultText =  "אחוז ריבית חריגה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -634,6 +662,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreditInterestPercentage",
+					  						OldFieldName =  "CreditInterestPercentage",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -653,6 +682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreditInterestPercentage",
 					  						ListPropertyPath =  "CreditInterestPercentage",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -671,7 +701,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditInterestPercentage",
-					  						DefaultText =  "CreditInterest Percentage",
+					  						DefaultText =  "Credit Interest Percentage",
+					  						FullLocalDefaultText =  "אחוז ריבית זיכוי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -690,6 +721,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StandardInterestAmount",
+					  						OldFieldName =  "StandardInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -709,6 +741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StandardInterestAmount",
 					  						ListPropertyPath =  "StandardInterestAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -728,6 +761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StandardInterestAmount",
 					  						DefaultText =  "Standard Interest Amount",
+					  						FullLocalDefaultText =  "סכום לריבית רגילה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -746,6 +780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExceptionalInterestAmount",
+					  						OldFieldName =  "ExceptionalInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -765,6 +800,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExceptionalInterestAmount",
 					  						ListPropertyPath =  "ExceptionalInterestAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -784,6 +820,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExceptionalInterestAmount",
 					  						DefaultText =  "Exceptional Interest Amount",
+					  						FullLocalDefaultText =  "סכום לריבית חריגה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -802,6 +839,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreditInterestAmount",
+					  						OldFieldName =  "CreditInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -821,6 +859,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreditInterestAmount",
 					  						ListPropertyPath =  "CreditInterestAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -840,6 +879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditInterestAmount",
 					  						DefaultText =  "Credit Interest Amount",
+					  						FullLocalDefaultText =  "סכום מסגרת אשראי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -858,6 +898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedStandInterestAmount",
+					  						OldFieldName =  "CalculatedStandInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -877,6 +918,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CalculatedStandInterestAmount",
 					  						ListPropertyPath =  "CalculatedStandInterestAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -896,6 +938,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedStandInterestAmount",
 					  						DefaultText =  "Calculated Standard Interest Amount",
+					  						FullLocalDefaultText =  "סכום מחושב לריבית רגילה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -914,6 +957,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedExcepInterestAmount",
+					  						OldFieldName =  "CalculatedExcepInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -933,6 +977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CalculatedExcepInterestAmount",
 					  						ListPropertyPath =  "CalculatedExcepInterestAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -952,6 +997,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedExcepInterestAmount",
 					  						DefaultText =  "Calculated Exceptional Interest Amount",
+					  						FullLocalDefaultText =  "סכום מחושב לריבית חריגה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -970,6 +1016,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedCreditInterestAmount",
+					  						OldFieldName =  "CalculatedCreditInterestAmount",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -989,6 +1036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CalculatedCreditInterestAmount",
 					  						ListPropertyPath =  "CalculatedCreditInterestAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1008,6 +1056,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedCreditInterestAmount",
 					  						DefaultText =  "Calculated Credit Interest Amount",
+					  						FullLocalDefaultText =  "סכום מחושב לריבית זיכוי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1026,6 +1075,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculationDetails",
+					  						OldFieldName =  "CalculationDetails",
 					  						ObjectTableName =  "InterestReportLinesByDate",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1045,6 +1095,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CalculationDetails",
 					  						ListPropertyPath =  "CalculationDetails",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1062,6 +1113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculationDetails",
 					  						DefaultText =  "Calculation Details",
+					  						FullLocalDefaultText =  "פרוט חישוב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1082,7 +1134,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable InterestReportLinesByDateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReportLinesByDate" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> InterestReportLinesByDateObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InterestReportLinesByDate").ToList();
+		       
+	      
+
+	         Screen InterestReportLinesByDateInterestReportLinesByDateHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReportLinesByDate.HeaderScreen", Name = "InterestReportLinesByDateHeaderScreen", ObjectTableId = InterestReportLinesByDateObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    InterestReportLinesByDateObjectTable.HeaderScreenId = InterestReportLinesByDateInterestReportLinesByDateHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 

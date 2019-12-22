@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.UpdateDateTime).HasColumnName("UpdateDateTime");
 
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").HasMaxLength(15).IsUnicode(false);
 

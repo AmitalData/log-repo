@@ -30,8 +30,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string CreatedByUserId { get; set; }
 	      
         public virtual User CreatedByUser { get; set; }
-        [Column("UpdateDate")]
-	    public DateTime? UpdateDate { get; set; }
+        [Column("UpdateDateTime")]
+	    public DateTime? UpdateDateTime { get; set; }
         [ForeignKey("UpdatedByUser")]
         [Column("UpdatedByUserId")]
 	    public string UpdatedByUserId { get; set; }

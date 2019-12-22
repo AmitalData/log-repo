@@ -44,9 +44,9 @@ export class InterestReportPM {
     public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
        
 	 
-    private updateDate: Date;
-    public get UpdateDate() { return this.updateDate; }
-    public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
+    private updateDateTime: Date;
+    public get UpdateDateTime() { return this.updateDateTime; }
+    public set UpdateDateTime(newValue: Date) { if (this.updateDateTime != newValue) { this.updateDateTime = newValue; this.MarkAsDirty("UpdateDateTime"); } }
        
 	 
     private updatedByUserId: string;

@@ -12,7 +12,7 @@ export class InterestReportList {
 	Tenant: number;
 	CreateDateTime: Date;
 	CreatedByUserId: string;
-	UpdateDate: Date;
+	UpdateDateTime: Date;
 	UpdatedByUserId: string;
 	GLAccountId: string;
 	ReportNumber: string;

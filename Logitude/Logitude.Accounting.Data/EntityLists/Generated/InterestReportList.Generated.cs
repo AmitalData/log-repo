@@ -23,7 +23,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string CreatedByUserId  { get; set; }
        [DataMember]
-       public DateTime? UpdateDate  { get; set; }
+       public DateTime? UpdateDateTime  { get; set; }
        [DataMember]
        public string UpdatedByUserId  { get; set; }
        [DataMember]

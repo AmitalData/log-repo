@@ -112,25 +112,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime? updateDate ;
+	  private DateTime? updateDateTime ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime? UpdateDate  
+       public DateTime? UpdateDateTime  
 	   {
 	    
 	     get
 		{
-		   return updateDate;
+		   return updateDateTime;
 		 }
 		 set
 		 {
-		   if(updateDate != value)
+		   if(updateDateTime != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDate",OldValue=updateDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDateTime",OldValue=updateDateTime,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
-		   updateDate=value;
+		   updateDateTime=value;
 		   }
 			
 		 }

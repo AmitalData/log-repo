@@ -26,7 +26,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDateTime, 
 	         CreatedByUserId, 
-	         UpdateDate, 
+	         UpdateDateTime, 
 	         UpdatedByUserId, 
 	         GLAccountId, 
 	         ReportNumber, 
@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDateTime, 
 	         CreatedByUserId, 
-	         UpdateDate, 
+	         UpdateDateTime, 
 	         UpdatedByUserId, 
 	         GLAccountId, 
 	         ReportNumber, 
@@ -83,9 +83,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDateTime))
             {
-				entityPOCO.UpdateDate = entityPM.UpdateDate;
+				entityPOCO.UpdateDateTime = entityPM.UpdateDateTime;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
@@ -167,9 +167,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDate))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDateTime))
             {
-					entityPM.UpdateDate = entityPOCO.UpdateDate;
+					entityPM.UpdateDateTime = entityPOCO.UpdateDateTime;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdatedByUserId))
@@ -248,9 +248,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDateTime))
             {
-                oldEntityPM.UpdateDate = entityPM.UpdateDate;
+                oldEntityPM.UpdateDateTime = entityPM.UpdateDateTime;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))

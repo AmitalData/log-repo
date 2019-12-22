@@ -33,7 +33,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          CreatedByUserId = a.CreatedByUserId,
 					
-					                          UpdateDate = a.UpdateDate,
+					                          UpdateDateTime = a.UpdateDateTime,
 					
 					                          UpdatedByUserId = a.UpdatedByUserId,
 					
