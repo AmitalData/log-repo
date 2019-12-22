@@ -205,15 +205,17 @@ export class CourierWorksheetComponent extends BaseComponent
                 case "Pending902":
                     {
                         this._SelectedTabFilter = this._TabFilterList[6];
-                        this.PendingFilter = "902";
                         this.TabFilterClick(this._TabFilterList[6]);
+                        this.PendingFilter = "902";
+                        this.GetPending();
                         break;
                     }
                 case "Pending900":
                     {
                         this._SelectedTabFilter = this._TabFilterList[6];
-                        this.PendingFilter = "900";
                         this.TabFilterClick(this._TabFilterList[6]);
+                        this.PendingFilter = "900";
+                        this.GetPending();
                         break;
                     }
                 case "OpenDeclarations":
