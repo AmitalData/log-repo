@@ -521,16 +521,30 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
-        public List<Declaration> GetDeclarationAmendmentsByCustomFileNo(int tenant, string customFileNo)
+        public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
         {
-            string id = GetIdByCustomFileNo(customFileNo ,tenant);
-          
+            Declaration declaration = GetSingleDeclarationById( id  , tenant);
+           
+            if (declaration.IsAmendment== true)
+            {      Declaration declarationOrg = GetSingleDeclarationById(declaration.AmendmentOriginalDeclartation, tenant);
 
-            var myQ = (from a in context.Declarations
-                       where  a.AmendmentOriginalDeclartation == id
-                       select a);
-           var list = myQ.ToList();
-            return list;
+                var myQ = (from a in context.Declarations
+                           where (a.AmendmentOriginalDeclartation == declarationOrg.Id || a.Id== declarationOrg.Id ) && a.Id != id
+                           select a);
+                return myQ.ToList();
+               }
+
+            else
+            {
+                    var myQ = (from a in context.Declarations
+                               where a.AmendmentOriginalDeclartation == id
+                               select a);
+                    return myQ.ToList();
+                }
+           
+
+
+          
         }
 
 

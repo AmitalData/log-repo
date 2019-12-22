@@ -1583,31 +1583,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return isFreight;
         }
 
-        public List<DeclarationList> GetDeclarationAmendmentsByCustomFileNo(int tenant, string customFileNo)
+        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id)
         {
-            //DeclarationRepository declarationRep = new DeclarationRepository(context);
-            //var declarations=   declarationRep.GetDeclarationAmendmentsByCustomFileNo(tenant, customFileNo);
-            //DeclarationDataMapping mappings = new DeclarationDataMapping();
-
-            //List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
-
-
-            //DeclarationListQueryService declarationListQueryService = new DeclarationListQueryService(context);
-
-            //IQueryable<DeclarationList> DeclarationListQuery = declarationListQueryService.GetIqueryableList(declarations);
-
-            ////foreach (Declaration declaration in declarations)
-            ////{
-            ////    DeclarationPM declarationPM = new DeclarationPM();
-            ////    mappings.CustomPOCOToPM(declarationPM, declaration);
-            ////    mappings.POCOToPM(declarationPM, declaration);
-            ////    GetComposition(new DeclarationKeys() { Id = declaration.Id, }, declarationPM);
-            ////    declarationPMs.Add(declarationPM);
-            ////}
-            //return declarationPMs;
-
-
-            List<Declaration> declarations = repository.GetDeclarationAmendmentsByCustomFileNo(tenant , customFileNo);
+ 
+            List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant , id);
             List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
             List<DeclarationList> declarationLists = new List<DeclarationList>();
@@ -1625,11 +1604,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     Tenant = item.Tenant,
                     AmendmentRequestNumber = item.AmendmentRequestNumber,
                     DeclarationVersionId = item.VersionId,
-                    AmendmentCorrectedByUserName = users.FirstOrDefault(x=>x.Id==item.AmendmentCorrectedByUserId).Code,
-                    AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name,
 
 
                };
+                if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
+                if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
 
  
                 declarationLists.Add(declarationList);

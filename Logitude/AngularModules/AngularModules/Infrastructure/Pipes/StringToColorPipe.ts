@@ -238,6 +238,12 @@ export class StringToColorPipe {
             myResult = this.ApplyDeclarationStatusCodePipe(value);
         }
 
+        else if (Parameter == "DeclarationAmendmentStatus")
+        {
+            myResult = this.ApplyDeclarationAmendmentStatusPipe(value);
+            
+        }
+
         else if (Parameter == "CustomsTransmissionsStatus") {
             myResult = this.ApplyCustomsTransmissionsStatusPipe(value);
         }
@@ -290,6 +296,36 @@ export class StringToColorPipe {
                     myResult = "#F40CB2";
                     break;
                 }
+        }
+
+        return myResult;
+    }
+    private ApplyDeclarationAmendmentStatusPipe(value: string) {
+        var myResult: string = "";
+
+        switch (value) {
+            case "3":
+            case "6":
+
+                {
+                    myResult = "#009161"; // green
+
+                    break;
+                }
+            case "1":
+            case "2":
+                {
+                    myResult = "#F37021"; // orange
+                    break;
+                }
+            case "4":
+            case "5":
+
+                {
+                    myResult = "#E53030"; // red
+                    break;
+                }
+
         }
 
         return myResult;

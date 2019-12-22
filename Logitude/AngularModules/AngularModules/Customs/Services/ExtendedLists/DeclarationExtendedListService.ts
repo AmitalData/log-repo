@@ -266,23 +266,27 @@ export class DeclarationExtendedListService {
 
 
 
-    GetDeclarationAmendmentListPMByCustomFileNo(customFileNo: string) {
+    GetDeclarationAmendmentsById(id: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDeclarationAmendmentListPMByCustomFileNo/?' + 'customFileNo=' + customFileNo,
+            return this._http.get(this._apiUrl + '/GetDeclarationAmendmentsById/?' + 'id=' + id,
                 { headers: authHeader }).map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
-                    var declarationList: DeclarationList;
-                    if (serviceResponse.Result) {
-                        var entity: DeclarationList;
-                        declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
-                    }
+                    var list = response.json();
 
-                    serviceResponse.Result = declarationList;
+                    var _mappedListsArray: Array<DeclarationList> = [];
+                    if (list) {
+                        for (var key in list) {
+                            var entity: DeclarationList;
+                            entity = this.MapJsonToEntityList(list[key]);
+                            _mappedListsArray.push(entity);
+                        }
+                    }
+ 
+                    serviceResponse.Result = _mappedListsArray;
                     return serviceResponse;
                 }).catch(ServiceHelper.HandleServiceError);
         });

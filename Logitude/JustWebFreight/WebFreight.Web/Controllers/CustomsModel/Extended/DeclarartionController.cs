@@ -569,7 +569,7 @@ new XElement("FileStreamError",
 
 
 
-        public HttpResponseMessage GetDeclarationAmendmentListPMByCustomFileNo(string customFileNo)
+        public HttpResponseMessage GetDeclarationAmendmentsById(string id)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -581,7 +581,7 @@ new XElement("FileStreamError",
             try {
                 DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
 
-                var declarations=  declarationQuery.GetDeclarationAmendmentsByCustomFileNo(tenant , customFileNo);
+                var declarations=  declarationQuery.GetDeclarationAmendmentsById(tenant , id);
             return Request.CreateResponse(HttpStatusCode.OK, declarations); 
         }
 
