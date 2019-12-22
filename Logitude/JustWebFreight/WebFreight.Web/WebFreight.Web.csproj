@@ -1021,6 +1021,10 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\IntegrityCheckStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestBasesPeriodViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestBasesTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportLinesByDateViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportLineViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportStatuseViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />
@@ -1052,6 +1056,9 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountWithholdingTaxController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestBasesPeriodController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestBasesTypeController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportLineController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportLinesByDateController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\OpenFormatReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\PaymentChequeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ReconcileExternalPageController.Generated.cs" />
@@ -2693,6 +2700,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesPeriodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestEntityTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportLinesByDateUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportStatuseUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestTransactionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalExternalReconcileUpdateClass.cs" />

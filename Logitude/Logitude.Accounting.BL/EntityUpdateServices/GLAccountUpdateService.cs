@@ -392,7 +392,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
         
-
+        
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
@@ -402,14 +402,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bool showLocals = !contact.DontShowLocal;
             if (entityPM.GLAccountInterestPeriods.GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
             {
-                throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.LineDateExist", entityPM.Tenant, showLocals));
+                throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
 
             }
             if (entityPM.ActiveForInterest == true )
             {
                  if(entityPM.InterestCalculationStartDate == null)
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.FieldInterestCalculationStartDateismandatory", entityPM.Tenant, showLocals));
+                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.FieldInterestCalculationStartDateismandatory", entityPM.Tenant, showLocals));
                 }
                 else
                 {
@@ -417,7 +417,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     GLAccountInterestPeriod Period = PeriodRepository.GetSingleByGLAccountIdAndTenant(entityPM.Id, entityPM.Tenant);
                     if (Period == null  && entityPM.GLAccountInterestPeriods.Count == 0)
                     {
-                        throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
+                        throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
                     }
                 }
             }
@@ -427,7 +427,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
                     {
-                        throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.DeleteExistInterestperiods", entityPM.Tenant, showLocals));
+                        throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.DeleteExistInterestperiods", entityPM.Tenant, showLocals));
                     }
 
                 }

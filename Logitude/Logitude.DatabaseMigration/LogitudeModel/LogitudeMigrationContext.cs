@@ -3417,7 +3417,28 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
         public IDbSet<InterestTransaction> InterestTransactions { get; set; }
         public IDbSet<InterestEntityType> InterestEntityTypes { get; set; }
-        
+        public IDbSet<InterestReport> InterestReports
+        {
+            get; set;
+
+        }
+
+        public IDbSet<InterestReportStatuse> InterestReportStatuses
+        {
+            get; set;
+
+        }
+
+        public IDbSet<InterestReportLine> InterestReportLines
+        {
+            get; set;
+
+        }
+        public IDbSet<InterestReportLinesByDate> InterestReportLinesByDates
+        {
+            get; set;
+
+        }
         #endregion
 
         #region Warehouse Context
@@ -4320,6 +4341,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new GLAccountCurrencyMap());
             modelBuilder.Configurations.Add(new GLAccountMoreDataMap());
             modelBuilder.Configurations.Add(new GLAccountInterestPeriodMap());
+            modelBuilder.Configurations.Add(new InterestReportLinesByDateMap());
 
             modelBuilder.Configurations.Add(new GLAccountTypeMap());
             modelBuilder.Configurations.Add(new JournalMap());
@@ -4386,7 +4408,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new InterestBasesPeriodMap());
             modelBuilder.Configurations.Add(new InterestTransactionMap());
             modelBuilder.Configurations.Add(new InterestEntityTypeMap());
-            
+            modelBuilder.Configurations.Add(new InterestReportMap());
+            modelBuilder.Configurations.Add(new InterestReportStatuseMap());
+            modelBuilder.Configurations.Add(new InterestReportLineMap());
             #endregion
 
             #region WareHouse

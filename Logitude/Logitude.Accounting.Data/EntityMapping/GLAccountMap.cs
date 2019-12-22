@@ -146,6 +146,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ActiveForInterestCreditInvoice).HasColumnName("ActiveForInterestCreditInvoice");
 
             this.Property(t => t.MinimumInterestInvoiceBilling).HasColumnName("MinimumInterestInvoiceBilling").HasPrecision(5, 0);
+
+            this.Property(t => t.InterestCreditLimit).HasColumnName("InterestCreditLimit").HasPrecision(18, 2);
         }
     }
 }
