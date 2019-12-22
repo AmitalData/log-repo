@@ -25,6 +25,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Text.RegularExpressions;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace WebFreight.Web.WebServices
 {
@@ -396,6 +398,16 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
 
+                if (!string.IsNullOrEmpty(shipment.QuoteId))
+                {
+                    QuoteRepository quoteRepository = new QuoteRepository(tenant);
+                    Quote quote = quoteRepository.GetSingleQuote(shipment.QuoteId, tenant);
+                    if(quote != null)
+                    {
+                        myDataProvider.ConnectedQuoteNumber = quote.QuoteNumber != null ? quote.QuoteNumber : "";
+                    }
+                }
+                
                 int numberofpackages = shipment.NumberOfPackages != null ? shipment.NumberOfPackages.Value : 0;
                 int numberofcontainers = shipment.NumberOfContainers != null ? shipment.NumberOfContainers.Value : 0;
 
