@@ -801,6 +801,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 if (!string.IsNullOrWhiteSpace(line.DebitAccount))
                                 {
                                     GLAccountPM glaAccount = GetGLAccountForLine(line);
+                                    if(glaAccount == null)
+                                        throw new Exception("Cannot find the provided Debit Account: " + line.DebitAccount);
+
                                     line.ChargeTypeGLAccountId = glaAccount?.Id;
                                 }
                                 else
