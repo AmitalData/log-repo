@@ -27,6 +27,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.Packagable = entityPM.Packagable;
             entityPOCO.IsBusinessUnitEnabled = entityPM.IsBusinessUnitEnabled;
             entityPOCO.IsCoreFeature = entityPM.IsCoreFeature;
+            entityPOCO.NameTextCodeCode = entityPM.NameTextCodeCode;
         }
     }
 }
