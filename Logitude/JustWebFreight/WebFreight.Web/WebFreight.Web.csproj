@@ -1969,6 +1969,8 @@
     <Compile Include="Controllers\WebServices\MessageSimulatingController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Services\TotangoServiceController.cs" />
     <Compile Include="Controllers\WebServices\QueueMessagesWebServiceController.cs" />
+    <Compile Include="CRMModel\DomainServices\CRMDomainService.Occasion.cs" />
+    <Compile Include="CRMModel\DomainServices\CRMDomainService.OccasionContact.cs" />
     <Compile Include="CustomModel\CustomsRegistrations.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitCargoIdentifier.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitConsItem.cs" />
