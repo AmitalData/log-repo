@@ -32,5 +32,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pm=this.GetEntityPM(poco);
             return pm;
         }
+        internal DBMigrationPM GetLastPM()
+        {
+            var poco = repository.GetLast();
+            var pm = this.GetEntityPM(poco);
+            return pm;
+        }
     }
 }

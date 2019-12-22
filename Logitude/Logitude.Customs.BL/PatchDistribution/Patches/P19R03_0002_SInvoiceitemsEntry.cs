@@ -13,39 +13,18 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
         {
 
         }
-        public override List<ScriptDTO> GetDownScripts()
+
+        public override void CreateUpScripts()
         {
-            throw new NotImplementedException();
+            this.AddUpSqlScript("CREATE INDEX IX_DECLARATIONS_CUSTOMFILENO ON DECLARATIONS (CUSTOMFILENO ASC)");
+            this.AddUpSqlScript("ALTER TABLE supplierinvoiceitems ADD (marksandnumbers VARCHAR2(512 CHAR),packagequantity NUMBER(10),weight NUMBER(18,2)) "); 
+            this.AddUpSqlScript("ALTER PROCEDURE usp_updateparentinvoiceitemseq COMPILE ");
+            this.AddUpSqlScript("ALTER PROCEDURE usp_updateinvoiceitemssequence COMPILE ");
         }
 
-        public override List<ScriptDTO> GetUpScripts()
+        public override void CreateDownScripts()
         {
-            int ScriptCount = 0;
-            return new List<ScriptDTO>()
-            {
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "CREATE INDEX IX_DECLARATIONS_CUSTOMFILENO ON DECLARATIONS (CUSTOMFILENO ASC)"
-                },
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems ADD (marksandnumbers VARCHAR2(512 CHAR),packagequantity NUMBER(10),weight NUMBER(18,2)) "
-                },
-
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER PROCEDURE usp_updateparentinvoiceitemseq COMPILE "
-                },
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER PROCEDURE usp_updateinvoiceitemssequence COMPILE "
-                }
-
-            };
+            throw new NotImplementedException();
         }
     }
 }

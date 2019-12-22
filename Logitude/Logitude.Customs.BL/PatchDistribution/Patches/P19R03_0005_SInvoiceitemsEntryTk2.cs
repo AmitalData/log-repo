@@ -13,50 +13,22 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
         {
 
         }
-        public override List<ScriptDTO> GetDownScripts()
+
+        public override void CreateDownScripts()
         {
             throw new NotImplementedException();
         }
 
-        public override List<ScriptDTO> GetUpScripts()
+        public override void CreateUpScripts()
         {
-            int ScriptCount = 0;
-            return new List<ScriptDTO>()
-            {
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems ADD (zmarksandnumbers VARCHAR2(30 CHAR),zweight NUMBER(15,3)) "
-                },
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "update supplierinvoiceitems  set zmarksandnumbers = substr(marksandnumbers,1,30) ,zweight =weight   where marksandnumbers is not null "
-                },
+            this.AddUpSqlScript("ALTER TABLE supplierinvoiceitems ADD (zmarksandnumbers VARCHAR2(30 CHAR),zweight NUMBER(15,3)) ");
+            this.AddUpSqlScript("update supplierinvoiceitems  set zmarksandnumbers = substr(marksandnumbers,1,30) ,zweight =weight   where marksandnumbers is not null ");
+            this.AddUpSqlScript("ALTER TABLE supplierinvoiceitems drop column marksandnumbers  ");
+            this.AddUpSqlScript("ALTER TABLE supplierinvoiceitems drop column weight ");
+            this.AddUpSqlScript("ALTER TABLE supplierinvoiceitems rename COLUMN  zmarksandnumbers to marksandnumbers  ");
+            this.AddUpSqlScript("ALTER TABLE supplierinvoiceitems rename COLUMN  zweight to weight ");
 
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems drop column marksandnumbers  "
-                },
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems drop column weight "
-                },
 
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems rename COLUMN  zmarksandnumbers to marksandnumbers  "
-                },
-
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems rename COLUMN  zweight to weight "
-                },
-            };
         }
     }
 }

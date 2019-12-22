@@ -3,6 +3,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -17,6 +18,7 @@ namespace Logitude.Customs.BL.PatchDistribution
 {
     public class PatchDistributionManager
     {
+        //public const string LoggerSuffix = "Migrate";
         public List<PatchDistributionBase> Check_PatchDistributionListAreValid()
         {
             var patchDistributionClassS =
@@ -62,60 +64,116 @@ namespace Logitude.Customs.BL.PatchDistribution
 
         }
 
-        public void Exec(decimal MajorVersion, int currentDbMinorVersion)
+        public void Exec(decimal MajorVersion, int lastDbMinorVersion)
         {
 
-            GetPatchDistribution_Waiting2Exec(MajorVersion, currentDbMinorVersion)
-                    .ForEach(myPatchDistribution =>
+            var patchDistribution_Waiting2Exec = GetPatchDistribution_Waiting2Exec(MajorVersion, lastDbMinorVersion);
+
+            foreach (var minorPatch in patchDistribution_Waiting2Exec)
+            {
+                int lastDbMigrateLine = GetLastDBMigartionLine(minorPatch);
+
+                var scripts = minorPatch
+                .GetSortedScripts()
+                .Where(r => r.ScriptCounter > lastDbMigrateLine)
+                .OrderBy(r => r.ScriptCounter).ToList();
+
+                foreach (var script in scripts)
                 {
-                    var scripts = myPatchDistribution.GetUpScripts().OrderBy(r => r.ScriptCounter).ToList();
-                    scripts.ForEach(script =>
-                    {
-                        ExecDBMigrationLine(myPatchDistribution, script, scripts.Last() == script);
-                    });
-                });
+                    ExecDBMigrationLine(minorPatch, script, scripts.Last() == script);
+
+                };
+            }
         }
 
-        private void ExecDBMigrationLine(PatchDistributionBase myPatchDistribution, ScriptDTO script, bool isLast,string approveRemark=null)
+        private static int GetLastDBMigartionLine(PatchDistributionBase minorPatch)
+        {
+            int lastDbMigrateLine = 0;
+            var myDBMigrationRepository = new DBMigrationRepository(0);
+            var currDBMigration =
+                myDBMigrationRepository.GetAll()
+                .Where(r => r.MajorVersion == minorPatch.MajorVersionYYPRR)
+                .Where(r => r.MinorVersion == minorPatch.PatchCounter_Minor)
+                .FirstOrDefault();
+            if (currDBMigration != null)
+            {
+                var myDBMigrationLineRepository = new DBMigrationLineRepository(0);
+                var lastMigLine = myDBMigrationLineRepository.GetLastExec(currDBMigration.Id);
+                if (lastMigLine != null)
+                {
+                    lastDbMigrateLine = lastMigLine.CounterKey;
+                }
+            }
+
+            return lastDbMigrateLine;
+        }
+
+        private void ExecDBMigrationLine(PatchDistributionBase myPatchDistribution, ScriptDTO script, bool isLast, string approveRemark = null)
         {
             var customContext = CustomContext.GetContext(0);
             var qsDBMigration = new DBMigrationQueryService(customContext);
             var repoDBMigration = new DBMigrationRepository(customContext);
             var repoDBMigrationLine = new DBMigrationLineRepository(customContext);
             DBMigrationLine dBMigrationLine = null;
+            DBMigration myDBMigration = null;
             using (var scope = TransactionFactory.GetNewTransaction())
             {
-
-                Debug.WriteLine($"ExecDBMigrationLine({myPatchDistribution.MajorVersionYYPRR}.{script.ScriptCounter})");
-                var myDBMigration = repoDBMigration.GetAll()
-.Where(dbMigration => dbMigration.MajorVersion == myPatchDistribution.MajorVersionYYPRR)
-.Where(dbMigration => dbMigration.MinorVersion == myPatchDistribution.PatchCounter_Minor)
-.FirstOrDefault();
-                if (myDBMigration == null)
-                {
-                    var rem = (myPatchDistribution.PatchDetails ?? "NotSet");
-                    myDBMigration = new Customs.Data.EntityPOCOs.DBMigration()
-                    {
-
-                        Id = (new IdCounterWrapper()).GetNumber("Customs.DBMigration", 0),
-                        MajorVersion = myPatchDistribution.MajorVersionYYPRR,
-                        MinorVersion = myPatchDistribution.PatchCounter_Minor,
-                        ExecuteDate = DateTime.Now,
-                        Remarks = rem.Substring(0, Math.Min(256, rem.Length)),
-                        IsClose = isLast
-
-                    };
-                    repoDBMigration.Add(myDBMigration);
-                }
-                else
-                {
-                    myDBMigration.IsClose = isLast;
-                    repoDBMigration.Update(myDBMigration);
-                }
-
-
                 try
                 {
+
+                    Logger.LogMe($"Start ExecDBMigrationLine({myPatchDistribution.MajorVersionYYPRR}.{myPatchDistribution.PatchCounter_Minor}.{script.ScriptCounter})", false);
+
+                    var sqlDDL_NoNeedCommit = script.SqlScript;
+                    Logger.LogMe(sqlDDL_NoNeedCommit, false);
+                    if (string.IsNullOrWhiteSpace(approveRemark))
+                    {
+                        (customContext as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
+        (dr) =>
+        {
+
+            Logger.LogMe($"ExecuteReaderSingleResult: {dr.GetString(0)}", false);
+            return 0;
+        });
+
+                    }
+                    else
+                    {
+                        Logger.LogMe($"approve patch !!", false);
+                    }
+
+
+                    myDBMigration = repoDBMigration.GetAll()
+    .Where(dbMigration => dbMigration.MajorVersion == myPatchDistribution.MajorVersionYYPRR)
+    .Where(dbMigration => dbMigration.MinorVersion == myPatchDistribution.PatchCounter_Minor)
+    .FirstOrDefault();
+                    if (myDBMigration == null)
+                    {
+                        var rem = (myPatchDistribution.PatchDetails ?? "NotSet");
+                        myDBMigration = new Customs.Data.EntityPOCOs.DBMigration()
+                        {
+
+                            Id = (new IdCounterWrapper()).GetNumber("Customs.DBMigration", 0),
+                            MajorVersion = myPatchDistribution.MajorVersionYYPRR,
+                            MinorVersion = myPatchDistribution.PatchCounter_Minor,
+                            ExecuteDate = DateTime.Now,
+                            Remarks = rem.Substring(0, Math.Min(256, rem.Length)),
+                            IsClose = isLast
+
+                        };
+                        repoDBMigration.Add(myDBMigration);
+                    }
+                    else
+                    {
+                        myDBMigration.IsClose = isLast;
+                        repoDBMigration.Update(myDBMigration);
+                    }
+
+
+
+
+
+
+
                     dBMigrationLine = new DBMigrationLine()
                     {
                         DBMigrationId = myDBMigration.Id,
@@ -126,27 +184,16 @@ namespace Logitude.Customs.BL.PatchDistribution
                     repoDBMigrationLine.Add(dBMigrationLine);
                     customContext.SaveChanges();
 
-                    var sqlDDL_NoNeedCommit = script.SqlScript;
-                    if (string.IsNullOrWhiteSpace(approveRemark))
-                    {
-                        (customContext as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
-        (dr) =>
-        {
-
-            Debug.WriteLine($"ExecuteReaderSingleResult: {dr.GetString(0)}");
-            return 0;
-        });
-
-                    }
+                    ///xxx
                     customContext.SaveChanges();
                     scope.Complete();
-                    Debug.WriteLine("DBMigrationLine:{myDBMigration.Id}.{CounterKey }");
+                    Logger.LogMe($"DBMigrationLine:{myDBMigration.MajorVersion}.{myDBMigration.MinorVersion}.{dBMigrationLine.CounterKey }", false);
                 }
                 catch (Exception eee)
                 {
-                    Debug.WriteLine(eee.ToString());
-                    throw new PatchDistributionException("PatchDistributionException",eee,
-                        myPatchDistribution,  script, isLast);
+                    Logger.LogMe(eee.ToString(), false);
+                    throw new PatchDistributionException("PatchDistributionException", eee,
+                        myPatchDistribution, script, isLast);
                 }
 
             }
@@ -171,8 +218,12 @@ namespace Logitude.Customs.BL.PatchDistribution
                     {
                         throw new Exception($"PatchDistributionBase Sequnce is not valid /שם המחלקה לא סדרתי " + myPatchDistribution.GetType().AssemblyQualifiedName);
                     }
-                    var UpScripts = myPatchDistribution.GetUpScripts();
-                    int seqScript = 0;
+                    var UpScripts = myPatchDistribution.GetSortedScripts();
+                    if (UpScripts.Count() == 0)
+                    {
+                        throw new Exception($"אין סקריפטים  ?!?!" + myPatchDistribution.GetType().AssemblyQualifiedName + " ");
+                    }
+                    int seqScript = 1;
                     foreach (var scriptDTO in UpScripts)
                     {
 
@@ -197,15 +248,15 @@ namespace Logitude.Customs.BL.PatchDistribution
                     }
                     seqMinor++;
                 }
-                
+
             }
         }
         public void ApproveLastFailure(PatchDistributionException myPatchDistributionException, string approveRemarks)
         {
 
             ExecDBMigrationLine(
-                myPatchDistributionException.MyPatchDistribution, 
-                myPatchDistributionException.MyScript, myPatchDistributionException.IsLast, 
+                myPatchDistributionException.MyPatchDistribution,
+                myPatchDistributionException.MyScript, myPatchDistributionException.IsLast,
                 approveRemarks);
         }
     }
@@ -249,10 +300,10 @@ namespace Logitude.Customs.BL.PatchDistribution
     public class PatchDistributionException : Exception
     {
 
-        public DBMigrationLine MyDBMigrationLine { get;  }
+        public DBMigrationLine MyDBMigrationLine { get; }
 
-         
-        public PatchDistributionBase  MyPatchDistribution { get; }
+
+        public PatchDistributionBase MyPatchDistribution { get; }
 
         public ScriptDTO MyScript { get; }
         public bool IsLast { get; }
