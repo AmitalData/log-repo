@@ -1137,7 +1137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALLBIREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BIReportTextCode_0.Id, Code = "ALLBIREPORTS",  EditWizardName = "",
+			  Query ALLBIREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BIReportTextCode_0.Id, NameTextCodeCode = BIReportTextCode_0.Code, Code = "ALLBIREPORTS",  EditWizardName = "",
 			   EditWizardComponentPath = "",
 			   QueryGroupCode = "df7a", IndexOrder = 0, Tenant = 0, ObjectTableId = BIReportObjectTable.Id, QuerySection = "BIReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BIReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	

@@ -635,7 +635,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllMeasurementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MeasurementTextCode_0.Id, Code = "All Measurements",  QueryGroupCode = "MMQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MeasurementObjectTable.Id, QuerySection = "Measurement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MeasurementFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMeasurementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MeasurementTextCode_0.Id, NameTextCodeCode = MeasurementTextCode_0.Code, Code = "All Measurements",  QueryGroupCode = "MMQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MeasurementObjectTable.Id, QuerySection = "Measurement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MeasurementFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllMeasurementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id, IndexOrder = 0, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MeasurementObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -1429,7 +1429,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PackageTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PackageTypeTextCode_0.Id, Code = "Package Types",  QueryGroupCode = "PCKT", IndexOrder = 0, Tenant = 0, ObjectTableId = PackageTypeObjectTable.Id, QuerySection = "PackageType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PackageTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PackageTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PackageTypeTextCode_0.Id, NameTextCodeCode = PackageTypeTextCode_0.Code, Code = "Package Types",  QueryGroupCode = "PCKT", IndexOrder = 0, Tenant = 0, ObjectTableId = PackageTypeObjectTable.Id, QuerySection = "PackageType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PackageTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn PackageTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id, IndexOrder = 0, ObjectFieldId = PackageTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PackageTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PackageTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PackageTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

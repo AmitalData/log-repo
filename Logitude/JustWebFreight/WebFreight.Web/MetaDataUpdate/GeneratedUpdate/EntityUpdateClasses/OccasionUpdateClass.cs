@@ -1662,7 +1662,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllOccasionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OccasionTextCode_0.Id, Code = "All Occasions",  QueryGroupCode = "4696", IndexOrder = 0, Tenant = 0, ObjectTableId = OccasionObjectTable.Id, QuerySection = "Occasion", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OccasionFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllOccasionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OccasionTextCode_0.Id, NameTextCodeCode = OccasionTextCode_0.Code, Code = "All Occasions",  QueryGroupCode = "4696", IndexOrder = 0, Tenant = 0, ObjectTableId = OccasionObjectTable.Id, QuerySection = "Occasion", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OccasionFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllOccasionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOccasionsQuery.Id, IndexOrder = 0, ObjectFieldId = OccasionObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == OccasionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == OccasionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 

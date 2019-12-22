@@ -371,7 +371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketSeveritiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketSeverityTextCode_0.Id, Code = "All Ticket Severities",  QueryGroupCode = "TSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketSeverityObjectTable.Id, QuerySection = "TicketSeverity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketSeverityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTicketSeveritiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketSeverityTextCode_0.Id, NameTextCodeCode = TicketSeverityTextCode_0.Code, Code = "All Ticket Severities",  QueryGroupCode = "TSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketSeverityObjectTable.Id, QuerySection = "TicketSeverity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketSeverityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTicketSeveritiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketSeveritiesQuery.Id, IndexOrder = 0, ObjectFieldId = TicketSeverityObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketSeverityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketSeverityObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketSeverityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

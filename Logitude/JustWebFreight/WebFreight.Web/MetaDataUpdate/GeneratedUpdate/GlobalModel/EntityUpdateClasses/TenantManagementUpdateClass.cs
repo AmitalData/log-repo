@@ -8393,7 +8393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_0.Id, Code = "All Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_0.Id, NameTextCodeCode = TenantManagementTextCode_0.Code, Code = "All Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -8421,7 +8421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
   
 	      
 
-			  Query InactiveTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_1.Id, Code = "Inactive Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 1, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query InactiveTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_1.Id, NameTextCodeCode = TenantManagementTextCode_1.Code, Code = "Inactive Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 1, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InactiveTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -8452,7 +8452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
   
 	      
 
-			  Query TrialTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_2.Id, Code = "Trial Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 2, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TrialTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_2.Id, NameTextCodeCode = TenantManagementTextCode_2.Code, Code = "Trial Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 2, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn TrialTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -8477,7 +8477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
   
 	      
 
-			  Query PayingTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_3.Id, Code = "Paying Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 3, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PayingTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_3.Id, NameTextCodeCode = TenantManagementTextCode_3.Code, Code = "Paying Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 3, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn PayingTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -8502,7 +8502,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
   
 	      
 
-			  Query NotRecuringTenantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_4.Id, Code = "Not Recuring Tenants",  QueryGroupCode = "TNTS", IndexOrder = 4, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query NotRecuringTenantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_4.Id, NameTextCodeCode = TenantManagementTextCode_4.Code, Code = "Not Recuring Tenants",  QueryGroupCode = "TNTS", IndexOrder = 4, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn NotRecuringTenantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 

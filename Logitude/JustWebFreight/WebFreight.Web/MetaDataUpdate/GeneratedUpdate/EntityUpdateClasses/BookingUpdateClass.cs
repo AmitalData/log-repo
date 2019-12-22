@@ -9373,7 +9373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query WatingForResponseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_0.Id, Code = "WatingForResponse",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
+			  Query WatingForResponseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_0.Id, NameTextCodeCode = BookingTextCode_0.Code, Code = "WatingForResponse",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
 			   QueryGroupCode = "BKNG", IndexOrder = 0, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn WatingForResponseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id, IndexOrder = 0, ObjectFieldId = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -9403,7 +9403,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ConfirmedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_1.Id, Code = "ConfirmedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
+			  Query ConfirmedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_1.Id, NameTextCodeCode = BookingTextCode_1.Code, Code = "ConfirmedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
 			   QueryGroupCode = "BKNG", IndexOrder = 1, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ConfirmedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id, IndexOrder = 0, ObjectFieldId = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -9433,7 +9433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query RejectedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_2.Id, Code = "RejectedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
+			  Query RejectedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_2.Id, NameTextCodeCode = BookingTextCode_2.Code, Code = "RejectedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
 			   QueryGroupCode = "BKNG", IndexOrder = 2, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn RejectedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id, IndexOrder = 0, ObjectFieldId = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -9463,7 +9463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query InProgressBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_3.Id, Code = "InProgressBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
+			  Query InProgressBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_3.Id, NameTextCodeCode = BookingTextCode_3.Code, Code = "InProgressBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
 			   QueryGroupCode = "BKNG", IndexOrder = 3, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_3.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InProgressBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id, IndexOrder = 0, ObjectFieldId = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -9493,7 +9493,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CancelledBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_4.Id, Code = "CancelledBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
+			  Query CancelledBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_4.Id, NameTextCodeCode = BookingTextCode_4.Code, Code = "CancelledBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
 			   QueryGroupCode = "BKNG", IndexOrder = 4, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_4.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id, IndexOrder = 0, ObjectFieldId = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -9523,7 +9523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CreatedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_5.Id, Code = "CreatedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
+			  Query CreatedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_5.Id, NameTextCodeCode = BookingTextCode_5.Code, Code = "CreatedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
 			   QueryGroupCode = "BKNG", IndexOrder = 5, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_5.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CreatedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id, IndexOrder = 0, ObjectFieldId = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -9555,7 +9555,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_6.Id, Code = "AllBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
+			  Query AllBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_6.Id, NameTextCodeCode = BookingTextCode_6.Code, Code = "AllBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
 			   QueryGroupCode = "BKNG", IndexOrder = 6, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_6.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id, IndexOrder = 0, ObjectFieldId = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BookingObjectFields.Where(d => d.FieldName == "TransportModeCode" && d.ObjectTableId == BookingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);

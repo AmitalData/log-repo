@@ -2315,7 +2315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ParticipantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ParticipantTextCode_0.Id, Code = "Participants",  QueryGroupCode = "PPCT", IndexOrder = 0, Tenant = 0, ObjectTableId = ParticipantObjectTable.Id, QuerySection = "Participant", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ParticipantFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ParticipantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ParticipantTextCode_0.Id, NameTextCodeCode = ParticipantTextCode_0.Code, Code = "Participants",  QueryGroupCode = "PPCT", IndexOrder = 0, Tenant = 0, ObjectTableId = ParticipantObjectTable.Id, QuerySection = "Participant", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ParticipantFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ParticipantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 0, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -2633,7 +2633,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query WarehousesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseTextCode_0.Id, Code = "Warehouses",  QueryGroupCode = "WARH", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseObjectTable.Id, QuerySection = "Warehouse", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WarehouseFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query WarehousesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseTextCode_0.Id, NameTextCodeCode = WarehouseTextCode_0.Code, Code = "Warehouses",  QueryGroupCode = "WARH", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseObjectTable.Id, QuerySection = "Warehouse", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WarehouseFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn WarehousesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id, IndexOrder = 0, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == WarehouseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == WarehouseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

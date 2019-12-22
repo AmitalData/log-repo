@@ -2298,7 +2298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query UpcomingBirthdaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_0.Id, Code = "Upcoming Birthdays",  QueryGroupCode = "CONT", IndexOrder = 0, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query UpcomingBirthdaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_0.Id, NameTextCodeCode = ContactTextCode_0.Code, Code = "Upcoming Birthdays",  QueryGroupCode = "CONT", IndexOrder = 0, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn UpcomingBirthdaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id, IndexOrder = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2321,7 +2321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query NoRemindersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_1.Id, Code = "No Reminders",  QueryGroupCode = "CONT", IndexOrder = 1, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_1.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query NoRemindersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_1.Id, NameTextCodeCode = ContactTextCode_1.Code, Code = "No Reminders",  QueryGroupCode = "CONT", IndexOrder = 1, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_1.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn NoRemindersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id, IndexOrder = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2344,7 +2344,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query ContactsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_2.Id, Code = "Contacts",  QueryGroupCode = "CONT", IndexOrder = 2, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_2.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ContactsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_2.Id, NameTextCodeCode = ContactTextCode_2.Code, Code = "Contacts",  QueryGroupCode = "CONT", IndexOrder = 2, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_2.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ContactsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id, IndexOrder = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
