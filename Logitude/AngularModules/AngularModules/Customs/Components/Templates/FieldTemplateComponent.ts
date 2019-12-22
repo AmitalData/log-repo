@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -24,6 +24,7 @@ export class FieldTemplateComponent {
     }
 
     public Run(args: any) {
+        debugger;
         this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];
         this.ObjectTableName = args['ObjectTableName'];

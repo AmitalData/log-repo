@@ -49,19 +49,141 @@ export class DeclarationAmendmentComponent extends BaseComponent   {
     public declarations: DeclarationPM[];
     IsLoaded: boolean;
     id: string;
+    public columns: any[] = null;
+    MenuHeaderchangeevent = new EventEmitter();
+    filterAgrs: ApiQueryFilters;
+    private _entityListService: EntityListService = new EntityListService();
+    _stratSearch: boolean = true;
+
+
     constructor(private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,
     private entityArgs: EntityArgs) {
         super();
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
+                this.BuildColumns();
 
-                this.LoadDeclarationAmendmentsList();
+                setTimeout(() => {
+                    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+                }, 10);
+
+
+               // this.LoadDeclarationAmendmentsList();
             });
 
     }
 
+    DataSource = {
 
+        pageSize: 10,
+        rowCount: null,
+        //SortData("RequestCreateDate", "Descending", false, false);
+        sortingCol: "",// "Id",
+        sortingDir: "",//"Descending",
+        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+
+            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            return tempo;
+
+        },
+    };
+
+    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+
+
+
+        if (filters == null) {
+            filters = new ApiQueryFilters();
+        }
+
+        filters.PageSize = take;
+        filters.PageIndex = skip;
+        filters.GetAll = false;
+        filters.GetCount = true;
+
+        filters.SortBy = "Id";
+        filters.SortDirection = "Descending";
+
+        filters.SortBy = "AmendmentRequestNumber";//"Id";
+        filters.SortDirection = "Descending";//"Descending";
+
+
+
+        let declarationId = this.EntityPM.Id;
+     //   filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
+
+        /// filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+
+        var myout = this.declarationExtendedListService.GetDeclarationAmendmentsById(this.id).subscribe();
+
+            //this._entityListService
+            //.getExtendedByFilters("Customs.CustomsDeclaration", filters);
+        //myout.then(res => {
+        //    this._stratSearch = false;
+        //    //this.CurrentSession.StopBusyIndicator();
+        //});
+
+        return myout;
+
+    }
+
+    BuildColumns() {
+        this.columns = [];
+        this.columns.push({
+
+            FieldName: 'LineNumber',
+            DataTypeCode: 'String',//'Number',
+            Display:"#",
+            Styles: { width: '55px' },
+            IsCustomTemplate: true
+            , ServerSideSortable: true,
+         });
+
+        this.columns.push({
+
+            FieldName: 'AmendmentRequestNumber',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentRequestNumber"),
+            Styles: { width: '90px' },
+            IsCustomTemplate: true
+            , ServerSideSortable: true,
+            SortByName: 'AmendmentRequestNumber'
+        });
+
+        this.columns.push({
+
+            FieldName: 'VersionId',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.Declaration.F.VersionId"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+            , ServerSideSortable: true,
+         });
+
+        this.columns.push({
+
+            FieldName: 'AmendmentCorrectedByUserName',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentCorrectedByUserName"),
+            Styles: { width: '80px' },
+            IsCustomTemplate: true
+            , ServerSideSortable: true,
+         });
+
+        this.columns.push({
+
+            FieldName: 'AmendmentStatusName',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentStatusName"),
+            Styles: { width: '140px' },
+            IsCustomTemplate: true
+            , ServerSideSortable: true,
+         });
+
+
+
+    }
     private LoadDeclarationAmendmentsList() {
         this.amendmentObslist = new ObservableCollection([]);
         this.CurrentSession.StartBusyIndicator("Loading...");
