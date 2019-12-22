@@ -32,11 +32,13 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
     @Output() SearchFieldChangeEvent = new EventEmitter();
     private selectedItems: ObservableCollection;
     private selectedItemsCount: number = 0;
+    private timerToken: any;
     constructor() {
         super();
         this.crmService = new CRMDomainService();
         this.selectedItems = new ObservableCollection([]);
 
+        this.RunComponentTimer();
         this.Listen();
     }
 
@@ -51,6 +53,12 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
                 this.IsAllChecked = false;
             }
         });
+    }
+
+    private RunComponentTimer() {
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
     }
 
     ngOnDestroy() {
@@ -309,10 +317,16 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
         return new Promise((resolve, reject) => { resolve(this.crmService.GetOccasionContactsByFilters(filters)) });
     }
 
-    public SearchText: string = null;
-    SearchMethod(text: string) {
-        this.SearchText = text;
+    private searchText: string;
+    get SearchText() { return this.searchText; }
+    set SearchText(value: string) {
+        if (this.searchText != value) {
+            this.searchText = value;
+        }
+    }
 
+    OnSearchTextChangeEvent(text: string) {        
+        this.SearchText = text;
         this.BrowseClicked();
     }
     
