@@ -188,7 +188,7 @@
                     </td>
 
                     <td style="width: 300px;">
-                        <SearchBox [ObjectTableName]="'Contact'" (TextChanged)="SearchMethod($event)"></SearchBox>
+                        <SearchBox [UseTimer]="true" [ObjectTableName]="'Contact'" (TextChanged)="OnSearchTextChangeEvent($event)"></SearchBox>
                     </td>
                 </tr>
             </table>
