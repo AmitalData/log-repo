@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Interface Setting",
-			      				    Code =  "eb27",
+			      				    Code =  "1490",
 			      				    Name =  "CustomsInterfaceSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
