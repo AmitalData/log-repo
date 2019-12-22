@@ -101,7 +101,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
     public get FieldLable() {
         if (this.IsNew) {
-            return this.objectField.FullNameTextCodeId;
+            return this.objectField.FullNameTextCodeCode;
         }
 
         else {
@@ -112,8 +112,8 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
     public set FieldLable(newValue: string) {
         if (this.IsNew) {
-            this.objectField.FullNameTextCodeId = newValue;
-            this.objectField.ListTextCodeId = newValue;
+            this.objectField.FullNameTextCodeCode = newValue;
+            this.objectField.ListTextCodeCode = newValue;
 
             //if (AppTool.IsNullOrEmpty(this.Code) && !AppTool.IsNullOrEmpty(newValue)) {
             this.Code = AppTool.Replace(newValue, " ", "");
@@ -150,11 +150,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             }
 
             else {
-                return this.objectField.HelpTextCodeId;
+                return this.objectField.HelpTextCodeCode;
             }
         }
 
-        return this.objectField.HelpTextCodeId;
+        return this.objectField.HelpTextCodeCode;
     }
     public set HelpText(value: string) {
         if (!this.IsNew) {
@@ -163,12 +163,12 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             }
 
             else {
-                this.objectField.HelpTextCodeId = value;
+                this.objectField.HelpTextCodeCode = value;
             }
         }
 
         else {
-            this.objectField.HelpTextCodeId = value;
+            this.objectField.HelpTextCodeCode = value;
         }
     }
 
