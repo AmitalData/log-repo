@@ -155,14 +155,16 @@ export class InvoiceTool {
             invoicePartners.push(new InvoicePartnerType("SL", "SL", "Shipping line"));
             invoicePartners.push(new InvoicePartnerType("TR", "TR", "Trucker"));
             invoicePartners.push(new InvoicePartnerType("VD", "VD", "Vendor"));
-            invoicePartners.push(new InvoicePartnerType("AC", "AC", "Accounting Partner"));
+            if (SessionLocator.TenantPM.AccountingActivated) {
+                invoicePartners.push(new InvoicePartnerType("AC", "AC", "Accounting Partner"));
+            }
 
         }
 
         return invoicePartners;
     }
     public static GetBillToPartnerTypes() {
-        return "CS,AG,AL,CG,SG,SL,TR,VD,WH,AC";
+        return "CS,AG,AL,CG,SG,SL,TR,VD,WH";
     }
     public static GetVendorPartnerTypes() {
         return "AG,AL,CG,SG,SL,TR,VD,WH";
@@ -556,7 +558,7 @@ export class CreditLimitHelper {
         this.IsValid = false;
         this.IsBlockingShipment = false;
 
-        this.EntityPM.BillToCreditLimitActualAmount = AppTool.AddAmounts(loadedAmount, this.EntityPM.AmountDueInLocalCurrency);
+        this.EntityPM.BillToCreditLimitActualAmount = loadedAmount;
         this.EntityPM.BillToCreditLimitActualBalance = AppTool.AddAmounts(this.EntityPM.BillToCreditLimitOpenBalance, this.EntityPM.BillToCreditLimitActualAmount);
 
         var LimitAmount = AppTool.IsNullOrEmpty(this.EntityPM.BillToCreditLimitAmount) ? 0 : this.EntityPM.BillToCreditLimitAmount;
