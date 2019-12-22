@@ -48,6 +48,11 @@ FOR /L %%A IN (1,1,1) DO (
     cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="activity" --params.CRM.ActivityType="appoint" --suite=login,CRM >D:\E2ETeamAyman\Cloud\prot.log 2>&1
     CALL :CheckError "Appointment"
 
+     -------------------------------------------------- Opportunities-------------------------------------------------------------------------------------------------
+
+    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="opportunity" --suite=login,CRM > D:\E2ETeamAyman\prot.log 2>&1
+    CALL :CheckError "opportunity"
+
 )
 cd /
 cd C:\Automation e2e\TeamAyman\Cloud

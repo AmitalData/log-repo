@@ -30,20 +30,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     {
         public override void GetComposition(EntityKeyFields entityKeys, BankDepositPM entityPM)
         {
-            IAccountingContext context = MainContext as AccountingContext;
-            BankDepositKeys bankDepositKeys = entityKeys as BankDepositKeys;
+            entityPM.BankDepositLines = GetLines(entityPM);
 
-            BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(context);
+            //IAccountingContext context = MainContext as AccountingContext;
+            //BankDepositKeys bankDepositKeys = entityKeys as BankDepositKeys;
+            //BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(context);
+            //entityPM.BankDepositLines = bankDepositLineQueryService.GetMulti(bankDepositKeys, true);
 
+        }
 
-
-            //******getting all compositionTables for response service purposes only *****///
-
-            entityPM.BankDepositLines = bankDepositLineQueryService.GetMulti(bankDepositKeys, true);
-
-            // entityPM.DeclarationErrorViews = this.GetDeclarationErrors(declarationKeys.Id, entityPM.Tenant, null);
-            //****************************************************************************//
-
+        public List<BankDepositLinePM> GetLines(BankDepositPM depositPM)
+        {
+            BankDepositLineQueryService bankDepositLineQuery = new BankDepositLineQueryService(context);
+            return bankDepositLineQuery.GetLinesJoinedWithCheques(new List<string>() { depositPM.Id }, depositPM.Tenant);
         }
 
         public void ReturnCheque(string bankDepositId, string arpChequeId, string returnType, string notes, int tenant)

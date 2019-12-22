@@ -88,6 +88,10 @@ FOR /L %%A IN (1,1,1) DO (
 
     cmd /c call npm run e2e -- --params.Env="prod" --params.Team="ayman" --params.CRM.CRMType="activity" --params.CRM.ActivityType="appoint" --suite=login,CRM >D:\E2ETeamAyman\Prod\prot.log 2>&1
     CALL :CheckError "Appointment"
+    -------------------------------------------------- Opportunities-------------------------------------------------------------------------------------------------
+
+    cmd /c call npm run e2e -- --params.Env="prod" --params.Team="ayman" --params.CRM.CRMType="opportunity" --suite=login,CRM > D:\E2ETeamAyman\prot.log 2>&1
+    CALL :CheckError "opportunity"
 
 )
 cd /

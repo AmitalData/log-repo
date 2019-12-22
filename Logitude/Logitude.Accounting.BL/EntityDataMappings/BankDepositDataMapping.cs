@@ -41,39 +41,45 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPOCOProperties.Add(POCOPropertyNames.DepositBankAccountId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.CashBookId);
 
-
             if (entityPOCO.DepositBankAccountId != null)
-            {
-                BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPOCO.Tenant);
-                BankAccountPM bankAccount = bankAccountQueryService.GetSingle(entityPOCO.DepositBankAccountId, true, false);
-                if (bankAccount != null)
-                {
-                    entityPM.DeferredGLAccountId = bankAccount.DeferredGLAccountId;
-                    entityPM.CashGLAccountId = bankAccount.GLAccountId;
-                    entityPM.BankAccountNumber = bankAccount.AccountNumber;
-                }
+                MapBankAccountFields(entityPM, entityPOCO);
 
-            }
-
-            string glaId;
-
-            // Get Cashbook
             if (entityPOCO.CashBookId != null)
+                MapCashbookFields(entityPM, entityPOCO);
+
+
+            MapJournalFields(entityPM, entityPOCO);
+
+            if (entityPOCO.DepositCurrencyId != null)
+                MapCurrencyFields(entityPM, entityPOCO);
+
+            if (entityPOCO.CreatedByUserId != null)
+                MapContactFields(entityPM, entityPOCO);
+
+        }
+
+        private void MapContactFields(BankDepositPM entityPM, BankDeposit entityPOCO)
+        {
+            ContactQuery query = new ContactQuery(entityPOCO.Tenant);
+            ContactPM contact = query.GetSingleContact(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+            if (contact != null)
             {
-                CashBookQueryService cashBookQueryService = new CashBookQueryService(entityPOCO.Tenant);
-                CashBookPM cashBook = cashBookQueryService.GetSingle(entityPOCO.CashBookId, true, false);
-                if (cashBook != null)
-                {
-                    entityPM.CashBookGLAccountId = cashBook.AccountId;
-                    entityPM.CashBookName = cashBook.LocalName;
-                    entityPM.IsCashDeposit = cashBook.CashBookTypeCode == "1";
-
-                    glaId = cashBook.AccountId;
-                }
-
+                entityPM.CreatedByUserName = contact.LocalName;
             }
+        }
 
-            // Get Journal
+        private void MapCurrencyFields(BankDepositPM entityPM, BankDeposit entityPOCO)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(entityPOCO.Tenant);
+            CurrencyPM currency = currencyQuery.GetSinglePM(entityPOCO.DepositCurrencyId, entityPOCO.Tenant);
+            if (currency != null)
+            {
+                entityPM.DepositCurrencyCode = currency.Code;
+            }
+        }
+
+        private void MapJournalFields(BankDepositPM entityPM, BankDeposit entityPOCO)
+        {
             JournalQueryService journalQueryService = new JournalQueryService(entityPOCO.Tenant);
             JournalPM journal = journalQueryService.GetByAccountingEntityId(entityPOCO.Id, entityPOCO.Tenant);
             if (journal != null)
@@ -82,35 +88,33 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.JournalNumber = journal.JournalNumber;
                 entityPM.JournalQueueId = journal.QueueId;
             }
-      
-
-            // Get Currency
-            if (entityPOCO.DepositCurrencyId != null)
-            {
-                CurrencyQuery currencyQuery = new CurrencyQuery(entityPOCO.Tenant);
-                CurrencyPM currency = currencyQuery.GetSinglePM(entityPOCO.DepositCurrencyId, entityPOCO.Tenant);
-                if (currency != null)
-                {
-                    entityPM.DepositCurrencyCode = currency.Code;
-                }
-
-            }
-
-            // Get user
-            if (entityPOCO.CreatedByUserId != null)
-            {
-                ContactQuery query = new ContactQuery(entityPOCO.Tenant);
-                ContactPM contact = query.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
-                if (contact != null)
-                {
-                    entityPM.CreatedByUserName = contact.LocalName;
-                }
-            }
-
         }
 
+        private void MapCashbookFields(BankDepositPM entityPM, BankDeposit entityPOCO)
+        {
+            CashBookQueryService cashBookQueryService = new CashBookQueryService(entityPOCO.Tenant);
+            CashBookPM cashBook = cashBookQueryService.GetLightCashbook(entityPOCO.CashBookId, entityPOCO.Tenant);
+            if (cashBook != null)
+            {
+                entityPM.CashBookGLAccountId = cashBook.AccountId;
+                entityPM.CashBookName = cashBook.LocalName;
+                entityPM.IsCashDeposit = cashBook.CashBookTypeCode == "1";
+            }
+        }
 
-        private static void BuildSearchFields(BankDepositPM entityPM, BankDeposit poco, bool isNewEntity)
+        private void MapBankAccountFields(BankDepositPM entityPM, BankDeposit entityPOCO)
+        {
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPOCO.Tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetLightBankAccount(entityPOCO.DepositBankAccountId, entityPOCO.Tenant);
+            if (bankAccount != null)
+            {
+                entityPM.DeferredGLAccountId = bankAccount.DeferredGLAccountId;
+                entityPM.CashGLAccountId = bankAccount.GLAccountId;
+                entityPM.BankAccountNumber = bankAccount.AccountNumber;
+            }
+        }
+
+        private void BuildSearchFields(BankDepositPM entityPM, BankDeposit poco, bool isNewEntity)
         {
             string result = "";
 
