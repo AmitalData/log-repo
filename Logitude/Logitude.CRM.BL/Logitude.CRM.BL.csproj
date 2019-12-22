@@ -160,6 +160,7 @@
     <Compile Include="EntityDataMappings\Generated\SLAHeaderDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SLALineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\StageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupportMailboxDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TicketClassificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TicketCreatedByTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TicketDataMapping.Generated.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="EntityDataMappings\SLAHeaderDataMapping.cs" />
     <Compile Include="EntityDataMappings\SLALineDataMapping.cs" />
     <Compile Include="EntityDataMappings\StageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupportMailboxDataMapping.cs" />
     <Compile Include="EntityDataMappings\TicketClassificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\TicketCreatedByTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TicketDataMapping.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="EntityPMs\Generated\SLAHeaderPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SLALinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\StagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupportMailboxPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TicketClassificationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TicketCreatedByTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TicketEscalationPM.Generated.cs" />
@@ -307,6 +310,7 @@
     <Compile Include="EntityQueryServices\Generated\SLAHeaderQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SLALineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupportMailboxQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketCreatedByTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketEscalationQueryService.Generated.cs" />
@@ -377,6 +381,7 @@
     <Compile Include="EntityUpdateServices\Generated\SLAHeaderUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SLALineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\StageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupportMailboxUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketClassificationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketCreatedByTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketEscalationUpdateService.Generated.cs" />
