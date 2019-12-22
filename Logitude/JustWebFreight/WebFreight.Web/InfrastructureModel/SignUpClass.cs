@@ -1504,9 +1504,9 @@ namespace WebFreight.Web.InfrastructureModel
 
                 TextCode zeroShortTextCode = null;
                 TextCode currentShortTextCode = null;
-                if (zeroObject.ShortNameTextCodeId != null)
+                if (zeroObject.ShortNameTextCodeCode != null)
                 {
-                    zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.ShortNameTextCodeId).FirstOrDefault();
+                    zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ShortNameTextCodeCode).FirstOrDefault();
                     currentShortTextCode = currentTenantTextCodes[zeroShortTextCode.Code + theTenant + currentObjectTable.Id];
                 }
 
