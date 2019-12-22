@@ -26,35 +26,35 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
                 new ScriptDTO()
                 {
                     ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems ADD (zmarksandnumbers VARCHAR2(30 CHAR),zweight NUMBER(15,3));"
+                    SqlScript = "ALTER TABLE supplierinvoiceitems ADD (zmarksandnumbers VARCHAR2(30 CHAR),zweight NUMBER(15,3)) "
                 },
                 new ScriptDTO()
                 {
                     ScriptCounter = ScriptCount++,
-                    SqlScript = "update supplierinvoiceitems  set zmarksandnumbers = substr(marksandnumbers,1,30) ,zweight =weight   where marksandnumbers is not null;"
-                },
-
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems drop column marksandnumbers ;"
-                },
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems drop column weight ;"
+                    SqlScript = "update supplierinvoiceitems  set zmarksandnumbers = substr(marksandnumbers,1,30) ,zweight =weight   where marksandnumbers is not null "
                 },
 
                 new ScriptDTO()
                 {
                     ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems rename COLUMN  zmarksandnumbers to marksandnumbers  ;"
+                    SqlScript = "ALTER TABLE supplierinvoiceitems drop column marksandnumbers  "
+                },
+                new ScriptDTO()
+                {
+                    ScriptCounter = ScriptCount++,
+                    SqlScript = "ALTER TABLE supplierinvoiceitems drop column weight "
                 },
 
                 new ScriptDTO()
                 {
                     ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems rename COLUMN  zweight to weight ;"
+                    SqlScript = "ALTER TABLE supplierinvoiceitems rename COLUMN  zmarksandnumbers to marksandnumbers  "
+                },
+
+                new ScriptDTO()
+                {
+                    ScriptCounter = ScriptCount++,
+                    SqlScript = "ALTER TABLE supplierinvoiceitems rename COLUMN  zweight to weight "
                 },
             };
         }

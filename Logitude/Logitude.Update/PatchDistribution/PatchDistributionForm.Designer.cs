@@ -31,12 +31,13 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.textBoxApproveRemarks = new System.Windows.Forms.TextBox();
+            this.buttonApproveLastFailure = new System.Windows.Forms.Button();
             this.buttonUpdateDB = new System.Windows.Forms.Button();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonApproveLastFailure = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -73,6 +74,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.textBoxApproveRemarks);
             this.splitContainer1.Panel1.Controls.Add(this.buttonApproveLastFailure);
             this.splitContainer1.Panel1.Controls.Add(this.buttonUpdateDB);
             this.splitContainer1.Panel1.Controls.Add(this.checkBox1);
@@ -85,6 +87,24 @@
             this.splitContainer1.Size = new System.Drawing.Size(800, 426);
             this.splitContainer1.SplitterDistance = 68;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // textBoxApproveRemarks
+            // 
+            this.textBoxApproveRemarks.Location = new System.Drawing.Point(302, 5);
+            this.textBoxApproveRemarks.Multiline = true;
+            this.textBoxApproveRemarks.Name = "textBoxApproveRemarks";
+            this.textBoxApproveRemarks.Size = new System.Drawing.Size(173, 60);
+            this.textBoxApproveRemarks.TabIndex = 10;
+            // 
+            // buttonApproveLastFailure
+            // 
+            this.buttonApproveLastFailure.Location = new System.Drawing.Point(481, 3);
+            this.buttonApproveLastFailure.Name = "buttonApproveLastFailure";
+            this.buttonApproveLastFailure.Size = new System.Drawing.Size(75, 62);
+            this.buttonApproveLastFailure.TabIndex = 9;
+            this.buttonApproveLastFailure.Text = "Approve \r\nLast Failure";
+            this.buttonApproveLastFailure.UseVisualStyleBackColor = true;
+            this.buttonApproveLastFailure.Click += new System.EventHandler(this.buttonApproveLastFailure_Click);
             // 
             // buttonUpdateDB
             // 
@@ -130,16 +150,6 @@
             this.startToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.startToolStripMenuItem.Text = "Start";
             // 
-            // buttonApproveLastFailure
-            // 
-            this.buttonApproveLastFailure.Location = new System.Drawing.Point(84, 4);
-            this.buttonApproveLastFailure.Name = "buttonApproveLastFailure";
-            this.buttonApproveLastFailure.Size = new System.Drawing.Size(75, 62);
-            this.buttonApproveLastFailure.TabIndex = 9;
-            this.buttonApproveLastFailure.Text = "Approve \r\nLast Failure";
-            this.buttonApproveLastFailure.UseVisualStyleBackColor = true;
-            this.buttonApproveLastFailure.Click += new System.EventHandler(this.buttonApproveLastFailure_Click);
-            // 
             // PatchDistributionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,5 +184,6 @@
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.Button buttonUpdateDB;
         private System.Windows.Forms.Button buttonApproveLastFailure;
+        private System.Windows.Forms.TextBox textBoxApproveRemarks;
     }
 }

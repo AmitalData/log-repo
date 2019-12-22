@@ -76,7 +76,7 @@ namespace Logitude.Customs.BL.PatchDistribution
                 });
         }
 
-        private static void ExecDBMigrationLine(PatchDistributionBase myPatchDistribution, ScriptDTO script, bool isLast)
+        private void ExecDBMigrationLine(PatchDistributionBase myPatchDistribution, ScriptDTO script, bool isLast,string approveRemark=null)
         {
             var customContext = CustomContext.GetContext(0);
             var qsDBMigration = new DBMigrationQueryService(customContext);
@@ -121,21 +121,23 @@ namespace Logitude.Customs.BL.PatchDistribution
                         DBMigrationId = myDBMigration.Id,
                         CounterKey = script.ScriptCounter,
                         SqlScript = script.SqlScript.Substring(0, Math.Min(1024, script.SqlScript.Length)),
+                        ApprovedRemarks = approveRemark
                     };
                     repoDBMigrationLine.Add(dBMigrationLine);
                     customContext.SaveChanges();
 
                     var sqlDDL_NoNeedCommit = script.SqlScript;
+                    if (string.IsNullOrWhiteSpace(approveRemark))
+                    {
+                        (customContext as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
+        (dr) =>
+        {
 
-                    (customContext as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
-    (dr) =>
-    {
+            Debug.WriteLine($"ExecuteReaderSingleResult: {dr.GetString(0)}");
+            return 0;
+        });
 
-        Debug.WriteLine($"ExecuteReaderSingleResult: {dr.GetString(0)}");
-        return 0;
-    });
-
-
+                    }
                     customContext.SaveChanges();
                     scope.Complete();
                     Debug.WriteLine("DBMigrationLine:{myDBMigration.Id}.{CounterKey }");
@@ -143,7 +145,8 @@ namespace Logitude.Customs.BL.PatchDistribution
                 catch (Exception eee)
                 {
                     Debug.WriteLine(eee.ToString());
-                    throw new PatchDistributionException("PatchDistributionException",eee, dBMigrationLine);
+                    throw new PatchDistributionException("PatchDistributionException",eee,
+                        myPatchDistribution,  script, isLast);
                 }
 
             }
@@ -151,23 +154,28 @@ namespace Logitude.Customs.BL.PatchDistribution
 
         private void Validate(List<PatchDistributionBase> listOfDistributions)
         {
-            var myPatchs = listOfDistributions
+            var myPatchsGroupByMajor = listOfDistributions
                 .GroupBy(r => r.MajorVersionYYPRR)
                 .Select(g => g.ToList())
                .ToList();
-            myPatchs.ForEach(g =>
+            foreach (List<PatchDistributionBase> majorPatchDist in myPatchsGroupByMajor)
             {
-                var l =
-                g.OrderBy(r => r.PatchCounter_Minor)
-                .Select((myPatchDistribution, seq) =>
+
+                var majorPatchDistOrderByList = majorPatchDist.OrderBy(r => r.PatchCounter_Minor);
+                int seqMinor = 1;
+
+                foreach (var myPatchDistribution in majorPatchDistOrderByList)
                 {
-                    if (myPatchDistribution.PatchCounter_Minor != seq)
+
+                    if (myPatchDistribution.PatchCounter_Minor != seqMinor)
                     {
                         throw new Exception($"PatchDistributionBase Sequnce is not valid /שם המחלקה לא סדרתי " + myPatchDistribution.GetType().AssemblyQualifiedName);
                     }
-                    myPatchDistribution.GetUpScripts()
-                    .Select((scriptDTO, seqScript) =>
+                    var UpScripts = myPatchDistribution.GetUpScripts();
+                    int seqScript = 0;
+                    foreach (var scriptDTO in UpScripts)
                     {
+
                         if (string.IsNullOrWhiteSpace(scriptDTO.SqlScript))
                         {
                             throw new Exception($"אין סקריפט ?!?!" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter);
@@ -184,23 +192,22 @@ namespace Logitude.Customs.BL.PatchDistribution
                         {
                             throw new Exception($"הסקריפט לא סדרתי " + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter + Environment.NewLine + " צריך להיות " + seqScript);
                         }
-                        return scriptDTO;
-                    });
-                    
-                    return myPatchDistribution;
+                        seqScript++;
+
+                    }
+                    seqMinor++;
                 }
-                ); ;
-
-
-
-
-            });
-
-
-
-
+                
+            }
         }
+        public void ApproveLastFailure(PatchDistributionException myPatchDistributionException, string approveRemarks)
+        {
 
+            ExecDBMigrationLine(
+                myPatchDistributionException.MyPatchDistribution, 
+                myPatchDistributionException.MyScript, myPatchDistributionException.IsLast, 
+                approveRemarks);
+        }
     }
     public class AssemblyDBMigrationModel
     {
@@ -243,7 +250,19 @@ namespace Logitude.Customs.BL.PatchDistribution
     {
 
         public DBMigrationLine MyDBMigrationLine { get;  }
-        
-        public PatchDistributionException(string message, Exception inner, DBMigrationLine myDBMigrationLine) : base(message, inner) { MyDBMigrationLine = myDBMigrationLine; }
+
+         
+        public PatchDistributionBase  MyPatchDistribution { get; }
+
+        public ScriptDTO MyScript { get; }
+        public bool IsLast { get; }
+
+        public PatchDistributionException(string message, Exception inner,
+            PatchDistributionBase myPatchDistribution, ScriptDTO myScript, bool isLast) : base(message, inner)
+        {
+            this.MyPatchDistribution = myPatchDistribution;
+            this.MyScript = myScript;
+            this.IsLast = isLast;
+        }
     }
 }

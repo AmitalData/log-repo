@@ -26,23 +26,23 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
                 new ScriptDTO()
                 {
                     ScriptCounter = ScriptCount++,
-                    SqlScript = "CREATE INDEX IX_DECLARATIONS_CUSTOMFILENO ON DECLARATIONS (CUSTOMFILENO ASC);"
+                    SqlScript = "CREATE INDEX IX_DECLARATIONS_CUSTOMFILENO ON DECLARATIONS (CUSTOMFILENO ASC)"
                 },
                 new ScriptDTO()
                 {
                     ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER TABLE supplierinvoiceitems ADD (marksandnumbers VARCHAR2(512 CHAR),packagequantity NUMBER(10),weight NUMBER(18,2));"
+                    SqlScript = "ALTER TABLE supplierinvoiceitems ADD (marksandnumbers VARCHAR2(512 CHAR),packagequantity NUMBER(10),weight NUMBER(18,2)) "
                 },
 
                 new ScriptDTO()
                 {
                     ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER PROCEDURE usp_updateparentinvoiceitemseq COMPILE;"
+                    SqlScript = "ALTER PROCEDURE usp_updateparentinvoiceitemseq COMPILE "
                 },
                 new ScriptDTO()
                 {
                     ScriptCounter = ScriptCount++,
-                    SqlScript = "ALTER PROCEDURE usp_updateinvoiceitemssequence COMPILE;"
+                    SqlScript = "ALTER PROCEDURE usp_updateinvoiceitemssequence COMPILE "
                 }
 
             };
