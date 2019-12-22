@@ -599,10 +599,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SendHybridTask(entityPM);
 
         }
-
+        private TenantPM GetTenantPM(int tenantId)
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenantId);
+            return tenantQuery.GetTenantFromDB(tenantId);
+        }
         public void SendHybridTask(GLAccountPM glaccounPM)
         {
-            if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount==false)
+            TenantPM tenantPM = GetTenantPM(glaccounPM.Tenant);
+            if  (tenantPM.IsHybrid && glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount==false)
             {
                 FillGLAccountCurrencyCode(glaccounPM);
 
