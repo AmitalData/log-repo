@@ -44,7 +44,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public int GetCardsContactsForContactIds_Count(List<string> contactIdsList, int tenant)
         {
             var cardsList = (from d in context.CardContacts.Include("Card.Customer")
-                             where d.Tenant == tenant && contactIdsList.Contains(d.ContactId)
+                             where d.Tenant == tenant && contactIdsList.Contains(d.ContactId) && (d.Card != null && d.Card.IsCustomer)
                              select d).GroupBy(a => a.CardId).ToList();
 
             return cardsList != null ? cardsList.Count() : 0;
@@ -54,11 +54,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             var ids = "";
             List<string> cardsList = (from d in context.CardContacts.Include("Card.Customer")
-                             where d.Tenant == tenant && contactIdsList.Contains(d.ContactId)
-                             select d).GroupBy(a => a.CardId)
+                                      where d.Tenant == tenant && contactIdsList.Contains(d.ContactId) && (d.Card != null && d.Card.IsCustomer)
+                                      select d).GroupBy(a => a.CardId)
                             .Select(grp => grp.FirstOrDefault().CardId).ToList();
 
-            if(cardsList !=null && cardsList.Count() > 0)
+            if (cardsList != null && cardsList.Count() > 0)
             {
                 ids = string.Join(",", cardsList);
                 ids.TrimEnd(',');
