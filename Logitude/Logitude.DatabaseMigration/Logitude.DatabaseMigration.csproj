@@ -1822,6 +1822,10 @@
     <Compile Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.Designer.cs">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs" />
+    <Compile Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.Designer.cs">
+      <DependentUpon>201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -3126,6 +3130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.resx">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.resx">
+      <DependentUpon>201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

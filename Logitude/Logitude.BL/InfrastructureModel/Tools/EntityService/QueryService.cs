@@ -117,7 +117,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             QueryTracing.Trace(theEntityPm, Poco, isNewEntity);
 
             TextCodeRepository textCodeRep = new TextCodeRepository(objectContext);
-            TextCode textCode = textCodeRep.GetSingleTextCodeByTenant(theEntityPm.NameTextCodeId, theEntityPm.Tenant);
+            TextCode textCode = textCodeRep.GetSingleTextCodeByTenant(theEntityPm.NameTextCodeCode, theEntityPm.Tenant);
             if (textCode != null && textCode.DefaultText != theEntityPm.NewViewName)
             {
                 textCode.DefaultText = theEntityPm.NewViewName;
