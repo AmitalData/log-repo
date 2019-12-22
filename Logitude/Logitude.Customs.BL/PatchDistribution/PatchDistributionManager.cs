@@ -159,13 +159,35 @@ namespace Logitude.Customs.BL.PatchDistribution
             {
                 var l =
                 g.OrderBy(r => r.PatchCounter_Minor)
-                .Select((r, seq) =>
+                .Select((myPatchDistribution, seq) =>
                 {
-                    if (r.PatchCounter_Minor != seq)
+                    if (myPatchDistribution.PatchCounter_Minor != seq)
                     {
-                        throw new Exception($"PatchDistributionBase Sequnce is not valid " + r.GetType().AssemblyQualifiedName);
+                        throw new Exception($"PatchDistributionBase Sequnce is not valid /שם המחלקה לא סדרתי " + myPatchDistribution.GetType().AssemblyQualifiedName);
                     }
-                    return r;
+                    myPatchDistribution.GetUpScripts()
+                    .Select((scriptDTO, seqScript) =>
+                    {
+                        if (string.IsNullOrWhiteSpace(scriptDTO.SqlScript))
+                        {
+                            throw new Exception($"אין סקריפט ?!?!" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter);
+                        }
+
+                        if (scriptDTO.SqlScript.TrimEnd(" "[0]).EndsWith(";"))
+                        {
+                            throw new Exception($"נא להוריד את הפיסיק נקודה בסוף הסקיריפט" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter + Environment.NewLine
+                                +
+                                scriptDTO.SqlScript);
+                        }
+
+                        if (scriptDTO.ScriptCounter != seqScript)
+                        {
+                            throw new Exception($"הסקריפט לא סדרתי " + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter + Environment.NewLine + " צריך להיות " + seqScript);
+                        }
+                        return scriptDTO;
+                    });
+                    
+                    return myPatchDistribution;
                 }
                 ); ;
 

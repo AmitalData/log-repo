@@ -31,11 +31,12 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.buttonUpdateDB = new System.Windows.Forms.Button();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.doItToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonApproveLastFailure = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -46,7 +47,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(150, 6);
+            this.checkBox1.Location = new System.Drawing.Point(701, 8);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(65, 17);
             this.checkBox1.TabIndex = 7;
@@ -57,7 +58,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 4);
+            this.label1.Location = new System.Drawing.Point(611, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
@@ -72,6 +73,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.buttonApproveLastFailure);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonUpdateDB);
             this.splitContainer1.Panel1.Controls.Add(this.checkBox1);
             this.splitContainer1.Panel1.Controls.Add(this._TBTenant);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
@@ -83,11 +86,21 @@
             this.splitContainer1.SplitterDistance = 68;
             this.splitContainer1.TabIndex = 4;
             // 
+            // buttonUpdateDB
+            // 
+            this.buttonUpdateDB.Location = new System.Drawing.Point(3, 3);
+            this.buttonUpdateDB.Name = "buttonUpdateDB";
+            this.buttonUpdateDB.Size = new System.Drawing.Size(75, 62);
+            this.buttonUpdateDB.TabIndex = 8;
+            this.buttonUpdateDB.Text = "Update\r\nDataDBase";
+            this.buttonUpdateDB.UseVisualStyleBackColor = true;
+            this.buttonUpdateDB.Click += new System.EventHandler(this.buttonUpdateDB_Click);
+            // 
             // _TBTenant
             // 
-            this._TBTenant.Location = new System.Drawing.Point(72, 4);
+            this._TBTenant.Location = new System.Drawing.Point(658, 5);
             this._TBTenant.Name = "_TBTenant";
-            this._TBTenant.Size = new System.Drawing.Size(72, 20);
+            this._TBTenant.Size = new System.Drawing.Size(37, 20);
             this._TBTenant.TabIndex = 1;
             this._TBTenant.Text = "1";
             // 
@@ -113,18 +126,19 @@
             // 
             // startToolStripMenuItem
             // 
-            this.startToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.doItToolStripMenuItem});
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
             this.startToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.startToolStripMenuItem.Text = "Start";
             // 
-            // doItToolStripMenuItem
+            // buttonApproveLastFailure
             // 
-            this.doItToolStripMenuItem.Name = "doItToolStripMenuItem";
-            this.doItToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.doItToolStripMenuItem.Text = "DoIt";
-            this.doItToolStripMenuItem.Click += new System.EventHandler(this.doItToolStripMenuItem_Click);
+            this.buttonApproveLastFailure.Location = new System.Drawing.Point(84, 4);
+            this.buttonApproveLastFailure.Name = "buttonApproveLastFailure";
+            this.buttonApproveLastFailure.Size = new System.Drawing.Size(75, 62);
+            this.buttonApproveLastFailure.TabIndex = 9;
+            this.buttonApproveLastFailure.Text = "Approve \r\nLast Failure";
+            this.buttonApproveLastFailure.UseVisualStyleBackColor = true;
+            this.buttonApproveLastFailure.Click += new System.EventHandler(this.buttonApproveLastFailure_Click);
             // 
             // PatchDistributionForm
             // 
@@ -158,6 +172,7 @@
         private System.Windows.Forms.TextBox textBoxLogger;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem doItToolStripMenuItem;
+        private System.Windows.Forms.Button buttonUpdateDB;
+        private System.Windows.Forms.Button buttonApproveLastFailure;
     }
 }

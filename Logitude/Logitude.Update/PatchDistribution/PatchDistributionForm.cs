@@ -28,8 +28,8 @@ namespace Logitude.Update.PatchDistribution
         private PatchDistributionManager _PatchDistributionManager;
         private PatchDistributionMatchModel _PatchDistributionMatchModel;
 
-        public bool StartEnabled { get => this.doItToolStripMenuItem.Enabled; set => this.doItToolStripMenuItem.Enabled = value; }
-        public bool AproveEnabled { get; private set; }
+        public bool StartEnabled { get => this.buttonUpdateDB.Enabled; set => this.buttonUpdateDB.Enabled = value; }
+        public bool ApproveEnabled { get=> buttonApproveLastFailure.Enabled; set=> buttonApproveLastFailure.Enabled = value; }
 
         private PatchDistributionException _MyPatchDistributionException;
 
@@ -53,7 +53,7 @@ namespace Logitude.Update.PatchDistribution
             catch   (PatchDistributionException myPatchDistributionException)
             {
                 StartEnabled = false;
-                AproveEnabled = true;
+                ApproveEnabled = true;
                 _MyPatchDistributionException = myPatchDistributionException;
                 MessageBox.Show(myPatchDistributionException.ToString());
             }
@@ -153,8 +153,15 @@ namespace Logitude.Update.PatchDistribution
 
         }
 
+        private void buttonUpdateDB_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void buttonApproveLastFailure_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class MyTraceListener : TraceListener
