@@ -224,10 +224,15 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
     }
 
     CheckTwoDigitBeforeComma(InterestRate: number): boolean {
-        if ((InterestRate.toFixed()).length > 2) {
-            return false;
+        if (InterestRate != null) {
+            if ((InterestRate.toFixed()).length > 2) {
+                return false;
+            }
+            return true;
         }
-        return true;
+        else {
+            return true;
+        }
     }
 
 
@@ -275,7 +280,9 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
         if (this.standardInterestRateBase != newValue) {
             this.standardInterestRateBase = newValue;
             if (newValue && newValue.LocalName)
-            this.StandardInterestRateBaseName = newValue.LocalName;
+                this.StandardInterestRateBaseName = newValue.LocalName;
+            else
+                this.StandardInterestRateBaseName = null;
         }
     }
 
@@ -311,7 +318,9 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
         if (this.exceptionalInterestRateBase != newValue) {
             this.exceptionalInterestRateBase = newValue;
             if (newValue && newValue.LocalName)
-            this.ExceptionalInterestRateName = newValue.LocalName;
+                this.ExceptionalInterestRateName = newValue.LocalName;
+            else
+                this.ExceptionalInterestRateName = null;
         }
     }
 
@@ -346,7 +355,9 @@ export class GLAccountInterestPeriodModel extends BaseComponent {
         if (this.creditInterestRateBase != newValue) {
             this.creditInterestRateBase = newValue;
             if (newValue && newValue.LocalName)
-            this.CreditInterestRateBaseName = newValue.LocalName;
+                this.CreditInterestRateBaseName = newValue.LocalName;
+            else
+                this.CreditInterestRateBaseName = null;
         }
     }
 
