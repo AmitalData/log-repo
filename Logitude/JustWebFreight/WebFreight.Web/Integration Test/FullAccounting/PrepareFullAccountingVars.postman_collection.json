@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "f41d1d0c-7849-4b33-ba6c-f40c64c93635",
+		"_postman_id": "2145c3ae-45fd-439a-8dd8-d232d238a028",
 		"name": "PrepareFullAccountingVars copy",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
@@ -514,20 +514,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/accountingperiods",
-					"protocol": "https",
-					"host": [
-						"test",
-						"logitudeworld",
-						"com"
-					],
-					"path": [
-						"TEST",
-						"api",
-						"accountingperiods"
-					]
-				}
+				"url": "{URL}}/api/accountingperiods"
 			},
 			"response": []
 		},
@@ -906,16 +893,7 @@
 					"mode": "raw",
 					"raw": "{\r\n   \r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2016-02-02T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":{{Tenant}},\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2012-02-02T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/vattypes",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"vattypes"
-					]
-				}
+				"url": "{{URL}}/api/vattypes"
 			},
 			"response": []
 		},
@@ -1046,16 +1024,7 @@
 					"mode": "raw",
 					"raw": "{\r\n\r\n   \"Tenant\":{{Tenant}},\r\n   \r\n   \"EnglishName\":\"cash\",\r\n   \"LocalName\":\"cash local\",\r\n   \"Days\":0,\r\n   \"InActive\":false,\r\n   \"DisplayInLOV\":true,\r\n   \"SearchFields\":null,\r\n   \"IsManuallySet\":false,\r\n   \"CurrentMonth\":false,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/paymentterms",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"paymentterms"
-					]
-				}
+				"url": "{{URL}}/api/paymentterms"
 			},
 			"response": []
 		},
@@ -1199,16 +1168,7 @@
 					"mode": "raw",
 					"raw": "{\r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"EnglishName\":\"Cash\",\r\n   \"LocalName\":null,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/paymentterms",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"paymentterms"
-					]
-				}
+				"url": "{{URL}}/api/paymentterms"
 			},
 			"response": []
 		},
@@ -1217,9 +1177,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": ""
-				}
+				"url": ""
 			},
 			"response": []
 		},
@@ -1390,16 +1348,7 @@
 					"mode": "raw",
 					"raw": "{\r\n\r\n\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \r\n   \"EnglishName\":\"Main Office\",\r\n   \"LocalName\":\"Main Office\",\r\n  \r\n   \"InActive\":false,\r\n   \r\n   \"SearchFields\":\"test\",\r\n \r\n   \"IsHybrid\":false,\r\n   \"ExternalId\":null,\r\n   \"AddressId\":null,\r\n   \"Signature\":null,\r\n   \r\n   \"INTTRAContactId\":null,\r\n   \"CounterCode\":null\r\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/branches",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"branches"
-					]
-				}
+				"url": "{{URL}}/api/branches"
 			},
 			"response": []
 		},
@@ -1538,16 +1487,7 @@
 					"mode": "raw",
 					"raw": "{\r\n   \"Tenant\":{{Tenant}},\r\n  \r\n   \"Code\":\"AFT\",\r\n   \"EnglishName\":\"141\",\r\n   \"LocalName\":null,\r\n   \"ChargesGroupCode\":\"COMM\",\r\n   \"ChargesGroupId\":\"1-6036\",\r\n   \"MeasurementId\":\"1-29726\",\r\n   \"ContainerMeasurementId\":null,\r\n   \"Description\":null,\r\n   \"IsReceivable\":true,\r\n   \"IsPayable\":true,\r\n   \"IsAir\":true,\r\n   \"IsOcean\":true,\r\n   \"IsInland\":true,\r\n   \"IsAutoDisplayInShipment\":false,\r\n   \"IsAutoDisplayInConsolidation\":false,\r\n   \"IsAutoDisplayInQuote\":false,\r\n   \"DueTypeCode\":null,\r\n   \"IATACodeId\":null,\r\n   \"AWBPrintDescription\":true,\r\n   \"VatTypeId\":null,\r\n   \"ViewOrder\":100,\r\n  \r\n \r\n   \"IsCustoms\":false,\r\n   \"ComputedLocalName\":null,\r\n   \"AddedManually\":true,\r\n   \"InActive\":false,\r\n   \"MeasurementCode\":null,\r\n   \"MeasurementShortName\":null,\r\n   \"ContainerMeasurementCode\":null,\r\n   \"SearchFields\":\"11,11\",\r\n\r\n   \"PayableDebitGLAcountId\":null,\r\n   \"ReceivableCreditGLAccountId\":null,\r\n   \"IsExpense\":false\r\n ,\r\n  \r\n   \"IsExport\":true\r\n  \r\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/chargestypes",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"chargestypes"
-					]
-				}
+				"url": "{{URL}}/api/chargestypes"
 			},
 			"response": []
 		},
@@ -1725,16 +1665,7 @@
 					"mode": "raw",
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"1PMCF\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
-				"url": {
-					"raw": "{{URL}}/api/chartofaccounts",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"chartofaccounts"
-					]
-				}
+				"url": "{{URL}}/api/chartofaccounts"
 			},
 			"response": []
 		},
@@ -1881,16 +1812,7 @@
 					"mode": "raw",
 					"raw": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"CS\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"12PMCSadress\",\r\n    \"CountryId\": \"{{CountryId}}\"\r\n    \r\n    \r\n\r\n \r\n  \r\n  },\r\n \r\n  \"Customer\": {\r\n    \"$id\": \"3\",\r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"12PMCS\",\r\n    \"LocalName\": \"12PMCS\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"CS\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\",\r\n    \r\n\r\n    \r\n    \"IsCustomer\": true,\r\n    \"CustomerStatusCode\": \"ACT\",\r\n\r\n  \r\n    \"SetAsPotential\": false,\r\n    \r\n   \r\n    \"CustomerTenant\": 0\r\n  }\r\n\r\n}\r\n"
 				},
-				"url": {
-					"raw": "{{URL}}/api/PartnersDomain",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"PartnersDomain"
-					]
-				}
+				"url": "{{URL}}/api/PartnersDomain"
 			},
 			"response": []
 		},
@@ -2043,16 +1965,7 @@
 					"mode": "raw",
 					"raw": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"VD\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMVD\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \r\n    \r\n    \r\n    \"SearchFields\": \"1s5PMV2,1s5PMV2,1s5PMV2\"\r\n \r\n  \r\n  },\r\n \r\n  \"Vendor\": {\r\n   \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"1s5PMV2\",\r\n    \"LocalName\": \"1s5PMV2\",\r\n     \"PartnerTypeId\": \"VD\",\r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\"\r\n  }\r\n}\r\n"
 				},
-				"url": {
-					"raw": "{{URL}}/api/PartnersDomain",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"PartnersDomain"
-					]
-				}
+				"url": "{{URL}}/api/PartnersDomain"
 			},
 			"response": []
 		},
@@ -2309,16 +2222,7 @@
 					"mode": "raw",
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"15CFC\",\r\n    \"LocalName\": \"לקוחות\",\r\n    \"Englishname\": \"PMCustomerChart\",\r\n    \"TypeCode\": \"3\",\r\n    \"Inactive\": true,\r\n    \"SearchFields\": \"15CFC,15CFC,15CFC\",\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
-				"url": {
-					"raw": "{{URL}}/api/chartofaccounts",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"chartofaccounts"
-					]
-				}
+				"url": "{{URL}}/api/chartofaccounts"
 			},
 			"response": []
 		},
@@ -2375,16 +2279,7 @@
 					"mode": "raw",
 					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"2\",\r\n   \"DisplayNumber\":\"54l4CSPM\",\r\n   \"LocalName\":\"54l4CSPM\",\r\n   \"EnglishName\":\"54l4CSPM\",\r\n   \"SearchFields\":\"54l4CSPM,54l4CSPM,54l4CSPM\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{ChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"3\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{CustomerId}}\"\r\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/glaccounts",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"glaccounts"
-					]
-				}
+				"url": "{{URL}}/api/glaccounts"
 			},
 			"response": []
 		},
@@ -2533,16 +2428,7 @@
 					"mode": "raw",
 					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"458GLPML\",\r\n   \"LocalName\":\"458GLPML\",\r\n   \"EnglishName\":\"458GLPML\",\r\n   \"SearchFields\":\"458GLPML,458GLPML,458GLPML\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/glaccounts",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"glaccounts"
-					]
-				}
+				"url": "{{URL}}/api/glaccounts"
 			},
 			"response": []
 		},
@@ -2717,15 +2603,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23 ",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chartofaccountviews",
 						"getbyfilters"
@@ -2796,16 +2678,7 @@
 					"mode": "raw",
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n}\r\n"
 				},
-				"url": {
-					"raw": "{{URL}}/api/chartofaccounts",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"chartofaccounts"
-					]
-				}
+				"url": "{{URL}}/api/chartofaccounts"
 			},
 			"response": []
 		},
@@ -2825,7 +2698,7 @@
 							"if (id1exist)  {",
 							"   pm.environment.set(\"BankGLAccountId\",idvalue1); ",
 							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
-							"   postman.setNextRequest(\"CreateBankCode\");",
+							"   postman.setNextRequest(\"GetBankCode\");",
 							" ",
 							"}});"
 						],
@@ -2851,14 +2724,154 @@
 					"mode": "raw",
 					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \"DisplayNumber\":\"1414BKPM\",\r\n   \"LocalName\":\"1414BKPM\",\r\n   \"EnglishName\":\"1414BKPM\",\r\n   \"SearchFields\":\"1414BKPM,1414BKPM,1414BKPM\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n}"
 				},
+				"url": "{{URL}}/api/glaccounts"
+			},
+			"response": []
+		},
+		{
+			"name": "GetBankCode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "81fdd616-9b3a-49f9-9a91-6f8b4f488509",
+						"exec": [
+							"",
+							"pm.test(\"GetBankCode\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"CoderExsits : \" + false] = (true);",
+							"        postman.setNextRequest(\"CreateBankCode\");   ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"CodeId\",idvalue);",
+							"     tests[\"CoderExsits : \" + true ] = (true);",
+							"     postman.setNextRequest(\"CreateBranchCashBook\");",
+							"    }",
+							"   ",
+							"    ",
+							"});",
+							" ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "staging.amital.co.il"
+					},
+					{
+						"key": "pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "cache-control",
+						"value": "no-cache"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "KdY8lhnApgGjOl7aP2yuAfs6sthk+o9sJKk="
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://staging.amital.co.il/Angular19171210/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "cookie",
+						"value": "__utmz=22491179.1569324975.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utma=22491179.2130097536.1569324975.1571736495.1574855059.9; email_cookie=khawla@logitudeworld.com"
+					}
+				],
 				"url": {
-					"raw": "{{URL}}/api/glaccounts",
+					"raw": "{{URL}}/api/bankcodeviews/getbyfilters?ForceCacheRefresh=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK14&PageIndex=0&PageSize=12",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
 						"api",
-						"glaccounts"
+						"bankcodeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "BK14"
+						},
+						{
+							"key": "GetCount",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "12"
+						},
+						{
+							"key": "SortBy",
+							"value": "Code",
+							"disabled": true
+						},
+						{
+							"key": "SortDirection",
+							"value": "Ascending",
+							"disabled": true
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BK14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -2952,16 +2965,7 @@
 					"mode": "raw",
 					"raw": "{   \"tenant\": {{Tenant}},\n    \"code\": \"BK14\",\n    \"englishName\": \"BKT\",\n    \"localName\": \"בקי\"\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/bankcodes",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"bankcodes"
-					]
-				}
+				"url": "{{URL}}/api/bankcodes"
 			},
 			"response": []
 		},
@@ -3012,16 +3016,7 @@
 					"mode": "raw",
 					"raw": "{\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"EnglishName\":\"Cash Book\",\r\n   \"LocalName\":\"מבחן התרסקות\",\r\n   \"SearchFields\":\"test\"\r\n}"
 				},
-				"url": {
-					"raw": "{{URL}}/api/branches",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"branches"
-					]
-				}
+				"url": "{{URL}}/api/branches"
 			},
 			"response": []
 		}
