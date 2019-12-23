@@ -1,4 +1,4 @@
-﻿
+
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -37,15 +37,17 @@
 
                                 <tr class="FormFieldRow">
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'SupportEmail'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'SupportDomain'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'SupportEmail'" [Text]="SupportEmail" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'SupportDomain'" [Text]="SupportDomain" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
 
                                     <td>
-                                        <div></div>
+                                        <div>
+                                            <button *ngIf="IsSupportDomainVisible" style="width:90px;" class="Button" (click)="UpdateDomainClicked()">Update Domain</button>
+                                        </div>
                                     </td>
                                 </tr>
 

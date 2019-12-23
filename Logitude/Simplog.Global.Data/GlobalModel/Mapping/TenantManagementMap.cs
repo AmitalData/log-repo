@@ -53,6 +53,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapEAWBSContractQTY).IsOptional();
             this.Property(t => t.BluesnapOneTimeContractQTY).IsOptional();
             this.Property(t => t.BluesnapInttraStockContractQTY).IsOptional();
+            this.Property(t => t.SupportDomain).HasMaxLength(50).IsUnicode(false);
 
             this.ToTable("TenantManagements");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -154,6 +155,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsINTTRAOnlyDemo).HasColumnName("IsINTTRAOnlyDemo");
             this.Property(t => t.MainAdditionalPackageApplied).HasColumnName("MainAdditionalPackageApplied");
             this.Property(t => t.TotalPrice).HasColumnName("TotalPrice");
+            this.Property(t => t.SupportDomain).HasColumnName("SupportDomain");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

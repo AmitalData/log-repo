@@ -178,12 +178,11 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public bool IsINTTRAStockPrepaid { get; set; }
 
-
         public string PackageCodeSearchField { get; set; }
 
         public bool IsINTTRAOnlyDemo { get; set; }
 
         public bool MainAdditionalPackageApplied { get; set; }
-
+        public string SupportDomain { get; set; }
     }
 }
