@@ -6,13 +6,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class AirlineAreasPortList {
+export class CarrierAreaList {
    		Id: string;
-		AirlineAreaId: string;
-		PortId: string;
 		Tenant: number;
+		Description: string;
 		Name: string;
-		AddedDate: Date;
-		AddedByUserId: string;
+		CreateDate: Date;
+		UpdateDate: Date;
+		CreatedByUserId: string;
+		UpdatedByUserId: string;
+		CarrierId: string;
+		CreatedByUserName: string;
+		UpdatedByUserName: string;
 	
 }

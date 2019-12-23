@@ -10,9 +10,9 @@ using System.Web;
 
 namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
-    public class AirlineAreaTracing
+    public class CarrierAreaTracing
     {
-        public static void Trace(AirlineAreaPM entityPM, AirlineArea entityPOCO, bool isNewEntity)
+        public static void Trace(CarrierAreaPM entityPM, CarrierArea entityPOCO, bool isNewEntity)
         {
             string email = HttpContext.Current.User.Identity.Name;
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);

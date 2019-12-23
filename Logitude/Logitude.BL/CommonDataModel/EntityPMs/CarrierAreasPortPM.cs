@@ -9,7 +9,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class AirlineAreasPortPM
+    public class CarrierAreasPortPM
     {
         [Key]
         [DataMember]
@@ -20,7 +20,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AirlineAreaId { get; set; }
+        public string CarrierAreaId { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

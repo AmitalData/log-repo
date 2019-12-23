@@ -9,7 +9,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class AirlineAreaPM
+    public class CarrierAreaPM
     {
         [Key]
         [DataMember]
@@ -24,7 +24,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AirlineId { get; set; }
+        public string CarrierId { get; set; }
 
         
 
@@ -56,27 +56,27 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public ChangeSetOperation ChangeSetOp { get; set; }
 
-        private List<AirlineAreasPortPM> airlineAreasPorts;
+        private List<CarrierAreasPortPM> carrierAreasPorts;
         [Include]
-        [Association("AirlineAreasPortPM", "Id", "AirlineAreaId")]
+        [Association("CarrierAreasPortPM", "Id", "CarrierAreaId")]
         [Composition]
         [DataMember]
-        public virtual List<AirlineAreasPortPM> AirlineAreasPorts
+        public virtual List<CarrierAreasPortPM> CarrierAreasPorts
         {
             get
             {
 
-                if (this.airlineAreasPorts == null)
+                if (this.carrierAreasPorts == null)
                 {
-                    airlineAreasPorts = new List<AirlineAreasPortPM>();
+                    carrierAreasPorts = new List<CarrierAreasPortPM>();
                 }
-                return this.airlineAreasPorts;
+                return this.carrierAreasPorts;
             }
             set
             {
                 if (value != null)
                 {
-                    airlineAreasPorts = value;
+                    carrierAreasPorts = value;
                 }
             }
         }

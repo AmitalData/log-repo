@@ -2578,7 +2578,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetAllArilineAreasByAirlineId(string airlineId)
+        public HttpResponseMessage GetAllArilineAreasByCarrierId(string carrierId)
         {
             try
             {
@@ -2588,10 +2588,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(tenant);
-                List<AirlineAreaPM> airlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airlineId, tenant);
+                CarrierAreaQuery carrierAreaQuery = new CarrierAreaQuery(tenant);
+                List<CarrierAreaPM> carrierAreas = carrierAreaQuery.GetCarrierAreasPMsByCarrierId(carrierId, tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, airlineAreas);
+                return Request.CreateResponse(HttpStatusCode.OK, carrierAreas);
             }
 
             catch (Exception ex)
@@ -2600,7 +2600,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetRemoveAirlineAreaFromAirline(string areaId)
+        public HttpResponseMessage GetRemoveCarrierAreaFromCarrier(string areaId)
         {
             try
             {
@@ -2611,23 +2611,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(commonDataContext);
-                AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(commonDataContext);
+                CarrierAreaRepository carrierAreaRepository = new CarrierAreaRepository(commonDataContext);
+                CarrierAreasPortRepository carrierAreasPortRepository = new CarrierAreasPortRepository(commonDataContext);
 
-                AirlineArea airlineArea = airlineAreaRepository.GetSingleAirlineArea(areaId, tenant);
+                CarrierArea carrierArea = carrierAreaRepository.GetSingleCarrierArea(areaId, tenant);
 
-                if(airlineArea != null)
+                if(carrierArea != null)
                 {
-                    List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(areaId, tenant);
+                    List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(areaId, tenant);
                     if(areasPorts != null && areasPorts.Count > 0)
                     {
-                        foreach (AirlineAreasPort item in areasPorts)
+                        foreach (CarrierAreasPort item in areasPorts)
                         {
-                            airlineAreasPortRepository.Remove(item);
+                            carrierAreasPortRepository.Remove(item);
                         }
                     }
 
-                    airlineAreaRepository.Remove(airlineArea);
+                    carrierAreaRepository.Remove(carrierArea);
                     commonDataContext.SaveChanges();
                 }               
 

@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
     
-    public partial class AirlineAreaViewsController : ApiController
+    public partial class CarrierAreaViewsController : ApiController
     {
 	  
        
@@ -57,21 +57,21 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("AirlineArea", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("CarrierArea", "READ", authToken.Tenant);
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-				AirlineAreaRepository  airlineAreaRepository = new AirlineAreaRepository(MyContext);
-				AirlineAreaList entityList = null;
-				AirlineArea entityPoco = airlineAreaRepository.GetSingleAirlineArea(id , authToken.Tenant);
+				CarrierAreaRepository  carrierAreaRepository = new CarrierAreaRepository(MyContext);
+				CarrierAreaList entityList = null;
+				CarrierArea entityPoco = carrierAreaRepository.GetSingleCarrierArea(id , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
-									List<AirlineArea> singleEntityList = new List<AirlineArea>();
+									List<CarrierArea> singleEntityList = new List<CarrierArea>();
 					singleEntityList.Add(entityPoco);
 
-					AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
-					IQueryable<AirlineArea> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<AirlineAreaList> iQueryableEntityList = airlineAreaQuery.GetIQueryableEntityList(iQueryable);
+					CarrierAreaQuery carrierAreaQuery = new CarrierAreaQuery(carrierAreaRepository);
+					IQueryable<CarrierArea> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<CarrierAreaList> iQueryableEntityList = carrierAreaQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -95,17 +95,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("AirlineArea", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("CarrierArea", "READ", authToken.Tenant);
 
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-				AirlineAreaRepository  airlineAreaRepository = new AirlineAreaRepository(MyContext);
-				IQueryable<AirlineArea> entityPocos = airlineAreaRepository.GetAirlineAreas(authToken.Tenant);
+				CarrierAreaRepository  carrierAreaRepository = new CarrierAreaRepository(MyContext);
+				IQueryable<CarrierArea> entityPocos = carrierAreaRepository.GetCarrierAreas(authToken.Tenant);
 
-				AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
-			    IQueryable<AirlineAreaList> entityLists = airlineAreaQuery.GetIQueryableEntityList(entityPocos);
+				CarrierAreaQuery carrierAreaQuery = new CarrierAreaQuery(carrierAreaRepository);
+			    IQueryable<CarrierAreaList> entityLists = carrierAreaQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Id);
-				List<AirlineAreaList> listResult = entityLists.ToList();
+				List<CarrierAreaList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -127,20 +127,20 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
 				                
-				SecurityUtility.CheckContactFeature("AirlineArea", "READ", authToken.Tenant);
+				SecurityUtility.CheckContactFeature("CarrierArea", "READ", authToken.Tenant);
 	
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "AirlineArea",
+                    ObjectTableName = "CarrierArea",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "AirlineAreas",
+                    QuerySection = "CarrierAreas",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> AirlineAreaObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AirlineArea",tenant);
+				List<ObjectField> CarrierAreaObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("CarrierArea",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -163,7 +163,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = AirlineAreaObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = CarrierAreaObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -173,7 +173,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							 queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -190,7 +190,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = AirlineAreaObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = CarrierAreaObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -202,7 +202,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							 queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                         {
@@ -216,29 +216,29 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 GenericSort sortClass = new GenericSort();
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
-                AirlineAreaRepository  airlineAreaRepository = new AirlineAreaRepository(MyContext);
-                IQueryable<AirlineArea> entityPocos = airlineAreaRepository.GetAirlineAreas(tenant);
+                CarrierAreaRepository  carrierAreaRepository = new CarrierAreaRepository(MyContext);
+                IQueryable<CarrierArea> entityPocos = carrierAreaRepository.GetCarrierAreas(tenant);
 
-                AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
+                CarrierAreaQuery carrierAreaQuery = new CarrierAreaQuery(carrierAreaRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<AirlineArea>(nonListQueryOperation, entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery<CarrierArea>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<AirlineAreaList> entityLists = airlineAreaQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<CarrierAreaList> entityLists = carrierAreaQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<AirlineAreaList>(listQueryOperation, entityLists);
+                entityLists = genericFilter.GetFilteredQuery<CarrierAreaList>(listQueryOperation, entityLists);
 
 		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(AirlineAreaList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(CarrierAreaList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in AirlineAreaObjectFields
+                   ObjectField objectField = (from a in CarrierAreaObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -246,7 +246,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<AirlineAreaList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<CarrierAreaList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -256,36 +256,36 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<AirlineAreaList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<CarrierAreaList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<AirlineAreaList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<CarrierAreaList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<AirlineAreaList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<CarrierAreaList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<AirlineAreaList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<CarrierAreaList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<AirlineAreaList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<CarrierAreaList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<AirlineAreaList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<CarrierAreaList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
@@ -315,7 +315,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<AirlineAreaList> listResult = entityLists.ToList();
+			   List<CarrierAreaList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

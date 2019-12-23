@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {AirlineAreaPM} from './AirlineAreaPM';
+import {CarrierAreaPM} from './CarrierAreaPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -16,7 +16,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class AirlineAreasPortPM {
+export class CarrierAreasPortPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -38,9 +38,9 @@ export class AirlineAreasPortPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private airlineAreaId: string;
-    public get AirlineAreaId() { return this.airlineAreaId; }
-    public set AirlineAreaId(newValue: string) { if (this.airlineAreaId != newValue) { this.airlineAreaId = newValue; this.MarkAsDirty("AirlineAreaId"); } }
+    private carrierAreaId: string;
+    public get CarrierAreaId() { return this.carrierAreaId; }
+    public set CarrierAreaId(newValue: string) { if (this.carrierAreaId != newValue) { this.carrierAreaId = newValue; this.MarkAsDirty("CarrierAreaId"); } }
        
 	 
     private portId: string;
@@ -84,7 +84,7 @@ export class AirlineAreasPortPM {
        
 	 
 
-    public OldEntityPM: AirlineAreasPortPM;
+    public OldEntityPM: CarrierAreasPortPM;
 	    
 	private entityParentPM: any;
     public get EntityParentPM() { return this.entityParentPM; }
@@ -100,11 +100,11 @@ export class AirlineAreasPortPM {
         }	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AirlineAreasPort");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CarrierAreasPort");
            
         }
     }
-    private MyClone: AirlineAreasPortPM;
+    private MyClone: CarrierAreasPortPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

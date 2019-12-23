@@ -650,6 +650,7 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 08 [Wesam] Delete Constraint between ScreenFields and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Fill objectfieldcode on QueryColumns.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Delete Constraint between QueryColumns and objectField.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 19 [Samar] delete ailrine area metadata.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />

@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
-    public class AirlineAreasPort
+    public class CarrierAreasPort
     {
         [Key]
         public string Id { get; set; }
-        public string AirlineAreaId { get; set; }
+        public string CarrierAreaId { get; set; }
         public string PortId { get; set; }
 
         public int Tenant { get; set; }
@@ -20,8 +20,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("AddedByUserId")]
         public virtual User AddedByUser { get; set; }
 
-        [ForeignKey("AirlineAreaId")]
-        public AirlineArea AirlineArea { get; set; }
+        [ForeignKey("CarrierAreaId")]
+        public CarrierArea CarrierArea { get; set; }
 
 
         [ForeignKey("PortId")]

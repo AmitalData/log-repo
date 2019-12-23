@@ -17,18 +17,18 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {AirlineAreaPM} from '../../EntityPMs/AirlineAreaPM';
+import {CarrierAreaPM} from '../../EntityPMs/CarrierAreaPM';
 
-import {AirlineAreasPortPM} from '../../EntityPMs/AirlineAreasPortPM';
+import {CarrierAreasPortPM} from '../../EntityPMs/CarrierAreasPortPM';
 
 @Injectable()
 
-export class AirlineAreaPMService {
+export class CarrierAreaPMService {
  private _http: Http;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/airlineareas';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/carrierareas';      
     }
 
  get(id: string) {
@@ -45,7 +45,7 @@ export class AirlineAreaPMService {
 
                    
 					
-                    var entity: AirlineAreaPM;
+                    var entity: CarrierAreaPM;
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
@@ -56,7 +56,7 @@ export class AirlineAreaPMService {
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AirlineArea", "GetSinglePM", 'id=' + id);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CarrierArea", "GetSinglePM", 'id=' + id);
 				 
                 return serviceResponse;
 
@@ -64,7 +64,7 @@ export class AirlineAreaPMService {
             });                    
     }
 
-	 insert(entityPM: AirlineAreaPM) {
+	 insert(entityPM: CarrierAreaPM) {
  
         var callTime = new Date();        
         return Observable.defer(() => {
@@ -77,13 +77,13 @@ export class AirlineAreaPMService {
                  
                 validator = new ClassLevelValidator();
                  
-                var errorsArray = validator.Validate("AirlineArea", entityPM);
+                var errorsArray = validator.Validate("CarrierArea", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: AirlineAreaPM;
+                    var mappedEntity: CarrierAreaPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
@@ -92,14 +92,14 @@ export class AirlineAreaPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  AirlineAreaPM;
+                               var mappedResult:  CarrierAreaPM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							}
 							
 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AirlineArea", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CarrierArea", "SaveChanges", "");                    
 												 
                             
                             return serviceResponse;
@@ -119,7 +119,7 @@ export class AirlineAreaPMService {
             );
     }
 
-    update(entityPM: AirlineAreaPM) {
+    update(entityPM: CarrierAreaPM) {
 
             var callTime = new Date();         
             return Observable.defer(() => {
@@ -132,13 +132,13 @@ export class AirlineAreaPMService {
                  
                 validator = new ClassLevelValidator();
                
-                var errorsArray = validator.Validate("AirlineArea", entityPM);
+                var errorsArray = validator.Validate("CarrierArea", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: AirlineAreaPM;
+                    var mappedEntity: CarrierAreaPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
@@ -148,13 +148,13 @@ export class AirlineAreaPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  AirlineAreaPM;
+                               var mappedResult:  CarrierAreaPM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							 }
 							 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AirlineArea", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CarrierArea", "SaveChanges", "");                    
 					                           
                             return serviceResponse;
 
@@ -176,12 +176,12 @@ export class AirlineAreaPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AirlineAreaPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: CarrierAreaPM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new AirlineAreaPM();
+            entityPM = new CarrierAreaPM();
         }
 
 		var customFields: Array<string> = [];
@@ -210,20 +210,20 @@ export class AirlineAreaPMService {
                  
             }
 			
-               this.MapAirlineAreasPorts(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapCarrierAreasPorts(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
 			   			   
-            entityPM.OldEntityPM.AirlineAreasPorts = [];
-            for (var item in entityPM.AirlineAreasPorts) {
-            var myAirlineAreasPortPM = entityPM.AirlineAreasPorts[item];
-            var newAirlineAreasPortPM: AirlineAreasPortPM = this.clone(myAirlineAreasPortPM);
+            entityPM.OldEntityPM.CarrierAreasPorts = [];
+            for (var item in entityPM.CarrierAreasPorts) {
+            var myCarrierAreasPortPM = entityPM.CarrierAreasPorts[item];
+            var newCarrierAreasPortPM: CarrierAreasPortPM = this.clone(myCarrierAreasPortPM);
 						
 							 
-            entityPM.OldEntityPM.AirlineAreasPorts.push(newAirlineAreasPortPM);
+            entityPM.OldEntityPM.CarrierAreasPorts.push(newCarrierAreasPortPM);
             }
 			   
 		}
@@ -235,27 +235,27 @@ export class AirlineAreaPMService {
         return entityPM;
     }
 
-    MapAirlineAreasPorts(entityPM: AirlineAreaPM, jsonPM: any, mapParent: boolean = true) {
+    MapCarrierAreasPorts(entityPM: CarrierAreaPM, jsonPM: any, mapParent: boolean = true) {
 
-        var oldAirlineAreasPorts: AirlineAreasPortPM[] = [];
+        var oldCarrierAreasPorts: CarrierAreasPortPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
-            oldAirlineAreasPorts = entityPM.OldEntityPM.AirlineAreasPorts;
+            oldCarrierAreasPorts = entityPM.OldEntityPM.CarrierAreasPorts;
         }
 
-        entityPM.AirlineAreasPorts = new Array<AirlineAreasPortPM>();
-        for (var item in jsonPM.AirlineAreasPorts) {
-            var jItem = jsonPM.AirlineAreasPorts[item];
+        entityPM.CarrierAreasPorts = new Array<CarrierAreasPortPM>();
+        for (var item in jsonPM.CarrierAreasPorts) {
+            var jItem = jsonPM.CarrierAreasPorts[item];
             if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                 continue;
             }
-            var newAirlineAreasPortPM: AirlineAreasPortPM;
+            var newCarrierAreasPortPM: CarrierAreasPortPM;
 	  
             if (mapParent) {
-                newAirlineAreasPortPM = new AirlineAreasPortPM(entityPM);
+                newCarrierAreasPortPM = new CarrierAreasPortPM(entityPM);
             }
             else
             {
-                newAirlineAreasPortPM = new AirlineAreasPortPM(null);
+                newCarrierAreasPortPM = new CarrierAreasPortPM(null);
             }
                 
             var pmKeysArray = Object.keys(jItem);
@@ -264,45 +264,45 @@ export class AirlineAreaPMService {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
-                newAirlineAreasPortPM[pmProperty] = jItem[pmProperty];
+                newCarrierAreasPortPM[pmProperty] = jItem[pmProperty];
             }
            
 			 
             if (mapParent) {
-                newAirlineAreasPortPM.UniqueKey = Guid.newGuid();
-                newAirlineAreasPortPM.ChangeSetOp = "None";
+                newCarrierAreasPortPM.UniqueKey = Guid.newGuid();
+                newCarrierAreasPortPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
-                newAirlineAreasPortPM.OldEntityPM = this.clone(newAirlineAreasPortPM);
+                newCarrierAreasPortPM.OldEntityPM = this.clone(newCarrierAreasPortPM);
 
 				
             }
             else {
-                if (newAirlineAreasPortPM.UniqueKey) {
+                if (newCarrierAreasPortPM.UniqueKey) {
 
                     if (jItem.IsDirty)
-                        newAirlineAreasPortPM.ChangeSetOp = "Update";
+                        newCarrierAreasPortPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newAirlineAreasPortPM.ChangeSetOp = "Insert";
+                        newCarrierAreasPortPM.ChangeSetOp = "Insert";
                 }
  
-                newAirlineAreasPortPM.OldEntityPM = null;
-                newAirlineAreasPortPM.EntityParentPM = null;
+                newCarrierAreasPortPM.OldEntityPM = null;
+                newCarrierAreasPortPM.EntityParentPM = null;
             }
 			
-			 newAirlineAreasPortPM.IsDirty = false;
-            entityPM.AirlineAreasPorts.push(newAirlineAreasPortPM);
+			 newCarrierAreasPortPM.IsDirty = false;
+            entityPM.CarrierAreasPorts.push(newCarrierAreasPortPM);
         }
-        if (oldAirlineAreasPorts) {
+        if (oldCarrierAreasPorts) {
             
-            for (var itemKey in oldAirlineAreasPorts) {
-                if (entityPM.AirlineAreasPorts.filter(p=> p.UniqueKey === oldAirlineAreasPorts[itemKey].UniqueKey).length === 0) {
+            for (var itemKey in oldCarrierAreasPorts) {
+                if (entityPM.CarrierAreasPorts.filter(p=> p.UniqueKey === oldCarrierAreasPorts[itemKey].UniqueKey).length === 0) {
 				
-                    if (oldAirlineAreasPorts[itemKey]) {
-                        //oldAirlineAreasPorts[itemKey].ChangeSetOp = "Delete";
-                        //entityPM.AirlineAreasPorts.push(oldAirlineAreasPorts[itemKey]);
-						var oldItemJson = oldAirlineAreasPorts[itemKey];
-                        var deletedPM: AirlineAreasPortPM = new AirlineAreasPortPM(null);
+                    if (oldCarrierAreasPorts[itemKey]) {
+                        //oldCarrierAreasPorts[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.CarrierAreasPorts.push(oldCarrierAreasPorts[itemKey]);
+						var oldItemJson = oldCarrierAreasPorts[itemKey];
+                        var deletedPM: CarrierAreasPortPM = new CarrierAreasPortPM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -319,7 +319,7 @@ export class AirlineAreaPMService {
                         deletedPM.ChangeSetOp = "Delete";
                         
                         deletedPM.OldEntityPM = null;
-                        entityPM.AirlineAreasPorts.push(deletedPM);
+                        entityPM.CarrierAreasPorts.push(deletedPM);
                     }
                 }
             }
@@ -345,8 +345,8 @@ export class AirlineAreaPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: AirlineAreaPM;
-			entityPM = new AirlineAreaPM();
+		    var entityPM: CarrierAreaPM;
+			entityPM = new CarrierAreaPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

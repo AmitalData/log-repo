@@ -1,6 +1,6 @@
 import { Component, Output, OnInit} from '@angular/core';
 import { AirlinePM } from '../../../../Common/EntityPMs/AirlinePM';
-import { AirlineAreaPM } from '../../../../Common/EntityPMs/AirlineAreaPM';
+import { CarrierAreaPM } from '../../../../Common/EntityPMs/CarrierAreaPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
@@ -9,16 +9,16 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AreaItemClass } from '../EditTabs/AreasTabComponent';
-import { AirlineAreaPMService } from '../../../../Common/Services/StandardPMs/AirlineAreaPMService';
+import { CarrierAreaPMService } from '../../../../Common/Services/StandardPMs/CarrierAreaPMService';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './AddEditAirlineAreaComponent.html',
+    templateUrl: './AddEditCarrierAreaComponent.html',
 })
 
-export class AddEditAirlineAreaComponent extends BaseComponent implements OnInit {
-    public EntityPM: AirlineAreaPM;
-    public ObjectTableName: string="AirlineArea";
+export class AddEditCarrierAreaComponent extends BaseComponent implements OnInit {
+    public EntityPM: CarrierAreaPM;
+    public ObjectTableName: string ="CarrierArea";
     public DataContext: AreaItemClass;
     public IsNew: boolean;   
     public ValidationErrorsList: string[] = [];
@@ -50,14 +50,14 @@ export class AddEditAirlineAreaComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList.push("Name is required");
         }
 
-        if (this.EntityPM.AirlineAreasPorts.filter(p => p.ChangeSetOp != "3")[0] == null) {
+        if (this.EntityPM.CarrierAreasPorts.filter(p => p.ChangeSetOp != "3")[0] == null) {
             this.ValidationErrorsList.push("At Least one port is required");
         }       
       
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
 
-            var service: AirlineAreaPMService = new AirlineAreaPMService();
+            var service: CarrierAreaPMService = new CarrierAreaPMService();
             
             if (this.IsNew) {
                 service.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
@@ -97,8 +97,8 @@ export class AddEditAirlineAreaComponent extends BaseComponent implements OnInit
         this.myCloner.AddField('Description');
         this.myCloner.AddField('Name');        
         this.myCloner.AddEntity(this.EntityPM);
-        this.myCloner.AddEntity(this.EntityPM.AirlineAreasPorts);
-        this.EntityPM.AirlineAreasPorts.forEach(p => {
+        this.myCloner.AddEntity(this.EntityPM.CarrierAreasPorts);
+        this.EntityPM.CarrierAreasPorts.forEach(p => {
             this.myCloner.AddEntity(p);
         });
     }

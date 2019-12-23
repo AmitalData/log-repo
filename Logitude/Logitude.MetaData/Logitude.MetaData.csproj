@@ -181,10 +181,10 @@
     </Content>
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsExecutionLog.lxml" />
-    <None Include="EntityFiles\CommonDataModel\AirlineAreasPort.lxml">
+    <None Include="EntityFiles\CommonDataModel\CarrierAreasPort.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\CommonDataModel\AirlineArea.lxml">
+    <None Include="EntityFiles\CommonDataModel\CarrierArea.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\CardContactProduct.lxml" />

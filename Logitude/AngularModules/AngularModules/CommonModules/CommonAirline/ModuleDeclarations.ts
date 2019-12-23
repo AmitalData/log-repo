@@ -10,7 +10,7 @@ import {AddEditTariffChargeComponent} from './Components/AddEdit/AddEditTariffCh
 import { AirlineDocsInTabComponent } from './Components/EditTabs/AirlineDocsInTabComponent';
 import { AirlineGeneralTabComponent } from './Components/EditTabs/AirlineGeneralTabComponent';
 import { AreasTabComponent } from './Components/EditTabs/AreasTabComponent';
-import { AddEditAirlineAreaComponent } from './Components/AddEdit/AddEditAirlineAreaComponent';
+import { AddEditCarrierAreaComponent } from './Components/AddEdit/AddEditCarrierAreaComponent';
 import { ChoosePortComponent } from './Components/AddEdit/ChoosePortComponent';
 import { ChooseCountryPortComponent } from './Components/AddEdit/ChooseCountryPortComponent';
 
@@ -30,7 +30,7 @@ export const Components =
         AirlineDocsInTabComponent,
         AirlineGeneralTabComponent,
         AirlineSurchargeTabComponent,
-        AddEditAirlineAreaComponent,
+        AddEditCarrierAreaComponent,
         ChoosePortComponent,
         ChooseCountryPortComponent
     ];
@@ -53,7 +53,7 @@ export class ModuleDeclarations {
             case "AirlineDocsInTabComponent": { myResult = AirlineDocsInTabComponent; break; }
             case "AirlineGeneralTabComponent": { myResult = AirlineGeneralTabComponent; break; }
             case "AirlineSurchargeTabComponent": { myResult = AirlineSurchargeTabComponent; break; }
-            case "AddEditAirlineAreaComponent": { myResult = AddEditAirlineAreaComponent; break; }
+            case "AddEditCarrierAreaComponent": { myResult = AddEditCarrierAreaComponent; break; }
             case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
             case "ChooseCountryPortComponent": { myResult = ChooseCountryPortComponent; break; }      
         }

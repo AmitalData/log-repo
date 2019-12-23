@@ -2837,8 +2837,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant)
         {
             List<FromToClass> myResult = new List<FromToClass>();
-            AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(tenant);
-            AirlineAreaRepository airlineAreasRepository = new AirlineAreaRepository(tenant);
+            CarrierAreasPortRepository carrierAreasPortRepository = new CarrierAreasPortRepository(tenant);
+            CarrierAreaRepository carrierAreasRepository = new CarrierAreaRepository(tenant);
             var surchargeLogItem = new SurchargeLog();
             List<string> areasFromPorts = new List<string>();
             List<string> areasToPorts = new List<string>();
@@ -2873,15 +2873,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         else if (to[0] == "Area")
                         {
-                            List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
-                            var area = airlineAreasRepository.GetSingleAirlineArea(to[1], tenant);
+                            List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(to[1], tenant);
+                            var area = carrierAreasRepository.GetSingleCarrierArea(to[1], tenant);
                             if (isFirstTime && area != null)
                             {
                                 areasToPorts.Add(area.Name);
                             }
                             if (areasPorts != null && areasPorts.Count > 0)
                             {
-                                foreach (AirlineAreasPort port in areasPorts)
+                                foreach (CarrierAreasPort port in areasPorts)
                                 {
                                     FromToClass routItem = new FromToClass()
                                     {
@@ -2898,13 +2898,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else if (from[0] == "Area")
                 {
-                    List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(from[1], tenant);
+                    List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(from[1], tenant);
                     if (areasPorts != null && areasPorts.Count > 0)
                     {
-                        var area = airlineAreasRepository.GetSingleAirlineArea(from[1], tenant);
+                        var area = carrierAreasRepository.GetSingleCarrierArea(from[1], tenant);
                         areasFromPorts.Add(area.Name);
                         var isFirstTimeAreaLoop = true;
-                        foreach (AirlineAreasPort port in areasPorts)
+                        foreach (CarrierAreasPort port in areasPorts)
                         {
                             foreach (string item_to in toList)
                             {
@@ -2928,15 +2928,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 }
                                 else if (to[0] == "Area")
                                 {
-                                    List<AirlineAreasPort> toAreasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
-                                    var toarea = airlineAreasRepository.GetSingleAirlineArea(to[1], tenant);
+                                    List<CarrierAreasPort> toAreasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(to[1], tenant);
+                                    var toarea = carrierAreasRepository.GetSingleCarrierArea(to[1], tenant);
                                     if (isFirstTime && isFirstTimeAreaLoop && toarea != null)
                                     {
                                         areasToPorts.Add(toarea.Name);
                                     }
                                     if (toAreasPorts != null && toAreasPorts.Count > 0)
                                     {
-                                        foreach (AirlineAreasPort toPort in toAreasPorts)
+                                        foreach (CarrierAreasPort toPort in toAreasPorts)
                                         {
                                             FromToClass routItem = new FromToClass()
                                             {

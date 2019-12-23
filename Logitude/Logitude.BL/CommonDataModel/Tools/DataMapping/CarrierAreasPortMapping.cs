@@ -10,24 +10,19 @@ using Logitude.BL.Security;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
-    public class AirlineAreaMapping
+    public class CarrierAreasPortMapping
     {
-        public static void MapEntity(AirlineAreaPM entityPM, AirlineArea poco, bool isNewState)
+        public static void MapEntity(CarrierAreasPortPM entityPM, CarrierAreasPort poco, bool isNewState)
         {
             if (isNewState)
             {
                 poco.Id = entityPM.Id;
                 poco.Tenant = entityPM.Tenant;
-                poco.CreateDate = entityPM.CreateDate;
-                poco.CreatedByUserId = entityPM.CreatedByUserId;
-                poco.AirlineId = entityPM.AirlineId;
-
+                poco.AddedDate = entityPM.AddedDate;
+                poco.AddedByUserId = entityPM.AddedByUserId;
+                poco.CarrierAreaId = entityPM.CarrierAreaId;
+                poco.PortId = entityPM.PortId;
             }
-
-            poco.Description = entityPM.Description;
-            poco.Name = entityPM.Name;
-            poco.UpdatedByUserId = entityPM.UpdatedByUserId;
-            poco.UpdateDate = entityPM.UpdateDate;
         }
     }
 }
