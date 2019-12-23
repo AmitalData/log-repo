@@ -9,7 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SLAEscalations" ParentColumnName="EscalationTimeUnit" ReferencedTableName="TimeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SLAEscalations_dbo.TimeUnits_EscalationTimeUnit" />
-  <Relation ParentTableName="SLALines" ParentColumnName="ResolveWithinTimeUnit" ReferencedTableName="TimeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SLALines_dbo.TimeUnits_ResolveWithinTimeUnit" />
-  <Relation ParentTableName="SLALines" ParentColumnName="FirstResponseTimeUnit" ReferencedTableName="TimeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SLALines_dbo.TimeUnits_FirstResponseTimeUnit" />
 </Table>

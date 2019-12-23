@@ -3,20 +3,19 @@
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="100">
+  <Column Name="Name" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="100">
+  <Column Name="LocalName" Type="nvarchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Customers" ParentColumnName="RegionId" ReferencedTableName="Regions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Regions_RegionId" />
 </Table>

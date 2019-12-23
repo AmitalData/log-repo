@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="GroupMembers" Schema="dbo" DBType="Main">
-  <Column Name="CancelledDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="GroupId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="UserId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CancelledDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="GroupId" ReferencedTable="Groups" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

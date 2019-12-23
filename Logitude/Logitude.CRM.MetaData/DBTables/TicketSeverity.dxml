@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="TicketSeverities" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Inactive" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="Name" Type="nvarchar" Size="60">
     <Constraints Nullable="false" />
@@ -18,10 +18,7 @@
   <Column Name="Severity" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="Inactive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="SLALines" ParentColumnName="SeverityId" ReferencedTableName="TicketSeverities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SLALines_dbo.TicketSeverities_SeverityId" />
-  <Relation ParentTableName="Tickets" ParentColumnName="SeverityId" ReferencedTableName="TicketSeverities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.TicketSeverities_SeverityId" />
-  <Relation ParentTableName="TicketClassifications" ParentColumnName="DefaultSeverityId" ReferencedTableName="TicketSeverities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TicketClassifications_dbo.TicketSeverities_DefaultSeverityId" />
 </Table>

@@ -3,11 +3,10 @@
   <Column Name="Code" Type="varchar" Size="5">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="60">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="LocalName" Type="nvarchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Journals" ParentColumnName="AccountingEntityCode" ReferencedTableName="AccountingEntities" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Journals_dbo.AccountingEntities_AccountingEntityCode" />
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

@@ -9,4 +9,5 @@
   <Column Name="NumberOfThreads" Type="int">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ForeignKeyColumn="Code" ReferencedTable="BatchServicesDefinitions" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="PickUpDeliveryTypeCode" ReferencedTableName="PickUpDeliveryTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.PickUpDeliveryTypes_PickUpDeliveryTypeCode" />
 </Table>

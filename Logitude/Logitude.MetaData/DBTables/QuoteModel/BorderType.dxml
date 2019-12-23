@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="QuoteTemplateTableDesigns" ParentColumnName="BorderTypeCode" ReferencedTableName="BorderTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QuoteTemplateTableDesigns_dbo.BorderTypes_BorderTypeCode" />
 </Table>

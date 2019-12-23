@@ -3,14 +3,13 @@
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Name" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Declarations" ParentColumnName="CourierCustomStatusCode" ReferencedTableName="CourierCustomStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.CourierCustomStatuses_CourierCustomStatusCode" />
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

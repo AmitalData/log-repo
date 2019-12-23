@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DWHSettings" Schema="dbo" DBType="Main">
-  <Column Name="Catalog" Type="varchar" Size="200">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsParentTenant" Type="bit">
-    <Constraints Nullable="false" />
+  <Column Name="Tenant" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="ParentTenant" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Password" Type="varchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Server" Type="varchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="UserName" Type="varchar" Size="200">
     <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Password" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Catalog" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsParentTenant" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
 </Table>

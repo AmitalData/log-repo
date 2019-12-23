@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CashBooks" Schema="dbo" DBType="Main">
-  <Column Name="AccountId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="BranchId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CashBookTypeCode" Type="varchar" Size="15">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
@@ -15,36 +12,43 @@
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnglishName" Type="varchar" Size="60">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="60">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="TotalAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="UpdateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="CashBookLines" ParentColumnName="CashBookId" ReferencedTableName="CashBooks" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CashBookLines_dbo.CashBooks_CashBookId" />
-  <Relation ParentTableName="BankDeposits" ParentColumnName="CashBookId" ReferencedTableName="CashBooks" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankDeposits_dbo.CashBooks_CashBookId" />
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CashBookTypeCode" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalAmount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AccountId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BranchId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CashBookTypeCode" ReferencedTable="CashBookTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="BranchId" ReferencedTable="Branches" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

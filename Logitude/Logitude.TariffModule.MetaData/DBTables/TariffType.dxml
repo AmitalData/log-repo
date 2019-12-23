@@ -12,4 +12,5 @@
   <Column Name="TransportModeCode" Type="char" Size="1">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ForeignKeyColumn="TransportModeCode" ReferencedTable="TransportModes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

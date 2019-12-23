@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ARPaymentCheques" Schema="dbo" DBType="Main">
-  <Column Name="BankAccount" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="BankBranch" Type="varchar" Size="30">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="BankId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ChequeNumber" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ExchangeRate" Type="decimal" Precision="5" Scale="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="LineNumber" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LocalAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="PaymentId" Type="varchar" Size="15">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="4000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="StatusCode" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="PaymentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="LineNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ChequeNumber" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ValueDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="CashBookLines" ParentColumnName="ARPChequeId" ReferencedTableName="ARPaymentCheques" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CashBookLines_dbo.ARPaymentCheques_ARPChequeId" />
-  <Relation ParentTableName="BankDepositLines" ParentColumnName="ARPaymentChequeId" ReferencedTableName="ARPaymentCheques" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankDepositLines_dbo.ARPaymentCheques_ARPaymentChequeId" />
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalAmount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BankId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BankBranch" Type="varchar" Size="30">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BankAccount" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="StatusCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExchangeRate" Type="decimal" Precision="5" Scale="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="PaymentId" ReferencedTable="ARPayments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="StatusCode" ReferencedTable="ARPaymentChequeStatuses" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

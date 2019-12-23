@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="BIReports" ParentColumnName="TypeCode" ReferencedTableName="BIReportsTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.BIReports_dbo.BIReportsTypes_TypeCode" />
 </Table>

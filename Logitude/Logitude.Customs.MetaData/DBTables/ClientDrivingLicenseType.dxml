@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ClientDrivingLicenseTypes" Schema="Customs" DBType="Main">
-  <Column Name="ClientDrivingLicenseLine" Type="int">
+  <Column Name="ClientId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ClientId" Type="varchar" Size="15">
+  <Column Name="ClientDrivingLicenseLine" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="DriversLicenseTypeCode" Type="varchar" Size="2">
@@ -12,4 +12,5 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ForeignKeyColumn="ClientId,ClientDrivingLicenseLine" ReferencedTable="ClientDrivingLicenses" ReferencedColumn="ClientId,Line" ReferencedTableSchema="Customs" />
 </Table>

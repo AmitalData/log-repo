@@ -13,6 +13,7 @@ namespace Logitude.DBMigrations
                 string root = AppHelper.GetRoot(args);
                 //root = @"C:\Users\AbedMalakh\source\repos\log-repo\Logitude";
                 //root = @"D:\TestDXML";
+                //root = @"D:\TestDXMLFilesWithRelations";
 
                 if (!String.IsNullOrEmpty(root))
                 {

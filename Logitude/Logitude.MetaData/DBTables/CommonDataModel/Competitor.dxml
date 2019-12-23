@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Competitors" Schema="dbo" DBType="Main">
-  <Column Name="AddressId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Name" Type="nvarchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Opportunity" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+  <Column Name="Website" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Strengths" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="Weaknesses" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Opportunity" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="Threat" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Weaknesses" Type="nvarchar" Size="1000">
+  <Column Name="AddressId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Website" Type="varchar" Size="100">
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomerCompetitorProducts" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerCompetitorProducts_dbo.Competitors_CompetitorId" />
-  <Relation ParentTableName="CustomerCompetitors" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerCompetitors_dbo.Competitors_CompetitorId" />
-  <Relation ParentTableName="OpportunityCompetitorProducts" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitorProducts_dbo.Competitors_CompetitorId" />
-  <Relation ParentTableName="OpportunityCompetitors" ParentColumnName="CompetitorId" ReferencedTableName="Competitors" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitors_dbo.Competitors_CompetitorId" />
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="AddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

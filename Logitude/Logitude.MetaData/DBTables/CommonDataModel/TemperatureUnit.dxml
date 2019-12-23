@@ -9,7 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ShipmentPackages" ParentColumnName="FlashPointTemperatureUnitCode" ReferencedTableName="TemperatureUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.TemperatureUnits_FlashPointTemperatureUnitCode" />
-  <Relation ParentTableName="ShipmentPackages" ParentColumnName="TemperatureUnitCode" ReferencedTableName="TemperatureUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.TemperatureUnits_TemperatureUnitCode" />
-  <Relation ParentTableName="Tenants" ParentColumnName="TemperatureUnitCode" ReferencedTableName="TemperatureUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.TemperatureUnits_TemperatureUnitCode" />
 </Table>

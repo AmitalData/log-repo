@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ShippingAgents" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="ForwarderAccountNumber" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ForwarderCreditNumber" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="LocalCustomsCode" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PrimaryContactEmail" Type="varchar" Size="70">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="PrimaryContactName" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="PrimaryContactEmail" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="PrimaryContactPhone" Type="varchar" Size="25">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="ShippingLines" ParentColumnName="ShippingAgentId" ReferencedTableName="ShippingAgents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShippingLines_dbo.ShippingAgents_ShippingAgentId" />
+  <Relation ForeignKeyColumn="Id" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

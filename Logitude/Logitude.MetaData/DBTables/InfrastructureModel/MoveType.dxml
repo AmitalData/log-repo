@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="MoveTypes" Schema="dbo" DBType="Main">
-  <Column Name="AddedManually" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Code" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="MoveTypeEnglishName" Type="varchar" Size="40">
@@ -18,15 +12,20 @@
   <Column Name="MoveTypeLocalName" Type="nvarchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="TransportModeId" Type="char" Size="1">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Shipments" ParentColumnName="MoveTypeId" ReferencedTableName="MoveTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.MoveTypes_MoveTypeId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="MoveTypeId" ReferencedTableName="MoveTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.MoveTypes_MoveTypeId" />
+  <Column Name="AddedManually" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="TransportModeId" ReferencedTable="TransportModes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

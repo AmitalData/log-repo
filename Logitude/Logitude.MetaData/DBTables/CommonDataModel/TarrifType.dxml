@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="TarrifHeaders" ParentColumnName="TarrifTypeCode" ReferencedTableName="TarrifTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TarrifHeaders_dbo.TarrifTypes_TarrifTypeCode" />
 </Table>

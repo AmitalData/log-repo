@@ -9,10 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="ContainerType1MarkUpTypeCode" ReferencedTableName="MarkUpTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.MarkUpTypes_ContainerType1MarkUpTypeCode" />
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="ContainerType2MarkUpTypeCode" ReferencedTableName="MarkUpTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.MarkUpTypes_ContainerType2MarkUpTypeCode" />
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="ContainerType3MarkUpTypeCode" ReferencedTableName="MarkUpTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.MarkUpTypes_ContainerType3MarkUpTypeCode" />
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="ContainerType4MarkUpTypeCode" ReferencedTableName="MarkUpTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.MarkUpTypes_ContainerType4MarkUpTypeCode" />
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="ContainerType5MarkUpTypeCode" ReferencedTableName="MarkUpTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.MarkUpTypes_ContainerType5MarkUpTypeCode" />
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="MarkUpTypeCode" ReferencedTableName="MarkUpTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.MarkUpTypes_MarkUpTypeCode" />
 </Table>

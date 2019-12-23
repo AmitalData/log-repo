@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="TraceEvents" Schema="dbo" DBType="Main">
-  <Column Name="CustomerCareUserEmail" Type="varchar" Size="70">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="varchar" Size="40">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Deleted" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EntityId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="EventTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LogDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="EventDateTime" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="EventTypeId" Type="varchar" Size="15">
+  <Column Name="Deleted" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ExternalId" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="40">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerCareUserEmail" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="IsAddedManually" Type="bit">
     <Constraints Nullable="false" />
@@ -27,22 +42,10 @@
   <Column Name="Location" Type="nvarchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="LogDateTime" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Notes" Type="nvarchar" Size="4000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="PartnerName" Type="varchar" Size="70">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
+  <Relation ForeignKeyColumn="EventTypeId" ReferencedTable="EventTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

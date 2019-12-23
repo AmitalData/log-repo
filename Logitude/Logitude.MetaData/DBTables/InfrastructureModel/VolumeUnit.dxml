@@ -9,8 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Shipments" ParentColumnName="VolumeUnitCode" ReferencedTableName="VolumeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.VolumeUnits_VolumeUnitCode" />
-  <Relation ParentTableName="Bookings" ParentColumnName="VolumeUnitCode" ReferencedTableName="VolumeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.VolumeUnits_VolumeUnitCode" />
-  <Relation ParentTableName="Tenants" ParentColumnName="VolumeUnitCode" ReferencedTableName="VolumeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.VolumeUnits_VolumeUnitCode" />
-  <Relation ParentTableName="FlightsSchedulesRequests" ParentColumnName="VolumeUnitCode" ReferencedTableName="VolumeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesRequests_dbo.VolumeUnits_VolumeUnitCode" />
 </Table>

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomBanksCards" Schema="Customs" DBType="Main">
-  <Column Name="CardId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CustomBankId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CustomBankId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CardId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CustomBankId" ReferencedTable="CustomBanks" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="CardId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

@@ -12,4 +12,5 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ForeignKeyColumn="ClaimId,CounterKey" ReferencedTable="ClaimsRelatedEntities" ReferencedColumn="ClaimId,EntityCounterKey" ReferencedTableSchema="Customs" />
 </Table>

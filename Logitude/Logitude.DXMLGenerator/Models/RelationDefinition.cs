@@ -12,13 +12,22 @@ namespace Logitude.DXMLGenerator.Models
     public class RelationDefinition
     {
         [XmlAttribute()]
-        public string ForeignKeyColumn { get; set; }//ParentColumnName
+        public string ForeignKeyColumn { get; set; }
         
         [XmlAttribute()]
-        public string ReferencedTable { get; set; }//ReferencedTableName
+        public string ReferencedTable { get; set; }
 
         [XmlAttribute()]
-        public string ReferencedColumn { get; set; }//ReferencedColumnName
+        public string ReferencedColumn { get; set; }
+
+        [XmlAttribute()]
+        public int ReferencedColumnOrder { get; set; }
+
+        [XmlIgnore]
+        public bool ReferencedColumnOrderSpecified { get { return ReferencedColumnOrder > 0; } }
+
+        [XmlAttribute()]
+        public string ReferencedTableSchema { get; set; }
 
         [XmlAttribute()]
         public string ForeignKeyConstraintName { get; set; }

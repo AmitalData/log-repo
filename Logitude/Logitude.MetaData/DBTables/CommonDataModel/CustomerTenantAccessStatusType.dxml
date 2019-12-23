@@ -12,7 +12,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="52">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomerTenantAccesses" ParentColumnName="Status" ReferencedTableName="CustomerTenantAccessStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccesses_dbo.CustomerTenantAccessStatusTypes_Status" />
-  <Relation ParentTableName="CustomerTenantAccessCards" ParentColumnName="StatusTypeCode" ReferencedTableName="CustomerTenantAccessStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessCards_dbo.CustomerTenantAccessStatusTypes_StatusTypeCode" />
-  <Relation ParentTableName="CustomerTenantAccessRequests" ParentColumnName="RequestStatus" ReferencedTableName="CustomerTenantAccessStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessRequests_dbo.CustomerTenantAccessStatusTypes_RequestStatus" />
 </Table>

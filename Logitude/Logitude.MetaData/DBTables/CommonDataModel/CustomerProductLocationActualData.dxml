@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomerProductLocationActualDatas" Schema="dbo" DBType="Main">
-  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CountryId" Type="varchar" Size="15">
+  <Column Name="CustomerId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="CustomerId" Type="varchar" Size="15">
+  <Column Name="ProductTypeCode" Type="varchar" Size="2">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Month" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="NumberOfShipments" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ProductTypeCode" Type="varchar" Size="2">
+  <Column Name="Year" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Revenue" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
+  <Column Name="CountryId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
@@ -27,7 +21,16 @@
   <Column Name="TEU" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Year" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="NumberOfShipments" Type="int">
+    <Constraints Nullable="true" />
   </Column>
+  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Revenue" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CustomerId" ReferencedTable="Customers" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ProductTypeCode" ReferencedTable="ProductTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

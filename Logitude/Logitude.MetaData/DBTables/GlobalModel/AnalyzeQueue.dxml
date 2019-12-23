@@ -1,69 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="AnalyzeQueues" Schema="dbo" DBType="Global">
-  <Column Name="AckReason" Type="varchar" Size="256">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="AWBNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CommunicationLogId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ConnectedToEntity" Type="bit">
+  <Column Name="MessageBody" Type="varbinary" Size="-1">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ConnectedToTenant" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DoneDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EntityReference" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ErrorMessage" Type="varchar" Size="8000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FileName" Type="nvarchar" Size="120">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FileSize" Type="float">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="From" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="Log" Type="varchar" Size="500">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MessageBody" Type="varbinary" Size="-1">
+  <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ObjectTableName" Type="varchar" Size="25">
+  <Column Name="FileSize" Type="float">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Status" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ErrorMessage" Type="varchar" Size="8000">
     <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommunicationLogId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Subject" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConnectedToTenant" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ConnectedToEntity" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="Retries" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="EntityReference" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ObjectTableName" Type="varchar" Size="25">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="StackTrace" Type="varchar" Size="8000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Status" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Subject" Type="varchar" Size="40">
+  <Column Name="AWBNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="AckReason" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
   </Column>
+  <Column Name="DoneDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileName" Type="nvarchar" Size="120">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Log" Type="varchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="Tenant" ReferencedTable="TenantManagements" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Status" ReferencedTable="AnalyzeQueueStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="APPaymentMethods" Schema="dbo" DBType="Main">
-  <Column Name="AccountingExternalId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="AddedManually" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Code" Type="varchar" Size="2">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Inactive" Type="bit">
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Name" Type="varchar" Size="40">
@@ -21,8 +15,13 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="APPayments" ParentColumnName="PaymentMethodId" ReferencedTableName="APPaymentMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.APPaymentMethods_PaymentMethodId" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AccountingExternalId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

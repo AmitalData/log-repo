@@ -12,5 +12,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Users" ParentColumnName="DistributorCode" ReferencedTableName="Distributors" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Users_dbo.Distributors_DistributorCode" />
 </Table>

@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="MenusTables" ParentColumnName="CategoryTypeCode" ReferencedTableName="CategoryTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.MenusTables_dbo.CategoryTypes_CategoryTypeCode" />
 </Table>

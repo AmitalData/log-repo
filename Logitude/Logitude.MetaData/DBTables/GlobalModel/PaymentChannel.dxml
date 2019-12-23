@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="TenantManagements" ParentColumnName="PaymentChannelCode" ReferencedTableName="PaymentChannels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TenantManagements_dbo.PaymentChannels_PaymentChannelCode" />
 </Table>

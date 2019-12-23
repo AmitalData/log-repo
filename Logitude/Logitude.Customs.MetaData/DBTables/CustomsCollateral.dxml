@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomsCollaterals" Schema="Customs" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="CollateralRequestNumber" Type="varchar" Size="9">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CollateralRequestStatusCode" Type="varchar" Size="2">
+  <Column Name="RequestValidityDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CollateralValidityDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CreateDateTime" Type="datetime">
+  <Column Name="CollateralRequestStatusCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CustomerId" Type="varchar" Size="15">
+  <Column Name="RequestedCollateralTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CustomsEntityTypeCode" Type="varchar" Size="9">
+  <Column Name="OrganizationUnitTypeCode" Type="varchar" Size="5">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CustomsHouseTypeCode" Type="varchar" Size="17">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeclarationId" Type="varchar" Size="15">
+  <Column Name="WorkerName" Type="nvarchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Remarks" Type="nvarchar" Size="512">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileNo" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomsEntityTypeCode" Type="varchar" Size="9">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="EntityIdKey1" Type="varchar" Size="35">
@@ -33,40 +48,29 @@
   <Column Name="EntityIdKey3" Type="varchar" Size="35">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FileNo" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="IncludingThirdPartyGuarantee" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsClosed" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="OrganizationUnitTypeCode" Type="varchar" Size="5">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Remarks" Type="nvarchar" Size="512">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="RequestedCollateralTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="RequestValidityDate" Type="datetime">
+  <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="WorkerName" Type="nvarchar" Size="35">
+  <Column Name="CreateDateTime" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomsCollateralsAnswers" ParentColumnName="CustomsCollateralId" ReferencedTableName="CustomsCollaterals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsAnswers_Customs.CustomsCollaterals_CustomsCollateralId" />
-  <Relation ParentTableName="CustomsCollateralsConditions" ParentColumnName="CustomsCollateralId" ReferencedTableName="CustomsCollaterals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsConditions_Customs.CustomsCollaterals_CustomsCollateralId" />
-  <Relation ParentTableName="DeclarationConstraints" ParentColumnName="CustomsCollateralId" ReferencedTableName="CustomsCollaterals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationConstraints_Customs.CustomsCollaterals_CustomsCollateralId" />
+  <Column Name="IsClosed" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CollateralRequestStatusCode" ReferencedTable="CollateralRequestStatus" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="RequestedCollateralTypeCode" ReferencedTable="CollateralTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="OrganizationUnitTypeCode" ReferencedTable="OrganizationUnitTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="CustomsHouseTypeCode" ReferencedTable="CustomsHouseTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="CustomsEntityTypeCode" ReferencedTable="EntityTypeLookups" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="DeclarationId" ReferencedTable="Declarations" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="CustomerId" ReferencedTable="Customers" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

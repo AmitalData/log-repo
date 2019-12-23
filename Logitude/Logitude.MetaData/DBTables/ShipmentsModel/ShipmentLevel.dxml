@@ -9,10 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Shipments" ParentColumnName="ShipmentLevelCode" ReferencedTableName="ShipmentLevels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.ShipmentLevels_ShipmentLevelCode" />
-  <Relation ParentTableName="AgentSharedDocuments" ParentColumnName="ShipmentLevelCode" ReferencedTableName="ShipmentLevels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AgentSharedDocuments_dbo.ShipmentLevels_ShipmentLevelCode" />
-  <Relation ParentTableName="AgentSharedManifests" ParentColumnName="ShipmentLevelCode" ReferencedTableName="ShipmentLevels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.ShipmentLevels_ShipmentLevelCode" />
-  <Relation ParentTableName="AirlineStatistics" ParentColumnName="ShipmentLevelCode" ReferencedTableName="ShipmentLevels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AirlineStatistics_dbo.ShipmentLevels_ShipmentLevelCode" />
-  <Relation ParentTableName="WarehouseEntries" ParentColumnName="ShipmentLevelCode" ReferencedTableName="ShipmentLevels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.ShipmentLevels_ShipmentLevelCode" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ShipmentLevelCode" ReferencedTableName="ShipmentLevels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.ShipmentLevels_ShipmentLevelCode" />
 </Table>

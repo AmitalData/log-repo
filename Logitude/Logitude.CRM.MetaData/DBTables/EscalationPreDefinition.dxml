@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SLAEscalationRecepients" ParentColumnName="PreDefinitionId" ReferencedTableName="EscalationPreDefinitions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SLAEscalationRecepients_dbo.EscalationPreDefinitions_PreDefinitionId" />
 </Table>

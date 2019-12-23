@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="PaymentChequeLines" Schema="dbo" DBType="Main">
-  <Column Name="Amount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
+  <Column Name="PaymentChequeId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Line" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="Notes" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PaymentChequeId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="Amount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="SequenceNumeric" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="PaymentChequeId" ReferencedTable="PaymentCheques" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

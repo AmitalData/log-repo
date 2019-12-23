@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="HybridTenantThresholds" Schema="dbo" DBType="Main">
-  <Column Name="FailedThresold" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Tenant" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="FailedThresold" Type="int">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="WaitingThresold" Type="int">
     <Constraints Nullable="false" />

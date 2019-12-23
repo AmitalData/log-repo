@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="AccountingSettings" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
   <Column Name="AccountingSystemCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AllowClosureWithoutPayables" Type="bit">
+  <Column Name="AllowVoidARI" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="AllowManualInvoiceNumber" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AllowMinusInvoicelines" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AllowPositiveAmountsInTheCreditNote" Type="bit">
+  <Column Name="AllowVoidARP" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="AllowVoidAPI" Type="bit">
@@ -21,82 +18,58 @@
   <Column Name="AllowVoidAPP" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="AllowVoidARI" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AllowVoidARP" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="APInvoiceTransferStartDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ARInvoiceTransferStartDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ARPaymentTransferStartDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EnableInvoiceStocksManagement" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableMultiCurrencyAPPayments" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableMultiCurrencyARPayments" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableMultiPercentageVATTypes" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableMultiRateAPInvoices" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableNegativeOffsetAPPayments" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableNegativeOffsetARPayments" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IsAPInvoicesTransferEnabled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsAPPaymentsTransferEnabled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsARInvoiceChronologicalDates" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsARInvoicesTransferEnabled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsARPaymentChronologicalDates" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsARPaymentsTransferEnabled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsSingleTaxPerInvoice" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsVatNumberMandatoryInAP" Type="bit">
+  <Column Name="AllowManualInvoiceNumber" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsVatNumberMandatoryInAR" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="NotifyPastDateOnInvoiceEdit" Type="bit">
+  <Column Name="IsVatNumberMandatoryInAP" Type="bit">
     <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsARInvoiceChronologicalDates" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsARPaymentChronologicalDates" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ReceivableVATableTempCard" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReceivableVATExemptTempCard" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="PayableVATableTempCard" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PayableVATCard" Type="varchar" Size="15">
+  <Column Name="PayableVATExemptTempCard" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PayableVATExemptTempCard" Type="varchar" Size="15">
+  <Column Name="AllowClosureWithoutPayables" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSingleTaxPerInvoice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsARInvoicesTransferEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAPInvoicesTransferEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsARPaymentsTransferEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ARInvoiceTransferStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="APInvoiceTransferStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ARPaymentTransferStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QBOrealMeID" Type="nvarchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="QBOAccessToken" Type="nvarchar" Size="200">
@@ -105,28 +78,58 @@
   <Column Name="QBOAccessTokenSecret" Type="nvarchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="QBOOAuth" Type="int">
+  <Column Name="AllowMinusInvoicelines" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="QBOrealMeID" Type="nvarchar" Size="200">
-    <Constraints Nullable="true" />
+  <Column Name="AllowPositiveAmountsInTheCreditNote" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="ReceivableVATableTempCard" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="EnableMultiPercentageVATTypes" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="ReceivableVATCard" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="NotifyPastDateOnInvoiceEdit" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="ReceivableVATExemptTempCard" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="IsAPPaymentsTransferEnabled" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="RefreshToken" Type="nvarchar" Size="2000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="RegistryDateTypeCode" Type="varchar" Size="4">
+  <Column Name="QBOOAuth" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ReceivableVATCard" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PayableVATCard" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TransferToDropboxActivated" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="EnableMultiRateAPInvoices" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="RegistryDateTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnableMultiCurrencyARPayments" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnableMultiCurrencyAPPayments" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnableNegativeOffsetARPayments" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnableNegativeOffsetAPPayments" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnableInvoiceStocksManagement" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="Id" ReferencedTable="Tenants" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AccountingSystemCode" ReferencedTable="AccountingSystems" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="RegistryDateTypeCode" ReferencedTable="RegistryDateTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

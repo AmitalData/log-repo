@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="SharedManifestsStatuses" Schema="dbo" DBType="Main">
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="StatusCode" Type="varchar" Size="4">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="StatusName" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="AgentSharedDocuments" ParentColumnName="StatusCode" ReferencedTableName="SharedManifestsStatuses" ReferencedColumnName="StatusCode" ForeignKeyConstraintName="FK_dbo.AgentSharedDocuments_dbo.SharedManifestsStatuses_StatusCode" />
-  <Relation ParentTableName="AgentSharedManifests" ParentColumnName="StatusCode" ReferencedTableName="SharedManifestsStatuses" ReferencedColumnName="StatusCode" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.SharedManifestsStatuses_StatusCode" />
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

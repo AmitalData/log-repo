@@ -3,24 +3,22 @@
   <Column Name="Code" Type="varchar" Size="50">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="DefaultFilterBy" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsClosed" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Name" Type="varchar" Size="50">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="Name" Type="varchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="TypeCode" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="DWObjectFields" ParentColumnName="DimensionTableCode" ReferencedTableName="DWObjectTables" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.DWObjectFields_dbo.DWObjectTables_DimensionTableCode" />
-  <Relation ParentTableName="DWObjectFields" ParentColumnName="DWObjectTableCode" ReferencedTableName="DWObjectTables" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.DWObjectFields_dbo.DWObjectTables_DWObjectTableCode" />
+  <Column Name="IsClosed" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DefaultFilterBy" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

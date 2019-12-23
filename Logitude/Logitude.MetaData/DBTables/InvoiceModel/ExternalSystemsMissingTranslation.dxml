@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ExternalSystemsMissingTranslations" Schema="dbo" DBType="Main">
-  <Column Name="ExternalCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IsResolved" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LogitudeTable" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="LogitudeId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="LogitudeTable" Type="varchar" Size="50">
+  <Column Name="ExternalCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Split1" Type="varchar" Size="20">
@@ -21,7 +21,7 @@
   <Column Name="Split2" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="IsResolved" Type="bit">
     <Constraints Nullable="false" />
   </Column>
 </Table>

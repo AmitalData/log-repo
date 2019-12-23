@@ -1,21 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Bookings" Schema="dbo" DBType="Main">
-  <Column Name="AccountNumber" Type="varchar" Size="14">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BookingNumber" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DirectionCode" Type="char" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TransportModeCode" Type="char" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AirlinePrefix" Type="varchar" Size="3">
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BookingStatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Master" Type="varchar" Size="16">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AnswerOtherServicesInformation" Type="varchar" Size="250">
+  <Column Name="SpaceAllocationCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MainCarriageCarrierId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MainCarriageIsFromStack" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MainCarriageSpaceAllocationCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AWBCarrierTarrifReference" Type="varchar" Size="25">
+  <Column Name="MainCarriageAllotmentIdentification" Type="varchar" Size="14">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AWBCommodityItemNumber" Type="varchar" Size="7">
+  <Column Name="MainCarriageFromPortId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AWBHandlingInformation" Type="nvarchar" Size="250">
+  <Column Name="MainCarriageToPortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MainCarriageCarrierPrefix" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MainCarriageCarrierNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MainCarriageETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment1FromPortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment1ToPortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment1CarrierId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment1ETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment1AllotmentIdentification" Type="varchar" Size="14">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment1CarrierPrefix" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment1CarrierNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment1SpaceAllocationCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment2FromPortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment2ToPortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment2CarrierId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment2ETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment2AllotmentIdentification" Type="varchar" Size="14">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment2CarrierPrefix" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment2CarrierNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Transshipment2SpaceAllocationCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FFRStatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FFRStatusDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FNAReason" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipperId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipperAddressId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipperReference" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConsigneeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConsigneeAddressId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConsigneeReference" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IssuingCarrierAgentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IssuingCarrierAddressId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IATACodeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CASSCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="AWBSpecialHandlingCodeId1" Type="varchar" Size="15">
@@ -45,193 +180,19 @@
   <Column Name="AWBSpecialHandlingCodeId9" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="BookingLevelCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="BookingNumber" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="BookingProductId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="BookingStatusCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CASSCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ChargeableWeightEdited" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChargeableWeightInKG" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ConsigneeAddressId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ConsigneeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ConsigneeReference" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DangerousClassNumber" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DangerousFlashPoint" Type="varchar" Size="8">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DangerousIMDGCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DangerousMaterialDescription" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DangerousPackagingGroup" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DangerousUnNumber" Type="varchar" Size="4">
+  <Column Name="AWBCarrierTarrifReference" Type="varchar" Size="25">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DescriptionOfGoods" Type="varchar" Size="512">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DescriptionOfGoodsId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DimensionsUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DimFactor" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DirectionCode" Type="char" Size="1">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FFRStatusCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FFRStatusDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FMAAcknowledgementReason" Type="varchar" Size="256">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FNAReason" Type="varchar" Size="256">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GrossWeight" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GrossWeightEdited" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="GrossWeightInKG" Type="decimal" Precision="18" Scale="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HasErrors" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HasResponse" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IATACodeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="InterlineId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsDangerous" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IssuingCarrierAddressId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IssuingCarrierAgentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IssuingCarrierIATACode" Type="varchar" Size="7">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsTemperatureSensitive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LastFSRStatusRequestDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastSentByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainCarriageAllotmentIdentification" Type="varchar" Size="14">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainCarriageCarrierId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MainCarriageCarrierNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainCarriageCarrierPrefix" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainCarriageETD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainCarriageFinalDestinationPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainCarriageFromPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainCarriageIsFromStack" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MainCarriageSpaceAllocationCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainCarriageToPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainHarmonize" Type="varchar" Size="9">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Master" Type="varchar" Size="16">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Notes" Type="varchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="NumberOfPackages" Type="int">
+  <Column Name="SpecialServicesRequest" Type="varchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="OtherServicesInformation" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Ratio" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Routing" Type="varchar" Size="100">
@@ -240,86 +201,20 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ShipmentId" Type="varchar" Size="15">
+  <Column Name="IssuingCarrierIATACode" Type="varchar" Size="7">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ShipperAddressId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ShipperId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ShipperReference" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SpaceAllocationCode" Type="varchar" Size="2">
+  <Column Name="GrossWeightEdited" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SpecialServicesRequest" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="ChargeableWeightEdited" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TransportModeCode" Type="char" Size="1">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Transshipment1AllotmentIdentification" Type="varchar" Size="14">
+  <Column Name="NumberOfPackages" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Transshipment1CarrierId" Type="varchar" Size="15">
+  <Column Name="GrossWeight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment1CarrierNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment1CarrierPrefix" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment1ETD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment1FromPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment1SpaceAllocationCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment1ToPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment2AllotmentIdentification" Type="varchar" Size="14">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment2CarrierId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment2CarrierNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment2CarrierPrefix" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment2ETD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment2FromPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment2SpaceAllocationCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Transshipment2ToPortId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdatedByPartner" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="Volume" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
@@ -327,13 +222,161 @@
   <Column Name="VolumetricWeight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AWBCommodityItemNumber" Type="varchar" Size="7">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DimensionsUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="VolumeUnitCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GrossWeightInKG" Type="decimal" Precision="18" Scale="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChargeableWeightInKG" Type="decimal" Precision="18" Scale="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Ratio" Type="decimal" Precision="18" Scale="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DimFactor" Type="decimal" Precision="18" Scale="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MainCarriageFinalDestinationPortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsDangerous" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DangerousClassNumber" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DangerousUnNumber" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DangerousPackagingGroup" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DangerousIMDGCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DangerousFlashPoint" Type="varchar" Size="8">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DangerousMaterialDescription" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MainHarmonize" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AWBHandlingInformation" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AnswerOtherServicesInformation" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HasResponse" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FMAAcknowledgementReason" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HasErrors" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="WaitingForResponse" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="BookingAnswers" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.Bookings_BookingId" />
-  <Relation ParentTableName="BookingPackages" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingPackages_dbo.Bookings_BookingId" />
-  <Relation ParentTableName="BookingLastRequests" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingLastRequests_dbo.Bookings_BookingId" />
+  <Column Name="InterlineId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BookingLevelCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AirlinePrefix" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BookingProductId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastSentByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DescriptionOfGoodsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AccountNumber" Type="varchar" Size="14">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsTemperatureSensitive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastFSRStatusRequestDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByPartner" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="DirectionCode" ReferencedTable="Directions" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="TransportModeCode" ReferencedTable="TransportModes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ShipmentId" ReferencedTable="Shipments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="BookingStatusCode" ReferencedTable="BookingStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="SpaceAllocationCode" ReferencedTable="BookingSpaceAllocations" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MainCarriageCarrierId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MainCarriageSpaceAllocationCode" ReferencedTable="BookingSpaceAllocations" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MainCarriageFromPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MainCarriageToPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Transshipment1FromPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Transshipment1ToPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Transshipment1CarrierId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Transshipment1SpaceAllocationCode" ReferencedTable="BookingSpaceAllocations" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Transshipment2FromPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Transshipment2ToPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Transshipment2CarrierId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Transshipment2SpaceAllocationCode" ReferencedTable="BookingSpaceAllocations" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FFRStatusCode" ReferencedTable="FFRStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ShipperId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ShipperAddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ConsigneeId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ConsigneeAddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="IssuingCarrierAgentId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="IssuingCarrierAddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="IATACodeId" ReferencedTable="IATACodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId1" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId2" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId3" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId4" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId5" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId6" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId7" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId8" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AWBSpecialHandlingCodeId9" ReferencedTable="AWBSpecialHandlingCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="GrossWeightUnitCode" ReferencedTable="WeightUnits" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ChargeableWeightUnitCode" ReferencedTable="WeightUnits" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DimensionsUnitCode" ReferencedTable="DimensionsUnits" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="VolumeUnitCode" ReferencedTable="VolumeUnits" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MainCarriageFinalDestinationPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="InterlineId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="BookingLevelCode" ReferencedTable="BookingLevels" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="BookingProductId" ReferencedTable="BookingProducts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="LastSentByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DescriptionOfGoodsId" ReferencedTable="AWBDescriptionOfGoods" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

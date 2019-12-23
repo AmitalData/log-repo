@@ -6,14 +6,13 @@
   <Column Name="EnglishName" Type="varchar" Size="30">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="LocalName" Type="nvarchar" Size="50">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="AccountingPeriods" ParentColumnName="PeriodTypeCode" ReferencedTableName="PeriodTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AccountingPeriods_dbo.PeriodTypes_PeriodTypeCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

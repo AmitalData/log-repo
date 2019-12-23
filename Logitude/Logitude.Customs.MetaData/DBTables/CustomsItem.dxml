@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomsItems" Schema="Customs" DBType="Main">
-  <Column Name="ComputedCheckDigit" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
+  <Column Name="ID" Type="varchar" Size="9">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="CustomsBookTypeID" Type="int">
     <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FullClassification" Type="varchar" Size="13">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="CustomsItemCategoryID" Type="int">
     <Constraints Nullable="false" />
@@ -12,12 +15,7 @@
   <Column Name="CustomsItemHierarchicLocationID" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FullClassification" Type="varchar" Size="13">
+  <Column Name="ComputedCheckDigit" Type="varchar" Size="1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ID" Type="varchar" Size="9">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Relation ParentTableName="CustomsItemDetailsHistorys" ParentColumnName="CustomsItemID" ReferencedTableName="CustomsItems" ReferencedColumnName="ID" ForeignKeyConstraintName="FK_Customs.CustomsItemDetailsHistorys_Customs.CustomsItems_CustomsItemID" />
-  <Relation ParentTableName="PropertiesDetailsHistorys" ParentColumnName="CustomsItemID" ReferencedTableName="CustomsItems" ReferencedColumnName="ID" ForeignKeyConstraintName="FK_Customs.PropertiesDetailsHistorys_Customs.CustomsItems_CustomsItemID" />
 </Table>

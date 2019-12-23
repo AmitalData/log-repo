@@ -6,15 +6,13 @@
   <Column Name="EnglishName" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="LocalName" Type="nvarchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="GLAccounts" ParentColumnName="ChartOfAccountsTypeCode" ReferencedTableName="ChartOfAccountsTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.ChartOfAccountsTypes_ChartOfAccountsTypeCode" />
-  <Relation ParentTableName="ChartOfAccounts" ParentColumnName="TypeCode" ReferencedTableName="ChartOfAccountsTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ChartOfAccounts_dbo.ChartOfAccountsTypes_TypeCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

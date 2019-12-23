@@ -6,15 +6,11 @@
   <Column Name="Name" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="TransportModeId" Type="char" Size="1">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Shipments" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.ShipmentTypes_ShipmentTypeId" />
-  <Relation ParentTableName="AgentSharedManifests" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.ShipmentTypes_ShipmentTypeId" />
-  <Relation ParentTableName="WarehouseEntries" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.ShipmentTypes_ShipmentTypeId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.ShipmentTypes_ShipmentTypeId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.ShipmentTypes_ShipmentTypeId" />
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="TransportModeId" ReferencedTable="TransportModes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

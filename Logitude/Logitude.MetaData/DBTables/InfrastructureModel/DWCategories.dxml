@@ -3,11 +3,10 @@
   <Column Name="Code" Type="varchar" Size="50">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Index" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Name" Type="varchar" Size="50">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="DWObjectFieldCategories" ParentColumnName="DWCategoryCode" ReferencedTableName="DWCategories" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.DWObjectFieldCategories_dbo.DWCategories_DWCategoryCode" />
+  <Column Name="Index" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

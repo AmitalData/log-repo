@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Commodities" Schema="dbo" DBType="Main">
-  <Column Name="AirlineId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Code" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Name" Type="nvarchar" Size="250">
@@ -18,7 +15,11 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="AirlineId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="AirlineId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

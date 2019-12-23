@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="RoleFeatures" ParentColumnName="FeatureAccessLevelCode" ReferencedTableName="FeatureAccessLevels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.RoleFeatures_dbo.FeatureAccessLevels_FeatureAccessLevelCode" />
 </Table>

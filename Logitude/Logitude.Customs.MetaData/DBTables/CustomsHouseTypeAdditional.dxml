@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomsHouseTypeAdditionals" Schema="Customs" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="17">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="TransportModeId" Type="varchar" Size="1">
     <Constraints Nullable="true" />
@@ -18,4 +15,10 @@
   <Column Name="UnloadPortCode" Type="varchar" Size="17">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="Code" ReferencedTable="CustomsHouseTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="TransportModeId" ReferencedTable="CustomsTransportModes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="UnloadPortCode" ReferencedTable="UnloadingSiteType" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

@@ -3,14 +3,13 @@
   <Column Name="Code" Type="varchar" Size="1">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IndexOrder" Type="int">
+  <Column Name="Name" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="60">
+  <Column Name="IndexOrder" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Quotes" ParentColumnName="RatingCode" ReferencedTableName="QuoteRatings" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.QuoteRatings_RatingCode" />
 </Table>

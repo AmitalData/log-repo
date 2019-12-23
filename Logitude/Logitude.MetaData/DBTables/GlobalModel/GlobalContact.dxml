@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="GlobalContacts" Schema="dbo" DBType="Global">
-  <Column Name="Email" Type="varchar" Size="70">
-    <Constraints Nullable="false" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="GlobalTenantId" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Email" Type="varchar" Size="70">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="InternetAccess" Type="bit">
+  <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsUser" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="InternetAccess" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="GlobalTenantId" ReferencedTable="GlobalTenants" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

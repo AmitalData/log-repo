@@ -1,34 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ObjectFields" Schema="dbo" DBType="Main">
-  <Column Name="AgentPermissionTypeCode" Type="varchar" Size="15">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="FieldCode" Type="varchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FullNameTextCodeId" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AllowedInAirlineMessaging" Type="bit">
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="AllowedinAutomationConditions" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AllowedInCustomerFieldsSettings" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AutomaticField" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AutomationEmailRecipient" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CanAutomateSetValue" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CanFilter" Type="bit">
+  <Column Name="FieldName" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Code" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ColumnHeaderTemplateName" Type="varchar" Size="50">
+  <Column Name="DataTypeCode" Type="varchar" Size="10">
     <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MaxLength" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsRequiered" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustom" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HelpTextCodeId" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MinLength" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LookUpTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayOnLookUp" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CanFilter" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayOnly" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SystemRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SystemMaxLength" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ListTextCodeId" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayInList" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomFilter" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Operator" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MultiLine" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTimeFrameFilter" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayInSearchWindowList" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayInSearchWindowFilters" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PMPropertyPath" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ListPropertyPath" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LookUpControlName" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayInLookUpIndex" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AutomaticField" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UniqueField" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShortNameTextCodeId" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayInSearchWindowListIndex" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayInSearchWindowFiltersIndex" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsMulti" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MultiTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DependencyFilter1Value" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DependencyFilter2Value" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DependencyFilter3Value" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DependencyFilter1Type" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DependencyFilter2Type" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DependencyFilter3Type" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DependencyFilter1IsList" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DependencyFilter2IsList" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DependencyFilter3IsList" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="ControlField1" Type="varchar" Size="100">
     <Constraints Nullable="true" />
@@ -39,232 +150,119 @@
   <Column Name="ControlField3" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ConverterName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CopyToDW" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CustomerPermissionTypeCode" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CustomPickListCode" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DataTemplateName" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DataTypeCode" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DependencyFilter1IsList" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DependencyFilter1Type" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DependencyFilter1Value" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DependencyFilter2IsList" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DependencyFilter2Type" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DependencyFilter2Value" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DependencyFilter3IsList" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DependencyFilter3Type" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DependencyFilter3Value" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DigitsAfterPoint" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInAutomationAsEnitity" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInDocumentReferences" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInEntityVariables" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInList" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInLookupColumnSize" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DisplayInLookUpIndex" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInSearchWindowFilters" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInSearchWindowFiltersIndex" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInSearchWindowList" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayInSearchWindowListIndex" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayLongName" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayOnLookUp" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayOnLookUpLocal" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DisplayOnly" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableFullscreenTextBox" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FieldCode" Type="varchar" Size="200">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FieldName" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FullNameTextCodeId" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GeneratedComponentPath" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HasTemplate" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HelpTextCodeId" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HtmlHeaderComponentName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HtmlHeaderComponentUrl" Type="varchar" Size="256">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HtmlListComponentName" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HtmlListComponentUrl" Type="varchar" Size="256">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsCustom" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsCustomFilter" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsMaxLength" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsMulti" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsRequiered" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsRestrictable" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsTimeFrameFilter" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ListPropertyPath" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ListTextCodeId" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LookUpControlName" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LookUpTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MaxLength" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MinLength" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MultiLine" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MultiTableId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NumberOfDigits" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Operator" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PMPropertyPath" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="RecordType" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ShortNameTextCodeId" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SystemMaxLength" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SystemRequired" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="TextCase" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="UniqueField" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="ValidForQuerySection1" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ValidForQuerySection2" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ObjectFieldModifications" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFieldModifications_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="ObjectFieldValidations" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFieldValidations_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="ObjectTableRuleFields" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableRuleFields_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="ObjectTableRules" ParentColumnName="TriggerFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableRules_dbo.ObjectFields_TriggerFieldId" />
-  <Relation ParentTableName="AdvancedQueryFilters" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AdvancedQueryFilters_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="CustomerFieldsUpdateSettings" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerFieldsUpdateSettings_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="Restrictions" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Restrictions_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="AirlineMessagingRules" ParentColumnName="RuleFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineMessagingRules_dbo.ObjectFields_RuleFieldId" />
-  <Relation ParentTableName="RuleConditionFields" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RuleConditionFields_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="ScreenFields" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ScreenFields_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="QueryColumns" ParentColumnName="ObjectFieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QueryColumns_dbo.ObjectFields_ObjectFieldId" />
-  <Relation ParentTableName="CustomsRequiredFields" ParentColumnName="ObjectfieldId" ReferencedTableName="ObjectFields" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsRequiredFields_dbo.ObjectFields_ObjectfieldId" />
+  <Column Name="IsRestrictable" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayInEntityVariables" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TextCase" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DigitsAfterPoint" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayInLookupColumnSize" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayLongName" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerPermissionTypeCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AgentPermissionTypeCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NumberOfDigits" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomPickListCode" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsMaxLength" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowedinAutomationConditions" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AutomationEmailRecipient" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CanAutomateSetValue" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowedInCustomerFieldsSettings" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowedInAirlineMessaging" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="GeneratedComponentPath" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayInDocumentReferences" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CopyToDW" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayOnLookUpLocal" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayInAutomationAsEnitity" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="RecordType" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConverterName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DataTemplateName" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ColumnHeaderTemplateName" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HasTemplate" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HtmlHeaderComponentUrl" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HtmlListComponentUrl" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HtmlHeaderComponentName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HtmlListComponentName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnableFullscreenTextBox" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="FullNameTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DataTypeCode" ReferencedTable="FieldDataTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="HelpTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="LookUpTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ListTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ShortNameTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MultiTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CustomerPermissionTypeCode" ReferencedTable="PermissionTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AgentPermissionTypeCode" ReferencedTable="PermissionTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

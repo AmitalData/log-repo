@@ -3,19 +3,20 @@
   <Column Name="CustomsItemID" Type="varchar" Size="9">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ID" Type="varchar" Size="9">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Title" Type="nvarchar" Size="255">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StartDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="EndDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EntityStatusID" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ID" Type="varchar" Size="9">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="StartDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Title" Type="nvarchar" Size="255">
-    <Constraints Nullable="true" />
-  </Column>
+  <Relation ForeignKeyColumn="CustomsItemID" ReferencedTable="CustomsItems" ReferencedColumn="ID" ReferencedTableSchema="Customs" />
 </Table>

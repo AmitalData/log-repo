@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomsTransferHeaders" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TransferNumber" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TransferDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileName" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CustomsTransferTypeCode" Type="varchar" Size="4">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="FileName" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="Notes" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="TransferDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="TransferNumber" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="CustomsTransferLines" ParentColumnName="CustomsTransferHeaderId" ReferencedTableName="CustomsTransferHeaders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomsTransferLines_dbo.CustomsTransferHeaders_CustomsTransferHeaderId" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CustomsTransferTypeCode" ReferencedTable="CustomsTransferTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

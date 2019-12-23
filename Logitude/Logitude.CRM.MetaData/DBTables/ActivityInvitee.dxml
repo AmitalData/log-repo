@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ActivityInvitees" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
   <Column Name="ActivityId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ContactId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="Email" Type="varchar" Size="70">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="IsRequired" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="ActivityId" ReferencedTable="Activities" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

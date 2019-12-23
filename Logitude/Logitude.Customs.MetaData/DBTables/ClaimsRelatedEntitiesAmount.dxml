@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ClaimsRelatedEntitiesAmounts" Schema="Customs" DBType="Main">
-  <Column Name="Amount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="ClaimId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -12,10 +9,15 @@
   <Column Name="LineNo" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="PaymentTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="PaymentTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Amount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="ClaimId,CounterKey" ReferencedTable="ClaimsRelatedEntities" ReferencedColumn="ClaimId,EntityCounterKey" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="PaymentTypeCode" ReferencedTable="ParagraphTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

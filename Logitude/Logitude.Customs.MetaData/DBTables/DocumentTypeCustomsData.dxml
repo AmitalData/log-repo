@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DocumentTypeCustomsDatas" Schema="dbo" DBType="Main">
-  <Column Name="CustomsDoucumentTypeCode" Type="varchar" Size="7">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="DocumentTypeId" Type="nvarchar" Size="128">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CustomsDoucumentTypeCode" Type="varchar" Size="7">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CustomsDoucumentTypeCode" ReferencedTable="CustomDocumentTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

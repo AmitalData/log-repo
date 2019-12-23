@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ObjectTableRules" ParentColumnName="RuleTypeCode" ReferencedTableName="RuleTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ObjectTableRules_dbo.RuleTypes_RuleTypeCode" />
 </Table>

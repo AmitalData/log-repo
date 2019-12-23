@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="BluesnapContracts" ParentColumnName="BluesnapContractTypeCode" ReferencedTableName="BluesnapContractTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.BluesnapContracts_dbo.BluesnapContractTypes_BluesnapContractTypeCode" />
 </Table>

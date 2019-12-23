@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="GlobalZones" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="8">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnglishName" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Code" Type="varchar" Size="8">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="LocalName" Type="nvarchar" Size="40">
@@ -18,11 +18,10 @@
   <Column Name="Notes" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="Countries" ParentColumnName="GlobalZoneId" ReferencedTableName="GlobalZones" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Countries_dbo.GlobalZones_GlobalZoneId" />
 </Table>

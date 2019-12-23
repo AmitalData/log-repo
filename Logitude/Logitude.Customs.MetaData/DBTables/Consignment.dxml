@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Consignments" Schema="Customs" DBType="Main">
-  <Column Name="CargoDescription" Type="nvarchar" Size="256">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CargoTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="ConsignmentNumber" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="DeclarationId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="DeliveryPlaceName" Type="varchar" Size="256">
+  <Column Name="SequenceNumeric" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="IsLastReleaseFromWarehous" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LoadingPortCode" Type="varchar" Size="17">
+  <Column Name="CargoTypeCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ManifestDate" Type="datetime">
@@ -27,23 +21,8 @@
   <Column Name="ManifestNumber" Type="varchar" Size="35">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OriginCountryCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ReceiverWarehouseCode" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="SecondCargoID" Type="varchar" Size="35">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SequenceNumeric" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="StorageSiteCode" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="ThirdCargoID" Type="varchar" Size="35">
     <Constraints Nullable="true" />
@@ -54,8 +33,33 @@
   <Column Name="UnloadPortCode" Type="varchar" Size="17">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ConsignmentInternalTransitions" ParentColumnName="DeclarationId" ReferencedTableName="Consignments" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.ConsignmentInternalTransitions_Customs.Consignments_DeclarationId_ConsignmentNumber" />
-  <Relation ParentTableName="ConsignmentPackages" ParentColumnName="DeclarationId" ReferencedTableName="Consignments" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.ConsignmentPackages_Customs.Consignments_DeclarationId_ConsignmentNumber" />
-  <Relation ParentTableName="ConsignmentInternalTransitions" ParentColumnName="ConsignmentNumber" ReferencedTableName="Consignments" ReferencedColumnName="ConsignmentNumber" ForeignKeyConstraintName="FK_Customs.ConsignmentInternalTransitions_Customs.Consignments_DeclarationId_ConsignmentNumber" />
-  <Relation ParentTableName="ConsignmentPackages" ParentColumnName="ConsignmentNumber" ReferencedTableName="Consignments" ReferencedColumnName="ConsignmentNumber" ForeignKeyConstraintName="FK_Customs.ConsignmentPackages_Customs.Consignments_DeclarationId_ConsignmentNumber" />
+  <Column Name="CargoDescription" Type="nvarchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsLastReleaseFromWarehous" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LoadingPortCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OriginCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StorageSiteCode" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReceiverWarehouseCode" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeliveryPlaceName" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="DeclarationId" ReferencedTable="Declarations" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="CargoTypeCode" ReferencedTable="CargoIdentifireTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="UnloadPortCode" ReferencedTable="UnloadingSiteType" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="IsLastReleaseFromWarehous" ReferencedTable="LastReleaseFromWarehouses" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="LoadingPortCode" ReferencedTable="InternationalSites" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="OriginCountryCode" ReferencedTable="CustomsCountries" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="StorageSiteCode" ReferencedTable="DeliverySiteTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="ReceiverWarehouseCode" ReferencedTable="RegisteredWarehouseSiteTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CorrespondencesAttachments" Schema="dbo" DBType="Main">
-  <Column Name="CorrespondenceId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DocumentFilingId" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="DocumentFilingId" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CorrespondenceId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="DocumentFilingId" ReferencedTable="DocumentsFilings" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CorrespondenceId" ReferencedTable="Correspondences" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

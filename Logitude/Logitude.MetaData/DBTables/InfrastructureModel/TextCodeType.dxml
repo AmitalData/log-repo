@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="20">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="TextCodes" ParentColumnName="TextCodeTypeCode" ReferencedTableName="TextCodeTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TextCodes_dbo.TextCodeTypes_TextCodeTypeCode" />
 </Table>

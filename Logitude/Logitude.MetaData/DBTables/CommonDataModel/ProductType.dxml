@@ -6,27 +6,15 @@
   <Column Name="Name" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="QuotationDefaultTemplateId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="RoutingRQuoteDefaultTemplateId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Relation ParentTableName="CustomerCompetitorProducts" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerCompetitorProducts_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="CustomerProductActualDatas" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerProductActualDatas_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="OpportunityCompetitorProducts" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitorProducts_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="CustomerProductLocationActualDatas" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerProductLocationActualDatas_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="CustomerProductLocations" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerProductLocations_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="OpportunityProductLocations" ParentColumnName="OpportunityProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.OpportunityProductLocations_dbo.ProductTypes_OpportunityProductTypeCode" />
-  <Relation ParentTableName="OpportunityProducts" ParentColumnName="OpportunityProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.OpportunityProducts_dbo.ProductTypes_OpportunityProductTypeCode" />
-  <Relation ParentTableName="CustomerProducts" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerProducts_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="UserPermittedProducts" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.UserPermittedProducts_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="CardContactProducts" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CardContactProducts_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="CardExternalAccountsByProducts" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CardExternalAccountsByProducts_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="ChargesExternalAccountsByProducts" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ChargesExternalAccountsByProducts_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="Users" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Users_dbo.ProductTypes_ProductTypeCode" />
-  <Relation ParentTableName="ProductTypeModifications" ParentColumnName="ProductTypeCode" ReferencedTableName="ProductTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ProductTypeModifications_dbo.ProductTypes_ProductTypeCode" />
+  <Relation ForeignKeyColumn="QuotationDefaultTemplateId" ReferencedTable="QuoteTemplates" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="RoutingRQuoteDefaultTemplateId" ReferencedTable="QuoteTemplates" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>
