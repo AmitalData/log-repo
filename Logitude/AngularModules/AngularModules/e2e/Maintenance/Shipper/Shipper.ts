@@ -50,6 +50,7 @@ export class NewShipper {
         this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.shipperName);
         this.helper.ItemsVisibility('LogGrid_0_0row0')
         this.helper.WaitBusyIndicator();
+        this.helper.WaitElementToBeDisplayedInTheList('.TextTrimming', this.shipperName);
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');
     }
 
