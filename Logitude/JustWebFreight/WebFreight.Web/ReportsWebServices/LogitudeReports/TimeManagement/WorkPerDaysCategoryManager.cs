@@ -436,24 +436,31 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 itemRecord.TotalGategoryDays = this.GetDaysFormatFromMinutes(itemRecord.TotalGategoryDaysDouble);
             }
         }
-
         private string GetDaysFormatFromMinutes(double minutes)
         {
             string iResult = "";
+
             if (minutes != 0)
             {
                 TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
+
+
                 double TotalHours = minutes / 60;
-                int iDays = (int)(TotalHours / 9);
-                double Hours = TotalHours % 9;
-                double iHours = Math.Round(Hours / 9, 2);
-                iResult = iDays + "." + iHours.ToString().Replace("0.", "").PadRight(1, '0');
+
+                int iDays = (int)(TotalHours / 8);
+                double Hours = TotalHours % 8;
+                double iHours = Math.Round(Hours / 8, 2);
+
+                iResult = iDays + ":" + iHours.ToString().Replace("0.", "").PadRight(2, '0');
+
                 if (minutes < 0)
                 {
                     iResult = "- " + iResult;
                 }
             }
+
             return iResult;
         }
+
     }
 }
