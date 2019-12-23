@@ -1826,6 +1826,11 @@
     <Compile Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.Designer.cs">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs" />
+    <Compile Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.Designer.cs">
+      <DependentUpon>201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
       <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
@@ -3141,6 +3146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.resx">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.resx">
+      <DependentUpon>201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
