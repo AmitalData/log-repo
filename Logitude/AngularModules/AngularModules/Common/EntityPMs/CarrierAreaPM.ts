@@ -72,6 +72,11 @@ export class CarrierAreaPM {
     public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
        
 	 
+    private transportModeCode: string;
+    public get TransportModeCode() { return this.transportModeCode; }
+    public set TransportModeCode(newValue: string) { if (this.transportModeCode != newValue) { this.transportModeCode = newValue; this.MarkAsDirty("TransportModeCode"); } }
+       
+	 
     private createdByUserName: string;
     public get CreatedByUserName() { return this.createdByUserName; }
     public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }

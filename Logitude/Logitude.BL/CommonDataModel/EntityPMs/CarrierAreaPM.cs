@@ -25,9 +25,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CarrierId { get; set; }
-
         
-
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Name { get; set; }
@@ -46,7 +44,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UpdatedByUserId { get; set; }
 
-
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string TransportModeCode { get; set; }
 
         [DataMember]
         public string CreatedByUserName { get; set; }

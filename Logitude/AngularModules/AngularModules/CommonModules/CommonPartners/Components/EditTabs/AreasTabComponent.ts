@@ -1,14 +1,14 @@
-import { Component, OnDestroy} from '@angular/core';
-import {AirlinePM} from '../../../../Common/EntityPMs/AirlinePM';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import { Component, OnDestroy } from '@angular/core';
+import { AirlinePM } from '../../../../Common/EntityPMs/AirlinePM';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { CarrierAreaPM } from '../../../../Common/EntityPMs/CarrierAreaPM';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
@@ -19,24 +19,36 @@ import { CarrierAreasPortPM } from '../../../../Common/EntityPMs/CarrierAreasPor
     templateUrl: './AreasTabComponent.html',
 })
 
-export class AreasTabComponent extends BaseComponent implements OnDestroy {
-    public EntityPM: AirlinePM;
-    public ObjectTableName: string = "Airline";
-    public TenantPM: TenantPM;
-    public ResourcesReady: boolean = false;
-    private _entityResourceService: EntityResourceService = new EntityResourceService();  
-    private CurrentSession = SessionLocator.SelectedSession;
+export class AreasTabComponent implements OnDestroy {
     public ItemsSource: AreaItemClass[];
+    public EntityPM: any = null;
+    public EntityId: string = null;
+    public ObjectTableName: string;
+    public TransportModeCode: string = null;
+    public ResourcesReady: boolean = false;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;    
     public DomainService: PartnersDomainService;
 
     constructor(public entityArgs: EntityArgs) {
-        super();
-        this._entityResourceService.getEntityResourceByTableName("AirlineArea", 0).subscribe(response1 => {
-            this._entityResourceService.getEntityResourceByTableName("AirlineAreasPort", 0).subscribe(response2 => {
+        this._entityResourceService.getEntityResourceByTableName("CarrierArea", 0).subscribe(response1 => {
+            this._entityResourceService.getEntityResourceByTableName("CarrierAreasPort", 0).subscribe(response2 => {
                 this.ResourcesReady = true;
                 this.EntityPM = entityArgs.EntityPM;
-                this.TenantPM = SessionLocator.TenantPM;
-                this.DomainService = new PartnersDomainService();
+                this.EntityId = entityArgs.EntityPM.Id;
+                this.ObjectTableName = entityArgs.ObjectTableName;
+
+                if (this.EntityPM.PartnerTypeId == "AL") {
+                    this.TransportModeCode = "A";
+                }
+
+                else if (this.EntityPM.PartnerTypeId == "SL") {
+                    this.TransportModeCode = "O";
+                }
+
+                if (this.DomainService == null) {
+                    this.DomainService = new PartnersDomainService();
+                }
 
                 this.Listen();
                 this.LoadData();
@@ -69,26 +81,27 @@ export class AreasTabComponent extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
+    public AllAreas: CarrierAreaPM[] = [];
     public LoadData() {
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this.DomainService.GetAllCarrierAreasByCarrierId(this.EntityPM.Id).subscribe((myResult: any) => {
-            this.BuildItemsSource(myResult);
+        this.DomainService.GetAllCarrierAreasByCarrierId(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllAreas = myResponse.Result;
+                this.BuildItemsSource();
+            }
+
             this.CurrentSession.StopBusyIndicator();
         });
     }
-    private BuildItemsSource(items: CarrierAreaPM[]) {
+    private BuildItemsSource() {
         this.ItemsSource = [];
-
-        if (items == null) {
-            items = [];
-        }
-
-        items.forEach(item => {
+        
+        this.AllAreas.forEach(item => {
             this.ItemsSource.push(new AreaItemClass(item, this, false));
-        });               
+        });
     }
-    
+
     AddCarrierAreaClicked() {
         var item = new CarrierAreaPM();
         item.Tenant = this.EntityPM.Tenant;
@@ -98,28 +111,28 @@ export class AreasTabComponent extends BaseComponent implements OnDestroy {
         item.CreatedByUserId = SessionInfo.LoggedUserId;
         item.UpdatedByUserId = SessionInfo.LoggedUserId;
         item.CreatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
-        item.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;       
-        
+        item.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+        item.TransportModeCode = this.TransportModeCode;
+
         var itemComponent = new AreaItemClass(item, this, true);
-        this.RunWindow(itemComponent, "New Area");        
+        this.RunWindow(itemComponent, "New Area");
     }
 
     EditCarrierAreaClicked(editedEntity: AreaItemClass) {
         this.RunWindow(editedEntity, "Edit Area");
     }
 
-    DeleteCarrierAreaClicked(EditedEntity: CarrierAreaPM) {
-        if (EditedEntity) {
+    DeleteCarrierAreaClicked(area: CarrierAreaPM) {
+        if (area) {
             var window: ConfirmWindow = new ConfirmWindow();
             window.Show("Are you sure you want to delete this area?");
             window.WindowClosed.subscribe((event: any) => {
                 if (window.Yes) {
-                    this.DomainService.RemoveAreaFromCarrier(EditedEntity.Id).subscribe((myResult: any) => {
+                    this.DomainService.RemoveAreaFromCarrier(area.Id).subscribe((myResult: any) => {
                         this.LoadData();
                     });
                 }
             });
-            
         }
     }
 
@@ -129,9 +142,8 @@ export class AreasTabComponent extends BaseComponent implements OnDestroy {
         logWindow.Height = 650;
         logWindow.Title = windowTitle;
         logWindow.DataContext = itemComponent;
-        logWindow.Show("./CommonModules/CommonAirline/Components/AddEdit/AddEditCarrierAreaComponent");
+        logWindow.Show("./CommonModules/CommonPartners/Components/AddEdit/AddEditAreaComponent");
     }
-
 }
 
 export class AreaItemClass extends BaseComponent {
@@ -139,10 +151,12 @@ export class AreaItemClass extends BaseComponent {
     public EntityPM: CarrierAreaPM;
     public IsNewEntity: boolean = false;
     public PortItemsList: CarrierAreasPortPM[];
+    public TransportModeCode: string;
     constructor(item: CarrierAreaPM, public fatherComponent: AreasTabComponent, isNewEntity: boolean) {
         super();
-        this.EntityPM = item;        
+        this.EntityPM = item;
         this.IsNewEntity = isNewEntity;
+        this.TransportModeCode = item.TransportModeCode;
 
         this.SetUIProperties();
         this.BuildPortItemsList();
@@ -174,19 +188,19 @@ export class AreaItemClass extends BaseComponent {
         }
     }
 
-    get Id() { return this.EntityPM.Id; }    
+    get Id() { return this.EntityPM.Id; }
     get CreatedByUserName() { return this.EntityPM.CreatedByUserName; }
     get CreateDate() { return this.EntityPM.CreateDate; }
     get UpdatedByUserName() { return this.EntityPM.UpdatedByUserName; }
     get UpdateDate() { return this.EntityPM.UpdateDate; }
-
+    
     ChoosePort() {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 320;
-        logWindow.Height = 170;        
+        logWindow.Height = 170;
         logWindow.DataContext = this;
         logWindow.Title = "Choose Ports";
-        logWindow.Show('./CommonModules/CommonAirline/Components/AddEdit/ChoosePortComponent');
+        logWindow.Show('./CommonModules/CommonPartners/Components/AddEdit/ChoosePortComponent');
     }
 
     ChooseCountry() {
@@ -195,7 +209,7 @@ export class AreaItemClass extends BaseComponent {
         logWindow.Height = 170;
         logWindow.DataContext = this;
         logWindow.Title = "Choose Country Ports";
-        logWindow.Show('./CommonModules/CommonAirline/Components/AddEdit/ChooseCountryPortComponent');
+        logWindow.Show('./CommonModules/CommonPartners/Components/AddEdit/ChooseCountryPortComponent');
     }
 
     DeletePort(item: CarrierAreasPortPM) {
@@ -206,8 +220,8 @@ export class AreaItemClass extends BaseComponent {
                 if (this.EntityPM.CarrierAreasPorts.indexOf(item) != -1) {
                     this.EntityPM.RemoveCarrierAreasPortPM(item);
                     this.BuildPortItemsList();
-                }                
+                }
             }
-        });        
+        });
     }
 }

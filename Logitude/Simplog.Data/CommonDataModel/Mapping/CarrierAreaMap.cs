@@ -9,11 +9,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public CarrierAreaMap()
         {
             this.HasKey(t => t.Id);
+            this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Name).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CreatedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CarrierId).HasMaxLength(15).IsUnicode(false);
-            
+            this.Property(t => t.TransportModeCode).IsRequired().HasMaxLength(1).IsUnicode(false);
+
             this.ToTable("CarrierAreas");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Name).HasColumnName("Name");
@@ -24,10 +26,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.CarrierId).HasColumnName("CarrierId");
-            
+            this.Property(t => t.TransportModeCode).HasColumnName("TransportModeCode");
+
             this.HasOptional(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
             this.HasOptional(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
             this.HasRequired(t => t.Carrier).WithMany().HasForeignKey(d => d.CarrierId).WillCascadeOnDelete(false);
+            this.HasRequired(t => t.TransportMode).WithMany().HasForeignKey(d => d.TransportModeCode);
         }
     }
 }

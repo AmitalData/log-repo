@@ -55,7 +55,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        UpdatedByUserId = a.UpdatedByUserId,
                        CreatedByUserName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
                        UpdatedByUserName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact.EnglishName,
-
+                       TransportModeCode = a.TransportModeCode,
                    }).FirstOrDefault();
 
             return myResult;
@@ -97,6 +97,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CreatedByUserId = a.CreatedByUserId,
                                                 CreatedByUserName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
                                                 UpdatedByUserName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact.EnglishName,
+                                                TransportModeCode = a.TransportModeCode,
                                             }).ToList();
             return myResult;
         }
@@ -135,6 +136,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   Tenant = a.Tenant,
                                                   UpdateDate = a.UpdateDate,
                                                   UpdatedByUserId = a.UpdatedByUserId,
+                                                  TransportModeCode = a.TransportModeCode,
                                               }).ToList();
 
             return myResult;
@@ -154,6 +156,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      Tenant = a.Tenant,
                                                      UpdateDate = a.UpdateDate,
                                                      UpdatedByUserId = a.UpdatedByUserId,
+                                                     TransportModeCode = a.TransportModeCode,
                                                  };
             return result;
         }

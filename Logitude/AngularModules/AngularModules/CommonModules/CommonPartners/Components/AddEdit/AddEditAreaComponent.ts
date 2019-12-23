@@ -1,26 +1,26 @@
-import { Component, Output, OnInit} from '@angular/core';
+import { Component, Output, OnInit } from '@angular/core';
 import { AirlinePM } from '../../../../Common/EntityPMs/AirlinePM';
 import { CarrierAreaPM } from '../../../../Common/EntityPMs/CarrierAreaPM';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AreaItemClass } from '../EditTabs/AreasTabComponent';
 import { CarrierAreaPMService } from '../../../../Common/Services/StandardPMs/CarrierAreaPMService';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './AddEditCarrierAreaComponent.html',
+    templateUrl: './AddEditAreaComponent.html',
 })
 
-export class AddEditCarrierAreaComponent extends BaseComponent implements OnInit {
+export class AddEditAreaComponent extends BaseComponent implements OnInit {
     public EntityPM: CarrierAreaPM;
-    public ObjectTableName: string ="CarrierArea";
+    public ObjectTableName: string = "CarrierArea";
     public DataContext: AreaItemClass;
-    public IsNew: boolean;   
+    public IsNew: boolean;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -37,10 +37,10 @@ export class AddEditCarrierAreaComponent extends BaseComponent implements OnInit
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.IsNew = dataContext.IsNewEntity;
-        
+
         this.Clone();
     }
-    
+
     SaveButtonClicked() {
         this.ValidationErrorsList = [];
 
@@ -52,16 +52,16 @@ export class AddEditCarrierAreaComponent extends BaseComponent implements OnInit
 
         if (this.EntityPM.CarrierAreasPorts.filter(p => p.ChangeSetOp != "3")[0] == null) {
             this.ValidationErrorsList.push("At Least one port is required");
-        }       
-      
+        }
+
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
 
             var service: CarrierAreaPMService = new CarrierAreaPMService();
-            
+
             if (this.IsNew) {
                 service.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                    this.SaveAreasCompleted(myResponse);                                       
+                    this.SaveAreasCompleted(myResponse);
                 });
             }
 
@@ -69,8 +69,8 @@ export class AddEditCarrierAreaComponent extends BaseComponent implements OnInit
                 service.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     this.SaveAreasCompleted(myResponse);
                 });
-            }            
-        }       
+            }
+        }
     }
 
     private SaveAreasCompleted(myResponse: ServiceResponse) {
@@ -83,7 +83,7 @@ export class AddEditCarrierAreaComponent extends BaseComponent implements OnInit
             this.DataContext.fatherComponent.LoadData();
             this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CloseCurrentWindow();
-        } 
+        }
     }
 
     CancelButtonClicked() {
@@ -95,7 +95,7 @@ export class AddEditCarrierAreaComponent extends BaseComponent implements OnInit
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('Description');
-        this.myCloner.AddField('Name');        
+        this.myCloner.AddField('Name');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.EntityPM.CarrierAreasPorts);
         this.EntityPM.CarrierAreasPorts.forEach(p => {

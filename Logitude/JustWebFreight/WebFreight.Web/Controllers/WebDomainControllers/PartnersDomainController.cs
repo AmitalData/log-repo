@@ -2578,7 +2578,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetAllArilineAreasByCarrierId(string carrierId)
+        public HttpResponseMessage GetAllCarrierAreasByCarrierId(string carrierId)
         {
             try
             {

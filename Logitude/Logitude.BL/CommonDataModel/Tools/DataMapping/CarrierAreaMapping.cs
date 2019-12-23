@@ -21,7 +21,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 poco.CreateDate = entityPM.CreateDate;
                 poco.CreatedByUserId = entityPM.CreatedByUserId;
                 poco.CarrierId = entityPM.CarrierId;
-
+                poco.TransportModeCode = entityPM.TransportModeCode;
             }
 
             poco.Description = entityPM.Description;

@@ -1826,6 +1826,10 @@
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs" />
+    <Compile Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.Designer.cs">
+      <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.Designer.cs">
@@ -3140,6 +3144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.resx">
       <DependentUpon>201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.resx">
+      <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

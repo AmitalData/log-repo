@@ -1659,7 +1659,10 @@ export class PartnersDomainService {
                     listMapped.push(itemMapped);
                 }
 
-                return listMapped;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = listMapped;
+                return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }

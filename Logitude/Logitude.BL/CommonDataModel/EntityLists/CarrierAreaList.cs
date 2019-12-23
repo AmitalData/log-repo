@@ -17,6 +17,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CarrierId { get; set; }
         public string CreatedByUserName { get; set; }
         public string UpdatedByUserName { get; set; }
-
+        public string TransportModeCode { get; set; }
     }
 }
