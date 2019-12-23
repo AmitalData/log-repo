@@ -1224,7 +1224,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             DateTime endOfMonthOfTaxReportDate = new DateTime(taxReportDate.Year, taxReportDate.Month, DateTime.DaysInMonth(taxReportDate.Year, taxReportDate.Month));
 
             List<APInvoicePM> invoicePMs = (from a in repository.context.APInvoices.Include("Branch")
-                                            where Ids.Contains(a.Id) && a.Tenant == tenant && !(a.StatusCode == "AC" && beginOfMonthOfTaxReportDate <= a.InvoiceDate && a.InvoiceDate <= endOfMonthOfTaxReportDate)
+                                            where Ids.Contains(a.Id) && a.Tenant == tenant && !(a.StatusCode == "VD" && beginOfMonthOfTaxReportDate <= a.InvoiceDate && a.InvoiceDate <= endOfMonthOfTaxReportDate)
                                             select new APInvoicePM()
                                             {
                                                 ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
