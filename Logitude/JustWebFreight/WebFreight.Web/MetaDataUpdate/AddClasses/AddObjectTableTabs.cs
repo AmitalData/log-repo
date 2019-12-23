@@ -31,6 +31,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTableTab.IndexOrder = objectTableTabDetails.IndexOrder;
                 objectTableTab.ObjectTableId = objectTableTabDetails.ObjectTableId;
                 objectTableTab.TabNameTextCodeId = objectTableTabDetails.TabNameTextCodeId;
+                objectTableTab.TabNameTextCodeCode = objectTableTabDetails.TabNameTextCodeId;
                 objectTableTab.FeatureId = objectTableTabDetails.FeatureId;
                 objectTableTab.HtmlComponentName = objectTableTabDetails.HtmlComponentName;
                 objectTableTab.HtmlComponentUrl = objectTableTabDetails.HtmlComponentUrl;
@@ -47,6 +48,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Code = objectTableTabDetails.Code,
                     Id = IdCounter.GetNumber("ObjectTableTab", objectTableTabDetails.Tenant).ToString(),
                     TabNameTextCodeId = objectTableTabDetails.TabNameTextCodeId,
+                    TabNameTextCodeCode = objectTableTabDetails.TabNameTextCodeCode,
                     Tenant = objectTableTabDetails.Tenant,
                     FeatureId = objectTableTabDetails.FeatureId,
                     HtmlComponentName = objectTableTabDetails.HtmlComponentName,
