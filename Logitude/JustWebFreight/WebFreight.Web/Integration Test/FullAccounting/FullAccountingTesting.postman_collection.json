@@ -1140,7 +1140,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"tenant\": {{Tenant}},\n    \"bankId\": \"{{CodeId}}\",\n    \"branchNumber\": 99,\n    \"accountNumber\": \"BKTest14\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"gLAccountId\": \"{{BankGLAccountId}}\",\n    \"deferredGLAccountId\": \"{{BankGLAccountId}}\",\n    \"transferGLAcccountId\": \"{{BankGLAccountId}}\",\n    \"EnglishName\":\"Bank Account Test\",\n    \"LocalName\":\"מבחן חשבון בנק\"\n}"
+					"raw": "{\n    \"tenant\": {{Tenant}},\n    \"bankId\": \"{{CodeId}}\",\n    \"branchNumber\": 99,\n    \"accountNumber\": \"BK{{tot}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"gLAccountId\": \"{{BankGLAccountId}}\",\n    \"deferredGLAccountId\": \"{{BankGLAccountId}}\",\n    \"transferGLAcccountId\": \"{{BankGLAccountId}}\",\n    \"EnglishName\":\"Bank Account Test\",\n    \"LocalName\":\"מבחן חשבון בנק\"\n}"
 				},
 				"url": "{{URL}}/api/bankaccounts"
 			},

@@ -2785,7 +2785,7 @@
 					},
 					{
 						"key": "token",
-						"value": "KdY8lhnApgGjOl7aP2yuAfs6sthk+o9sJKk="
+						"value": "{{Token}}"
 					},
 					{
 						"key": "sec-fetch-site",
