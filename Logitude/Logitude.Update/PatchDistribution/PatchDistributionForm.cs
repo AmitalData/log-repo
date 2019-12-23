@@ -5,6 +5,7 @@ using Logitude.Customs.BL.PatchDistribution.Patches;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -28,8 +29,8 @@ namespace Logitude.Update.PatchDistribution
         private PatchDistributionManager _PatchDistributionManager;
         private PatchDistributionMatchModel _PatchDistributionMatchModel;
 
-        public bool StartEnabled { get => this.doItToolStripMenuItem.Enabled; set => this.doItToolStripMenuItem.Enabled = value; }
-        public bool AproveEnabled { get; private set; }
+        public bool UpdateDBEnabled { get => this.buttonUpdateDB.Enabled; set => this.buttonUpdateDB.Enabled = value; }
+        public bool ApproveEnabled { get=> buttonApproveLastFailure.Enabled; set=> textBoxApproveRemarks.Enabled= buttonApproveLastFailure.Enabled = value;  }
 
         private PatchDistributionException _MyPatchDistributionException;
 
@@ -39,32 +40,12 @@ namespace Logitude.Update.PatchDistribution
             //DbContextBaseUtil.ToLog = checkBox1.Checked = true;
             TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
             Debug.Listeners.Add(debugListener);
-            StartEnabled = false;
+            ApproveEnabled =UpdateDBEnabled = false;
         }
 
 
 
-        private void doItToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                _PatchDistributionManager.Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
-            }
-            catch   (PatchDistributionException myPatchDistributionException)
-            {
-                StartEnabled = false;
-                AproveEnabled = true;
-                _MyPatchDistributionException = myPatchDistributionException;
-                MessageBox.Show(myPatchDistributionException.ToString());
-            }
-            catch (Exception ee)
-            {
-                StartEnabled = false;
-                MessageBox.Show(ee.ToString());
-            }
-            
-        }
-
+        
 
 
 
@@ -91,14 +72,15 @@ namespace Logitude.Update.PatchDistribution
             var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
             var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
             var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
-            Debug.WriteLine($"assemblyVersion ={assemblyVersion}");
+            Logger.LogMe($"assemblyVersion ={assemblyVersion}", false);
 
 
             var patchDistributionMatch = new PatchDistributionMatch();
             _PatchDistributionMatchModel =patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-            Debug.WriteLine(_PatchDistributionMatchModel.Message);
-            Debug.WriteLine($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
-            Debug.WriteLine($"DB MinorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
+            Logger.LogMe(_PatchDistributionMatchModel.Message,false);
+            Logger.LogMe($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}", false);
+            Logger.LogMe($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", false);
+            //Logger.LogMe($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}", false);
 
 
             if (_PatchDistributionMatchModel.NotDistributionBranch)
@@ -124,10 +106,10 @@ namespace Logitude.Update.PatchDistribution
                     {
                         return;
                     }
-                    StartEnabled = true;
+                    UpdateDBEnabled = true;
                     break;
                 case PatchDistributionMatch.MajorVersionMatchEnum.OK_DBAndAssemblyREqual:
-
+                    
                     var patchDistributionList = _PatchDistributionManager.GetPatchDistribution_Waiting2Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
                     if (patchDistributionList.Count == 0)
                     {
@@ -137,7 +119,7 @@ namespace Logitude.Update.PatchDistribution
                     Debug.WriteLine("Menu >> Start >  Doit !!!");
                     _PatchDistributionList = patchDistributionList;
 
-                    StartEnabled = true;
+                    UpdateDBEnabled = true;
                     break;
                 case PatchDistributionMatch.MajorVersionMatchEnum.NotDistributionBranch:
                 case PatchDistributionMatch.MajorVersionMatchEnum.OldSource:
@@ -153,8 +135,56 @@ namespace Logitude.Update.PatchDistribution
 
         }
 
+        private void buttonUpdateDB_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _PatchDistributionManager.Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+                UpdateDBEnabled = false;
+            }
+            catch (PatchDistributionException myPatchDistributionException)
+            {
+                UpdateDBEnabled = false;
+                ApproveEnabled = true;
+                _MyPatchDistributionException = myPatchDistributionException;
+                MessageBox.Show(myPatchDistributionException.ToString());
+            }
+            catch (Exception ee)
+            {
+                UpdateDBEnabled = false;
+                MessageBox.Show(ee.ToString());
+            }
+        }
 
+        private void buttonApproveLastFailure_Click(object sender, EventArgs e)
+        {
+            if (_MyPatchDistributionException == null)
+            {
+                MessageBox.Show("_MyPatchDistributionException == null");
+            }
+            if(String.IsNullOrWhiteSpace(textBoxApproveRemarks.Text))
+            {
+                MessageBox.Show("נא הכנס הערה- מדוע אתה מאשר את הנפילה האחורנה");
+                buttonApproveLastFailure.Focus();
+                return;
+            }
+            string approveRemarks = textBoxApproveRemarks.Text;
+            try
+            {
+                _PatchDistributionManager.ApproveLastFailure(_MyPatchDistributionException, approveRemarks);
+            }
+            catch (Exception ee)
+            {
+                ApproveEnabled = false;
+                Debug.WriteLine(ee.ToString());
+                MessageBox.Show(ee.ToString());
+                return;
+            }
+            textBoxApproveRemarks.Text = "";
+            ApproveEnabled = false;
+            UpdateDBEnabled = true;
 
+        }
     }
 
     public class MyTraceListener : TraceListener

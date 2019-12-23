@@ -26,18 +26,18 @@ namespace Logitude.Customs.BL.PatchDistribution
 
             var myDBMigrationQueryService = new DBMigrationQueryService(0);
             var myLastClosed_DBMigration = myDBMigrationQueryService.GetLastClosedPM();//Must Have
-                
-                //??
-                //new DBMigrationPM()
-                //{
-                //    MajorVersion = 19.03m,
-                //    MinorVersion = 0,
-                //     //DBMigrationLines = new List<DBMigrationLinePM>()
-                //     //{
-                         
-                //     //}
-                     
-                //};
+
+            //??
+            //new DBMigrationPM()
+            //{
+            //    MajorVersion = 19.03m,
+            //    MinorVersion = 0,
+            //     //DBMigrationLines = new List<DBMigrationLinePM>()
+            //     //{
+
+            //     //}
+
+            //};
 
 
 
@@ -87,6 +87,7 @@ namespace Logitude.Customs.BL.PatchDistribution
         public string Message { get; internal set; }
         public bool NotDistributionBranch { get; internal set; }
         public PatchDistributionMatch.MajorVersionMatchEnum MajorVersionMatch { get; set; }
+        
     }
 
 }
