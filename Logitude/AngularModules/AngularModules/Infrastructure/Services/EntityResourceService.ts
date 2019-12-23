@@ -13,6 +13,8 @@ import {WebWorkerService} from '../WebWorker/web-worker.service';
 import {IndexedDbService} from './IndexedDbService'; 
 import { LocalStorageManager } from '../Utilities/LocalStorageManager';
 import { forEach } from '@angular/router/src/utils/collection';
+import { Environment } from '../Locators/Environment';
+import { ObjectsLocator } from '../Locators/ObjectsLocator';
 @Injectable()
 
 export class EntityResourceService {
@@ -32,120 +34,139 @@ export class EntityResourceService {
 
     public getEntityResourceByTableName(objectTableName: string, tenant: number = 0) {
 
-        if (!SessionLocator.UseCachedData) {
-            return Observable.create(observer => {
-                observer.next(1);
-            });
-        }
-
-        if (EntityResourceService.ExisitsInCache(objectTableName)) {
-            return Observable.create(observer => {
-                observer.next(objectTableName);
-            });
-        }
-
-        else {
-            if (EntityResourceService.TablesLoadQueue[objectTableName]) {
-                // if already exists in the load stack return the same obs
-                return EntityResourceService.TablesLoadQueue[objectTableName].share();
+        try {
+            //if (objectTableName == "Shipment") {
+            //    var m;
+            //    let test = m.text;
+            //}
+            if (!SessionLocator.UseCachedData) {
+                return Observable.create(observer => {
+                    observer.next(1);
+                });
             }
 
-            var fieldsKey = objectTableName + "_ObjectFields.zip";
-            var codesKey = objectTableName + "_TextCodes.zip";
-
-            var entityFields = LocalStorageManager.GetItem(fieldsKey);
-            var entityCodes = LocalStorageManager.GetItem(codesKey);
-
-            var isMissingClosedTable: boolean = false;
-            var objectTable: any = window.ObjectTables.filter(d => d.Name == objectTableName)[0];
-            if (objectTable && objectTable.IsClosed == true) {
-                var storagefileName: string = objectTableName + "_ClosedData.zip";
-                var fileString = LocalStorageManager.GetItem(storagefileName);
-                if (fileString == null || fileString == undefined)
-                    isMissingClosedTable = true;
+            if (EntityResourceService.ExisitsInCache(objectTableName)) {
+                return Observable.create(observer => {
+                    observer.next(objectTableName);
+                });
             }
-            // var r = -1;
-            // return this.DbService.GetTableData("TextCodes", objectTableName).flatMap(r=> {
-            if (!entityFields || !entityCodes || isMissingClosedTable == true) {
 
-                //var observable = Observable.timer(1).flatMap(function test() {
-                //    var authHeader = new Headers();
-                //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-                //    return this._http.get(this._apiUrl + '?objectTableName=' + objectTableName + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-
-
-                //        var filejson = response.json();
-                //        if (filejson) {
-                //            var fileData = EntityResourceService.base64ToBufferConvertor(filejson);
-
-                //            return this.UnZipFileAndAddToStorageUsingWebWorker(fileData, objectTableName);
-                //        }
-                //        else {
-
-                //            console.error("couldn't find " + objectTableName + ".zip file in the server!");
-                //            return [];
-                //        }
-                //    });
-                //}).share();
-
-                var observable = this.GetResourcesFile(objectTableName, tenant).flatMap(response => {
-
-
-                    var filejson = response.json();
-                    if (filejson) {
-
-                        if (EntityResourceService.ServerTablesUnzipQueue[objectTableName]) {
-
-                            // if already exists in the load stack return the same obs
-                            return EntityResourceService.ServerTablesUnzipQueue[objectTableName].share();
-                        }
-
-                        var fileData = EntityResourceService.base64ToBufferConvertor(filejson);
-                        var obs = this.UnZipFileAndAddToStorageUsingWebWorker(fileData, objectTableName).share();
-
-                        EntityResourceService.ServerTablesUnzipQueue[objectTableName] = obs;
-
-                        return obs;
-                    }
-                    else {
-
-                        console.error("couldn't find " + objectTableName + ".zip file in the server!");
-                        return [];
-                    }
-                }).share();
-
-                EntityResourceService.TablesLoadQueue[objectTableName] = observable;
-                return observable.share();
-
-            }
             else {
-
-                EntityResourceService.ZipFilesDictionary[objectTableName] = [];
-                if (entityFields) {
-                    var zFieldsObject = new ZipFileDetails();
-                    zFieldsObject.FileName = fieldsKey;
-                    zFieldsObject.FileData = EntityResourceService.base64ToBufferConvertor(entityFields);
-                    EntityResourceService.ZipFilesDictionary[objectTableName].push(zFieldsObject);
+                if (EntityResourceService.TablesLoadQueue[objectTableName]) {
+                    // if already exists in the load stack return the same obs
+                    return EntityResourceService.TablesLoadQueue[objectTableName].share();
                 }
 
-                if (entityCodes) {
-                    var zCodesObject = new ZipFileDetails();
-                    zCodesObject.FileName = codesKey;
-                    zCodesObject.FileData = EntityResourceService.base64ToBufferConvertor(entityCodes);
-                    EntityResourceService.ZipFilesDictionary[objectTableName].push(zCodesObject);
+                var fieldsKey = objectTableName + "_ObjectFields.zip";
+                var codesKey = objectTableName + "_TextCodes.zip";
+
+                var entityFields = LocalStorageManager.GetItem(fieldsKey);
+                var entityCodes = LocalStorageManager.GetItem(codesKey);
+
+                var isMissingClosedTable: boolean = false;
+                var objectTable: any = window.ObjectTables.filter(d => d.Name == objectTableName)[0];
+                if (objectTable && objectTable.IsClosed == true) {
+                    var storagefileName: string = objectTableName + "_ClosedData.zip";
+                    var fileString = LocalStorageManager.GetItem(storagefileName);
+                    if (fileString == null || fileString == undefined)
+                        isMissingClosedTable = true;
+                }
+                // var r = -1;
+                // return this.DbService.GetTableData("TextCodes", objectTableName).flatMap(r=> {
+                if (!entityFields || !entityCodes || isMissingClosedTable == true) {
+
+                    //var observable = Observable.timer(1).flatMap(function test() {
+                    //    var authHeader = new Headers();
+                    //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+                    //    return this._http.get(this._apiUrl + '?objectTableName=' + objectTableName + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+
+
+                    //        var filejson = response.json();
+                    //        if (filejson) {
+                    //            var fileData = EntityResourceService.base64ToBufferConvertor(filejson);
+
+                    //            return this.UnZipFileAndAddToStorageUsingWebWorker(fileData, objectTableName);
+                    //        }
+                    //        else {
+
+                    //            console.error("couldn't find " + objectTableName + ".zip file in the server!");
+                    //            return [];
+                    //        }
+                    //    });
+                    //}).share();
+
+                    var observable = this.GetResourcesFile(objectTableName, tenant).flatMap(response => {
+
+
+                        var filejson = response.json();
+                        if (filejson) {
+
+                            if (EntityResourceService.ServerTablesUnzipQueue[objectTableName]) {
+
+                                // if already exists in the load stack return the same obs
+                                return EntityResourceService.ServerTablesUnzipQueue[objectTableName].share();
+                            }
+
+                            var fileData = EntityResourceService.base64ToBufferConvertor(filejson);
+                            var obs = this.UnZipFileAndAddToStorageUsingWebWorker(fileData, objectTableName).share();
+
+                            EntityResourceService.ServerTablesUnzipQueue[objectTableName] = obs;
+
+                            return obs;
+                        }
+                        else {
+
+                            console.error("couldn't find " + objectTableName + ".zip file in the server!");
+                            return [];
+                        }
+                    }).share();
+
+                    EntityResourceService.TablesLoadQueue[objectTableName] = observable;
+                    return observable.share();
+
+                }
+                else {
+
+                    EntityResourceService.ZipFilesDictionary[objectTableName] = [];
+                    if (entityFields) {
+                        var zFieldsObject = new ZipFileDetails();
+                        zFieldsObject.FileName = fieldsKey;
+                        zFieldsObject.FileData = EntityResourceService.base64ToBufferConvertor(entityFields);
+                        EntityResourceService.ZipFilesDictionary[objectTableName].push(zFieldsObject);
+                    }
+
+                    if (entityCodes) {
+                        var zCodesObject = new ZipFileDetails();
+                        zCodesObject.FileName = codesKey;
+                        zCodesObject.FileData = EntityResourceService.base64ToBufferConvertor(entityCodes);
+                        EntityResourceService.ZipFilesDictionary[objectTableName].push(zCodesObject);
+                    }
+
+                    let observable: Observable<{}> = this.UnZipFilesToMemoryUsingWebWorker(objectTableName);
+                    observable.share();
+
+                    EntityResourceService.TablesLoadQueue[objectTableName] = observable;
+
+                    return observable.share();
                 }
 
-                var observable: Observable<{}> = this.UnZipFilesToMemoryUsingWebWorker(objectTableName);
-                observable.share();
 
-                EntityResourceService.TablesLoadQueue[objectTableName] = observable;
-
-                return observable.share();
+            }
+        }
+        catch (error) {
+            this.HandleError(error, objectTableName);
+            if (ObjectsLocator.GlobalSetting && (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2")) {
+                alert(error);
             }
 
-
+            return Observable.create(observer => {
+                observer.error(error);
+            });
         }
 
+    }
+    private HandleError(error, objectTableName: string) {
+        console.error("couldn't load entity resources for  " + objectTableName + " " + error);
     }
  
     private AddTableToCache(tableName: string) {
@@ -321,7 +342,7 @@ export class EntityResourceService {
                 }
                 )
                     .catch(error => {
-                        console.error(error);
+                        this.HandleError(error, objectTableName);
                     }
                     );
             }
@@ -496,7 +517,7 @@ export class EntityResourceService {
 
                             }
                             ).catch(error => {
-                                console.error(error);
+                                this.HandleError(error, parentEntityName);
                             }
                                 );
 
@@ -508,7 +529,7 @@ export class EntityResourceService {
 
                 }
             }).catch(error => {
-                console.error(error);
+                this.HandleError(error, parentEntityName);
             }
                 );
 
