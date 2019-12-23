@@ -12100,7 +12100,7 @@ namespace WebFreight.Web.ReportsWebServices
             byte[] bytearray = memstream.ToArray();
             return bytearray;
         }
-
+        bool showLocals;
         private RevenueExpenseDataProvider GetTrailBalanceDataProvider(byte[] xmlFilters, int tenant)
         {
             RevenueExpenseDataProvider totalData = new DataProviders.RevenueExpenseDataProvider();
@@ -12231,17 +12231,9 @@ namespace WebFreight.Web.ReportsWebServices
             string category5Name = GetCategory5Name(category5, tenant);
             totalData.CurrencyDetailed = currency;
             ContactPM contact = GetLoggedContact(tenant);
-            bool showLocals = !contact.DontShowLocal;
-            if (showLocals)
-            {
-                totalData.DetailedCustomersAccounts = customer ? "הצג פירוט" : "ללא פירוט";
-                totalData.DetailedVendorsAccounts = vendor ? "הצג פירוט" : "ללא פירוט";
-            }
-            else
-            {
-                totalData.DetailedCustomersAccounts = customer ? "Show" : "Dont show";
-                totalData.DetailedVendorsAccounts = vendor ? "Show" : "Dont show";
-            }
+            showLocals = !contact.DontShowLocal;
+            totalData.DetailedCustomersAccounts = SetDetailedCustomersAccounts(customer);
+            totalData.DetailedVendorsAccounts = SetDetailedVendorsAccounts(customer);
             totalData.Category = category1Name != null ? category1Name : category5Name;
             totalData.UseZeroFilter = useZeroFilter;
             totalData.FromDate = fromDate;
@@ -12948,7 +12940,29 @@ namespace WebFreight.Web.ReportsWebServices
 
             return totalData;
         }
+        private string SetDetailedCustomersAccounts(bool customer)
+        {
+            if (showLocals)
+            {
+                return customer ? "הצג פירוט" : "ללא פירוט";
+            }
+            else
+            {
+                return customer ? "Show" : "Dont show";
+            }
 
+        }
+        private string SetDetailedVendorsAccounts(bool vendor)
+        {
+            if (showLocals)
+            {
+                return vendor ? "הצג פירוט" : "ללא פירוט";
+            }
+            else
+            {
+                return vendor ? "Show" : "Dont show";
+            }
+        }
         private string GetCategory1Name(string category1, int tenant)
         {
             Category1QueryService category1QueryService = new Category1QueryService(tenant);

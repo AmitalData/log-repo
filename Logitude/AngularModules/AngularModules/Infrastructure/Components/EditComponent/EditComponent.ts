@@ -516,11 +516,11 @@ export class EditComponent implements OnDestroy {
 
 
         if (SessionLocator.TenantPM.AccountingActivated) {
-            var myObjectTable = window.ObjectTables.filter(x => x.Name === "APInvoice")[0];
-            var myObjectTableId = myObjectTable.Id;
+            var objectTable = window.ObjectTables.filter(x => x.Name === "APInvoice")[0];
+            var objectTableId = objectTable.Id;
 
-            headerScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "APInvoice.FullACCHeaderScreen")[0];
-            objectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
+            headerScreen = window.Screens.filter(d => d.ObjectTableId === objectTableId && d.Code == "APInvoice.FullACCHeaderScreen")[0];
+            objectFields = window.ObjectFields.filter(d => d.ObjectTableId === objectTableId);
             this.GenerateHeaderScreen(headerScreen,objectFields);
         }
         else {
