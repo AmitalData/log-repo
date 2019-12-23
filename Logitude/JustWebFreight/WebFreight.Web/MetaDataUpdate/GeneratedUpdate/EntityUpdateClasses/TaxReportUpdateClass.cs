@@ -2105,7 +2105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDT",HtmlComponentName = "TaxReportDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", FeatureId = TaxReportDetailsFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", ObjectTableId = TaxReportObjectTable.Id, TabNameTextCodeId = TaxReportDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDT",HtmlComponentName = "TaxReportDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", FeatureId = TaxReportDetailsFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", ObjectTableId = TaxReportObjectTable.Id, TabNameTextCodeId = TaxReportDetailsTextCode_TH0.Id, TabNameTextCodeCode = TaxReportDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

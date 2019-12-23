@@ -715,7 +715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSGE",HtmlComponentName = "CustomsShipperGeneralTabComponent",HtmlComponentUrl = "./CommonModules/CommonOthers/Components/Depositions/EditTab/CustomsShipperGeneralTabComponent", FeatureId = CustomsShipperGeneralFeature_TH0.Id, ControlPath = "./CommonModules/CommonOthers/Components/Depositions/EditTab/CustomsShipperGeneralTabComponent", ObjectTableId = CustomsShipperObjectTable.Id, TabNameTextCodeId = CustomsShipperGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSGE",HtmlComponentName = "CustomsShipperGeneralTabComponent",HtmlComponentUrl = "./CommonModules/CommonOthers/Components/Depositions/EditTab/CustomsShipperGeneralTabComponent", FeatureId = CustomsShipperGeneralFeature_TH0.Id, ControlPath = "./CommonModules/CommonOthers/Components/Depositions/EditTab/CustomsShipperGeneralTabComponent", ObjectTableId = CustomsShipperObjectTable.Id, TabNameTextCodeId = CustomsShipperGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomsShipperGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

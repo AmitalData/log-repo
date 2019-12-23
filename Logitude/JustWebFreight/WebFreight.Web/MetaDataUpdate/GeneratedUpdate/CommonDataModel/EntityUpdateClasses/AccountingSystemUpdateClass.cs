@@ -1499,7 +1499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AyGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingSystemGeneralFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.AccountingSystemGeneralTabControl", ObjectTableId = AccountingSystemObjectTable.Id, TabNameTextCodeId = AccountingSystemGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AyGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingSystemGeneralFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.AccountingSystemGeneralTabControl", ObjectTableId = AccountingSystemObjectTable.Id, TabNameTextCodeId = AccountingSystemGeneralTextCode_TH0.Id, TabNameTextCodeCode = AccountingSystemGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
