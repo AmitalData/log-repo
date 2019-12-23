@@ -584,6 +584,11 @@ export class TicketPM {
     public set EntityNumber(newValue: string) { if (this.entityNumber != newValue) { this.entityNumber = newValue; this.MarkAsDirty("EntityNumber"); } }
        
 	 
+    private supportMailboxId: string;
+    public get SupportMailboxId() { return this.supportMailboxId; }
+    public set SupportMailboxId(newValue: string) { if (this.supportMailboxId != newValue) { this.supportMailboxId = newValue; this.MarkAsDirty("SupportMailboxId"); } }
+       
+	 
 
     public OldEntityPM: TicketPM;
 		
