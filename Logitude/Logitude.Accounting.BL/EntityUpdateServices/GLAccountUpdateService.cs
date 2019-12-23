@@ -413,23 +413,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    GLAccountInterestPeriodRepository PeriodRepository = new GLAccountInterestPeriodRepository(entityPM.Tenant);
-                    GLAccountInterestPeriod Period = PeriodRepository.GetSingleByGLAccountIdAndTenant(entityPM.Id, entityPM.Tenant);
-                    if (Period == null  && entityPM.GLAccountInterestPeriods.Count == 0)
+                    bool IsNotDeletde = false;
+                    for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+                    {
+                        if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                        {
+                            IsNotDeletde = true;
+                        }
+
+                    }
+                    if (!IsNotDeletde)
                     {
                         throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
-                    }
-                }
-            }
-            entityPM.ActiveForInterest = false ;
 
-            for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
-            {
-                if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
-                {
-                    entityPM.ActiveForInterest = true;
+                    }
+ 
                 }
-                
             }
             if (entityPM.ActiveForInterest == false)
             {
@@ -443,15 +442,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
-
-            if (entityPM.MinimumInterestInvoiceBilling != null && entityPM.MinimumInterestInvoiceBilling != 0)
-            {
-                if (Math.Floor(Math.Log10((double)entityPM.MinimumInterestInvoiceBilling) + 1) > 2)
-                {
-                    throw new Exception("Number Of Digit Before Comma Must Be Five Or Less In Minimum Interest Invoice Billing Field");
-
-                }
-            }
+ 
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             bool useLocal = !((bool)loggedUser?.DontShowLocal);
 
@@ -820,8 +811,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             gLAccountWithholdingTaxUpdateService.UpdateMulti(entityPM.GLAccountWithholdingTaxes, entityPM.DeletedGLAccountWithholdingTaxes, entityPM, true);
 
-            var gLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            gLAccountInterestPeriodUpdateService.UpdateMulti(entityPM.GLAccountInterestPeriods, entityPM.DeletedGLAccountInterestPeriods, entityPM, true);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountInterestPeriods.Count > 0)
             {
                 ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
@@ -835,8 +824,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (line.ChangeSetOp == ChangeSetOperation.Update)
                     {
                         GLAccountInterestPeriodQueryService gLAccountInterestPeriodQueryService = new GLAccountInterestPeriodQueryService(line.Tenant);
-                        GLAccountInterestPeriodPM gLAccountInterestPeriodPM = gLAccountInterestPeriodQueryService.GetSingle(line.LineNumber, line.GLAccountId, false, true);
-
+                        GLAccountInterestPeriodPM gLAccountInterestPeriodPM = gLAccountInterestPeriodQueryService.GetSingle(line.LineNumber, line.GLAccountId, false, false);
+ 
                         if (line.PeriodStartDate != gLAccountInterestPeriodPM.PeriodStartDate || line.StandardInterestRateBaseId != gLAccountInterestPeriodPM.StandardInterestRateBaseId || line.StandardAddInterestPercent != gLAccountInterestPeriodPM.StandardAddInterestPercent || line.ExceptionalInterestRateBaseId != gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId || line.ExceptionalAddInterestPercent != gLAccountInterestPeriodPM.ExceptionalAddInterestPercent || line.CreditInterestRateBaseId != gLAccountInterestPeriodPM.CreditInterestRateBaseId || line.CreditAddInterestPercent != gLAccountInterestPeriodPM.CreditAddInterestPercent)
                             {
 
@@ -884,6 +873,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 }
             }
+
+            var gLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            gLAccountInterestPeriodUpdateService.UpdateMulti(entityPM.GLAccountInterestPeriods, entityPM.DeletedGLAccountInterestPeriods, entityPM, true);
+
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
 

@@ -190,8 +190,9 @@
                                                     <table>
                                                         <tr style="height:15px;">
                                                             <td>
-                                                                <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'MinimumInterestInvoiceBilling'" [InputType]="'sigdouble'" [DataContext]="DataContext"
-                                                                [Text]="MinimumInterestInvoiceBilling" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+                                                                <LogTextBoxV2 [DigitsAfterPoint]="0" [FocusOnMe]="'true'" [ObjectFieldName]="'MinimumInterestInvoiceBilling'"  [DataContext]="DataContext"
+                                                                [Text]="MinimumInterestInvoiceBilling" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBoxV2>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -249,7 +250,7 @@
                                     (Ondblclick)="OnFocus()">
                                     
                     <!--PeriodStartDate-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="PeriodStartDateHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="PeriodStartDateHeader" [binding]="'PeriodStartDate'">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.PeriodStartDate | DateTimeToDatePipe}}</span>
@@ -262,7 +263,7 @@
                     </log-column>
 
                     <!--StandardInterestRateBaseId-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'180'" [header]="StandardInterestRateBaseIdHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'180'" [header]="StandardInterestRateBaseIdHeader" [binding]="'StandardInterestRateBaseId'">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.StandardInterestRateBaseName}}</span>
@@ -273,14 +274,16 @@
                                         [DataContext]="item"
                                         (SelectedItemChanged)="item.StandardInterestRateBase = $event"
                                         [LookUpTableName]="'InterestBasesType'"
-                                        [HideColumns]="true">
+                                        [HideColumns]="true"
+                                        [RunToggleMode]="true"
+                                        [FocusOnMe]="'true'">
                                 </LogLov>
                             </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--StandardAddInterestPercent-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'220'" [header]="StandardAdditionalInterestPercentageHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'220'" [header]="StandardAdditionalInterestPercentageHeader" [binding]="'StandardAddInterestPercent'">
                         <log-cell-template template="let item" #logcelltemplate>
 
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
@@ -289,14 +292,14 @@
 
                              <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                  <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'StandardAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
-                                                                [Text]="item.StandardAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
+                                             [Text]="item.StandardAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
                              </div>
 
                         </log-cell-template>
                     </log-column>
 
                     <!--ExceptionalInterestRateBaseId-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'220'" [header]="ExceptionalInterestRateBaseIdHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'220'" [header]="ExceptionalInterestRateBaseIdHeader" [binding]="'ExceptionalInterestRateBaseId'">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.ExceptionalInterestRateName}} </span>
@@ -307,14 +310,16 @@
                                         [DataContext]="item"
                                         (SelectedItemChanged)="item.ExceptionalInterestRateBase = $event"
                                         [LookUpTableName]="'InterestBasesType'"
-                                        [HideColumns]="true">
+                                        [HideColumns]="true"
+                                        [RunToggleMode]="true"
+                                        [FocusOnMe]="'true'">
                                 </LogLov>
                             </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--ExceptionalAddInterestPercent-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'230'" [header]="ExceptionalAdditionalInterestPercentageHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'230'" [header]="ExceptionalAdditionalInterestPercentageHeader" [binding]="'ExceptionalAddInterestPercent'">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.ExceptionalAddInterestPercent}}</span>
@@ -327,7 +332,7 @@
                     </log-column>
 
                     <!--CreditInterestRateBaseId-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'160'" [header]="CreditInterestRateBaseIdHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'160'" [header]="CreditInterestRateBaseIdHeader" [binding]="'CreditInterestRateBaseId'">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span> {{item.CreditInterestRateBaseName}} </span>
@@ -338,14 +343,16 @@
                                         [DataContext]="item"
                                         (SelectedItemChanged)="item.CreditInterestRateBase = $event"
                                         [LookUpTableName]="'InterestBasesType'"
-                                        [HideColumns]="true">
+                                        [HideColumns]="true"
+                                        [RunToggleMode]="true"
+                                        [FocusOnMe]="'true'">
                                 </LogLov>
                             </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--CreditAddInterestPercent-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'210'" [header]="CreditAdditionalInterestPercentageHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'210'" [header]="CreditAdditionalInterestPercentageHeader" [binding]="'CreditAddInterestPercent'">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.CreditAddInterestPercent}}</span>
@@ -358,7 +365,7 @@
                     </log-column>
 
                     <!--UpdatedByUser-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="UpdatedByUserHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="UpdatedByUserHeader" >
                         <log-cell-template template="let item" #logcelltemplate>
                             <div  [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.UpdatedByUserName}}</span>
