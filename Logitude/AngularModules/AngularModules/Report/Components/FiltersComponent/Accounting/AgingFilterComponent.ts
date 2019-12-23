@@ -114,7 +114,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
 
     //row 2
-    
+
     private collector: string;
     public get Collector() { return this.collector; }
     public set Collector(value: string) {
@@ -132,7 +132,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
     }
 
     //row 3
-    
+
     private category1: string;
     public get Category1() { return this.category1; }
     public set Category1(value: string) {
@@ -227,6 +227,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
             myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+            myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
@@ -254,5 +255,13 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         this.SelectedCategory = item;
     }
     //#endregion
+
+    // Filter Methods
+    public DateFilterSelectedValue: string = 'filter_Due';
+    DateFilterItemClicked(itemValue: string) {
+        if (this.DateFilterSelectedValue != itemValue) {
+            this.DateFilterSelectedValue = itemValue;
+        }
+    }
 
 }
