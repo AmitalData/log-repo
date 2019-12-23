@@ -2360,6 +2360,13 @@ namespace WebFreight.Web.InfrastructureModel
             //TextCodeRepository.Update(entity);
         }
 
+        public string GetTextCodeIdByCode(string code, int tenant)
+        {
+            TextCodeRepository textCodeRepository = new TextCodeRepository(tenant);
+            string textCodeId = textCodeRepository.GetSingleTextCodeByCode(code, tenant);
+            return textCodeId;
+        }
+
         public void DeleteTextCode(TextCodePM textCode)
         {
             if (ObjectContext == null)

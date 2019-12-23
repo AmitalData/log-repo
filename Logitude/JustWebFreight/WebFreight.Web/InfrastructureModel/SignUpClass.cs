@@ -2194,6 +2194,7 @@ namespace WebFreight.Web.InfrastructureModel
                     IndexOrder = q.IndexOrder,
                     DisplayCount = q.DisplayCount,
                     NameTextCodeId = textCode.Id,
+                    NameTextCodeCode = textCode.Code,
                     QueryGroupCode = q.QueryGroupCode,
                     IsAddNewEntityEnabled = q.IsAddNewEntityEnabled,
                     DefaultSortDirection = q.DefaultSortDirection,
