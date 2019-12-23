@@ -189,7 +189,7 @@ export class StandardFieldItem {
     constructor(field: ObjectFieldPM, public loadedFields: ObjectFieldPM[], public fieldsTranslations: FieldsTranslations[]) {
         this.ObjectField = field;
         this.ObjectFieldId = field.Id;
-
+        //Fix ObjectFieldTextCodeId when you add TextCodeCode to Translations table.
         this.fullLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.FullNameTextCodeId)[0];
         this.shortLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.ShortNameTextCodeId)[0];
         this.listLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.ListTextCodeId)[0];

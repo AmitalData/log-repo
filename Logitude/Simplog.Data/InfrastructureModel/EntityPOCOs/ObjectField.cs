@@ -103,6 +103,13 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public bool DisplayOnLookUpLocal { get; set; }
 
+        public string FullNameTextCodeCode { get; set; }
+
+        public string HelpTextCodeCode { get; set; }
+
+        public string ListTextCodeCode { get; set; }
+
+        public string ShortNameTextCodeCode { get; set; }
 
         public bool DisplayInAutomationAsEnitity { get; set; }
         public string RecordType { get; set; }
