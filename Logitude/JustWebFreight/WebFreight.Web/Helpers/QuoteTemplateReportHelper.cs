@@ -2123,7 +2123,12 @@ namespace Logitude.BL.Helpers
                 object newValue = customFieldResolver.GetFieldValue(quotePM, field, quotePM.Tenant);
                 if (newValue != null)
                 {
-                    FieldValue = newValue.ToString();
+                    if (field.DataTypeCode.ToLower() == "boolean")
+                    {
+                        FieldValue = newValue.ToString().ToLower() == "false" ? TranslateTextsClass.Translate("General.O.No", quotePM.Tenant) : TranslateTextsClass.Translate("General.O.Yes", quotePM.Tenant);
+                    }
+                    else FieldValue = newValue.ToString();
+
                 }
             }
             return FieldValue;
@@ -2353,8 +2358,7 @@ namespace Logitude.BL.Helpers
             }
             else if (fieldname == "DANGEROUSGOODS")
             {
-                if (quotePM.IsDangerous) FieldValue = "Yes";
-                else FieldValue = "No";
+                FieldValue = !quotePM.IsDangerous ? TranslateTextsClass.Translate("General.O.No", quotePM.Tenant) : TranslateTextsClass.Translate("General.O.Yes", quotePM.Tenant);
             }
             else if (fieldname == "TRUCKER" || fieldname == "SHIPINGLINE" || fieldname == "AIRLINE")
             {

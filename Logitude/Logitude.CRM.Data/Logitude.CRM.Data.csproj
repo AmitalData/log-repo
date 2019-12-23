@@ -143,6 +143,7 @@
     <Compile Include="EntityKeys\SLAHeaderKeys.cs" />
     <Compile Include="EntityKeys\SLALineKeys.cs" />
     <Compile Include="EntityKeys\StageKeys.cs" />
+    <Compile Include="EntityKeys\SupportMailboxKeys.cs" />
     <Compile Include="EntityKeys\TicketClassificationKeys.cs" />
     <Compile Include="EntityKeys\TicketCreatedByTypeKeys.cs" />
     <Compile Include="EntityKeys\TicketEscalationKeys.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="EntityListQueryServices\Generated\SLAHeaderListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SLALineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StageListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SupportMailboxListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TicketClassificationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TicketCreatedByTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TicketEscalationListQueryService.Generated.cs" />
@@ -242,6 +244,7 @@
     <Compile Include="EntityListQueryServices\SLAHeaderListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SLALineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StageListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SupportMailboxListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TicketClassificationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TicketCreatedByTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TicketEscalationListQueryService.cs" />
@@ -293,6 +296,7 @@
     <Compile Include="EntityLists\Generated\SLAHeaderList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SLALineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SupportMailboxList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TicketClassificationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TicketCreatedByTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TicketEscalationList.Generated.cs" />
@@ -346,6 +350,7 @@
     <Compile Include="EntityMapping\SLAHeaderMap.cs" />
     <Compile Include="EntityMapping\SLALineMap.cs" />
     <Compile Include="EntityMapping\StageMap.cs" />
+    <Compile Include="EntityMapping\SupportMailboxMap.cs" />
     <Compile Include="EntityMapping\TicketClassificationMap.cs" />
     <Compile Include="EntityMapping\TicketCreatedByTypeMap.cs" />
     <Compile Include="EntityMapping\TicketEscalationMap.cs" />
@@ -395,6 +400,7 @@
     <Compile Include="EntityPOCOs\SLAHeader.cs" />
     <Compile Include="EntityPOCOs\SLALine.cs" />
     <Compile Include="EntityPOCOs\Stage.cs" />
+    <Compile Include="EntityPOCOs\SupportMailbox.cs" />
     <Compile Include="EntityPOCOs\Ticket.cs" />
     <Compile Include="EntityPOCOs\TicketClassification.cs" />
     <Compile Include="EntityPOCOs\TicketCreatedByType.cs" />
@@ -465,6 +471,7 @@
     <Compile Include="Repsitories\Generated\SLAHeaderRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SLALineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StageRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SupportMailboxRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TicketClassificationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TicketCreatedByTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TicketEscalationRepository.Generated.cs" />
@@ -497,6 +504,7 @@
     <Compile Include="Repsitories\SLAHeaderRepository.cs" />
     <Compile Include="Repsitories\SLALineRepository.cs" />
     <Compile Include="Repsitories\StageRepository.cs" />
+    <Compile Include="Repsitories\SupportMailboxRepository.cs" />
     <Compile Include="Repsitories\TicketClassificationRepository.cs" />
     <Compile Include="Repsitories\TicketCreatedByTypeRepository.cs" />
     <Compile Include="Repsitories\TicketEscalationRepository.cs" />

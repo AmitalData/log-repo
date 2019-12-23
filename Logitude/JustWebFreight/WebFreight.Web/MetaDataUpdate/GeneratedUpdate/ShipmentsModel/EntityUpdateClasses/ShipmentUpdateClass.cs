@@ -11621,6 +11621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -35322,7 +35323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "INTTRASIError",
 					  						OldFieldName =  "INTTRASIError",
 					  						ObjectTableName =  "Shipment",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  256,
 					  						IsRequired =  false,
@@ -40041,6 +40042,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FirstARInvoiceApprovalDate",
+					  						OldFieldName =  "FirstARInvoiceApprovalDate",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -40061,6 +40063,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FirstARInvoiceApprovalDate",
 					  						ListPropertyPath =  "FirstARInvoiceApprovalDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -40088,6 +40091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -40746,7 +40750,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query EBookingInProgressQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_18.Id, Code = "EBookingInProgress",  QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query EBookingInProgressQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_18.Id, Code = "EBookingInProgress",  EditWizardName = "SimulatorBookingComponent",
+			   QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn EBookingInProgressQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingTransStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingTransStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 

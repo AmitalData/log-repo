@@ -2353,7 +2353,7 @@ export class QuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        if (value.indexOf(',') > -1) {
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
                             myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
                         }
                         else {

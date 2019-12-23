@@ -342,7 +342,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
         if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
             if (this.EntityPM.ShipmentLevelCode != "C") {
                 if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                    if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "ABM") {
+                    if (!AppTool.IsNullOrEmpty(ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode)) {
                         visible = true;
                     }
                 }
@@ -418,8 +418,8 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
 
         if (isLocalVisible) {
             var newItem: SummaryItem = new SummaryItem();
-            newItem.CustomsInterfaceName = "ABM Customsware";
-            newItem.Code = "ABM";
+            newItem.CustomsInterfaceName = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceName;
+            newItem.Code = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode;
             newItem.StatusName = !AppTool.IsNullOrEmpty(this.EntityPM.LocalCustomsTransmissionsStatusName) ? this.EntityPM.LocalCustomsTransmissionsStatusName : notSent;
             newItem.StatusDate = this.EntityPM.LocalCustomsTransmissionsStatusDate;
             newItem.StatusCode = this.EntityPM.LocalCustomsTransmissionsStatusCode;
