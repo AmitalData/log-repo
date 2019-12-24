@@ -13,6 +13,7 @@ import { CarrierAreaPM } from '../../../../Common/EntityPMs/CarrierAreaPM';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { CarrierAreasPortPM } from '../../../../Common/EntityPMs/CarrierAreasPortPM';
+import { ShippingLinePM } from '../../../../Common/EntityPMs/ShippingLinePM';
 
 @Component({
     moduleId: module.id,
@@ -38,14 +39,13 @@ export class AreasTabComponent implements OnDestroy {
                 this.EntityId = entityArgs.EntityPM.Id;
                 this.ObjectTableName = entityArgs.ObjectTableName;
 
-                if (this.EntityPM.PartnerTypeId == "AL") {
+                if (this.EntityPM instanceof AirlinePM) {
                     this.TransportModeCode = "A";
                 }
-
-                else if (this.EntityPM.PartnerTypeId == "SL") {
+                else if (this.EntityPM instanceof ShippingLinePM) {
                     this.TransportModeCode = "O";
                 }
-
+                
                 if (this.DomainService == null) {
                     this.DomainService = new PartnersDomainService();
                 }
@@ -105,13 +105,7 @@ export class AreasTabComponent implements OnDestroy {
     AddCarrierAreaClicked() {
         var item = new CarrierAreaPM();
         item.Tenant = this.EntityPM.Tenant;
-        item.CarrierId = this.EntityPM.Id;
-        item.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-        item.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        item.CreatedByUserId = SessionInfo.LoggedUserId;
-        item.UpdatedByUserId = SessionInfo.LoggedUserId;
-        item.CreatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
-        item.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+        item.CarrierId = this.EntityPM.Id;        
         item.TransportModeCode = this.TransportModeCode;
 
         var itemComponent = new AreaItemClass(item, this, true);
@@ -151,12 +145,10 @@ export class AreaItemClass extends BaseComponent {
     public EntityPM: CarrierAreaPM;
     public IsNewEntity: boolean = false;
     public PortItemsList: CarrierAreasPortPM[];
-    public TransportModeCode: string;
     constructor(item: CarrierAreaPM, public fatherComponent: AreasTabComponent, isNewEntity: boolean) {
         super();
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity;
-        this.TransportModeCode = item.TransportModeCode;
 
         this.SetUIProperties();
         this.BuildPortItemsList();

@@ -7,11 +7,16 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.CarrierAreas", "TransportModeCode", c => c.String(nullable: true, maxLength: 1, fixedLength:true, unicode: false));            
+            AddColumn("dbo.CarrierAreas", "TransportModeCode", c => c.String(nullable: true, maxLength: 1, fixedLength:true, unicode: false));
+
             Sql(@"update CarrierAreas set TransportModeCode = 'A'");
+
             AlterColumn("dbo.CarrierAreas", "TransportModeCode", c => c.String(nullable: false, maxLength: 1, fixedLength: true, unicode: false));
             CreateIndex("dbo.CarrierAreas", "TransportModeCode");
             AddForeignKey("dbo.CarrierAreas", "TransportModeCode", "dbo.TransportModes", "Id");
+
+            Sql("update DBIdCounters set TableName = 'CarrierArea' where TableName = 'AirlineArea'");
+            Sql("update DBIdCounters set TableName = 'CarrierAreaPort' where TableName = 'AirlineAreaPort'");
         }
         
         public override void Down()

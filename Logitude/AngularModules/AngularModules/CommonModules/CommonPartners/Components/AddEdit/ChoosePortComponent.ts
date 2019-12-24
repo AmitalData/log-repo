@@ -18,13 +18,15 @@ export class ChoosePortComponent extends BaseComponent {
     public ParentClass: AreaItemClass;
     public ObjectTableName = "CarrierAreasPort";
     public ValidationErrorsList: string[] = [];
-    public ForceFocus: any ;
+    public ForceFocus: any;
+    public TransportModeCode: string;
     constructor() {
         super();
     }
 
     SetDataContext(dataContext: AreaItemClass) {
-        this.ParentClass = dataContext;        
+        this.ParentClass = dataContext;
+        this.TransportModeCode = dataContext.fatherComponent.TransportModeCode;
     }
 
     KeyDownEvent(event) {

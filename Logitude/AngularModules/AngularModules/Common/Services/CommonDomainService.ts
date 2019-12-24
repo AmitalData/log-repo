@@ -1219,11 +1219,11 @@ export class CommonDomainService {
         return entityPM;
     }
 
-    GetCarrierAreas(airlineId: string) {
+    GetCarrierAreas(carrierId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCarrierAreas?airlineId=' + airlineId, {
+            return this._http.get(this._apiUrl + '/GetCarrierAreas?carrierId=' + carrierId, {
                 headers: authHeader
             }).map(response => {
                 var myResult = response.json();
