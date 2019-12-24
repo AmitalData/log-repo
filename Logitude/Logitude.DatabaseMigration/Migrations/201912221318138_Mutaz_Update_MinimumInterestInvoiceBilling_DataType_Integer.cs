@@ -11,6 +11,7 @@ namespace Logitude.DatabaseMigration.Migrations
             DropIndex("dbo.InterestReportLines", new[] { "InterestTransactionId" });
             DropPrimaryKey("dbo.InterestReportLines");
             AlterColumn("dbo.InterestReportLines", "InterestTransactionId", c => c.String(nullable: false, maxLength: 15, unicode: false));
+            Sql("IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF__GLAccount__Minim__43836F81]') AND type = 'D') BEGIN ALTER TABLE[dbo].[GLAccounts] DROP CONSTRAINT[DF__GLAccount__Minim__43836F81] END");
             AlterColumn("dbo.GLAccounts", "MinimumInterestInvoiceBilling", c => c.Int());
             DropColumn("dbo.InterestReports", "UpdateDate");
             AddPrimaryKey("dbo.InterestReportLines", new[] { "InterestReportId", "InterestTransactionId" });
