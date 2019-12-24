@@ -6736,7 +6736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "MinimumInterestInvoiceBilling",
 					  						OldFieldName =  "MinimumInterestInvoiceBilling",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -6850,6 +6850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestCreditLimit",
+					  						OldFieldName =  "InterestCreditLimit",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -6869,6 +6870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InterestCreditLimit",
 					  						ListPropertyPath =  "InterestCreditLimit",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8273,7 +8275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LUPD",
                 EnglishName =  "Line Updated",
-                LocalName =  "עודכנה שורת",
+                LocalName =  " עודכנה שורת ריבית ",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8424,6 +8426,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountONewExternalTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NewExternalTransaction", DefaultText = "New External Transaction",LocalDefaultText = @"דף חיצוני חדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOExternalTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ExternalTransaction", DefaultText = "External Transaction",LocalDefaultText = @"תנועות חיצוניות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountODeleteExistInterestperiods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.DeleteExistInterestperiods", DefaultText = "You must delete the Interest periods record before Deactivating the customer",LocalDefaultText = @"יש למחוק הגדרת תקופות ריבית לפני חסימת לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOLineDateExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LineDateExist", DefaultText = "Line with the same date already exist",LocalDefaultText = @"קיימת כבר שורה עם תאריך זהה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOFieldInterestCalculationStartDateismandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.FieldInterestCalculationStartDateismandatory", DefaultText = "Field Interest Calculation Start Date is mandatory",LocalDefaultText = @"שדה תאריך הוא חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "At least one GLAccount Interest Periods record is required",LocalDefaultText = @"חובה להזין לפחות רשומה אחת של תקופת ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
