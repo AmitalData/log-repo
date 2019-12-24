@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;73034461-6f51-4c82-a69c-eddfe9234200&quot;"
   ObjectTableName="&quot;ARInvoiceStockLine&quot;"
   IsNew="true"

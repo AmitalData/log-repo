@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;04c39dd7-d25c-45c9-8ac3-aa67caa907a1&quot;"
   ObjectTableName="&quot;WithholdingTaxDeductionType&quot;"
   IsNew="false"

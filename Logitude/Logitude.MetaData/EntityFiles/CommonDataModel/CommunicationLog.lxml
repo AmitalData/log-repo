@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;e83a0e61-66fd-49eb-b01f-9aef0ef743c2&quot;"
   ObjectTableName="&quot;CommunicationLog&quot;"
   IsNew="false"

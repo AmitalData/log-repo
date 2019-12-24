@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f08c454f-3342-409f-9809-ff7306f7bc41&quot;"
   ObjectTableName="&quot;APPaymentMethod&quot;"
   DBTableName="&quot;APPaymentMethods&quot;"

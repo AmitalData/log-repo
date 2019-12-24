@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ad00cc2c-a90d-4e5e-b126-559752516010&quot;"
   ObjectTableName="&quot;Toggle&quot;"
   IsNew="true"

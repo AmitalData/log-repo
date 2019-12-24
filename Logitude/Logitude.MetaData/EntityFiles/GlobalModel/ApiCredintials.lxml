@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ec9a2e0b-cc8c-44d1-bf51-e21b8e4d0f8a&quot;"
   ObjectTableName="&quot;ApiCredintials&quot;"
   IsNew="false"

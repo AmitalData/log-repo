@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;33619db5-a37e-4c49-8d53-416d80a36c9f&quot;"
   ObjectTableName="&quot;AccountingSystemsSyncStatus&quot;"
   IsNew="false"

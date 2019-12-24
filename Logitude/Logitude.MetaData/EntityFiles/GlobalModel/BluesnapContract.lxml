@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;696819e8-ba9b-4440-8411-ddf77198e098&quot;"
   ObjectTableName="&quot;BluesnapContract&quot;"
   IsNew="false"

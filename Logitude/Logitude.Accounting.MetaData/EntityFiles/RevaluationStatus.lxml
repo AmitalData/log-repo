@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;d95e1f6f-8bbc-43f0-807a-62bb4181e5c2&quot;"
   ObjectTableName="&quot;RevaluationStatus&quot;"
   DBTableName="&quot;RevaluationStatuses&quot;"

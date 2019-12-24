@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;3a51d704-78f8-47f8-aaec-4fc7aebdfd80&quot;"
   ObjectTableName="&quot;AutomationResultEmailRecipient&quot;"
   DBTableName="&quot;AutomationResultEmailRecipients&quot;"

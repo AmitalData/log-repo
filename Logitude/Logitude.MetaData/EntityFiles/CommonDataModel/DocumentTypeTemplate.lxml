@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;8c34cc0e-231b-48f8-8f75-93e18963c39a&quot;"
   ObjectTableName="&quot;DocumentTypeTemplate&quot;"
   IsNew="false"

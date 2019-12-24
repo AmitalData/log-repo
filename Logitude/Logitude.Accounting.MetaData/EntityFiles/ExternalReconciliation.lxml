@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;1f4b891c-969a-4449-a864-41f49f9498a0&quot;"
   ObjectTableName="&quot;ExternalReconciliation&quot;"
   IsNew="false"

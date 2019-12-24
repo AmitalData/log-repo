@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f390b0e0-86d5-435e-8b05-e442e4f49a9b&quot;"
   ObjectTableName="&quot;CustomsTransmissionsStatus&quot;"
   IsNew="false"

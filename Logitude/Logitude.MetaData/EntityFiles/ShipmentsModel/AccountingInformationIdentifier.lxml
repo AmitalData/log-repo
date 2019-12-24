@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;04ed86e7-243a-4ea4-a3e6-cc7a3b638b04&quot;"
   ObjectTableName="&quot;AccountingInformationIdentifier&quot;"
   DBTableName="&quot;AccountingInformationIdentifiers&quot;"

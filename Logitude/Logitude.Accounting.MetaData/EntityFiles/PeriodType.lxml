@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;78cb13b6-211e-456d-90a8-6ea41366b02e&quot;"
   ObjectTableName="&quot;PeriodType&quot;"
   DBTableName="&quot;PeriodTypes&quot;"

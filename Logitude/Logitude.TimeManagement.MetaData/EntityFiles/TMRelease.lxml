@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f2924359-147b-4cf4-8bfb-7c8022eec6fe&quot;"
   ObjectTableName="&quot;TMRelease&quot;"
   IsNew="false"

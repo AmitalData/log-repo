@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;0bdd28d3-a553-4e7d-97e8-cc16f0a99b3a&quot;"
   ObjectTableName="&quot;HybridTenantThreshold&quot;"
   IsNew="false"

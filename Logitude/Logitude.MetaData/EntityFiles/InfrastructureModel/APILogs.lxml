@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;97900fb5-ca10-40b9-a621-c01a14eff599&quot;"
   ObjectTableName="&quot;APILogs&quot;"
   IsNew="false"

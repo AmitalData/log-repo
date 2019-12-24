@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;50924783-0f5d-41fa-a6c6-0c2cd67681f5&quot;"
   ObjectTableName="&quot;ShipmentComputedFields&quot;"
   IsNew="true"

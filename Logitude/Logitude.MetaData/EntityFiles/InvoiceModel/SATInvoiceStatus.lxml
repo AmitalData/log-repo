@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;82fe9465-d2af-4f9d-9330-129cb94ab2bb&quot;"
   ObjectTableName="&quot;SATInvoiceStatus&quot;"
   DBTableName="&quot;SATInvoiceStatus&quot;"

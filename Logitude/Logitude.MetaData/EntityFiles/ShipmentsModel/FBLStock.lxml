@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;fa35e216-85f8-4339-9b60-9eea34e47805&quot;"
   ObjectTableName="&quot;FBLStock&quot;"
   DBTableName="&quot;FBLStocks&quot;"

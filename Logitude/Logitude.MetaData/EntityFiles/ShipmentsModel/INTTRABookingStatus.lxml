@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ad940fcd-f764-42b8-8f71-5865146f42e1&quot;"
   ObjectTableName="&quot;INTTRABookingStatus&quot;"
   IsNew="true"

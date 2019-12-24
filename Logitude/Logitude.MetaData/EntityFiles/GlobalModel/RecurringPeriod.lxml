@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;55f45536-25e1-4102-99ee-7257ccb21ba3&quot;"
   ObjectTableName="&quot;RecurringPeriod&quot;"
   DBTableName="&quot;RecurringPeriods&quot;"

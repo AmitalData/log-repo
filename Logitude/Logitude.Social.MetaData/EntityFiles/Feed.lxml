@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a44279e7-6886-4935-b1c4-dc3ae0e1c95c&quot;"
   ObjectTableName="&quot;Feed&quot;"
   DBTableName="&quot;Feeds&quot;"

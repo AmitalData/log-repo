@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;4967cf47-550c-4038-82e7-6c633156bb97&quot;"
   ObjectTableName="&quot;CustomsInterface&quot;"
   IsNew="false"

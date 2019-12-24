@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;cdbe9c52-53c5-4c6f-a96b-1d4763efe750&quot;"
   ObjectTableName="&quot;PaymentChequeStatus&quot;"
   IsNew="false"

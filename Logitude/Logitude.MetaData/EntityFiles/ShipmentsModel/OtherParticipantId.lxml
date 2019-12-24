@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a33d7d26-be11-4063-ba50-522ec8cb1f0b&quot;"
   ObjectTableName="&quot;OtherParticipantId&quot;"
   DBTableName="&quot;OtherParticipantIds&quot;"

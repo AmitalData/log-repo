@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a8326ec7-89a6-4195-8240-f54f502559a6&quot;"
   ObjectTableName="&quot;QuoteSaleCharge&quot;"
   IsNew="false"

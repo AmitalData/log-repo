@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;d7da9b65-1cd6-45bb-857a-f5f618038d32&quot;"
   ObjectTableName="&quot;CommunicationLogType&quot;"
   DBTableName="&quot;CommunicationLogTypes&quot;"

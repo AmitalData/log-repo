@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;478acbc6-1541-499d-bca1-15ed78f06824&quot;"
   ObjectTableName="&quot;APInvoice&quot;"
   IsNew="false"

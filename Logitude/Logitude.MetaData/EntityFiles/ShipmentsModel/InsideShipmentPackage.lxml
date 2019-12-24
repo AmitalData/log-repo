@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;81b54875-58a0-443d-bbe9-12248460ebda&quot;"
   ObjectTableName="&quot;InsideShipmentPackage&quot;"
   IsNew="false"

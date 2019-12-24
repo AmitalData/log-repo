@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ce9ac9cf-e76f-4d38-8f3b-9cc59e3b2eb1&quot;"
   ObjectTableName="&quot;ShipmentCustomsTransmission&quot;"
   IsNew="false"

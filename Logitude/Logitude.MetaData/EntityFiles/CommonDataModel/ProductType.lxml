@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;9015d2ee-6958-4963-bb53-ae307968cd02&quot;"
   ObjectTableName="&quot;ProductType&quot;"
   IsNew="false"

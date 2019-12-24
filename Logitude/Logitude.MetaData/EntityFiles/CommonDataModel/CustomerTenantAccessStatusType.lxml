@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;50e5c7ba-b075-4882-a3d4-66794e158273&quot;"
   ObjectTableName="&quot;CustomerTenantAccessStatusType&quot;"
   DBTableName="&quot;CustomerTenantAccessStatusTypes&quot;"

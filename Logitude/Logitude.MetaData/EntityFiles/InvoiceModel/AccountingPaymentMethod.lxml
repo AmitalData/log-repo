@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;91ed4eec-edc5-497a-8d67-8ab7be0c3266&quot;"
   ObjectTableName="&quot;AccountingPaymentMethod&quot;"
   IsNew="false"

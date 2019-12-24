@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;03edc433-3aa1-4506-8995-32eeb204a32d&quot;"
   ObjectTableName="&quot;ARPayment&quot;"
   IsNew="false"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;af6c2cc5-487b-4ec5-8d79-928045dc6251&quot;"
   ObjectTableName="&quot;FTPDetail&quot;"
   IsNew="false"

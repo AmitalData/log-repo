@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;396f7f4a-ca9d-4bdb-9f0f-2ea8511e886b&quot;"
   ObjectTableName="&quot;DocumentsExecutionLog&quot;"
   IsNew="true"

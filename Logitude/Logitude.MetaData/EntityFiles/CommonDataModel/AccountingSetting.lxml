@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ef35d271-85a7-46d8-b6af-812616f8b86b&quot;"
   ObjectTableName="&quot;AccountingSetting&quot;"
   IsNew="false"

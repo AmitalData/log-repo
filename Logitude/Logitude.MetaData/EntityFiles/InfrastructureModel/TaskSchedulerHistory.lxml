@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;8f458985-d810-403a-a7d3-e8804e838a38&quot;"
   ObjectTableName="&quot;TaskSchedulerHistory&quot;"
   IsNew="false"

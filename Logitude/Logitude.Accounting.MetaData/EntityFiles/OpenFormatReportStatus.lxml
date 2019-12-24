@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a02c56fb-83d7-4776-9877-1c172c23d4cb&quot;"
   ObjectTableName="&quot;OpenFormatReportStatus&quot;"
   IsNew="true"

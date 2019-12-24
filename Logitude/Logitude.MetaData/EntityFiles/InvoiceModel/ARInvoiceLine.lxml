@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;e77d7922-4c5c-4bb0-93ba-82100abe06e5&quot;"
   ObjectTableName="&quot;ARInvoiceLine&quot;"
   IsNew="false"

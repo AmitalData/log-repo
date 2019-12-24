@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;b2e95b00-e257-4003-9e16-efe998a2d683&quot;"
   ObjectTableName="&quot;ShippingLine&quot;"
   IsNew="false"

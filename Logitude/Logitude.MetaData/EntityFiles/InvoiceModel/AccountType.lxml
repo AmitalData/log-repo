@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;b2a5162e-bc72-44ce-8dc1-f23007928c5e&quot;"
   ObjectTableName="&quot;AccountType&quot;"
   DBTableName="&quot;AccountTypes&quot;"

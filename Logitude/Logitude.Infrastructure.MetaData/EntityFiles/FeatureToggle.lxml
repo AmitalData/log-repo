@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;79ca6b5a-87b3-47b2-9100-3cc43bb86934&quot;"
   ObjectTableName="&quot;FeatureToggle&quot;"
   IsNew="true"

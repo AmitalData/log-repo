@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;9011f8b1-eddc-4354-a534-bb1fb669e7af&quot;"
   ObjectTableName="&quot;UserLastSettings&quot;"
   IsNew="true"

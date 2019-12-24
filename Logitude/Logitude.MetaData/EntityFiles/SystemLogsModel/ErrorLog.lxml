@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;d6493e4e-3855-49b8-ab88-d0b2ad9e791b&quot;"
   ObjectTableName="&quot;ErrorLog&quot;"
   DBTableName="&quot;ErrorLogs&quot;"

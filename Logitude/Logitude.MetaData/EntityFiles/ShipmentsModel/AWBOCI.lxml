@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c102aac3-51f9-4323-a8b7-9d47261edcfe&quot;"
   ObjectTableName="&quot;AWBOCI&quot;"
   DBTableName="&quot;AWBOCIs&quot;"

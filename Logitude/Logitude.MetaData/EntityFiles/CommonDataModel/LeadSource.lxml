@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;4605ac4c-bc8f-4934-be30-2ba15c88750a&quot;"
   ObjectTableName="&quot;LeadSource&quot;"
   DBTableName="&quot;LeadSources&quot;"

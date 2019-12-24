@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;93209674-c3d3-48a6-aed9-75216956de17&quot;"
   ObjectTableName="&quot;GlobalZone&quot;"
   DBTableName="&quot;GlobalZones&quot;"

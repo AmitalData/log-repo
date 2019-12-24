@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;e5748802-606e-45af-b17b-af4cdef0c8aa&quot;"
   ObjectTableName="&quot;InterestBasesType&quot;"
   IsNew="true"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;57618e68-d99b-4fb2-90b8-293862c4e53b&quot;"
   ObjectTableName="&quot;InterestBasesPeriod&quot;"
   IsNew="true"

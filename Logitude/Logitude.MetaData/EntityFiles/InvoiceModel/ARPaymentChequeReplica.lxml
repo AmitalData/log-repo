@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c41daca0-476c-45b4-b97e-8c48efbb5112&quot;"
   ObjectTableName="&quot;ARPaymentChequeReplica&quot;"
   IsNew="true"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;dacdfbf6-4dfc-4dcb-8498-9ea265cf7d57&quot;"
   ObjectTableName="&quot;ShipmentAWBPrintOnly&quot;"
   DBTableName="&quot;ShipmentAWBPrintOnlies&quot;"

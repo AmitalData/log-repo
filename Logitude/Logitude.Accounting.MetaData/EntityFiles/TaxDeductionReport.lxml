@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;344e9103-11a4-497c-9037-b85d5cdcf7c6&quot;"
   ObjectTableName="&quot;TaxDeductionReport&quot;"
   IsNew="true"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f681a0e0-ce3b-465e-bf57-a3ecf2b6ae09&quot;"
   ObjectTableName="&quot;ConversationHeaderMessage&quot;"
   DBTableName="&quot;ConversationHeaderMessages&quot;"

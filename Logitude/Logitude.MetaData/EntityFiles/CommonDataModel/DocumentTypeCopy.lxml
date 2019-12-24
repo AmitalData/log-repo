@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;9d553fad-aa42-4de3-93bf-ac13c925e9fe&quot;"
   ParentTableName="&quot;DocumentType&quot;"
   ObjectTableName="&quot;DocumentTypeCopy&quot;"

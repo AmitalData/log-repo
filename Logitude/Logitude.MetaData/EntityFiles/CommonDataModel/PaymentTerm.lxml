@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;2270fa0b-39c6-4a36-b08d-7723886be554&quot;"
   ObjectTableName="&quot;PaymentTerm&quot;"
   IsNew="false"

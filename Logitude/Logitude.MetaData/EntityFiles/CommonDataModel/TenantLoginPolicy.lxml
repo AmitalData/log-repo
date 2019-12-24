@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;6ed48b87-bc30-4841-871e-c83040859a07&quot;"
   ObjectTableName="&quot;TenantLoginPolicy&quot;"
   IsNew="false"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;316b686a-ca4b-456f-bb67-bd9faf87e0bf&quot;"
   ObjectTableName="&quot;TenantAddOn&quot;"
   DBTableName="&quot;TenantAddOns&quot;"

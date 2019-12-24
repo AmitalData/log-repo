@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;91d40504-53a7-4f84-b1aa-f2d0c0ed9bf7&quot;"
   ObjectTableName="&quot;CustomsTransferHeader&quot;"
   IsNew="true"

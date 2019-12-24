@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;cfcb93ce-27e8-4c86-aba7-8215b1f02b44&quot;"
   ObjectTableName="&quot;Address&quot;"
   IsNew="false"

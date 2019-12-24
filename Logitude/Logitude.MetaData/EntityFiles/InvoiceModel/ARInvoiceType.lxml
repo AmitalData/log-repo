@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;dd88093a-8659-43c5-8e97-cc4ccd77f4fc&quot;"
   ObjectTableName="&quot;ARInvoiceType&quot;"
   DBTableName="&quot;ARInvoiceTypes&quot;"

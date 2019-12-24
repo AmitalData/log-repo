@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;22a260ed-33a7-4087-93f6-f4d3a8ef133a&quot;"
   ObjectTableName="&quot;APInvoicePayment&quot;"
   DBTableName="&quot;APInvoicePayment&quot;"

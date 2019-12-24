@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a6c688fd-3046-4416-a22a-51bfa2996c91&quot;"
   ObjectTableName="&quot;QuoteTotalVAT&quot;"
   DBTableName="&quot;QuoteTotalVATs&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;abd4b0a2-f8ea-479f-9da0-78151057b7b5&quot;"
   ObjectTableName="&quot;FeatureAccessLevel&quot;"
   DBTableName="&quot;FeatureAccessLevels&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a9e8047f-87e0-4d62-af7b-a22d4bf8817e&quot;"
   ObjectTableName="&quot;Currency&quot;"
   IsNew="false"

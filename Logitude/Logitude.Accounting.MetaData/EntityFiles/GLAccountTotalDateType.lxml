@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;b7557b44-1d2f-4dce-87ba-ca028e58395f&quot;"
   ObjectTableName="&quot;GLAccountTotalDateType&quot;"
   DBTableName="&quot;GLAccountTotalDateTypes&quot;"

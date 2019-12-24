@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;1445e2e3-86ef-4a51-9345-6b39ef0b9221&quot;"
   ObjectTableName="&quot;TenantManagmentPrivateLabels&quot;"
   IsNew="false"

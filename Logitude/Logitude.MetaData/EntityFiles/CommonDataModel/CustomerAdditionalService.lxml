@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;923ec719-87e7-45e9-b980-3ddae80ac623&quot;"
   IsComposition="true"
   ParentTableName="&quot;Customer&quot;"

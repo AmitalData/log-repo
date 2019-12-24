@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;5af9ba02-2b3b-448d-9a64-3059ab2f9cc7&quot;"
   ObjectTableName="&quot;TMOfficeHour&quot;"
   IsNew="false"

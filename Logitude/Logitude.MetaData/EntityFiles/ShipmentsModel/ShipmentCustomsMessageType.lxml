@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ef0fb4c2-b684-443a-87ce-eb9b1afc3ffa&quot;"
   ObjectTableName="&quot;ShipmentCustomsMessageType&quot;"
   DBTableName="&quot;ShipmentCustomsMessageTypes&quot;"

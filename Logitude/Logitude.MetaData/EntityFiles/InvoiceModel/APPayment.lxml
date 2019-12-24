@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;025e02c8-e532-4082-be00-aa67fb120e0d&quot;"
   ObjectTableName="&quot;APPayment&quot;"
   IsNew="false"

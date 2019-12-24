@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;fb88b2e5-cd01-4290-81db-923e534cb10d&quot;"
   ObjectTableName="&quot;InboundEmailLine&quot;"
   IsNew="false"

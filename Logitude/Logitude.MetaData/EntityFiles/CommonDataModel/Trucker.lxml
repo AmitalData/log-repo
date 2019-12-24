@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;5aa7e97f-ede3-4331-99e3-ef4cfb4e4de9&quot;"
   ObjectTableName="&quot;Trucker&quot;"
   IsNew="false"

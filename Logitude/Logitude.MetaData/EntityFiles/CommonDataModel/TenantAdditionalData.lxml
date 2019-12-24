@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;99107f54-bb88-4d3d-ac18-e10c9e471a66&quot;"
   ObjectTableName="&quot;TenantAdditionalData&quot;"
   IsNew="true"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ba782ae4-470b-4173-a7b3-98018e9e94ad&quot;"
   ParentTableName="&quot;ChargesType&quot;"
   ObjectTableName="&quot;ChargeTypeAccounting&quot;"

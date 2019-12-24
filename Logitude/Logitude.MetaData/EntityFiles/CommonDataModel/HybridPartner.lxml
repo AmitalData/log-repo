@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;8d2e45ef-526b-433b-85be-9f51f1a6b7ec&quot;"
   ObjectTableName="&quot;HybridPartner&quot;"
   DBTableName="&quot;HybridPartners&quot;"

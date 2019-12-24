@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;aa693df9-2418-46e0-8976-9f01496318ee&quot;"
   ObjectTableName="&quot;MoveType&quot;"
   IsNew="false"

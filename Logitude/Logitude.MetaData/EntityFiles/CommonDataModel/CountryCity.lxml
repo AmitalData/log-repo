@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;3cf4ff7d-86b6-46e0-ba24-4d521904550b&quot;"
   ObjectTableName="&quot;CountryCity&quot;"
   IsNew="false"

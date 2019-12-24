@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;23d0b170-e883-40d2-a4ef-bc75dcd2a2bd&quot;"
   ObjectTableName="&quot;TMProjectCategory&quot;"
   IsNew="true"

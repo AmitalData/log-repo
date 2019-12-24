@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;63213c64-03cf-407b-b207-37c3abcfb738&quot;"
   ObjectTableName="&quot;MessagingStock&quot;"
   IsNew="false"

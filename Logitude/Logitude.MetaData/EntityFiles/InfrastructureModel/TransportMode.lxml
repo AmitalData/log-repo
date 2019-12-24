@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;37e647ad-a532-485e-94ce-524a67a6f6fe&quot;"
   ObjectTableName="&quot;TransportMode&quot;"
   DBTableName="&quot;TransportModes&quot;"

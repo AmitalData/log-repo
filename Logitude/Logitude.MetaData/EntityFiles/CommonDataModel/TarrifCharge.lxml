@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;1e874e31-54da-443b-a652-68bef19a5801&quot;"
   IsComposition="true"
   ParentTableName="&quot;TarrifHeader&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;e9615367-424a-46ec-9581-46ad1399d9b4&quot;"
   ObjectTableName="&quot;ChargesType&quot;"
   IsNew="false"
