@@ -72,8 +72,8 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
                     var list: FullAccountingSettingList[];
                     list = res;
                     this.fullAccountingSettingList = list[0];
-                    if (this.fullAccountingSettingList && this.fullAccountingSettingList.DefaultDifferencesGLAccountId) {
-                        this.GLAccountId = this.fullAccountingSettingList.DefaultDifferencesGLAccountId;
+                    if (!AppTool.IsNullOrEmpty(this.fullAccountingSettingList) && !AppTool.IsNullOrEmpty(this.fullAccountingSettingList.DefaultExternalDiffGLAccountId)) {
+                        this.GLAccountId = this.fullAccountingSettingList.DefaultExternalDiffGLAccountId;
                         this.gLAccountPMService.get(this.glAcccountId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var res = myResponse.Result;
