@@ -1,28 +1,286 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;067d9fa0-3620-423c-9ddc-8af249c7f7e7&quot;" ObjectTableName="&quot;FFRStatus&quot;" DBTableName="&quot;FFRStatus&quot;" ObjectTableSingular="&quot;FFR Status&quot;" ObjectTablePlural="&quot;FFR Status&quot;" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Name&quot;" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="true" EnableEditFromLOV="false" SortingByObjectField="&quot;Name&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;MD&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;FFR Status&quot;" Code="&quot;bf85&quot;" Name="&quot;FFRStatus Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;Name&quot;" GenerateDomainService="false" ClientModuleName="&quot;Booking&quot;">
-  <field Id="&quot;b9634871-e7f6-41b3-ad07-54b6225c56ef&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;FFRStatus&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="3" IsRequired="true" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="3" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;FFRStatus&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;fc3a0826-d16f-413e-a06d-bea95d8cb4d3&quot;" FieldName="&quot;Name&quot;" ObjectTableName="&quot;FFRStatus&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="60" IsRequired="true" DisplayOnLookUp="true" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="60" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;Name&quot;" ListPropertyPath="&quot;Name&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;FFRStatus&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Name&quot;" DefaultText="&quot;Name&quot;" ListFieldLable="&quot;NameListLable&quot;" ListLableDefaultText="&quot;Name&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;528cf502-fbdf-4f5e-96ab-c40fa112b9dd&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;FFRStatus&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="true" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;FFRStatus&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;Search...&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;Search...&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<entity
+  Id="&quot;067d9fa0-3620-423c-9ddc-8af249c7f7e7&quot;"
+  ObjectTableName="&quot;FFRStatus&quot;"
+  DBTableName="&quot;FFRStatus&quot;"
+  ObjectTableSingular="&quot;FFR Status&quot;"
+  ObjectTablePlural="&quot;FFR Status&quot;"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Name&quot;"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="true"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Name&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;MD&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;FFR Status&quot;"
+  Code="&quot;bf85&quot;"
+  Name="&quot;FFRStatus Query Group&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;Name&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Booking&quot;">
+  <field
+    Id="&quot;b9634871-e7f6-41b3-ad07-54b6225c56ef&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;FFRStatus&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="3"
+    IsRequired="true"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="3"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;FFRStatus&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;fc3a0826-d16f-413e-a06d-bea95d8cb4d3&quot;"
+    FieldName="&quot;Name&quot;"
+    ObjectTableName="&quot;FFRStatus&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="60"
+    IsRequired="true"
+    DisplayOnLookUp="true"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="60"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;Name&quot;"
+    ListPropertyPath="&quot;Name&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;FFRStatus&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Name&quot;"
+    DefaultText="&quot;Name&quot;"
+    ListFieldLable="&quot;NameListLable&quot;"
+    ListLableDefaultText="&quot;Name&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;528cf502-fbdf-4f5e-96ab-c40fa112b9dd&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;FFRStatus&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;FFRStatus&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;Search...&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;Search...&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;FFRStatus&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;FFRStatus&quot;" ShortView="false" IsManualEntry="false" LocalName="&quot;Updated&quot;" EnglishName="&quot;Updated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;FFRStatus&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;FFRStatus&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records>
-    <Record Code="&quot;BCN&quot;" Name="&quot;Booking Confirmed&quot;" SearchFields="&quot;BCN,Booking Confirmed,&quot;" />
-    <Record Code="&quot;BRQ&quot;" Name="&quot;Booking Request&quot;" SearchFields="&quot;BRQ,Booking Request,&quot;" />
-    <Record Code="&quot;BRR&quot;" Name="&quot;Booking Request Rejected&quot;" SearchFields="&quot;BRR,Booking Request Rejected,&quot;" />
-    <Record Code="&quot;CAA&quot;" Name="&quot;Cancellation Accepted&quot;" SearchFields="&quot;CAA,Cancellation Accepted,&quot;" />
-    <Record Code="&quot;CRR&quot;" Name="&quot;Cancellation Request Rejected&quot;" SearchFields="&quot;CRR,Cancellation Request Rejected,&quot;" />
-    <Record Code="&quot;CRS&quot;" Name="&quot;Cancellation Request Sent&quot;" SearchFields="&quot;CRS,Cancellation Request Sent,&quot;" />
-    <Record Code="&quot;CNM&quot;" Name="&quot;Cancelled Manually&quot;" SearchFields="&quot;CNM,Cancelled Manually,&quot;" />
-    <Record Code="&quot;CNF&quot;" Name="&quot;Confirmed&quot;" SearchFields="&quot;CNF,Confirmed&quot;" />
-    <Record Code="&quot;CFM&quot;" Name="&quot;Confirmed Manually&quot;" SearchFields="&quot;CFM,Confirmed Manually,&quot;" />
-    <Record Code="&quot;FMA&quot;" Name="&quot;FMA&quot;" SearchFields="&quot;FMA,FMA&quot;" />
-    <Record Code="&quot;FNA&quot;" Name="&quot;FNA&quot;" SearchFields="&quot;FNA,FNA&quot;" />
-    <Record Code="&quot;NST&quot;" Name="&quot;Not Sent&quot;" SearchFields="&quot;NST,Not Sent,&quot;" />
-    <Record Code="&quot;PAR&quot;" Name="&quot;Partially confirmed&quot;" SearchFields="&quot;PAR,Partially confirmed&quot;" />
-    <Record Code="&quot;SNT&quot;" Name="&quot;Sent&quot;" SearchFields="&quot;SNT,Sent&quot;" />
-    <Record Code="&quot;RBC&quot;" Name="&quot;Waiting for Airline Cancellation&quot;" SearchFields="&quot;RBC,Waiting for Airline Cancellation,&quot;" />
-    <Record Code="&quot;RBA&quot;" Name="&quot;Waiting for Airline Confirmation&quot;" SearchFields="&quot;RBA,Waiting for Airline Confirmation,&quot;" />
+    <Record
+      Code="&quot;BCN&quot;"
+      Name="&quot;Booking Confirmed&quot;"
+      SearchFields="&quot;BCN,Booking Confirmed,&quot;" />
+    <Record
+      Code="&quot;BRQ&quot;"
+      Name="&quot;Booking Request&quot;"
+      SearchFields="&quot;BRQ,Booking Request,&quot;" />
+    <Record
+      Code="&quot;BRR&quot;"
+      Name="&quot;Booking Request Rejected&quot;"
+      SearchFields="&quot;BRR,Booking Request Rejected,&quot;" />
+    <Record
+      Code="&quot;CAA&quot;"
+      Name="&quot;Cancellation Accepted&quot;"
+      SearchFields="&quot;CAA,Cancellation Accepted,&quot;" />
+    <Record
+      Code="&quot;CRR&quot;"
+      Name="&quot;Cancellation Request Rejected&quot;"
+      SearchFields="&quot;CRR,Cancellation Request Rejected,&quot;" />
+    <Record
+      Code="&quot;CRS&quot;"
+      Name="&quot;Cancellation Request Sent&quot;"
+      SearchFields="&quot;CRS,Cancellation Request Sent,&quot;" />
+    <Record
+      Code="&quot;CNM&quot;"
+      Name="&quot;Cancelled Manually&quot;"
+      SearchFields="&quot;CNM,Cancelled Manually,&quot;" />
+    <Record
+      Code="&quot;CNF&quot;"
+      Name="&quot;Confirmed&quot;"
+      SearchFields="&quot;CNF,Confirmed&quot;" />
+    <Record
+      Code="&quot;CFM&quot;"
+      Name="&quot;Confirmed Manually&quot;"
+      SearchFields="&quot;CFM,Confirmed Manually,&quot;" />
+    <Record
+      Code="&quot;FMA&quot;"
+      Name="&quot;FMA&quot;"
+      SearchFields="&quot;FMA,FMA&quot;" />
+    <Record
+      Code="&quot;FNA&quot;"
+      Name="&quot;FNA&quot;"
+      SearchFields="&quot;FNA,FNA&quot;" />
+    <Record
+      Code="&quot;NST&quot;"
+      Name="&quot;Not Sent&quot;"
+      SearchFields="&quot;NST,Not Sent,&quot;" />
+    <Record
+      Code="&quot;PAR&quot;"
+      Name="&quot;Partially confirmed&quot;"
+      SearchFields="&quot;PAR,Partially confirmed&quot;" />
+    <Record
+      Code="&quot;SNT&quot;"
+      Name="&quot;Sent&quot;"
+      SearchFields="&quot;SNT,Sent&quot;" />
+    <Record
+      Code="&quot;RBC&quot;"
+      Name="&quot;Waiting for Airline Cancellation&quot;"
+      SearchFields="&quot;RBC,Waiting for Airline Cancellation,&quot;" />
+    <Record
+      Code="&quot;RBA&quot;"
+      Name="&quot;Waiting for Airline Confirmation&quot;"
+      SearchFields="&quot;RBA,Waiting for Airline Confirmation,&quot;" />
   </Records>
 </entity>

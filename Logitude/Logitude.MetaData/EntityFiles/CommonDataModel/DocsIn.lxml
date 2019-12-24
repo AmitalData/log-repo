@@ -1,37 +1,214 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;416a2bf5-8c91-4541-833c-81016724c5aa&quot;" ObjectTableName="&quot;DocsIn&quot;" IsNew="false" DBTableName="&quot;DocumentIns&quot;" OldDBTableName="&quot;DocumentIns&quot;" ObjectTableSingular="&quot;Docs In&quot;" ObjectTablePlural="&quot;Docs Ins&quot;" HasCustomFilter="false" HasCustomFields="false" HasHelper="false" HasShortTitle="false" HasFiltersMenu="false" HasCustomValidator="false" IsEditable="true" IsNewWizard="false" KeyPropertyPath="&quot;Id&quot;" AutoCompleteSearchWindow="false" IsClosed="false" CacheOnClient="false" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="true" IsAutoComplete="false" EnableEditFromLOV="false" InActive="false" IsSaveButtonVisible="true" IsComposition="true" EnableSecurity="true" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;MD&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Docs In&quot;" Code="&quot;6a6d&quot;" Name="&quot;DocsIn&quot;" GenerateDomainService="false" NoViewController="false" NoPMController="false" NoTS="false" HasCompactSearch="false" ApplyDefaultValues="false" HasMenuButtons="false" ApplyOnPropertyChangedCode="false" HasApiHelper="false" AllowedForComputingPartners="false" Code1="&quot;f119&quot;" Name1="&quot; Query Group&quot;" CustomFieldsCount="0" DisableSearchBox="false" HasDocuments="false" IsLookUp="false" SearchFields="&quot;DocsIn,DocumentIns,,Id,&quot;">
+﻿<entity
+  Id="&quot;416a2bf5-8c91-4541-833c-81016724c5aa&quot;"
+  ObjectTableName="&quot;DocsIn&quot;"
+  IsNew="false"
+  DBTableName="&quot;DocumentIns&quot;"
+  OldDBTableName="&quot;DocumentIns&quot;"
+  ObjectTableSingular="&quot;Docs In&quot;"
+  ObjectTablePlural="&quot;Docs Ins&quot;"
+  HasCustomFilter="false"
+  HasCustomFields="false"
+  HasHelper="false"
+  HasShortTitle="false"
+  HasFiltersMenu="false"
+  HasCustomValidator="false"
+  IsEditable="true"
+  IsNewWizard="false"
+  KeyPropertyPath="&quot;Id&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="false"
+  CacheOnClient="false"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="true"
+  IsAutoComplete="false"
+  EnableEditFromLOV="false"
+  InActive="false"
+  IsSaveButtonVisible="true"
+  IsComposition="true"
+  EnableSecurity="true"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;MD&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Docs In&quot;"
+  Code="&quot;6a6d&quot;"
+  Name="&quot;DocsIn&quot;"
+  GenerateDomainService="false"
+  NoViewController="false"
+  NoPMController="false"
+  NoTS="false"
+  HasCompactSearch="false"
+  ApplyDefaultValues="false"
+  HasMenuButtons="false"
+  ApplyOnPropertyChangedCode="false"
+  HasApiHelper="false"
+  AllowedForComputingPartners="false"
+  Code1="&quot;f119&quot;"
+  Name1="&quot; Query Group&quot;"
+  CustomFieldsCount="0"
+  DisableSearchBox="false"
+  HasDocuments="false"
+  IsLookUp="false"
+  SearchFields="&quot;DocsIn,DocumentIns,,Id,&quot;">
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;DocsIn&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;DocsIn&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;DocsIn&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;DocsIn&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocsIn.B.DeleteAttachment&quot;" DefaultText="&quot;Delete Attachment&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.B.Search&quot;" DefaultText="&quot;Search&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.Attach&quot;" DefaultText="&quot;Attach&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.Actions&quot;" DefaultText="&quot;Actions&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.Name&quot;" DefaultText="&quot;Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.ReferenceNo&quot;" DefaultText="&quot;Reference No.&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.ReceivedBy&quot;" DefaultText="&quot;Received By&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.ReceivedDate&quot;" DefaultText="&quot;Received Date&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.FollowUp&quot;" DefaultText="&quot;Follow Up&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.Notes&quot;" DefaultText="&quot;Notes&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.B.UndoReceived&quot;" DefaultText="&quot;Undo Received&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.B.SetReceived&quot;" DefaultText="&quot;Set Received&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.B.Upload&quot;" DefaultText="&quot;Upload&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.B.View&quot;" DefaultText="&quot;View&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.B.Additional&quot;" DefaultText="&quot;Additional&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.B.SelectFiles&quot;" DefaultText="&quot;Select Files&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.B.Close&quot;" DefaultText="&quot;Close&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.DocsIn&quot;" DefaultText="&quot;Docs In&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.FileSize&quot;" DefaultText="&quot;File Size&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.FileName&quot;" DefaultText="&quot;File Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.O.ContactsList&quot;" DefaultText="&quot;Contacts List&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.M.FileOpenByAnotherProgram&quot;" DefaultText="&quot;File is already open by another program!&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.M.CantUploadFile&quot;" DefaultText="&quot;Can't upload file ( empty or corrupted)&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.M.FileUploadedSuccessfully&quot;" DefaultText="&quot;File Uploaded Successfully&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsIn.M.NoDocsInFound&quot;" DefaultText="&quot;No Docs In found&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.DeleteAttachment&quot;"
+      DefaultText="&quot;Delete Attachment&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.Search&quot;"
+      DefaultText="&quot;Search&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.Attach&quot;"
+      DefaultText="&quot;Attach&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.Actions&quot;"
+      DefaultText="&quot;Actions&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.Name&quot;"
+      DefaultText="&quot;Name&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.ReferenceNo&quot;"
+      DefaultText="&quot;Reference No.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.ReceivedBy&quot;"
+      DefaultText="&quot;Received By&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.ReceivedDate&quot;"
+      DefaultText="&quot;Received Date&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.FollowUp&quot;"
+      DefaultText="&quot;Follow Up&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.Notes&quot;"
+      DefaultText="&quot;Notes&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.UndoReceived&quot;"
+      DefaultText="&quot;Undo Received&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.SetReceived&quot;"
+      DefaultText="&quot;Set Received&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.Upload&quot;"
+      DefaultText="&quot;Upload&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.View&quot;"
+      DefaultText="&quot;View&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.Additional&quot;"
+      DefaultText="&quot;Additional&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.SelectFiles&quot;"
+      DefaultText="&quot;Select Files&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.B.Close&quot;"
+      DefaultText="&quot;Close&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.DocsIn&quot;"
+      DefaultText="&quot;Docs In&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.FileSize&quot;"
+      DefaultText="&quot;File Size&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.FileName&quot;"
+      DefaultText="&quot;File Name&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.O.ContactsList&quot;"
+      DefaultText="&quot;Contacts List&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.M.FileOpenByAnotherProgram&quot;"
+      DefaultText="&quot;File is already open by another program!&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.M.CantUploadFile&quot;"
+      DefaultText="&quot;Can't upload file ( empty or corrupted)&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.M.FileUploadedSuccessfully&quot;"
+      DefaultText="&quot;File Uploaded Successfully&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsIn.M.NoDocsInFound&quot;"
+      DefaultText="&quot;No Docs In found&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
