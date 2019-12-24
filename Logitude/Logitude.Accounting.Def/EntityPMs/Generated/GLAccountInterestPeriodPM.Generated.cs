@@ -137,12 +137,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal standardAddInterestPercent ;
+	  private decimal? standardAddInterestPercent ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal StandardAddInterestPercent  
+       public decimal? StandardAddInterestPercent  
 	   {
 	    
 	     get
@@ -153,7 +153,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(standardAddInterestPercent != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StandardAddInterestPercent",OldValue=standardAddInterestPercent,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StandardAddInterestPercent",OldValue=standardAddInterestPercent,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   standardAddInterestPercent=value;
 		   }
@@ -183,12 +183,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal exceptionalAddInterestPercent ;
+	  private decimal? exceptionalAddInterestPercent ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal ExceptionalAddInterestPercent  
+       public decimal? ExceptionalAddInterestPercent  
 	   {
 	    
 	     get
@@ -199,7 +199,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(exceptionalAddInterestPercent != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExceptionalAddInterestPercent",OldValue=exceptionalAddInterestPercent,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExceptionalAddInterestPercent",OldValue=exceptionalAddInterestPercent,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   exceptionalAddInterestPercent=value;
 		   }
@@ -229,12 +229,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal creditAddInterestPercent ;
+	  private decimal? creditAddInterestPercent ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal CreditAddInterestPercent  
+       public decimal? CreditAddInterestPercent  
 	   {
 	    
 	     get
@@ -245,7 +245,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(creditAddInterestPercent != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAddInterestPercent",OldValue=creditAddInterestPercent,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAddInterestPercent",OldValue=creditAddInterestPercent,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   creditAddInterestPercent=value;
 		   }

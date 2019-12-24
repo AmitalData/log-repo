@@ -8275,7 +8275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LUPD",
                 EnglishName =  "Line Updated",
-                LocalName =  "עודכנה שורת",
+                LocalName =  " עודכנה שורת ריבית ",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
