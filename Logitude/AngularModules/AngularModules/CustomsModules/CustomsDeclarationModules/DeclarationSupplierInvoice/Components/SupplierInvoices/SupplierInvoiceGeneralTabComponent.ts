@@ -3037,8 +3037,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SetStatusVisibility());
-
-          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/EditSupplierInvoiceItem');
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/EditSupplierInvoiceItem');
 
 
         } else {
