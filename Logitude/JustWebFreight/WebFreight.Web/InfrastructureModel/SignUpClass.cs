@@ -1465,9 +1465,10 @@ namespace WebFreight.Web.InfrastructureModel
                     Tenant = theTenant,
                 };
                 theTextCodeRepository.Add(newTextCode);
-                if (tenantZeroObjectTable.DescriptionTextCodeId == textCode.Id)
+                if (tenantZeroObjectTable.DescriptionTextCodeCode == textCode.Code)
                 {
                     currentTenantObjectTable.DescriptionTextCodeId = newTextCode.Id;
+                    currentTenantObjectTable.DescriptionTextCodeCode = newTextCode.Code;
                     theObjectTableRepository.Update(currentTenantObjectTable);
 
                 }
