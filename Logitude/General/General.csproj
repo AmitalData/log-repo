@@ -231,6 +231,7 @@
     <Content Include="2019.R5\12 - 2019\Day 05 [Samar] updated dependency for Master agent field.sql" />
     <Content Include="2019.R5\12 - 2019\Day 15 [Samar] drop customer competitor from query columns.sql" />
     <Content Include="2019.R5\12 - 2019\Day 15 [Samar] Fill First Approval Date backward.sql" />
+    <Content Include="2019.R5\12 - 2019\Day 18 [Abed] fill the subject for all emails opened to tenants in Logbox from automation in tenant 0.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
@@ -646,12 +647,15 @@
     <Content Include="Main Branch\2019\11 - 2019\Day 26 [Abed] fill objectfieldcode on AdvancedQueryFilters - Copy.sql" />
     <Content Include="Main Branch\2019\11 - 2019\Day 27 [Abed] delete Constrant between advancedQueryFilters and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 01 [Samar] Opportunity Tenant Opened stage.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 19 [Wesam] Fill textcodefields on ObjectFields.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 19 [Wesam] Delete Constraint between ObjectFields and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Fill ShortTextCodeCode on Tips.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Delete Constraint between Tips and TextCodes.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 12 [Wesam] Fill objectfieldcode on ScreenFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 08 [Wesam] Delete Constraint between ScreenFields and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Fill objectfieldcode on QueryColumns.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Delete Constraint between QueryColumns and objectField.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 19 [Samar] delete ailrine area metadata.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
