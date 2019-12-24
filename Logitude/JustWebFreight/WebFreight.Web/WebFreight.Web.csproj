@@ -1817,6 +1817,7 @@
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ExternalSystemsTablesCodeController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\SATInterfaceSettingController.Generated.cs" />
     <Compile Include="Controllers\QuoteModel\ApiHelpers\QuoteAPiHelper.cs" />
+    <Compile Include="Controllers\QuoteModel\Extended\QuoteDocumentVersionExtendedController.cs" />
     <Compile Include="Controllers\QuoteModel\Extended\QuoteTemplateDetailsFieldExtendedController.cs" />
     <Compile Include="Controllers\QuoteModel\Extended\QuoteTemplateExtendedController.cs" />
     <Compile Include="Controllers\QuoteModel\Extended\QuoteTemplateHeaderFieldExtendedController.cs" />

@@ -1,4 +1,4 @@
-﻿
+
 import {QuotePM} from './QuotePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -97,6 +97,10 @@ export class QuoteDocumentVersionPM {
     public get DisplayVersionTypeName() { return this.displayVersionTypeName; }
     public set DisplayVersionTypeName(newValue: string) { if (this.displayVersionTypeName != newValue) { this.displayVersionTypeName = newValue;  } }
 
+
+    private extension: string;
+    public get Extension() { return this.extension; }
+    public set Extension(newValue: string) { if (this.extension != newValue) { this.extension = newValue; } }
     
 
     public OldEntityPM: QuoteDocumentVersionPM;
