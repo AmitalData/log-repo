@@ -358,7 +358,7 @@ namespace MetaDataGenerator
 				DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
 				string solutionDirectory = solutionDir.FullName;
 
-				string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
+				string dir = solutionDirectory;//+ @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
 				dialog.SelectedPath = dir;
 				
 				System.Windows.Forms.DialogResult result = dialog.ShowDialog();

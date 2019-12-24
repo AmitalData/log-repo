@@ -1,38 +1,336 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;c515dc15-88ae-4a19-8a0f-c9709547b0d2&quot;" ObjectTableName="&quot;AWBChargesCode&quot;" DBTableName="&quot;AWBChargesCodes&quot;" ObjectTableSingular="&quot;AWB Charges Code&quot;" ObjectTablePlural="&quot;AWB Charges Codes&quot;" DefaultText="&quot;AWB Charges Code&quot;" Name="&quot;AWBChargesCode&quot;" IsNewWizard="false" LookUp1="&quot;Code&quot;" HasCustomValidator="false" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="true" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableEditFromLOV="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="true" IsAutoComplete="true" CustomFieldsCount="0" HasCustomFields="false" InActive="false" SearchFields="&quot;AWBChargesCode,AWBChargesCodes,,Code,&quot;" IsSaveButtonVisible="true" EnableSecurity="false" ObjectTableTypeCode="&quot;MD&quot;" IsComposition="false" MaxNumberOfCustomFields="0" AllowCustomFields="false" HasDynamicHeader="false" HasDocuments="false" IsLookUp="true" IsEditable="true" ClientModuleName="&quot;Shipment&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;Name&quot;">
-  <field Id="&quot;6e1c0549-b7fc-4324-8c88-d7429c5023f3&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;AWBChargesCode&quot;" FieldsDataType="&quot;Text&quot;" DataTypeCode="&quot;Text&quot;" MaxLength="4" IsRequiered="true" IsCustom="false" MinLength="0" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" DisplayInSearchWindowFilters="true" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" DisplayInSearchWindowFiltersIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" IsRestrictable="false" DisplayInEntityVariables="true" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" NumberOfDigits="0" IsMaxLength="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" AllowedInAirlineMessaging="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" HelpTextCode="&quot;Code&quot;" HelpTextDefaultText="&quot;&quot;" IsPrimaryKey="true" Code="&quot;Code&quot;" DependencyFilter3IsList="false" AllowedInCustomerFieldsSettings="false" DisplayInDocumentReferences="false" CopyToDW="false" HasTemplate="false" IsRequired="true" IsSpellCheckedFullFieldLable="false" IsSpellCheckedListLocalDefaultText="false" IsSpellCheckedHelpLocalDefaultText="false" NoMetaDataField="false" HasDataBaseField="true" HasPMField="true" GenerateInList="true" />
-  <field Id="&quot;feae9f8c-d128-4706-a024-674237d779ad&quot;" FieldName="&quot;Name&quot;" ObjectTableName="&quot;AWBChargesCode&quot;" FieldsDataType="&quot;Text&quot;" DataTypeCode="&quot;Text&quot;" MaxLength="100" IsRequiered="true" IsCustom="false" MinLength="0" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" DisplayInSearchWindowFilters="true" PMPropertyPath="&quot;Name&quot;" ListPropertyPath="&quot;Name&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" DisplayInSearchWindowFiltersIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" IsRestrictable="false" DisplayInEntityVariables="true" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" NumberOfDigits="0" IsMaxLength="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" AllowedInAirlineMessaging="false" FullFieldLable="&quot;Name&quot;" DefaultText="&quot;Name&quot;" ListFieldLable="&quot;NameListLable&quot;" ListLableDefaultText="&quot;Name&quot;" HelpTextCode="&quot;Name&quot;" HelpTextDefaultText="&quot;&quot;" Code="&quot;Name&quot;" DependencyFilter3IsList="false" AllowedInCustomerFieldsSettings="false" DisplayInDocumentReferences="false" CopyToDW="false" HasTemplate="false" IsRequired="true" IsSpellCheckedFullFieldLable="false" IsSpellCheckedListLocalDefaultText="false" IsSpellCheckedHelpLocalDefaultText="false" NoMetaDataField="false" HasDataBaseField="true" HasPMField="true" GenerateInList="true" />
-  <field Id="&quot;e76550c4-fe31-4567-add0-1e6a7c0e6c89&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;AWBChargesCode&quot;" FieldsDataType="&quot;Text&quot;" DataTypeCode="&quot;Text&quot;" MaxLength="1000" IsRequiered="false" IsCustom="false" MinLength="0" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" Operator="&quot;Contains&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" DisplayInSearchWindowFilters="false" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" DisplayInSearchWindowFiltersIndex="0" IsMulti="false" ValidForQuerySection1="&quot;AWBChargesCode&quot;" ValidForQuerySection2="&quot;AWBChargesCodeFollowUp&quot;" DependencyFilter1IsList="false" DependencyFilter2IsList="false" IsRestrictable="false" DisplayInEntityVariables="true" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" NumberOfDigits="0" IsMaxLength="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" AllowedInAirlineMessaging="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;Search..&quot;" HelpTextCode="&quot;SearchFields&quot;" HelpTextDefaultText="&quot;Searching by :&#xA;1: code&#xA;2: name&quot;" Code="&quot;SearchFields&quot;" DependencyFilter3IsList="false" AllowedInCustomerFieldsSettings="false" DisplayInDocumentReferences="false" CopyToDW="false" HasTemplate="false" IsRequired="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" NoMetaDataField="false" HasDataBaseField="true" HasPMField="true" GenerateInList="true" />
+﻿<entity
+  Id="&quot;c515dc15-88ae-4a19-8a0f-c9709547b0d2&quot;"
+  ObjectTableName="&quot;AWBChargesCode&quot;"
+  DBTableName="&quot;AWBChargesCodes&quot;"
+  ObjectTableSingular="&quot;AWB Charges Code&quot;"
+  ObjectTablePlural="&quot;AWB Charges Codes&quot;"
+  DefaultText="&quot;AWB Charges Code&quot;"
+  Name="&quot;AWBChargesCode&quot;"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  HasCustomValidator="false"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="true"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableEditFromLOV="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="true"
+  IsAutoComplete="true"
+  CustomFieldsCount="0"
+  HasCustomFields="false"
+  InActive="false"
+  SearchFields="&quot;AWBChargesCode,AWBChargesCodes,,Code,&quot;"
+  IsSaveButtonVisible="true"
+  EnableSecurity="false"
+  ObjectTableTypeCode="&quot;MD&quot;"
+  IsComposition="false"
+  MaxNumberOfCustomFields="0"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  HasDocuments="false"
+  IsLookUp="true"
+  IsEditable="true"
+  ClientModuleName="&quot;Shipment&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;Name&quot;">
+  <field
+    Id="&quot;6e1c0549-b7fc-4324-8c88-d7429c5023f3&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;AWBChargesCode&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    DataTypeCode="&quot;Text&quot;"
+    MaxLength="4"
+    IsRequiered="true"
+    IsCustom="false"
+    MinLength="0"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    DisplayInSearchWindowFilters="true"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    DisplayInSearchWindowFiltersIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    NumberOfDigits="0"
+    IsMaxLength="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    AllowedInAirlineMessaging="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    HelpTextCode="&quot;Code&quot;"
+    HelpTextDefaultText="&quot;&quot;"
+    IsPrimaryKey="true"
+    Code="&quot;Code&quot;"
+    DependencyFilter3IsList="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInDocumentReferences="false"
+    CopyToDW="false"
+    HasTemplate="false"
+    IsRequired="true"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    NoMetaDataField="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    GenerateInList="true" />
+  <field
+    Id="&quot;feae9f8c-d128-4706-a024-674237d779ad&quot;"
+    FieldName="&quot;Name&quot;"
+    ObjectTableName="&quot;AWBChargesCode&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    DataTypeCode="&quot;Text&quot;"
+    MaxLength="100"
+    IsRequiered="true"
+    IsCustom="false"
+    MinLength="0"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    DisplayInSearchWindowFilters="true"
+    PMPropertyPath="&quot;Name&quot;"
+    ListPropertyPath="&quot;Name&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    DisplayInSearchWindowFiltersIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    NumberOfDigits="0"
+    IsMaxLength="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    AllowedInAirlineMessaging="false"
+    FullFieldLable="&quot;Name&quot;"
+    DefaultText="&quot;Name&quot;"
+    ListFieldLable="&quot;NameListLable&quot;"
+    ListLableDefaultText="&quot;Name&quot;"
+    HelpTextCode="&quot;Name&quot;"
+    HelpTextDefaultText="&quot;&quot;"
+    Code="&quot;Name&quot;"
+    DependencyFilter3IsList="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInDocumentReferences="false"
+    CopyToDW="false"
+    HasTemplate="false"
+    IsRequired="true"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    NoMetaDataField="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    GenerateInList="true" />
+  <field
+    Id="&quot;e76550c4-fe31-4567-add0-1e6a7c0e6c89&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;AWBChargesCode&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    DataTypeCode="&quot;Text&quot;"
+    MaxLength="1000"
+    IsRequiered="false"
+    IsCustom="false"
+    MinLength="0"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    Operator="&quot;Contains&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    DisplayInSearchWindowFiltersIndex="0"
+    IsMulti="false"
+    ValidForQuerySection1="&quot;AWBChargesCode&quot;"
+    ValidForQuerySection2="&quot;AWBChargesCodeFollowUp&quot;"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    NumberOfDigits="0"
+    IsMaxLength="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    AllowedInAirlineMessaging="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;Search..&quot;"
+    HelpTextCode="&quot;SearchFields&quot;"
+    HelpTextDefaultText="&quot;Searching by :&#xA;1: code&#xA;2: name&quot;"
+    Code="&quot;SearchFields&quot;"
+    DependencyFilter3IsList="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInDocumentReferences="false"
+    CopyToDW="false"
+    HasTemplate="false"
+    IsRequired="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    NoMetaDataField="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    GenerateInList="true" />
   <EventTypes />
   <Records>
-    <Record Code="&quot;BA&quot;" SearchFields="&quot;BA,Basic&quot;" Name="&quot;Basic&quot;" />
-    <Record Code="&quot;CA&quot;" SearchFields="&quot;CA,Partial Collect Credit - Partial Prepaid Cash&quot;" Name="&quot;Partial Collect Credit - Partial Prepaid Cash&quot;" />
-    <Record Code="&quot;CB&quot;" SearchFields="&quot;CB,Partial Collect Credit - Partial Prepaid Credit&quot;" Name="&quot;Partial Collect Credit - Partial Prepaid Credit&quot;" />
-    <Record Code="&quot;CC&quot;" SearchFields="&quot;CC,All Charges Collect&quot;" Name="&quot;All Charges Collect&quot;" />
-    <Record Code="&quot;CE&quot;" SearchFields="&quot;CE,Partial Collect Credit Card - Partial Prepaid Cash&quot;" Name="&quot;Partial Collect Credit Card - Partial Prepaid Cash&quot;" />
-    <Record Code="&quot;CG&quot;" SearchFields="&quot;CG,All Charges Collect by GBL&quot;" Name="&quot;All Charges Collect by GBL&quot;" />
-    <Record Code="&quot;CH&quot;" SearchFields="&quot;CH,Partial Collect Credit Card - Partial Prepaid Credit&quot;" Name="&quot;Partial Collect Credit Card - Partial Prepaid Credit&quot;" />
-    <Record Code="&quot;CM&quot;" SearchFields="&quot;CM,Destination Collect by MCO&quot;" Name="&quot;Destination Collect by MCO&quot;" />
-    <Record Code="&quot;CP&quot;" SearchFields="&quot;CP,Destination Collect Cash&quot;" Name="&quot;Destination Collect Cash&quot;" />
-    <Record Code="&quot;CX&quot;" SearchFields="&quot;CX,Destination Collect Credit&quot;" Name="&quot;Destination Collect Credit&quot;" />
-    <Record Code="&quot;CZ&quot;" SearchFields="&quot;CZ,All Charges Collect by Credit Card&quot;" Name="&quot;All Charges Collect by Credit Card&quot;" />
-    <Record Code="&quot;NC&quot;" SearchFields="&quot;NC,No Charge&quot;" Name="&quot;No Charge&quot;" />
-    <Record Code="&quot;NG&quot;" SearchFields="&quot;NG,No Weight Charge - Other Charges Prepaid by GBL&quot;" Name="&quot;No Weight Charge - Other Charges Prepaid by GBL&quot;" />
-    <Record Code="&quot;NP&quot;" SearchFields="&quot;NP,No Weight Charge - Other Charges Prepaid Cash&quot;" Name="&quot;No Weight Charge - Other Charges Prepaid Cash&quot;" />
-    <Record Code="&quot;NT&quot;" SearchFields="&quot;NT,No Weight Charge - Other Charges Collect&quot;" Name="&quot;No Weight Charge - Other Charges Collect&quot;" />
-    <Record Code="&quot;NX&quot;" SearchFields="&quot;NX,No Weight Charge - Other Charges Prepaid Credit&quot;" Name="&quot;No Weight Charge - Other Charges Prepaid Credit&quot;" />
-    <Record Code="&quot;NZ&quot;" SearchFields="&quot;NZ,No Weight Charge - Other Charges Prepaid by Credit Card&quot;" Name="&quot;No Weight Charge - Other Charges Prepaid by Credit Card&quot;" />
-    <Record Code="&quot;PC&quot;" SearchFields="&quot;PC,Partial Prepaid Cash - Partial Collect Cash&quot;" Name="&quot;Partial Prepaid Cash - Partial Collect Cash&quot;" />
-    <Record Code="&quot;PD&quot;" SearchFields="&quot;PD,Partial Prepaid Credit - Partial Collect Cash&quot;" Name="&quot;Partial Prepaid Credit - Partial Collect Cash&quot;" />
-    <Record Code="&quot;PE&quot;" SearchFields="&quot;PE,Partial Prepaid Credit Card - Partial Collect Cash&quot;" Name="&quot;Partial Prepaid Credit Card - Partial Collect Cash&quot;" />
-    <Record Code="&quot;PF&quot;" SearchFields="&quot;PF,Partial Prepaid Credit Card - Partial Collect Credit Card&quot;" Name="&quot;Partial Prepaid Credit Card - Partial Collect Credit Card&quot;" />
-    <Record Code="&quot;PG&quot;" SearchFields="&quot;PG,All Charges Prepaid by GBL&quot;" Name="&quot;All Charges Prepaid by GBL&quot;" />
-    <Record Code="&quot;PH&quot;" SearchFields="&quot;PH,Partial Prepaid Credit Card - Partial Collect Credit&quot;" Name="&quot;Partial Prepaid Credit Card - Partial Collect Credit&quot;" />
-    <Record Code="&quot;PP&quot;" SearchFields="&quot;PP,All Charges Prepaid Cash&quot;" Name="&quot;All Charges Prepaid Cash&quot;" />
-    <Record Code="&quot;PX&quot;" SearchFields="&quot;PX,All Charges Prepaid Credit&quot;" Name="&quot;All Charges Prepaid Credit&quot;" />
-    <Record Code="&quot;PZ&quot;" SearchFields="&quot;PZ,All Charges Prepaid by Credit Card&quot;" Name="&quot;All Charges Prepaid by Credit Card&quot;" />
+    <Record
+      Code="&quot;BA&quot;"
+      SearchFields="&quot;BA,Basic&quot;"
+      Name="&quot;Basic&quot;" />
+    <Record
+      Code="&quot;CA&quot;"
+      SearchFields="&quot;CA,Partial Collect Credit - Partial Prepaid Cash&quot;"
+      Name="&quot;Partial Collect Credit - Partial Prepaid Cash&quot;" />
+    <Record
+      Code="&quot;CB&quot;"
+      SearchFields="&quot;CB,Partial Collect Credit - Partial Prepaid Credit&quot;"
+      Name="&quot;Partial Collect Credit - Partial Prepaid Credit&quot;" />
+    <Record
+      Code="&quot;CC&quot;"
+      SearchFields="&quot;CC,All Charges Collect&quot;"
+      Name="&quot;All Charges Collect&quot;" />
+    <Record
+      Code="&quot;CE&quot;"
+      SearchFields="&quot;CE,Partial Collect Credit Card - Partial Prepaid Cash&quot;"
+      Name="&quot;Partial Collect Credit Card - Partial Prepaid Cash&quot;" />
+    <Record
+      Code="&quot;CG&quot;"
+      SearchFields="&quot;CG,All Charges Collect by GBL&quot;"
+      Name="&quot;All Charges Collect by GBL&quot;" />
+    <Record
+      Code="&quot;CH&quot;"
+      SearchFields="&quot;CH,Partial Collect Credit Card - Partial Prepaid Credit&quot;"
+      Name="&quot;Partial Collect Credit Card - Partial Prepaid Credit&quot;" />
+    <Record
+      Code="&quot;CM&quot;"
+      SearchFields="&quot;CM,Destination Collect by MCO&quot;"
+      Name="&quot;Destination Collect by MCO&quot;" />
+    <Record
+      Code="&quot;CP&quot;"
+      SearchFields="&quot;CP,Destination Collect Cash&quot;"
+      Name="&quot;Destination Collect Cash&quot;" />
+    <Record
+      Code="&quot;CX&quot;"
+      SearchFields="&quot;CX,Destination Collect Credit&quot;"
+      Name="&quot;Destination Collect Credit&quot;" />
+    <Record
+      Code="&quot;CZ&quot;"
+      SearchFields="&quot;CZ,All Charges Collect by Credit Card&quot;"
+      Name="&quot;All Charges Collect by Credit Card&quot;" />
+    <Record
+      Code="&quot;NC&quot;"
+      SearchFields="&quot;NC,No Charge&quot;"
+      Name="&quot;No Charge&quot;" />
+    <Record
+      Code="&quot;NG&quot;"
+      SearchFields="&quot;NG,No Weight Charge - Other Charges Prepaid by GBL&quot;"
+      Name="&quot;No Weight Charge - Other Charges Prepaid by GBL&quot;" />
+    <Record
+      Code="&quot;NP&quot;"
+      SearchFields="&quot;NP,No Weight Charge - Other Charges Prepaid Cash&quot;"
+      Name="&quot;No Weight Charge - Other Charges Prepaid Cash&quot;" />
+    <Record
+      Code="&quot;NT&quot;"
+      SearchFields="&quot;NT,No Weight Charge - Other Charges Collect&quot;"
+      Name="&quot;No Weight Charge - Other Charges Collect&quot;" />
+    <Record
+      Code="&quot;NX&quot;"
+      SearchFields="&quot;NX,No Weight Charge - Other Charges Prepaid Credit&quot;"
+      Name="&quot;No Weight Charge - Other Charges Prepaid Credit&quot;" />
+    <Record
+      Code="&quot;NZ&quot;"
+      SearchFields="&quot;NZ,No Weight Charge - Other Charges Prepaid by Credit Card&quot;"
+      Name="&quot;No Weight Charge - Other Charges Prepaid by Credit Card&quot;" />
+    <Record
+      Code="&quot;PC&quot;"
+      SearchFields="&quot;PC,Partial Prepaid Cash - Partial Collect Cash&quot;"
+      Name="&quot;Partial Prepaid Cash - Partial Collect Cash&quot;" />
+    <Record
+      Code="&quot;PD&quot;"
+      SearchFields="&quot;PD,Partial Prepaid Credit - Partial Collect Cash&quot;"
+      Name="&quot;Partial Prepaid Credit - Partial Collect Cash&quot;" />
+    <Record
+      Code="&quot;PE&quot;"
+      SearchFields="&quot;PE,Partial Prepaid Credit Card - Partial Collect Cash&quot;"
+      Name="&quot;Partial Prepaid Credit Card - Partial Collect Cash&quot;" />
+    <Record
+      Code="&quot;PF&quot;"
+      SearchFields="&quot;PF,Partial Prepaid Credit Card - Partial Collect Credit Card&quot;"
+      Name="&quot;Partial Prepaid Credit Card - Partial Collect Credit Card&quot;" />
+    <Record
+      Code="&quot;PG&quot;"
+      SearchFields="&quot;PG,All Charges Prepaid by GBL&quot;"
+      Name="&quot;All Charges Prepaid by GBL&quot;" />
+    <Record
+      Code="&quot;PH&quot;"
+      SearchFields="&quot;PH,Partial Prepaid Credit Card - Partial Collect Credit&quot;"
+      Name="&quot;Partial Prepaid Credit Card - Partial Collect Credit&quot;" />
+    <Record
+      Code="&quot;PP&quot;"
+      SearchFields="&quot;PP,All Charges Prepaid Cash&quot;"
+      Name="&quot;All Charges Prepaid Cash&quot;" />
+    <Record
+      Code="&quot;PX&quot;"
+      SearchFields="&quot;PX,All Charges Prepaid Credit&quot;"
+      Name="&quot;All Charges Prepaid Credit&quot;" />
+    <Record
+      Code="&quot;PZ&quot;"
+      SearchFields="&quot;PZ,All Charges Prepaid by Credit Card&quot;"
+      Name="&quot;All Charges Prepaid by Credit Card&quot;" />
   </Records>
-  <AdditionalTextCodes>
-  </AdditionalTextCodes>
+  <AdditionalTextCodes></AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
