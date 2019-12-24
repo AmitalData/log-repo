@@ -30,7 +30,8 @@
 			<Button Content="Generate lxml files from database" Click="Button_Click_1" Grid.Row="1"   Height="39" Width="197"/>
 			<Button Margin="5 0 0 0" Content="Update Model LXMLS" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="197" Height="39" x:Name="btnUpdateModelLXMLs" Click="btnUpdateModelLXMLs_Click"/>
 			<Button  Margin="5 0 0 0" Content="Update Model Old LXMLS" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Top" Width="197" Height="39" x:Name="btnUpdate_Old_ModelLXMLs" Click="btnUpdate_Old_ModelLXMLs_Click"/>
-			<!--<Button  Margin="5 0 0 0" Content="Update Model Old LXMLS Closed Data only" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Top" Width="250" Height="39" x:Name="btnUpdate_Old_ModelLXMLs_ClosedOnly" Click="BtnUpdate_Old_ModelLXMLs_ClosedOnly_Click"/>-->
+            <Button Margin="5 0 0 0" Content="Format Model LXMLS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Height="39" x:Name="btnFormatModelLXMLs" Click="btnFormatModelLXMLs_Click"/>
+            <!--<Button  Margin="5 0 0 0" Content="Update Model Old LXMLS Closed Data only" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Top" Width="250" Height="39" x:Name="btnUpdate_Old_ModelLXMLs_ClosedOnly" Click="BtnUpdate_Old_ModelLXMLs_ClosedOnly_Click"/>-->
 
 		</StackPanel>
 

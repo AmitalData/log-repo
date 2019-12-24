@@ -121,10 +121,28 @@ namespace MetaDataGenerator
 
 
 
+        public bool FormatExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
+        {
+           using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+				if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+				{
+					 
+
+					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+					 
+
+				}
+			}
+            return true;
+        }
 
 
-
-		public bool AppendExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
+        public bool AppendExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
         {
             directoryPath = directoryPath + @"\";
             foreach (ObjectTable table in modelTables)
