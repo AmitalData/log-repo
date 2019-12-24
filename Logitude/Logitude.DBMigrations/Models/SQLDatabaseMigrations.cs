@@ -390,7 +390,6 @@ namespace Logitude.DBMigrations.Models
                 foreach(var relation in relations)
                 {
                     renameTableScript += GetDropRelationScript(relation);
-                    DroppedConstraints.Add(relation.ForeignKeyConstraintName);
                 }
                 renameTableScript += "-- Rename Table From " + TableMigrations.CurrentTableName + " To " + TableMigrations.DxmlTableName + "\n";
                 renameTableScript += "EXEC SP_RENAME '" + TableMigrations.DxmlTableSchema + "." + TableMigrations.CurrentTableName + "', '" + TableMigrations.DxmlTableName + "'";
@@ -559,7 +558,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetDropRelationScript(RelationDefinition relation)//relation from DBTable
         {
             string dropRelationScript = "-- Drop Foreign Key Constraint For Column " + relation.ForeignKeyColumn + " In Table " + relation.ParentTable + " That Reference To Column " + relation.ReferencedColumn + " In Table " + relation.ReferencedTable + "\n";
-            dropRelationScript += "EXEC('ALTER TABLE " + "[" + relation.ParentTableSchema + "].[" + relation.ParentTable + "]" + " DROP CONSTRAINT " + relation.ForeignKeyConstraintName + "')";
+            dropRelationScript += "EXEC('IF (OBJECT_ID(''" + relation.ParentTableSchema + "." + relation.ForeignKeyConstraintName + "'', ''F'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + relation.ParentTableSchema + "].[" + relation.ParentTable + "]" + " DROP CONSTRAINT " + relation.ForeignKeyConstraintName + " END" + "')";
             return dropRelationScript + ";\n\n";
         }
     }

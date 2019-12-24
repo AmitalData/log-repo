@@ -45,8 +45,6 @@ namespace Logitude.DBMigrations.Helpers
             GeneratedScript generatedScript = new GeneratedScript();
             RelationsScript relationsScript = new RelationsScript();
 
-            List<string> droppedConstraints = new List<string>();
-
             var stopwatch = Stopwatch.StartNew();
 
             foreach (var dxmlFile in DXMLFiles)
@@ -60,8 +58,7 @@ namespace Logitude.DBMigrations.Helpers
                 DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable);
 
                 string tableScript = databaseMigrations.GetScript();
-                droppedConstraints = droppedConstraints.Concat(databaseMigrations.GetDroppedConstraints()).ToList();
-                string tableRelationsScript = databaseMigrations.GetRelationsScript(droppedConstraints);
+                string tableRelationsScript = databaseMigrations.GetRelationsScript();
                 //string tableRelationsScript = null;
 
                 if (!String.IsNullOrEmpty(tableScript))

@@ -346,7 +346,6 @@ namespace Logitude.DBMigrations.Models
                 foreach (var relation in relations)
                 {
                     renameTableScript += GetDropRelationScript(relation);
-                    DroppedConstraints.Add(relation.ForeignKeyConstraintName.ToLower());
                 }
                 renameTableScript += "-- Rename Table From " + TableMigrations.CurrentTableName.ToUpper() + " To " + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper() + "\n";
                 renameTableScript += "RENAME \"" + TableMigrations.CurrentTableName.ToUpper() + "\" TO \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper() + "\"";

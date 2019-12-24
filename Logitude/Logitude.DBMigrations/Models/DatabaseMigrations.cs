@@ -15,7 +15,6 @@ namespace Logitude.DBMigrations.Models
         protected List<ColumnMigration> ColumnsMigrations = new List<ColumnMigration>();
         protected bool AlterPrimaryKeyConstraint = false;
         protected bool PrimaryKeyColumnAdded = false;
-        protected List<string> DroppedConstraints = new List<string>();
 
         public string GetScript()
         {
@@ -32,7 +31,7 @@ namespace Logitude.DBMigrations.Models
             return script;
         }
 
-        public string GetRelationsScript(List<string> droppedConstraints)
+        public string GetRelationsScript()
         {
             string tableRelationsScript = "";
 
@@ -49,10 +48,7 @@ namespace Logitude.DBMigrations.Models
                 {
                     if (!IsRelationInDXMLTable(relation))
                     {
-                        if (!droppedConstraints.Contains(relation.ForeignKeyConstraintName))
-                        {
-                            tableRelationsScript += GetDropRelationScript(relation);
-                        }
+                        tableRelationsScript += GetDropRelationScript(relation);
                     }
                 }
 
@@ -66,11 +62,6 @@ namespace Logitude.DBMigrations.Models
             }
 
             return tableRelationsScript;
-        }
-
-        public List<string> GetDroppedConstraints()
-        {
-            return DroppedConstraints;
         }
 
         protected string GetColumnDefinitionDataType(string dataType)
