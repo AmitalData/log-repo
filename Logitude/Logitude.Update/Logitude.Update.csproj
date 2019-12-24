@@ -344,6 +344,10 @@
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
       <Name>Logitude.BL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733f914-0e16-4412-84df-d98232dd43e9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
       <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
       <Name>Logitude.Customs.BL</Name>

@@ -51,16 +51,16 @@ export class SupportTabComponent extends BaseComponent implements OnInit {
         }
     }
 
-    UpdateDomainClicked() {
-        var domain: string;
+    //UpdateDomainClicked() {
+    //    var domain: string;
 
-        var email_splited: string[] = this.EntityPM.SupportEmail.split("@");
+    //    var email_splited: string[] = this.EntityPM.SupportEmail.split("@");
 
-        if (email_splited.length > 0) {
-            domain = email_splited[1];
-        }
+    //    if (email_splited.length > 0) {
+    //        domain = email_splited[1];
+    //    }
 
-        this.SupportDomain = domain;
-        this.SetUIProperties();
-    }
+    //    this.SupportDomain = domain;
+    //    this.SetUIProperties();
+    //}
 }

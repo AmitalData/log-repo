@@ -80,6 +80,9 @@ using System.Web;
 using Logitude.Server.Tools.Resolvers;
 using Logitude.BL.Resolvers;
 using WebFreight.Web.AccountingModel;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Update
 {
@@ -3972,7 +3975,72 @@ User/Pass",
             SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Green); // timer
             SetControlPropertyValue(UpdateRulesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
-         
+
+        private void button47_Click(object sender, EventArgs e)
+        {
+            List<TenantMailBox> tenantsToCreatMailBox = new List<TenantMailBox>();
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                IQueryable<TenantManagement> allTenants = tenantManagementRepository.GetAllTenants();
+                allTenants = allTenants.Where(d => d.SupportActivated && !string.IsNullOrEmpty(d.SupportEmail));
+
+                foreach (TenantManagement tenantManagement in allTenants)
+                {
+                    string[] splittedEmail = tenantManagement.SupportEmail.Split('@');
+
+                    if(splittedEmail.Length > 0)
+                    {
+                        tenantsToCreatMailBox.Add(new TenantMailBox() { Tenant = tenantManagement.Id,  Mail = splittedEmail[0] });
+                        tenantManagement.SupportDomain = splittedEmail[1];
+                    }
+                }
+
+                tenantManagementRepository.SubmitChanges();
+                scope.Complete();
+            }
+
+            if(tenantsToCreatMailBox.Count > 0)
+            {
+                UserRepository userRepository;
+                SupportMailboxRepository mailboxRepository;
+                foreach (TenantMailBox mail in tenantsToCreatMailBox)
+                {
+                    userRepository = new UserRepository(mail.Tenant);
+                    mailboxRepository = new SupportMailboxRepository(mail.Tenant);
+
+                    string userEmail = "system@tenant" + mail.Tenant + ".com";
+                    User user = userRepository.GetSingleUserByEmail(userEmail, mail.Tenant);
+
+                    bool exists = mailboxRepository.CheckIfDefaultMailBoxCreated(mail.Tenant);
+
+                    if (!exists)
+                    {
+                        SupportMailbox supportMailbox = new SupportMailbox()
+                        {
+                            Id = IdCounter.GetNumber("SupportMailbox", mail.Tenant),
+                            Tenant = mail.Tenant,
+                            CreateDate = TenantServerConfigration.GetCurrentDateTime(mail.Tenant),
+                            UpdateDate = TenantServerConfigration.GetCurrentDateTime(mail.Tenant),
+                            IsDefault = true,
+                            Inactive = false,
+                            Mailbox = mail.Mail,
+                            CreatedByUserId = user.Id,
+                            UpdatedByUserId = user.Id,
+                        };
+
+                        mailboxRepository.Add(supportMailbox);
+                        mailboxRepository.SubmitChanges();
+                    }
+                }
+            }
+        }
+    }
+
+    public class TenantMailBox
+    {
+        public int Tenant { get; set; }
+        public string Mail { get; set; }
     }
 
     public class MyFeature

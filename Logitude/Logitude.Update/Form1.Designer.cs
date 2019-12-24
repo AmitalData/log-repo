@@ -159,6 +159,7 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.UpdateRulesLabel = new System.Windows.Forms.Label();
             this.button48 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.button45 = new System.Windows.Forms.Button();
@@ -172,7 +173,6 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            //this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
             this.btnCompareData = new System.Windows.Forms.Button();
@@ -189,8 +189,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.UpdateRulesLabel = new System.Windows.Forms.Label();
-            //this.button47 = new System.Windows.Forms.Button();
+            this.button47 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -397,7 +396,6 @@
             // 
             // toolStripTextBoxFilePath
             // 
-            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -526,7 +524,6 @@
             // 
             // tenantTxtBox
             // 
-            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -713,7 +710,7 @@
             // 
             // btnAddBatchServicesDefinitions
             // 
-            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 195);
+            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 158);
             this.btnAddBatchServicesDefinitions.Name = "btnAddBatchServicesDefinitions";
             this.btnAddBatchServicesDefinitions.Size = new System.Drawing.Size(184, 35);
             this.btnAddBatchServicesDefinitions.TabIndex = 26;
@@ -753,7 +750,7 @@
             // 
             // DownLoadZipFile
             // 
-            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 151);
+            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 114);
             this.DownLoadZipFile.Name = "DownLoadZipFile";
             this.DownLoadZipFile.Size = new System.Drawing.Size(184, 38);
             this.DownLoadZipFile.TabIndex = 30;
@@ -764,7 +761,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(522, 57);
+            this.checkBox1.Location = new System.Drawing.Point(522, 23);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(85, 17);
             this.checkBox1.TabIndex = 18;
@@ -878,7 +875,7 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(522, 257);
+            this.button31.Location = new System.Drawing.Point(522, 203);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(184, 28);
             this.button31.TabIndex = 55;
@@ -956,7 +953,7 @@
             // 
             // ConvertXmalTemplateToHtmlButton
             // 
-            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 112);
+            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 71);
             this.ConvertXmalTemplateToHtmlButton.Name = "ConvertXmalTemplateToHtmlButton";
             this.ConvertXmalTemplateToHtmlButton.Size = new System.Drawing.Size(184, 33);
             this.ConvertXmalTemplateToHtmlButton.TabIndex = 42;
@@ -1078,7 +1075,7 @@
             // 
             // ConvertSignatureButton
             // 
-            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 83);
+            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 46);
             this.ConvertSignatureButton.Name = "ConvertSignatureButton";
             this.ConvertSignatureButton.Size = new System.Drawing.Size(184, 23);
             this.ConvertSignatureButton.TabIndex = 48;
@@ -1097,7 +1094,7 @@
             // 
             // _UpdatePortsButton
             // 
-            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 289);
+            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 237);
             this._UpdatePortsButton.Name = "_UpdatePortsButton";
             this._UpdatePortsButton.Size = new System.Drawing.Size(184, 34);
             this._UpdatePortsButton.TabIndex = 50;
@@ -1484,6 +1481,17 @@
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // UpdateRulesLabel
+            // 
+            this.UpdateRulesLabel.AutoSize = true;
+            this.UpdateRulesLabel.Location = new System.Drawing.Point(434, 280);
+            this.UpdateRulesLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.UpdateRulesLabel.Name = "UpdateRulesLabel";
+            this.UpdateRulesLabel.Size = new System.Drawing.Size(100, 13);
+            this.UpdateRulesLabel.TabIndex = 97;
+            this.UpdateRulesLabel.Text = "...";
+            this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // button48
             // 
             this.button48.Location = new System.Drawing.Point(543, 269);
@@ -1609,7 +1617,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
-            //this.tabPage2.Controls.Add(this.button47);
+            this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
             this.tabPage2.Controls.Add(this.button43);
             this.tabPage2.Controls.Add(this.button42);
@@ -1668,7 +1676,6 @@
             this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
-          
             // 
             // button44
             // 
@@ -1824,27 +1831,15 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
-            // UpdateRulesLabel
+            // button47
             // 
-            this.UpdateRulesLabel.AutoSize = true;
-            this.UpdateRulesLabel.Location = new System.Drawing.Point(434, 280);
-            this.UpdateRulesLabel.MinimumSize = new System.Drawing.Size(100, 0);
-            this.UpdateRulesLabel.Name = "UpdateRulesLabel";
-            this.UpdateRulesLabel.Size = new System.Drawing.Size(100, 13);
-            this.UpdateRulesLabel.TabIndex = 97;
-            this.UpdateRulesLabel.Text = "...";
-            this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //// 
-            //// button47
-            //// 
-            //this.button47.Location = new System.Drawing.Point(522, 25);
-            //this.button47.Name = "button47";
-            //this.button47.Size = new System.Drawing.Size(184, 23);
-            //this.button47.TabIndex = 97;
-            //this.button47.Text = "tax report";
-            //this.
-            //.UseVisualStyleBackColor = true;
-            //this.button47.Click += new System.EventHandler(this.button47_Click);
+            this.button47.Location = new System.Drawing.Point(522, 278);
+            this.button47.Name = "button47";
+            this.button47.Size = new System.Drawing.Size(184, 34);
+            this.button47.TabIndex = 97;
+            this.button47.Text = "Fill Tickert MailBox";
+            this.button47.UseVisualStyleBackColor = true;
+            this.button47.Click += new System.EventHandler(this.button47_Click);
             // 
             // Form1
             // 
@@ -2054,6 +2049,7 @@
         //private System.Windows.Forms.Button button47;
         private System.Windows.Forms.Button button48;
         private System.Windows.Forms.Label UpdateRulesLabel;
+        private System.Windows.Forms.Button button47;
     }
 }
 
