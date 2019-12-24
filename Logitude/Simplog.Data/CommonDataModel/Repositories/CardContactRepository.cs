@@ -66,6 +66,21 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return ids;
         }
 
+
+        public string GetCardsContactsForContactIds_Names(List<string> contactIdsList, int tenant)
+        {
+            var ids = "";
+            List<string> cardsList = (from d in context.CardContacts.Include("Card.Customer")
+                                      where d.Tenant == tenant && contactIdsList.Contains(d.ContactId) && (d.Card != null && d.Card.IsCustomer)
+                                      select d).GroupBy(a => a.Card).Select(grp => grp.FirstOrDefault().Card.EnglishName).ToList();
+            if (cardsList != null && cardsList.Count() > 0)
+            {
+                ids = string.Join(",", cardsList);
+                ids.TrimEnd(',');
+            }
+            return ids;
+        }
+
         public List<CardContact> GetCardContactForContact(string contactId, int tenant)
         {
             return (from record in context.CardContacts.Include("Card")
