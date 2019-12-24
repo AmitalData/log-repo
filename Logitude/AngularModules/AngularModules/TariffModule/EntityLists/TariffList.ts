@@ -33,6 +33,10 @@ export class TariffList {
 	TariffNumber: string;
 	IsFromUpdateScreen: boolean;
 	IsFromCopy: boolean;
+	LastActivityTypeName: string;
+	LastActivityByUserName: string;
+	LastActivityDate: Date;
+	TransportModeCode: string;
 	
 }
  

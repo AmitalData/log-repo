@@ -1,32 +1,25 @@
-import {Component, ViewChildren, QueryList,OnInit, OnDestroy} from '@angular/core';
+import {Component, ViewChildren, QueryList, OnInit} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { TariffDomainService, TariffSummery, TariffFilterParameter} from '../../Services/TariffDomainService';
+import { TariffDomainService, TariffSummery} from '../../Services/TariffDomainService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
-import { BatchTaskExecutionPM } from '../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
-import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
-import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
-import { AppTool } from '../../../Infrastructure/Tools';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-
-declare var ResultAsArray: any;
+import { TariffList } from '../../EntityLists/TariffList';
 
 @Component({
-    selector: 'TariffModuleWorkspaceComponent',
+    selector: 'CostComponent',
     moduleId: module.id,
-    templateUrl: './TariffModuleWorkspaceComponent.html',
-    providers: [EntityResourceService, TariffDomainService],
+    templateUrl: './CostWorkspaceComponent.html',
+    providers: [EntityResourceService, TariffDomainService]
 })
 
-export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
+export class CostWorkspaceComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
-    private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsTariffGenerateVisible: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
@@ -61,17 +54,17 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
             if (this.CurrentSession == null)
                 this.CurrentSession = SessionLocator.SelectedSession;
-            this.InitComponent();
+            this.LoadAllScreenData();
         });
-    }
-    ngOnDestroy() {
-        this.StopTimer();
+        
     }
 
     LoadAllScreenData() {
         this.LoadQueriesCounts();
         this.SetQueriesVisibility();
+        this.LoadRecentTariffs();
     }
+
     LoadQueriesCounts() {
         this.tariffDomainService.GetTariffsCounts().subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -109,12 +102,9 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public OceanLCLFreightCostVisibility: boolean = false;
     public OceanLCLSurchargesCostVisibility: boolean = false;
     public OceanFCLFreightCostVisibility: boolean = false;
-    public OceanFCLSurchargesCostVisibility: boolean = false;
+    public OceanFCLSurchargesCostVisibility: boolean = false; 
 
     SetQueriesVisibility() {
-        if (FeatureLocator.HasFeaturePermession("Tariff", "TARIFFGENERATE")) {
-            this.IsTariffGenerateVisible = true;
-        }
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {
             this.AirFreightCostVisibility = true;
@@ -190,7 +180,18 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         logWindow.ComponentLoaded.subscribe(comp => {
             comp.SetWindowArgs({ TypeCode: typeCode });
         });
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewTariffWindowClosed($event));
         logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
+    }
+
+    OnNewTariffWindowClosed(arg: any) {
+        if (SessionLocator.IsExternalParams) {
+            SessionLocator.ClearExternalParams();
+        }
+
+        if (arg == 'OK') {
+            this.LoadAllScreenData();
+        }
     }
 
     public ViewTariffs(code: string) {
@@ -321,12 +322,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-
-    private InitComponent() {
-        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
-        this.LoadAllScreenData();
-    }
-
+    
     private selectedItem: string;
     get SelectedItem() { return this.selectedItem; }
     set SelectedItem(newValue: string) {
@@ -335,201 +331,38 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         }
     }
     
-    TariffSettingsClicked() {
-        this._entityResourceService.getEntityResourceByTableName("TariffSetting", 0).subscribe(response => {
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 600;
-            logWindow.Height = 400;
-            logWindow.Title = "Tariff Settings";
-            logWindow.Show('./TariffModule/Components/Workspaces/TariffSettingComponent');
-        });
-    }
-
-    private timer: any;
-    private timerInterval: number = 5000;
-    private IsLoading: boolean = false;
-    private batchEntity: BatchTaskExecutionPM;
-    GenerateTariffsClicked() {
-        this.CurrentSession.StartBusyIndicator("Generating...");
-
-        this.tariffDomainService.GenerateTariffs().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-
-                this.batchEntity = myResponse.Result;
-
-                if (this.batchEntity != null) {
-                    this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
-                }
+    // Recent Tariffs
+    public RecentTariffsCount: number = 0;
+    public RecentTariffsList: TariffList[] = [];
+    LoadRecentTariffs() {
+        var tariffService: TariffDomainService = new TariffDomainService();
+        tariffService.GetRecentTariffs().subscribe(myResult => {
+            if (myResult == null) {
+                this.RecentTariffsList = [];
+                this.RecentTariffsCount = 0;
             }
-
             else {
-                this.CurrentSession.StopBusyIndicator();
-                var window = new MessageWindow();
-                window.Show(myResponse.ErrorsArray[0]);
+                this.RecentTariffsList = myResult;
+                this.RecentTariffsCount = myResult.length;
             }
         });
     }
 
-    // Generate from Excel 
-    private FileName: string;
-    GenerateExcelTariffsClicked(fileEvent) {
-        var file = fileEvent.target.files[0];
-
-        if (file) {
-            var extension: string = file.name.split('.')[1];
-
-            if (extension.includes("xls")) {
-                var file = fileEvent.target.files[0];
-                this.UploadExcel(file);
-            }
-
-            else {
-                var messageWindow: MessageWindow = new MessageWindow();
-                messageWindow.Show("You have to upload excel files only");
-            }
-        } 
-    }
-    UploadExcel(file: any) {
-        this.FileName = null;
-        if (!AppTool.IsNullOrEmpty(file.name)) {
-            var name = file.name.split('.');
-            if (name.length == 2) {
-                this.FileName = name[0];
-            }
-        }
-        if (file && file.size > 0) {
-            this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var myResult = response.Result;
-                    if (myResult) {
-                        this.StartUploadingExcelFile(file);
-                    }
-                }
+    //Edit Tariff
+    EditTariff(entity: any) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Tariff', BackButtonLabel: 'Tariffs' });
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                    this.OnBackFromEdit();
+                    this.LoadAllScreenData();
+                });
             });
-        }
     }
-    StartUploadingExcelFile(file: any) {
-        if (file && file.size > 0) {
-            var filebuffer = file.slice(0, file.size);
-            this.ConvertArrayBufferToBase64(filebuffer, this);
-        }
-    }
-    ConvertArrayBufferToBase64(file: any, context: any) {
-        var reader: FileReader = new FileReader();
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var binary = '';
-            var bytes = new Uint8Array(ResultAsArray(e));
-            var len = bytes.byteLength;
-            for (var i = 0; i < len; i++) {
-                binary += String.fromCharCode(bytes[i]);
-            }
-
-            var filter = new TariffFilterParameter();
-            filter.FileData = window.btoa(binary);
-            filter.FileName = context.FileName;
-            context.SendExcelToServer(filter);
-        };
-
-        reader.onerror = function (e) {
-            console.log(e);
-        };
-        reader.readAsArrayBuffer(file);
-    }
-    SendExcelToServer(filter: any) {
-        this.CurrentSession.StartBusyIndicator("Generating...");
-        this.tariffDomainService.GenerateTariffsFromExcel(filter).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                this.batchEntity = response.Result;
-
-                if (this.batchEntity != null) {
-                    this.CurrentSession.StartBusyIndicator("Uploading File...");
-                    this.CheckBatchTaskExecution(this.batchEntity.Id);
-                }
-
-                //this.CurrentSession.StopBusyIndicator();
-            }
-            else {
-                this.CurrentSession.StopBusyIndicator();
-                var window = new MessageWindow();
-                window.Show(response.ErrorsArray[0]);
-            }
-        });
+    OnBackFromEdit() {
+        SessionLocator.ClearExternalParams();
     }
 
-    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
-        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var list: BatchTaskExecutionList = myResponse.Result;
-
-                if (list.StatusCode == "D") {
-                    this.CurrentSession.StopBusyIndicator();
-
-                    var window = new MessageWindow();
-                    window.Show("File uploaded successfully");
-                }
-
-                else if (list.StatusCode == "F") {
-                    this.CurrentSession.StopBusyIndicator();
-                    var window = new MessageWindow();
-                    window.Show("There was an error uploading excel file. Please try again later");
-                }
-
-                else {
-                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
-                }
-            }
-
-            else {
-                this.CurrentSession.StopBusyIndicator();
-                var window = new MessageWindow();
-                window.Show(myResponse.ErrorsArray[0]);
-            }
-        });
-    }
-
-    GetBTE() {
-        if (!this.IsLoading) {
-            this.IsLoading = true;
-
-            var bteList: BatchTaskExecutionList;
-            var myService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-
-            myService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    bteList = myResponse.Result;
-
-                    if (bteList.StatusCode == "D") {
-                        this.LoadQueriesCounts();
-                        this.CurrentSession.StopBusyIndicator();
-                        this.StopTimer();
-                    }
-
-                    else if (bteList.StatusCode == "F") {
-                        this.CurrentSession.StopBusyIndicator();
-                        this.StopTimer();                       
-                    }
-                }
-
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                    this.StopTimer();
-
-                    var window = new MessageWindow();
-                    window.Show(myResponse.ErrorsArray[0]);
-
-                }
-
-                this.IsLoading = false;
-            });
-        }
-    }
-
-    StopTimer() {
-        if (this.timer) {
-            clearInterval(this.timer);
-        }
-    }
 }
 

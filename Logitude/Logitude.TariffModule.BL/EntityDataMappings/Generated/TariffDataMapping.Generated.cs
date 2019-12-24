@@ -134,7 +134,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ContainerType2Id, 
 	         ContainerType3Id, 
 	         ContainerType4Id, 
-	         ContainerType5Id,
+	         ContainerType5Id, 
+	         TransportModeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
