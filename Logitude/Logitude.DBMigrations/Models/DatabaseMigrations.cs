@@ -38,29 +38,29 @@ namespace Logitude.DBMigrations.Models
 
             if(CurrentTable == null)
             {
-                foreach (var dxmlTableRelation in DXMLTable.Relations)
+                foreach (var relation in DXMLTable.Relations)
                 {
-                    tableRelationsScript += GetCreateRelationScript(dxmlTableRelation);
+                    tableRelationsScript += GetCreateRelationScript(relation);
                 }
             }
             else
             {
-                foreach (var currentTableRelation in CurrentTable.Relations)
+                foreach (var relation in CurrentTable.Relations)
                 {
-                    if (!IsRelationInDXMLTable(currentTableRelation))
+                    if (!IsRelationInDXMLTable(relation))
                     {
-                        if (!droppedConstraints.Contains(currentTableRelation.ForeignKeyConstraintName))
+                        if (!droppedConstraints.Contains(relation.ForeignKeyConstraintName))
                         {
-                            tableRelationsScript += GetDropRelationScript(currentTableRelation);
+                            tableRelationsScript += GetDropRelationScript(relation);
                         }
                     }
                 }
 
-                foreach (var dxmlTableRelation in DXMLTable.Relations)
+                foreach (var relation in DXMLTable.Relations)
                 {
-                    if (!IsRelationInCurrentTable(dxmlTableRelation))
+                    if (!IsRelationInCurrentTable(relation))
                     {
-                        tableRelationsScript += GetCreateRelationScript(dxmlTableRelation);
+                        tableRelationsScript += GetCreateRelationScript(relation);
                     }
                 }
             }
@@ -588,12 +588,12 @@ namespace Logitude.DBMigrations.Models
             return processedRelations;
         }
 
-        protected bool IsRelationInCurrentTable(RelationDefinition relation)
+        protected bool IsRelationInCurrentTable(RelationDefinition relation)//dxml relation
         {
             return CurrentTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
         }
 
-        protected bool IsRelationInDXMLTable(RelationDefinition relation)
+        protected bool IsRelationInDXMLTable(RelationDefinition relation)//db relation
         {
             return DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
         }
@@ -700,9 +700,9 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract List<RelationDefinition> GetRelationsForDBTable(string tableName, bool usingParentTable);
 
-        protected abstract string GetCreateRelationScript(RelationDefinition dxmlTableRelation);
+        protected abstract string GetCreateRelationScript(RelationDefinition relation);
 
-        protected abstract string GetDropRelationScript(RelationDefinition currentTableRelation);
+        protected abstract string GetDropRelationScript(RelationDefinition relation);
 
         protected abstract string GetCreateTableScript();
 
