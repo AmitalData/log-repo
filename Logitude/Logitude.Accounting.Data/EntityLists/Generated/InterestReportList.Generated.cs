@@ -46,6 +46,16 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? GLAccountInterestCreditLimit  { get; set; }
        [DataMember]
        public string InterestReportStatusCode  { get; set; }
+       [DataMember]
+       public string CreatedByLocalName  { get; set; }
+       [DataMember]
+       public string GLAccountDisplayNumber  { get; set; }
+       [DataMember]
+       public string GLAccountLocalName  { get; set; }
+       [DataMember]
+       public string ARInvoiceNumber  { get; set; }
+       [DataMember]
+       public string UpdatedByLocalName  { get; set; }
    }
 
 }

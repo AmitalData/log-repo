@@ -388,6 +388,98 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string gLAccountDisplayNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GLAccountDisplayNumber  
+	   {
+	    
+	     get
+		{
+		   return gLAccountDisplayNumber;
+		 }
+		 set
+		 {
+		   if(gLAccountDisplayNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountDisplayNumber",OldValue=gLAccountDisplayNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gLAccountDisplayNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string gLAccountLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GLAccountLocalName  
+	   {
+	    
+	     get
+		{
+		   return gLAccountLocalName;
+		 }
+		 set
+		 {
+		   if(gLAccountLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountLocalName",OldValue=gLAccountLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gLAccountLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string aRInvoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ARInvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return aRInvoiceNumber;
+		 }
+		 set
+		 {
+		   if(aRInvoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ARInvoiceNumber",OldValue=aRInvoiceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   aRInvoiceNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByLocalName  
+	   {
+	    
+	     get
+		{
+		   return updatedByLocalName;
+		 }
+		 set
+		 {
+		   if(updatedByLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByLocalName",OldValue=updatedByLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

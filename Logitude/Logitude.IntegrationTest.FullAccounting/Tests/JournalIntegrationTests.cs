@@ -22,18 +22,15 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     public class JournalIntegrationTests
     {
         [TestMethod]
-        public void Journal_CrreateJournalO1175()
+        public async Task Post()
         {
-            Task.Run(async () =>
-            {
-                JournalPM entityPM = GetNewJournalO1175();
+                JournalPM entityPM = GetNewJourna();
                 HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "Journals");
-                JournalPM JournalO1175 = RestClientService.ParseResponse<JournalPM>(response);
-                Assert.AreEqual(JournalO1175.Id, entityPM.Id);
-            }).GetAwaiter().GetResult();
+                JournalPM JournalPM = RestClientService.ParseResponse<JournalPM>(response);
+                Assert.AreEqual(JournalPM.Id, entityPM.Id);
         }
 
-        private JournalPM GetNewJournalO1175()
+        private JournalPM GetNewJourna()
         {
             JournalPM JournalPM = new JournalPM();
             JournalPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -49,7 +46,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
             JournalPM.UpdatedByUserName = IntegrationTestLoginParameters.LoginUserName;
             JournalPM.ApproveDate = DateTime.UtcNow;
             JournalPM.ApprovedByUserId = IntegrationTestLoginParameters.LoginUserId;
-            var RandomString = RestClientService.GetRandomString(5);
+            var RandomString = VariablesGenerater.GetRandomString(5);
             JournalPM.SearchFields = "GE:JO:"+ RandomString;
             JournalPM.AccountingEntityReference = "GE:JO"+ RandomString;
             JournalPM.IsVoided = false;

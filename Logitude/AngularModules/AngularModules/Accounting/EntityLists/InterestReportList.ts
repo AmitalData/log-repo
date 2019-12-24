@@ -24,6 +24,11 @@ export class InterestReportList {
 	InvoiceAmount: number;
 	GLAccountInterestCreditLimit: number;
 	InterestReportStatusCode: string;
+	CreatedByLocalName: string;
+	GLAccountDisplayNumber: string;
+	GLAccountLocalName: string;
+	ARInvoiceNumber: string;
+	UpdatedByLocalName: string;
 	
 }
  

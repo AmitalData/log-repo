@@ -14,16 +14,12 @@ namespace Logitude.IntegrationTest.FullAccounting
     public class Initialize
     {
         [AssemblyInitialize]
-        public static void AssemblyInitialize(TestContext context)
+        public async Task AssemblyInitialize(TestContext context)
         {
-            Task.Run(async () =>
-            {
                 await LoginService.GetLoginTokenByUserEmailAndTenant();
                 await CorePreparationCalls.PrepareVariables();
                 await FullAccountingPreparationCalls.PrepareVariables();
-
-            }).GetAwaiter().GetResult();
-        }
+         }
 
         [AssemblyCleanup]
         public static void AssemblyCleanup()

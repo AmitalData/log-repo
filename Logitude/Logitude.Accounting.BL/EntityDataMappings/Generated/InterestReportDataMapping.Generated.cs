@@ -59,7 +59,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ARinvoiceId, 
 	         InvoiceAmount, 
 	         GLAccountInterestCreditLimit, 
-	         InterestReportStatusCode,
+	         InterestReportStatusCode, 
+	         GLAccountDisplayNumber, 
+	         GLAccountLocalName, 
+	         ARInvoiceNumber, 
+	         UpdatedByLocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

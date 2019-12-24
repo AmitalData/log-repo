@@ -22,22 +22,20 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     public class ChartOfAccountIntegrationTests
     {
         [TestMethod]
-        public async Task ChartOfAccount_Vendor1PMCFId_Put()
+        public async Task Put()
         {
-            
-                ChartOfAccountPM entityPM = await ChartOfAccount_Vendor1PMCFId_GetSingle();
-                entityPM.LocalName = "GE:" + RestClientService.GetRandomString(5);
-                entityPM.EnglishName = "GE:" + RestClientService.GetRandomString(5);
+                ChartOfAccountPM entityPM = await GetSingle();
+                entityPM.LocalName = "GE:" + VariablesGenerater.GetRandomString(5);
+                entityPM.EnglishName = "GE:" + VariablesGenerater.GetRandomString(5);
                 HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "ChartOfAccounts");
-                ChartOfAccountPM chartOfAccountVendor1PMCFId = RestClientService.ParseResponse<ChartOfAccountPM>(response);
-                Assert.AreEqual(entityPM.Code, chartOfAccountVendor1PMCFId.Code);
-           
+                ChartOfAccountPM chartOfAccountPM = RestClientService.ParseResponse<ChartOfAccountPM>(response);
+                Assert.AreEqual(entityPM.Id, chartOfAccountPM.Id);
         }
-        private async Task<ChartOfAccountPM> ChartOfAccount_Vendor1PMCFId_GetSingle()
+        private async Task<ChartOfAccountPM> GetSingle()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccounts/GetSingle?id="+ FullAccountingVariables.ChartOfAccountVendor1PMCFId);
-            ChartOfAccountPM chartOfAccountVendor1PMCFId = RestClientService.ParseResponse<ChartOfAccountPM>(response);
-            return chartOfAccountVendor1PMCFId;
+            ChartOfAccountPM chartOfAccountPM= RestClientService.ParseResponse<ChartOfAccountPM>(response);
+            return chartOfAccountPM;
         }
     }
 }

@@ -104,6 +104,26 @@ export class InterestReportPM {
     public set InterestReportStatusCode(newValue: string) { if (this.interestReportStatusCode != newValue) { this.interestReportStatusCode = newValue; this.MarkAsDirty("InterestReportStatusCode"); } }
        
 	 
+    private gLAccountDisplayNumber: string;
+    public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
+    public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
+       
+	 
+    private gLAccountLocalName: string;
+    public get GLAccountLocalName() { return this.gLAccountLocalName; }
+    public set GLAccountLocalName(newValue: string) { if (this.gLAccountLocalName != newValue) { this.gLAccountLocalName = newValue; this.MarkAsDirty("GLAccountLocalName"); } }
+       
+	 
+    private aRInvoiceNumber: string;
+    public get ARInvoiceNumber() { return this.aRInvoiceNumber; }
+    public set ARInvoiceNumber(newValue: string) { if (this.aRInvoiceNumber != newValue) { this.aRInvoiceNumber = newValue; this.MarkAsDirty("ARInvoiceNumber"); } }
+       
+	 
+    private updatedByLocalName: string;
+    public get UpdatedByLocalName() { return this.updatedByLocalName; }
+    public set UpdatedByLocalName(newValue: string) { if (this.updatedByLocalName != newValue) { this.updatedByLocalName = newValue; this.MarkAsDirty("UpdatedByLocalName"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		

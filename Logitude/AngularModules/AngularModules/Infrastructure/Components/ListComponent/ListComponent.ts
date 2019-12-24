@@ -2559,6 +2559,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         logWindow.WindowArgs = windowArgs;
                         break;
                     }
+                case "InterestReport":
+                    {
+                        logWindow.Width = 680;
+                        logWindow.Height = 200;
+                        break;
+                    }
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
