@@ -378,6 +378,7 @@ namespace Logitude.Accounting.Data.Repositories
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
                             where entityIdS.Contains(a.AccountingEntityId)
+                                    && a.AccountingEntityCode == "2"
                             select a);
 
             return journals;
