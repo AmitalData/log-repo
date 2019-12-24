@@ -45,6 +45,7 @@ using Logitude.Server.Tools.Resolvers;
 using Logitude.Customs.BL.Validators;
 using System.Web.Hosting;
 using WebFreight.Web.Helpers.APIHelpers;
+using Logitude.Customs.BL.PatchDistribution;
 
 namespace WebFreight.Web
 {
@@ -113,37 +114,26 @@ namespace WebFreight.Web
                     /// itzik : can use/convert to    !!!ContainerAccessor !!!! // ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
                     /// 
 
-                    bool useAppData = true;
-                    if (useAppData)
-                    {
-                        AppDataUtil.Init(HostingEnvironment.ApplicationPhysicalPath);
-                        var appDataUtil = new AppDataUtil();
-                        LogitudeSettings.ProductInfo = appDataUtil.GetProdInfo();
-
-                    }
-                    else {
-                        var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
-                        LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
-                    }
+                    ProductInfoSetting();
                     // this project no need but in FilingManager is must 
                     LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
                     LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
                     Logger.OverrideExecutablePath = HttpContext.Current.Server.MapPath("App_Data");
-                    LogitudeSettings.HandleLogMe = new Action<string, bool, string,DateTime>((mess, err, suffix, stopLogAt) =>
+                    LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
                     {
                         if (DateTime.Now > stopLogAt) return;
                         Logger.LogMe(mess, err, suffix);
-                        });
+                    });
                     LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
                     createAmitalRestrictOwnerModelService = () =>
-                      {
-                          var amitalRestrictOwnerService = new AmitalRestrictOwnerService();
-                          return amitalRestrictOwnerService;
-                      };
+                    {
+                        var amitalRestrictOwnerService = new AmitalRestrictOwnerService();
+                        return amitalRestrictOwnerService;
+                    };
                 }
-                
+
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
                 LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
 
@@ -367,8 +357,51 @@ namespace WebFreight.Web
 			};
 
 		}
-		 
-		private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
+
+        private static void ProductInfoSetting()
+        {
+            try
+            {
+
+                bool useAppData = false;
+                if (useAppData)
+                {
+                    AppDataUtil.Init(HostingEnvironment.ApplicationPhysicalPath);
+                    var appDataUtil = new AppDataUtil();
+                    LogitudeSettings.ProductInfo = appDataUtil.GetProdInfo();
+
+                }
+                else
+                {
+                    var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
+                    LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
+
+                    bool AlertProductMessage =!String.IsNullOrWhiteSpace( System.Configuration.ConfigurationManager.AppSettings.Get("AlertProductMessage"));
+                    if (AlertProductMessage)
+                    {
+                        var assemblyVersion = assemblyUtil.GetVersion(LogitudeSettings.ProductInfo);
+                        var patchDistributionMatch = new PatchDistributionMatch();
+                        var patchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
+                        if (patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB ||
+                            patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldSource)
+                        {
+
+                            LogitudeSettings.ProductMessage = patchDistributionMatchModel.Message;
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                Logger.LogMe("ProductInfoSetting:" + e.ToString(), true);
+            }
+
+        }
+
+        private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
         {
             FillAppSettings();
         }

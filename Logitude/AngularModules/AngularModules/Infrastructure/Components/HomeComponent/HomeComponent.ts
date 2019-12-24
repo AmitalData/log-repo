@@ -150,6 +150,13 @@ export class HomeComponent implements OnDestroy{
         this.Company = SessionLocator.TenantPM.Company;
         if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting) && !AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductInfo)) {
             this.ProductInfo = ObjectsLocator.GlobalSetting.ProductInfo;
+            if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductMessage)) {
+                let myMessageWindow = new MessageWindow();
+                myMessageWindow.ShowErrorIcon = true;
+                myMessageWindow.Title = "Please Call Amital";
+                myMessageWindow.Show(ObjectsLocator.GlobalSetting.ProductMessage);
+
+            }
         } else {
             this.ProductInfo = "";
         }

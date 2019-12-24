@@ -61,8 +61,9 @@ namespace Logitude.Customs.BL.PatchDistribution
             return 
             UpScripts.GetSortedScripts();
         }
-        protected void AddUpSqlScript(string sqlScript)
+        protected ScriptDTO AddUpSqlScript(string sqlScript)
         {
+            return
             this.UpScripts.Add(sqlScript);
         }
 
@@ -81,13 +82,15 @@ namespace Logitude.Customs.BL.PatchDistribution
             _ScriptDTOs = new List<ScriptDTO>();
         }
 
-        internal void Add(string sqlScript)
+        internal ScriptDTO Add(string sqlScript)
         {
-            _ScriptDTOs.Add(new ScriptDTO()
-            {
-                ScriptCounter = this._ListScriptCounter++,
-                SqlScript = sqlScript
-            });
+            var myScriptDTO = new ScriptDTO(
+
+                this._ListScriptCounter++,
+                sqlScript
+            );
+            _ScriptDTOs.Add(myScriptDTO);
+            return myScriptDTO;
         }
       
         public List<ScriptDTO> GetSortedScripts() {
@@ -97,10 +100,22 @@ namespace Logitude.Customs.BL.PatchDistribution
     public class ScriptDTO
     {
 
-        public int ScriptCounter { get; set; }
-        public string SqlScript { get; set; }
+        public int ScriptCounter { get; }
+        public string SqlScript { get; }
+        ScriptDTO()
+        {
+
+        }
+        public ScriptDTO(int scriptCounter, string sqlScript)
+        {
+            ScriptCounter = scriptCounter;
+            SqlScript = sqlScript;
+        }
         public string OSScript { get; set; }
         public string MessageIfCrash { get; set; }
+
+        public string MessageBefore { get; set; }
+        public string MessageAfter { get; internal set; }
 
         public override string ToString()
         {

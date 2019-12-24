@@ -59,13 +59,13 @@ namespace Logitude.Customs.BL.PatchDistribution
 
             if (myAssemblyDBMigrationModel.MajorVersion < myLastClosed_DBMigration.MajorVersion)
             {
-                myPatchDistributionMatchModel.Message = /*MessageBox.Show*/($"DataBase MajorVersion is newer -  Assembly:{myAssemblyDBMigrationModel.MajorVersion} < DBMigration{myLastClosed_DBMigration.MajorVersion}");
+                myPatchDistributionMatchModel.Message = /*MessageBox.Show*/($"DataBase Major Version is newer -  Assembly:{myAssemblyDBMigrationModel.MajorVersion} < DB Migration:{myLastClosed_DBMigration.MajorVersion}");
                 //this.Close();
                 myPatchDistributionMatchModel.MajorVersionMatch = MajorVersionMatchEnum.OldSource;
             }
             else if (myAssemblyDBMigrationModel.MajorVersion < myLastClosed_DBMigration.MajorVersion)
             {
-                myPatchDistributionMatchModel.Message = /*MessageBox.Show*/($"DataBase MajorVersion is older -  Assembly:{myAssemblyDBMigrationModel.MajorVersion} > DBMigration{myLastClosed_DBMigration.MajorVersion}");
+                myPatchDistributionMatchModel.Message = /*MessageBox.Show*/($"DataBase Major Version is older -  Assembly:{myAssemblyDBMigrationModel.MajorVersion} > DB Migration:{myLastClosed_DBMigration.MajorVersion}");
                 //this.Close();
                 myPatchDistributionMatchModel.MajorVersionMatch = MajorVersionMatchEnum.OldDB;
             }
