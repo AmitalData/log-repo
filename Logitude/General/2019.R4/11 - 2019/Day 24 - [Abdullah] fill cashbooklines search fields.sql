@@ -1,4 +1,4 @@
-
+﻿
 
 -- Task 59601: slowness in opening the cheque cashbook screen - Cloud R4
 
