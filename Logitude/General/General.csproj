@@ -649,6 +649,8 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 01 [Samar] Opportunity Tenant Opened stage.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Wesam] Fill textcodefields on ObjectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Wesam] Delete Constraint between ObjectFields and TextCode.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Fill ShortTextCodeCode on Tips.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Delete Constraint between Tips and TextCodes.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 12 [Wesam] Fill objectfieldcode on ScreenFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 08 [Wesam] Delete Constraint between ScreenFields and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Fill objectfieldcode on QueryColumns.sql" />
