@@ -1835,7 +1835,7 @@ namespace MeatadataGeneratorTool
 
               
                 FileStream fileStream = new FileStream(App.DirectOpenPath, FileMode.Truncate, FileAccess.Write);
-                XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true , OmitXmlDeclaration = true, WriteEndDocumentOnClose = true };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
+                XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true , OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
                 XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
                  
                 doc.Save(xmlWriter);
