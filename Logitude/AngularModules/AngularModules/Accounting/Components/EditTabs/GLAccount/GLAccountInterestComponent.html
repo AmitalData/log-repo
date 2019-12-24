@@ -274,6 +274,7 @@
                                         [DataContext]="item"
                                         (SelectedItemChanged)="item.StandardInterestRateBase = $event"
                                         [LookUpTableName]="'InterestBasesType'"
+                                        [DisplayMemberPath]="'LocalName'"
                                         [HideColumns]="true"
                                         [RunToggleMode]="true"
                                         [FocusOnMe]="'true'">
@@ -310,6 +311,7 @@
                                         [DataContext]="item"
                                         (SelectedItemChanged)="item.ExceptionalInterestRateBase = $event"
                                         [LookUpTableName]="'InterestBasesType'"
+                                        [DisplayMemberPath]="'LocalName'"
                                         [HideColumns]="true"
                                         [RunToggleMode]="true"
                                         [FocusOnMe]="'true'">
@@ -343,6 +345,7 @@
                                         [DataContext]="item"
                                         (SelectedItemChanged)="item.CreditInterestRateBase = $event"
                                         [LookUpTableName]="'InterestBasesType'"
+                                        [DisplayMemberPath]="'LocalName'"
                                         [HideColumns]="true"
                                         [RunToggleMode]="true"
                                         [FocusOnMe]="'true'">

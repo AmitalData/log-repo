@@ -25,7 +25,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     {
 
         [TestMethod]
-        public async Task Post()
+        public async Task CreateARInvoice_Post_Failed()
         {
 
                 ARInvoicePM entityPM = GetNewARInvoice();

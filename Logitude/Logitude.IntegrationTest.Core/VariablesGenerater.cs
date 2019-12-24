@@ -10,7 +10,7 @@ namespace Logitude.IntegrationTest.Core
     {
         public static string GetRandomString(int length)
         {
-            return BaseRandomString("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",length);
+            return BaseRandomString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",length);
         }
         public static string GetNumbersRandomString(int length)
         {

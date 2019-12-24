@@ -22,7 +22,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     public class JournalIntegrationTests
     {
         [TestMethod]
-        public async Task Post()
+        public async Task CreateJournal_Post_Failed()
         {
                 JournalPM entityPM = GetNewJourna();
                 HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "Journals");

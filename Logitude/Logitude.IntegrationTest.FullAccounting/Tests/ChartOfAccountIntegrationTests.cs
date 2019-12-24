@@ -22,7 +22,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     public class ChartOfAccountIntegrationTests
     {
         [TestMethod]
-        public async Task Put()
+        public async Task UpdateChartOfAccount_Put_Successful()
         {
                 ChartOfAccountPM entityPM = await GetSingle();
                 entityPM.LocalName = "GE:" + VariablesGenerater.GetRandomString(5);

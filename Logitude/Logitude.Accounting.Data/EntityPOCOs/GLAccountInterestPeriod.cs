@@ -37,21 +37,21 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	      
         public virtual InterestBasesType StandardInterestBasesType { get; set; }
         [Column("StandardAddInterestPercent")]
-	    public decimal StandardAddInterestPercent { get; set; }
+	    public decimal? StandardAddInterestPercent { get; set; }
         [ForeignKey("ExceptionalInterestBasesType")]
         [Column("ExceptionalInterestRateBaseId")]
 	    public string ExceptionalInterestRateBaseId { get; set; }
 	      
         public virtual InterestBasesType ExceptionalInterestBasesType { get; set; }
         [Column("ExceptionalAddInterestPercent")]
-	    public decimal ExceptionalAddInterestPercent { get; set; }
+	    public decimal? ExceptionalAddInterestPercent { get; set; }
         [ForeignKey("CreditInterestBasesType")]
         [Column("CreditInterestRateBaseId")]
 	    public string CreditInterestRateBaseId { get; set; }
 	      
         public virtual InterestBasesType CreditInterestBasesType { get; set; }
         [Column("CreditAddInterestPercent")]
-	    public decimal CreditAddInterestPercent { get; set; }
+	    public decimal? CreditAddInterestPercent { get; set; }
         [ForeignKey("UpdatedByUser")]
         [Column("UpdatedByUserId")]
 	    public string UpdatedByUserId { get; set; }

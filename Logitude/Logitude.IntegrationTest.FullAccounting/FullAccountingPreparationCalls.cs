@@ -6,13 +6,9 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.IntegrationTest.FullAccounting
@@ -21,7 +17,7 @@ namespace Logitude.IntegrationTest.FullAccounting
     {
         public static async Task PrepareVariables()
         {
-            //await GetFullAccountingSettingsTenant();
+            await GetFullAccountingSettingsTenant();
             await GetAccounntingPeriods();
             await OpenCurrentMonth();
             await GetAccountingCurriencyTenant();

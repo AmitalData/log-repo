@@ -22,7 +22,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     public class GlAcountIntegrationTests
     {
         [TestMethod]
-        public async Task Put()
+        public async Task UpdateGlAcount_Put_Successful()
         {
             GLAccountPM entityPM = await GetSingle();
             entityPM.LocalName = "GE:" + VariablesGenerater.GetRandomString(5);
@@ -32,7 +32,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
             Assert.AreEqual(GLAccountPM.Id, entityPM.Id);
         }
         [TestMethod]
-        public  async Task Post()
+        public  async Task CreateGlAcount_Post_Successful()
         {
             GLAccountPM entityPM = GetNewGlAccountPM();
             HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "GLAccounts");

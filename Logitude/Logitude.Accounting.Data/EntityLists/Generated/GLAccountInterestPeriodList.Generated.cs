@@ -27,15 +27,15 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string StandardInterestRateBaseId  { get; set; }
        [DataMember]
-       public decimal StandardAddInterestPercent  { get; set; }
+       public decimal? StandardAddInterestPercent  { get; set; }
        [DataMember]
        public string ExceptionalInterestRateBaseId  { get; set; }
        [DataMember]
-       public decimal ExceptionalAddInterestPercent  { get; set; }
+       public decimal? ExceptionalAddInterestPercent  { get; set; }
        [DataMember]
        public string CreditInterestRateBaseId  { get; set; }
        [DataMember]
-       public decimal CreditAddInterestPercent  { get; set; }
+       public decimal? CreditAddInterestPercent  { get; set; }
        [DataMember]
        public string UpdatedByUserId  { get; set; }
        [DataMember]
