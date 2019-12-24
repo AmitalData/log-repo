@@ -112,8 +112,9 @@ export class AreasTabComponent implements OnDestroy {
         this.RunWindow(itemComponent, "New Area");
     }
 
-    EditCarrierAreaClicked(editedEntity: AreaItemClass) {
-        this.RunWindow(editedEntity, "Edit Area");
+    EditCarrierAreaClicked(itemComponent: AreaItemClass) {
+        itemComponent.CopyAreaPorts();
+        this.RunWindow(itemComponent, "Edit Area");
     }
 
     DeleteCarrierAreaClicked(area: CarrierAreaPM) {
@@ -215,5 +216,49 @@ export class AreaItemClass extends BaseComponent {
                 }
             }
         });
+    }
+
+    public savedItems: CarrierAreasPortPM[] = [];
+    public CopyAreaPorts() {
+        this.savedItems = [];
+        if (this.EntityPM.CarrierAreasPorts.length > 0) {           
+            this.EntityPM.CarrierAreasPorts.forEach(item => {                
+                var areaPort = new CarrierAreasPortPM(null);
+                areaPort.CarrierAreaId = item.CarrierAreaId;
+                areaPort.Tenant = item.Tenant;
+                areaPort.Description = item.Description;
+                areaPort.PortId = item.PortId;
+                areaPort.Name = item.Name;
+                areaPort.AddedDate = item.AddedDate;
+                areaPort.AddedByUserId = item.AddedByUserId;
+                this.savedItems.push(areaPort);
+            });
+        }
+    }
+
+    public ResetAreaPorts() {
+        if (this.savedItems != null) {
+            var items: CarrierAreasPortPM[] = this.EntityPM.CarrierAreasPorts;
+            items.forEach(item => {
+                var savedItem: CarrierAreasPortPM = this.savedItems.filter(d => d.Id == item.Id)[0];
+                if (savedItem == null) {
+                    if (this.EntityPM.CarrierAreasPorts.indexOf(item) != -1) {
+                        this.EntityPM.RemoveCarrierAreasPortPM(item);
+                    }
+                }
+
+                else {
+                    item.Name = savedItem.Name;
+                    item.Description = savedItem.Description;                    
+                }
+            });
+
+            this.savedItems.forEach(item => {
+                var list = this.EntityPM.CarrierAreasPorts.filter(d => d.Id == item.Id);
+                if (list == null) {
+                    this.EntityPM.CarrierAreasPorts.push(item);
+                }
+            });
+        }
     }
 }

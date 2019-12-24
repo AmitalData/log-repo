@@ -23,12 +23,14 @@ export class ChooseCountryPortComponent extends BaseComponent {
     public ObjectTableName = "CarrierAreasPort";
     public ValidationErrorsList: string[] = [];
     public ForceFocus: any;
+    public TransportModeCode: string;
     constructor() {
         super();
     }
 
     SetDataContext(dataContext: AreaItemClass) {
         this.ParentClass = dataContext;
+        this.TransportModeCode = dataContext.fatherComponent.TransportModeCode;
     }
 
     KeyDownEvent(event) {
@@ -80,7 +82,8 @@ export class ChooseCountryPortComponent extends BaseComponent {
     public CountryPortsMessageCount = "";
     private LoadPortListMethod() {
         var filters = new ApiQueryFilters();
-        filters.addAdditionalFilter("TransportModeId", "A", null, null, "Equals", false, true, false, "Text");
+
+        filters.addAdditionalFilter("TransportModeId", this.TransportModeCode, null, null, "Equals", false, true, false, "Text");
         filters.addAdditionalFilter("CountryId", this.CountryId, null, null, "Equals", false, true, false, "Text");
         filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 

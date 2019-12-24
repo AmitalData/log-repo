@@ -103,6 +103,7 @@ export class AddEditAreaComponent extends BaseComponent implements OnInit {
         });
     }
     private RejectChanges() {
+        this.DataContext.ResetAreaPorts();
         this.myCloner.RejectChanges();
     }
 }
