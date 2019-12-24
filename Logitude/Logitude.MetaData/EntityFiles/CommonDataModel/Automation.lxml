@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;0e54a0d0-f836-4e5c-83e2-8c30c86bb18b&quot;"
   ObjectTableName="&quot;Automation&quot;"
   IsNew="false"

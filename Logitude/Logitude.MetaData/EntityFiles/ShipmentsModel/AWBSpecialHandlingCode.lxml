@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;197949bb-9e29-4447-b9bc-0ec460861cf9&quot;"
   SortingByObjectField="&quot;Code&quot;"
   ObjectTableName="&quot;AWBSpecialHandlingCode&quot;"

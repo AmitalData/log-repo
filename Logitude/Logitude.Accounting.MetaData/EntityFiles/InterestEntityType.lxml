@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;417a5370-a98e-44c8-83f6-8449d6456015&quot;"
   ObjectTableName="&quot;InterestEntityType&quot;"
   IsNew="true"

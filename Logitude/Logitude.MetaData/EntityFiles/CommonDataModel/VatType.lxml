@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;0d3aef35-d4eb-4e9c-94f7-b62242acf3d1&quot;"
   ObjectTableName="&quot;VatType&quot;"
   IsNew="false"

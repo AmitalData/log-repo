@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ec59f292-d647-4b69-91a4-4d655c650f2b&quot;"
   ObjectTableName="&quot;AutomaticReconcileMethod&quot;"
   IsNew="false"

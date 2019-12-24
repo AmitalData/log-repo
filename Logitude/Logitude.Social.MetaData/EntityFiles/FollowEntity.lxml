@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;0e55f049-8bbd-41a8-b3e3-15ba3e84410f&quot;"
   ObjectTableName="&quot;FollowEntity&quot;"
   DBTableName="&quot;FollowEntities&quot;"

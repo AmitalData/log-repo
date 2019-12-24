@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;7ca89cee-b711-422c-aff9-e702ea7cc3c2&quot;"
   ObjectTableName="&quot;LedgerTransaction&quot;"
   DBTableName="&quot;LedgerTransactions&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;d0b2b903-d7be-46ca-8607-0951d7b16d6e&quot;"
   ObjectTableName="&quot;CashBookLine&quot;"
   IsNew="false"

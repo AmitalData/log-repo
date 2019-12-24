@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;7c2394f0-5021-4a8d-88db-baef37f62f7e&quot;"
   ObjectTableName="&quot;ARInvoiceStock&quot;"
   IsNew="true"

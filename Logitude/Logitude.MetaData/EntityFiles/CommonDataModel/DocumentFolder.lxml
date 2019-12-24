@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;0ed74eee-ea0c-4c0c-8460-6ca4bc25576b&quot;"
   ObjectTableName="&quot;DocumentFolder&quot;"
   DBTableName="&quot;DocumentFolders&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c616d63c-2774-453c-8430-fccb5924dce9&quot;"
   ObjectTableName="&quot;LogitudeMessagesTransmissionLog&quot;"
   DBTableName="&quot;LogitudeMessagesTransmissionLogs&quot;"

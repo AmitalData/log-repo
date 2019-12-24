@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;6b8ad642-902e-4497-959d-827d4630f127&quot;"
   ObjectTableName="&quot;BatchServicesDefinition&quot;"
   IsNew="false"

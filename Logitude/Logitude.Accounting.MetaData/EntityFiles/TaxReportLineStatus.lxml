@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;96e990ba-7319-4186-b99b-58bbd669f27a&quot;"
   ObjectTableName="&quot;TaxReportLineStatus&quot;"
   IsNew="true"

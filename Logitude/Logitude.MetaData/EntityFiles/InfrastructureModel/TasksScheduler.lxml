@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f6685c6e-ccd8-468e-a558-60a774f42dd3&quot;"
   ObjectTableName="&quot;TasksScheduler&quot;"
   IsNew="false"

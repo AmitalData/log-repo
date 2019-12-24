@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;e2df1318-51c5-407d-8975-5c3bfe72f62d&quot;"
   ObjectTableName="&quot;CustomerTenantAccess&quot;"
   IsNew="false"

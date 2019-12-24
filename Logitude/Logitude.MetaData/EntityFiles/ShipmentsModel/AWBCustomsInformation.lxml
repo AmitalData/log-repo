@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;fd99ac1d-cf79-4daf-aca5-23d06ef3c033&quot;"
   SortingByObjectField="&quot;Code&quot;"
   ObjectTableName="&quot;AWBCustomsInformation&quot;"

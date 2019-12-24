@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c0e0d834-8eb5-4fc1-a807-c86ecd357817&quot;"
   ObjectTableName="&quot;RevenueExpenseType&quot;"
   IsNew="false"

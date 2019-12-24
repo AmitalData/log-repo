@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;6e273faf-4062-4f82-a7da-a2dfe0d701c5&quot;"
   ObjectTableName="&quot;BookingSpaceAllocation&quot;"
   DBTableName="&quot;BookingSpaceAllocations&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;1aa4b8e4-27d1-4f50-9b9a-7012659eb906&quot;"
   ObjectTableName="&quot;BankPageEntryType&quot;"
   DBTableName="&quot;BankPageEntryTypes&quot;"

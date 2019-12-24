@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f9c02846-9a92-49cd-8a67-ecd40ee80eb9&quot;"
   ObjectTableName="&quot;MAWBStack&quot;"
   IsNew="false"

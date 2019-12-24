@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;82aebe20-cbb2-4386-b8d2-7d02035faedf&quot;"
   ObjectTableName="&quot;ChartOfAccountsType&quot;"
   IsNew="false"

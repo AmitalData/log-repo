@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;2aac6eb0-db6e-40fe-990d-2e2c14ff232c&quot;"
   ObjectTableName="&quot;CustomerProduct&quot;"
   DBTableName="&quot;CustomerProducts&quot;"

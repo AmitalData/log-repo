@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;8220539b-7fca-455a-a8f5-ecde62d0bf73&quot;"
   ObjectTableName="&quot;GLAccountType&quot;"
   IsNew="false"

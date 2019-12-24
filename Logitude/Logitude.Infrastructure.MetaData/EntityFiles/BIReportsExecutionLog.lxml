@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;afe58efd-aea0-4864-99ed-b252d3bab1f0&quot;"
   ObjectTableName="&quot;BIReportsExecutionLog&quot;"
   IsNew="true"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ae4ea589-3387-40ae-a8e0-5a03ea479c6c&quot;"
   ObjectTableName="&quot;JournalType&quot;"
   IsNew="false"

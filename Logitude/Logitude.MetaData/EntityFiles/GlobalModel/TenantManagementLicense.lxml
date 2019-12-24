@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c28ef741-2fe3-4b41-a5a2-6a8fde9930f4&quot;"
   ObjectTableName="&quot;TenantManagementLicense&quot;"
   IsNew="false"

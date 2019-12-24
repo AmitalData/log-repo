@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a66e0aed-ce2c-4664-87b4-9a0de634d798&quot;"
   ObjectTableName="&quot;LoginPolicy&quot;"
   DBTableName="&quot;LoginPolicies&quot;"

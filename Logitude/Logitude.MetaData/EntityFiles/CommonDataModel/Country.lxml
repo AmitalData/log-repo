@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;652ddea6-0d0a-4c0a-b26b-d260fbbfb457&quot;"
   ObjectTableName="&quot;Country&quot;"
   IsNew="false"

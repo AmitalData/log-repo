@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;95c22fca-4932-42c3-bc2a-d66a5ec85346&quot;"
   ObjectTableName="&quot;General&quot;"
   IsNew="false"

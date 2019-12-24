@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c0d8f69c-b099-48a8-bee3-1f910cade783&quot;"
   ObjectTableName="&quot;CustomerFieldsUpdateSetting&quot;"
   DBTableName="&quot;CustomerFieldsUpdateSettings&quot;"

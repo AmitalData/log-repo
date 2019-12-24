@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;7013bb40-783e-4dcc-862e-b3635cbeb467&quot;"
   ObjectTableName="&quot;LBPTeamMember&quot;"
   IsNew="true"

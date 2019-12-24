@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;fca3bf15-3cc9-4e9a-bf17-3a3fadeaa018&quot;"
   ObjectTableName="&quot;CardContactProduct&quot;"
   IsNew="true"

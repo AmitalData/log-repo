@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;efe2cd53-420b-4b6d-9eb8-f985b4b9fa03&quot;"
   ObjectTableName="&quot;VatFormatType&quot;"
   DBTableName="&quot;VatFormatTypes&quot;"

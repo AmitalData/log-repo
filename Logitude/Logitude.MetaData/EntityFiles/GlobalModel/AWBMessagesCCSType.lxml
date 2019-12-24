@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;af699fd7-4548-4e27-a334-084ade062b61&quot;"
   ObjectTableName="&quot;AWBMessagesCCSType&quot;"
   DBTableName="&quot;AWBMessagesCCSTypes&quot;"

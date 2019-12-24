@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;08a8a77a-1e73-4f9e-b5e7-eec7e3881a99&quot;"
   ObjectTableName="&quot;ReconcileMethod&quot;"
   IsNew="false"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;60e99c8c-6530-433b-99b5-e88a4e9b0d08&quot;"
   ObjectTableName="&quot;TenantManagement&quot;"
   IsNew="false"

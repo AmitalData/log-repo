@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;4bb6a26a-cb02-49f2-a5c5-fede0be5d9cc&quot;"
   ObjectTableName="&quot;TarrifStep&quot;"
   IsNew="false"

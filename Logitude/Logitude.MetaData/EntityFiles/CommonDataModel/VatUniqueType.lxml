@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c5cdc663-65ba-4de4-ae07-126c62a12a0f&quot;"
   ObjectTableName="&quot;VatUniqueType&quot;"
   DBTableName="&quot;VatUniqueTypes&quot;"

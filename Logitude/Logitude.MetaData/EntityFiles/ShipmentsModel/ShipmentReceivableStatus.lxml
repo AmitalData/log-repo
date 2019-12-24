@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;cddcf5f4-aae9-4700-a4a3-e659d55af250&quot;"
   ObjectTableName="&quot;ShipmentReceivableStatus&quot;"
   DBTableName="&quot;ShipmentReceivableStatus&quot;"

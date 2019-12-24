@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a068cc8f-2db1-4771-8bdf-bb21bf711d4f&quot;"
   ObjectTableName="&quot;Incoterm&quot;"
   IsNew="false"

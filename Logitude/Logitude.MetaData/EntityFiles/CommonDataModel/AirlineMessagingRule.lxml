@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;1b2d952a-615f-400d-94f7-acd8958ecfd3&quot;"
   ObjectTableName="&quot;AirlineMessagingRule&quot;"
   DBTableName="&quot;AirlineMessagingRules&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c4bee885-964f-490f-861b-54a6d3fb297f&quot;"
   ObjectTableName="&quot;CreditLimitSetting&quot;"
   IsNew="false"

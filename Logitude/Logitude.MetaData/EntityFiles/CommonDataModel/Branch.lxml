@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;cae52e95-bd2b-4aad-9697-86713b83f37f&quot;"
   ObjectTableName="&quot;Branch&quot;"
   IsNew="false"

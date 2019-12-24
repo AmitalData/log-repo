@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a2354360-3b74-4117-865e-62ef991d5950&quot;"
   ObjectTableName="&quot;QuotePriceSteps&quot;"
   IsNew="false"

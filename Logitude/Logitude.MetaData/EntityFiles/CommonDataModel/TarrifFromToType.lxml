@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;659ced2d-5968-4bf4-837a-0fb425c44473&quot;"
   ObjectTableName="&quot;TarrifFromToType&quot;"
   DBTableName="&quot;TarrifFromToTypes&quot;"

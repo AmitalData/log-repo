@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;7e78f37d-e420-471b-ba8b-22618533c73e&quot;"
   ObjectTableName="&quot;SATInterface&quot;"
   DBTableName="&quot;SATInterfaces&quot;"

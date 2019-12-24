@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;21842aff-f3e4-4e9e-8f21-f7c56b18b770&quot;"
   ObjectTableName="&quot;AccountingTransferLine&quot;"
   DBTableName="&quot;AccountingTransferLines&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;b1fb26c9-d137-41d7-8455-baaae484bf05&quot;"
   ObjectTableName="&quot;BIReportFolder&quot;"
   IsNew="true"

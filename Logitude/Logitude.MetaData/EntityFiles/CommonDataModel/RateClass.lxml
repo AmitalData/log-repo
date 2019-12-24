@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;8c1899d8-e5aa-454b-8ff5-d9b12134edaa&quot;"
   ObjectTableName="&quot;RateClass&quot;"
   DBTableName="&quot;RateClasses&quot;"

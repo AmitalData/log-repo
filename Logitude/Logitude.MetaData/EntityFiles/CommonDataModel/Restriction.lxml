@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;6057bb4f-743f-414b-ba8b-8eb757bce837&quot;"
   ObjectTableName="&quot;Restriction&quot;"
   IsNew="false"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;e678b993-4704-4031-af9f-3f59d8e6621f&quot;"
   ObjectTableName="&quot;TeamMemberBusinessRole&quot;"
   IsNew="true"

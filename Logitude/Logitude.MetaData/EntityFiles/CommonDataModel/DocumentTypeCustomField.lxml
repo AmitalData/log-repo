@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;84ea334c-4ef8-475b-8fb2-90c49e6dc5fc&quot;"
   ObjectTableName="&quot;DocumentTypeCustomField&quot;"
   DBTableName="&quot;DocumentTypeCustomFields1&quot;"

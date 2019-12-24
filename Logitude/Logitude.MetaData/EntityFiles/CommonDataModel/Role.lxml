@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c95c1cee-794e-4041-8f14-93dc7c6c6d89&quot;"
   ObjectTableName="&quot;Role&quot;"
   IsNew="false"

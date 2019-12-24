@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;8cd9b922-4423-4bab-aca5-35f3b224e093&quot;"
   ObjectTableName="&quot;ARInvoicePayment&quot;"
   IsNew="false"

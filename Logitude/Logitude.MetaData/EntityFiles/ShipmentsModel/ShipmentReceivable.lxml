@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;4d59b338-faf9-410e-b838-09edd73e40e8&quot;"
   ObjectTableName="&quot;ShipmentReceivable&quot;"
   IsNew="false"

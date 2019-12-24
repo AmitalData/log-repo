@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;13152453-5803-4eda-ad8f-7d3312df31a1&quot;"
   ObjectTableName="&quot;WeightUnit&quot;"
   DBTableName="&quot;WeightUnits&quot;"

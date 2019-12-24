@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;0124e95f-dfec-4cd6-a79a-dc8405283206&quot;"
   ObjectTableName="&quot;CustomAgent&quot;"
   IsNew="false"

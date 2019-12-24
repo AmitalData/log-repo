@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;461b7e44-40f3-4173-ae01-e36e910fc851&quot;"
   ObjectTableName="&quot;EventType&quot;"
   IsNew="false"

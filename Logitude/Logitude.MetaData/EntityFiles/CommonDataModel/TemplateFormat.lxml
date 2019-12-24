@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;87833a42-d2f6-4741-a99e-edc348a51cf3&quot;"
   ObjectTableName="&quot;TemplateFormat&quot;"
   DBTableName="&quot;TemplateFormats&quot;"

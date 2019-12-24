@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;af795ee9-a06a-4dbf-a730-e7fe57239838&quot;"
   ObjectTableName="&quot;APInvoiceTransferStatus&quot;"
   IsNew="false"

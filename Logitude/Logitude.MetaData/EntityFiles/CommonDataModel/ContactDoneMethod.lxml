@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;dc4053bf-e96a-49e2-9e1b-992e6e0aad11&quot;"
   ObjectTableName="&quot;ContactDoneMethod&quot;"
   DBTableName="&quot;ContactDoneMethods&quot;"

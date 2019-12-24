@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;13818d3e-bfef-4e1e-ae5e-0fd6de451949&quot;"
   ObjectTableName="&quot;BankDepositLine&quot;"
   IsNew="false"

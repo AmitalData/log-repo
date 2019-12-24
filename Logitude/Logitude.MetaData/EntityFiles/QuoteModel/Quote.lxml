@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;cfb970dc-9960-44bb-b28a-3b4d93847ff5&quot;"
   ObjectTableName="&quot;Quote&quot;"
   IsNew="false"

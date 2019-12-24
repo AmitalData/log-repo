@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;2ab838fb-291a-4f48-962f-d78d3d047fc9&quot;"
   ObjectTableName="&quot;TarrifHeader&quot;"
   IsNew="false"

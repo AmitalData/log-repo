@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;ba71d324-737a-4493-962e-0bfaff1da7de&quot;"
   ObjectTableName="&quot;FlightsSchedulesRequestStatus&quot;"
   DBTableName="&quot;FlightsSchedulesRequestStatus&quot;"

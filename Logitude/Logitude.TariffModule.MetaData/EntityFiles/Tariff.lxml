@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c5cb732f-eec5-45d3-947c-95fc24b9d915&quot;"
   ObjectTableName="&quot;Tariff&quot;"
   IsNew="true"

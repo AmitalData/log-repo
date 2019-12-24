@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f12121a0-1482-4dad-bd50-dbe4f58e98bb&quot;"
   ObjectTableName="&quot;RatesTable&quot;"
   IsNew="false"

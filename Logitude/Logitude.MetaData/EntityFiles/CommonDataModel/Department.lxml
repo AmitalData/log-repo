@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;6c2f807a-b5d5-45e2-91e3-f9e15bb4ae27&quot;"
   ObjectTableName="&quot;Department&quot;"
   DBTableName="&quot;Departments&quot;"

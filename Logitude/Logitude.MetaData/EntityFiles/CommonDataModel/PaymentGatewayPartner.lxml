@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;857afe1d-9f0f-4047-9bb0-a1d79d2cd04c&quot;"
   ObjectTableName="&quot;PaymentGatewayPartner&quot;"
   IsNew="true"

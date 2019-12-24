@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;20fe6682-e875-4d4e-9a3f-5f472ef5f02c&quot;"
   ObjectTableName="&quot;HarmonizeCode&quot;"
   IsNew="true"

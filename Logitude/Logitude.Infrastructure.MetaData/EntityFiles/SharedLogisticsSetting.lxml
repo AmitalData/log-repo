@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;32825514-1e83-44ba-8976-129366dc9785&quot;"
   ObjectTableName="&quot;SharedLogisticsSetting&quot;"
   IsNew="true"

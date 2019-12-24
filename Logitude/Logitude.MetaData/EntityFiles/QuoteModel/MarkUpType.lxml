@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;4fc998f5-80e1-4565-bf37-2a42e6ef6330&quot;"
   ObjectTableName="&quot;MarkUpType&quot;"
   DBTableName="&quot;MarkUpTypes&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f068ebde-a7c1-469b-bf85-b02607a27278&quot;"
   ObjectTableName="&quot;ShipmentCustomerType&quot;"
   DBTableName="&quot;ShipmentCustomerTypes&quot;"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;2487de26-69ee-482a-a1fe-9ae268c00443&quot;"
   ObjectTableName="&quot;GLAccountWithholdingTax&quot;"
   DBTableName="&quot;GLAccountWithholdingTax&quot;"

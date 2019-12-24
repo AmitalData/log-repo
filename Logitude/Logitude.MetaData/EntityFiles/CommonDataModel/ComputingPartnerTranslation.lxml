@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;2318cc25-5cca-46bc-a613-51e429e54461&quot;"
   ObjectTableName="&quot;ComputingPartnerTranslation&quot;"
   IsNew="false"

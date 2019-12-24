@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f48ccc7b-ddd1-44a9-bbcc-a525783efad9&quot;"
   ObjectTableName="&quot;DWObjectField&quot;"
   IsNew="false"

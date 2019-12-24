@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;c7801e88-1bd8-4309-b6be-85b36f2a0e30&quot;"
   ObjectTableName="&quot;Port&quot;"
   IsNew="false"

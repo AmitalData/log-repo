@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;281b7085-9c8b-4ae3-93b9-ef460c100c1e&quot;"
   ObjectTableName="&quot;InterestReport&quot;"
   IsNew="true"

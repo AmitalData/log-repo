@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;067d9fa0-3620-423c-9ddc-8af249c7f7e7&quot;"
   ObjectTableName="&quot;FFRStatus&quot;"
   DBTableName="&quot;FFRStatus&quot;"

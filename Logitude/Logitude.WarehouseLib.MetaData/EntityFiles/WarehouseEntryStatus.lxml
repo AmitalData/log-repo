@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;2e494d35-e2ce-4b43-bf25-d9f1bdd8bdbe&quot;"
   ObjectTableName="&quot;WarehouseEntryStatus&quot;"
   DBTableName="&quot;WarehouseEntryStatuses&quot;"

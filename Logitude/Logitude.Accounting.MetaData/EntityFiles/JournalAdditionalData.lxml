@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;59fa5fcb-3b36-498b-a131-f7ab60586186&quot;"
   ObjectTableName="&quot;JournalAdditionalData&quot;"
   IsNew="true"

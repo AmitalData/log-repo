@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;b92952d3-97ed-4d94-8f36-36b68438dab1&quot;"
   ObjectTableName="&quot;Rank&quot;"
   IsNew="false"

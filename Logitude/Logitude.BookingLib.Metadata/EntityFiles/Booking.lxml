@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;3c5d97e2-c4ba-47c6-8d44-63a7712d5eca&quot;"
   ObjectTableName="&quot;Booking&quot;"
   IsNew="false"

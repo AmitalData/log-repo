@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;4d1ec154-b713-4655-b149-75f709446b29&quot;"
   ObjectTableName="&quot;Participant&quot;"
   IsNew="false"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;a112d960-f1b0-40df-9b0f-8dc857b424f2&quot;"
   ObjectTableName="&quot;GroupMember&quot;"
   DBTableName="&quot;GroupMembers&quot;"

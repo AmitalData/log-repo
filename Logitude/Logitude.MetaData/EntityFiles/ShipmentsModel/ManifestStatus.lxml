@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;5fa680a8-a63f-4308-a6b1-75b53e0b1f5c&quot;"
   ObjectTableName="&quot;ManifestStatus&quot;"
   DBTableName="&quot;ManifestStatus&quot;"

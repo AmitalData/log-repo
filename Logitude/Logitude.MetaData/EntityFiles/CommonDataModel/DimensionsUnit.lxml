@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;228849e0-af73-4633-8e56-78d1ef62d9a1&quot;"
   ObjectTableName="&quot;DimensionsUnit&quot;"
   DBTableName="&quot;DimensionsUnits&quot;"

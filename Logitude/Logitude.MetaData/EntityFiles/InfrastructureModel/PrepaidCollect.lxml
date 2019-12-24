@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;efc62060-a7aa-444b-9231-b4da46fbb3c8&quot;"
   ObjectTableName="&quot;PrepaidCollect&quot;"
   IsNew="false"

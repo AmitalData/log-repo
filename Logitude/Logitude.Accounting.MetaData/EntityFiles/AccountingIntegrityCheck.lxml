@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;8c07d22b-2f0b-4373-986d-2063094295bf&quot;"
   ObjectTableName="&quot;AccountingIntegrityCheck&quot;"
   IsNew="false"

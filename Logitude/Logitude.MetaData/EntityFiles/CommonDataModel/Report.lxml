@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;7767a9e1-8576-443a-9c09-fd52fc766c6e&quot;"
   ObjectTableName="&quot;Report&quot;"
   IsNew="false"

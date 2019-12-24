@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;27e7e889-9e8c-4495-a0ca-1089aebbf66b&quot;"
   ObjectTableName="&quot;CounterDefinition&quot;"
   IsNew="false"

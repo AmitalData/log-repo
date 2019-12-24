@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;701122de-324a-4340-9579-20ea1655e274&quot;"
   ObjectTableName="&quot;QuoteClosingReason&quot;"
   DBTableName="&quot;QuoteClosingReasons&quot;"

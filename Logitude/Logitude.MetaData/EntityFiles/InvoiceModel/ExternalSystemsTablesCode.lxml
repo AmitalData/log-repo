@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;9c6ac419-bdd7-4fbb-aeba-993025813249&quot;"
   ObjectTableName="&quot;ExternalSystemsTablesCode&quot;"
   IsNew="false"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;f667735b-3e1e-430f-8ae8-5260e3670f01&quot;"
   ObjectTableName="&quot;CustomsShipper&quot;"
   IsNew="true"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;7913f5fc-896d-4f37-bce6-02a75e6b4e1f&quot;"
   ObjectTableName="&quot;GLAccountInterestPeriod&quot;"
   IsNew="true"

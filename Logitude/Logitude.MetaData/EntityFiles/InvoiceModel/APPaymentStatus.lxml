@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;02daa3df-8f2f-40a8-abf7-48d589caabd4&quot;"
   ObjectTableName="&quot;APPaymentStatus&quot;"
   DBTableName="&quot;APPaymentStatus&quot;"

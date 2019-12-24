@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;bc65587b-b805-4199-85f7-c7f6658c6f1b&quot;"
   ObjectTableName="&quot;SchedulerProcedure&quot;"
   IsNew="true"

@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;8d7ca2b3-8cb8-4dfe-868a-100cd2ddcfe0&quot;"
   ObjectTableName="&quot;BookingPackage&quot;"
   DBTableName="&quot;BookingPackages&quot;"

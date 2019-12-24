@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;45312090-91ba-468e-84bd-c69d0d6a794e&quot;"
   ObjectTableName="&quot;Airline&quot;"
   IsNew="false"
