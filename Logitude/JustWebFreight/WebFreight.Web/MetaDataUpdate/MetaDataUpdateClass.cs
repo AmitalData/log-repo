@@ -4917,6 +4917,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableId = AirlinesObject.Id,
                 VisibilityDefaultValue = true,
                 ShortTextCode = "Airline.Tip.General",
+                ShortTextCodeCode = "Airline.Tip.General",
             }, TipRepository, TextCodeRepository, tips, textCodes);
             AirlinesObject.MainTipCode = airlineTip.Code;
 
@@ -4928,6 +4929,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableId = PortsObject.Id,
                 VisibilityDefaultValue = true,
                 ShortTextCode = "Port.Tip.General",
+                ShortTextCodeCode = "Port.Tip.General",
             }, TipRepository, TextCodeRepository, tips, textCodes);
             PortsObject.MainTipCode = portTip.Code;
 
@@ -4939,6 +4941,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableId = ShippingLinesObject.Id,
                 VisibilityDefaultValue = true,
                 ShortTextCode = "ShippingLine.Tip.General",
+                ShortTextCodeCode = "ShippingLine.Tip.General",
             }, TipRepository, TextCodeRepository, tips, textCodes);
             ShippingLinesObject.MainTipCode = shippingLineTip.Code;
 
@@ -4950,6 +4953,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableId = ShipmentObject.Id,
                 VisibilityDefaultValue = true,
                 ShortTextCode = "Shipment.Tip.OrderDetails",
+                ShortTextCodeCode = "Shipment.Tip.OrderDetails",
             }, TipRepository, TextCodeRepository, tips, textCodes);
 
             Tip CustomerTenantAccessCardTip = AddTips.AddTip(new TipDetails()
@@ -4960,6 +4964,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableId = CustomerTenantAccessCardObject.Id,
                 VisibilityDefaultValue = true,
                 ShortTextCode = "CustomerTenantAccessCard.Tip.NewCardTip",
+                ShortTextCodeCode = "CustomerTenantAccessCard.Tip.NewCardTip",
             }, TipRepository, TextCodeRepository, tips, textCodes);
 
             this.ObjectContext.SaveChanges();
