@@ -1806,6 +1806,10 @@
     <Compile Include="Migrations\201912151615218_Edit_Fields_In_GLAccount.Designer.cs">
       <DependentUpon>201912151615218_Edit_Fields_In_GLAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.cs" />
+    <Compile Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.Designer.cs">
+      <DependentUpon>201912181600213_UpdateFieldsInterestInGLAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs" />
     <Compile Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.Designer.cs">
       <DependentUpon>201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs</DependentUpon>
@@ -1822,6 +1826,7 @@
     <Compile Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.Designer.cs">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -1835,6 +1840,8 @@
       <DependentUpon>201912220836314_WesamAddShortTextCodeCodeToTipsTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+
+
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.Designer.cs">
       <DependentUpon>201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs</DependentUpon>
@@ -1843,6 +1850,11 @@
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
       <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs" />
+    <Compile Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.Designer.cs">
+      <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
+    </Compile>
+    
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Migrations\201802141437145_ClassifiedREmarks.resx">
       <DependentUpon>201802141437145_ClassifiedREmarks.cs</DependentUpon>
@@ -3131,6 +3143,9 @@
     <EmbeddedResource Include="Migrations\201912151615218_Edit_Fields_In_GLAccount.resx">
       <DependentUpon>201912151615218_Edit_Fields_In_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181600213_UpdateFieldsInterestInGLAccount.resx">
+      <DependentUpon>201912181600213_UpdateFieldsInterestInGLAccount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.resx">
       <DependentUpon>201912180858216_Add_Field_InterestCreditLimit_To_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
@@ -3143,6 +3158,7 @@
     <EmbeddedResource Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.resx">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201912221319308_AddSupportMailboxTable.resx">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -3155,6 +3171,11 @@
     <EmbeddedResource Include="Migrations\201912220836314_WesamAddShortTextCodeCodeToTipsTable.resx">
       <DependentUpon>201912220836314_WesamAddShortTextCodeCodeToTipsTable.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
+      <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

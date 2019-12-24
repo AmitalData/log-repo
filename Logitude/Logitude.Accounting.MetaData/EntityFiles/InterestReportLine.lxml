@@ -4,6 +4,7 @@
   ObjectTableName="&quot;InterestReportLine&quot;"
   IsNew="true"
   DBTableName="&quot;InterestReportLines&quot;"
+  OldDBTableName="&quot;InterestReportLines&quot;"
   ObjectTableSingular="&quot;InterestReportLine&quot;"
   ObjectTablePlural="&quot;InterestReportLines&quot;"
   HasCustomFilter="false"
@@ -36,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Interest Report Line&quot;"
-  Code="&quot;3909&quot;"
+  Code="&quot;259b&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -60,6 +61,7 @@
   <field
     Id="&quot;714cd054-2383-4439-9796-9d3860fd2a6f&quot;"
     FieldName="&quot;Tenant&quot;"
+    OldFieldName="&quot;Tenant&quot;"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -83,6 +85,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -118,6 +121,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -128,6 +132,7 @@
   <field
     Id="&quot;5d7809dd-951a-42ea-b86b-aec7afe826d9&quot;"
     FieldName="&quot;InterestReportId&quot;"
+    OldFieldName="&quot;InterestReportId&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -151,6 +156,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;InterestReportId&quot;"
     ListPropertyPath="&quot;InterestReportId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -183,6 +189,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -193,6 +200,7 @@
   <field
     Id="&quot;a26cd5db-37ed-4913-9304-68596f18300e&quot;"
     FieldName="&quot;InterestTransactionId&quot;"
+    OldFieldName="&quot;InterestTransactionId&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -216,6 +224,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;InterestTransactionId&quot;"
     ListPropertyPath="&quot;InterestTransactionId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -250,6 +259,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -257,6 +267,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;InterestReportLineHeaderScreen&quot;"
+    ObjectTableName="&quot;InterestReportLine&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -285,6 +304,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
