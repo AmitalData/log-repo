@@ -103,6 +103,10 @@ namespace WarehouseData
                     else oControl = DWDepartmentLabel;
 
                     break;
+                case "ShipmentComputedFields":
+
+                    oControl = DWShipmentComputedFieldLabel;
+                    break;
 
                 default:
                     oControl = BuildWarehouseData;
@@ -480,6 +484,12 @@ namespace WarehouseData
                             else SetControlPropertyValue("Text", DWCurrencyLabel.Text + "     (" + countStart + ")", table.DBTableName);
 
                             break;
+                
+                        case "ShipmentComputedFields":
+                            SetControlPropertyValue("Text", DWShipmentComputedFieldLabel.Text + "     (" + countStart + ")", table.DBTableName);
+               
+                            break;
+
 
                     }
                 }
