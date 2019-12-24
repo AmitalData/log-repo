@@ -58,7 +58,11 @@ or FieldName = 'ForwarderPartnerId' or FieldName = 'CreatedByUserId' or FieldNam
 or FieldName = 'StatusDate' or FieldName = 'CustomsDeclarationNumber' or  FieldName ='FirstOperationalCloseDate'   or FieldName ='EstimatedFinalArrivalDate' or FieldName = 'ActualFinalArrivalDate'  or FieldName = 'Routing' or FieldName = 'DescriptionOfGoods' or FieldName= 'PreCarriageETD' or FieldName='MoveTypeId' or FieldName='SpecialServicesTypeId'  or FieldName= 'AgentComputed' or FieldName= 'ARInvoices' or    FieldName= 'ConsolidatorId' or FieldName = 'ConsolidatorReference' or FieldName = 'Notes'or FieldName = 'Notify1Id' or FieldName = 'Notify1Reference'or FieldName = 'Notify2Id' or FieldName = 'Notify2Reference'
 or FieldName = 'ColoaderId' or FieldName = 'ColoaderReference1'or FieldName = 'ShipperNotExporterId' or FieldName = 'ShipperNotExporterReference' or FieldName = 'ReleasingAgentId' or FieldName = 'ReleasingAgentReference1' or FieldName ='Ratio' or FieldName ='VolumetricWeight' or FieldName ='WarehouseLegActualEntryDate'  or FieldName ='WarehouseLegExpectedEntryDate'  or FieldName ='WarehouseLegActualReleaseDate'  or FieldName ='WarehouseLegExpectedReleaseDate' or FieldName ='ChargeableWeightUnitCode'
 or FieldName = 'IncludesCustoms' or FieldName = 'DeclarationNumber' or FieldName = 'DeclarationDate' or FieldName = 'TerminalAvailable' or FieldName = 'WarehouseLegLastFreeDate'
+or FieldName = 'OrderGrossWeight' or FieldName = 'OrderChargeableWeight' or FieldName = 'BookingVolume' or FieldName = 'BookingNumberOfPackages' or FieldName = 'EstimateProfitInProfitCurrency'or FieldName = 'EstimateProfitInLocalCurrency'
+or FieldName = 'GrossWeightUnitCode'or FieldName = 'VolumeUnitCode'
 )
+
+
 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Master') and (FieldName = 'MainCarriageATD' or FieldName = 'Master' or FieldName = 'MainCarriageToPortId' or FieldName = 'Transshipment1ToPortId' or FieldName = 'Transshipment2ToPortId' or FieldName = 'Transshipment3ToPortId' 
 or FieldName = 'MainCarriageETD' or FieldName = 'MainCarriageFinalDestinationATA' or FieldName = 'MainCarriageFinalDestinationETA' or FieldName = 'MainCarriageCarrierNumber'  or FieldName='MainCarriageCarrierId'  or FieldName = 'AirlinePrefix'
