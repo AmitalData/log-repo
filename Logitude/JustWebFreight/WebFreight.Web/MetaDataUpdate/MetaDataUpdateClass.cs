@@ -60151,111 +60151,148 @@ namespace WebFreight.Web.MetaDataUpdate
             #region TableDescription
             TextCode Incotermtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.O.TableDescription", DefaultText = "Define delivery terms specifying the default method – collect or prepaid – for freight and other charges.", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             IncotermTable.DescriptionTextCodeId = Incotermtc.Id;
+            IncotermTable.DescriptionTextCodeCode = Incotermtc.Code;
 
             TextCode PaymentTermtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.O.TableDescription", DefaultText = "Define payment terms, specifying the number of days for calculating payment due date for invoices.", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             PaymentTermTable.DescriptionTextCodeId = PaymentTermtc.Id;
+            PaymentTermTable.DescriptionTextCodeCode = PaymentTermtc.Code;
 
             TextCode Currencytc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.O.TableDescription", DefaultText = "Maintain currency information.", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             CurrencyTable.DescriptionTextCodeId = Currencytc.Id;
+            CurrencyTable.DescriptionTextCodeCode = Currencytc.Code;
 
             TextCode VatTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.O.TableDescription", DefaultText = "Maintain the types of VAT applied in your country. Update the VAT percents according to dates.", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             VatTypeTable.DescriptionTextCodeId = VatTypetc.Id;
+            VatTypeTable.DescriptionTextCodeCode = VatTypetc.Code;
 
             TextCode ChargesTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.TableDescription", DefaultText = "Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB.", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             ChargesTypeTable.DescriptionTextCodeId = ChargesTypetc.Id;
+            ChargesTypeTable.DescriptionTextCodeCode = ChargesTypetc.Code;
 
             TextCode RatesTabletc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.TableDescription", DefaultText = "Insert the daily exchange rates of currencies to your base currency.", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             RatesTableTable.DescriptionTextCodeId = RatesTabletc.Id;
+            RatesTableTable.DescriptionTextCodeCode = RatesTabletc.Code;
 
             TextCode Porttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.O.TableDescription", DefaultText = "Logitude supplies and maintains the ports for you. You can modify port names and add local names.", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             PortTable.DescriptionTextCodeId = Porttc.Id;
+            PortTable.DescriptionTextCodeCode = Porttc.Code;
 
             TextCode Countrytc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.O.TableDescription", DefaultText = "Logitude supplies and maintains the countries for you. You can maintain the country information, and connect countries to global zones and the EC.", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             CountryTable.DescriptionTextCodeId = Countrytc.Id;
+            CountryTable.DescriptionTextCodeCode = Countrytc.Code;
 
             TextCode GlobalZonetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.O.TableDescription", DefaultText = "Logitude supplies the global zones for you. You can modify the names and add local names.", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             GlobalZoneTable.DescriptionTextCodeId = GlobalZonetc.Id;
+            GlobalZoneTable.DescriptionTextCodeCode = GlobalZonetc.Code;
 
             TextCode Branchtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.O.TableDescription", DefaultText = "Define your company’s branches and specify default data, such as ports, that applies at each branch.", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             BranchTable.DescriptionTextCodeId = Branchtc.Id;
+            BranchTable.DescriptionTextCodeCode = Branchtc.Code;
 
             TextCode Departmenttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.O.TableDescription", DefaultText = "Define your organization’s departments.", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             DepartmentTable.DescriptionTextCodeId = Departmenttc.Id;
+            DepartmentTable.DescriptionTextCodeCode = Departmenttc.Code;
 
             TextCode Contacttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.TableDescription", DefaultText = "Manage your company contacts, which includes contact information from partners and Logitude users.", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             ContactTable.DescriptionTextCodeId = Contacttc.Id;
+            ContactTable.DescriptionTextCodeCode = Contacttc.Code;
 
             TextCode Usertc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.TableDescription", DefaultText = "Manage your Logitude users, associate users to roles and define restrictions.", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             UserTable.DescriptionTextCodeId = Usertc.Id;
+            UserTable.DescriptionTextCodeCode = Usertc.Code;
 
             TextCode Statetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.O.TableDescription", DefaultText = "Logitude supplies the states for you. You can modify the names and add local names.", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             StateTable.DescriptionTextCodeId = Statetc.Id;
+            StateTable.DescriptionTextCodeCode = Statetc.Code;
 
             TextCode DocumentTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.TableDescription", DefaultText = "Create document types, use the layout designer to build document templates and customize documents.", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             DocumentTypeTable.DescriptionTextCodeId = DocumentTypetc.Id;
+            DocumentTypeTable.DescriptionTextCodeCode = DocumentTypetc.Code;
 
             TextCode EventTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.O.TableDescription", DefaultText = "Maintain event types for the activities you want Logitude to log, specify event types for follow-up and those that can be entered manually.", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             EventTypeTable.DescriptionTextCodeId = EventTypetc.Id;
+            EventTypeTable.DescriptionTextCodeCode = EventTypetc.Code;
 
             TextCode PackageTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.O.TableDescription", DefaultText = "Maintain the details of the types of packages you service – cartons, pallets, containers, etc.", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             PackageTypeTable.DescriptionTextCodeId = PackageTypetc.Id;
+            PackageTypeTable.DescriptionTextCodeCode = PackageTypetc.Code;
 
             TextCode Vesseltc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.O.TableDescription", DefaultText = "Add and manage information about the vessels you work with.", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             VesselTable.DescriptionTextCodeId = Vesseltc.Id;
+            VesselTable.DescriptionTextCodeCode = Vesseltc.Code;
 
             TextCode CreditCardTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.O.TableDescription", DefaultText = "Maintain Credit Cards information.", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             CreditCardTypeTable.DescriptionTextCodeId = CreditCardTc.Id;
+            CreditCardTypeTable.DescriptionTextCodeCode = CreditCardTc.Code;
 
             TextCode MeasurementTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.O.TableDescription", DefaultText = "Manage the unit of measurement names to be printed in documents.", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             MeasurementTable.DescriptionTextCodeId = MeasurementTc.Id;
+            MeasurementTable.DescriptionTextCodeCode = MeasurementTc.Code;
 
             TextCode RegionTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.O.TableDescription", DefaultText = "Define the geographic regions to be used for specifying customers' regional location.", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             RegionTable.DescriptionTextCodeId = RegionTc.Id;
+            RegionTable.DescriptionTextCodeCode = RegionTc.Code;
 
             TextCode CountryCityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.O.TableDescription", DefaultText = "Manage the cities to be used in addresses.", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             CountryCityTable.DescriptionTextCodeId = CountryCityTc.Id;
+            CountryCityTable.DescriptionTextCodeCode = CountryCityTc.Code;
 
             TextCode MoveTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.O.TableDescription", DefaultText = "Define the move types for shipments by Air, Ocean or Land transportation.", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             MoveTypeTable.DescriptionTextCodeId = MoveTypeTc.Id;
+            MoveTypeTable.DescriptionTextCodeCode = MoveTypeTc.Code;
 
             TextCode ReportTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.O.TableDescription", DefaultText = "Maintain all the reports you can use in the system.", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             ReportTable.DescriptionTextCodeId = ReportTc.Id;
+            ReportTable.DescriptionTextCodeCode = ReportTc.Code;
 
             TextCode QuoteTemplateTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.O.TableDescription", DefaultText = "Create new quote templates and maintain existing ones.", ObjectTableId = QuoteTemplateTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             QuoteTemplateTable.DescriptionTextCodeId = QuoteTemplateTc.Id;
+            QuoteTemplateTable.DescriptionTextCodeCode = QuoteTemplateTc.Code;
 
             TextCode CommodityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.O.TableDescription", DefaultText = "Manage the commodities to be used in shipments and printed and sent in FWB and FHL messages.", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             CommodityTable.DescriptionTextCodeId = CommodityTc.Id;
+            CommodityTable.DescriptionTextCodeCode = CommodityTc.Code;
 
             TextCode SpecialServiceTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.O.TableDescription", DefaultText = "Define the special services you want to use in your shipments.", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             SpecialServicesTypesTables.DescriptionTextCodeId = SpecialServiceTypeTc.Id;
+            SpecialServicesTypesTables.DescriptionTextCodeCode = SpecialServiceTypeTc.Code;
 
             TextCode BusinessUnitTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.O.TableDescription", DefaultText = "Define the business units you want to work with for controlling access to information and sharing of information.", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             BusinessUnitTable.DescriptionTextCodeId = BusinessUnitTc.Id;
+            BusinessUnitTable.DescriptionTextCodeCode = BusinessUnitTc.Code;
 
             TextCode CustomerSizeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.O.TableDescription", DefaultText = "Define sizes for evaluating the volume of customer business.", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             CustomerSizeTable.DescriptionTextCodeId = CustomerSizeTc.Id;
+            CustomerSizeTable.DescriptionTextCodeCode = CustomerSizeTc.Code;
 
             TextCode QuoteStageTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.O.TableDescription", DefaultText = "Define the stages for handling quotes.", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             QuoteStageTable.DescriptionTextCodeId = QuoteStageTc.Id;
+            QuoteStageTable.DescriptionTextCodeCode = QuoteStageTc.Code;
 
             TextCode LeadSourceTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.O.TableDescription", DefaultText = "Define the sources that supply you with information about  new customers.", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             LeadSourceTable.DescriptionTextCodeId = LeadSourceTc.Id;
+            LeadSourceTable.DescriptionTextCodeCode = LeadSourceTc.Code;
 
             TextCode CompetitorTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.O.TableDescription", DefaultText = "Define your competitors.", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             CompetitorObjectTable.DescriptionTextCodeId = CompetitorTc.Id;
+            CompetitorObjectTable.DescriptionTextCodeCode = CompetitorTc.Code;
 
             TextCode AdditionalServiceTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.O.TableDescription", DefaultText = "Define the services that you want to supply to your customers in addition to the regular products.", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AdditionalServiceTable.DescriptionTextCodeId = AdditionalServiceTc.Id;
+            AdditionalServiceTable.DescriptionTextCodeCode = AdditionalServiceTc.Code;
 
             TextCode IndustryTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.O.TableDescription", DefaultText = "Define industries for use in queries and reports.", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             IndustryTable.DescriptionTextCodeId = IndustryTc.Id;
+            IndustryTable.DescriptionTextCodeCode = IndustryTc.Code;
 
             TextCode ProductTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.O.TableDescription", DefaultText = "Define the types of products offered to customers.", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             ProductTypeTable.DescriptionTextCodeId = ProductTypeTc.Id;
+            ProductTypeTable.DescriptionTextCodeCode = ProductTypeTc.Code;
 
             TextCode EmailAlertSettingTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmailAlertSetting.O.TableDescription", DefaultText = "Define the e-mail notifications that will be sent automatically based on different triggers.", ObjectTableId = EmailAlertSettingTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             EmailAlertSettingTable.DescriptionTextCodeId = EmailAlertSettingTc.Id;
+            EmailAlertSettingTable.DescriptionTextCodeCode = EmailAlertSettingTc.Code;
+
             #endregion
 
             #region Tabs Headers

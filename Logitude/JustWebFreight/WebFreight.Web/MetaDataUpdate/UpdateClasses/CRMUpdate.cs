@@ -1935,33 +1935,43 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             TextCode QuestionnaireTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Questionnaire.O.TableDescription", DefaultText = "Create a customized page for entering  customer details  when creating a new customer from a potential customer.", ObjectTableId = QuestionnaireTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             QuestionnaireTable.DescriptionTextCodeId = QuestionnaireTc.Id;
+            QuestionnaireTable.DescriptionTextCodeCode = QuestionnaireTc.Code;
 
             TextCode StageTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "stage.O.TableDescription", DefaultText = "Define the stages of the sales process for CRM opportunities, including the probability percents.", ObjectTableId = stageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             stageObjectTable.DescriptionTextCodeId = StageTc.Id;
+            stageObjectTable.DescriptionTextCodeCode = StageTc.Code;
 
             TextCode OpportunityClosingReasonTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityClosingReason.O.TableDescription", DefaultText = "Define the reasons for closing  opportunities.", ObjectTableId = closingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             closingObjectTable.DescriptionTextCodeId = OpportunityClosingReasonTc.Id;
+            closingObjectTable.DescriptionTextCodeCode = OpportunityClosingReasonTc.Code;
 
             TextCode TicketTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketType.O.TableDescription", DefaultText = "Define the ticket types to be used when closing tickets.", ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             TicketTypeObjectTable.DescriptionTextCodeId = TicketTypeTc.Id;
+            TicketTypeObjectTable.DescriptionTextCodeCode = TicketTypeTc.Code;
 
             TextCode TicketStageTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketStage.O.TableDescription", DefaultText = "Define the stages of the ticket handling process in the system.", ObjectTableId = TicketStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             TicketStageObjectTable.DescriptionTextCodeId = TicketStageTc.Id;
+            TicketStageObjectTable.DescriptionTextCodeCode = TicketStageTc.Code;
 
             TextCode SLAHeaderTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SLAHeader.O.TableDescription", DefaultText = "Define the service level agreement based on severity and escalation management conditions.", ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             SLAHeaderObjectTable.DescriptionTextCodeId = SLAHeaderTc.Id;
+            SLAHeaderObjectTable.DescriptionTextCodeCode = SLAHeaderTc.Code;
 
             TextCode BusinessHourTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessHour.O.TableDescription", DefaultText = "Define business hours and holidays.", ObjectTableId = BusinessHourObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             BusinessHourObjectTable.DescriptionTextCodeId = BusinessHourTc.Id;
+            BusinessHourObjectTable.DescriptionTextCodeCode = BusinessHourTc.Code;
 
             TextCode TicketSeverityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketSeverity.O.TableDescription", DefaultText = "Define the levels of severity to be used in ticket processing.", ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             TicketSeverityObjectTable.DescriptionTextCodeId = TicketSeverityTc.Id;
+            TicketSeverityObjectTable.DescriptionTextCodeCode = TicketSeverityTc.Code;
 
             TextCode TicketClassificationTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketClassification.O.TableDescription", DefaultText = "Add the categories according to which tickets will be classified, in hierarchy tree pattern. Each branch in the tree can be defined with Employee Group, Default Severity, Manager and Notify users.", ObjectTableId = TicketClassificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             TicketClassificationObjectTable.DescriptionTextCodeId = TicketClassificationTc.Id;
+            TicketClassificationObjectTable.DescriptionTextCodeCode = TicketClassificationTc.Code;
 
             TextCode EmployeeGroupTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmployeeGroup.O.TableDescription", DefaultText = "Define the employee groups to be used in classifications and the SLA table. Each group can be defined with Manager, Notify users and the list of group members.", ObjectTableId = EmployeeGroupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             EmployeeGroupObjectTable.DescriptionTextCodeId = EmployeeGroupTc.Id;
+            EmployeeGroupObjectTable.DescriptionTextCodeCode = EmployeeGroupTc.Code;
             #endregion
 
             #region Queries

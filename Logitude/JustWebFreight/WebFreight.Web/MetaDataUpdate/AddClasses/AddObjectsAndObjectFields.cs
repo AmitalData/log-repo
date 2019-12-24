@@ -127,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         textCodeRepository.SubmitChanges();
                     }
                     objectTable.DescriptionTextCodeId = descriptionTextCode.Id;
+                    objectTable.DescriptionTextCodeCode = descriptionTextCode.Code;
                 }
 
                 if (!string.IsNullOrEmpty(objectTablesDetails.NewButtonDefaultText) || !string.IsNullOrEmpty(objectTablesDetails.NewButtonLocalDefaultText))
@@ -155,6 +156,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         textCodeRepository.SubmitChanges();
                     }
                     objectTable.NewButtonTextCodeId = newButtonTextCode.Id;
+                    objectTable.NewButtonTextCodeCode = newButtonTextCode.Code;
                 }
 
                 objectTable.IsLookUp = (!string.IsNullOrEmpty(objectTablesDetails.LookUp1) && !objectTablesDetails.IsComposition);
@@ -274,6 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         descriptionTextCode.TextCodeTypeCode = "T";
                         textCodeRepository.Add(descriptionTextCode);
                         updatedObjectTable.DescriptionTextCodeId = descriptionTextCode.Id;
+                        updatedObjectTable.DescriptionTextCodeCode = descriptionTextCode.Code;
                     }
                 }
 
@@ -304,6 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         newButtonTextCode.TextCodeTypeCode = "B";
                         textCodeRepository.Add(newButtonTextCode);
                         updatedObjectTable.NewButtonTextCodeId = newButtonTextCode.Id;
+                        updatedObjectTable.NewButtonTextCodeCode = newButtonTextCode.Code;
                     }
                 }
 
