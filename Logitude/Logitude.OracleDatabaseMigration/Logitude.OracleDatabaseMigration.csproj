@@ -404,8 +404,7 @@
     <Compile Include="Migrations\201911181156591_ChangesHazardousSubstances1.Designer.cs">
       <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
     </Compile>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
-    <Compile Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs" />
+     <Compile Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs" />
     <Compile Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.Designer.cs">
       <DependentUpon>201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
     </Compile>
@@ -417,8 +416,7 @@
     <Compile Include="Migrations\201912041514241_dbMigLineTk2.Designer.cs">
       <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
     </Compile>
-========================================================================
-    <Compile Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs" />
+     <Compile Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs" />
     <Compile Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.Designer.cs">
       <DependentUpon>201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs</DependentUpon>
     </Compile>
@@ -426,8 +424,7 @@
     <Compile Include="Migrations\201912171544423_AmendmentStatus_LenghtName.Designer.cs">
       <DependentUpon>201912171544423_AmendmentStatus_LenghtName.cs</DependentUpon>
     </Compile>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 59608
-    <Compile Include="Migrations\Configuration.cs" />
+     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -717,8 +714,7 @@
     <EmbeddedResource Include="Migrations\201911181156591_ChangesHazardousSubstances1.resx">
       <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
-    <EmbeddedResource Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.resx">
+     <EmbeddedResource Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.resx">
       <DependentUpon>201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912031511537_dbMigLine.resx">
@@ -727,15 +723,13 @@
     <EmbeddedResource Include="Migrations\201912041514241_dbMigLineTk2.resx">
       <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
     </EmbeddedResource>
-========================================================================
-    <EmbeddedResource Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.resx">
+     <EmbeddedResource Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.resx">
       <DependentUpon>201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912171544423_AmendmentStatus_LenghtName.resx">
       <DependentUpon>201912171544423_AmendmentStatus_LenghtName.cs</DependentUpon>
     </EmbeddedResource>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 59608
-    <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
+     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
