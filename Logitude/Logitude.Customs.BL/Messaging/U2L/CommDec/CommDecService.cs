@@ -1492,6 +1492,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 {
                     SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
                 }
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.StatisticQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.StatisticQuantityType))
+                {
+                    SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
+                }
                 SupplierInvoiceItemPMList.Add(SupplierInvoiceItemPM);
             }
 

@@ -30,7 +30,15 @@ namespace Logitude.Customs.Data.Repsitories
                 .FirstOrDefault();
         }
 
-    
+        public DBMigration GetLast()
+        {
+            return this.GetAll()
+               .OrderByDescending(r => r.MajorVersion)
+               .ThenByDescending(r => r.MinorVersion)
+               .FirstOrDefault();
+        }
+
+
     }
 
 }

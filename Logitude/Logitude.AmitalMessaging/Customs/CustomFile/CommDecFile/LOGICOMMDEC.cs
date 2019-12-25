@@ -1043,6 +1043,8 @@
 
         private string pROCESSTYPEField;
 
+        private string statisticQuantityTypeField;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         private POINTERS[] pOINTERSField;
@@ -1254,6 +1256,19 @@
             set
             {
                 this.pROCESSTYPEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StatisticQuantityType
+        {
+            get
+            {
+                return this.statisticQuantityTypeField;
+            }
+            set
+            {
+                this.statisticQuantityTypeField = value;
             }
         }
 

@@ -11,7 +11,7 @@ using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    public class P19R03_0001_PatchDist: PatchDistributionBase
+    public class P19R03_0001_PatchDist : PatchDistributionBase
     {
 
         public P19R03_0001_PatchDist() : base("טבלאות תשתית הפצה ",new DateTime(2019,12,2))
@@ -111,25 +111,16 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
                 throw;
             }
         }
-        public override List<ScriptDTO> GetUpScripts()
+        public override void CreateUpScripts()
         {
-            int ScriptCount = 0;
-            return new List<ScriptDTO>()
-            {
-                new ScriptDTO() { 
-                    ScriptCounter = ScriptCount++, 
-                    SqlScript = "CREATE INDEX IX_DBMigrationLines_Id ON DBMigrationLines (DBMigrationId)"
-                },
-                new ScriptDTO() {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript = @"ALTER TABLE DBMigrationLines
+            this.AddUpSqlScript("CREATE INDEX IX_DBMigrationLines_Id ON DBMigrationLines (DBMigrationId)");
+            this.AddUpSqlScript(
+                @"ALTER TABLE DBMigrationLines
   ADD CONSTRAINT FK_N1148365077 FOREIGN KEY (DBMigrationId) REFERENCES DBMigrations (Id)
-"
-                },
-            };
+");
         }
 
-        public override List<ScriptDTO> GetDownScripts()
+        public override void CreateDownScripts()
         {
             throw new NotImplementedException();
         }
