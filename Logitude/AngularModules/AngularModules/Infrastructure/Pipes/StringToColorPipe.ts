@@ -194,8 +194,7 @@ export class StringToColorPipe {
     }
     private ApplyParameterPipe(value: string, Parameter: string) {
         var myResult: string = "#282E30";
-
-        if (Parameter == "CustomerStatusCode") {
+         if (Parameter == "CustomerStatusCode") {
             myResult = this.ApplyCustomerStatusCodePipe(value);
         }
 
@@ -237,7 +236,7 @@ export class StringToColorPipe {
         else if (Parameter == "DeclarationStatusTypeCode") {
             myResult = this.ApplyDeclarationStatusCodePipe(value);
         }
-
+            
         else if (Parameter == "DeclarationAmendmentStatus")
         {
             myResult = this.ApplyDeclarationAmendmentStatusPipe(value);

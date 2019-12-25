@@ -536,7 +536,7 @@ export class DeclarationWebService {
     }
 
 
-    PutCopyDeclaration_test(genericRequestParams: GenericRequestParams) {
+    GetNewAmendmentDeclaration(genericRequestParams: GenericRequestParams) {
         return Observable.defer(() => {
 
             var authHeader = new Headers();
@@ -546,12 +546,13 @@ export class DeclarationWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
             var params = JSON.stringify(genericRequestParams);
-            return this._http.put(
-                this._apiUrl + '/PutCopyDeclaration_test/',
+            return this._http.post(
+                this._apiUrl + '/PostNewAmendmentDeclaration/',
                 JSON.stringify(genericRequestParams),
                 { headers: authHeader }).map((res) => {
-
-                    serviceResponse.Result = res.json();
+                   
+                    serviceResponse.Result = this.MapJsonToEntityPM(res.json(), true);
+               
 
                     return serviceResponse;
 

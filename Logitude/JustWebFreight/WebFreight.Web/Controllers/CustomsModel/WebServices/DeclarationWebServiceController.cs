@@ -364,43 +364,30 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage PutCopyDeclaration_test(GenericRequestParams requestParams)
+        public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)
         {
 
             try
             {
-                //string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
-                //string loggedUserEmail = authToken.Email;
-                //int tenant = authToken.Tenant;
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                //var customContext = CustomContext.GetContext(tenant);
-
-                //DeclarationUpdateService service = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-                //service.CopyDeclaration_test(fromDeclarationId,  tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+ 
                 DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
-                var test = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
-
+                var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
+                string error="";
                 DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService();
 
-                dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(test.Declaration, requestParams.Tenant, true);
+                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , out error);
 
                 XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
-               // var subReq = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
-                var xml = "";
+ 
 
-                using (var sww = new StringWriter())
-                {
-                    using (XmlWriter writer = XmlWriter.Create(sww))
-                    {
-                        xsSubmit.Serialize(writer, test.Declaration);
-                        xml = sww.ToString(); // Your XML
-                    }
-                }
+                if (declarationPM != null)
+                return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, error);
 
 
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
 
             catch (Exception ex)

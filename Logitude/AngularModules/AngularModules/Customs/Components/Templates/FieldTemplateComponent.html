@@ -36,22 +36,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="FieldName == 'AmendmentStatus'" style="position:relative;width:100%; height: 100%;">
-                    <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;text-align:right">
-
-
-                        <div *ngIf="!IsHeaderScreenTemplate">
- 
-                            <div class="TextTrimming"
-                                 style="display: inline; "
-                                 [ngStyle]="{color: Entity.AmendmentStatus | StringToColorPipe:'DeclarationAmendmentStatus'}">
-                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
-                            </div>
-                        </div>
- 
-
-                    </div>
-                </div>
+             
                 <!-- CourierCustomStatusName -->
                 <div *ngIf="FieldName == 'CourierCustomStatusName'" style="position:relative;width:100%; height: 100%;">
                     <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;text-align:right">

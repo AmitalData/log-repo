@@ -129,8 +129,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         string decIdOrg;
 
-        public void MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter)
+        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter , out string error)
         {
+            error = "";
+            try
+            {
+
             var context = CustomContext.GetContext(tenant);
              DeclarationRepository declarationRepository = new DeclarationRepository(context);
 
@@ -143,7 +147,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationPM declarationPM = new DeclarationPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
-              //  DeclarationNumber = GetValueIDType(declaration.ID),
+                //  DeclarationNumber = GetValueIDType(declaration.ID),
                 DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID),
                 Tenant = tenant,
                 IsConnectedToUnifreight = true,
@@ -157,7 +161,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 IsClose = declarationOrg.IsClose,
                 //AdditionalDocument ********************
                 AgentId = GetAgent(declaration),
-
+                IsAmendment = true,
+                AmendmentOriginalDeclartation = declarationOrg.Id,
                 Consignments = GetConsignments(declaration , tenant),
                 //= new List<ConsignmentPM> () {
                 //    new ConsignmentPM() {
@@ -181,8 +186,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (declaration.DMExtensions != null)
             {
-                declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
-                declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
+                //declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
+
+                    declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID) + DateTime.Now.Year;
+                    declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
                if(declaration.DMExtensions.TaxationDateTime!= null) declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.DMExtensions.TaxationDateTime);
                 declarationPM.AutonomyRegionTypeCode = GetValueIDType(declaration.DMExtensions.AutonomyRegionType);
                 if (declaration.DMExtensions.PreviousDocument != null)
@@ -204,7 +211,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             declarationUpdateService.Update(declarationPM, true);
 
 
-           var declarationId = declarationRepository.GetLastDeclarationByCustomFileNo(declarationPM.CustomFileNo, tenant).Id;
+           var declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
 
 
 
@@ -228,6 +235,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CustomsDocumentPointer.ParentEntityId = declarationId;
                 }
                 customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
+            }
+                return declarationPM;
+
+            }
+        catch(System.Exception ex)
+
+            {
+                error = ex.Message;
+                return null;
             }
          }
 

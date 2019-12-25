@@ -10,7 +10,8 @@ import { CourierConnectedDeclarationListTemplate } from './Components/CourierCon
 import { SignStationListTemplate } from './Components/SignStationListTemplate';
 import { CourierWorksheetListTemplate } from './Components/CourierWorksheetListTemplate';
 import { DeclarationQueryListTemplate } from './Components/DeclarationQueryListTemplate';
-import { CustomsCollateralListTemplate } from './Components/CustomsCollateralListTemplate'
+import { CustomsCollateralListTemplate } from './Components/CustomsCollateralListTemplate';
+import { DeclarationAmendmentListTemplate } from './Components/DeclarationAmendmentDeclarationListTemplate';
 
 export const Components =
   [
@@ -27,7 +28,7 @@ export const Components =
     NotificationListTemplate,
         SupplierInvoiceItemsTaxListTemplate,
         CustomsCollateralListTemplate,
-        
+        DeclarationAmendmentListTemplate
   ];
 
 export class ModuleDeclarations {
@@ -49,6 +50,7 @@ export class ModuleDeclarations {
           case "CourierConnectedDeclarationListTemplate": { myResult = CourierConnectedDeclarationListTemplate; break; }
           case "DeclarationQueryListTemplate": { myResult = DeclarationQueryListTemplate; break; }
           case "CustomsCollateralListTemplate": { myResult = CustomsCollateralListTemplate; break; } 
+          case "DeclarationAmendmentListTemplate": { myResult = DeclarationAmendmentListTemplate; break; } 
 
 
       }

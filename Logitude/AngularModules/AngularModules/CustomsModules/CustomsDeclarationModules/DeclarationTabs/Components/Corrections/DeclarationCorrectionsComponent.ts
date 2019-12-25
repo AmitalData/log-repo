@@ -62,6 +62,29 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
+    public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
+
+    public get AmendmentissueDate() { return this.EntityPM ? this.EntityPM.AmendmentissueDate : null; }
+    public set AmendmentissueDate(newValue: Date) { this.EntityPM.AmendmentissueDate = newValue; }
+
+
+    public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
+    public set AmendmentDeficitInitiated(newValue: boolean) { this.EntityPM.AmendmentDeficitInitiated = newValue; }
+
+    public get VersionId() { return this.EntityPM ? this.EntityPM.VersionId : null; }
+    public set VersionId(newValue: string) { this.EntityPM.VersionId = newValue; }
+
+
+    public get AmendDeficitInitiatedReasTo() { return this.EntityPM ? this.EntityPM.AmendDeficitInitiatedReasTo : null; }
+    public set AmendDeficitInitiatedReasTo(newValue: string) { this.EntityPM.AmendDeficitInitiatedReasTo = newValue; }
+
+    public get AmendmentRemarks() { return this.EntityPM ? this.EntityPM.AmendmentRemarks : null; }
+    public set AmendmentRemarks(newValue: string) { this.EntityPM.AmendmentRemarks = newValue; }
+
+ 
+
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -76,6 +99,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         console.log("Declaration", this.EntityPM);
 
                         this.ReloadDeclarationCorrection();
+                        if (this.EntityPM.AmendmentDeficitInitiated) this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
 
                         //this.DisplayOnlyCheck();
                     });
@@ -120,6 +144,18 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                 }
                 })
             );;
+        }
+    }
+
+    AmendmentDeficitInitiatedChecked(checked) {
+        if (checked) {
+            this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, true);
+            
+        }
+
+        else {
+            this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
+            this.AmendDeficitInitiatedReasTo = "";
         }
     }
     RefreshEntity() {
@@ -171,7 +207,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                     this.BuildSystemMessage(general.SystemMessageViews);
 
                 } else {
-                    this.IsNoAmendmentsMsgVisible = true;
+                    if (!this.EntityPM.IsAmendment) this.IsNoAmendmentsMsgVisible = true;
                 }
                 this.CurrentSession.StopBusyIndicator();
 

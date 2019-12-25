@@ -11,7 +11,7 @@ import { DeclarationExtendedListService } from "../../../../../Customs/Services/
 
 
 
- import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+ import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -33,14 +33,17 @@ import { EntityListService } from '../../../../../Infrastructure/Services/Entity
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomsCollateralList } from '../../../../../Customs/EntityLists/CustomsCollateralList';
 import { CustomsCollateralAnswerSharedDataService } from '../../../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
+import { GenericRequestParams } from "../../../../../Customs/DataContract/RequestParams/GenericRequestParams";
+import { SendRequestVIA } from "../../../../../Customs/DataContract/RequestParams/RequestParamsBase";
 
 @Component({
     moduleId: module.id,
     templateUrl: './DeclarationAmendmentComponent.html',
-    providers:[DeclarationExtendedListService]
+    providers: [DeclarationExtendedListService, DeclarationWebService]
 })
 
-export class DeclarationAmendmentComponent extends BaseComponent   {
+export class DeclarationAmendmentComponent extends BaseComponent implements OnInit  {
+
 
     public amendmentObslist: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -50,49 +53,61 @@ export class DeclarationAmendmentComponent extends BaseComponent   {
     IsLoaded: boolean;
     id: string;
     public columns: any[] = null;
-    MenuHeaderchangeevent = new EventEmitter();
+    @Output() MenuHeaderchangeevent = new EventEmitter();
+    @Output() onQueryChangeEvent = new EventEmitter();
     filterAgrs: ApiQueryFilters;
     private _entityListService: EntityListService = new EntityListService();
     _stratSearch: boolean = true;
-
+     CanOpenNewAmendment: boolean;
+    public ObjectTableName: string = "Customs.Declaration";
+    public DataContext: DeclarationAmendmentComponent = this;
 
     constructor(private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,
-    private entityArgs: EntityArgs) {
+        private entityArgs: EntityArgs, private _declarationWebService: DeclarationWebService) {
         super();
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
-                this.BuildColumns();
-
-                setTimeout(() => {
-                    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-                }, 10);
+                this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null);
+                 this.BuildColumns();
 
 
-               // this.LoadDeclarationAmendmentsList();
+ 
             });
 
     }
 
-    DataSource = {
+    ngOnInit(): void {
+        setTimeout(() => {
+            this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        }, 10);
+        this.IsLoaded = true;
+    }
 
-        pageSize: 10,
+
+ 
+
+
+
+    DataSource = {
+        
+        pageSize: 30,
         rowCount: null,
-        //SortData("RequestCreateDate", "Descending", false, false);
-        sortingCol: "",// "Id",
-        sortingDir: "",//"Descending",
+         sortingCol: "SignerName",
+        sortingDir: "Descending",
+        
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
 
-            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            var tempo = this.getRows(skip, take, sortingCol, sortingDir, false, searchFields, filters);
             return tempo;
 
         },
     };
 
+
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-
-
+ 
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
@@ -102,31 +117,16 @@ export class DeclarationAmendmentComponent extends BaseComponent   {
         filters.GetAll = false;
         filters.GetCount = true;
 
-        filters.SortBy = "Id";
-        filters.SortDirection = "Descending";
-
-        filters.SortBy = "AmendmentRequestNumber";//"Id";
-        filters.SortDirection = "Descending";//"Descending";
-
-
-
-        let declarationId = this.EntityPM.Id;
-     //   filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
-
-        /// filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-
-        var myout = this.declarationExtendedListService.GetDeclarationAmendmentsById(this.id).subscribe();
-
-            //this._entityListService
-            //.getExtendedByFilters("Customs.CustomsDeclaration", filters);
-        //myout.then(res => {
-        //    this._stratSearch = false;
-        //    //this.CurrentSession.StopBusyIndicator();
-        //});
-
-        return myout;
-
+        filters.SortBy = "";//"Id";
+        filters.SortDirection =  "Descending";
+        getCount = false;
+        filters.addAdditionalFilter("Id", this.id, null, null, "Equals", false, false, false, "string");
+           return    this._entityListService.getExtendedByFilters("Customs.Declaration", filters);
+ 
+ 
     }
+
+ 
 
     BuildColumns() {
         this.columns = [];
@@ -177,11 +177,23 @@ export class DeclarationAmendmentComponent extends BaseComponent   {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentStatusName"),
             Styles: { width: '140px' },
-            IsCustomTemplate: true
-            , ServerSideSortable: true,
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            HtmlListComponentName: 'DeclarationAmendmentListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',
+
          });
 
-
+        this.columns.push({
+            FieldName: "SaveAsOriginal",
+            DataTypeCode: 'String',
+            Display: '',
+            IsCustomTemplate: true,
+            Styles: { width: '35px' },
+            //IsCheckBox: true,
+            HtmlListComponentName: 'DeclarationAmendmentListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',
+        });
 
     }
     private LoadDeclarationAmendmentsList() {
@@ -191,11 +203,8 @@ export class DeclarationAmendmentComponent extends BaseComponent   {
         this.declarationExtendedListService.GetDeclarationAmendmentsById(this.id)
             .subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
-              //  this.declarations = myResponse.Result;
-               // debugger;
                 this.GetDeclarationAmendmentsListsOp_Completed(myResponse, false);
-                this.IsLoaded = true;
-               // this.TapagIdEdit();
+    
             });
     }
 
@@ -205,11 +214,79 @@ export class DeclarationAmendmentComponent extends BaseComponent   {
             myResponse.Result.forEach((item) => {
                 item.LineNumber = i;
                 i++;
+                  if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
+            this.CanOpenNewAmendment = false;
                  this.amendmentObslist.Insert(item);
             });
              
         }
     }
 
+
+    public OpenNewAmendment() {
+
+
+        var searchParams: GenericRequestParams = new GenericRequestParams();
+        searchParams.Tenant = SessionLocator.Tenant;
+        searchParams.AppicationId = this.EntityPM.Id;
+        searchParams.LoggingEnabled = true;
+        searchParams.LoggingEntityId = this.EntityPM.Id;
+        searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+        searchParams.LoggingObjectTableId =  this.ObjectTableName;
+        searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+        searchParams.RequestName = "Declaration Request";
+        searchParams.ResponseName = "Declaration Response";
+        searchParams.RequestVIA = SendRequestVIA.DCABatch;
+        searchParams.ForcePersonalSign = false;
+
+        this._declarationWebService
+            .GetNewAmendmentDeclaration(searchParams)
+            .subscribe((response: any) => {
+
+                if (response) {
+                    if (!response.HasError) {
+                        var entity = response.Result;
+                        if (entity != null) {
+                           // this.LoadDeclarationAmendmentsList();
+                            setTimeout(() => {
+                                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+                            }, 10);
+                        this.CurrentSession.StopBusyIndicator();
+                          
+                            this.openNewDeclaration(entity.Id);
+
+                             }
+
+                    }
+                }
+            });
+
+    }
+
+ 
+    OnRowSelected(event) {
+
+        
+        var selected = event.rowData.Id;
+         if (selected) {
+
+            this.openNewDeclaration(selected);
+
+        }
+    }
+
+    openNewDeclaration(id:string) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: TextCodeTranslator.Translate("General.MH.Declaration") });
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                    if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
+                        SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
+                    }
+                });
+
+            });
+    }
 
 }

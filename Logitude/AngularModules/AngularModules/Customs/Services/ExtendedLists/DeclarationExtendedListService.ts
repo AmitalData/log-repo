@@ -8,6 +8,7 @@ import { DeclarationList } from '../../EntityLists/DeclarationList';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { SendCollateralRequestParams} from '../../DataContract/RequestParams/SendCollateralRequestParams';
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 
@@ -308,6 +309,49 @@ export class DeclarationExtendedListService {
         return entityList;
     }
 
+
+
+    getByFilters(filters: ApiQueryFilters) {
+
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        var propValue;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            propValue = filters[propName];
+        }
+
+        var urlparameters = '/GetDeclarationAmendmentsById/?' + 'id=' + filters.AdditionalFilters[0].FieldValue;
+ 
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
+
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
+                var _mappedListsArray: Array<DeclarationList> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: DeclarationList;
+                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
 
 }

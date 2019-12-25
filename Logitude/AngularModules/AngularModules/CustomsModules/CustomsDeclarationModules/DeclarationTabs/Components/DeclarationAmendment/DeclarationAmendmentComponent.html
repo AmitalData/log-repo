@@ -28,7 +28,8 @@
 
 
                         <td style="left:0px;float:left">
-                            <button style="width:100px" class="Button" (click)="OpenEditCollateralAnswerWindow()">    {{'Customs.Declaration.O.OpenDeclarationAmendment'| TextCodeTranslationPipe}}</button>
+                            <!--[disabled] ="!CanOpenNewAmendment"-->
+                            <button [disabled] ="!CanOpenNewAmendment" style="width:100px" class="Button" (click)="OpenNewAmendment()">    {{'Customs.Declaration.O.OpenDeclarationAmendment'| TextCodeTranslationPipe}}</button>
 
 
                         </td>
@@ -39,77 +40,81 @@
                     <tr class="FormFieldRow" style="height:1px">
                         <td colspan="5" style="width: 100% ; height : 100%">
                             <div class="CellContent" style="bottom: 5px;padding:5px">
-                                <logitude-grid 
+                                <logitude-grid GridWidth="100%" GridHeight="100%"
+                                               [ObjectTable]="ObjectTableName"
                                                [dataSource]="DataSource"
-                                               [ObjectTable]="Customs.Declaration"
                                                [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                                [columns]="columns"
                                                [QueryChangeEvent]="onQueryChangeEvent"
-                                               [IsCustomTemplate]="true">
+                                               [IsCustomTemplate]="true"
+                                               (rowSelectedEvent)= "OnRowSelected($event)">
+>
                                 </logitude-grid>
+                                <div>
+                                    <logitude-edit-grid GridWidth="100%"   *ngIf="1==2"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="amendmentObslist"
+                                                        (SelectedItemChanged)="OnRowSelected($event)">
 
-                                <logitude-edit-grid GridWidth="100%" *ngIf="1==2"
-                                                    GridHeight="100%"
-                                                    [ItemSource]="amendmentObslist">
+                                        <log-column [header]="'#'" [binding]="'LineNumber'" [width]="'55'" [Alignment]="'right'">
+                                            <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.LineNumber}}</span>
+                                                </div>
 
-                                    <log-column [header]="'#'" [binding]="'LineNumber'" [width]="'55'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.LineNumber}}</span>
-                                            </div>
+                                            </log-cell-template>
 
-                                        </log-cell-template>
+                                        </log-column>
+                                        <!-- AmendmentRequestNumber -->
+                                        <log-column [header]="'Customs.Declaration.F.AmendmentRequestNumber' | TextCodeTranslationPipe" [binding]="'AmendmentRequestNumber'" [width]="'90'" [Alignment]="'right'">
+                                            <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.AmendmentRequestNumber}}</span>
+                                                </div>
 
-                                    </log-column>
-                                    <!-- AmendmentRequestNumber -->
-                                    <log-column [header]="'Customs.Declaration.F.AmendmentRequestNumber' | TextCodeTranslationPipe" [binding]="'AmendmentRequestNumber'" [width]="'90'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.AmendmentRequestNumber}}</span>
-                                            </div>
+                                            </log-cell-template>
+                                        </log-column>
 
-                                        </log-cell-template>
-                                    </log-column>
+                                        <!-- VersionId -->
+                                        <log-column [header]="'Customs.Declaration.F.VersionId' | TextCodeTranslationPipe"
+                                                    [binding]="'VersionId'" [width]="'120'" [Alignment]="'right'">
+                                            <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.VersionId}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
 
-                                    <!-- VersionId -->
-                                    <log-column [header]="'Customs.Declaration.F.VersionId' | TextCodeTranslationPipe"
-                                                [binding]="'VersionId'" [width]="'120'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.VersionId}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
+                                        <!-- AmendmentCorrectedByUserName -->
+                                        <log-column [header]="'Customs.Declaration.F.AmendmentCorrectedByUserName' | TextCodeTranslationPipe" [binding]="'AmendmentCorrectedByUserName'" [width]="'80'" [Alignment]="'right'">
+                                            <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.AmendmentCorrectedByUserName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
 
-                                    <!-- AmendmentCorrectedByUserName -->
-                                    <log-column [header]="'Customs.Declaration.F.AmendmentCorrectedByUserName' | TextCodeTranslationPipe" [binding]="'AmendmentCorrectedByUserName'" [width]="'80'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.AmendmentCorrectedByUserName}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
+                                        <!-- AmendmentStatusName -->
+                                        <log-column   [header]="'Customs.Declaration.F.AmendmentStatusName' | TextCodeTranslationPipe" [binding]="'AmendmentStatusName'" [width]="'140'" [Alignment]="'right'">
+                                            <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.AmendmentStatusName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
 
-                                    <!-- AmendmentStatusName -->
-                                    <log-column [header]="'Customs.Declaration.F.AmendmentStatusName' | TextCodeTranslationPipe" [binding]="'AmendmentStatusName'" [width]="'140'" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="text-align:right">
-                                                <span>{{item.AmendmentStatusName}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
+                                        <!-- Edit Button -->
+                                        <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+                                            <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                <span class="CellSeparator" style="float: right;"></span>
+                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true"></IconButton>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
 
-                                    <!-- Edit Button -->
-                                    <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <span class="CellSeparator" style="float: right;"></span>
-                                            <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true"></IconButton>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                </logitude-edit-grid>
+                                    </logitude-edit-grid>
+                                </div>
                             </div>
                         </td>
 

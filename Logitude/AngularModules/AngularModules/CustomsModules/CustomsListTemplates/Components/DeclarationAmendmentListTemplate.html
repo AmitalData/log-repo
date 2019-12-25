@@ -1,0 +1,23 @@
+<div *ngIf="fieldName == 'SaveAsOriginal'" style="text-align:right">
+
+    <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
+        <IconButton [Name]="'Edit'" [IsSmall]="true"></IconButton>
+    </div>
+    <!--<span class="CellSeparator" style="float: right;"></span>-->
+
+</div>
+
+<div *ngIf="fieldName == 'AmendmentStatusName'" style="position:relative;width:100%; height: 100%;">
+    <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;text-align:right">
+
+        <div class="TextTrimming"
+             style="display: inline; "
+             [ngStyle]="{color: rowData.AmendmentStatus | StringToColorPipe:'DeclarationAmendmentStatus'}">
+            <span style="font-weight: bold;">{{rowData.AmendmentStatusName}}</span>
+
+        </div>
+
+
+
+    </div>
+</div>

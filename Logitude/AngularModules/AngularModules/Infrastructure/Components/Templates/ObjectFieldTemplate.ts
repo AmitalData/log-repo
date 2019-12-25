@@ -89,8 +89,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
                         break;
                     }
             }
-            debugger;
-            if (this.HasTemplate) {
+             if (this.HasTemplate) {
                 this.LoadTemplate();
             }
 

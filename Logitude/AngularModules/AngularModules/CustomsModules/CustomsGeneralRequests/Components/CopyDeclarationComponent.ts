@@ -117,7 +117,7 @@ export class CopyDeclarationComponent extends BaseComponent
         searchParams.ForcePersonalSign = false;
 
         this._declarationWebService
-            .PutCopyDeclaration_test(searchParams)
+            .GetNewAmendmentDeclaration(searchParams)
             .subscribe((response: any) => {
 
                 if (response) {

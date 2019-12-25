@@ -163,7 +163,8 @@ using System.Diagnostics;
             }
             entityPM.TaxationDateTime = DateTime.Now.Date;
             
-            entityPM.ExternalDeclarationNumber = entityPM.CustomFileNo + DateTime.Now.Year;
+        if (entityPM.IsAmendment==true)
+                entityPM.ExternalDeclarationNumber = entityPM.CustomFileNo + DateTime.Now.Year;
 
 
             ContactRepository contactRep = new ContactRepository(entityPM.Tenant);

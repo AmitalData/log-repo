@@ -582,7 +582,12 @@ new XElement("FileStreamError",
                 DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
 
                 var declarations=  declarationQuery.GetDeclarationAmendmentsById(tenant , id);
-            return Request.CreateResponse(HttpStatusCode.OK, declarations); 
+
+                ServiceResponse response = new ServiceResponse();
+                response.Count = declarations.Count();
+
+                response.Result = declarations;
+                return Request.CreateResponse(HttpStatusCode.OK, response); 
         }
 
             catch (Exception ex)
