@@ -7,7 +7,12 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
 import { SendCollateralRequestParams } from '../../DataContract/RequestParams/SendCollateralRequestParams';
+========================================================================
+
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 59608
 
 @Injectable()
 
@@ -203,6 +208,24 @@ export class DeclarationExtendedListService {
         });
     }
 
+    PutCopyDeclaration_test(fromDeclarationId: string , tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+
+
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutCopyDeclaration_test/?' + 'fromDeclarationId=' + fromDeclarationId + '&tenant=' + tenant,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
 
     PutCopyDeclaration(fromDeclarationId: string, toDeclarationId: string, tenant: number) {
@@ -246,6 +269,35 @@ export class DeclarationExtendedListService {
         });
     }
 
+
+
+    GetDeclarationAmendmentsById(id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeclarationAmendmentsById/?' + 'id=' + id,
+                { headers: authHeader }).map(response => {
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    var list = response.json();
+
+                    var _mappedListsArray: Array<DeclarationList> = [];
+                    if (list) {
+                        for (var key in list) {
+                            var entity: DeclarationList;
+                            entity = this.MapJsonToEntityList(list[key]);
+                            _mappedListsArray.push(entity);
+                        }
+                    }
+ 
+                    serviceResponse.Result = _mappedListsArray;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+
+
+    }
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: DeclarationList;
@@ -261,6 +313,49 @@ export class DeclarationExtendedListService {
         return entityList;
     }
 
+
+
+    getByFilters(filters: ApiQueryFilters) {
+
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        var propValue;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            propValue = filters[propName];
+        }
+
+        var urlparameters = '/GetDeclarationAmendmentsById/?' + 'id=' + filters.AdditionalFilters[0].FieldValue;
+ 
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
+
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
+                var _mappedListsArray: Array<DeclarationList> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: DeclarationList;
+                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
 
 }
