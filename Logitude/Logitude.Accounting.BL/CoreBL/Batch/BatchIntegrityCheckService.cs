@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL.Batch
@@ -43,6 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         private void RunService(IntegrityCheckArgs args)
         {
             bool shouldFix=false;
+            string stringXML = string.Empty;
             try
             {
 
@@ -129,7 +131,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     }
                     entityPM.ShouldFix = res.ShouldFix;
                     // serialize resultXML
-                    string stringXML = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res);
+                    stringXML = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res);
 
                     // update
                     entityPM.ResultXML = stringXML;
@@ -146,7 +148,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 {
                     if (shouldFix)
                     {
-                        SendEmailWhileError(args.Tenant, "has been failed");
+                        SendEmailWhileError(args.Tenant, "has been failed", stringXML);
                     }
                     else
                     {
@@ -160,20 +162,29 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
         }
 
-        private void SendEmailWhileError(int tenant, string remark)
+        private void SendEmailWhileError(int tenant, string remark, string stringXML)
         {
             try
             {
 
+                bool formatXml = true;
+                if (formatXml)
+                {
+                    XDocument doc = XDocument.Parse(stringXML);
+                    stringXML = doc.ToString();
+                }
+                
+
 
                 var error = $"Integrity Check for tenant:{tenant} {remark}  (TASK 56708)";
-                string emailbody = $"<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>{error}</div>";
+                string emailbody = $"<div><div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>{error}</div><xmp>{stringXML}</xmp></div></div>";
+
                 EmailCommunicationParams emailParams = new EmailCommunicationParams();
 
                 emailParams = new EmailCommunicationParams()
                 {
                     From = "admin@fnarsoft.com",
-                    To = "eyal@amital.co.il;yaronc@amital.co.il;ohad@amital.co.il",
+                    To = "eyal@amital.co.il;yaronc@amital.co.il;ohad@amital.co.il,itzik@amital.co.il",
                     Subject = error,
                     EmailBody = emailbody,
                     Tenant = tenant,
