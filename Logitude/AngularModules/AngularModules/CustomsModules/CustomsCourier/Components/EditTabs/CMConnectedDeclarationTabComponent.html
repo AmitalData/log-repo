@@ -98,7 +98,7 @@
                                     <tr>
                                         <td>
                                             <div class="ActionButton" style="width: 35px;height:23px; ">
-                                                <CheckBox style="pointer-events:none;" [IsChecked]="IsSelected && CourierMasterService.connectedSelectAll" (Checked)="IsSelected = $event "></CheckBox>
+                                                <CheckBox style="pointer-events:none;" [IsChecked]="CourierMasterService.connectedSelectAll" (Checked)="IsSelected = $event "></CheckBox>
 
                                             </div>
                                         </td>
@@ -160,7 +160,7 @@
                                     <tr>
                                         <td>
                                             <div class="ActionButton" style="width: 35px;height:23px; ">
-                                                <CheckBox style="pointer-events:none;" [IsChecked]="IsSelectedNot && CourierMasterService.disconnectedSelectAll" (Checked)="IsSelectedNot = $event "></CheckBox>
+                                                <CheckBox style="pointer-events:none;" [IsChecked]="CourierMasterService.disconnectedSelectAll" (Checked)="IsSelectedNot = $event "></CheckBox>
 
                                             </div>
                                         </td>
