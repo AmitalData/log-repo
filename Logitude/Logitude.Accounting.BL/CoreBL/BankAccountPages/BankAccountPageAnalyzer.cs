@@ -387,7 +387,7 @@ s             b                   a
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                         new MyDTO()
                         {
-                            Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} יתרת פתיחה לא תואמת ",
+                            Message = $"חשבון בנק {ACCNUMBER}/{prevReconcileExternalPagePM.PageNo} דף  {newPageOfBankAccount.PageNo()} י.פתיחה  {newPageOfBankAccount.MyBankAccountM.OpenBalance} לא תואמת {prevReconcileExternalPagePM.CloseBalance}",
                             RawLine = ""
                         });
 
