@@ -37,6 +37,7 @@ using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
+using System.Web;
 
 namespace CustomsWorkerRole
 {
@@ -416,7 +417,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     //var tokenUri = new Uri(new Uri(host), relativeUriToken);
                     //webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
                     string tokenReq = "grant_type=password&username=f_moshe&Password=******";
-                    tokenReq = $"grant_type=password&username={_CourierHawbMamanCommunicationLogSettings.username}&Password={_CourierHawbMamanCommunicationLogSettings.password}";
+                    tokenReq = $"grant_type=password&username={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.username)}&Password={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.password)}";
+                    
                     var content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
                     LogMessagingUtil.Instance.AppendLine($"PostAsync({_CourierHawbMamanCommunicationLogSettings.URIToken}, {content})");
                     var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
