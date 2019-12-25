@@ -288,6 +288,30 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsPaymentProtested  { get; set; }
        [DataMember]
        public string FastIndividualProcessName  { get; set; }
+       [DataMember]
+       public string AmendmentRequestNumber  { get; set; }
+       [DataMember]
+       public string AmendmentStatus  { get; set; }
+       [DataMember]
+       public DateTime? AmendmentissueDate  { get; set; }
+       [DataMember]
+       public string AmendmentRemarks  { get; set; }
+       [DataMember]
+       public bool? AmendmentDeficitInitiated  { get; set; }
+       [DataMember]
+       public string AmendDeficitInitiatedReasTo  { get; set; }
+       [DataMember]
+       public string AmendmentCorrectedByUserId  { get; set; }
+       [DataMember]
+       public string AmendmentRejectionReason  { get; set; }
+       [DataMember]
+       public bool? IsAmendment  { get; set; }
+       [DataMember]
+       public string AmendmentOriginalDeclartation  { get; set; }
+       [DataMember]
+       public string AmendmentCorrectedByUserName  { get; set; }
+       [DataMember]
+       public string AmendmentStatusName  { get; set; }
    }
 
 }

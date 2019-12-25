@@ -506,6 +506,48 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
+
+        public Declaration GetLastDeclarationByDeclarationId(string id, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(id)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant
+                  select rec
+                  ).OrderByDescending(x=>x.CreateDateTime)
+                  .FirstOrDefault();
+        }
+
+        public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
+        {
+            Declaration declaration = GetSingleDeclarationById( id  , tenant);
+           
+            if (declaration.IsAmendment== true)
+            {      Declaration declarationOrg = GetSingleDeclarationById(declaration.AmendmentOriginalDeclartation, tenant);
+
+                var myQ = (from a in context.Declarations
+                           where (a.AmendmentOriginalDeclartation == declarationOrg.Id || a.Id== declarationOrg.Id ) && a.Id != id
+                           select a);
+                return myQ.ToList();
+               }
+
+            else
+            {
+                    var myQ = (from a in context.Declarations
+                               where a.AmendmentOriginalDeclartation == id
+                               select a);
+                    return myQ.ToList();
+                }
+           
+
+
+          
+        }
+
+
     }
     //class TotM {
 

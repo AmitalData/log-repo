@@ -228,6 +228,26 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DepositionStatusCode).HasColumnName("DepositionStatusCode").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.IsPaymentProtested).HasColumnName("IsPaymentProtested");
+
+            this.Property(t => t.AmendmentRequestNumber).HasColumnName("AmendmentRequestNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.AmendmentStatus).HasColumnName("AmendmentStatus").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.AmendmentissueDate).HasColumnName("AmendmentissueDate");
+
+            this.Property(t => t.AmendmentRemarks).HasColumnName("AmendmentRemarks").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.AmendmentDeficitInitiated).HasColumnName("AmendmentDeficitInitiated");
+
+            this.Property(t => t.AmendDeficitInitiatedReasTo).HasColumnName("AmendDeficitInitiatedReasTo").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.AmendmentCorrectedByUserId).HasColumnName("AmendmentCorrectedByUserId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.AmendmentRejectionReason).HasColumnName("AmendmentRejectionReason").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.IsAmendment).HasColumnName("IsAmendment");
+
+            this.Property(t => t.AmendmentOriginalDeclartation).HasColumnName("AmendmentOriginalDeclartation").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

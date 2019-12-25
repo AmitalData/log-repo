@@ -299,6 +299,7 @@
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
     <Compile Include="ResponseServices\DE_NG_5108_DecisionMessageResponseService.cs" />
     <Compile Include="ResponseServices\DF_9071_ExportDeclarationDataResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\GP_1035_GatepassFeedbackMessageResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG8374_CargoSplitResponseService.cs" />
     <Compile Include="ResponseServices\MN_NG_9023_CourierBOLFeedBackResponseService.cs" />

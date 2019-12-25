@@ -318,6 +318,32 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DepositionStatusCode { get; set; }
         [Column("IsPaymentProtested")]
 	    public bool IsPaymentProtested { get; set; }
+        [Column("AmendmentRequestNumber")]
+	    public string AmendmentRequestNumber { get; set; }
+        [ForeignKey("AmendmentStatusFK")]
+        [Column("AmendmentStatus")]
+	    public string AmendmentStatus { get; set; }
+	      
+        public virtual AmendmentStatus AmendmentStatusFK { get; set; }
+        [Column("AmendmentissueDate")]
+	    public DateTime? AmendmentissueDate { get; set; }
+        [Column("AmendmentRemarks")]
+	    public string AmendmentRemarks { get; set; }
+        [Column("AmendmentDeficitInitiated")]
+	    public bool? AmendmentDeficitInitiated { get; set; }
+        [Column("AmendDeficitInitiatedReasTo")]
+	    public string AmendDeficitInitiatedReasTo { get; set; }
+        [ForeignKey("AmendmentCorrectedByUser")]
+        [Column("AmendmentCorrectedByUserId")]
+	    public string AmendmentCorrectedByUserId { get; set; }
+	      
+        public virtual User AmendmentCorrectedByUser { get; set; }
+        [Column("AmendmentRejectionReason")]
+	    public string AmendmentRejectionReason { get; set; }
+        [Column("IsAmendment")]
+	    public bool? IsAmendment { get; set; }
+        [Column("AmendmentOriginalDeclartation")]
+	    public string AmendmentOriginalDeclartation { get; set; }
     }
 }
 	 
