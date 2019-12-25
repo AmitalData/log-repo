@@ -146,6 +146,7 @@ namespace Logitude.Update.PatchDistribution
                 }
                     );
                 UpdateDBEnabled = false;
+                Logger.LogMe($"End!!!!!!!!!!!!!!!!!", false);
             }
             catch (PatchDistributionException myPatchDistributionException)
             {

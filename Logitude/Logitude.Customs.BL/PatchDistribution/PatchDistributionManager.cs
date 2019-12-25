@@ -80,16 +80,16 @@ namespace Logitude.Customs.BL.PatchDistribution
 
                 foreach (var script in scripts)
                 {
-                    if (string.IsNullOrWhiteSpace(script.MessageBefore))
+                    if (!string.IsNullOrWhiteSpace(script.MessageBefore))
                     {
                         actionShowMessage(script.MessageBefore);
                     }
                     
                     ExecDBMigrationLine(minorPatch, script, scripts.Last() == script);
 
-                    if (string.IsNullOrWhiteSpace(script.MessageAfter))
+                    if (!string.IsNullOrWhiteSpace(script.MessageAfter))
                     {
-                        actionShowMessage(script.MessageBefore);
+                        actionShowMessage(script.MessageAfter);
                     }
 
                 }
@@ -181,7 +181,7 @@ namespace Logitude.Customs.BL.PatchDistribution
 
 
 
-
+                    approveRemark = approveRemark ?? "";
 
 
                     dBMigrationLine = new DBMigrationLine()
@@ -189,8 +189,8 @@ namespace Logitude.Customs.BL.PatchDistribution
                         DBMigrationId = myDBMigration.Id,
                         CounterKey = script.ScriptCounter,
                         SqlScript = script.SqlScript.Substring(0, Math.Min(1024, script.SqlScript.Length)),
-                        ApprovedRemarks = approveRemark
-                    };
+                        ApprovedRemarks = approveRemark.Substring(0, Math.Min(approveRemark.Length, 256))
+                };
                     repoDBMigrationLine.Add(dBMigrationLine);
                     customContext.SaveChanges();
 
