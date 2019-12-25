@@ -416,7 +416,12 @@
     <Compile Include="Migrations\201912041514241_dbMigLineTk2.Designer.cs">
       <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
     </Compile>
-     <Compile Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs" />
+    <Compile Include="Migrations\201912251546005_AddMigrationdocumentTypeCourierMandatory.cs" />
+    <Compile Include="Migrations\201912251546005_AddMigrationdocumentTypeCourierMandatory.Designer.cs">
+      <DependentUpon>201912251546005_AddMigrationdocumentTypeCourierMandatory.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs" />
     <Compile Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.Designer.cs">
       <DependentUpon>201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs</DependentUpon>
     </Compile>
@@ -729,7 +734,10 @@
     <EmbeddedResource Include="Migrations\201912171544423_AmendmentStatus_LenghtName.resx">
       <DependentUpon>201912171544423_AmendmentStatus_LenghtName.cs</DependentUpon>
     </EmbeddedResource>
-     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
+    <EmbeddedResource Include="Migrations\201912251546005_AddMigrationdocumentTypeCourierMandatory.resx">
+      <DependentUpon>201912251546005_AddMigrationdocumentTypeCourierMandatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -64,6 +64,11 @@ export class CustomDocumentTypePM {
     public set PointerLevelName(newValue: string) { if (this.pointerLevelName != newValue) { this.pointerLevelName = newValue; this.MarkAsDirty("PointerLevelName"); } }
        
 	 
+    private isCourierManadatory: boolean;
+    public get IsCourierManadatory() { return this.isCourierManadatory; }
+    public set IsCourierManadatory(newValue: boolean) { if (this.isCourierManadatory != newValue) { this.isCourierManadatory = newValue; this.MarkAsDirty("IsCourierManadatory"); } }
+       
+	 
 
     public OldEntityPM: CustomDocumentTypePM;
 		
