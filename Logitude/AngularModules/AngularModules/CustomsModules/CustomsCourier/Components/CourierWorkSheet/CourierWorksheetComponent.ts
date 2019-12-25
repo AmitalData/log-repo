@@ -207,7 +207,7 @@ export class CourierWorksheetComponent extends BaseComponent
                         this._SelectedTabFilter = this._TabFilterList[6];
                         this.TabFilterClick(this._TabFilterList[6]);
                         this.PendingFilter = "902";
-                        this.GetPending();
+                        if (this._PendingCodes != null && this._PendingCodes.length > 0) this._SelectedPendingCodeFilter = this._PendingCodes.find(r => r.Key == this.PendingFilter);
                         this.RefreshList();
                         break;
                     }
@@ -216,7 +216,7 @@ export class CourierWorksheetComponent extends BaseComponent
                         this._SelectedTabFilter = this._TabFilterList[6];
                         this.TabFilterClick(this._TabFilterList[6]);
                         this.PendingFilter = "900";
-                        this.GetPending();
+                        if (this._PendingCodes != null && this._PendingCodes.length > 0) this._SelectedPendingCodeFilter = this._PendingCodes.find(r => r.Key == this.PendingFilter);
                         this.RefreshList();
                         break;
                     }

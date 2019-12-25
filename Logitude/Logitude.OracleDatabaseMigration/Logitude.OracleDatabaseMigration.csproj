@@ -416,6 +416,10 @@
     <Compile Include="Migrations\201912041514241_dbMigLineTk2.Designer.cs">
       <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912251546005_AddMigrationdocumentTypeCourierMandatory.cs" />
+    <Compile Include="Migrations\201912251546005_AddMigrationdocumentTypeCourierMandatory.Designer.cs">
+      <DependentUpon>201912251546005_AddMigrationdocumentTypeCourierMandatory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -714,6 +718,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912041514241_dbMigLineTk2.resx">
       <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912251546005_AddMigrationdocumentTypeCourierMandatory.resx">
+      <DependentUpon>201912251546005_AddMigrationdocumentTypeCourierMandatory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
