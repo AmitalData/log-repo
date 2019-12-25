@@ -254,6 +254,7 @@
     <Compile Include="EntityDataMappings\AgentTalkBackTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentFieldReasonTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentRequestStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AmendmentStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ApprovedProfessionDataMapping.cs" />
     <Compile Include="EntityDataMappings\AssigneeNotificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AttachmentTypeDataMapping.cs" />
@@ -419,6 +420,7 @@
     <Compile Include="EntityDataMappings\Generated\AgentTalkBackTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentFieldReasonTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentRequestStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AmendmentStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ApprovedProfessionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AssigneeNotificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AttachmentTypeDataMapping.Generated.cs" />
@@ -872,6 +874,7 @@
     <Compile Include="EntityQueryServices\ConsignmentPackageQueryService.cs" />
     <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\AmendmentStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ConsignmentPackDangerQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
@@ -1312,6 +1315,7 @@
     <Compile Include="EntityUpdateServices\Generated\AccumalationStateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ActionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AgentTalkBackTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AmendmentStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ApprovedProfessionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoSplitRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoStatusUpdateService.Generated.cs" />

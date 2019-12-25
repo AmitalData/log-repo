@@ -185,20 +185,104 @@
                     </tr>
 
                     <!-- Version DDL -->
-                    <tr style="height: 40px;">
-                        <td style="width: 250px;">
+                    <tr style="height: 40px;"  *ngIf="!this.EntityPM.IsAmendment">
+                        <td style="width: 250px;"> 
                             <ComboBox [ItemsSource]="VersionsList"
                                       [SelectedItem]="SelectedVersion"
                                       (SelectedItemChanged)="FilterItemClicked($event)"></ComboBox>
                         </td>
                         <td colspan="2"></td>
                     </tr>
+                    <!--{{'Customs.Declaration.F.AmendmentRequestNumber' | TextCodeTranslationPipe}} :-->
 
+                <tr style="height: 28px;" >
+                    <td colspan="1">
+                        <table  style="width: 50%;" *ngIf="this.EntityPM.IsAmendment">
+                            <tr>
+                                <td style="width:75px">
+                                    <LogLabel [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+
+                                </td>
+   
+
+                                <td style="width:70px">
+                                    {{AmendmentRequestNumber}}
+
+                                    <!--<LogTextBox [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRequestNumber"
+        [HideColumns]="true" [DataContext]="DataContext"  ></LogTextBox>-->
+                                </td>
+
+                                <!--<td style="width:7px"></td>-->
+                                <td style="width:110px">
+                                    <LogLabel [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:75px">
+                                    {{AmendmentissueDate}}
+                                </td>
+
+                                <!--<td style="width:7px"></td>-->
+
+                                <td style="width:110px">
+                                    <LogLabel [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+
+                                </td>
+                                <td style="width:75px">
+                                    {{VersionId}}
+                                    <!--<LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
+        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                                </td>
+                                <td style="width:7px"></td>
+
+                            </tr>
+                            <tr  style="height: 10px;"></tr>
+                            <tr style="height: 60px;">
+
+                                <td style="width:75px">
+                                    <LogLabel [ObjectFieldName]="'AmendmentDeficitInitiated'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+
+                                </td>
+ 
+                                <td>
+                                    <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'" (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                                <!--<td style="width:7px"></td>-->
+
+                                <td style="width:110px">
+                                    <LogLabel [ObjectFieldName]="'AmendDeficitInitiatedReasTo'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'AmendDeficitInitiatedReasTo'" [ObjectTableName]="ObjectTableName" [Text]="AmendDeficitInitiatedReasTo"
+                                                [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
+                                </td>
+                                <!--<td style="width:7px"></td>-->
+
+                                <td style="width:110px">
+                                    <LogLabel [ObjectFieldName]="'AmendmentRemarks'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'AmendmentRemarks'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRemarks"
+                                                [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
+
+                                </td>
+                                <td style="width:7px"></td>
+
+
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
                     <tr style="height: 10px;">
                         <td></td>
                     </tr>
-
-
                     <!-- System Messages -->
                     <tr *ngIf="IsDescriptionVisible" style="height: 28px;">
                         <td colspan="3" class="subTitle">{{'Customs.Declaration.O.SystemMessages' | TextCodeTranslationPipe}}</td>
@@ -258,10 +342,10 @@
 
                     <!-- Amendments -->
                     <tr style="height: 28px;">
-                        <td colspan="3" class="subTitle">{{'Customs.Declaration.O.Amendments' | TextCodeTranslationPipe}}</td>
+                        <td colspan="8" class="subTitle">{{'Customs.Declaration.O.Amendments' | TextCodeTranslationPipe}}</td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="border: 1px solid gray;">
+                        <td colspan="8" style="border: 1px solid gray;">
                             <logitude-edit-grid GridWidth="100%"
                                                 GridHeight="100%"
                                                 [ItemSource]="AmendmentViewsList"

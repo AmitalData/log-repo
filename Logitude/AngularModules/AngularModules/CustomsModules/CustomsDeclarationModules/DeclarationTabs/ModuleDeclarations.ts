@@ -25,6 +25,7 @@ import { ConsigmentPackagesDangerComponent } from './Components/General/Consigme
 import { DeclarationClassificationComponent } from './Components/Classification/DeclarationClassificationComponent';
 import { SInvoiceClassificationTabComponent } from './Components/Classification/SInvoiceClassificationTabComponent';
 import { CasualSupplierDetailsComponent } from './Components/Classification/CasualSupplierDetailsComponent';
+import { DeclarationAmendmentComponent } from './Components/DeclarationAmendment/DeclarationAmendmentComponent';
 
 
 export const Components =
@@ -54,7 +55,7 @@ export const Components =
     DeclarationClassificationComponent,
     SInvoiceClassificationTabComponent,
         CasualSupplierDetailsComponent,
-
+        DeclarationAmendmentComponent,
 
     ];
 
@@ -91,6 +92,7 @@ export class ModuleDeclarations {
             case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
             case "CasualSupplierDetailsComponent": { myResult = CasualSupplierDetailsComponent; break; }
             case "ConsigmentPackagesDangerComponent": { myResult = ConsigmentPackagesDangerComponent; break; }
+            case "DeclarationAmendmentComponent": { myResult = DeclarationAmendmentComponent; break; }
 
         }
 

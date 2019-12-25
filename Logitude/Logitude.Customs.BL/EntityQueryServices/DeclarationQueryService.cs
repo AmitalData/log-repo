@@ -49,7 +49,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             DeclarationTaxQueryService declarationTaxService = new DeclarationTaxQueryService(context);
             DeclarationConstraintQueryService declarationConstraintQueryService = new EntityQueryServices.DeclarationConstraintQueryService(context);
             DeclarationConsAcceptanceQueryService declarationConsAcceptanceQueryService = new DeclarationConsAcceptanceQueryService(context);
-           DecDangersContactQueryService decDangersContactQueryService = new DecDangersContactQueryService(context);
+            DecDangersContactQueryService decDangersContactQueryService = new DecDangersContactQueryService(context);
 
             //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
 
@@ -59,14 +59,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.Consignments = consignmentService.GetMulti(declarationKeys, true);
             // if (LoadSupplierInvoices)
 
-           
+
             {
                 if (loadSupplierInvoicesItemsParentsOnly == true)
                 {
                     supplierInvoiceService.OnlyParentItem = true;
                 }
-                entityPM.SupplierInvoices = supplierInvoiceService.GetSupplierInvoicesForDeclaration(declarationKeys.Id, entityPM.Tenant, 
-                    
+                entityPM.SupplierInvoices = supplierInvoiceService.GetSupplierInvoicesForDeclaration(declarationKeys.Id, entityPM.Tenant,
+
                     LoadSupplierInvoicesWithItems || entityPM.IsCourierDeclaration // courier small entity - for Classification !!//Task 40622: מסך סיווג מתוך מסך עבודה - חלק מרכזי
 
                     );
@@ -292,9 +292,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         public List<string> GetListByCourierHAWB(string CourierHAWB, int tenant)
         {
-            
+
             return repository.GetListByCourierHAWB(CourierHAWB, tenant);
-            
+
         }
 
         public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration")
@@ -346,7 +346,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
                                 if (uIMessagePM != null)
                                 {
-                                    if(uIMessagePM.Sort == null)
+                                    if (uIMessagePM.Sort == null)
                                     {
                                         uIMessagePM.Sort = 99999999;
                                     }
@@ -1501,7 +1501,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var mandatoryTicketWithDocumentNotSend =
                 (from t in listDeclarationTicket.Where(t => t.IsSendMandatory)
                  join d in listDeclarationCustomDocument.Where(d => string.IsNullOrWhiteSpace(d.CustomsDocId))
-                 on t.DocumentsFilingId equals d.DocumentsFilingId 
+                 on t.DocumentsFilingId equals d.DocumentsFilingId
                  select t
                  ).ToList();
             if (mandatoryTicketWithDocumentNotSend.Count > 0)
@@ -1567,7 +1567,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var supplierInvoiceQueryService = new SupplierInvoiceQueryService(this.context);
 
             List<SupplierInvoicePM> supplierInvoiceList = supplierInvoiceQueryService.GetSupplierInvoicesForDeclaration(declarationId, tenant, true);
-            if(supplierInvoiceList != null)
+            if (supplierInvoiceList != null)
             {
                 foreach (SupplierInvoicePM item in supplierInvoiceList)
                 {
@@ -1580,8 +1580,42 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     }
                 }
             }
-
             return isFreight;
         }
+
+        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id)
+        {
+ 
+            List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant , id);
+            List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
+            AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
+            List<DeclarationList> declarationLists = new List<DeclarationList>();
+            UserRepository userRepository = new UserRepository();
+             var amendmentStatuses=  amendmentStatusRepository.GetAll();
+            var users = userRepository.GetAll();
+
+            foreach (Declaration item in declarations)
+            {
+
+                DeclarationList declarationList = new DeclarationList()
+                {
+
+                    Id = item.Id,
+                    Tenant = item.Tenant,
+                    AmendmentRequestNumber = item.AmendmentRequestNumber,
+                    DeclarationVersionId = item.VersionId,
+                    AmendmentStatus=item.AmendmentStatus,
+
+                };
+                if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
+                if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
+
+ 
+                declarationLists.Add(declarationList);
+            }
+
+            return declarationLists;
+        }
+
     }
 }
