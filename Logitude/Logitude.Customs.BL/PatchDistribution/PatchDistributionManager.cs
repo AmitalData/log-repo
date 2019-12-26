@@ -242,12 +242,12 @@ namespace Logitude.Customs.BL.PatchDistribution
                             throw new Exception($"אין סקריפט ?!?!" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter);
                         }
 
-                        if (scriptDTO.SqlScript.TrimEnd(" "[0]).EndsWith(";"))
-                        {
-                            throw new Exception($"נא להוריד את הפיסיק נקודה בסוף הסקיריפט" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter + Environment.NewLine
-                                +
-                                scriptDTO.SqlScript);
-                        }
+                        //if (scriptDTO.SqlScript.TrimEnd(" "[0]).EndsWith(";"))
+                        //{
+                        //    throw new Exception($"נא להוריד את הפיסיק נקודה בסוף הסקיריפט" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter + Environment.NewLine
+                        //        +
+                        //        scriptDTO.SqlScript);
+                        //}
 
                         if (scriptDTO.ScriptCounter != seqScript)
                         {
