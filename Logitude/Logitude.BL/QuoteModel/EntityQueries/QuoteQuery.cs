@@ -551,7 +551,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return myResult;
         }
 
-        private string GetPriceBreakWeightUnitCode(string costMeasurementCode, QuotePM quotePM)
+        private string GetPriceBreakWeightUnitCodeByCostMeasurementCode(string costMeasurementCode, QuotePM quotePM)
         {
             string weightUnitCode = "";
             switch(costMeasurementCode) {
@@ -2210,7 +2210,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                         }
                                     }
                                 }
-                                string stepUOM = GetPriceBreakWeightUnitCode(item.CostMeasurementCode, entityPM);
+                                string stepUOM = GetPriceBreakWeightUnitCodeByCostMeasurementCode(item.CostMeasurementCode, entityPM);
                                 if (string.IsNullOrEmpty(myPriceBreaks))
                                 {
                                     myPriceBreaks += "+" + itemStep.Step + " "+stepUOM + ": " + formattedValue;
