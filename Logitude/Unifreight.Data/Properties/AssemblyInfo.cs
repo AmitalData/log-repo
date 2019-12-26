@@ -34,5 +34,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 19R03P
-[assembly: AssemblyFileVersion("1.P.19.03.6")]
+[assembly: AssemblyFileVersion("1.P.19.03.0")]
 =======================================================================
