@@ -18,5 +18,6 @@ export class CarrierAreaList {
 		CarrierId: string;
 		CreatedByUserName: string;
 		UpdatedByUserName: string;
+		TransportModeCode: string;
 	
 }

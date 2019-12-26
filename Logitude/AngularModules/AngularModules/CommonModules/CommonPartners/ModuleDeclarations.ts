@@ -30,6 +30,10 @@ import { VendorDocsInTabComponent } from './Components/EditTabs/Vendor/VendorDoc
 import { WarehouseDocsInTabComponent } from './Components/EditTabs/Warehouse/WarehouseDocsInTabComponent';
 import { NewAccountingPartnerComponent } from './Components/NewEntity/NewAccountingPartnerComponent';
 import { ContactOccasionsTabComponent} from './Components/EditTabs/Contact/ContactOccasionsTabComponent';
+import { AreasTabComponent } from './Components/EditTabs/AreasTabComponent';
+import { AddEditAreaComponent } from './Components/AddEdit/AddEditAreaComponent';
+import { ChoosePortComponent } from './Components/AddEdit/ChoosePortComponent';
+import { ChooseCountryPortComponent } from './Components/AddEdit/ChooseCountryPortComponent';
 
 export const Components =
     [
@@ -65,6 +69,10 @@ export const Components =
         WarehouseDocsInTabComponent,
         NewAccountingPartnerComponent,
         ContactOccasionsTabComponent,
+        AreasTabComponent,
+        AddEditAreaComponent,
+        ChoosePortComponent,
+        ChooseCountryPortComponent,
     ];
 
 export class ModuleDeclarations {
@@ -105,7 +113,10 @@ export class ModuleDeclarations {
             case "WarehouseDocsInTabComponent": { myResult = WarehouseDocsInTabComponent; break; }
             case "NewAccountingPartnerComponent": { myResult = NewAccountingPartnerComponent; break; }
             case "ContactOccasionsTabComponent": { myResult = ContactOccasionsTabComponent; break; }
-
+            case "AreasTabComponent": { myResult = AreasTabComponent; break; }
+            case "AddEditAreaComponent": { myResult = AddEditAreaComponent; break; }
+            case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
+            case "ChooseCountryPortComponent": { myResult = ChooseCountryPortComponent; break; }  
         }
 
         return myResult;

@@ -1,3 +1,4 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +18,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? UpdateDate { get; set; }
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
+        public string TransportModeCode { get; set; }
 
         [ForeignKey("CreatedByUserId")]
         public virtual User CreatedByUser { get; set; }
@@ -26,5 +28,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("CarrierId")]
         public Card Carrier { get; set; }
+
+        [ForeignKey("TransportModeCode")]
+        public TransportMode TransportMode { get; set; }
     }
 }

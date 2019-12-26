@@ -1,27 +1,23 @@
 
-<div class="TabHolder" *ngIf="ResourcesReady">
-    <table>
-        <tr style="height:5px">
-            <td></td>
+<div class="TabHolder">
+    <table *ngIf="ResourcesReady">
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'CarrierArea.O.Areas' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 1px;">
+                            <button id="{{'addArea' | IdGeneratorPipe}}" class="Button" (click)="AddCarrierAreaClicked()">{{'CarrierArea.B.NewArea' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
+
         <tr>
             <td style="vertical-align:top">
                 <table>
-                    <tr style="height:30px">
-                        <td>
-                            <table>
-                                <tr>
-                                    <td style="width:100px">
-                                        <button class="Button" (click)="AddCarrierAreaClicked()">New Area</button>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr style="height:5px">
-                        <td></td>
-                    </tr>
                     <tr>
                         <td style="vertical-align:top">
                             <table>
@@ -31,12 +27,12 @@
                                             <div class="SimpleGridViewHeader">
                                                 <table>
                                                     <tr class="SimpleGridHeaderRow">
-                                                        <td style="width: 150px;">{{'AirlineArea.F.Name' | TextCodeTranslationPipe}}</td>
-                                                        <td style="width: 170px;">{{'AirlineArea.F.Description' | TextCodeTranslationPipe}}</td>
-                                                        <td style="width: 150px;">{{'AirlineArea.F.CreatedByUserName' | TextCodeTranslationPipe}}</td>
-                                                        <td style="width: 150px;">{{'AirlineArea.F.CreateDate' | TextCodeTranslationPipe}}</td>
-                                                        <td style="width: 150px;">{{'AirlineArea.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
-                                                        <td style="width: 150px;">{{'AirlineArea.F.UpdateDate' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'CarrierArea.F.Name' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 170px;">{{'CarrierArea.F.Description' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'CarrierArea.F.CreatedByUserName' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'CarrierArea.F.CreateDate' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'CarrierArea.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'CarrierArea.F.UpdateDate' | TextCodeTranslationPipe}}</td>
 
                                                         <td class="LastChild"></td>
                                                     </tr>
@@ -83,18 +79,10 @@
                                     </td>
                                 </tr>
                             </table>
-
-
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
-        <tr>
-            <td>
-                <div></div>
-            </td>
-        </tr>
     </table>
-
 </div>

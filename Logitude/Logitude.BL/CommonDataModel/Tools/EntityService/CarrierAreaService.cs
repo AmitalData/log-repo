@@ -5,6 +5,7 @@ using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             CarrierAreaTracing.Trace(entityPM, Poco, isNewEntity);
-            CarrierAreaMapping.MapEntity(entityPM, Poco, isNewEntity);
+            CarrierAreaMapping.MapEntity(entityPM, Poco, isNewEntity, loggedContact.Id);
 
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();           
@@ -84,7 +85,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateCarrierAreasPortCollection();
 
             CarrierAreaTracing.Trace(entityPM, Poco, isNewEntity);
-            CarrierAreaMapping.MapEntity(entityPM, Poco, isNewEntity);
+            CarrierAreaMapping.MapEntity(entityPM, Poco, isNewEntity, loggedContact.Id);
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
@@ -134,7 +135,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CarrierAreaId = itemPM.CarrierAreaId,
                 Tenant = tenant,
                 Name = itemPM.Name,
-                AddedDate = itemPM.AddedDate,
+                AddedDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 PortId = itemPM.PortId,
                 AddedByUserId = itemPM.AddedByUserId,
             };

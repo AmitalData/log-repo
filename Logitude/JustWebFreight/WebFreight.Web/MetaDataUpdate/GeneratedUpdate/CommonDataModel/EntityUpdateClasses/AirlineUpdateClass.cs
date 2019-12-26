@@ -5374,7 +5374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AirlineContactsFeature_TH5.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineContactsTextCode_TH5.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALAR",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AreasTabComponent", FeatureId = AirlineAreasFeature_TH6.Id, ControlPath = "Simplog.FreightLib.Views.Areas", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineAreasTextCode_TH6.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALAR",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AirlineAreasFeature_TH6.Id, ControlPath = "Simplog.FreightLib.Views.Areas", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineAreasTextCode_TH6.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALSU",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineSurchargeTabComponent", FeatureId = AirlineSurchargeTariffFeature_TH7.Id, ControlPath = "Simplog.FreightLib.Views.TariffTabs.SurchargeTariff", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineSurchargeTariffTextCode_TH7.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
@@ -5552,7 +5552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault(); 			   Feature AirlineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault(); 			   Feature AirlineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();

@@ -1048,6 +1048,12 @@ export class EditComponent implements OnDestroy {
                         break;
                     }
 
+                    case "Simplog.FreightLib.Views.Areas": {
+                        myComponentName = "AreasTabComponent";
+                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AreasTabComponent";
+                        break;
+                    }
+
                     default: {
 
                         if (!AppTool.IsNullOrEmpty(mySelectedTab.EntityPM.HtmlComponentUrl)) {
