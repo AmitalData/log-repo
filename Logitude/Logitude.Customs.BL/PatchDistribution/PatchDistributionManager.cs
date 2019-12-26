@@ -290,7 +290,11 @@ namespace Logitude.Customs.BL.PatchDistribution
             string YY = parts[2];
             string YearRelease = parts[3];
 
-            string MinorVer = parts[4];
+            string MinorVer = "0";
+            if (parts.Length == 5)
+            {
+                MinorVer = parts[4];
+            }
 
             return new AssemblyDBMigrationModel()
             {
