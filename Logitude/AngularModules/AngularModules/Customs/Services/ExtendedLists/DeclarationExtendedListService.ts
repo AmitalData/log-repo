@@ -7,13 +7,10 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
-import { SendCollateralRequestParams } from '../../DataContract/RequestParams/SendCollateralRequestParams';
-========================================================================
-
+ import { SendCollateralRequestParams } from '../../DataContract/RequestParams/SendCollateralRequestParams';
+ 
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 59608
-
+ 
 @Injectable()
 
 export class DeclarationExtendedListService {

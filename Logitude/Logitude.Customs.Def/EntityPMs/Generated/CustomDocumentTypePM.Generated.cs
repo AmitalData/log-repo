@@ -204,6 +204,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isCourierManadatory ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCourierManadatory  
+	   {
+	    
+	     get
+		{
+		   return isCourierManadatory;
+		 }
+		 set
+		 {
+		   if(isCourierManadatory != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCourierManadatory",OldValue=isCourierManadatory,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCourierManadatory=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

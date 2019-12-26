@@ -10,14 +10,11 @@ import { CourierConnectedDeclarationListTemplate } from './Components/CourierCon
 import { SignStationListTemplate } from './Components/SignStationListTemplate';
 import { CourierWorksheetListTemplate } from './Components/CourierWorksheetListTemplate';
 import { DeclarationQueryListTemplate } from './Components/DeclarationQueryListTemplate';
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
-
+ 
 import { CourierDeclarationWorkspaceListTemplate } from './Components/CourierDeclarationWorkspaceListTemplate'
-========================================================================
-import { CustomsCollateralListTemplate } from './Components/CustomsCollateralListTemplate';
+ import { CustomsCollateralListTemplate } from './Components/CustomsCollateralListTemplate';
 import { DeclarationAmendmentListTemplate } from './Components/DeclarationAmendmentDeclarationListTemplate';
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 59608
-
+ 
 export const Components =
   [
     CustomsRequestsSheetsListTemplate,
@@ -31,14 +28,10 @@ export const Components =
     DeclarationSupplierInvoiceListTemplate,
     DeclarationQueryListTemplate,
     NotificationListTemplate,
-        SupplierInvoiceItemsTaxListTemplate,
-        CustomsCollateralListTemplate,
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
-        CourierDeclarationWorkspaceListTemplate,
-        
-========================================================================
-        DeclarationAmendmentListTemplate
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 59608
+    SupplierInvoiceItemsTaxListTemplate,
+    CustomsCollateralListTemplate,
+    CourierDeclarationWorkspaceListTemplate,
+    DeclarationAmendmentListTemplate
   ];
 
 export class ModuleDeclarations {
@@ -60,12 +53,8 @@ export class ModuleDeclarations {
           case "CourierConnectedDeclarationListTemplate": { myResult = CourierConnectedDeclarationListTemplate; break; }
           case "DeclarationQueryListTemplate": { myResult = DeclarationQueryListTemplate; break; }
           case "CustomsCollateralListTemplate": { myResult = CustomsCollateralListTemplate; break; } 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
           case "CourierDeclarationWorkspaceListTemplate": { myResult = CourierDeclarationWorkspaceListTemplate; break; }
-========================================================================
           case "DeclarationAmendmentListTemplate": { myResult = DeclarationAmendmentListTemplate; break; } 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 59608
-
       }
 
     return myResult;
