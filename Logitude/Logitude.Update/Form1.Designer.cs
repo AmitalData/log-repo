@@ -173,6 +173,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
             this.btnCompareData = new System.Windows.Forms.Button();
@@ -189,7 +190,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.button47 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1142,7 +1142,7 @@
             // CopyReportButtonLable
             // 
             this.CopyReportButtonLable.AutoSize = true;
-            this.CopyReportButtonLable.Location = new System.Drawing.Point(565, 506);
+            this.CopyReportButtonLable.Location = new System.Drawing.Point(519, 497);
             this.CopyReportButtonLable.MinimumSize = new System.Drawing.Size(100, 0);
             this.CopyReportButtonLable.Name = "CopyReportButtonLable";
             this.CopyReportButtonLable.Size = new System.Drawing.Size(100, 13);
@@ -1677,6 +1677,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // button47
+            // 
+            this.button47.Location = new System.Drawing.Point(522, 278);
+            this.button47.Name = "button47";
+            this.button47.Size = new System.Drawing.Size(184, 34);
+            this.button47.TabIndex = 97;
+            this.button47.Text = "Fill Tickert MailBox";
+            this.button47.UseVisualStyleBackColor = true;
+            this.button47.Click += new System.EventHandler(this.button47_Click);
+            // 
             // button44
             // 
             this.button44.Location = new System.Drawing.Point(271, 506);
@@ -1830,16 +1840,6 @@
             this.button46.Text = "Update Logos";
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
-            // 
-            // button47
-            // 
-            this.button47.Location = new System.Drawing.Point(522, 278);
-            this.button47.Name = "button47";
-            this.button47.Size = new System.Drawing.Size(184, 34);
-            this.button47.TabIndex = 97;
-            this.button47.Text = "Fill Tickert MailBox";
-            this.button47.UseVisualStyleBackColor = true;
-            this.button47.Click += new System.EventHandler(this.button47_Click);
             // 
             // Form1
             // 
