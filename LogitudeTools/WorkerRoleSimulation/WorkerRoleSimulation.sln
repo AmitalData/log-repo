@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{20A320
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationWorkerRole", "..\..\Logitude\CommunicationWorkerRole\CommunicationWorkerRole.csproj", "{BA2A42B8-A348-4D44-984C-1D718CB20B6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFreight.Web", "..\..\Logitude\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj", "{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All Projects|Any CPU = All Projects|Any CPU
@@ -74,6 +76,30 @@ Global
 		{BA2A42B8-A348-4D44-984C-1D718CB20B6F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BA2A42B8-A348-4D44-984C-1D718CB20B6F}.Release|x86.ActiveCfg = Release|Any CPU
 		{BA2A42B8-A348-4D44-984C-1D718CB20B6F}.Release|x86.Build.0 = Release|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.All Projects|Any CPU.ActiveCfg = All Projects|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.All Projects|Any CPU.Build.0 = All Projects|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.All Projects|Mixed Platforms.ActiveCfg = All Projects|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.All Projects|Mixed Platforms.Build.0 = All Projects|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.All Projects|x86.ActiveCfg = All Projects|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.All Projects|x86.Build.0 = All Projects|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Debug|x86.Build.0 = Debug|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.None|Any CPU.ActiveCfg = None|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.None|Any CPU.Build.0 = None|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.None|Mixed Platforms.ActiveCfg = None|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.None|Mixed Platforms.Build.0 = None|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.None|x86.ActiveCfg = None|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.None|x86.Build.0 = None|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Release|x86.ActiveCfg = Release|Any CPU
+		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
