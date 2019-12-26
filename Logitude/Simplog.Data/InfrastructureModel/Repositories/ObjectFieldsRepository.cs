@@ -494,7 +494,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.SaveChanges();
         }
 
-
+        public ObjectField GetSingleObjectFieldById(string id, int tenant)
+        {
+            return (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
+                    where a.Id == id
+                    select a).FirstOrDefault();
+        }
 
         public ObjectField GetSingleObjectFieldByCode(string code, int tenant)
         {
