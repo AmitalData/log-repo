@@ -2172,6 +2172,7 @@ namespace WebFreight.Web.InfrastructureModel
                     SystemLevel = ruleField.SystemLevel,
                     RuleNotificationTypeCode = ruleField.RuleNotificationTypeCode,
                     Expression = ruleField.Expression,
+                    ObjectFieldCode = objectField.FieldCode,
                 };
 
                 theObjectTableRuleFieldRepository.Add(newRuleField);

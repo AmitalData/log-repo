@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
             RuleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
             Dictionary<string, ObjectTableRule> TenantObjectTableRule = ObjectTableRuleRepository.GetObjectTableRules(0).ToDictionary(d => d.RuleCode, a => a);
-            Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields = ObjectTableRuleFieldRepository.GetObjectTableRuleFields(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldId, a => a);
+            Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields = ObjectTableRuleFieldRepository.GetObjectTableRuleFields(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldId + d.ObjectFieldCode, a => a);
             Dictionary<string, RuleConditionField> TenantRuleConditionFields = RuleConditionFieldRepository.GetRuleConditionFieldsByTenant(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldId, a => a);
             List<ObjectFieldValidation> TenantObjectFieldValidations = ObjectFieldValidationRepository.GetObjectFieldValidations(0).ToList();
 
@@ -80,7 +80,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField airlineCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = airlineCode.Id, ObjectTableRuleId = AirlineDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField airlineCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = airlineCode.Id, ObjectFieldCode = airlineCode.FieldCode, ObjectTableRuleId = AirlineDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             ObjectTableRule airlineSetValRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
             {
@@ -106,6 +106,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 SystemLevel = true,
                 Tenant = 0,
                 Expression = "If([LimitedLength],false,false)",
+                ObjectFieldCode = checkDigit.FieldCode,
             }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             ObjectTableRule checkDigitblockFieldsRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
@@ -123,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
             RuleConditionField limitedLength_CondField = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails() { ObjectFieldId = limitedLength.Id, ObjectTableRuleId = checkDigitblockFieldsRule.Id, Operator = "Equals", Value = "False", Tenant = checkDigitblockFieldsRule.Tenant }, RuleConditionFieldRepository, TenantRuleConditionFields);
-            ObjectTableRuleField checkdigitField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = checkDigit.Id, ObjectTableRuleId = checkDigitblockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField checkdigitField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = checkDigit.Id, ObjectFieldCode = checkDigit.FieldCode, ObjectTableRuleId = checkDigitblockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             #endregion
 
             #region ShippingTableRules
@@ -146,7 +147,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField shippingLineCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = shippingLineCode.Id, ObjectTableRuleId = ShippingLineDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField shippingLineCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = shippingLineCode.Id, ObjectFieldCode = shippingLineCode.FieldCode, ObjectTableRuleId = ShippingLineDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             //ObjectTableRuleRepository.Add(ShippingLineDuplicationRule);
             //ObjectTableRuleFieldRepository.Add(shippingLineCodeField);
@@ -172,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField truckerCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = truckerCode.Id, ObjectTableRuleId = TruckerDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField truckerCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = truckerCode.Id, ObjectFieldCode = truckerCode.FieldCode, ObjectTableRuleId = TruckerDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(truckerCodeField);
             //ObjectTableRuleRepository.Add(TruckerDuplicationRule);
             #endregion
@@ -198,8 +199,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField CountryIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = portCountryId.Id, ObjectTableRuleId = PortDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField portCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = portCode.Id, ObjectTableRuleId = PortDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField CountryIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = portCountryId.Id, ObjectFieldCode = portCountryId.FieldCode, ObjectTableRuleId = PortDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField portCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = portCode.Id, ObjectFieldCode = portCode.FieldCode, ObjectTableRuleId = PortDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             //ObjectTableRuleFieldRepository.Add(portCodeField);
             //ObjectTableRuleFieldRepository.Add(CountryIdField);
@@ -226,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField incotermCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = incotermCode.Id, ObjectTableRuleId = IncotermDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField incotermCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = incotermCode.Id, ObjectFieldCode = incotermCode.FieldCode, ObjectTableRuleId = IncotermDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(incotermCodeField);
             //ObjectTableRuleRepository.Add(IncotermDuplicationRule);
             #endregion
@@ -251,7 +252,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField currencyCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = currencyCode.Id, ObjectTableRuleId = CurrencyDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField currencyCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = currencyCode.Id, ObjectFieldCode = currencyCode.FieldCode, ObjectTableRuleId = CurrencyDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(currencyCodeField);
             //ObjectTableRuleRepository.Add(CurrencyDuplicationRule);
             #endregion
@@ -276,7 +277,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField vatTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = vatTypeCode.Id, ObjectTableRuleId = VatTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField vatTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = vatTypeCode.Id, ObjectFieldCode = vatTypeCode.FieldCode, ObjectTableRuleId = VatTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(vatTypeCodeField);
             //ObjectTableRuleRepository.Add(VatTypeDuplicationRule);
             #endregion
@@ -302,7 +303,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField chargeTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = chargeTypeCode.Id, ObjectTableRuleId = ChargeTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField chargeTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = chargeTypeCode.Id, ObjectFieldCode = chargeTypeCode.FieldCode, ObjectTableRuleId = ChargeTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(chargeTypeCodeField);
             //ObjectTableRuleRepository.Add(ChargeTypeDuplicationRule);
             #endregion
@@ -327,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField countryCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = countryCode.Id, ObjectTableRuleId = CountryDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField countryCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = countryCode.Id, ObjectFieldCode = countryCode.FieldCode, ObjectTableRuleId = CountryDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(countryCodeField);
             //ObjectTableRuleRepository.Add(CountryDuplicationRule);
             #endregion
@@ -352,7 +353,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField globalZoneCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = globalZoneCode.Id, ObjectTableRuleId = GlobalZoneDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField globalZoneCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = globalZoneCode.Id, ObjectFieldCode = globalZoneCode.FieldCode, ObjectTableRuleId = GlobalZoneDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(globalZoneCodeField);
             //ObjectTableRuleRepository.Add(GlobalZoneDuplicationRule);
             #endregion
@@ -378,8 +379,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField SatteCountryIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = countryId.Id, ObjectTableRuleId = StateDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField stateCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = stateCode.Id, ObjectTableRuleId = StateDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField SatteCountryIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = countryId.Id, ObjectFieldCode = countryId.FieldCode, ObjectTableRuleId = StateDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField stateCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = stateCode.Id, ObjectFieldCode = stateCode.FieldCode, ObjectTableRuleId = StateDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(stateCodeField);
             //ObjectTableRuleRepository.Add(StateDuplicationRule);
             //ObjectTableRuleFieldRepository.Add(SatteCountryIdField);
@@ -409,8 +410,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = docIsCustomerView.Id, ObjectTableRuleId = DocTypeBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = docIsAgentView.Id, ObjectTableRuleId = DocTypeBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = docIsCustomerView.Id, ObjectFieldCode = docIsCustomerView.FieldCode, ObjectTableRuleId = DocTypeBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = docIsAgentView.Id, ObjectFieldCode = docIsAgentView.FieldCode, ObjectTableRuleId = DocTypeBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             //Duplication
             ObjectTableRule DocumentTypeDuplicationRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
@@ -428,7 +429,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField documentTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = documentTypeCode.Id, ObjectTableRuleId = DocumentTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField documentTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = documentTypeCode.Id, ObjectFieldCode = documentTypeCode.FieldCode, ObjectTableRuleId = DocumentTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             #endregion
 
             #region EventTypeRules
@@ -455,8 +456,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventIsCustomerView.Id, ObjectTableRuleId = EventTypeBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventIsAgentView.Id, ObjectTableRuleId = EventTypeBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventIsCustomerView.Id, ObjectFieldCode = eventIsCustomerView.FieldCode, ObjectTableRuleId = EventTypeBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventIsAgentView.Id, ObjectFieldCode = eventIsAgentView.FieldCode, ObjectTableRuleId = EventTypeBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             //Duplication
             ObjectTableRule EventTypeDuplicationRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
@@ -474,7 +475,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField eventTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventTypeCode.Id, ObjectTableRuleId = EventTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField eventTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventTypeCode.Id, ObjectFieldCode = eventTypeCode.FieldCode, ObjectTableRuleId = EventTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             #endregion
 
             #region PackageTypeRules
@@ -497,7 +498,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField packageTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = packageTypeCode.Id, ObjectTableRuleId = PackageTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField packageTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = packageTypeCode.Id, ObjectFieldCode = packageTypeCode.FieldCode, ObjectTableRuleId = PackageTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(packageTypeCodeField);
             //ObjectTableRuleRepository.Add(PackageTypeDuplicationRule);
             #endregion
@@ -522,7 +523,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField vesselCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = vesselCode.Id, ObjectTableRuleId = VesselDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField vesselCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = vesselCode.Id, ObjectFieldCode = vesselCode.FieldCode, ObjectTableRuleId = VesselDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(vesselCodeField);
             //ObjectTableRuleRepository.Add(VesselDuplicationRule);
             #endregion
@@ -547,7 +548,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField warehouseCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = warehouseCode.Id, ObjectTableRuleId = WarehouseDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField warehouseCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = warehouseCode.Id, ObjectFieldCode = warehouseCode.FieldCode, ObjectTableRuleId = WarehouseDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             //ObjectTableRuleFieldRepository.Add(warehouseCodeField);
             //ObjectTableRuleRepository.Add(WarehouseDuplicationRule);
             #endregion
@@ -637,7 +638,7 @@ namespace WebFreight.Web.MetaDataUpdate
             //}, ObjectTableRuleRepository, TenantObjectTableRule);
 
 
-            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = addressStateId.Id, ObjectTableRuleId = StateRequiredRule1.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = addressStateId.Id, ObjectFieldCode = addressStateId.FieldCode, ObjectTableRuleId = StateRequiredRule1.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             //AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = addressStateId.Id, ObjectTableRuleId = StateRequiredRule2.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
@@ -669,6 +670,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 // Id = IdCounter.GetNumber("ObjectTableRuleField").ToString(),
                 ObjectFieldId = addressStateId.Id,
+                ObjectFieldCode = addressStateId.FieldCode,
                 ObjectTableRuleId = CountryChangedRule.Id,
                 SystemLevel = true,
                 Tenant = 0,
@@ -701,7 +703,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 AdvancedCondition = true,
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = CustomerStateId.Id, ObjectTableRuleId = CustomerStateRequiredRule.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = CustomerStateId.Id, ObjectFieldCode = CustomerStateId.FieldCode, ObjectTableRuleId = CustomerStateRequiredRule.Id, SystemLevel = true, Tenant = 0, RuleNotificationTypeCode = "ERR" }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             #endregion
 
             ObjectContext.SaveChanges();
@@ -794,8 +796,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField AllOpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectTableRuleId = blockedFieldsUpdateRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField ShipmentTypeIdBlckField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ShipmentTypeId.Id, ObjectTableRuleId = blockShipmentTypeRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField AllOpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectFieldCode = OpenedByUserId.FieldCode, ObjectTableRuleId = blockedFieldsUpdateRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ShipmentTypeIdBlckField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ShipmentTypeId.Id, ObjectFieldCode = ShipmentTypeId.FieldCode, ObjectTableRuleId = blockShipmentTypeRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             #endregion
 
             #region Operational Closed
@@ -815,39 +817,39 @@ namespace WebFreight.Web.MetaDataUpdate
 
             RuleConditionField IsOperationalClosed_CondField = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails() { ObjectFieldId = IsOperationalClosed.Id, ObjectTableRuleId = blockFieldsRule.Id, Operator = "Equals", Value = "True", Tenant = blockFieldsRule.Tenant }, RuleConditionFieldRepository, TenantRuleConditionFields);
 
-            ObjectTableRuleField ShipmentTypeIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ShipmentTypeId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField HAWBDateField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = HAWBDate.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField MainCarriageCarrierIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageCarrierId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField MAWBOBLField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MAWBOBL.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField MAWBOBLDateField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MAWBOBLDate.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField HAWBFBLBLField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = HAWBFBLBL.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField StatusIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = StatusId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField IncotermIdField1 = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = IncotermId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField FreightPrepaidCollectIdField1 = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = FreightPrepaidCollectId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField OtherPrepaidCollectIdField1 = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OtherPrepaidCollectId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField SalesManUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = SalesManUserId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField OpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField DepartmentIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DepartmentId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField BranchIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = BranchId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField MainCarriageCarrierNumberField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageCarrierNumber.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField RateClassCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = RateClassCode.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField NumberOfPackagesField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = NumberOfPackages.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField DescriptionOfGoodsField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DescriptionOfGoods.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField GrossWeightField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = GrossWeight.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField VolumetricWeightField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = VolumetricWeight.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField VolumeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = Volume.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField ChargeableWeightField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ChargeableWeight.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField AWBFreightPrepaidField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = AWBFreightPrepaid.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField AWBFreightCollectField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = AWBFreightCollect.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField DangerousClassNumberField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousClassNumber.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField DangerousUnNumberField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousUnNumber.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField DangerousPackagingGroupField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousPackagingGroup.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField DangerousFlashPointField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousFlashPoint.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField DangerousMaterialDescriptionField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousMaterialDescription.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField MainHarmonizeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainHarmonize.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField NumberOfContainersField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = NumberOfContainers.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField MainCarriageFromPortIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageFromPortId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField MainCarriageToPortIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageToPortId.Id, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ShipmentTypeIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ShipmentTypeId.Id, ObjectFieldCode = ShipmentTypeId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField HAWBDateField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = HAWBDate.Id, ObjectFieldCode = HAWBDate.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField MainCarriageCarrierIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageCarrierId.Id, ObjectFieldCode = MainCarriageCarrierId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField MAWBOBLField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MAWBOBL.Id, ObjectFieldCode = MAWBOBL.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField MAWBOBLDateField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MAWBOBLDate.Id, ObjectFieldCode = MAWBOBLDate.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField HAWBFBLBLField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = HAWBFBLBL.Id, ObjectFieldCode = HAWBFBLBL.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField StatusIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = StatusId.Id, ObjectFieldCode = StatusId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField IncotermIdField1 = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = IncotermId.Id, ObjectFieldCode = IncotermId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField FreightPrepaidCollectIdField1 = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = FreightPrepaidCollectId.Id, ObjectFieldCode = FreightPrepaidCollectId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField OtherPrepaidCollectIdField1 = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OtherPrepaidCollectId.Id, ObjectFieldCode = OtherPrepaidCollectId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField SalesManUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = SalesManUserId.Id, ObjectFieldCode = SalesManUserId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField OpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectFieldCode = OpenedByUserId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField DepartmentIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DepartmentId.Id, ObjectFieldCode = DepartmentId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField BranchIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = BranchId.Id, ObjectFieldCode = BranchId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField MainCarriageCarrierNumberField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageCarrierNumber.Id, ObjectFieldCode = MainCarriageCarrierNumber.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField RateClassCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = RateClassCode.Id, ObjectFieldCode = RateClassCode.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField NumberOfPackagesField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = NumberOfPackages.Id, ObjectFieldCode = NumberOfPackages.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField DescriptionOfGoodsField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DescriptionOfGoods.Id, ObjectFieldCode = DescriptionOfGoods.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField GrossWeightField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = GrossWeight.Id, ObjectFieldCode = GrossWeight.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField VolumetricWeightField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = VolumetricWeight.Id, ObjectFieldCode = VolumetricWeight.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField VolumeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = Volume.Id, ObjectFieldCode = Volume.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ChargeableWeightField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ChargeableWeight.Id, ObjectFieldCode = ChargeableWeight.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField AWBFreightPrepaidField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = AWBFreightPrepaid.Id, ObjectFieldCode = AWBFreightPrepaid.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField AWBFreightCollectField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = AWBFreightCollect.Id, ObjectFieldCode = AWBFreightCollect.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField DangerousClassNumberField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousClassNumber.Id, ObjectFieldCode = DangerousClassNumber.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField DangerousUnNumberField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousUnNumber.Id, ObjectFieldCode = DangerousUnNumber.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField DangerousPackagingGroupField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousPackagingGroup.Id, ObjectFieldCode = DangerousPackagingGroup.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField DangerousFlashPointField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousFlashPoint.Id, ObjectFieldCode = DangerousFlashPoint.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField DangerousMaterialDescriptionField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = DangerousMaterialDescription.Id, ObjectFieldCode = DangerousMaterialDescription.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField MainHarmonizeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainHarmonize.Id, ObjectFieldCode = MainHarmonize.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField NumberOfContainersField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = NumberOfContainers.Id, ObjectFieldCode = NumberOfContainers.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField MainCarriageFromPortIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageFromPortId.Id, ObjectFieldCode = MainCarriageFromPortId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField MainCarriageToPortIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = MainCarriageToPortId.Id, ObjectFieldCode = MainCarriageToPortId.FieldCode, ObjectTableRuleId = blockFieldsRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             #endregion
 
             #endregion
@@ -1718,7 +1720,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField AllOpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectTableRuleId = blockedFieldsUpdateRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField AllOpenedByUserIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = OpenedByUserId.Id, ObjectFieldCode = OpenedByUserId.FieldCode, ObjectTableRuleId = blockedFieldsUpdateRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             #region Block after cancel
             //ObjectTableRule blockFieldsRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
@@ -1840,7 +1842,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 AdvancedCondition = true,
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField ARInvoicePrintNotesField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ARInvoicePrintNotes.Id, ObjectTableRuleId = blockARInvoicePrintNotesRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ARInvoicePrintNotesField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ARInvoicePrintNotes.Id, ObjectFieldCode = ARInvoicePrintNotes.FieldCode, ObjectTableRuleId = blockARInvoicePrintNotesRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
             ObjectContext.SaveChanges();
         }
 

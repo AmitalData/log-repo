@@ -496,10 +496,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 
 
-        public ObjectField GetSingleObjectFieldById(string id, int tenant)
+        public ObjectField GetSingleObjectFieldByCode(string code, int tenant)
         {
             return (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
-                    where a.Id == id
+                    where a.Code == code
                     select a).FirstOrDefault();
         }
 
