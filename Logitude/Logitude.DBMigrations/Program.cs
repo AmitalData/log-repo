@@ -17,10 +17,13 @@ namespace Logitude.DBMigrations
 
                 if (!String.IsNullOrEmpty(root))
                 {
-                    string[] DXMLFiles = AppHelper.GetDXMLFilesFromRoot(root);
-                    if (DXMLFiles != null)
+                    string[] dxmlFiles = AppHelper.GetDXMLFilesFromRoot(root);
+                    if (dxmlFiles != null)
                     {
-                        GeneratedScript generatedScript = AppHelper.GenerateScriptFromDXMLFiles(DXMLFiles);
+                        DxmlValidation dxmlValidation = new DxmlValidation(dxmlFiles);
+                        dxmlValidation.Validate();
+
+                        GeneratedScript generatedScript = AppHelper.GenerateScriptFromDXMLFiles(dxmlFiles);
                         AppHelper.SaveScript(generatedScript);
                         if (AppHelper.IsArgumentProvided(args, "-exe"))
                         {

@@ -422,9 +422,16 @@ namespace Logitude.DBMigrations.Models
             return dropScript + ";\n\n";
         }
 
-        protected override string GetAlterTypeScript(ColumnMigration columnMigration)
+        protected override string GetAlterTypeScript(ColumnMigration columnMigration)//
         {
-            string alterTypeScript = "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name + "\n";
+            string alterTypeScript = "";
+            List<RelationDefinition> relations = CurrentTable.Relations;
+            RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
+            if (foreignKeyRelation != null)
+            {
+                alterTypeScript += GetDropRelationScript(foreignKeyRelation);
+            }
+            alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterTypeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             alterTypeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
             alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? 1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
@@ -435,10 +442,17 @@ namespace Logitude.DBMigrations.Models
             return alterTypeScript + ";\n\n";
         }
 
-        protected override string GetAlterSizeScript(ColumnMigration columnMigration)
+        protected override string GetAlterSizeScript(ColumnMigration columnMigration)//
         {
+            string alterSizeScript = "";
+            List<RelationDefinition> relations = CurrentTable.Relations;
+            RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
+            if (foreignKeyRelation != null)
+            {
+                alterSizeScript += GetDropRelationScript(foreignKeyRelation);
+            }
             bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            string alterSizeScript = "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name + "\n";
+            alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterSizeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             alterSizeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
             alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size, 0, 0);
@@ -466,9 +480,15 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected override string GetDropPrimaryKeyScript(ColumnMigration columnMigration)
+        protected override string GetDropPrimaryKeyScript(ColumnMigration columnMigration)//
         {
-            string dropPrimaryKeyScript = "-- Drop The Primary Key Constraint\n";
+            string dropPrimaryKeyScript = "";
+            List<RelationDefinition> relations = GetRelationsForDBTable(CurrentTable.Name, false);
+            foreach (var relation in relations)
+            {
+                dropPrimaryKeyScript += GetDropRelationScript(relation);
+            }
+            dropPrimaryKeyScript += "-- Drop The Primary Key Constraint\n";
             string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
             dropPrimaryKeyScript += "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + "')";
             return dropPrimaryKeyScript + ";\n\n";
@@ -504,9 +524,16 @@ namespace Logitude.DBMigrations.Models
             return unsetNullableScript + ";\n\n";
         }
 
-        protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)
+        protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)//
         {
-            string alterPrecisionAndScaleScript = "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
+            string alterPrecisionAndScaleScript = "";
+            List<RelationDefinition> relations = CurrentTable.Relations;
+            RelationDefinition foreignKeyRelation = relations.Where(r => (!r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn == columnMigration.CurrentColumn.Name) || (r.ForeignKeyColumn.Contains(",") && r.ForeignKeyColumn.Contains(columnMigration.CurrentColumn.Name))).FirstOrDefault();
+            if (foreignKeyRelation != null)
+            {
+                alterPrecisionAndScaleScript += GetDropRelationScript(foreignKeyRelation);
+            }
+            alterPrecisionAndScaleScript += "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterPrecisionAndScaleScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             alterPrecisionAndScaleScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
             alterPrecisionAndScaleScript += GetDataTypeScript(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);

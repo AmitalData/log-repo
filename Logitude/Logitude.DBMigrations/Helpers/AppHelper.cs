@@ -16,18 +16,20 @@ namespace Logitude.DBMigrations.Helpers
 
         public static string[] GetDXMLFilesFromRoot(string root)
         {
+            Console.WriteLine("Reading DXML Files From The Root ...");
+
             try
             {
                 var stopwatch = Stopwatch.StartNew();
 
-                string DXMLFilesPath = Path.Combine(root);
-                string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml", SearchOption.AllDirectories);
+                string dxmlFilesPath = Path.Combine(root);
+                string[] dxmlFiles = Directory.GetFiles(dxmlFilesPath, "*.dxml", SearchOption.AllDirectories);
 
                 AppendToPerformanceData("Get DXML Files From Root", stopwatch);
 
-                if (DXMLFiles.Length > 0)
+                if (dxmlFiles.Length > 0)
                 {
-                    return DXMLFiles;
+                    return dxmlFiles;
                 }
                 else
                 {
@@ -40,14 +42,14 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-        public static GeneratedScript GenerateScriptFromDXMLFiles(string[] DXMLFiles)
+        public static GeneratedScript GenerateScriptFromDXMLFiles(string[] dxmlFiles)
         {
             GeneratedScript generatedScript = new GeneratedScript();
             RelationsScript relationsScript = new RelationsScript();
 
             var stopwatch = Stopwatch.StartNew();
 
-            foreach (var dxmlFile in DXMLFiles)
+            foreach (var dxmlFile in dxmlFiles)
             {
                 string dxmlFileName = Path.GetFileName(dxmlFile);
                 Console.WriteLine("Generating Script For " + dxmlFileName + " ...");

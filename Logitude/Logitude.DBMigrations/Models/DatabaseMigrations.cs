@@ -318,26 +318,20 @@ namespace Logitude.DBMigrations.Models
 
         protected void BuildDropColumnMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            //List<RelationDefinition> relations = GetRelationsForDBTable(CurrentTable.Name, false);
-            //if (relations.Where(r => r.ReferencedColumn == currentTableColumn.Name).Any())
-            //{
-
-            //}
-
-            //if (currentTableColumn.Constraints.PrimaryKey)
-            //{
-            //    ColumnMigration dropPrimaryKeyMigration = GetColumnMigration(MigrationTypes.DROPPRIMARYKEY, currentTableColumn, dxmlTableColumn);
-            //    ColumnsMigrations.Add(dropPrimaryKeyMigration);
-            //}
+            if (currentTableColumn.Constraints.PrimaryKey)
+            {
+                ColumnMigration dropPrimaryKeyMigration = GetColumnMigration(MigrationTypes.DROPPRIMARYKEY, currentTableColumn, dxmlTableColumn);
+                ColumnsMigrations.Add(dropPrimaryKeyMigration);
+            }
 
             ColumnMigration dropMigration = GetColumnMigration(MigrationTypes.DROP, currentTableColumn, dxmlTableColumn);
             ColumnsMigrations.Add(dropMigration);
 
-            //if (currentTableColumn.Constraints.PrimaryKey)
-            //{
-            //    ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
-            //    ColumnsMigrations.Add(addPrimaryKeyMigration);
-            //}
+            if (currentTableColumn.Constraints.PrimaryKey)
+            {
+                ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
+                ColumnsMigrations.Add(addPrimaryKeyMigration);
+            }
         }
 
         protected void BuildAlterMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
@@ -581,7 +575,40 @@ namespace Logitude.DBMigrations.Models
 
         protected bool IsRelationInCurrentTable(RelationDefinition relation)//dxml relation
         {
-            return CurrentTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
+            bool isForeignKeyDataTypeChanged = false;
+
+            if (!relation.ForeignKeyColumn.Contains(","))
+            {
+                ColumnDefinition dxmlForeignKeyColumn = DXMLTable.Columns.Where(c => c.Name == relation.ForeignKeyColumn).First();
+
+                if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
+                {
+                    ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
+                    isForeignKeyDataTypeChanged = (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale));
+                }
+            }
+            else
+            {
+                List<ColumnDefinition> dxmlForeignKeyColumns = DXMLTable.Columns.Where(c => relation.ForeignKeyColumn.Split(',').Contains(c.Name)).ToList();
+
+                isForeignKeyDataTypeChanged = false;
+
+                foreach (var dxmlForeignKeyColumn in dxmlForeignKeyColumns)
+                {
+                    if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
+                    {
+                        ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
+                        if ((dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale)))
+                        {
+                            isForeignKeyDataTypeChanged = true;
+                        }
+                    }
+                }
+            }
+
+            bool isRelationInCurrentTable = CurrentTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
+
+            return (!isForeignKeyDataTypeChanged && isRelationInCurrentTable);
         }
 
         protected bool IsRelationInDXMLTable(RelationDefinition relation)//db relation

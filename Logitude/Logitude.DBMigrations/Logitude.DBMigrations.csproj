@@ -51,6 +51,8 @@
     <Compile Include="Models\ColumnMigration.cs" />
     <Compile Include="Models\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
+    <Compile Include="Models\DxmlTable.cs" />
+    <Compile Include="Models\DxmlValidation.cs" />
     <Compile Include="Models\RelationsScript.cs" />
     <Compile Include="Models\GeneratedScript.cs" />
     <Compile Include="Models\OracleDatabaseMigrations.cs" />
