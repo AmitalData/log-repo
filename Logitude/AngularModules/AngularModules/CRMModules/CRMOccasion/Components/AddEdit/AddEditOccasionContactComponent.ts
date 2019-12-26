@@ -13,6 +13,7 @@ import { AdditionalServiceListService } from '../../../../Common/Services/Standa
 import { AdditionalServiceList } from '../../../../Common/EntityLists/AdditionalServiceList';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'AddEditOccasionContactComponent',
@@ -33,6 +34,8 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
     private selectedItems: ObservableCollection;
     private selectedItemsCount: number = 0;
     private IsSavedAll: boolean = false;
+    private itemsCount;
+
     constructor() {
         super();
         this.crmService = new CRMDomainService();
@@ -367,6 +370,10 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
         this.onQueryChangeEvent.emit({ Filters: this.filters, Reload: true });        
     }
 
+    onCountReady(event) {
+        this.itemsCount = event;
+    }
+
     OkButtonClicked() {
         var errors: string[] = [];
         var test = this.RemovedItems;
@@ -411,6 +418,11 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
 
             }
             else {
+                if ((this.itemsCount - this.RemovedItems.length) > 1000) {
+                    var msg = new MessageWindow();
+                    msg.Show("Selected contacts must be less than 1000");
+                    return;
+                }
                 this.IsSavedAll = true;
                 this.RemovedItems.forEach(item => {
                     var existContact: OccasionInviteePM = this.EntityPM.OccasionInvitees.filter(d => d.ContactId == item.ContactId)[0];

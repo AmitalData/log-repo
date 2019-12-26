@@ -2128,7 +2128,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
                 ServiceResponse response = FilterOccasionContacts(filters, tenant);
-                ICRMContext MyContext = CRMContext.GetContext(tenant);
+                List<OccasionContactSearchresult> temp = (List<OccasionContactSearchresult>)response.Result;
+
                 string loggedUserEmail = "";
                 if (authToken != null)
                 {
@@ -2136,39 +2137,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 if (response.Count > 0)
                 {
-                    UserRepository userRepository = new UserRepository(tenant);
-
-                    User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
-
-                    string[] ids = { };
-                    ids= !string.IsNullOrEmpty(filters.Filter8Value)?filters.Filter8Value.Split(','):ids;
-                    List<OccasionContactSearchresult>  temp = (List<OccasionContactSearchresult>)response.Result;
-                    List<OccasionInvitee> oldInvitees = MyContext.OccasionInvitees.Where(p => p.OccasionId == filters.Filter9Value).ToList();
-                    temp.RemoveAll(x => ids.Any(y => y == x.ContactId));
-                    var myCount = 0;
-                    foreach (OccasionContactSearchresult item in temp)
-                    {
-                        if (oldInvitees.Where(p => p.ContactId == item.ContactId).FirstOrDefault() == null)
-                        {
-                            OccasionInvitee invitee = new OccasionInvitee();
-                            invitee.Id = IdCounter.GetNumber("OccasionInvitee", tenant);
-                            invitee.OccasionId = filters.Filter9Value;
-                            invitee.Tenant = tenant;
-                            invitee.ContactId = item.ContactId;
-                            invitee.AddedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            invitee.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            invitee.AddedByUserId = loggedUser.Id;
-                            invitee.UpdatedByUserId = loggedUser.Id;
-                            myCount++;
-                            MyContext.OccasionInvitees.Add(invitee);
-                            if (myCount > 500)
-                            {
-                                MyContext.SaveChanges();
-                                myCount = 0;
-                            }
-                        }
-                    }
-                    MyContext.SaveChanges();                                   
+                    OccasionInviteeUpdateService occasionInviteeUpdateService = new OccasionInviteeUpdateService(tenant);
+                    occasionInviteeUpdateService.SaveAllOccasionInvitees(tenant,loggedUserEmail, temp, filters);
                 }
 
 
@@ -2529,20 +2499,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string SearchText { get; set; }
     }
 
-    public class OccasionContactSearchresult
-    {
-        public string ContactId { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Company { get; set; }
-        public string Region { get; set; }
-        public string Industry { get; set; }
-        public string Product { get; set; }
-        public string CustomerSize { get; set; }
-        public string CustomerId { get; set; }
-        public string ContactPhone { get; set; }
-        public string ContactPosition { get; set; }
-        public string ContactMobile { get; set; }
-        public string ContactTel { get; set; }
-    }
+
 }

@@ -212,7 +212,7 @@
                                     <logitude-grid style="vertical-align:top;" [QueryChangeEvent]="onQueryChangeEvent" GridWidth="100%" GridHeight="100%"
                                                    [dataSource]="DataSource" [ReloadData]="true" [columns]="Columns" [autoLoad]="true" [rows]="Items" [CheckboxProp]="'ContactId'"
                                                    [searchFields]="SearchText" [SearchFieldchangeevent]="SearchFieldChangeEvent"  (RemovedListItemsEvent)="OnSetRemoved($event)"
-                                                   (CheckBoxChecked)="onCheckBoxChecked($event)" [IsAllRecordsChecked]="IsAllChecked">
+                                                   (CheckBoxChecked)="onCheckBoxChecked($event)" [IsAllRecordsChecked]="IsAllChecked" (CountReady)="onCountReady($event)">
                                     </logitude-grid>
                                 </div>
                             </div>
