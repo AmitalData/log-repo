@@ -9,14 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageTransportModeId" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.TransportModes_OnCarriageTransportModeId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageTransportModeId" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.TransportModes_PreCarriageTransportModeId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="TransportModeId" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.TransportModes_TransportModeId" />
-  <Relation ParentTableName="Bookings" ParentColumnName="TransportModeCode" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.TransportModes_TransportModeCode" />
-  <Relation ParentTableName="WarehouseEntries" ParentColumnName="TransportModeId" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.TransportModes_TransportModeId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="TransportModeId" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.TransportModes_TransportModeId" />
-  <Relation ParentTableName="MoveTypes" ParentColumnName="TransportModeId" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MoveTypes_dbo.TransportModes_TransportModeId" />
-  <Relation ParentTableName="ShipmentTypes" ParentColumnName="TransportModeId" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentTypes_dbo.TransportModes_TransportModeId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="TransportModeId" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.TransportModes_TransportModeId" />
-  <Relation ParentTableName="TariffTypes" ParentColumnName="TransportModeCode" ReferencedTableName="TransportModes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffTypes_dbo.TransportModes_TransportModeCode" />
 </Table>

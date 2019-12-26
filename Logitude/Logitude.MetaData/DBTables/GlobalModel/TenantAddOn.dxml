@@ -3,10 +3,10 @@
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="PackageCode" Type="varchar" Size="5">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="PackageCode" Type="varchar" Size="5">
     <Constraints Nullable="false" />
   </Column>
 </Table>

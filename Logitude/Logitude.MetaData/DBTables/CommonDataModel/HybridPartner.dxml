@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="HybridPartners" Schema="dbo" DBType="Main">
-  <Column Name="AllowSendingDocsToAgent" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Name" Type="varchar" Size="25">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsExternalPartner" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsMislakaActivated" Type="bit">
+  <Column Name="PartnerTenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="LocalName" Type="nvarchar" Size="25">
@@ -21,22 +15,27 @@
   <Column Name="LogoId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="25">
+  <Column Name="SmallLogoId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsMislakaActivated" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="PartnerTenant" Type="int">
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExternalPartner" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ReceiveAllStatuses" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
+  <Column Name="AllowSendingDocsToAgent" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="SmallLogoId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Relation ParentTableName="HybridPartnersPermissions" ParentColumnName="AllowedByHybridPartnerId" ReferencedTableName="HybridPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.HybridPartnersPermissions_dbo.HybridPartners_AllowedByHybridPartnerId" />
-  <Relation ParentTableName="CustomerTenantAccessRequests" ParentColumnName="ForwarderId" ReferencedTableName="HybridPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessRequests_dbo.HybridPartners_ForwarderId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ForwarderPartnerId" ReferencedTableName="HybridPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.HybridPartners_ForwarderPartnerId" />
+  <Relation ForeignKeyColumn="LogoId" ReferencedTable="ImageDetails" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="SmallLogoId" ReferencedTable="ImageDetails" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ShipmentPayables" ParentColumnName="ShipmentPayableAmountTypeCode" ReferencedTableName="ShipmentPayableAmountTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.ShipmentPayableAmountTypes_ShipmentPayableAmountTypeCode" />
 </Table>

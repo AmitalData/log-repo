@@ -1,75 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="BankAccounts" Schema="dbo" DBType="Main">
-  <Column Name="AccountNumber" Type="varchar" Size="15">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
-  </Column>
-  <Column Name="BankId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="BranchAddress" Type="nvarchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="BranchNumber" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChequeCounter" Type="int">
-    <Constraints Nullable="true" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DeferredGLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnglishName" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IBAN" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastPageCloseBalance" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastPageEndDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastPageNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PrintingAccountNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PrintingBranchNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SwiftCode" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="TransferGLAcccountId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="UpdateDate" Type="datetime">
@@ -78,6 +18,71 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="PaymentCheques" ParentColumnName="BankAccountId" ReferencedTableName="BankAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.BankAccounts_BankAccountId" />
-  <Relation ParentTableName="BankDeposits" ParentColumnName="DepositBankAccountId" ReferencedTableName="BankAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankDeposits_dbo.BankAccounts_DepositBankAccountId" />
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BankId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BranchNumber" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AccountNumber" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="GLAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DeferredGLAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IBAN" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SwiftCode" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BranchAddress" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChequeCounter" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastPageNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastPageEndDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastPageCloseBalance" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferGLAcccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PrintingBranchNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrintingAccountNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="BankId" ReferencedTable="BankCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="GLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DeferredGLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="TransferGLAcccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

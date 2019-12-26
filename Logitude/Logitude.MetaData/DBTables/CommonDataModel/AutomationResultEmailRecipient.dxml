@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="AutomationResultEmailRecipients" Schema="dbo" DBType="Main">
-  <Column Name="AutomationsId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AutomationsId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="RecipientType" Type="varchar" Size="8">
     <Constraints Nullable="true" />
@@ -12,7 +15,5 @@
   <Column Name="RecipientValue" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="AutomationsId" ReferencedTable="Automations" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

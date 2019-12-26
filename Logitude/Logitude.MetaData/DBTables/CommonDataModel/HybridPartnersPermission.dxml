@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="HybridPartnersPermissions" Schema="dbo" DBType="Main">
-  <Column Name="AllowedByHybridPartnerId" Type="varchar" Size="15">
+  <Column Name="HybridPartnerId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="HybridPartnerId" Type="varchar" Size="15">
+  <Column Name="AllowedByHybridPartnerId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ForeignKeyColumn="AllowedByHybridPartnerId" ReferencedTable="HybridPartners" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

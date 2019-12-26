@@ -6,10 +6,12 @@
   <Column Name="MetaDataTypeCode" Type="varchar" Size="6">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="MetaDataValue" Type="varchar" Size="128">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="MetaDataValue" Type="varchar" Size="128">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CustomsDocumentId" ReferencedTable="CustomsDocuments" ReferencedColumn="DocumentsFilingId" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="MetaDataTypeCode" ReferencedTable="CustomMetaDataTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

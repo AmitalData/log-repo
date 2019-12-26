@@ -9,6 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ShipmentCustomsTransmissions" ParentColumnName="Status" ReferencedTableName="CustomsTransmissionsStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentCustomsTransmissions_dbo.CustomsTransmissionsStatus_Status" />
-  <Relation ParentTableName="Shipments" ParentColumnName="LocalCustomsTransmissionsStatusCode" ReferencedTableName="CustomsTransmissionsStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.CustomsTransmissionsStatus_LocalCustomsTransmissionsStatusCode" />
 </Table>

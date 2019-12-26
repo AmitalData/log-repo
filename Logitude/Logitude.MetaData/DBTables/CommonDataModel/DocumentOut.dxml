@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DocumentOuts" Schema="dbo" DBType="Main">
-  <Column Name="DocumentTemplateId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EditableFields" Type="varbinary" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmailTemplateId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="40">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IsBlobExist" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Issued" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IssuedByUserId" Type="varchar" Size="15">
+  <Column Name="EditableFields" Type="varbinary" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="IssuedDate" Type="datetime">
+  <Column Name="DocumentTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmailTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="XamlDocumentId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="NeedsRebuild" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="IsBlobExist" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="XamlDocumentId" Type="varchar" Size="15">
+  <Column Name="IssuedDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CommunicationLogs" ParentColumnName="DocumentOutId" ReferencedTableName="DocumentOuts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.DocumentOuts_DocumentOutId" />
-  <Relation ParentTableName="DocumentOutCopies" ParentColumnName="DocumentOutId" ReferencedTableName="DocumentOuts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOutCopies_dbo.DocumentOuts_DocumentOutId" />
-  <Relation ParentTableName="FollowUps" ParentColumnName="InternalDocumentId" ReferencedTableName="DocumentOuts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.DocumentOuts_InternalDocumentId" />
+  <Column Name="IssuedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="Id" ReferencedTable="DocumentsFilings" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="XamlDocumentId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="IssuedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

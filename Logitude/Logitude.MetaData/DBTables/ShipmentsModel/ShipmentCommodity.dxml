@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ShipmentCommodities" Schema="dbo" DBType="Main">
-  <Column Name="ChargeableWeight" Type="float">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ChargeRate" Type="float">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ChargeAmount" Type="float">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ChargeRate" Type="float">
+  <Column Name="RateClassCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CommodityNumber" Type="varchar" Size="15">
@@ -15,25 +24,7 @@
   <Column Name="DescriptionOfGoods" Type="varchar" Size="2000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="GrossWeight" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="IsFirstLine" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="NumberOfPackages" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="RateClassCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ShipmentId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Volume" Type="float">
@@ -42,6 +33,15 @@
   <Column Name="VolumetricWeight" Type="float">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ShipmentPackages" ParentColumnName="CommodityId" ReferencedTableName="ShipmentCommodities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.ShipmentCommodities_CommodityId" />
-  <Relation ParentTableName="BookingPackages" ParentColumnName="CommodityId" ReferencedTableName="ShipmentCommodities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingPackages_dbo.ShipmentCommodities_CommodityId" />
+  <Column Name="GrossWeight" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChargeableWeight" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NumberOfPackages" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="ShipmentId" ReferencedTable="Shipments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="RateClassCode" ReferencedTable="RateClasses" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

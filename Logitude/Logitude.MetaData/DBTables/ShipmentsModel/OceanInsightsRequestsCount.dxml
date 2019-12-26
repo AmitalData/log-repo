@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="OceanInsightsRequestsCounts" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Type" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OceanInsigntId" Type="varchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="BLNumber" Type="varchar" Size="18">
     <Constraints Nullable="true" />
   </Column>
@@ -8,20 +23,5 @@
   </Column>
   <Column Name="ContainerSubscriptionId" Type="varchar" Size="250">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="OceanInsigntId" Type="varchar" Size="500">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Type" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
   </Column>
 </Table>

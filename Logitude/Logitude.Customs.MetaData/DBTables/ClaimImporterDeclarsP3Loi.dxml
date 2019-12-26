@@ -6,13 +6,14 @@
   <Column Name="CounterKey" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="DeclarationNumber" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="LineNo" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="DeclarationNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="ClaimId,CounterKey" ReferencedTable="ClaimImporterDeclarsPage3s" ReferencedColumn="ClaimId,LineNo" ReferencedTableSchema="Customs" />
 </Table>

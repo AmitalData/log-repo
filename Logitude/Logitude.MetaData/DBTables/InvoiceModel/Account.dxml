@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Accounts1" Schema="dbo" DBType="Main">
-  <Column Name="AccountTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="false" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="AddedManually" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Code" Type="nvarchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="Name" Type="nvarchar" Size="30">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AccountTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="ExternalAccountingCard" Type="nvarchar" Size="25">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Name" Type="nvarchar" Size="30">
+  <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="ARPayments" ParentColumnName="ARAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Accounts1_ARAccountId" />
-  <Relation ParentTableName="ARPayments" ParentColumnName="DebitAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Accounts1_DebitAccountId" />
-  <Relation ParentTableName="ChargesTypes" ParentColumnName="PayableAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.Accounts1_PayableAccountId" />
-  <Relation ParentTableName="ChargesTypes" ParentColumnName="ReceivableAccountId" ReferencedTableName="Accounts1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.Accounts1_ReceivableAccountId" />
+  <Relation ForeignKeyColumn="AccountTypeCode" ReferencedTable="AccountTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

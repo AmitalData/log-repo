@@ -6,6 +6,4 @@
   <Column Name="Name" Type="varchar" Size="265">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="QueueMessageMoreDetails" ParentColumnName="QueueDefinitionCode" ReferencedTableName="QueueDefinitions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QueueMessageMoreDetails_dbo.QueueDefinitions_QueueDefinitionCode" />
-  <Relation ParentTableName="QueueMessages" ParentColumnName="QueueDefinitionCode" ReferencedTableName="QueueDefinitions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QueueMessages_dbo.QueueDefinitions_QueueDefinitionCode" />
 </Table>

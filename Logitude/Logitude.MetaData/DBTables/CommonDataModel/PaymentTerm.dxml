@@ -1,55 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="PaymentTerms" Schema="dbo" DBType="Main">
-  <Column Name="AddedManually" Type="bit">
-    <Constraints Nullable="false" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CurrentMonth" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Days" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Description" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DisplayInLOV" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EnglishName" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ExternalId" Type="varchar" Size="25">
+  <Column Name="LocalName" Type="nvarchar" Size="40">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FromDateTypeCode" Type="varchar" Size="5">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsManuallySet" Type="bit">
+  <Column Name="AddedManually" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalDescription" Type="nvarchar" Size="250">
+  <Column Name="Days" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayInLOV" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Description" Type="varchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="40">
+  <Column Name="LocalDescription" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="ExternalId" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsManuallySet" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="APInvoices" ParentColumnName="PaymentTermId" ReferencedTableName="PaymentTerms" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoices_dbo.PaymentTerms_PaymentTermId" />
-  <Relation ParentTableName="Tenants" ParentColumnName="PaymentTermId" ReferencedTableName="PaymentTerms" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PaymentTerms_PaymentTermId" />
-  <Relation ParentTableName="Cards" ParentColumnName="PaymentTermId" ReferencedTableName="PaymentTerms" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.PaymentTerms_PaymentTermId" />
-  <Relation ParentTableName="ARInvoices" ParentColumnName="PaymentTermId" ReferencedTableName="PaymentTerms" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.PaymentTerms_PaymentTermId" />
+  <Column Name="CurrentMonth" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FromDateTypeCode" Type="varchar" Size="5">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="FromDateTypeCode" ReferencedTable="PaymentTermDateTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

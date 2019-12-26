@@ -3,7 +3,7 @@
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IsRequired" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="MaxLength" Type="int">
@@ -12,13 +12,14 @@
   <Column Name="MinLength" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ObjectFieldId" Type="varchar" Size="15">
+  <Column Name="IsRequired" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="ObjectFieldId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="UpdateDateGMT" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

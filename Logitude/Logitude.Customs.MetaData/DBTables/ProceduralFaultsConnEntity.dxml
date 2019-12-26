@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ProceduralFaultsConnEntities" Schema="Customs" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ProceduralFaultId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntityType" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="EntityIdKey1" Type="varchar" Size="35">
     <Constraints Nullable="true" />
   </Column>
@@ -12,16 +24,5 @@
   <Column Name="EntityPath" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="EntityType" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="ProceduralFaultId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="ProceduralFaultId" ReferencedTable="ProceduralFaults" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
 </Table>

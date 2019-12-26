@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CreditCardTypes" Schema="dbo" DBType="Main">
-  <Column Name="BankAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Code" Type="varchar" Size="2">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Code" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Name" Type="varchar" Size="40">
@@ -21,6 +15,10 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ARPayments" ParentColumnName="CreditCardTypeId" ReferencedTableName="CreditCardTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.CreditCardTypes_CreditCardTypeId" />
-  <Relation ParentTableName="APPayments" ParentColumnName="CreditCardTypeId" ReferencedTableName="CreditCardTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.CreditCardTypes_CreditCardTypeId" />
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BankAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

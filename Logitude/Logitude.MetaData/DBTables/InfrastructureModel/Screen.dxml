@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Screens" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IsReadOnly" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Name" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NumberOfColumns" Type="int">
+  <Column Name="Code" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="NumberOfRows" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NumberOfColumns" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ObjectTableId" Type="varchar" Size="15">
@@ -24,7 +18,11 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ScreenFields" ParentColumnName="ScreenId" ReferencedTableName="Screens" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ScreenFields_dbo.Screens_ScreenId" />
-  <Relation ParentTableName="ScreenModifications" ParentColumnName="ScreenId" ReferencedTableName="Screens" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ScreenModifications_dbo.Screens_ScreenId" />
-  <Relation ParentTableName="ObjectTables" ParentColumnName="HeaderScreenId" ReferencedTableName="Screens" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTables_dbo.Screens_HeaderScreenId" />
+  <Column Name="IsReadOnly" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

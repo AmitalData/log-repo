@@ -1,6 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Cards" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="BankName" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BankAddress" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Swift" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="AccountNumber" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IBANNumber" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="70">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VatNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ReceivablesAccountingCard" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PayablesAccountingCard" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExternalId2" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="2000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Website" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastLoginDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvitationDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsCustomer" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnableConsolidationInvoices" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CityName" Type="nvarchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsActiveForMobile" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IRSPlace" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IRSNumber" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SupportNotes" Type="nvarchar" Size="2000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GLAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExternalAccountingBusinessArea" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SATPaymentMethodCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SATForeignRFC" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ZipCode" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Address1" Type="nvarchar" Size="65">
@@ -9,282 +108,82 @@
   <Column Name="Address2" Type="nvarchar" Size="65">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="BankAddress" Type="nvarchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="BankName" Type="nvarchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CityName" Type="nvarchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ClassifierId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Code" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CollectorId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CountryCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CountryId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CountryName" Type="varchar" Size="120">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EnableConsolidationInvoices" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnglishName" Type="varchar" Size="70">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ExternalAccountingBusinessArea" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ExternalId2" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GLAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IBANNumber" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="ImageDetailId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="InvitationDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InvoiceCurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IRSNumber" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IRSPlace" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsActiveForMobile" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsAutonomy" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsCustomer" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsInternationalPartner" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LastLoginDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MetodoPagoCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Notes" Type="nvarchar" Size="2000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PartnerTypeId" Type="char" Size="2">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="PayablesAccountingCard" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PaymentTermId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Phone" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PrimaryContactId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ReceivablesAccountingCard" Type="varchar" Size="25">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SalesmanUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SATForeignRFC" Type="varchar" Size="20">
+  <Column Name="CountryId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SATPaymentMethodCode" Type="varchar" Size="2">
+  <Column Name="CountryCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SharedLogisticsInvitationStatusCode" Type="int">
+  <Column Name="CountryName" Type="varchar" Size="120">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="StateName" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SupportNotes" Type="nvarchar" Size="2000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Swift" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdateDate" Type="datetime">
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="UsoCFDICode" Type="nvarchar" Size="128">
+  <Column Name="PrimaryContactId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VatNumber" Type="varchar" Size="20">
+  <Column Name="ImageDetailId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceCurrencyId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VatTypeId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Website" Type="varchar" Size="100">
+  <Column Name="PaymentTermId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ZipCode" Type="varchar" Size="15">
+  <Column Name="PartnerTypeId" Type="char" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SharedLogisticsInvitationStatusCode" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Shipments" ParentColumnName="NominatedHandlingPartyId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_NominatedHandlingPartyId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="Notify1Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_Notify1Id" />
-  <Relation ParentTableName="Shipments" ParentColumnName="Notify2Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_Notify2Id" />
-  <Relation ParentTableName="ARPayments" ParentColumnName="BillToId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Cards_BillToId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageCarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_OnCarriageCarrierId" />
-  <Relation ParentTableName="BookingAnswers" ParentColumnName="CarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.Cards_CarrierId" />
-  <Relation ParentTableName="CustomBanksCards" ParentColumnName="CardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomBanksCards_dbo.Cards_CardId" />
-  <Relation ParentTableName="CustomAgents" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomAgents_dbo.Cards_Id" />
-  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageCarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_PreCarriageCarrierId" />
-  <Relation ParentTableName="Customers" ParentColumnName="BillToId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Cards_BillToId" />
-  <Relation ParentTableName="Customers" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Cards_Id" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ReleasingAgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_ReleasingAgentId" />
-  <Relation ParentTableName="CustomerCustomsAgentByProducts" ParentColumnName="CustomsAgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerCustomsAgentByProducts_dbo.Cards_CustomsAgentId" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="AgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Cards_AgentId" />
-  <Relation ParentTableName="Bookings" ParentColumnName="ConsigneeId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Cards_ConsigneeId" />
-  <Relation ParentTableName="Customers" ParentColumnName="CustomsAgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Cards_CustomsAgentId" />
-  <Relation ParentTableName="Customers" ParentColumnName="ForwarderId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Cards_ForwarderId" />
-  <Relation ParentTableName="CustomerForwarderByProducts" ParentColumnName="ForwarderId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerForwarderByProducts_dbo.Cards_ForwarderId" />
-  <Relation ParentTableName="TMProjects" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMProjects_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="CustomerMediatorByProducts" ParentColumnName="MediatorId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerMediatorByProducts_dbo.Cards_MediatorId" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="ForeignClientId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Cards_ForeignClientId" />
-  <Relation ParentTableName="Declarations" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="Customers" ParentColumnName="MediatorId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Cards_MediatorId" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="LeadPartnerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Cards_LeadPartnerId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ShipperId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_ShipperId" />
-  <Relation ParentTableName="Bookings" ParentColumnName="InterlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Cards_InterlineId" />
-  <Relation ParentTableName="Bookings" ParentColumnName="IssuingCarrierAgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Cards_IssuingCarrierAgentId" />
-  <Relation ParentTableName="CustomsShippers" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomsShippers_dbo.Cards_Id" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ShipperNotExporterId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_ShipperNotExporterId" />
-  <Relation ParentTableName="Participants" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Participants_dbo.Cards_Id" />
-  <Relation ParentTableName="Bookings" ParentColumnName="MainCarriageCarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Cards_MainCarriageCarrierId" />
-  <Relation ParentTableName="AWBSpecialHandlingCodes" ParentColumnName="AirlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AWBSpecialHandlingCodes_dbo.Cards_AirlineId" />
-  <Relation ParentTableName="Tenants" ParentColumnName="AgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Cards_AgentId" />
-  <Relation ParentTableName="CustomerSalesNote" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerSalesNote_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="AirlineMessagingRules" ParentColumnName="AirlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineMessagingRules_dbo.Cards_AirlineId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="AgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_AgentId" />
-  <Relation ParentTableName="Bookings" ParentColumnName="ShipperId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Cards_ShipperId" />
-  <Relation ParentTableName="Tenants" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="WarehouseLegWarehouseId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_WarehouseLegWarehouseId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="ConsigneeId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_ConsigneeId" />
-  <Relation ParentTableName="Bookings" ParentColumnName="Transshipment1CarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Cards_Transshipment1CarrierId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="Bookings" ParentColumnName="Transshipment2CarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Cards_Transshipment2CarrierId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="CarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Cards_CarrierId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="EmptyDeliveryContainerPartnerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Cards_EmptyDeliveryContainerPartnerId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="EmptyPickupContainerPartnerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Cards_EmptyPickupContainerPartnerId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_AgentId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AgentComputed" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_AgentComputed" />
-  <Relation ParentTableName="Quotes" ParentColumnName="FreelancerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_FreelancerId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="FromPartnerCardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Cards_FromPartnerCardId" />
-  <Relation ParentTableName="BookingProducts" ParentColumnName="AirlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingProducts_dbo.Cards_AirlineId" />
-  <Relation ParentTableName="PaymentOrders" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrders_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="FromPartnerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_FromPartnerId" />
-  <Relation ParentTableName="APInvoices" ParentColumnName="VendorId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoices_dbo.Cards_VendorId" />
-  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageFromPartnerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Cards_MainCarriageFromPartnerId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="MainCarriageCarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_MainCarriageCarrierId" />
-  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="InterlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Cards_InterlineId" />
-  <Relation ParentTableName="WarehouseEntries" ParentColumnName="ConsigneeId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Cards_ConsigneeId" />
-  <Relation ParentTableName="AccountingNotes" ParentColumnName="CardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AccountingNotes_dbo.Cards_CardId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="ToPartnerCardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Cards_ToPartnerCardId" />
-  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageCarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Cards_MainCarriageCarrierId" />
-  <Relation ParentTableName="Tapags" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Tapags_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="WarehouseEntries" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="NotifyId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_NotifyId" />
-  <Relation ParentTableName="CardContacts" ParentColumnName="CardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CardContacts_dbo.Cards_CardId" />
-  <Relation ParentTableName="WarehouseEntries" ParentColumnName="ShipperId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Cards_ShipperId" />
-  <Relation ParentTableName="Commodities" ParentColumnName="AirlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Commodities_dbo.Cards_AirlineId" />
-  <Relation ParentTableName="CardExternalAccountsByProducts" ParentColumnName="CardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CardExternalAccountsByProducts_dbo.Cards_CardId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ColoaderId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_ColoaderId" />
-  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageToPartnerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Cards_MainCarriageToPartnerId" />
-  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment1CarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Cards_Transshipment1CarrierId" />
-  <Relation ParentTableName="CardExternalCodeByCurrencies" ParentColumnName="CardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CardExternalCodeByCurrencies_dbo.Cards_CardId" />
-  <Relation ParentTableName="ShippingAgents" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShippingAgents_dbo.Cards_Id" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ConsigneeId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_ConsigneeId" />
-  <Relation ParentTableName="IATACodes" ParentColumnName="AirlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.IATACodes_dbo.Cards_AirlineId" />
-  <Relation ParentTableName="ShippingLines" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShippingLines_dbo.Cards_Id" />
-  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment2CarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Cards_Transshipment2CarrierId" />
-  <Relation ParentTableName="Truckers" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Truckers_dbo.Cards_Id" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ConsigneeNotImporterId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_ConsigneeNotImporterId" />
-  <Relation ParentTableName="PhysicalChecks" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PhysicalChecks_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="Vendors" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Vendors_dbo.Cards_Id" />
-  <Relation ParentTableName="AccountingPartners" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AccountingPartners_dbo.Cards_Id" />
-  <Relation ParentTableName="Warehouses" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Warehouses_dbo.Cards_Id" />
-  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment3CarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Cards_Transshipment3CarrierId" />
-  <Relation ParentTableName="Agents" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Agents_dbo.Cards_Id" />
-  <Relation ParentTableName="Quotes" ParentColumnName="ShipperId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_ShipperId" />
-  <Relation ParentTableName="Airlines" ParentColumnName="Id" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Airlines_dbo.Cards_Id" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ConsolidatorId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_ConsolidatorId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="ToPartnerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Cards_ToPartnerId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="CustomAgentExportId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_CustomAgentExportId" />
-  <Relation ParentTableName="Users" ParentColumnName="FreelancerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Users_dbo.Cards_FreelancerId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="CustomAgentImportId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_CustomAgentImportId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="CustomClearancePointId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_CustomClearancePointId" />
-  <Relation ParentTableName="Tariffs" ParentColumnName="SellerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Cards_SellerId" />
-  <Relation ParentTableName="Addresses" ParentColumnName="CardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Addresses_dbo.Cards_CardId" />
-  <Relation ParentTableName="APPayments" ParentColumnName="VendorId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.Cards_VendorId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="MAWBStacks" ParentColumnName="AssignedToId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MAWBStacks_dbo.Cards_AssignedToId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ToPartnerCardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Cards_ToPartnerCardId" />
-  <Relation ParentTableName="Activities" ParentColumnName="CustomerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Cards_CustomerId" />
-  <Relation ParentTableName="FlightsSchedulesRequests" ParentColumnName="AirlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesRequests_dbo.Cards_AirlineId" />
-  <Relation ParentTableName="ARInvoices" ParentColumnName="BillToId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.Cards_BillToId" />
-  <Relation ParentTableName="BookingLastRequests" ParentColumnName="CarrierId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingLastRequests_dbo.Cards_CarrierId" />
-  <Relation ParentTableName="Tickets" ParentColumnName="CompanyId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.Cards_CompanyId" />
-  <Relation ParentTableName="ShipmentPayables" ParentColumnName="VendorId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.Cards_VendorId" />
-  <Relation ParentTableName="FlightsSchedulesResponses" ParentColumnName="AirlineId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesResponses_dbo.Cards_AirlineId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="FreelancerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_FreelancerId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="FreightForwarderId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_FreightForwarderId" />
-  <Relation ParentTableName="ShipmentAssemblies" ParentColumnName="ShipperId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentAssemblies_dbo.Cards_ShipperId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="FreightLocationId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_FreightLocationId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="FreightPayerId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_FreightPayerId" />
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="VendorId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.Cards_VendorId" />
-  <Relation ParentTableName="TarrifHeaders" ParentColumnName="CardId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifHeaders_dbo.Cards_CardId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="IssuingCarrierAgentId" ReferencedTableName="Cards" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Cards_IssuingCarrierAgentId" />
+  <Column Name="CollectorId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ClassifierId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MetodoPagoCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UsoCFDICode" Type="nvarchar" Size="128">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsInternationalPartner" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAutonomy" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="SalesmanUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="PrimaryContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ImageDetailId" ReferencedTable="ImageDetails" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="InvoiceCurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="VatTypeId" ReferencedTable="VatTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="PaymentTermId" ReferencedTable="PaymentTerms" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="PartnerTypeId" ReferencedTable="PartnerTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="SharedLogisticsInvitationStatusCode" ReferencedTable="SharedLogisticsInvitationStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CollectorId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ClassifierId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MetodoPagoCode" ReferencedTable="MetodoPagos" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UsoCFDICode" ReferencedTable="UsoCFDIs" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

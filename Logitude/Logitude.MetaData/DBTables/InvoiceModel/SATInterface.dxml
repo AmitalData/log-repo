@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SATInterfaceSettings" ParentColumnName="SATInterfaceCode" ReferencedTableName="SATInterfaces" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SATInterfaceSettings_dbo.SATInterfaces_SATInterfaceCode" />
 </Table>

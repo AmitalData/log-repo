@@ -109,7 +109,7 @@ namespace Logitude.DXMLGenerator.Models
                 reader.Close();
                 connection.Close();
 
-                return dbTables.OrderBy(t => t.Name).ToList();
+                return dbTables;
             }
             catch (Exception)
             {
@@ -198,7 +198,7 @@ namespace Logitude.DXMLGenerator.Models
                     Name = table.Name,
                     Schema = table.Schema,
                     DBType = GetDatabaseType(table.DBName),
-                    Columns = columnsDefinitions.OrderBy(c => c.Name).ToList(),
+                    Columns = columnsDefinitions,
                     Relations = GetTableRelations(table.Name)
                 };
             }
@@ -221,14 +221,15 @@ namespace Logitude.DXMLGenerator.Models
 
         private List<RelationDefinition> GetTableRelations(string tableName)
         {
-            string queryString = @"SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName " +
+            string queryString = @"SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName, ParentTableSchema.name AS ParentTableSchemaName, ReferencedTableSchema.name AS ReferencedTableSchemaName, ReferencedColumn.column_id AS ReferencedColumnOrder " +
                                   "FROM SYS.FOREIGN_KEY_COLUMNS ForeignKeyColumns " +
                                   "INNER JOIN SYS.TABLES ParentTable ON ParentTable.object_id = ForeignKeyColumns.parent_object_id " +
+                                  "INNER JOIN SYS.SCHEMAS ParentTableSchema ON ParentTable.schema_id = ParentTableSchema.schema_id " +
                                   "INNER JOIN SYS.COLUMNS ParentColumn ON ParentColumn.column_id = ForeignKeyColumns.parent_column_id AND ParentColumn.object_id = ParentTable.object_id " +
                                   "INNER JOIN SYS.TABLES ReferencedTable ON ReferencedTable.object_id = ForeignKeyColumns.referenced_object_id " +
+                                  "INNER JOIN SYS.SCHEMAS ReferencedTableSchema ON ReferencedTable.schema_id = ReferencedTableSchema.schema_id " +
                                   "INNER JOIN SYS.COLUMNS ReferencedColumn ON ReferencedColumn.column_id = ForeignKeyColumns.referenced_column_id AND ReferencedColumn.object_id = ReferencedTable.object_id " +
                                   "INNER JOIN SYS.OBJECTS SysObject ON SysObject.object_id = ForeignKeyColumns.constraint_object_id " +
-                                  //"WHERE ForeignKeyColumns.referenced_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
                                   "WHERE ForeignKeyColumns.parent_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
 
             SqlDataReader reader = null;
@@ -250,7 +251,9 @@ namespace Logitude.DXMLGenerator.Models
                         ForeignKeyColumn = reader["ParentColumnName"].ToString(),
                         ReferencedTable = reader["ReferencedTableName"].ToString(),
                         ReferencedColumn = reader["ReferencedColumnName"].ToString(),
-                        ForeignKeyConstraintName = reader["ForeignKeyConstraintName"].ToString()
+                        ForeignKeyConstraintName = reader["ForeignKeyConstraintName"].ToString(),
+                        ReferencedTableSchema = reader["ReferencedTableSchemaName"].ToString(),
+                        ReferencedColumnOrder = Convert.ToInt32(reader["ReferencedColumnOrder"].ToString())
                     };
                     relations.Add(relation);
                 }
@@ -258,7 +261,9 @@ namespace Logitude.DXMLGenerator.Models
                 reader.Close();
                 connection.Close();
 
-                return relations;
+                List<RelationDefinition> processedRelations = HandlingCompositeRelations(relations);
+
+                return processedRelations;
             }
             catch (Exception)
             {
@@ -494,6 +499,53 @@ namespace Logitude.DXMLGenerator.Models
                 ExcludedTables = null;
                 ExcludedTablesNames = null;
             }
+        }
+
+        private List<RelationDefinition> HandlingCompositeRelations(List<RelationDefinition> relations)
+        {
+            List<string> processedConstraints = new List<string>();
+            List<RelationDefinition> processedRelations = new List<RelationDefinition>();
+
+            foreach(var relation in relations)
+            {
+                if (!processedConstraints.Contains(relation.ForeignKeyConstraintName))
+                {
+                    string foreignKeyColumn;
+                    string referencedColumn;
+                    string referencedTable;
+                    string referencedTableSchema;
+
+                    List<RelationDefinition> relationsWithSameConstraint = relations.Where(r => r.ForeignKeyConstraintName == relation.ForeignKeyConstraintName).OrderBy(r => r.ReferencedColumnOrder).ToList();
+
+                    if (relationsWithSameConstraint.Count() > 1)
+                    {
+                        foreignKeyColumn = string.Join(",", relationsWithSameConstraint.Select(r => r.ForeignKeyColumn).ToArray());
+                        referencedColumn = string.Join(",", relationsWithSameConstraint.Select(r => r.ReferencedColumn).ToArray());
+                        referencedTable = relationsWithSameConstraint.First().ReferencedTable;
+                        referencedTableSchema = relationsWithSameConstraint.First().ReferencedTableSchema;
+                    }
+                    else
+                    {
+                        foreignKeyColumn = relation.ForeignKeyColumn;
+                        referencedColumn = relation.ReferencedColumn;
+                        referencedTable = relation.ReferencedTable;
+                        referencedTableSchema = relation.ReferencedTableSchema;
+                    }
+
+                    RelationDefinition processedRelation = new RelationDefinition
+                    {
+                        ForeignKeyColumn = foreignKeyColumn,
+                        ReferencedColumn = referencedColumn,
+                        ReferencedTable = referencedTable,
+                        ReferencedTableSchema = referencedTableSchema
+                    };
+
+                    processedRelations.Add(processedRelation);
+                    processedConstraints.Add(relation.ForeignKeyConstraintName);
+                }
+            }
+
+            return processedRelations;
         }
 
         private void ExportErrorsData()

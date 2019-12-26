@@ -1,43 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="AWBSpecialHandlingCodes" Schema="dbo" DBType="Main">
-  <Column Name="AirlineId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Code" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsIATA" Type="bit">
+  <Column Name="Code" Type="varchar" Size="4">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Name" Type="varchar" Size="200">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="IsIATA" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AirlineId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId1" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId1" />
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId2" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId2" />
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId3" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId3" />
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId4" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId4" />
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId5" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId5" />
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId6" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId6" />
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId7" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId7" />
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId8" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId8" />
-  <Relation ParentTableName="Bookings" ParentColumnName="AWBSpecialHandlingCodeId9" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId9" />
-  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="AWBPrintingSecurityStatusId" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.AWBSpecialHandlingCodes_AWBPrintingSecurityStatusId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId1" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId1" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId2" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId2" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId3" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId3" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId4" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId4" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId5" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId5" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId6" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId6" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId7" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId7" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId8" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId8" />
-  <Relation ParentTableName="Shipments" ParentColumnName="AWBSpecialHandlingCodeId9" ReferencedTableName="AWBSpecialHandlingCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.AWBSpecialHandlingCodes_AWBSpecialHandlingCodeId9" />
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="AirlineId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

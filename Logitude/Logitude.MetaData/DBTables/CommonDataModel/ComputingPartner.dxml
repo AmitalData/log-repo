@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ComputingPartners" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="15">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="50">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Description" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Name" Type="varchar" Size="50">
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Remarks" Type="nvarchar" Size="250">
@@ -27,16 +24,18 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="Code" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
+  <Column Name="Description" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+  <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ComputingPartnerCodes" ParentColumnName="ComputingPartnerId" ReferencedTableName="ComputingPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerCodes_dbo.ComputingPartners_ComputingPartnerId" />
-  <Relation ParentTableName="ComputingPartnerTables" ParentColumnName="ComputingPartnerId" ReferencedTableName="ComputingPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerTables_dbo.ComputingPartners_ComputingPartnerId" />
-  <Relation ParentTableName="ComputingPartnerTranslations" ParentColumnName="ComputingPartnerId" ReferencedTableName="ComputingPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerTranslations_dbo.ComputingPartners_ComputingPartnerId" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

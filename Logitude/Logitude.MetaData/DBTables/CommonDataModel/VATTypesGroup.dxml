@@ -9,4 +9,6 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ForeignKeyColumn="GroupVATTypeId" ReferencedTable="VatTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="SingleVATTypeId" ReferencedTable="VatTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

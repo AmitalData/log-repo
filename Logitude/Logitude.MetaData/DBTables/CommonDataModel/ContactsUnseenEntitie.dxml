@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ContactsUnseenEntities" Schema="dbo" DBType="Main">
-  <Column Name="ContactId" Type="varchar" Size="15">
+  <Column Name="Id" Type="varchar" Size="40">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
+  <Column Name="ContactId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EntityId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="40">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="ObjectTableId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

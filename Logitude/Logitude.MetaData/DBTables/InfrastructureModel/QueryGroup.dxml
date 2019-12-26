@@ -3,11 +3,10 @@
   <Column Name="Code" Type="varchar" Size="4">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IndexOrder" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Name" Type="varchar" Size="80">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Queries" ParentColumnName="QueryGroupCode" ReferencedTableName="QueryGroups" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Queries_dbo.QueryGroups_QueryGroupCode" />
+  <Column Name="IndexOrder" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

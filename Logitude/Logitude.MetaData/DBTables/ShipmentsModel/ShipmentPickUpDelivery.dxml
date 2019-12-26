@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ShipmentPickUpDeliveries" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ATD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="ATA" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ATD" Type="datetime">
+  <Column Name="ETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ETA" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CarrierId" Type="varchar" Size="15">
@@ -12,13 +27,19 @@
   <Column Name="CarrierNumber" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="Notes" Type="nvarchar" Size="2000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PickUpDeliveryNumber" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TruckNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="Driver" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="EmptyDeliveryContainerPartnerId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmptyDeliveryDepotReference" Type="varchar" Size="50">
+  <Column Name="TrailerNumber" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="EmptyPickupContainerPartnerId" Type="varchar" Size="15">
@@ -27,91 +48,83 @@
   <Column Name="EmptyPickupDepotReference" Type="varchar" Size="50">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ETA" Type="datetime">
+  <Column Name="EmptyDeliveryContainerPartnerId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ETD" Type="datetime">
+  <Column Name="EmptyDeliveryDepotReference" Type="varchar" Size="50">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FromAddress" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column Name="PickUpDeliveryTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="FromAddressCity" Type="nvarchar" Size="25">
-    <Constraints Nullable="true" />
+  <Column Name="FullResponsibility" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="FromAddressCountryId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="PickUpDeliveryFromTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="FromAddressId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FromAddressZipCode" Type="varchar" Size="15">
+  <Column Name="FromPortId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="FromPartnerCardId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FromPortId" Type="varchar" Size="15">
+  <Column Name="FromAddressId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FullResponsibility" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="Notes" Type="nvarchar" Size="2000">
+  <Column Name="FromAddressCity" Type="nvarchar" Size="25">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PickUpDeliveryFromTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
+  <Column Name="FromAddressZipCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
   </Column>
-  <Column Name="PickUpDeliveryNumber" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
+  <Column Name="FromAddressCountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FromAddress" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="PickUpDeliveryToTypeCode" Type="varchar" Size="4">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="PickUpDeliveryTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ShipmentId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ToAddress" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ToAddressCity" Type="nvarchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ToAddressCountryId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ToAddressId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ToAddressZipCode" Type="varchar" Size="15">
+  <Column Name="ToPortId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ToPartnerCardId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ToPortId" Type="varchar" Size="15">
+  <Column Name="ToAddressId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TrailerNumber" Type="varchar" Size="15">
+  <Column Name="ToAddressCity" Type="nvarchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToAddressZipCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToAddressCountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToAddress" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TransportModeCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TruckNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Relation ParentTableName="ShipmentPackages" ParentColumnName="DeliveryId" ReferencedTableName="ShipmentPickUpDeliveries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.ShipmentPickUpDeliveries_DeliveryId" />
-  <Relation ParentTableName="ShipmentPackages" ParentColumnName="EmptyContainerReturnId" ReferencedTableName="ShipmentPickUpDeliveries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.ShipmentPickUpDeliveries_EmptyContainerReturnId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveryPackages" ParentColumnName="ShipmentPickUpDeliveryId" ReferencedTableName="ShipmentPickUpDeliveries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveryPackages_dbo.ShipmentPickUpDeliveries_ShipmentPickUpDeliveryId" />
+  <Relation ForeignKeyColumn="ShipmentId" ReferencedTable="Shipments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CarrierId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="EmptyPickupContainerPartnerId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="EmptyDeliveryContainerPartnerId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="PickUpDeliveryTypeCode" ReferencedTable="PickUpDeliveryTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="PickUpDeliveryFromTypeCode" ReferencedTable="PickUpDeliveryFromToTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FromPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FromPartnerCardId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FromAddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FromAddressCountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="PickUpDeliveryToTypeCode" ReferencedTable="PickUpDeliveryFromToTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ToPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ToPartnerCardId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ToAddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ToAddressCountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="TransportModeCode" ReferencedTable="PickUpDeliveryTransportModes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

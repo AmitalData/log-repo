@@ -21,4 +21,6 @@
   <Column Name="TradeLevyNumber" Type="varchar" Size="10">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber" ReferencedTable="SupplierInvoiceItems" ReferencedColumn="DeclarationId,CounterKey,LineNumber" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="TradeLevyExamptCode" ReferencedTable="TradeLevyExamptTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

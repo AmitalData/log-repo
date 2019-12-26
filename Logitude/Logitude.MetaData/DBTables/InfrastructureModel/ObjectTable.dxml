@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ObjectTables" Schema="dbo" DBType="Main">
-  <Column Name="AllowCustomFields" Type="bit">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="AllowedForComputingPartners" Type="bit">
+  <Column Name="Name" Type="varchar" Size="50">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="AllowedInQueues" Type="bit">
+  <Column Name="IsNewWizard" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="AutoCompleteSearchWindow" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CacheOnClient" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ClientModuleName" Type="varchar" Size="60">
+  <Column Name="NewWizardControlName" Type="varchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CodeField" Type="varchar" Size="15">
+  <Column Name="LookUp1" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CustomFieldsCount" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DBTableName" Type="varchar" Size="100">
+  <Column Name="LookUp2" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DependencyFilter1" Type="varchar" Size="40">
@@ -36,112 +30,118 @@
   <Column Name="DependencyFilter3" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DescriptionTextCodeId" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DisableSearchBox" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DownloadToExcelFeatureCode" Type="varchar" Size="120">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EditableFromAutoCompleteWindow" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableAddFromLOV" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableEditFromLOV" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EnableSecurity" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EntityResource" Type="varbinary" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EntityResourceLastUpdate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HasCounter" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HasCustomFields" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="HasCustomFilter" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="HasCustomValidator" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="HasDocuments" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HasDynamicHeader" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HasFiltersMenu" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HasHelper" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HasMenuButtons" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HasShortTitle" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="HeaderScreenId" Type="varchar" Size="15">
+  <Column Name="KeyPropertyPath" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsAutoComplete" Type="bit">
+  <Column Name="AutoCompleteSearchWindow" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsClosed" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsComposition" Type="bit">
+  <Column Name="HeaderScreenId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CacheOnClient" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsEditable" Type="bit">
+  <Column Name="EditableFromAutoCompleteWindow" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsLookUp" Type="bit">
+  <Column Name="LastUpdateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsMain" Type="bit">
+  <Column Name="HasCounter" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsNewWizard" Type="bit">
+  <Column Name="EnableEditFromLOV" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnableAddFromLOV" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsRestrictable" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="IsMain" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAutoComplete" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SortingByObjectField" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DBTableName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomFieldsCount" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HasCustomFields" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DescriptionTextCodeId" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="IsSaveButtonVisible" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsTabsHidden" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="KeyPropertyPath" Type="varchar" Size="100">
+  <Column Name="MainTipCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="LastUpdateDate" Type="datetime">
+  <Column Name="EnableSecurity" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LookUp1" Type="varchar" Size="40">
+  <Column Name="ObjectTableTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsComposition" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MaxNumberOfCustomFields" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowCustomFields" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HasDynamicHeader" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HasDocuments" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EntityResource" Type="varbinary" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="LookUp2" Type="varchar" Size="40">
+  <Column Name="IsLookUp" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NewButtonTextCodeId" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsEditable" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowedForComputingPartners" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CodeField" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NameField" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="LovDisplayMemberPath" Type="nvarchar" Size="-1">
@@ -150,94 +150,51 @@
   <Column Name="LovDisplayMemberPathLocal" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="MainTipCode" Type="varchar" Size="4">
+  <Column Name="EntityResourceLastUpdate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="MaxNumberOfCustomFields" Type="int">
+  <Column Name="DisableSearchBox" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Name" Type="varchar" Size="50">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="NameField" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NewButtonTextCodeId" Type="varchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NewWizardComponentPath" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NewWizardControlName" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ObjectTableTypeCode" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+  <Column Name="ClientModuleName" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ServerModuleName" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SortingByObjectField" Type="varchar" Size="100">
+  <Column Name="NewWizardComponentPath" Type="varchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SplitComponentPath" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
+  <Column Name="HasHelper" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="HasShortTitle" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HasMenuButtons" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HasFiltersMenu" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="UpdateKey" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ObjectTableHelperControls" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableHelperControls_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="CommunicationLogs" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ObjectTableLastUpdates" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableLastUpdates_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="DocumentsFilings" ParentColumnName="ChildObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.ObjectTables_ChildObjectTableId" />
-  <Relation ParentTableName="ObjectTableRules" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableRules_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="DocumentsFilings" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ObjectTableTabs" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableTabs_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ObjectFields" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ObjectFields" ParentColumnName="LookUpTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.ObjectTables_LookUpTableId" />
-  <Relation ParentTableName="ObjectFields" ParentColumnName="MultiTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.ObjectTables_MultiTableId" />
-  <Relation ParentTableName="TenantSettings" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TenantSettings_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Queries" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Queries_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="DocumentTypes" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypes_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Features" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Features_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="TraceEvents" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TraceEvents_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="InboundEmails" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InboundEmails_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="EmailAlertSettings" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EmailAlertSettings_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Restrictions" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Restrictions_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="EntityStatus" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EntityStatus_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="EntityLastActivities" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EntityLastActivities_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="EntityLastUpdates" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EntityLastUpdates_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="APInvoiceEntities" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoiceEntities_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="EventTypes" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EventTypes_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="PaymentCheques" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="CustomsClosedTables" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsClosedTables_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="SharedLogisticsUpdates" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedLogisticsUpdates_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ComputingPartnerCodes" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerCodes_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ComputingPartnerTables" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerTables_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ComputingPartnerTranslations" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerTranslations_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Posts" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Posts_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="MenuButtonGroups" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MenuButtonGroups_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="CustomsRequiredFields" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsRequiredFields_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ARInvoiceEntities" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceEntities_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="CustomTables" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomTables_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="QuestionnaireAnswers" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuestionnaireAnswers_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="MenusTables" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MenusTables_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="BusinessProcessQueues" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessProcessQueues_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ContactsUnseenEntities" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactsUnseenEntities_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Tickets" ParentColumnName="EntityType" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.ObjectTables_EntityType" />
-  <Relation ParentTableName="FollowEntities" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowEntities_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="ConversationHeaders" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ConversationHeaders_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="TextCodes" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TextCodes_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Screens" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Screens_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Correspondences" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Correspondences_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Tips" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tips_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Notifications" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Notifications_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="FormCustomFields1" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FormCustomFields1_dbo.ObjectTables_ObjectTableId" />
-  <Relation ParentTableName="Counters" ParentColumnName="ObjectTableId" ReferencedTableName="ObjectTables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Counters_dbo.ObjectTables_ObjectTableId" />
+  <Column Name="DownloadToExcelFeatureCode" Type="varchar" Size="120">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SplitComponentPath" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AllowedInQueues" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTabsHidden" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="HeaderScreenId" ReferencedTable="Screens" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DescriptionTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MainTipCode" ReferencedTable="Tips" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ObjectTableTypeCode" ReferencedTable="ObjectTableTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="NewButtonTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

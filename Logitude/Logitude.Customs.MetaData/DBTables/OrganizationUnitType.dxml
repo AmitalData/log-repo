@@ -6,15 +6,13 @@
   <Column Name="EnglishName" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="LocalName" Type="nvarchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomsCollaterals" ParentColumnName="OrganizationUnitTypeCode" ReferencedTableName="OrganizationUnitTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_Customs.OrganizationUnitTypes_OrganizationUnitTypeCode" />
-  <Relation ParentTableName="Tapags" ParentColumnName="ProfessionUnitTypeCode" ReferencedTableName="OrganizationUnitTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Tapags_Customs.OrganizationUnitTypes_ProfessionUnitTypeCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

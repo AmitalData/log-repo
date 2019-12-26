@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="FollowEntities" Schema="dbo" DBType="Main">
-  <Column Name="CancelledDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EntityId" Type="varchar" Size="15">
@@ -12,16 +15,15 @@
   <Column Name="FollowerUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="IsCancelled" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
+  <Column Name="CancelledDate" Type="datetime">
+    <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FollowerUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

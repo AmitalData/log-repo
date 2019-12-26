@@ -6,6 +6,7 @@ using System.IO;
 using Oracle.DataAccess.Client;
 using System.Linq;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Logitude.DBMigrations.Helpers
 {
@@ -42,6 +43,7 @@ namespace Logitude.DBMigrations.Helpers
         public static GeneratedScript GenerateScriptFromDXMLFiles(string[] DXMLFiles)
         {
             GeneratedScript generatedScript = new GeneratedScript();
+            RelationsScript relationsScript = new RelationsScript();
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -55,13 +57,22 @@ namespace Logitude.DBMigrations.Helpers
 
                 DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable);
 
-                string script = databaseMigrations.GetScript();
+                string tableScript = databaseMigrations.GetScript();
+                string tableRelationsScript = databaseMigrations.GetRelationsScript();
+                //string tableRelationsScript = null;
 
-                if (!String.IsNullOrEmpty(script))
+                if (!String.IsNullOrEmpty(tableScript))
                 {
-                    generatedScript = AppendGeneratedScript(generatedScript, dxmlTable.DBType, script, dxmlFileName);
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.DBType, tableScript, dxmlFileName);
+                }
+
+                if (!String.IsNullOrEmpty(tableRelationsScript))
+                {
+                    relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.DBType, tableRelationsScript);
                 }
             }
+
+            generatedScript = AppendRelationsScriptToGeneratedScript(generatedScript, relationsScript);
 
             AppendToPerformanceData("Generate Scripts From DXML Files", stopwatch);
 
@@ -191,26 +202,26 @@ namespace Logitude.DBMigrations.Helpers
             return connectionString;
         }
 
-        private static GeneratedScript AppendGeneratedScript(GeneratedScript generatedScript, string dbType, string script, string dxmlFileName)
+        private static GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string tableScript, string dxmlFileName)
         {
             if (dbType == "Global")
             {
-                generatedScript.GlobalScript += "/* Generated Script For " + dxmlFileName + " */\n";
-                generatedScript.GlobalScript += script;
+                //generatedScript.GlobalScript += "/* Generated Script For " + dxmlFileName + " */\n";
+                generatedScript.GlobalScript += tableScript;
                 generatedScript.GlobalScript += "\n";
                 return generatedScript;
             }
             else if (dbType == "Main")
             {
-                generatedScript.MainScript += "/* Generated Script For " + dxmlFileName + " */\n";
-                generatedScript.MainScript += script;
+                //generatedScript.MainScript += "/* Generated Script For " + dxmlFileName + " */\n";
+                generatedScript.MainScript += tableScript;
                 generatedScript.MainScript += "\n";
                 return generatedScript;
             }
             else if (dbType == "SystemLogs")
             {
-                generatedScript.SystemLogsScript += "/* Generated Script For " + dxmlFileName + " */\n";
-                generatedScript.SystemLogsScript += script;
+                //generatedScript.SystemLogsScript += "/* Generated Script For " + dxmlFileName + " */\n";
+                generatedScript.SystemLogsScript += tableScript;
                 generatedScript.SystemLogsScript += "\n";
                 return generatedScript;
             }
@@ -218,6 +229,40 @@ namespace Logitude.DBMigrations.Helpers
             {
                 return generatedScript;
             }
+        }
+
+        private static RelationsScript AppendToRelationsScript(RelationsScript relationsScript, string dbType, string tableRelationsScript)
+        {
+            if (dbType == "Global")
+            {
+                relationsScript.GlobalScript += tableRelationsScript;
+                relationsScript.GlobalScript += "\n";
+                return relationsScript;
+            }
+            else if (dbType == "Main")
+            {
+                relationsScript.MainScript += tableRelationsScript;
+                relationsScript.MainScript += "\n";
+                return relationsScript;
+            }
+            else if (dbType == "SystemLogs")
+            {
+                relationsScript.SystemLogsScript += tableRelationsScript;
+                relationsScript.SystemLogsScript += "\n";
+                return relationsScript;
+            }
+            else
+            {
+                return relationsScript;
+            }
+        }
+
+        private static GeneratedScript AppendRelationsScriptToGeneratedScript(GeneratedScript generatedScript, RelationsScript relationsScript)
+        {
+            generatedScript.GlobalScript += relationsScript.GlobalScript;
+            generatedScript.MainScript += relationsScript.MainScript;
+            generatedScript.SystemLogsScript += relationsScript.SystemLogsScript;
+            return generatedScript;
         }
 
         private static DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTable)

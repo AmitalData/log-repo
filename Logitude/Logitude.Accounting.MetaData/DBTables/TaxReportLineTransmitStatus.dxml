@@ -6,15 +6,13 @@
   <Column Name="EnglishName" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="LocalName" Type="nvarchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="TaxReportLines" ParentColumnName="TransmitStatusCode" ReferencedTableName="TaxReportLineTransmitStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TaxReportLines_dbo.TaxReportLineTransmitStatuses_TransmitStatusCode" />
-  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="TaxReportTransmitStatusCode" ReferencedTableName="TaxReportLineTransmitStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.TaxReportLineTransmitStatuses_TaxReportTransmitStatusCode" />
 </Table>

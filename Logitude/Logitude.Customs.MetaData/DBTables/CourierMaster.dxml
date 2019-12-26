@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CourierMasters" Schema="Customs" DBType="Main">
-  <Column Name="AirlineId" Type="varchar" Size="15">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDateTime" Type="datetime">
@@ -9,65 +12,68 @@
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DepartureDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EstimatedArrivalDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FlightNumber" Type="nvarchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GatewayPortCode" Type="varchar" Size="17">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GrossMassMeasure" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HAWB" Type="nvarchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsOpen" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ManifestNumber" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MAWB" Type="nvarchar" Size="35">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MAWBTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="OriginPortCode" Type="varchar" Size="17">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PackageQuantity" Type="int">
+  <Column Name="UpdateDateTime" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="AirlineId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MAWB" Type="nvarchar" Size="35">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HAWB" Type="nvarchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EstimatedArrivalDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GatewayPortCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OriginPortCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsOpen" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MAWBTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ManifestNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PackageQuantity" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GrossMassMeasure" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="ShortHAWB" Type="nvarchar" Size="8">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdateDateTime" Type="datetime">
+  <Column Name="FlightNumber" Type="nvarchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+  <Column Name="DepartureDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="WeightValueCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CourierDeclarations" ParentColumnName="CourierMasterId" ReferencedTableName="CourierMasters" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CourierDeclarations_Customs.CourierMasters_CourierMasterId" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AirlineId" ReferencedTable="CustomsAirlines" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="GatewayPortCode" ReferencedTable="InternationalSites" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="OriginPortCode" ReferencedTable="InternationalSites" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MAWBTypeCode" ReferencedTable="MAWBTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="WeightValueCode" ReferencedTable="FreightPaymentMethods" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

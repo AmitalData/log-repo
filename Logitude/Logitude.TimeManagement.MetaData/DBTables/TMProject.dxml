@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="TMProjects" Schema="dbo" DBType="Main">
-  <Column Name="BlockedForDataEntry" Type="bit">
+  <Column Name="Id" Type="varchar" Size="50">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="BudgetId" Type="varchar" Size="15">
+  <Column Name="Name" Type="nvarchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CategoryId" Type="varchar" Size="15">
+  <Column Name="Description" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OwnerId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ProjectNumber" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
@@ -15,52 +30,44 @@
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CustomerId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DayOffTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Description" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ExcludeFromProrating" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ExternalProjectNumber" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="50">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsInnerProject" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsProrated" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Name" Type="nvarchar" Size="60">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="OwnerId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ProjectNumber" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="UpdateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="IsInnerProject" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BudgetId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CategoryId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsProrated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExternalProjectNumber" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExcludeFromProrating" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DayOffTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BlockedForDataEntry" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="CustomerId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="OwnerId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="BudgetId" ReferencedTable="TMBudgets" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CategoryId" ReferencedTable="TMProjectCategories" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DayOffTypeCode" ReferencedTable="TMDayOffTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

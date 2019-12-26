@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="AirlineStatistics" Schema="dbo" DBType="Main">
-  <Column Name="AirlineCode" Type="varchar" Size="3">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="AirlinePrefix" Type="varchar" Size="4">
+  <Column Name="SourceTenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SourceTenantName" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Allotment" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="AWBNumber" Type="varchar" Size="20">
+  <Column Name="ShipmentLevelCode" Type="varchar" Size="1">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="BookingId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="2">
+  <Column Name="EntityReference" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AWBNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
+  <Column Name="HWBNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ConsigneeName" Type="varchar" Size="70">
-    <Constraints Nullable="true" />
+  <Column Name="AirlineCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="DescriptionOfGoods" Type="varchar" Size="512">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DestinationCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Direct" Type="bit">
+  <Column Name="UpdateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EntitiyCreateDate" Type="datetime">
@@ -45,10 +48,49 @@
   <Column Name="EntityCreatedByUserName" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="EntityReference" Type="varchar" Size="20">
+  <Column Name="MessageType" Type="varchar" Size="3">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="LastSentDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="EntityStatus" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NumberOfPackages" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GrossWeight" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Volume" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VolumeUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OriginCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DestinationCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DescriptionOfGoods" Type="varchar" Size="512">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipperName" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConsigneeName" Type="varchar" Size="70">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Flight1" Type="varchar" Size="15">
@@ -69,82 +111,41 @@
   <Column Name="Flight3Date" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="GrossWeight" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HWBNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LastSentDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MessageType" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MessagingStatus" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NumberOfPackages" Type="int">
+  <Column Name="OnCarriageTo" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="OnCarriageDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OnCarriageTo" Type="varchar" Size="3">
+  <Column Name="PreCarriageFrom" Type="varchar" Size="3">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="OriginCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="PreCarriageDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PreCarriageFrom" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ProductName" Type="varchar" Size="60">
+  <Column Name="Allotment" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AirlinePrefix" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProductName" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="Sender" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ShipmentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ShipmentLevelCode" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ShipperName" Type="varchar" Size="70">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SourceTenant" Type="int">
+  <Column Name="Direct" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SourceTenantName" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Volume" Type="decimal" Precision="18" Scale="2">
+  <Column Name="MessagingStatus" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VolumeUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
+  <Relation ForeignKeyColumn="ShipmentLevelCode" ReferencedTable="ShipmentLevels" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

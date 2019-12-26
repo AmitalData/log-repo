@@ -1,162 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ShipmentPackages" Schema="dbo" DBType="Main">
-  <Column Name="CarrierSeal" Type="varchar" Size="15">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Description" Type="varchar" Size="2000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CeficClass" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ChassisNumber" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ClassNumber" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Color" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CommodityId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CommodityName" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CommodityNumber" Type="varchar" Size="20">
+  <Column Name="PackageTypeId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ContainerNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CountryId" Type="varchar" Size="15">
+  <Column Name="ShipperSeal" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeliveryATA" Type="datetime">
+  <Column Name="CarrierSeal" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeliveryATD" Type="datetime">
+  <Column Name="Tare" Type="float">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeliveryETA" Type="datetime">
+  <Column Name="Quantity" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeliveryETD" Type="datetime">
+  <Column Name="Weight" Type="float">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeliveryFrom" Type="varchar" Size="100">
+  <Column Name="Volume" Type="float">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DeliveryId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DeliveryTo" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DeliveryTransportModeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Description" Type="varchar" Size="2000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ECRTransportModeCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmptyContainerReturnATA" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmptyContainerReturnATD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmptyContainerReturnETA" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmptyContainerReturnETD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmptyContainerReturnFrom" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmptyContainerReturnId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EmptyContainerReturnTo" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EMS" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ETA" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ETD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FlashPoint" Type="varchar" Size="8">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FlashPointTemperatureUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Harmonize" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="HasContainerException" Type="bit">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="Height" Type="float">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IMDGCode" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsDangerous" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsDeliveryFU" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsEmptyContainerReturnFU" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsMultiHarmonize" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="KelmerCode" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastStatusCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastStatusDate" Type="datetime">
+  <Column Name="Width" Type="float">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Length" Type="float">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Make" Type="varchar" Size="100">
+  <Column Name="UnNumber" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="MarinePollutant" Type="bit">
-    <Constraints Nullable="false" />
+  <Column Name="ClassNumber" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Temperature" Type="varchar" Size="8">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Ventilation" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SOC" Type="int">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="MarksAndNumbers" Type="varchar" Size="350">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PackagingGroup" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IMDGCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FlashPoint" Type="varchar" Size="8">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Harmonize" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="MaterialDescription" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="MethodUsed" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Model" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NonActiveContainer" Type="bit">
+  <Column Name="IsDangerous" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Notes" Type="nvarchar" Size="1000">
+  <Column Name="OriginalShipmentPackageId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VolumetricWeight" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommodityId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="NumberOfInsidePackages" Type="int">
@@ -165,31 +96,58 @@
   <Column Name="NumberOfInsidePackagesDetails" Type="varchar" Size="500">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OnCarriageATA" Type="datetime">
+  <Column Name="VGM" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OnCarriageATD" Type="datetime">
+  <Column Name="MethodUsed" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OnCarriageETA" Type="datetime">
+  <Column Name="IsDeliveryFU" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DeliveryId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OnCarriageETD" Type="datetime">
+  <Column Name="DeliveryETD" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OriginalShipmentPackageId" Type="varchar" Size="15">
+  <Column Name="DeliveryATD" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PackageTypeId" Type="varchar" Size="15">
+  <Column Name="DeliveryETA" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PackagingGroup" Type="varchar" Size="10">
+  <Column Name="DeliveryATA" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ProperShippingName" Type="varchar" Size="25">
+  <Column Name="DeliveryFrom" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Quantity" Type="int">
+  <Column Name="DeliveryTo" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsEmptyContainerReturnFU" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EmptyContainerReturnId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmptyContainerReturnETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmptyContainerReturnATD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmptyContainerReturnETA" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmptyContainerReturnATA" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmptyContainerReturnFrom" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmptyContainerReturnTo" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Reference1" Type="varchar" Size="2000">
@@ -204,7 +162,70 @@
   <Column Name="Reference4" Type="varchar" Size="2000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="RegistrationNumber" Type="varchar" Size="100">
+  <Column Name="CommodityNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommodityName" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CeficClass" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="KelmerCode" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EMS" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProperShippingName" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MarinePollutant" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NonActiveContainer" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OnCarriageETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OnCarriageATD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OnCarriageETA" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OnCarriageATA" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastStatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastStatusDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeliveryTransportModeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ECRTransportModeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TemperatureUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FlashPointTemperatureUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsMultiHarmonize" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ETA" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Routing" Type="varchar" Size="20">
@@ -213,56 +234,42 @@
   <Column Name="RoutingIds" Type="varchar" Size="50">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ShipmentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ShipperSeal" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SOC" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tare" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Temperature" Type="varchar" Size="8">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="TemperatureUnitCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UnNumber" Type="varchar" Size="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Ventilation" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="VGM" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Volume" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="VolumetricWeight" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="VoyageTripNumber" Type="varchar" Size="10">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Weight" Type="float">
+  <Column Name="HasContainerException" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Make" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Width" Type="float">
+  <Column Name="Model" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Year" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="InsideShipmentPackages" ParentColumnName="ShipmentPackageId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InsideShipmentPackages_dbo.ShipmentPackages_ShipmentPackageId" />
-  <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="ContainerId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.ShipmentPackages_ContainerId" />
-  <Relation ParentTableName="ShipmentPackageHarmonize" ParentColumnName="PackageId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackageHarmonize_dbo.ShipmentPackages_PackageId" />
-  <Relation ParentTableName="ShipmentPackageItems" ParentColumnName="PackageId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackageItems_dbo.ShipmentPackages_PackageId" />
+  <Column Name="Color" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChassisNumber" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RegistrationNumber" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="PackageTypeId" ReferencedTable="PackageTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ShipmentId" ReferencedTable="Shipments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CommodityId" ReferencedTable="ShipmentCommodities" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DeliveryId" ReferencedTable="ShipmentPickUpDeliveries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="EmptyContainerReturnId" ReferencedTable="ShipmentPickUpDeliveries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="LastStatusCode" ReferencedTable="INTTRAStatuses" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DeliveryTransportModeCode" ReferencedTable="PickUpDeliveryTransportModes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ECRTransportModeCode" ReferencedTable="PickUpDeliveryTransportModes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="TemperatureUnitCode" ReferencedTable="TemperatureUnits" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FlashPointTemperatureUnitCode" ReferencedTable="TemperatureUnits" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

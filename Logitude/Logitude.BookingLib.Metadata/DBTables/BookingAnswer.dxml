@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="BookingAnswers" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="BookingId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
+  </Column>
+  <Column Name="StatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Origin" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Destination" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommunicationLogId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FlightNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="BookingSpaceAllocationCode" Type="varchar" Size="2">
     <Constraints Nullable="false" />
@@ -9,41 +36,14 @@
   <Column Name="CarrierId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CommunicationLogId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column Name="OtherServicesInformation" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="DescriptionOfGoods" Type="varchar" Size="512">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Destination" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ETD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FlightNumber" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="NumberOfPieces" Type="int">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Origin" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="OtherServicesInformation" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="StatusCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="Weight" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
@@ -51,4 +51,9 @@
   <Column Name="WeightUnitCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ForeignKeyColumn="BookingId" ReferencedTable="Bookings" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="StatusCode" ReferencedTable="BookingAnswerStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CommunicationLogId" ReferencedTable="CommunicationLogs" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="BookingSpaceAllocationCode" ReferencedTable="BookingSpaceAllocations" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CarrierId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

@@ -3,16 +3,19 @@
   <Column Name="JournalId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="LedgerTransactionId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Line" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="ReconcileExternalPageLineId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="LedgerTransactionId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReconcileExternalPageLineId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="JournalId" ReferencedTable="Journals" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="LedgerTransactionId" ReferencedTable="LedgerTransactions" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ReconcileExternalPageLineId" ReferencedTable="ReconcileExternalPageLines" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

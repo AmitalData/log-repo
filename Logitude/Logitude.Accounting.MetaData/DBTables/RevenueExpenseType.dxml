@@ -3,14 +3,13 @@
   <Column Name="Code" Type="varchar" Size="1">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="EnglishName" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Inactive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Relation ParentTableName="GLAccounts" ParentColumnName="RevenueExpenseType" ReferencedTableName="RevenueExpenseTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.RevenueExpenseTypes_RevenueExpenseType" />
 </Table>

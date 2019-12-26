@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="QuoteTemplateSections" Schema="dbo" DBType="Main">
-  <Column Name="Description" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IsCancel" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
+  </Column>
+  <Column Name="QuoteTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SectionDocId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="Name" Type="nvarchar" Size="60">
     <Constraints Nullable="false" />
@@ -15,18 +18,16 @@
   <Column Name="Order" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="QuoteTemplateId" Type="varchar" Size="15">
+  <Column Name="Description" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsCancel" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="QuoteTemplateSectionTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SectionDocId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="QuoteTemplateExcludedSections" ParentColumnName="QuoteTemplateSectionId" ReferencedTableName="QuoteTemplateSections" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateExcludedSections_dbo.QuoteTemplateSections_QuoteTemplateSectionId" />
-  <Relation ParentTableName="QuoteTemplateSectionModifications" ParentColumnName="QuoteTemplateSectionId" ReferencedTableName="QuoteTemplateSections" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSectionModifications_dbo.QuoteTemplateSections_QuoteTemplateSectionId" />
+  <Relation ForeignKeyColumn="QuoteTemplateId" ReferencedTable="QuoteTemplates" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="SectionDocId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="QuoteTemplateSectionTypeCode" ReferencedTable="QuoteTemplateSectionTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

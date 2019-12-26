@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="SLAEscalations" Schema="dbo" DBType="Main">
-  <Column Name="EscalaitonTimeInMinutes" Type="int">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="EscalationActionTimeIndicator" Type="varchar" Size="2">
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SLAHeaderId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LineNumber" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EscalationFor" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EscalationActionTimeIndicator" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EscalationTime" Type="int">
@@ -15,17 +24,10 @@
   <Column Name="EscalationTimeUnit" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="EscalaitonTimeInMinutes" Type="int">
+    <Constraints Nullable="true" />
   </Column>
-  <Column Name="LineNumber" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SLAHeaderId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="SLAEscalationRecepients" ParentColumnName="SLAEscalationId" ReferencedTableName="SLAEscalations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SLAEscalationRecepients_dbo.SLAEscalations_SLAEscalationId" />
+  <Relation ForeignKeyColumn="SLAHeaderId" ReferencedTable="SLAHeaders" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="EscalationActionTimeIndicator" ReferencedTable="EscalationActionTimeIndicators" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="EscalationTimeUnit" ReferencedTable="TimeUnits" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

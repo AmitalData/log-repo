@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="JournalStatusTypes" Schema="dbo" DBType="Main">
-  <Column Name="EnglishName" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="JournalStatusID" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="LocalName" Type="nvarchar" Size="50">
     <Constraints Nullable="true" />
@@ -15,5 +12,7 @@
   <Column Name="SearchFields" Type="nvarchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Journals" ParentColumnName="StatusCode" ReferencedTableName="JournalStatusTypes" ReferencedColumnName="JournalStatusID" ForeignKeyConstraintName="FK_dbo.Journals_dbo.JournalStatusTypes_StatusCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

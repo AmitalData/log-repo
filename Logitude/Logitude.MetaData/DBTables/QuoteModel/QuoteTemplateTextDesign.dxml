@@ -1,54 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="QuoteTemplateTextDesigns" Schema="dbo" DBType="Main">
-  <Column Name="Alignment" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="BackgroundColor" Type="varchar" Size="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FontFamily" Type="varchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FontSize" Type="float">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FontWeight" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Italic" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="FontSize" Type="float">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="TextColor" Type="varchar" Size="10">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="FontFamily" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BackgroundColor" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FontWeight" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Italic" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="UnDerLine" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageHeaderArea2FreeTextDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_PageHeaderArea2FreeTextDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageHeaderArea3FreeTextDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_PageHeaderArea3FreeTextDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PricingContainsersTitleDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_PricingContainsersTitleDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PricingPackagesTitleDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_PricingPackagesTitleDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="GroupByContainsersLabelDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_GroupByContainsersLabelDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="GroupByContainsersValueDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_GroupByContainsersValueDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="TotalsContainsersLabelDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_TotalsContainsersLabelDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="TotalsContainsersValueDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_TotalsContainsersValueDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="GroupByPackagesLabelDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_GroupByPackagesLabelDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="GroupByPackagesValueDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_GroupByPackagesValueDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="TotalsPackagesLabelDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_TotalsPackagesLabelDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="TotalsPackagesValueDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_TotalsPackagesValueDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="TotalPerContainersAdditionalTextDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_TotalPerContainersAdditionalTextDesignId" />
-  <Relation ParentTableName="QuoteTemplateTableDesigns" ParentColumnName="GroupByDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateTableDesigns_dbo.QuoteTemplateTextDesigns_GroupByDesignId" />
-  <Relation ParentTableName="QuoteTemplateTableDesigns" ParentColumnName="HeaderDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateTableDesigns_dbo.QuoteTemplateTextDesigns_HeaderDesignId" />
-  <Relation ParentTableName="QuoteTemplateTableDesigns" ParentColumnName="LinesDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateTableDesigns_dbo.QuoteTemplateTextDesigns_LinesDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="DetailsTitleDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_DetailsTitleDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageFooterArea1FreeTextDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_PageFooterArea1FreeTextDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageFooterArea2FreeTextDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_PageFooterArea2FreeTextDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageFooterArea3FreeTextDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_PageFooterArea3FreeTextDesignId" />
-  <Relation ParentTableName="QuoteTemplateSettings" ParentColumnName="PageHeaderArea1FreeTextDesignId" ReferencedTableName="QuoteTemplateTextDesigns" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSettings_dbo.QuoteTemplateTextDesigns_PageHeaderArea1FreeTextDesignId" />
+  <Column Name="Alignment" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

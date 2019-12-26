@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="AccountingSystemsSyncStatuses" Schema="dbo" DBType="Main">
-  <Column Name="ExternalCodesLastUpdate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="LastError" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
   </Column>
-  <Column Name="LastErrorDate" Type="datetime">
+  <Column Name="ExternalCodesLastUpdate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="LastRequestDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="LastError" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="SyncInterval" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="LastErrorDate" Type="datetime">
+    <Constraints Nullable="true" />
   </Column>
 </Table>

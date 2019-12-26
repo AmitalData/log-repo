@@ -3,16 +3,17 @@
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="NumberOfColumns" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="NumberOfRows" Type="int">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ScreenId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="NumberOfRows" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="NumberOfColumns" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="ScreenId" ReferencedTable="Screens" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

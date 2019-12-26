@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="SATInterfaceSettings" Schema="dbo" DBType="Main">
+  <Column Name="Tenant" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="SATInterfaceCode" Type="varchar" Size="10">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Token" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="ActivationDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="MetodoPagoCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SATInterfaceCode" Type="varchar" Size="10">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="Token" Type="nvarchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
+  <Relation ForeignKeyColumn="SATInterfaceCode" ReferencedTable="SATInterfaces" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MetodoPagoCode" ReferencedTable="MetodoPagos" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

@@ -6,14 +6,13 @@
   <Column Name="EnglishName" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="LocalName" Type="nvarchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="300">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ReconcileExternalPages" ParentColumnName="EntryTypeCode" ReferencedTableName="BankPageEntryTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ReconcileExternalPages_dbo.BankPageEntryTypes_EntryTypeCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

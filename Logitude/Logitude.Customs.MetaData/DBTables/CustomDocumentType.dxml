@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomDocumentTypes" Schema="Customs" DBType="Main">
-  <Column Name="AutoSetOriginalDocumentTrue" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Code" Type="varchar" Size="7">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="EnglishName" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="LocalName" Type="nvarchar" Size="120">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PointerLevel" Type="varchar" Size="1">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomDocumentTypeMetaData" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomDocumentTypeMetaData_Customs.CustomDocumentTypes_DocumentTypeCode" />
-  <Relation ParentTableName="DocumentTypeCustomsDatas" ParentColumnName="CustomsDoucumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.DocumentTypeCustomsDatas_Customs.CustomDocumentTypes_CustomsDoucumentTypeCode" />
-  <Relation ParentTableName="CustomsDocuments" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocuments_Customs.CustomDocumentTypes_DocumentTypeCode" />
-  <Relation ParentTableName="CustomsDocumentsTickets" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsTickets_Customs.CustomDocumentTypes_DocumentTypeCode" />
-  <Relation ParentTableName="CustomsDocumentsDefinitions" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsDefinitions_Customs.CustomDocumentTypes_DocumentTypeCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PointerLevel" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AutoSetOriginalDocumentTrue" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="PointerLevel" ReferencedTable="PointerLevels" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

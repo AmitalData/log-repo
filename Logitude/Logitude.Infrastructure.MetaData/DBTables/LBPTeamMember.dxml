@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="LBPTeamMembers" Schema="dbo" DBType="Main">
-  <Column Name="AddDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AddedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="MemberTeamId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="MemberUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
@@ -18,8 +12,17 @@
   <Column Name="TeamId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="AddDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="TeamMemberBusinessRoles" ParentColumnName="TeamMemberId" ReferencedTableName="LBPTeamMembers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TeamMemberBusinessRoles_dbo.LBPTeamMembers_TeamMemberId" />
+  <Column Name="AddedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MemberTeamId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="MemberUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="TeamId" ReferencedTable="Teams" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AddedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MemberTeamId" ReferencedTable="Teams" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

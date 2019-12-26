@@ -6,14 +6,13 @@
   <Column Name="EnglishName" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="LocalName" Type="nvarchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvioceItemCertificats" ParentColumnName="CertificateExemptionTypeCode" ReferencedTableName="CertificateExemptionTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvioceItemCertificats_Customs.CertificateExemptionTypes_CertificateExemptionTypeCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

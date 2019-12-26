@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomerSalesmanByProducts" Schema="dbo" DBType="Main">
-  <Column Name="CustomerId" Type="varchar" Size="15">
+  <Column Name="ProductTypeCode" Type="varchar" Size="2">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ProductTypeCode" Type="varchar" Size="2">
+  <Column Name="CustomerId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="SalesmanUserId" Type="varchar" Size="15">
@@ -12,4 +12,5 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ForeignKeyColumn="SalesmanUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

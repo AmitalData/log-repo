@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Tickets" Schema="dbo" DBType="Main">
-  <Column Name="Bcc" Type="varchar" Size="500">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="BusinessUnitId" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CCs" Type="varchar" Size="4000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Closewithoutnotifying" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ClosureDescription" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CompanyId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ContactId" Type="varchar" Size="15">
+  <Column Name="TicketNumber" Type="varchar" Size="20">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
@@ -27,22 +15,43 @@
   <Column Name="CreatedByContactId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CreatedbyType" Type="varchar" Size="3">
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CompanyId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CustomerContactId" Type="varchar" Size="15">
+  <Column Name="ContactId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MainClassificationId" Type="varchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OwnerId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="EmployeeGroupId" Type="varchar" Size="15">
+  <Column Name="StageId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SeverityId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Subject" Type="nvarchar" Size="256">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TicketTypeId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="EntityType" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsClosed" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="Field1" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Field10" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Field2" Type="nvarchar" Size="250">
@@ -69,73 +78,106 @@
   <Column Name="Field9" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FirstCloseDate" Type="datetime">
+  <Column Name="Field10" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FirstResolveDate" Type="datetime">
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FirstResponseDue" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FirstResponseTime" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FullResolvedTime" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="GuidId" Type="varchar" Size="22">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="InternalMode" Type="bit">
+  <Column Name="TicketDescription" Type="nvarchar" Size="-1">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="InternalUsers" Type="varchar" Size="4000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsCancelled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsClosed" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LastCloseDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastCompletedActivityDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastCompletedActivitySubject" Type="nvarchar" Size="255">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LastCompletedActivityTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MainClassificationId" Type="varchar" Size="50">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="NextActivityDate" Type="datetime">
+  <Column Name="NextActivityTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="NextActivitySubject" Type="nvarchar" Size="255">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="NextActivityTypeCode" Type="varchar" Size="2">
+  <Column Name="NextActivityDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OpenDate" Type="datetime">
+  <Column Name="LastCompletedActivityTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastCompletedActivitySubject" Type="nvarchar" Size="255">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastCompletedActivityDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CCs" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Bcc" Type="varchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BusinessUnitId" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmployeeGroupId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FirstResponseTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FirstResponseDue" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FullResolvedTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ResolveWithinDue" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GuidId" Type="varchar" Size="22">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="OpenEscalation" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="InternalUsers" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ClosureDescription" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Closewithoutnotifying" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SecondaryClassificationId" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FirstResolveDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Source" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedbyType" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FirstCloseDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastCloseDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpenDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="OpenPeriodMinutes" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OwnerId" Type="varchar" Size="15">
+  <Column Name="InternalMode" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerContactId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="QuoteId" Type="varchar" Size="15">
@@ -144,53 +186,28 @@
   <Column Name="QuoteNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ResolveWithinDue" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SecondaryClassificationId" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SeverityId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ShipmentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ShipmentNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="SLAId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Source" Type="varchar" Size="3">
+  <Column Name="EntityType" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="StageId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Subject" Type="nvarchar" Size="256">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="TicketDescription" Type="nvarchar" Size="-1">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="TicketNumber" Type="varchar" Size="20">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="TicketTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="Activities" ParentColumnName="TicketId" ReferencedTableName="Tickets" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Tickets_TicketId" />
+  <Relation ForeignKeyColumn="CreatedByContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CompanyId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="MainClassificationId" ReferencedTable="TicketClassifications" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="OwnerId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="StageId" ReferencedTable="TicketStages" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="SeverityId" ReferencedTable="TicketSeverities" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="TicketTypeId" ReferencedTable="TicketTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="NextActivityTypeCode" ReferencedTable="ActivityTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="LastCompletedActivityTypeCode" ReferencedTable="ActivityTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="BusinessUnitId" ReferencedTable="BusinessUnits" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="EmployeeGroupId" ReferencedTable="EmployeeGroups" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="SecondaryClassificationId" ReferencedTable="TicketClassifications" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="Source" ReferencedTable="TicketSources" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CreatedbyType" ReferencedTable="TicketCreatedByTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CustomerContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="EntityType" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

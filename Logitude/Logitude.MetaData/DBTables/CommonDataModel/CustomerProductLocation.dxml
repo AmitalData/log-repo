@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CustomerProductLocations" Schema="dbo" DBType="Main">
-  <Column Name="CommitmentChargeableWeight" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CommitmentNumberOfShipments" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CommitmentRevenue" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CommitmentTEU" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CountryId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="CustomerId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="PotentialChargeableWeight" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PotentialNumberOfShipments" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PotentialRevenue" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PotentialTEU" Type="decimal" Precision="18" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="ProductTypeCode" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CountryId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="PotentialTEU" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PotentialNumberOfShipments" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PotentialChargeableWeight" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommitmentTEU" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommitmentNumberOfShipments" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommitmentChargeableWeight" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PotentialRevenue" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommitmentRevenue" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CustomerId" ReferencedTable="Customers" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ProductTypeCode" ReferencedTable="ProductTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

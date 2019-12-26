@@ -3,14 +3,13 @@
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Name" Type="nvarchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="TaxReportLines" ParentColumnName="LineTypeCode" ReferencedTableName="TaxReportLineTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TaxReportLines_dbo.TaxReportLineTypes_LineTypeCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

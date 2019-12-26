@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="InterfaceManagements" Schema="Customs" DBType="Main">
-  <Column Name="Active" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AllowRestore" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Code" Type="varchar" Size="32">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="DcaPrefixName" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Description" Type="nvarchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InOut" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefaultSendOptionsCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefaultPriority" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AllowRestore" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Active" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SendAsDual" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ResponseInterfaceCode" Type="varchar" Size="32">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SignatureTypeCode" Type="varchar" Size="1">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DcaPrefixName2" Type="varchar" Size="256">
@@ -21,30 +45,6 @@
   <Column Name="DcaPrefixName4" Type="varchar" Size="256">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DefaultPriority" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DefaultSendOptionsCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Description" Type="nvarchar" Size="256">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InOut" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ResponseInterfaceCode" Type="varchar" Size="32">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SendAsDual" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SignatureTypeCode" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Relation ParentTableName="InterfaceTenantDefinitions" ParentColumnName="Code" ReferencedTableName="InterfaceManagements" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.InterfaceTenantDefinitions_Customs.InterfaceManagements_Code" />
-  <Relation ParentTableName="CustomsRequestsSheets" ParentColumnName="InterfaceTypeCode" ReferencedTableName="InterfaceManagements" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsRequestsSheets_Customs.InterfaceManagements_InterfaceTypeCode" />
+  <Relation ForeignKeyColumn="DefaultSendOptionsCode" ReferencedTable="InterfaceSendOptions" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="SignatureTypeCode" ReferencedTable="SignatureTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

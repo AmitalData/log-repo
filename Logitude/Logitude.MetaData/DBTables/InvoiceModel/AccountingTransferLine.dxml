@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="AccountingTransferLines" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EntityId" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="AccountingTransferHeaderId" Type="nvarchar" Size="128">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="EntityId" Type="nvarchar" Size="-1">
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="EntityReference" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="nvarchar" Size="128">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="AccountingTransferHeaderId" ReferencedTable="AccountingTransferHeaders" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="QuestionnaireAnswerLines" Schema="dbo" DBType="Main">
-  <Column Name="AnswerValue" Type="nvarchar" Size="1000">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="QuestionnaireAnswerId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -12,4 +9,8 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="AnswerValue" Type="nvarchar" Size="1000">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="QuestionnaireAnswerId" ReferencedTable="QuestionnaireAnswers" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

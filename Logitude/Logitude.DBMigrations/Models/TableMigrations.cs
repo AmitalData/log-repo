@@ -10,6 +10,7 @@ namespace Logitude.DBMigrations.Models
     {
         public string DxmlTableName { get; set; }
         public string DxmlTableShortName { get; set; }
+        public string DxmlTableSchema { get; set; }
         public string CurrentTableName { get; set; }
         public List<ColumnMigration> ColumnsMigrations { get; set; }
     }
