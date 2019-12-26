@@ -513,14 +513,26 @@ export class HomeComponent implements OnDestroy{
                                 this.CurrentSession = myCA23EditTab.SessionComponent;
                                 cmpRef.instance.RunComponent();
                                 AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
-
+                                this.ProductMessage();
                             });
                         }
                     }
                     else {
                         AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
+                        this.ProductMessage();
                     }
                 }, 500);
+        }
+    }
+    ProductMessage() {
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductMessage)) {
+
+            let myMessageWindow = new MessageWindow();
+            myMessageWindow.ShowErrorIcon = true;
+            myMessageWindow.Title = "Please Call Amital";
+            myMessageWindow.Show(ObjectsLocator.GlobalSetting.ProductMessage);
+            
+
         }
     }
     public get IsAmitalBackButtonDisable() {

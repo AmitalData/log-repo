@@ -403,6 +403,8 @@ namespace WebFreight.Web
                             }
                             LogitudeSettings.ProductMessage = @"הגרסה המיגורית תקינה 
 אולם לא בוצעו עדכונים מינורים  ";
+                            
+
                         }
                     }
 
@@ -412,6 +414,10 @@ namespace WebFreight.Web
             {
 
                 Logger.LogMe("ProductInfoSetting:" + e.ToString(), true);
+            }
+            finally
+            {
+                Logger.LogMe(LogitudeSettings.ProductMessage, false, "ProductMessage");
             }
 
         }
