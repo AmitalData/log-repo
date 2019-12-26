@@ -147,6 +147,7 @@ namespace Logitude.Update.PatchDistribution
                     );
                 UpdateDBEnabled = false;
                 Logger.LogMe($"End!!!!!!!!!!!!!!!!!", false);
+                MessageBox.Show("Please don't forget to recycle the IIS");
             }
             catch (PatchDistributionException myPatchDistributionException)
             {
