@@ -660,6 +660,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     IsShowAddFromLibraryLink: boolean;
+    IsShowAddReportFromLibraryLink: boolean = false;
     HasExcelExportButton: boolean;
 
     LinkAddDocumentFromLibraryClcik() {
@@ -688,6 +689,21 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
 
+    LinkAddReportFromLibraryClick() {
+        var windowTitle = "New BI Report";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 750;
+        logWindow.Height = 600;
+        logWindow.Title = windowTitle;
+        var windowArgs: any = {};
+        windowArgs.IsCopyFromLibrary = true;
+        windowArgs.FolderId = this.listArgs.BIReportFolderId;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+        logWindow.ComponentLoaded.subscribe(s => {
+            //
+        });
+    }
 
 
     IsShowAddQuoteTemplateFromLibraryLink: boolean;
@@ -761,6 +777,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             else {
                 this.IsShowAddFromLibraryLink = false;
+            }
+
+        }
+
+        if (this.ObjectTable.Name == "BIReport") {
+            if (FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopyFromLibrary")) {
+                if (SessionLocator.Tenant != 0) {
+                    this.IsShowAddReportFromLibraryLink = true;
+                }
             }
 
         }

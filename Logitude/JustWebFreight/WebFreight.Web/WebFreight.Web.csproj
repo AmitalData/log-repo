@@ -1686,7 +1686,7 @@
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BatchServicesDefinitionController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BluesnapContractController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\WebhookKeysController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Extended\BIReportController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\BIReportExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BusinessRoleExtendedViewsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CacheLogController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CustomPickListExtendedController.cs" />
