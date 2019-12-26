@@ -800,7 +800,18 @@ export class HomeComponent implements OnDestroy{
                                     });
                                 }
 
-                                else{
+                                else {
+                                    if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductMessage)) {
+                                        cmpRef.instance.SessionInitialize.subscribe(s => {
+                                            let myMessageWindow = new MessageWindow();
+                                            myMessageWindow.ShowErrorIcon = true;
+                                            myMessageWindow.Title = "Please Call Amital";
+                                            myMessageWindow.Show(ObjectsLocator.GlobalSetting.ProductMessage);
+
+                                        });
+
+                                    }
+
                                     this.AccountAndTenantExpiration();
                                 }
                             }                            

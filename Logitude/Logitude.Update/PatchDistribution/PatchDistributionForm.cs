@@ -95,7 +95,7 @@ namespace Logitude.Update.PatchDistribution
             switch (_PatchDistributionMatchModel.MajorVersionMatch)
             {
                 case PatchDistributionMatch.MajorVersionMatchEnum.OldDB:
-                    var patchDistributionList_RealyOldDB = _PatchDistributionManager.GetPatchDistribution_Waiting2Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+                    var patchDistributionList_RealyOldDB = _PatchDistributionManager.GetPatchDistribution_MinorNotClosed(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
 
                     if (patchDistributionList_RealyOldDB.Count == 0)
                     {
@@ -110,7 +110,7 @@ namespace Logitude.Update.PatchDistribution
                     break;
                 case PatchDistributionMatch.MajorVersionMatchEnum.OK_DBAndAssemblyREqual:
                     
-                    var patchDistributionList = _PatchDistributionManager.GetPatchDistribution_Waiting2Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+                    var patchDistributionList = _PatchDistributionManager.GetPatchDistribution_MinorNotClosed(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
                     if (patchDistributionList.Count == 0)
                     {
                         MessageBox.Show("Nothing TODO- OK_DB And Assembly R Equal  MajorVersion+MinorVersion ");
@@ -139,8 +139,14 @@ namespace Logitude.Update.PatchDistribution
         {
             try
             {
-                _PatchDistributionManager.Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+                _PatchDistributionManager.Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion,
+                    (mess)=>
+                {
+                    MessageBox.Show(mess);
+                }
+                    );
                 UpdateDBEnabled = false;
+                Logger.LogMe($"End!!!!!!!!!!!!!!!!!", false);
             }
             catch (PatchDistributionException myPatchDistributionException)
             {
