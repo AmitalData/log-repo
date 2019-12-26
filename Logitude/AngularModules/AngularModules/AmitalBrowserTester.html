@@ -299,8 +299,18 @@
             data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"yaronc@amital.co.il","Id":"1-7","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"19082513","Token":"bwnYB2wyOTKm42paYruaHbGmP3F/X9N5PaE=","UserId":"1-7","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"Tu+r0a4Acpmf73AeGN+tzOUmWFsZ3Op1NGE=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2019-08-25T15:16:09.328293","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"yaronc@amital.co.il","Roles":null}';
             data.AmitalBrowserInUse = true;
 
+
+            
+            data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1-10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"57.1-Prod (1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1-10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"19122610","Token":"9D966087-8254-460F-8329-A979B0391A6B","UserId":"1-10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":{"$ref":"2"},"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"q7mzO+6xQQ/Idg2RdCz00e5q5Iw5f1mE17g=","NumberOfRetries":0,"SessionTimeout":0.0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2019-12-26T11:21:47.0034123","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}';
+
+            data.Token= "l3xu30OADQ8H5JdYiH6CrF+Sl8KzPxIIN88=";
+            data.AmitalBrowserInUse = true;
+
             //HOWTO - LOGIN http://localhost:9996/
             // THEN DEVTOOLS >>SESSION STORAGE >> KEY >> USERDATA
+            //ADD AmitalBrowserInUse":true,
+
+            var userData = JSON.parse(data);// 4 TESTER
 
             window.sessionStorage.setItem("userdata", data);
             let myIframe = document.getElementById("myFrame");
