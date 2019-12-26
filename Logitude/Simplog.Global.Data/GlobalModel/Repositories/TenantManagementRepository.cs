@@ -169,7 +169,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public TenantManagement GetSingleTenantManagementPMByListOfEmails(List<string> emails)
         {
-
             TenantManagement myTenant = new TenantManagement();
             List<TenantManagement> tenants = new List<TenantManagement>();
             if (emails.Count > 0)
@@ -179,7 +178,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                             select a).ToList();
 
                 emails = emails.Select(a=>a.Split('@')[1].Trim()).ToList();
-                myTenant = tenants.Where(a=>a.SupportEmail != null && emails.Contains(a.SupportEmail.Split('@')[1].Trim())).FirstOrDefault();
+                myTenant = tenants.Where(a=>a.SupportDomain != null && emails.Contains(a.SupportDomain)).FirstOrDefault();
             }
 
             return myTenant;

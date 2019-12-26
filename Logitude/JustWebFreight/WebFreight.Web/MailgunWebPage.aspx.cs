@@ -151,7 +151,7 @@ namespace WebFreight.Web
                 var reader = new StreamReader(myMemoryStream);
                 string content = reader.ReadToEnd();
                 byte[] bytearray = myMemoryStream.ToArray();
-                int tenant = helper.GetTenant(emailDetails.RecipientEmail).Id;
+                int tenant = helper.GetTenantBySupportEmail(emailDetails.RecipientEmail).Id;
                 AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
                 AnalyzeQueue analyzeQueue = new AnalyzeQueue()
                 {

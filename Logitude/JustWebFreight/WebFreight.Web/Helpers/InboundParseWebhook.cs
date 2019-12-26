@@ -81,7 +81,7 @@ namespace WebFreight.Web.Helpers
             try
             {
                 helper = new InboundEmailGeneralHelperMethods(null);
-                TenantManagement tenantManagement = helper.GetTenant(emailDetails.RecipientEmail);
+                TenantManagement tenantManagement = helper.GetTenantBySupportEmail(emailDetails.RecipientEmail);
 
                 if (tenantManagement != null)
                 {
