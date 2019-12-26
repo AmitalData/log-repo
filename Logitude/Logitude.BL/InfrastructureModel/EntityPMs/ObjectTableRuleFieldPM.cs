@@ -17,6 +17,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableRuleCode { get; set; }
         public string ObjectTableRuleTypeCode { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+        public string ObjectFieldCode { get; set; }
 
 
     }
