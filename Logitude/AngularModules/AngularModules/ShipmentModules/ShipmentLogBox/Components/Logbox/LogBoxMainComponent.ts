@@ -84,9 +84,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             if ($event.Name == "ReloadShipments") {
                 this.SelectedFilter = "My Shipments";
                 this.LoadImporterShipments();
+                console.log("5");
             }
             if ($event.Name == "CustomReloadShipments") {
                 this.LoadImporterShipments();
+                console.log("6");
             }
             if ($event.Name == "ReloadPublicShipments") {
                 //this.LoadImporterShipments();
@@ -165,7 +167,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 }
             }
         }
-        this.setUserLastSettings();
+        //this.setUserLastSettings();
         
 
     }
@@ -212,6 +214,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.mySelectedTransportFilter = newValue;
 
             this.LoadImporterShipments();
+            console.log("2");
             this.SaveUserLastSettings("SelectedTransportFilter", this.mySelectedTransportFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Transportation type filter changed");
         }
@@ -223,6 +226,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.mySelectedDirectionFilter = newValue;
 
             this.LoadImporterShipments();
+            console.log("3");
             this.SaveUserLastSettings("SelectedDirectionFilter", this.mySelectedDirectionFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Direction filter changed");
         }
@@ -243,6 +247,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             //this.LoadQueriesCounts();
             //this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: this.SelectedTransportFilter == "All" ? true : false });
             this.LoadImporterShipments();
+            console.log("4");
             this.SaveUserLastSettings("SelectedArchiveFilter", this.mySelectedArchiveFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Open/Close filter changed");
            
@@ -287,16 +292,17 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 var myTransportFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedTransportFilter');
 
                 if (myArchiveFilter.length > 0) {
-                    this.SelectedArchiveFilter = myArchiveFilter[0].FilterValue;
+                    this.mySelectedArchiveFilter = myArchiveFilter[0].FilterValue;
                 }
                 if (myDirectionFilter.length > 0) {
-                    this.SelectedDirectionFilter = myDirectionFilter[0].FilterValue;
+                    this.mySelectedDirectionFilter = myDirectionFilter[0].FilterValue;
                 }
                 if (myTransportFilter.length > 0) {
-                    this.SelectedTransportFilter = myTransportFilter[0].FilterValue;
+                    this.mySelectedTransportFilter = myTransportFilter[0].FilterValue;
                 } 
             }
             this.LoadImporterShipments();
+            //this.LoadImporterShipments();
         });
 
     }
@@ -581,6 +587,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.OnImporterShipmentsFilterChanged.emit({ IsRecentSelected: false, IsRequestedSelected: false });
         }
         this.LoadImporterShipments();
+        console.log("7");
     }
     SelectedRow: any;
     SelectedRowIndex: any;
@@ -596,6 +603,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private LoadImporterShipments() {
+        console.log("LoadImporterShipments");
+        
         this.SelectedRow = null;
         this.ShipmentSelectedEvent.emit(this.SelectedRow);
         this.BuildColumns();
@@ -739,7 +748,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
     GridAfterViewInitCompleted($event) {
-        this.LoadImporterShipments();
+        this.setUserLastSettings();
+        
+        console.log("8");
     }
     timerToken: any;
     RefreshBtnClick() {
@@ -786,8 +797,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
         this.searchFields = temp;
         this.SearchFilter = temp;
-        this.LoadImporterShipments();
-        ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
+        if (this.searchFields != temp) {
+            this.LoadImporterShipments();
+            ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
+        }
         //this.SearchFieldchangeevent.emit(this.searchFields);
         //this.SelectedRow = null;
     }
