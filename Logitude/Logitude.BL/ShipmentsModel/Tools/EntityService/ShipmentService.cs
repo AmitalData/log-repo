@@ -3094,6 +3094,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     else if (entityPM.IsShipmentAdditionalCloudDataChange)
                     {
                         shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
+                        shipmentAdditionalCloudData.ApprovedByUserName = null;
+                        shipmentAdditionalCloudData.DenyReason = null;
+                        shipmentAdditionalCloudData.ApproveDateTime = null;
                         shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                     }
 
