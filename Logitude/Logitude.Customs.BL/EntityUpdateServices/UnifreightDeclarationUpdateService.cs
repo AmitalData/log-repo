@@ -2293,7 +2293,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 list =list.Take(top).ToList();
             }//
-            return string.Join(",", list).TrimEnd(',');
+            return string.Join(",", list).TrimEnd(',').Substring(0,1024);
         }
 
         private Unifreight.BL.EntityPMs.SupplierInvoicePM SetSupplierInvoice(Def.EntityPMs.SupplierInvoicePM decSupplierInvoice)
