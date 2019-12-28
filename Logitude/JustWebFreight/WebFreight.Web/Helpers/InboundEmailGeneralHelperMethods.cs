@@ -196,7 +196,6 @@ namespace WebFreight.Web.Helpers
             emails = this.GetSupportEmail(emails);
             TenantManagement myTenant = new TenantManagement();
             myTenant = tenantManagementRepository.GetSingleTenantManagementPMByListOfEmails(emails);
-
             return myTenant;
         }
 
