@@ -9,25 +9,19 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
     public class P19R03_0004_DeleteQMessWhenDone : PatchDistributionBase
     {
         public P19R03_0004_DeleteQMessWhenDone()
-            :base("שינוי SP queue_setstatus  מחיקת תור שהסתיים", new DateTime(2019, 12, 2))
+            : base("שינוי SP queue_setstatus  מחיקת תור שהסתיים", new DateTime(2019, 12, 2))
         {
 
         }
-        public override List<ScriptDTO> GetDownScripts()
+
+        public override void CreateDownScripts()
         {
             throw new NotImplementedException();
         }
 
-        public override List<ScriptDTO> GetUpScripts()
+        public override void CreateUpScripts()
         {
-            int ScriptCount = 0;
-            return new List<ScriptDTO>()
-            {
-                new ScriptDTO()
-                {
-                    ScriptCounter = ScriptCount++,
-                    SqlScript =
-@"CREATE OR REPLACE PROCEDURE queue_setstatus (
+            this.AddUpSqlScript(@"CREATE OR REPLACE PROCEDURE queue_setstatus (
     v_messageid   IN NUMBER,
     v_statud      IN NUMBER
 ) AS
@@ -77,9 +71,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
             END;
         END IF;
     END IF;
-END;"
-                },
-            };
+END ;");
         }
     }
 }
