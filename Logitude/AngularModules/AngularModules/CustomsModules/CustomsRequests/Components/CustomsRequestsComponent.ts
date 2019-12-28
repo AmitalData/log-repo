@@ -42,7 +42,7 @@ export class CustomsRequestsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+         this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response2 => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((resp => {
                     this._CustomsRequestMenuService = new CustomsRequestMenuService();

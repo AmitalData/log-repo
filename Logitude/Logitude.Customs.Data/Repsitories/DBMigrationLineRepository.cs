@@ -20,8 +20,19 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public DBMigrationLine GetLastExec(string DBMigrationId)
+        {
+            var q =
+            this
+             .GetAll()
+                .Where(r => r.DBMigrationId == DBMigrationId)
+            .OrderByDescending(r => r.CounterKey);
 
-   }
+            var res=q.FirstOrDefault();
+            return res;
+
+        }
+    }
 
 }
    

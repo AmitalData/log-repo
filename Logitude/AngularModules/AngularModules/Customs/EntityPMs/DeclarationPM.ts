@@ -1024,7 +1024,67 @@ export class DeclarationPM {
         }
     }
     //public DecDangersContacts: Array<DecDangersContactPM>= [];
- 
+     private amendmentRequestNumber: string;
+    public get AmendmentRequestNumber() { return this.amendmentRequestNumber; }
+    public set AmendmentRequestNumber(newValue: string) { if (this.amendmentRequestNumber != newValue) { this.amendmentRequestNumber = newValue; this.MarkAsDirty("AmendmentRequestNumber"); } }
+       
+	 
+    private amendmentStatus: string;
+    public get AmendmentStatus() { return this.amendmentStatus; }
+    public set AmendmentStatus(newValue: string) { if (this.amendmentStatus != newValue) { this.amendmentStatus = newValue; this.MarkAsDirty("AmendmentStatus"); } }
+       
+	 
+    private amendmentissueDate: Date;
+    public get AmendmentissueDate() { return this.amendmentissueDate; }
+    public set AmendmentissueDate(newValue: Date) { if (this.amendmentissueDate != newValue) { this.amendmentissueDate = newValue; this.MarkAsDirty("AmendmentissueDate"); } }
+       
+	 
+    private amendmentRemarks: string;
+    public get AmendmentRemarks() { return this.amendmentRemarks; }
+    public set AmendmentRemarks(newValue: string) { if (this.amendmentRemarks != newValue) { this.amendmentRemarks = newValue; this.MarkAsDirty("AmendmentRemarks"); } }
+       
+	 
+    private amendmentDeficitInitiated: boolean;
+    public get AmendmentDeficitInitiated() { return this.amendmentDeficitInitiated; }
+    public set AmendmentDeficitInitiated(newValue: boolean) { if (this.amendmentDeficitInitiated != newValue) { this.amendmentDeficitInitiated = newValue; this.MarkAsDirty("AmendmentDeficitInitiated"); } }
+       
+	 
+    private amendDeficitInitiatedReasTo: string;
+    public get AmendDeficitInitiatedReasTo() { return this.amendDeficitInitiatedReasTo; }
+    public set AmendDeficitInitiatedReasTo(newValue: string) { if (this.amendDeficitInitiatedReasTo != newValue) { this.amendDeficitInitiatedReasTo = newValue; this.MarkAsDirty("AmendDeficitInitiatedReasTo"); } }
+       
+	 
+    private amendmentCorrectedByUserId: string;
+    public get AmendmentCorrectedByUserId() { return this.amendmentCorrectedByUserId; }
+    public set AmendmentCorrectedByUserId(newValue: string) { if (this.amendmentCorrectedByUserId != newValue) { this.amendmentCorrectedByUserId = newValue; this.MarkAsDirty("AmendmentCorrectedByUserId"); } }
+       
+	 
+    private amendmentRejectionReason: string;
+    public get AmendmentRejectionReason() { return this.amendmentRejectionReason; }
+    public set AmendmentRejectionReason(newValue: string) { if (this.amendmentRejectionReason != newValue) { this.amendmentRejectionReason = newValue; this.MarkAsDirty("AmendmentRejectionReason"); } }
+       
+	 
+    private isAmendment: boolean;
+    public get IsAmendment() { return this.isAmendment; }
+    public set IsAmendment(newValue: boolean) { if (this.isAmendment != newValue) { this.isAmendment = newValue; this.MarkAsDirty("IsAmendment"); } }
+       
+	 
+    private amendmentOriginalDeclartation: string;
+    public get AmendmentOriginalDeclartation() { return this.amendmentOriginalDeclartation; }
+    public set AmendmentOriginalDeclartation(newValue: string) { if (this.amendmentOriginalDeclartation != newValue) { this.amendmentOriginalDeclartation = newValue; this.MarkAsDirty("AmendmentOriginalDeclartation"); } }
+       
+	 
+    private amendmentCorrectedByUserName: string;
+    public get AmendmentCorrectedByUserName() { return this.amendmentCorrectedByUserName; }
+    public set AmendmentCorrectedByUserName(newValue: string) { if (this.amendmentCorrectedByUserName != newValue) { this.amendmentCorrectedByUserName = newValue; this.MarkAsDirty("AmendmentCorrectedByUserName"); } }
+       
+	 
+    private amendmentStatusName: string;
+    public get AmendmentStatusName() { return this.amendmentStatusName; }
+    public set AmendmentStatusName(newValue: string) { if (this.amendmentStatusName != newValue) { this.amendmentStatusName = newValue; this.MarkAsDirty("AmendmentStatusName"); } }
+       
+	 
+
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;

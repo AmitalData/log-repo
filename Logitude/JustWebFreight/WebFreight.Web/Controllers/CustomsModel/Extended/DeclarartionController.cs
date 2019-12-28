@@ -48,6 +48,12 @@ using Logitude.Server.Tools.Models;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.RequestParams;
 
+
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.RequestServices;
+using System.Xml;
+
+
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class DeclarartionController : ApiController
@@ -251,13 +257,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+
+
         public HttpResponseMessage PutCopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
         {
-
-
-
-
-
 
             try
             {
@@ -566,5 +569,37 @@ new XElement("FileStreamError",
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-    }
+
+
+
+        public HttpResponseMessage GetDeclarationAmendmentsById(string id)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            string loggedUserEmail = authToken.Email;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            DeclarationList declaration = new DeclarationList();
+            ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+            try {
+                DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
+
+                var declarations=  declarationQuery.GetDeclarationAmendmentsById(tenant , id);
+
+                ServiceResponse response = new ServiceResponse();
+                response.Count = declarations.Count();
+
+                response.Result = declarations;
+                return Request.CreateResponse(HttpStatusCode.OK, response); 
+        }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
 }
+
+    }
+    }

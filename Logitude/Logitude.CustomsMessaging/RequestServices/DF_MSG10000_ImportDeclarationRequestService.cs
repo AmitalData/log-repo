@@ -2270,7 +2270,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //Yuval Chalup 15.11.2016 TASK-24438 --->
 
             var declarationImporter = new DeclarationImporter();
-            declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
+            declarationImporter.ID  = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
 
             string importerAddress=null;
             string importerName = null;

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <PropertyGroup>
@@ -213,8 +213,10 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\VendorExtendedSearchComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
+     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
-    <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.html" />
+    <Content Include="CustomsModules\CustomsListTemplates\Components\DeclarationAmendmentListTemplate.html" />
+     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ConsigmentPackagesDanger\ConsigmentPackagesDangerComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditInterfaceManagementComponent.html" />
@@ -806,6 +808,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\Controller\DeclarationCargoSplitController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ConsigmentPackagesDanger\ConsigmentPackagesDangerComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\AddAttachmentResponseComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\CargoQueryRequestComponent.ts" />
@@ -830,6 +833,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\ModuleCustomsGeneralRequests.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationAmendmentDeclarationListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\AddEditInterfaceManagementComponent.ts" />

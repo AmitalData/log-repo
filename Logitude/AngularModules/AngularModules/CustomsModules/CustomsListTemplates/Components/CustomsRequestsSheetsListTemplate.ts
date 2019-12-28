@@ -82,8 +82,7 @@ export class CustomsRequestsSheetsListTemplate {
     ShowFormatedResponse(RequestComminicationId, InterfaceTypeCode) {
         ///alert("ShowFormatedResponse(id)" + RequestComminicationId);
 
-
-        let customsRequestMenuService = new CustomsRequestMenuService();
+         let customsRequestMenuService = new CustomsRequestMenuService();
         customsRequestMenuService.ShowModalByIdAndIntreface(RequestComminicationId, InterfaceTypeCode, this._CustomsRequestsSheet.RequestDescription);
 
 

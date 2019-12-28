@@ -24,7 +24,7 @@ export class FieldTemplateComponent {
     }
 
     public Run(args: any) {
-        this.Entity = args['Entity'];
+         this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];
         this.ObjectTableName = args['ObjectTableName'];
         this.IsSpotLightTemplate = args['IsSpotLightTemplate'];

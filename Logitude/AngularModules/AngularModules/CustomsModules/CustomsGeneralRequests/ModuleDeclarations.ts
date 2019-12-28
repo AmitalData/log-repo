@@ -1,4 +1,4 @@
-﻿import { CourierBOLQueryComponent } from './Components/CourierBOLQueryComponent';
+import { CourierBOLQueryComponent } from './Components/CourierBOLQueryComponent';
 import { ExchangeRatesQueryComponent } from './Components/ExchangeRatesQueryComponent';
 import { MasterBOLQueryComponent } from './Components/MasterBOLQueryComponent';
 import { CustomItemLegalDemandsQueryComponent } from './Components/CustomItemLegalDemandsQueryComponent';
@@ -18,6 +18,7 @@ import { ClientSearchByIDComponent } from './Components/ClientSearchByIDComponen
 import { CustomerIndicationComponent } from './Components/CustomerIndicationComponent';
 import { RecallClientsForCutoms } from './Components/RecallClientsForCutoms';
 import { MorningMessageComponent } from './Components/MorningMessageComponent';
+import { CopyDeclarationComponent } from './Components/CopyDeclarationComponent';
 
 export const Components =
     [
@@ -41,7 +42,7 @@ export const Components =
         CustomerIndicationComponent,
         RecallClientsForCutoms,
         MorningMessageComponent,
-
+        CopyDeclarationComponent
     ];
 
 export class ModuleDeclarations {
@@ -71,6 +72,7 @@ export class ModuleDeclarations {
             case "CustomerIndicationComponent": { myResult = CustomerIndicationComponent; break; }
             case "RecallClientsForCutoms": { myResult = RecallClientsForCutoms; break; }
             case "MorningMessageComponent": { myResult = MorningMessageComponent; break; }
+            case "CopyDeclarationComponent": { myResult = CopyDeclarationComponent; break; }
 
         }
 

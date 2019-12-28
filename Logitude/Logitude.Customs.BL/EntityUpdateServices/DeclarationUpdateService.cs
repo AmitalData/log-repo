@@ -45,8 +45,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using System.Diagnostics;
-
-namespace Logitude.Customs.BL.EntityUpdateServices
+ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationUpdateService
     {
@@ -164,7 +163,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             entityPM.TaxationDateTime = DateTime.Now.Date;
             
-            entityPM.ExternalDeclarationNumber = entityPM.CustomFileNo + DateTime.Now.Year;
+        if (entityPM.IsAmendment==true)
+                entityPM.ExternalDeclarationNumber = entityPM.CustomFileNo + DateTime.Now.Year;
 
 
             ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
@@ -1367,6 +1367,132 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return;
         }
         //Yuval Chalup 17.12.2015 TASK-18939 --->
+        //Yuval Chalup 17.12.2015 TASK-18939 --->
+
+        public bool CopyDeclaration_test(string fromDeclarationId , int tenant)
+        {
+            List<string> ids = new List<string>();
+            ICustomContext context = MainContext as CustomContext;
+
+            ids.Add(fromDeclarationId);
+
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+            List<DeclarationPM> declarationPMs = declarationQueryService.GetDeclarationsByIds(ids, tenant);
+
+            DeclarationPM fromDeclaration = declarationPMs.Where(d => d.Id == fromDeclarationId).FirstOrDefault();
+
+            DeclarationPM newDeclaration = new DeclarationPM();
+            newDeclaration = fromDeclaration;
+             newDeclaration.ChangeSetOp = ChangeSetOperation.Insert;
+
+            foreach (var consignment in newDeclaration.Consignments)
+            {
+                consignment.ChangeSetOp = ChangeSetOperation.Insert;
+                 foreach (var package in consignment.ConsignmentPackages)
+                {
+                    package.ChangeSetOp = ChangeSetOperation.Insert;
+ 
+                    foreach (var consignmentPackDangers in package.ConsignmentPackDangers)
+                {
+                        consignmentPackDangers.ChangeSetOp = ChangeSetOperation.Insert;
+                 }
+
+    
+                }
+
+           
+            }
+
+
+            foreach (var dangerContact in newDeclaration.DecDangersContacts)
+            {
+                dangerContact.ChangeSetOp = ChangeSetOperation.Insert;
+            }
+
+              newDeclaration.SupplierInvoices = null;
+
+
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+
+            declarationUpdateService.Update(newDeclaration, true);
+
+
+            declarationPMs = declarationQueryService.GetDeclarationsByIds(ids, tenant);
+
+             newDeclaration = declarationPMs.Where(d => d.Id == fromDeclarationId).FirstOrDefault();
+
+             foreach (var invoice in newDeclaration.SupplierInvoices)
+            {
+                invoice.ChangeSetOp = ChangeSetOperation.Insert;
+                foreach (var item in invoice.SupplierInvoiceItems)
+                {
+                    item.ChangeSetOp = ChangeSetOperation.Insert;
+                    foreach (var supplierInvioceItemCertificats in item.SupplierInvioceItemCertificats)
+                    {
+                        supplierInvioceItemCertificats.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+
+                    foreach (var supplierInvoiceItemLevies in item.SupplierInvoiceItemLevies)
+                    {
+                        supplierInvoiceItemLevies.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemModVehicles in item.SupplierInvoiceItemModVehicles)
+                    {
+                        supplierInvoiceItemModVehicles.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemProcesTypes in item.SupplierInvoiceItemProcesTypes)
+                    {
+                        supplierInvoiceItemProcesTypes.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsConDeclars in item.SupplierInvoiceItemsConDeclars)
+                    {
+                        supplierInvoiceItemsConDeclars.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsDescripts in item.SupplierInvoiceItemsDescripts)
+                    {
+                        supplierInvoiceItemsDescripts.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsMods in item.SupplierInvoiceItemsMods)
+                    {
+                        supplierInvoiceItemsMods.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsProdIdents in item.SupplierInvoiceItemsProdIdents)
+                    {
+                        supplierInvoiceItemsProdIdents.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsSerialNums in item.SupplierInvoiceItemsSerialNums)
+                    {
+                        supplierInvoiceItemsSerialNums.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemTaxes in item.SupplierInvoiceItemTaxes)
+                    {
+                        supplierInvoiceItemTaxes.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+
+                    foreach (var supplierInvoiceItemVehicles in item.SupplierInvoiceItemVehicles)
+                    {
+                        supplierInvoiceItemVehicles.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+                }
+            }
+
+            declarationUpdateService.Update(newDeclaration, true);
+
+
+            return true;
+        }
 
         public bool CopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
         {
