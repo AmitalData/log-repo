@@ -653,7 +653,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
                     {
-                        
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("No Available Sign Server, 2715 Request will not be sent !! " + myCustomsRequestsSheetServiceException.Message);
                     }
                     throw;
                 }
