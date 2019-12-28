@@ -2257,6 +2257,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
             _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList(3);
             _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList();
+            if(_CCUFILEMPM.ALLPRATMEHESLIST.Length > 1024) _CCUFILEMPM.ALLPRATMEHESLIST = _CCUFILEMPM.ALLPRATMEHESLIST.Substring(0, 1024);
 
 
             CreateCCUTRANSPVAL();
@@ -2304,7 +2305,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 list = list.Take(top).ToList();
             }//
-            return string.Join(",", list).TrimEnd(',').Substring(0,1024);
+            return string.Join(",", list).TrimEnd(',');
         }
 
         private Unifreight.BL.EntityPMs.SupplierInvoicePM SetSupplierInvoice(Def.EntityPMs.SupplierInvoicePM decSupplierInvoice)
