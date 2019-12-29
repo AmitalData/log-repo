@@ -13,6 +13,7 @@ import { AdditionalServiceListService } from '../../../../Common/Services/Standa
 import { AdditionalServiceList } from '../../../../Common/EntityLists/AdditionalServiceList';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'AddEditOccasionContactComponent',
@@ -33,6 +34,8 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
     private selectedItems: ObservableCollection;
     private selectedItemsCount: number = 0;
     private timerToken: any;
+    private IsSavedAll: boolean = false;
+    private itemsCount;
     constructor() {
         super();
         this.crmService = new CRMDomainService();
@@ -52,6 +55,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             else if (res.Name == "RemoveAll") {
                 this.IsAllChecked = false;
             }
+            this.OnLinesSelected();
         });
     }
 
@@ -64,6 +68,12 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.ListenEvent);
         this.ListenEvent = null
+    }
+
+    OnSetRemoved(event) {
+        if (!AppTool.IsNullOrEmpty(event)) {
+            this.RemovedItems = event;
+        }
     }
 
     SetWindowArgs(entityPM: OccasionPM) {
@@ -136,12 +146,22 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             this.occasionId = value;
         }
     }
-    
-    private isAllChecked: boolean = false;
-    get IsAllChecked() { return this.isAllChecked; }
+
+    get IsAllChecked() { return this.EntityPM.IsAllAdded; }
     set IsAllChecked(value: boolean) {
-        if (this.isAllChecked != value) {
-            this.isAllChecked = value;
+        if (this.EntityPM.IsAllAdded != value) {
+            this.EntityPM.IsAllAdded = value;
+
+        }
+    }
+
+
+    private removedItems: any[] = [];
+    get RemovedItems() { return this.removedItems; }
+    set RemovedItems(value: any[]) {
+        if (this.removedItems != value) {
+            this.removedItems = value;
+
         }
     }
     
@@ -174,7 +194,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
     
     public OkButtonIsEnabled: boolean = false;    
     public OnLinesSelected() {
-        this.OkButtonIsEnabled = this.selectedItemsCount > 0 ? true : false;
+        this.OkButtonIsEnabled = (this.selectedItemsCount > 0 || this.IsAllChecked) ? true : false;
     }
 
     DataSource = {
@@ -313,10 +333,29 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             filters.Filter7Operator = "Equals";
         }
 
-        this.filters = filters;
-        return new Promise((resolve, reject) => { resolve(this.crmService.GetOccasionContactsByFilters(filters)) });
-    }
 
+        if (!this.IsSavedAll) {
+            this.filters = filters;
+            return new Promise((resolve, reject) => { resolve(this.crmService.GetOccasionContactsByFilters(filters)) });
+        }
+
+        else {
+            var ids = this.EntityPM.RemovedOccasionInvitees.map(function (item) {
+                return item['ContactId'];
+            });
+            filters.Filter8Name = "DeletedContactIds";
+            filters.Filter8Value = ids.join(",");
+            filters.Filter9Name = "OccasionIds";
+            filters.Filter9Value = this.EntityPM.Id;
+            this.filters = filters;
+
+            return new Promise((resolve, reject) => {
+                resolve(this.crmService.GetOccasionContactsByFiltersAndUpdate(filters))
+            });
+           
+ 
+        }
+    }
     private searchText: string;
     get SearchText() { return this.searchText; }
     set SearchText(value: string) {
@@ -344,10 +383,14 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
         this.onQueryChangeEvent.emit({ Filters: this.filters, Reload: true });        
     }
 
+    onCountReady(event) {
+        this.itemsCount = event;
+    }
+
     OkButtonClicked() {
         var errors: string[] = [];
-
-        if (this.selectedItemsCount == 0) {
+        var test = this.RemovedItems;
+        if (this.selectedItemsCount <= 0 && !this.IsAllChecked) {
             errors.push("You must select 1 line at least");
         }
 
@@ -360,32 +403,79 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            this.selectedItems.Collection.forEach(item => {
-                var existContact: OccasionInviteePM = this.EntityPM.OccasionInvitees.filter(d => d.ContactId == item.rowData.ContactId)[0];
+            if (!this.IsAllChecked) {
+                this.selectedItems.Collection.forEach(item => {
+                    var existContact: OccasionInviteePM = this.EntityPM.OccasionInvitees.filter(d => d.ContactId == item.rowData.ContactId)[0];
 
-                if (existContact == null) {
-                    var invitee = new OccasionInviteePM(this.EntityPM);
-                    invitee.Tenant = SessionLocator.Tenant;
-                    invitee.AddedByUserId = SessionInfo.LoggedUserId;
-                    invitee.AddedByUserName = SessionInfo.LoggedUserPM.EnglishName;
-                    invitee.AddedDate = DateTool.GetCurrentDateTimeAsUtc();
-                    invitee.ContactId = item.rowData.ContactId;
-                    invitee.ContactName = item.rowData.Name;
-                    invitee.OccasionId = this.EntityPM.Id;
-                    invitee.UpdatedByUserId = SessionInfo.LoggedUserId;
-                    invitee.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
-                    invitee.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-                    invitee.ContactEmail = item.rowData.Email;
-                    invitee.ContactMobile = item.rowData.ContactMobile;
-                    invitee.ContactPhone = item.rowData.ContactPhone;
-                    invitee.ContactPosition = item.rowData.ContactPosition;
-                    invitee.CustomerName = item.rowData.Company;
-                    invitee.ContactTel = item.rowData.ContactTel;
-                    this.EntityPM.AddOccasionInvitee(invitee);
+                    if (existContact == null) {
+                        var invitee = new OccasionInviteePM(this.EntityPM);
+                        invitee.Tenant = SessionLocator.Tenant;
+                        invitee.AddedByUserId = SessionInfo.LoggedUserId;
+                        invitee.AddedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+                        invitee.AddedDate = DateTool.GetCurrentDateTimeAsUtc();
+                        invitee.ContactId = item.rowData.ContactId;
+                        invitee.ContactName = item.rowData.Name;
+                        invitee.OccasionId = this.EntityPM.Id;
+                        invitee.UpdatedByUserId = SessionInfo.LoggedUserId;
+                        invitee.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+                        invitee.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                        invitee.ContactEmail = item.rowData.Email;
+                        invitee.ContactMobile = item.rowData.ContactMobile;
+                        invitee.ContactPhone = item.rowData.ContactPhone;
+                        invitee.ContactPosition = item.rowData.ContactPosition;
+                        invitee.CustomerName = item.rowData.Company;
+                        invitee.ContactTel = item.rowData.ContactTel;
+                        this.EntityPM.AddOccasionInvitee(invitee);
+                    }
+                });
+
+            }
+            else {
+                if ((this.itemsCount - this.RemovedItems.length) > 1000) {
+                    var msg = new MessageWindow();
+                    msg.Show("Selected contacts must be less than 1000");
+                    return;
                 }
-            });
+                this.IsSavedAll = true;
+                this.RemovedItems.forEach(item => {
+                    var existContact: OccasionInviteePM = this.EntityPM.OccasionInvitees.filter(d => d.ContactId == item.ContactId)[0];
 
+                    if (existContact == null) {
+                        var invitee = new OccasionInviteePM(this.EntityPM);
+                        invitee.Tenant = SessionLocator.Tenant;
+                        invitee.AddedByUserId = SessionInfo.LoggedUserId;
+                        invitee.AddedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+                        invitee.AddedDate = DateTool.GetCurrentDateTimeAsUtc();
+                        invitee.ContactId = item.ContactId;
+                        invitee.ContactName = item.Name;
+                        invitee.OccasionId = this.EntityPM.Id;
+                        invitee.UpdatedByUserId = SessionInfo.LoggedUserId;
+                        invitee.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+                        invitee.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                        invitee.ContactEmail = item.Email;
+                        invitee.ContactMobile = item.ContactMobile;
+                        invitee.ContactPhone = item.ContactPhone;
+                        invitee.ContactPosition = item.ContactPosition;
+                        invitee.CustomerName = item.Company;
+                        invitee.ContactTel = item.ContactTel;
+                        this.EntityPM.RemovedOccasionInvitees.push(invitee);
+                    }
+                });
+                this.DataSource = {
+                    pageSize: 20,
+                    rowCount: null,
+                    sortingDir: "Descending",
+                    getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+                        var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+                        return tempo;
+                    },
+                };
+                this.onQueryChangeEvent.emit({ Filters: this.filters, Reload: false });        
+                this.IsSavedAll = false;
+            }
             this.CurrentSession.CloseCurrentWindow();
+
+
         }
     }
 
