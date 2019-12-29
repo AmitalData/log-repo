@@ -28,12 +28,12 @@ export class NewBIReport extends BaseComponent {
     public BIReportExtendedListService : BIReportExtendedListService;
     private CurrentSession = SessionLocator.SelectedSession;
     private OriginalName: string = "";
-    private IsCopy: boolean = false;
-    private IsNewBIReport: boolean = true;
-    private IsTenantZero: boolean = false;
-    private IsOneRowSelected: boolean = false;
-    private HasCopyFeature: boolean = false;
-    private CopyFromTitle: string;
+    public IsCopy: boolean = false;
+    public IsNewBIReport: boolean = true;
+    public IsTenantZero: boolean = false;
+    public IsOneRowSelected: boolean = false;
+    public HasCopyFeature: boolean = false;
+    public CopyFromTitle: string;
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() TenantFieldChangeEvent = new EventEmitter();

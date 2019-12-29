@@ -1847,6 +1847,10 @@
     <Compile Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.Designer.cs">
       <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.cs" />
+    <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.Designer.cs">
+      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
 
 
@@ -3189,6 +3193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.resx">
       <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
