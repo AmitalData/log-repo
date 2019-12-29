@@ -568,22 +568,28 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.ClientId)) return;
 
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.SelectedSession.StopBusyIndicator();
-        var windowArgs: any = {};
-        windowArgs.EntityPM = this.EntityPM;
-        //windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        SessionLocator.SelectedSession.StartBusyIndicator("");
 
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 550;
-        logWindow.Height = 350;
-        logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = true;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
-        logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/General/PassportDetails/PassportDetailsComponent');
+        this.ClaimPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+            var claim = response.Result;
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            if (!AppTool.IsNullOrEmpty(claim)) {
+                var windowArgs: any = {};
+                windowArgs.EntityPM = this.EntityPM;
+                //windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+                var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 550;
+                logWindow.Height = 350;
+                logWindow.Title = windowTitle;
+                logWindow.ShowCloseButton = true;
+                logWindow.WindowArgs = windowArgs;
+                logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+                logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/General/PassportDetails/PassportDetailsComponent');
+            }
+        });
+
     }
 
     SetFieldsDisabled(message: string) {
@@ -597,7 +603,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                 this.IsClientPassportEnabled = false;
                 this.UIProperties.SetEnabled("ClientId", "Customs.Claim", true);
             }
-            this.RefreshEntity(); 
+            //this.RefreshEntity(); 
         }
 
     }
