@@ -460,12 +460,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
 
-                    if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
-                    {
-                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
-                        throw new ApplicationException("Can't update " + fieldLabel);
-                    }
-
                     if (entityPM.DueDate != entityPOCO.DueDate)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.DueDate", entityPM.Tenant);
@@ -478,11 +472,19 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
 
-                    if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
-                    {
-                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
-                        throw new ApplicationException("Can't update " + fieldLabel);
-                    }
+
+                    //if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
+                    //{
+                    //    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
+                    //    throw new ApplicationException("Can't update " + fieldLabel);
+                    //}
+
+                    //if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
+                    //{
+                    //    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
+                    //    throw new ApplicationException("Can't update " + fieldLabel);
+                    //}
+
                 }
             }
         }
