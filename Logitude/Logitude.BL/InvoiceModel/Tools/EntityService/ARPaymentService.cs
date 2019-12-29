@@ -153,7 +153,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             newPayment.ValueDate = _arpaymentPM.ValueDate;
             paymentRepository.Update(newPayment);
             paymentRepository.SubmitChanges();
-
+            CreateInterestTransactionLine(_arpaymentPM);
             GetPaymentForeignFields();
 
             BuildEntitiesNumbers();
@@ -596,26 +596,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //}
         }
         int lineNumber = 0;
-        private void CreateInterestTransactionLine(ARPaymentInvoicePM paymentInvoice)
+        private void CreateInterestTransactionLine(ARPaymentPM payment)
         {
-            DateTime? dateForInterest = entityPM.ValueDate == null ? DateTime.Now : entityPM.ValueDate;
-
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated && payment.BillToPartnerTypeId == "CS")
+            {
+                DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
-                EntityId = paymentInvoice.ARPaymentId,
+                EntityId = payment.Id,
                 OriginalEntityLineNumber = ++lineNumber,
-                LocalAmount = (decimal)paymentInvoice.LocalAmount,
-                ForeignAmount = (decimal?)paymentInvoice.ForeignAmount,
+                LocalAmount = (decimal)payment.AmountInLocalCurrency,
+                ForeignAmount = (decimal?)payment.AmountInPaymentCurrency,
                 InterestValueDate = (DateTime)dateForInterest,
                 Tenant = entityPM.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
+                CurrencyId = payment.PaymentCurrencyId,
             };
             IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
             interestTransactionUpdateService.Create(interestTransaction);
 
-
-
+            }
         }
         private void UpdatePaymentInvoice(ARPaymentInvoicePM item)
         {
@@ -2028,10 +2029,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 paymentPM.PaymentInvoices.Add(payInvPM);
-                if (tenantPOCO != null && tenantPOCO.AccountingActivated && paymentPM.BillToPartnerTypeId=="CS")
-                {
-                    CreateInterestTransactionLine(payInvPM);
-                }
+             
             }
 
 
