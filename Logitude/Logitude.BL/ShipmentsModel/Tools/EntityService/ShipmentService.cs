@@ -1357,32 +1357,34 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             // Ayman: Please don't remove
             IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
             ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
-            Shipment updatedPOCO = updatedEntityRepository.GetSingleShipment(entityPM.Id, entityPM.Tenant);
+            ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+            entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
 
-            if (updatedPOCO != null)
-            {
-                entityPM.OpenPayablesInLocalCurrency = updatedPOCO.OpenPayablesInLocalCurrency;
-                entityPM.OpenPayablesInProfitCurrency = updatedPOCO.OpenPayablesInProfitCurrency;
-                entityPM.AccountedPayablesInLocalCurrency = updatedPOCO.AccountedPayablesInLocalCurrency;
-                entityPM.AccountedPayablesInProfitCurrency = updatedPOCO.AccountedPayablesInProfitCurrency;
-                entityPM.OpenReceivablesInLocalCurrency = updatedPOCO.OpenReceivablesInLocalCurrency;
-                entityPM.OpenReceivablesInProfitCurrency = updatedPOCO.OpenReceivablesInProfitCurrency;
-                entityPM.AccountedReceivablesInLocalCurrency = updatedPOCO.AccountedReceivablesInLocalCurrency;
-                entityPM.AccountedReceivablesInProfitCurrency = updatedPOCO.AccountedReceivablesInProfitCurrency;
-                entityPM.ProfitInLocalCurrency = updatedPOCO.ProfitInLocalCurrency;
-                entityPM.ProfitInProfitCurrency = updatedPOCO.ProfitInProfitCurrency;
-                entityPM.ShipmentPayableStatusCode = updatedPOCO.ShipmentPayableStatusCode;
-                entityPM.ShipmentReceivableStatusCode = updatedPOCO.ShipmentReceivableStatusCode;
-                entityPM.ARInvoiceIssued = updatedPOCO.ARInvoiceIssued;
-                entityPM.CreditNoteIssued = updatedPOCO.CreditNoteIssued;
+            //Shipment updatedPOCO = updatedEntityRepository.GetSingleShipment(entityPM.Id, entityPM.Tenant);
+            //if (updatedPOCO != null)
+            //{
+            //    entityPM.OpenPayablesInLocalCurrency = updatedPOCO.OpenPayablesInLocalCurrency;
+            //    entityPM.OpenPayablesInProfitCurrency = updatedPOCO.OpenPayablesInProfitCurrency;
+            //    entityPM.AccountedPayablesInLocalCurrency = updatedPOCO.AccountedPayablesInLocalCurrency;
+            //    entityPM.AccountedPayablesInProfitCurrency = updatedPOCO.AccountedPayablesInProfitCurrency;
+            //    entityPM.OpenReceivablesInLocalCurrency = updatedPOCO.OpenReceivablesInLocalCurrency;
+            //    entityPM.OpenReceivablesInProfitCurrency = updatedPOCO.OpenReceivablesInProfitCurrency;
+            //    entityPM.AccountedReceivablesInLocalCurrency = updatedPOCO.AccountedReceivablesInLocalCurrency;
+            //    entityPM.AccountedReceivablesInProfitCurrency = updatedPOCO.AccountedReceivablesInProfitCurrency;
+            //    entityPM.ProfitInLocalCurrency = updatedPOCO.ProfitInLocalCurrency;
+            //    entityPM.ProfitInProfitCurrency = updatedPOCO.ProfitInProfitCurrency;
+            //    entityPM.ShipmentPayableStatusCode = updatedPOCO.ShipmentPayableStatusCode;
+            //    entityPM.ShipmentReceivableStatusCode = updatedPOCO.ShipmentReceivableStatusCode;
+            //    entityPM.ARInvoiceIssued = updatedPOCO.ARInvoiceIssued;
+            //    entityPM.CreditNoteIssued = updatedPOCO.CreditNoteIssued;
 
-                entityPM.OperationalDate = updatedPOCO.OperationalDate;
-                entityPM.FinalArrivalDate = updatedPOCO.FinalArrivalDate;
-                entityPM.EstimatedFinalArrivalDate = updatedPOCO.EstimatedFinalArrivalDate;
-                entityPM.ActualFinalArrivalDate = updatedPOCO.ActualFinalArrivalDate;
-                entityPM.RegistryDate = updatedPOCO.RegistryDate;
-                entityPM.FirstARInvoiceApprovalDate = updatedPOCO.FirstARInvoiceApprovalDate;
-            }
+            //    entityPM.OperationalDate = updatedPOCO.OperationalDate;
+            //    entityPM.FinalArrivalDate = updatedPOCO.FinalArrivalDate;
+            //    entityPM.EstimatedFinalArrivalDate = updatedPOCO.EstimatedFinalArrivalDate;
+            //    entityPM.ActualFinalArrivalDate = updatedPOCO.ActualFinalArrivalDate;
+            //    entityPM.RegistryDate = updatedPOCO.RegistryDate;
+            //    entityPM.FirstARInvoiceApprovalDate = updatedPOCO.FirstARInvoiceApprovalDate;
+            //}
 
             if (isReloadingConsoles)
             {
