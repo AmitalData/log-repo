@@ -551,6 +551,25 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return myResult;
         }
 
+        private string GetPriceBreakWeightUnitCodeByCostMeasurementCode(string costMeasurementCode, QuotePM quotePM)
+        {
+            string weightUnitCode = "";
+            switch(costMeasurementCode) {
+            case "GRWT": { weightUnitCode = quotePM.GrossWeightUnitCode; break; }
+            case "CHWT": { weightUnitCode = quotePM.ChargeableWeightUnitCode; break; }
+            case "VOLU": { weightUnitCode = quotePM.VolumeUnitCode; break; }
+            case "BTEU": { weightUnitCode = "TEU"; break; }
+            case "PRVL": { weightUnitCode = "Value of Goods"; break; }
+            case "PRFR": { weightUnitCode = "Freight Value"; break; }
+            case "GWTN": { weightUnitCode = "Ton"; break; }
+            case "QTY": { weightUnitCode = "pieces"; break; }
+            case "CWKG": { weightUnitCode = "KG"; break; }
+            case "GWKG": { weightUnitCode = "KG"; break; }
+            case "VCBM": { weightUnitCode = "CBM"; break; }
+            }
+            return weightUnitCode.ToLower();
+        }
+
         public List<ChartingDataClass> GetQuotesChartData(string code, string ownerId, string businessUnitId, string chartCode, int tenant)
         {
             List<ChartingDataClass> myResult = new List<ChartingDataClass>();
@@ -2191,16 +2210,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                         }
                                     }
                                 }
-
+                                string stepUOM = GetPriceBreakWeightUnitCodeByCostMeasurementCode(item.CostMeasurementCode, entityPM);
                                 if (string.IsNullOrEmpty(myPriceBreaks))
                                 {
-                                    myPriceBreaks += "+" + itemStep.Step + " kg: " + formattedValue;
+                                    myPriceBreaks += "+" + itemStep.Step + " "+stepUOM + ": " + formattedValue;
                                 }
 
                                 else
                                 {
                                     myPriceBreaks += "\r";//Environment.NewLine;
-                                    myPriceBreaks += "+" + itemStep.Step + " kg: " + formattedValue;
+                                    myPriceBreaks += "+" + itemStep.Step + " " + stepUOM + ": " + formattedValue;
                                 }
                                
                             }
