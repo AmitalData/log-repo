@@ -1683,7 +1683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PortsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PortTextCode_0.Id, Code = "Ports",  QueryGroupCode = "PORT", IndexOrder = 0, Tenant = 0, ObjectTableId = PortObjectTable.Id, QuerySection = "Port", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PortFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PortsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PortTextCode_0.Id, NameTextCodeCode = PortTextCode_0.Code, Code = "Ports",  QueryGroupCode = "PORT", IndexOrder = 0, Tenant = 0, ObjectTableId = PortObjectTable.Id, QuerySection = "Port", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PortFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn PortsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id, IndexOrder = 0, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PortObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

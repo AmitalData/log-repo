@@ -823,7 +823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllEmployeeGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EmployeeGroupTextCode_0.Id, Code = "All Employee Groups",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = EmployeeGroupObjectTable.Id, QuerySection = "EmployeeGroup", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = EmployeeGroupFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllEmployeeGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EmployeeGroupTextCode_0.Id, NameTextCodeCode = EmployeeGroupTextCode_0.Code, Code = "All Employee Groups",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = EmployeeGroupObjectTable.Id, QuerySection = "EmployeeGroup", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = EmployeeGroupFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllEmployeeGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id, IndexOrder = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -797,7 +797,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllMoveTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MoveTypeTextCode_0.Id, Code = "All Move Types",  QueryGroupCode = "MTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MoveTypeObjectTable.Id, QuerySection = "MoveType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MoveTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMoveTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MoveTypeTextCode_0.Id, NameTextCodeCode = MoveTypeTextCode_0.Code, Code = "All Move Types",  QueryGroupCode = "MTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MoveTypeObjectTable.Id, QuerySection = "MoveType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MoveTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllMoveTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id, IndexOrder = 0, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MoveTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

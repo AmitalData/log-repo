@@ -24,6 +24,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.EditWizardName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Perspective).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.EditWizardComponentPath).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.NameTextCodeCode).HasMaxLength(100).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Queries");
@@ -41,6 +42,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsAddNewEntityEnabled).HasColumnName("IsAddNewEntityEnabled");
             this.Property(t => t.QueryGroupCode).HasColumnName("QueryGroupCode");
             this.Property(t => t.NameTextCodeId).HasColumnName("NameTextCodeId");
+            this.Property(t => t.NameTextCodeCode).HasColumnName("NameTextCodeCode");
             this.Property(t => t.DefaultSortColumn).HasColumnName("DefaultSortColumn");
             this.Property(t => t.DefaultSortDirection).HasColumnName("DefaultSortDirection");
             this.Property(t => t.SpotlightDataTemplate).HasColumnName("SpotlightDataTemplate");

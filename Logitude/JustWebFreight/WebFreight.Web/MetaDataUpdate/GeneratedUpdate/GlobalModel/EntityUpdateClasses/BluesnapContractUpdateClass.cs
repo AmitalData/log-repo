@@ -585,7 +585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllBluesnapContractQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BluesnapContractTextCode_0.Id, Code = "All Bluesnap Contract",  QueryGroupCode = "BSCR", IndexOrder = 0, Tenant = 0, ObjectTableId = BluesnapContractObjectTable.Id, QuerySection = "BluesnapContract", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BluesnapContractFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllBluesnapContractQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BluesnapContractTextCode_0.Id, NameTextCodeCode = BluesnapContractTextCode_0.Code, Code = "All Bluesnap Contract",  QueryGroupCode = "BSCR", IndexOrder = 0, Tenant = 0, ObjectTableId = BluesnapContractObjectTable.Id, QuerySection = "BluesnapContract", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BluesnapContractFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllBluesnapContractQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id, IndexOrder = 0, ObjectFieldId = BluesnapContractObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == BluesnapContractObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BluesnapContractObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == BluesnapContractObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

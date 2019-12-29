@@ -2060,7 +2060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALLTAXREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxReportTextCode_0.Id, Code = "ALLTAXREPORTS",  QueryGroupCode = "97c2", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxReportObjectTable.Id, QuerySection = "TaxReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ALLTAXREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxReportTextCode_0.Id, NameTextCodeCode = TaxReportTextCode_0.Code, Code = "ALLTAXREPORTS",  QueryGroupCode = "97c2", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxReportObjectTable.Id, QuerySection = "TaxReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ALLTAXREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

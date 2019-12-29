@@ -444,7 +444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAPPaymentMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APPaymentMethodTextCode_0.Id, Code = "All AP Payment Methods",  QueryGroupCode = "PPYM", IndexOrder = 0, Tenant = 0, ObjectTableId = APPaymentMethodObjectTable.Id, QuerySection = "APPaymentMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentMethodFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAPPaymentMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APPaymentMethodTextCode_0.Id, NameTextCodeCode = APPaymentMethodTextCode_0.Code, Code = "All AP Payment Methods",  QueryGroupCode = "PPYM", IndexOrder = 0, Tenant = 0, ObjectTableId = APPaymentMethodObjectTable.Id, QuerySection = "APPaymentMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentMethodFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllAPPaymentMethodsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id, IndexOrder = 0, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == APPaymentMethodObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APPaymentMethodObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == APPaymentMethodObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

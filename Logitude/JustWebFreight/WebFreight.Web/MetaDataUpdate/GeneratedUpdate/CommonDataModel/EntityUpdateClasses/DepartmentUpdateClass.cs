@@ -510,7 +510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DepartmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DepartmentTextCode_0.Id, Code = "Departments",  QueryGroupCode = "DEPT", IndexOrder = 0, Tenant = 0, ObjectTableId = DepartmentObjectTable.Id, QuerySection = "Department", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DepartmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DepartmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DepartmentTextCode_0.Id, NameTextCodeCode = DepartmentTextCode_0.Code, Code = "Departments",  QueryGroupCode = "DEPT", IndexOrder = 0, Tenant = 0, ObjectTableId = DepartmentObjectTable.Id, QuerySection = "Department", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DepartmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DepartmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepartmentsQuery.Id, IndexOrder = 0, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DepartmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DepartmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
