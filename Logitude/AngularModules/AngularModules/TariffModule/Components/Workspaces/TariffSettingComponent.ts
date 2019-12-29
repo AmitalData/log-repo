@@ -50,6 +50,7 @@ export class TariffSettingComponent extends BaseComponent {
                     this.BuildItemsSource();
                     this.IsResourcesReady = true;
                     this.SetUIPropertiesForEditButtons();
+                    this.SetUIPropertiesOfFields();
                 }
             });
         });
@@ -65,6 +66,11 @@ export class TariffSettingComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
             this.IsLCLEditBtnEnabled = true;
         }
+    }
+
+    private SetUIPropertiesOfFields() {
+        this.UIProperties.SetRequired("AirDefaultStepsId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AirDefaultStepsId));
+        this.UIProperties.SetRequired("LCLDefaultStepsId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.LCLDefaultStepsId));
     }
 
     get DefaultWarningPercentage() {
@@ -87,6 +93,7 @@ export class TariffSettingComponent extends BaseComponent {
         if (this.EntityPM.LCLDefaultStepsId != value) {
             this.EntityPM.LCLDefaultStepsId = value;
             this.SetUIPropertiesForEditButtons();
+            this.SetUIPropertiesOfFields();
         }
     }
 
@@ -99,6 +106,7 @@ export class TariffSettingComponent extends BaseComponent {
         if (this.EntityPM.AirDefaultStepsId != value) {
             this.EntityPM.AirDefaultStepsId = value;
             this.SetUIPropertiesForEditButtons();
+            this.SetUIPropertiesOfFields();
         }
     }
 
@@ -151,7 +159,7 @@ export class TariffSettingComponent extends BaseComponent {
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
-        if (!this.EntityPM.IsDirty) {
+        if (!this.EntityPM.IsDirty && !AppTool.IsNullOrEmpty(this.AirDefaultStepsId) && !AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
             this.CurrentSession.CloseCurrentWindow();
         }
         else {
