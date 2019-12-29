@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Logitude.DBMigrations.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -15,6 +17,8 @@ namespace Logitude.DBMigrations.Models
         protected List<ColumnMigration> ColumnsMigrations = new List<ColumnMigration>();
         protected bool AlterPrimaryKeyConstraint = false;
         protected bool PrimaryKeyColumnAdded = false;
+
+        protected List<TableDefinition> DXMLTables;
 
         public string GetScript()
         {
@@ -482,7 +486,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected TableDefinition FormatCaseSensitiveNames(TableDefinition table)
+        protected TableDefinition FormatNames(TableDefinition table)
         {
             if(table != null)
             {
@@ -571,49 +575,6 @@ namespace Logitude.DBMigrations.Models
             }
 
             return processedRelations;
-        }
-
-        protected bool IsRelationInCurrentTable(RelationDefinition relation)//dxml relation
-        {
-            bool isForeignKeyDataTypeChanged = false;
-
-            if (!relation.ForeignKeyColumn.Contains(","))
-            {
-                ColumnDefinition dxmlForeignKeyColumn = DXMLTable.Columns.Where(c => c.Name == relation.ForeignKeyColumn).First();
-
-                if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
-                {
-                    ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
-                    isForeignKeyDataTypeChanged = (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale));
-                }
-            }
-            else
-            {
-                List<ColumnDefinition> dxmlForeignKeyColumns = DXMLTable.Columns.Where(c => relation.ForeignKeyColumn.Split(',').Contains(c.Name)).ToList();
-
-                isForeignKeyDataTypeChanged = false;
-
-                foreach (var dxmlForeignKeyColumn in dxmlForeignKeyColumns)
-                {
-                    if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
-                    {
-                        ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
-                        if ((dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale)))
-                        {
-                            isForeignKeyDataTypeChanged = true;
-                        }
-                    }
-                }
-            }
-
-            bool isRelationInCurrentTable = CurrentTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
-
-            return (!isForeignKeyDataTypeChanged && isRelationInCurrentTable);
-        }
-
-        protected bool IsRelationInDXMLTable(RelationDefinition relation)//db relation
-        {
-            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
         }
 
         protected string GetAlterTableScript()
@@ -767,5 +728,9 @@ namespace Logitude.DBMigrations.Models
         protected abstract bool IsColumnRenamed(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn);
 
         protected abstract int FormatColumnSize(int size, string type);
+
+        protected abstract bool IsRelationInCurrentTable(RelationDefinition relation);
+
+        protected abstract bool IsRelationInDXMLTable(RelationDefinition relation);
     }
 }
