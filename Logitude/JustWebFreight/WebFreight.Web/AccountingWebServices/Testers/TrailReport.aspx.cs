@@ -41,11 +41,11 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                        DetailedControlJob = false,
                        DetailedControlFile = false,
                        Suppress_DoNotShowCardWithoutActivity= true,
-                    GLAccountLevel_ChartOfAccountsTypeCodeList = new List<string>()
+                    ChartOfAccountsTypeCodeList = new List<string>()
                     {
                         "1","2"
                     },
-                    GLAccountLevel_ChartOfAccountsIdList= new List<string>(),
+                    ChartOfAccountsIdList = new List<string>(),
 
                 };
                 _HiddenFieldTrail.Value= _TextBoxParam.Text = JsonConvert.SerializeObject(param);

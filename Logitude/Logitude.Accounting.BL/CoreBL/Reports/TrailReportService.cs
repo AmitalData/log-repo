@@ -970,7 +970,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         /// new filter Chart Of Account type with multiple choice option.
         /// </summary>
         List<string> _GLAccountLevel_ChartOfAccountsTypeCodeList;
-        public List<string> GLAccountLevel_ChartOfAccountsTypeCodeList {
+        public List<string> ChartOfAccountsTypeCodeList {
             get { 
                 _GLAccountLevel_ChartOfAccountsTypeCodeList = _GLAccountLevel_ChartOfAccountsTypeCodeList ?? new List<string>();
                 return _GLAccountLevel_ChartOfAccountsTypeCodeList;
@@ -984,7 +984,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         /// change the filter Chart Of Account to  multiple choice option. 
         /// </summary>
         List<string> _GLAccountLevel_ChartOfAccountsIdList;
-        public List<string> GLAccountLevel_ChartOfAccountsIdList 
+        public List<string> ChartOfAccountsIdList 
         {
             get {
                 _GLAccountLevel_ChartOfAccountsIdList = _GLAccountLevel_ChartOfAccountsIdList ?? new List<string>();
