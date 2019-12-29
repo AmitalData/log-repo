@@ -29,7 +29,7 @@ export class NewBIReport extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private OriginalName: string = "";
     private IsCopy: boolean = false;
-    private IsNewBIReport: boolean = true;
+    public IsNewBIReport: boolean = true;
     private IsTenantZero: boolean = false;
     private IsOneRowSelected: boolean = false;
     private HasCopyFeature: boolean = false;
