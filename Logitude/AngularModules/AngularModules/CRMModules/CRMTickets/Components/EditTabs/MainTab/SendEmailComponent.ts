@@ -1,4 +1,3 @@
-/// <reference path="../../../../../quotemodules/quoteothers/components/quotation/attachmentquotationcomponent.ts" />
 
 declare var window: any;
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
