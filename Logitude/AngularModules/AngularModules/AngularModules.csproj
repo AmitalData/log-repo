@@ -185,6 +185,7 @@
     <Content Include="CRMModules\CRMOthers\Components\SLA\AddEditEscalationComponent.html" />
     <Content Include="CRMModules\CRMOthers\Components\SLA\NewSLAComponent.html" />
     <Content Include="CRMModules\CRMOthers\Components\SLA\SLAMainWindowComponent.html" />
+    <Content Include="CRMModules\CRMOthers\Components\SupportMailBox\AddEditSupportMailBoxComponent.html" />
     <Content Include="CRMModules\CRMOthers\Components\SupportMailBox\SupportMailBoxComponent.html" />
     <Content Include="CRMModules\CRMOthers\Components\TicketSettings\TicketSettingsComponent.html" />
     <Content Include="CRMModules\CRMStages\Components\StageGeneralTabComponent.html" />
@@ -558,6 +559,7 @@
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\Questionnaire\QuestionnaireAnswersComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\SLA\AddEditEscalationComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\SLA\NewSLAComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOthers\Components\SupportMailBox\AddEditSupportMailBoxComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\SupportMailBox\SupportMailBoxComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\TicketSettings\TicketSettingsComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMStages\Components\StageGeneralTabComponent.ts" />

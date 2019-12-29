@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {DateTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SupportMailboxPM } from '../../../../CRM/EntityPMs/SupportMailboxPM';
 import { CRMDomainService } from '../../../../CRM/Services/CRMDomainService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
@@ -76,7 +75,16 @@ export class SupportMailBoxComponent {
         confirmWindow.Show("Delete this Support Mailbox?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                
+                this.CurrentSession.StartBusyIndicatorSaving();
+
+                this.domainService.DeleteMailBox(mailbox.Id).subscribe((myResponse: ServiceResponse) => {
+                    var pmResponse: ServiceResponse = myResponse;
+                    if (!pmResponse.HasError) {
+                        this.LoadMailBoxes();
+                    }
+
+                    this.CurrentSession.StopBusyIndicator();
+                });
             }
         });
     }
