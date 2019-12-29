@@ -5129,7 +5129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DateForInterest",
+					 						FieldName =  "DateForVATInterest",
 					  						OldFieldName =  "DateForVATInterest",
 					  						ObjectTableName =  "ARInvoice",
 					  						FieldsDataType =  "DateTime",
@@ -5149,8 +5149,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DateForInterest",
-					  						ListPropertyPath =  "DateForInterest",
+					  						PMPropertyPath =  "DateForVATInterest",
+					  						ListPropertyPath =  "DateForVATInterest",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -5171,9 +5171,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DateForInterest",
-					  						DefaultText =  "Date For Interest ",
-					  						FullLocalDefaultText =  "תאריך לריבית מע\"מ",
+					  						FullFieldLable =  "DateForVATInterest",
+					  						DefaultText =  "Date for VAT interest",
+					  						FullLocalDefaultText =  "תאריך לריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

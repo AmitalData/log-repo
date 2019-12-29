@@ -952,7 +952,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunDate",
-					  						OldFieldName =  "LastRunDate",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -972,7 +971,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastRunDate",
 					  						ListPropertyPath =  "LastRunDate",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1011,7 +1009,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunByUserId",
-					  						OldFieldName =  "LastRunByUserId",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -1032,7 +1029,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastRunByUserId",
 					  						ListPropertyPath =  "LastRunByUserId",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1068,7 +1064,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunByUserName",
-					  						OldFieldName =  "LastRunByUserName",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1088,7 +1083,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastRunByUserName",
 					  						ListPropertyPath =  "LastRunByUserName",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1166,7 +1160,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable BIReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReport" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> BIReportObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BIReport").ToList();
+		       
+	      
+
+	         Screen BIReportBIReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BIReport.HeaderScreen", Name = "BIReportHeaderScreen", ObjectTableId = BIReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    BIReportObjectTable.HeaderScreenId = BIReportBIReportHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 

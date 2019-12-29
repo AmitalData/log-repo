@@ -1167,7 +1167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_0.Id, Code = "Agent Shared Manifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			  Query AgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_0.Id, NameTextCodeCode = AgentSharedManifestTextCode_0.Code, Code = "Agent Shared Manifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
 			   QueryGroupCode = "ASMN", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -1200,7 +1200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query AirAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_1.Id, Code = "AirAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			  Query AirAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_1.Id, NameTextCodeCode = AgentSharedManifestTextCode_1.Code, Code = "AirAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
 			   QueryGroupCode = "AASM", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AirAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -1237,7 +1237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query OceanAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_2.Id, Code = "OceanAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			  Query OceanAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_2.Id, NameTextCodeCode = AgentSharedManifestTextCode_2.Code, Code = "OceanAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
 			   QueryGroupCode = "OASM", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OceanAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -1274,7 +1274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query InlandAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_3.Id, Code = "InlandAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			  Query InlandAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_3.Id, NameTextCodeCode = AgentSharedManifestTextCode_3.Code, Code = "InlandAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
 			   QueryGroupCode = "IASM", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_3.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InlandAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
@@ -1311,7 +1311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query CancelledAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_4.Id, Code = "CancelledAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			  Query CancelledAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_4.Id, NameTextCodeCode = AgentSharedManifestTextCode_4.Code, Code = "CancelledAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
 			   QueryGroupCode = "CASM", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_4.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
