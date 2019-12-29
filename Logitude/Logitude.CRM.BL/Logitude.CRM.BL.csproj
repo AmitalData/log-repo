@@ -391,6 +391,7 @@
     <Compile Include="EntityUpdateServices\Generated\TicketTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TimeUnitUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\OccasionContactSearchresult.cs" />
     <Compile Include="EntityUpdateServices\OccasionInviteeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionUpdateService.cs" />

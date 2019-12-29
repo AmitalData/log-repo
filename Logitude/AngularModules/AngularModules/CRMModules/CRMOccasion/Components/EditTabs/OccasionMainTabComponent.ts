@@ -60,10 +60,14 @@ export class OccasionMainTabComponent extends BaseComponent {
                 }
             });
 
+
+
+
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties_EntityClosed();
+                    this.LoadOccasionLinesData();
                 }
             });
 
