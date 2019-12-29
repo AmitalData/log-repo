@@ -3500,6 +3500,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM shipmentPM = new ShipmentPM();
 
                     shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+
                     //shipmentPM.ToCountryCode = !string.IsNullOrEmpty(shipmentPM.MainCarriageFinalDestinationPortCountryCode) ? shipmentPM.MainCarriageFinalDestinationPortCountryCode : shipmentPM.ToPortCountryCode,
                     //shipmentPM.FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
                     ShipmentPM securedPM = new ShipmentPM();

@@ -348,13 +348,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 this.InitializeBookingData();
 
-                GetForeignFields();
+                //GetForeignFields();
                 BuildActivityLog();
                 BuildImportersQueue();
                 RunStoredProcedures();
                 BuildAgentSharedManifest();
                 RunAutomation("OnCreate");
-
+                this.ReloadEntityPM();
                 scope.Complete();
             }
         }
@@ -510,9 +510,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ApplyUpdatingMasterHouses();
 
                     RunStoredProcedures();
-                    GetForeignFields();
+                    //GetForeignFields();
                     BuildActivityLog();
                     BuildImportersQueue();
+                    this.ReloadEntityPM();
                     #endregion
                 }
 
@@ -573,6 +574,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void ReloadEntityPM()
+        {
+            //IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
+            //ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
+            //ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+            //this.entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
+            //this.GetForeignFields_Status();
         }
 
         private void UpdateShipmentComputedFields()
@@ -1292,7 +1303,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 RunStoredProcedureClass.UpdateCustomConnectToShipment(entityPM.CustomFilePocoId, entityPM.Tenant);
             }
 
-            bool isReloadingConsoles = false;
+            //bool isReloadingConsoles = false;
 
             if (this.entityPM.ShipmentLevelCode == "C")
             {
@@ -1312,13 +1323,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     UpdateShipmentProfitClass.UpdatePayables(entityPM.Id, entityPM.Tenant, false);
 
                     // Ayman: Please don't remove
-                    if (this.entityPM.ShipmentLevelCode == "C")
-                    {
-                        isReloadingConsoles = true;
-                    }
+                    //if (this.entityPM.ShipmentLevelCode == "C")
+                    //{
+                    //    isReloadingConsoles = true;
+                    //}
 
-                    ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(this.shipmentPayableRepository);
-                    entityPM.ShipmentPayables = shipmentPayableQuery.GetShipmentPayablePMsByShipment(entityPM.Id, entityPM.Tenant);
+                    //ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(this.shipmentPayableRepository);
+                    //entityPM.ShipmentPayables = shipmentPayableQuery.GetShipmentPayablePMsByShipment(entityPM.Id, entityPM.Tenant);
                 }
             }
 
@@ -1329,13 +1340,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     UpdateShipmentProfitClass.UpdateReceivables(entityPM.Id, entityPM.Tenant, false);
 
                     // Ayman: Please don't remove
-                    if (this.entityPM.ShipmentLevelCode == "C")
-                    {
-                        isReloadingConsoles = true;
-                    }
+                    //if (this.entityPM.ShipmentLevelCode == "C")
+                    //{
+                    //    isReloadingConsoles = true;
+                    //}
 
-                    ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(this.shipmentReceivableRepository);
-                    entityPM.ShipmentReceivables = shipmentReceivableQuery.GetShipmentReceivablePMsByShipmentId(entityPM.Id, entityPM.Tenant);
+                    //ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(this.shipmentReceivableRepository);
+                    //entityPM.ShipmentReceivables = shipmentReceivableQuery.GetShipmentReceivablePMsByShipmentId(entityPM.Id, entityPM.Tenant);
                 }
             }
 
@@ -1355,10 +1366,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
             // Ayman: Please don't remove
-            IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
-            ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
-            ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
-            entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+            //IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
+            //ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
+            //ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+            //entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
 
             //Shipment updatedPOCO = updatedEntityRepository.GetSingleShipment(entityPM.Id, entityPM.Tenant);
             //if (updatedPOCO != null)
@@ -1386,11 +1397,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             //    entityPM.FirstARInvoiceApprovalDate = updatedPOCO.FirstARInvoiceApprovalDate;
             //}
 
-            if (isReloadingConsoles)
-            {
-                ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(updatedEntityContext);
-                shipmentConsoleShipmentQuery.BuildConsoleShipments(entityPM);
-            }
+            //if (isReloadingConsoles)
+            //{
+            //    ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(updatedEntityContext);
+            //    shipmentConsoleShipmentQuery.BuildConsoleShipments(entityPM);
+            //}
         }
 
         //private string GetForeignPartnerCountryCode(ShipmentPM entityPM)
