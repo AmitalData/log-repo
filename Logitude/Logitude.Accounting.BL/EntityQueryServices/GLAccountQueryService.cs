@@ -1014,7 +1014,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
            return  (from a in context.GLAccounts
                                    where a.CustomerGLAccountId == accountId && a.CurrencyId == currency && a.Tenant == tenant
-                                   select new GLAccountPM() {
+                                   && a.Inactive == false//Task 61118: Service for retrieving the splitted GLAccounts- change logic if GLAccountCurrencies is block
+                                    select new GLAccountPM() {
                                        Id = a.Id,
                                        CurrencyId = a.CurrencyId,
                                        DisplayNumber =a.DisplayNumber,
