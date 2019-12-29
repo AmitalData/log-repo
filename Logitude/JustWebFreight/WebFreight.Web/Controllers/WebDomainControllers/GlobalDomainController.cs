@@ -370,8 +370,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             using (SqlConnection DBConnection = new SqlConnection(connectionString))
             {
                 DBConnection.Open();
-                SqlCommand commandWaitingData = new SqlCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where Status = 0 and CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' group by QueueDefinitionCode ", DBConnection);
-                SqlCommand commandFaildData = new SqlCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where Status = -1 and CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' group by QueueDefinitionCode ", DBConnection);
+                SqlCommand commandWaitingData = new SqlCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' and Status = 0 group by QueueDefinitionCode ", DBConnection);
+                SqlCommand commandFaildData = new SqlCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' and Status = -1 group by QueueDefinitionCode ", DBConnection);
 
                 SqlDataReader reader = commandWaitingData.ExecuteReader();
                 WaitingDataTable.Load(reader);
