@@ -204,12 +204,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime? interestCalculationDate ;
+	  private DateTime interestCalculationDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime? InterestCalculationDate  
+       public DateTime InterestCalculationDate  
 	   {
 	    
 	     get
@@ -220,7 +220,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(interestCalculationDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationDate",OldValue=interestCalculationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationDate",OldValue=interestCalculationDate,NewValue=value,PropertyType="DateTime"};
 		    NotifyPropertyChanged(values);
 		   interestCalculationDate=value;
 		   }
@@ -388,6 +388,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string createdByLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByLocalName  
+	   {
+	    
+	     get
+		{
+		   return createdByLocalName;
+		 }
+		 set
+		 {
+		   if(createdByLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByLocalName",OldValue=createdByLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByLocalName=value;
+		   }
+			
+		 }
+	   }
 	  private string gLAccountDisplayNumber ;
 	  	  
        
@@ -476,6 +499,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByLocalName",OldValue=updatedByLocalName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   updatedByLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string interestReportStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InterestReportStatusName  
+	   {
+	    
+	     get
+		{
+		   return interestReportStatusName;
+		 }
+		 set
+		 {
+		   if(interestReportStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestReportStatusName",OldValue=interestReportStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   interestReportStatusName=value;
 		   }
 			
 		 }

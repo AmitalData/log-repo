@@ -35,11 +35,11 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.GLAccountId).HasColumnName("GLAccountId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.GLAccountId).HasColumnName("GLAccountId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ReportNumber).HasColumnName("ReportNumber").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.InterestCalculationDate).HasColumnName("InterestCalculationDate");
+            this.Property(t => t.InterestCalculationDate).HasColumnName("InterestCalculationDate").IsRequired();
 
             this.Property(t => t.TotalAmount).HasColumnName("TotalAmount").HasPrecision(18, 2);
 

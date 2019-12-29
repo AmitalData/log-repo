@@ -104,6 +104,11 @@ export class InterestReportPM {
     public set InterestReportStatusCode(newValue: string) { if (this.interestReportStatusCode != newValue) { this.interestReportStatusCode = newValue; this.MarkAsDirty("InterestReportStatusCode"); } }
        
 	 
+    private createdByLocalName: string;
+    public get CreatedByLocalName() { return this.createdByLocalName; }
+    public set CreatedByLocalName(newValue: string) { if (this.createdByLocalName != newValue) { this.createdByLocalName = newValue; this.MarkAsDirty("CreatedByLocalName"); } }
+       
+	 
     private gLAccountDisplayNumber: string;
     public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
     public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
@@ -122,6 +127,11 @@ export class InterestReportPM {
     private updatedByLocalName: string;
     public get UpdatedByLocalName() { return this.updatedByLocalName; }
     public set UpdatedByLocalName(newValue: string) { if (this.updatedByLocalName != newValue) { this.updatedByLocalName = newValue; this.MarkAsDirty("UpdatedByLocalName"); } }
+       
+	 
+    private interestReportStatusName: string;
+    public get InterestReportStatusName() { return this.interestReportStatusName; }
+    public set InterestReportStatusName(newValue: string) { if (this.interestReportStatusName != newValue) { this.interestReportStatusName = newValue; this.MarkAsDirty("InterestReportStatusName"); } }
        
 	 
 

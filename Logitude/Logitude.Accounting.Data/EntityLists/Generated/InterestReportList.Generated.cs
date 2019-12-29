@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string ReportNumber  { get; set; }
        [DataMember]
-       public DateTime? InterestCalculationDate  { get; set; }
+       public DateTime InterestCalculationDate  { get; set; }
        [DataMember]
        public decimal? TotalAmount  { get; set; }
        [DataMember]
@@ -56,6 +56,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ARInvoiceNumber  { get; set; }
        [DataMember]
        public string UpdatedByLocalName  { get; set; }
+       [DataMember]
+       public string InterestReportStatusName  { get; set; }
    }
 
 }

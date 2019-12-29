@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("ReportNumber")]
 	    public string ReportNumber { get; set; }
         [Column("InterestCalculationDate")]
-	    public DateTime? InterestCalculationDate { get; set; }
+	    public DateTime InterestCalculationDate { get; set; }
         [Column("TotalAmount")]
 	    public decimal? TotalAmount { get; set; }
         [Column("OpenBalance")]

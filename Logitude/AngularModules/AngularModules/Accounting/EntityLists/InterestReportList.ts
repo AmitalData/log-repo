@@ -29,6 +29,7 @@ export class InterestReportList {
 	GLAccountLocalName: string;
 	ARInvoiceNumber: string;
 	UpdatedByLocalName: string;
+	InterestReportStatusName: string;
 	
 }
  

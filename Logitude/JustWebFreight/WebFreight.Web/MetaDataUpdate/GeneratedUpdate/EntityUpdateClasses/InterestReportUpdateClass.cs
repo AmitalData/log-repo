@@ -180,7 +180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDateTime",
-					  						DefaultText =  "Create Date Time",
+					  						DefaultText =  "Create Date",
 					  						FullLocalDefaultText =  "שעת יצירה",
 					  						ListFieldLable =  "CreateDateTimeListLable",
 					  						ListLableDefaultText =  "Create Date",
@@ -246,7 +246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Created By",
 					  						FullLocalDefaultText =  "מזהה פנימי של היוצר",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
-					  						ListLableDefaultText =  "CreatedByUserId",
+					  						ListLableDefaultText =  "Created By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -391,7 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -514,7 +514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -546,7 +546,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestCalculationDate",
-					  						DefaultText =  "Interest Calculation Date",
+					  						DefaultText =  "Calculation Date",
 					  						FullLocalDefaultText =  "תאריך חישוב ריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -852,7 +852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Invoice Amount",
 					  						FullLocalDefaultText =  "סכום חשבונית",
 					  						ListFieldLable =  "InvoiceAmountListLable",
-					  						ListLableDefaultText =  "InvoiceAmount",
+					  						ListLableDefaultText =  "Invoice Amount",
 					  						ListLocalDefaultText =  "סכום חשבונית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -912,7 +912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountInterestCreditLimit",
-					  						DefaultText =  "GLAccount Interest Credit Limit",
+					  						DefaultText =  "Credit Limit",
 					  						FullLocalDefaultText =  "מסגרת אשראי של הכרטיס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1219,7 +1219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ARInvoiceNumber",
-					  						DefaultText =  "InvoiceNumber",
+					  						DefaultText =  "Invoice Number",
 					  						ListFieldLable =  "ARInvoiceNumberListLable",
 					  						ListLableDefaultText =  "Invoice No.",
 					  						ListLocalDefaultText =  "מספר חשבונית",
@@ -1299,6 +1299,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InterestReportStatusName",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  200,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  200,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InterestReportStatusName",
+					  						ListPropertyPath =  "InterestReportStatusName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "InterestReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InterestReportStatusName",
+					  						DefaultText =  "Status Name",
+					  						FullLocalDefaultText =  "סטטוס של הדוח",
+					  						ListFieldLable =  "InterestReportStatusNameListLable",
+					  						ListLableDefaultText =  "Status Name",
+					  						ListLocalDefaultText =  "סטטוס של הדוח",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -1356,7 +1416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
          
             ScreenField InterestReportInterestReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestCalculationDate").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestCalculationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusCode").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField InterestReportInterestReportHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
