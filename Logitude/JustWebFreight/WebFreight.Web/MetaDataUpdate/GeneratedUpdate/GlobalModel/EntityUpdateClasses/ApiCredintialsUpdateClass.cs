@@ -785,7 +785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ApiCredintialsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ApiCredintialsTextCode_0.Id, Code = "ApiCredintials",  EditWizardName = "Simplog.Infrastructure.Views.ApiCredintials.AddEditApiCredintialsControl",
+			  Query ApiCredintialsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ApiCredintialsTextCode_0.Id, NameTextCodeCode = ApiCredintialsTextCode_0.Code, Code = "ApiCredintials",  EditWizardName = "Simplog.Infrastructure.Views.ApiCredintials.AddEditApiCredintialsControl",
 			   EditWizardComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/ApiCredintials/ApiCredintialsComponent",
 			   QueryGroupCode = "APIC", IndexOrder = 0, Tenant = 0, ObjectTableId = ApiCredintialsObjectTable.Id, QuerySection = "ApiCredintials", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ApiCredintialsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	

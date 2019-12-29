@@ -1238,7 +1238,7 @@ export class NewViewComponent {
                 myService.setServiceArgs(this.serviceArgs);
                 textCodesService.setServiceArgs(this.serviceArgs);
                 myService.insert(this.EntityPM).subscribe(myResult => {
-                    textCodesService.get(myResult.Result.NameTextCodeId, myResult.Result.Tenant).subscribe(res => {
+                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe(res => {
                         window.TextCodesTranslations.push(res);
                         this.AddFiltersAndColumns(myResult.Result);
                         window.Queries.push(myResult.Result);
@@ -1469,7 +1469,7 @@ export class NewViewComponent {
             textCodesService.setServiceArgs(this.serviceArgs);
             myService.update(this.EntityPM).subscribe(myResult => {
                 if (!SessionLocator.UseCachedData) {
-                    textCodesService.get(myResult.Result.NameTextCodeId, myResult.Result.Tenant).subscribe(res => {
+                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe(res => {
                         window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeId != myResult.Result.NameTextCodeId);
                         window.TranslationsCache = window.TranslationsCache.filter(d => d.Code != myResult.Result.NameTextCodeCode);
                         window.TextCodesTranslations.push(res);

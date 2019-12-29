@@ -1296,7 +1296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_0.Id, Code = "All Documents",  QueryGroupCode = "DOCF", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentsFilingFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_0.Id, NameTextCodeCode = DocumentsFilingTextCode_0.Code, Code = "All Documents",  QueryGroupCode = "DOCF", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentsFilingFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllDocumentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id, IndexOrder = 0, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Extension" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Extension" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1319,7 +1319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query RequestedDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_1.Id, Code = "Requested Documents",  QueryGroupCode = "DOCF", IndexOrder = 1, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentsFilingFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query RequestedDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_1.Id, NameTextCodeCode = DocumentsFilingTextCode_1.Code, Code = "Requested Documents",  QueryGroupCode = "DOCF", IndexOrder = 1, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentsFilingFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn RequestedDocumentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id, IndexOrder = 0, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Extension" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Extension" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

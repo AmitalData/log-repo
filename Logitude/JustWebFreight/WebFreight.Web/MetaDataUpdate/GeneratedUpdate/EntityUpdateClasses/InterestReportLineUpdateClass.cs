@@ -85,6 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "InterestReportLine",
 			      				    IsNew =  true,
 			      				    DBTableName =  "InterestReportLines",
+			      				    OldDBTableName =  "InterestReportLines",
 			      				    ObjectTableSingular =  "InterestReportLine",
 			      				    ObjectTablePlural =  "InterestReportLines",
 			      				    HasCustomFilter =  false,
@@ -115,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Report Line",
-			      				    Code =  "3909",
+			      				    Code =  "259b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -138,6 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportId",
+					  						OldFieldName =  "InterestReportId",
 					  						ObjectTableName =  "InterestReportLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -157,6 +159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InterestReportId",
 					  						ListPropertyPath =  "InterestReportId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -181,6 +184,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -192,6 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestTransactionId",
+					  						OldFieldName =  "InterestTransactionId",
 					  						ObjectTableName =  "InterestReportLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -211,6 +216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InterestTransactionId",
 					  						ListPropertyPath =  "InterestTransactionId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -235,6 +241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -248,7 +255,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable InterestReportLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReportLine" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> InterestReportLineObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InterestReportLine").ToList();
+		       
+	      
+
+	         Screen InterestReportLineInterestReportLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReportLine.HeaderScreen", Name = "InterestReportLineHeaderScreen", ObjectTableId = InterestReportLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    InterestReportLineObjectTable.HeaderScreenId = InterestReportLineInterestReportLineHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 
