@@ -205,6 +205,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             FieldName: "Email",
             DataTypeCode: 'String',
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             Display: 'Email',
             Styles: { width: '150px' },
         });
@@ -213,6 +214,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             FieldName: "Name",
             DataTypeCode: 'String',
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             Display: 'Name',
             Styles: { width: '150px' },
         });
@@ -221,6 +223,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             FieldName: "Company",
             DataTypeCode: 'String',
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             Display: 'Company',
             Styles: { width: '200px' },
         });
@@ -229,6 +232,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             FieldName: "Region",
             DataTypeCode: 'String',
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             Display: 'Region',
             Styles: { width: '120px' },
         });
@@ -237,6 +241,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             FieldName: "Industry",
             DataTypeCode: 'String',
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             Display: 'Industry',
             Styles: { width: '120px' },
         });
@@ -253,6 +258,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
             FieldName: "CustomerSize",
             DataTypeCode: 'String',
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             Display: 'Customer Size',
             Styles: { width: '120px' },
         });
