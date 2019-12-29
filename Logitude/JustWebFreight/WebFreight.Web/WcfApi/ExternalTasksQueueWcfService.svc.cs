@@ -74,7 +74,7 @@ namespace WebFreight.Web.WcfApi
                         Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, queueResponse.MessageId, "D", "Message removed from queue (Communication log status = Done) " + DateTime.Now.ToString(), null);
                         queueservice.Complete();
                     }
-                    else if (queueResponse.RetryNumber >= 5)
+                    else if (queueResponse.RetryNumber >= 4)
                     {
                         queueservice.CompleteAsFailed();
                         Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, queueResponse.MessageId, "F", "queue message exceeded 5 retries" + DateTime.Now.ToString(), null);
