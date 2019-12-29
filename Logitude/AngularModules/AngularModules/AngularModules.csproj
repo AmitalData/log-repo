@@ -1105,6 +1105,7 @@
     <Content Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockLinesComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\StockSelection\ARInvoiceStockSelectionComponent.html" />
     <Content Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.html" />
+    <Content Include="QuoteModules\QuoteOthers\Components\Quotation\AttachmentQuotationComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\VDKFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
@@ -2029,6 +2030,7 @@
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\FCLChargesComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\LCLChargesComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\QuoteVATDetailsComponent.ts" />
+    <TypeScriptCompile Include="QuoteModules\QuoteOthers\Components\Quotation\AttachmentQuotationComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\Connections\ConnectionsTabComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\DocsIn\QuoteDocsInTabComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\DocsOut\QuoteDocsOutTabComponent.ts" />
