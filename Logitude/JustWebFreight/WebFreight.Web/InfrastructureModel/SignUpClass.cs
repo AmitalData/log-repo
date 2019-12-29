@@ -1999,7 +1999,7 @@ namespace WebFreight.Web.InfrastructureModel
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == tab.ObjectTableId).FirstOrDefault();
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
-                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Id == tab.TabNameTextCodeId).FirstOrDefault();
+                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == tab.TabNameTextCodeCode).FirstOrDefault();
                 TextCode text = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
 
                 ObjectTableTab newTab = new ObjectTableTab()
@@ -2008,6 +2008,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Code = tab.Code,
                     ObjectTableId = currentObjectTable.Id,
                     TabNameTextCodeId = text.Id,
+                    TabNameTextCodeCode = text.Code,
                     IndexOrder = tab.IndexOrder,
                     ControlPath = tab.ControlPath,
                     Id = IdCounter.GetNumber("ObjectTableTab", theTenant).ToString(),
