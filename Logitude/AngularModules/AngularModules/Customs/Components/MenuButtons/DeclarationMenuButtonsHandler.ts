@@ -1,20 +1,20 @@
 declare var window: any;
-import {Component, Output, EventEmitter, OnDestroy, ChangeDetectorRef} from '@angular/core';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {DeclarationPM} from '../../EntityPMs/DeclarationPM';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {AppTool, DateTool, FormatTool} from '../../../Infrastructure/Tools';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM';
+import { Component, Output, EventEmitter, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { AppTool, DateTool, FormatTool } from '../../../Infrastructure/Tools';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { UnifreightController } from '../../Controller/UnifreightController';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {DeclarationPMService} from '../../Services/StandardPMs/DeclarationPMService';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { DeclarationPMService } from '../../Services/StandardPMs/DeclarationPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {DeclarationCourierStatusPMService} from '../../Services/StandardPMs/DeclarationCourierStatusPMService';
+import { DeclarationCourierStatusPMService } from '../../Services/StandardPMs/DeclarationCourierStatusPMService';
 import { DeclarationCourierStatusPM } from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { CustomsRequestMenuService } from '../../Services/Others/CustomsRequestMenuService';
 import { IIGGeneralMessagesService } from '../../Services/WebServices/IIGGeneralMessagesService';
@@ -26,14 +26,14 @@ import { DeclarationWebService } from '../../Services/WebServices/DeclarationWeb
 import { CustomFileCreditResponseData } from '../../DataContract/ResponseData/CustomFileCreditResponseData';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../Utilities/DeclarationDisplayOnlyChecks';
 import { VehicleReductionTypeListService } from '../../Services/StandardLists/VehicleReductionTypeListService';
-import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../../Infrastructure/Utilities/events/MenuButtonsEvents';
+import { MenuButtonsEvents, MenuButtonsStateChangedEventArgs } from '../../../Infrastructure/Utilities/events/MenuButtonsEvents';
 
-import {PrintRequestRequestParams} from '../../DataContract/RequestParams/PrintRequestRequestParams';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { PrintRequestRequestParams } from '../../DataContract/RequestParams/PrintRequestRequestParams';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {DeclarationEventManager} from '../../Utilities/DeclarationEventManager';
-import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import { DeclarationEventManager } from '../../Utilities/DeclarationEventManager';
+import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
@@ -88,8 +88,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         //    this._SubDisplayModeChanged.unsubscribe();
         //    this._SubDisplayModeChanged = null;
         //}
-        
-        
+
+
     }
     Listen() {
 
@@ -164,7 +164,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "More") {
                         button.IsDisabled = true;
                         button.IsHidden = true;
-
+                  
                     }
 
                     if (button.EventCode == "SendDeclaration") {
@@ -174,20 +174,24 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                         else {
                             button.IsDisabled = false;
-                           
+
                             button.IsHidden = false;
-                            
+
                         }
+
+             
+
+
                     }
 
                     if (button.EventCode == "SendManifest") {
                         if (this.IsDisplayOnly) {
                             button.IsDisabled = true;
-                          //  button.IsHidden = false;
+                            //  button.IsHidden = false;
                         }
                         else {
                             button.IsDisabled = false;
-                           // button.IsHidden = false;
+                            // button.IsHidden = false;
                         }
 
                         if (this.EntityPM.IsCourierDeclaration) {
@@ -199,9 +203,15 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
 
                     if (button.EventCode == "DeclarationPayment") {
-                        button.IsDisabled = false;
+                        if (!this.EntityPM.IsAmendment) {
+                            button.IsDisabled = false;
+                        }
+                        else {
+                            button.IsDisabled = true;
+                        }
                         button.IsHidden = false;
                         button.Width = 120;
+
                     }
                     if (button.EventCode == "Forms") {
                         button.Width = 60;
@@ -218,7 +228,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
 
                     if (button.EventCode == "Actions") {
-                        button.Width = 70;
+                        if (!this.EntityPM.IsAmendment) {
+                            button.IsDisabled = false;
+                        }
+                        else {
+                            button.IsDisabled = true;
+                            
+                        }
+                         button.Width = 70;
                     }
 
                     if (button.EventCode == "PrintRelease") // moran 29.2.16 - Task 19807
@@ -235,7 +252,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "PrintTzrufa") // moran 2.3.16 - Task 19807
                     {
                         //if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                        if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)){
+                        if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {
                             //if (!this.EntityPM.IsAccumulated) {
                             //    button.IsDisabled = false;
                             //} else {
@@ -248,9 +265,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
-                    if (button.EventCode == "PrintAccumaltedTzrufa") 
-                    {
-                        
+                    if (button.EventCode == "PrintAccumaltedTzrufa") {
+
                         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {
 
                             if (this.EntityPM.IsAccumulated) {
@@ -278,8 +294,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             }
                         }
                     }
-                    if (button.EventCode == "Vehicle Modifications") 
-                    {
+                    if (button.EventCode == "Vehicle Modifications") {
                         if (this.EntityPM.IsCourierDeclaration) {
                             button.IsHidden = true;
                         }
@@ -363,143 +378,142 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     public MenuButtonClickDo() {
 
-            if (true) {//this.isValid) { this is also for testing temp of course
-                switch (this.MenuButtonCode) {
-                    case "SendDeclaration":
-                        {
-                            ////SendDeclaration();
-                            // SendDeclaration(declarationViewModel);
-                            break;
-                        }
-                    case "DeclarationReset":
-                        {
-                            //InvokeOperation < string > op = declarationViewModel.Context.ResetDeclarationNumber(declaration.Id, declaration.Tenant);
-                            //op.Completed += op_ResetDeclarationNumberCompleted;
+        if (true) {//this.isValid) { this is also for testing temp of course
+            switch (this.MenuButtonCode) {
+                case "SendDeclaration":
+                    {
+                        ////SendDeclaration();
+                        // SendDeclaration(declarationViewModel);
+                        break;
+                    }
+                case "DeclarationReset":
+                    {
+                        //InvokeOperation < string > op = declarationViewModel.Context.ResetDeclarationNumber(declaration.Id, declaration.Tenant);
+                        //op.Completed += op_ResetDeclarationNumberCompleted;
+                    }
+                    break;
+
+                case "DeclarationPayment":
+                    {
+                        this.OpenPaymentOrderWindow();
+                        break;
+                    }
+                case "PrintTzrufa":
+                    {
+                        this.PrintTzrufaMethod(false);
+                        break;
+                    }
+                case "PrintAccumaltedTzrufa":
+                    {
+                        this.PrintTzrufaMethod(true);
+                        break;
+                    }
+
+                case "PrintDeclarationForm":
+                    {
+                        this.PrintDeclarationFormMethod();//declarationViewModel);
+                        break;
+                    }
+
+                case "DeclarationsStatusRequest":
+                    {
+                        this.DeclarationsStatusRequestMethod();
+                        //SaveDeclarationMethod("DeclarationsStatusRequest");
+                        break;
+                    }
+
+                case "DeclarationRestore":
+                    {
+                        this.DeclarationRestoreMethod();//SaveDeclarationMethod("DeclarationRestore");
+                        break;
+                    }
+
+                case "ResetDeclarationNumber":
+                    {
+                        this.ResetDeclarationNumberMethod();
+                        let toDo = false;
+                        if (toDo) {
+                            this.CurrentSession.StartBusyIndicator("");
+                            var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
+                            myIIGGeneralMessagesService.GetResetDeclarationNumber(this.EntityPM.Id, this.EntityPM.Tenant)
+                                .subscribe((myServiceResponse: ServiceResponse) => {
+                                    let messageWindow = new MessageWindow();
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (myServiceResponse.HasError) {
+
+                                        messageWindow.Show(myServiceResponse.ErrorsArray[0]);
+                                    }
+                                    else {
+                                        if (myServiceResponse.Result != null) {
+                                            messageWindow.Show(myServiceResponse.Result);
+                                        }
+                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+
+                                    }
+                                });
                         }
                         break;
+                    }
 
-                    case "DeclarationPayment":
-                        {
-                            this.OpenPaymentOrderWindow();
-                            break;
-                        }
-                    case "PrintTzrufa":
-                        {
-                            this.PrintTzrufaMethod(false);
-                            break;
-                        }
-                    case "PrintAccumaltedTzrufa":
-                        {
-                            this.PrintTzrufaMethod(true);
-                            break;
-                        }
+                case "Copy":
+                    {
+                        this.SaveDeclarationMethod("Copy");
+                        break;
+                    }
 
-                    case "PrintDeclarationForm":
-                        {
-                            this.PrintDeclarationFormMethod();//declarationViewModel);
-                            break;
-                        }
+                case "PrintRelease": // moran 29.2.16 - Task 19807
+                    {
+                        this.PrintReleaseMethod();
+                        break;
+                    }
 
-                    case "DeclarationsStatusRequest":
-                        {
-                            this.DeclarationsStatusRequestMethod();
-                            //SaveDeclarationMethod("DeclarationsStatusRequest");
-                            break;
-                        }
+                // moran 5.6.16 - AMI-56804 - add TransferToCollector
+                case "TransferToCollector":
+                    {
+                        // SaveDeclarationMethod("TransferToCollector");
+                        this.TransferToCollectorMethod();
+                        break;
+                    }
 
-                    case "DeclarationRestore":
-                        {
-                            this.DeclarationRestoreMethod();//SaveDeclarationMethod("DeclarationRestore");
-                            break;
-                        }
+                case "Vehicle Modifications":
+                    {
+                        this.DisplayDeclarationVehicleModificationsMethod();
+                        break;
+                    }
 
-                    case "ResetDeclarationNumber":
-                        {
-                            this.ResetDeclarationNumberMethod();
-                            let toDo = false;
-                            if (toDo)
-                            {
-                                this.CurrentSession.StartBusyIndicator("");
-                                var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
-                                myIIGGeneralMessagesService.GetResetDeclarationNumber(this.EntityPM.Id, this.EntityPM.Tenant)
-                                    .subscribe((myServiceResponse: ServiceResponse) => {
-                                        let messageWindow = new MessageWindow();
-                                        this.CurrentSession.StopBusyIndicator();
-                                        if (myServiceResponse.HasError) {
-
-                                            messageWindow.Show(myServiceResponse.ErrorsArray[0]);
-                                        }
-                                        else {
-                                            if (myServiceResponse.Result != null) {
-                                                messageWindow.Show(myServiceResponse.Result);
-                                            }
-                                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
-
-                                        }
-                                    });
-                            }
-                            break;
-                        }
-
-                    case "Copy":
-                        {
-                             this.SaveDeclarationMethod("Copy");
-                            break;
-                        }
-
-                    case "PrintRelease": // moran 29.2.16 - Task 19807
-                        {
-                            this.PrintReleaseMethod();
-                            break;
-                        }
-
-                    // moran 5.6.16 - AMI-56804 - add TransferToCollector
-                    case "TransferToCollector":
-                        {
-                            // SaveDeclarationMethod("TransferToCollector");
-                            this.TransferToCollectorMethod();
-                            break;
-                        }
-
-                    case "Vehicle Modifications":
-                        {
-                            this.DisplayDeclarationVehicleModificationsMethod();
-                            break;
-                        }
-
-                    case "SpecialActionRequest":
-                        {
-                            this.SpecialActionRequestMethod();
-                            break;
-                        }
-                    case "CourierPendingReason":
-                        {
-                            this.CourierPendingReasonMethod();
-                            break;
-                        }
-                    case "CourierPendingReasonDel":
-                        {
-                            this.CourierPendingReasonDeleteMethod();
-                            break;
-                        }
-                    case "Declaration Closure":
-                        {
-                            this.DeclarationClosureMethod();
-                            break;
-                        }
-                    case "Cancel Declaration Closure":
-                        {
-                            this.CancelDeclarationClosureMethod();
-                            break;
-                        }
-                    case "Declaration Customs Requests":
-                        {
-                            this.DeclarationCustomsRequestsMethod();
-                            break;
-                        }
-                }
+                case "SpecialActionRequest":
+                    {
+                        this.SpecialActionRequestMethod();
+                        break;
+                    }
+                case "CourierPendingReason":
+                    {
+                        this.CourierPendingReasonMethod();
+                        break;
+                    }
+                case "CourierPendingReasonDel":
+                    {
+                        this.CourierPendingReasonDeleteMethod();
+                        break;
+                    }
+                case "Declaration Closure":
+                    {
+                        this.DeclarationClosureMethod();
+                        break;
+                    }
+                case "Cancel Declaration Closure":
+                    {
+                        this.CancelDeclarationClosureMethod();
+                        break;
+                    }
+                case "Declaration Customs Requests":
+                    {
+                        this.DeclarationCustomsRequestsMethod();
+                        break;
+                    }
             }
+        }
     }
 
     DisplayDeclarationVehicleModificationsMethod() {
@@ -520,7 +534,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                     logWindow.WindowArgs = windowArgs;
                     logWindow.ShowCloseButton = true;
-                  logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/VehicleModificationsComponent');
+                    logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/VehicleModificationsComponent');
 
                     logWindow.WindowClosed.subscribe(($event: any) => {
 
@@ -530,7 +544,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 });
             });
 
-        
+
     }
 
     SaveDeclarationMethod(ActionName: string) {
@@ -576,7 +590,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.CopyDeclaration");
         logWindow.WindowArgs = windowArgs;
         logWindow.ShowCloseButton = true;
-      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationQueryComponent');
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationQueryComponent');
 
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.ReloadEntity($event);
@@ -588,8 +602,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ReloadEntity(message: string) {
         if (message != "cancel") {
-        
-         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
         }
     }
@@ -606,7 +620,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     var haveRS2755: boolean = false;
                     if (requestSheets == null || requestSheets.length == 0) {
                     } else {
-                            haveRS2755 = true;
+                        haveRS2755 = true;
                     }
                     if (haveRS2755) {
                         var messageWindow = new MessageWindow();
@@ -649,11 +663,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                     (isSave) => {
                                         token.unsubscribe()
                                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                        if (isSave) {  
+                                        if (isSave) {
                                             this._DeclarationNumberandVersionId = null;
                                             let window = new MessageWindow();
                                             window.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationReset"));
-                                        } 
+                                        }
                                     });
                                 this.CurrentSession.CurrentEditComponent.SaveChanges();
                             }
@@ -833,7 +847,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     private DeclarationRestoreMethod() {
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        declarationDisplayOnlyChecks.CheckIfRequestInProgress("2750",this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
+        declarationDisplayOnlyChecks.CheckIfRequestInProgress("2750", this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     var requestSheets = response.Result;
@@ -919,7 +933,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             return;
                         }
                     }
-                    
+
                 }
                 if (this._DeclarationNumberandVersionId != this.EntityPM.DeclarationNumberandVersionId) {
                     this.CheckBeforeSendPrintRequest();
@@ -956,7 +970,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 }
             });
     }
-    
+
     SendPrintRequest() {
 
         let declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
@@ -974,7 +988,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
-            "שליחת שאילתא להדפסת הצהרה", true)
+                "שליחת שאילתא להדפסת הצהרה", true)
             .then((res) => {
                 let sub =
                     this.CurrentSession.CurrentEditComponent.LoadCompleted
@@ -1007,9 +1021,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     }
 
-    
+
     ShowDocumentDeclaration() {
-       
+
         DownloadManager.DownloadPage(this._DocumentDeclarationId);
     }
     private PrintTzrufaMethod(IsAccumalated: boolean) {
@@ -1085,7 +1099,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
             logWindow.WindowArgs = args;
             logWindow.ShowCloseButton = true;
-          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
 
             logWindow.WindowClosed.subscribe(($event: any) => {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -1135,7 +1149,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
                 this.ApplyCheckMenuButtonsState(this.MenuButtons);
             }
-            
+
         });
     }
 
