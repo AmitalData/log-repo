@@ -1303,11 +1303,10 @@ export class MaintenanceComponent {
                 }
 
                 case "SUPM": {
-                    this._entityResourceService.getEntityResourceByTableName("SupportMailBox", 0).subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName("SupportMailbox", 0).subscribe(response => {
                         var windowTitle = "Support Mail Boxes";
                         var logWindow = new LogitudeWindow();
                         logWindow.Title = windowTitle;
-                        logWindow.IsShowCloseButton = true;
                         logWindow.Show('./CRMModules/CRMOthers/Components/SupportMailBox/SupportMailBoxComponent');
                     });                    
                     break;

@@ -6,6 +6,8 @@ import {NewBusinessHourAndHolidaysComponent} from './Components/BusinessHour/New
 import {AddEditBusinessHourHolidayComponent} from './Components/BusinessHour/AddEditBusinessHourHolidayComponent';
 import { TicketSettingsComponent } from './Components/TicketSettings/TicketSettingsComponent';
 import { SupportMailBoxComponent } from './Components/SupportMailBox/SupportMailBoxComponent';
+import { AddEditSupportMailBoxComponent } from './Components/SupportMailBox/AddEditSupportMailBoxComponent';
+
 //Questionnaire
 import { AddEditQuestionnaireComponent } from './Components/Questionnaire/AddEditQuestionnaireComponent';
 import { AddEditQuestionnaireQuestionComponent } from './Components/Questionnaire/AddEditQuestionnaireQuestionComponent';
@@ -26,6 +28,7 @@ export const Components =
         QuestionnaireAnswersComponent,
         AddEditPickListComponent,
         SupportMailBoxComponent,
+        AddEditSupportMailBoxComponent,
     ];
 
 export class ModuleDeclarations {
@@ -46,6 +49,7 @@ export class ModuleDeclarations {
             case "QuestionnaireAnswersComponent": { myResult = QuestionnaireAnswersComponent; break; }
             case "AddEditPickListComponent": { myResult = AddEditPickListComponent; break; }
             case "SupportMailBoxComponent": { myResult = SupportMailBoxComponent; break; }
+            case "AddEditSupportMailBoxComponent": { myResult = AddEditSupportMailBoxComponent; break; }
         }
 
         return myResult;

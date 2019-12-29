@@ -1,18 +1,18 @@
 <table>
     <tr class="FormFieldRow">
         <td>
-            <div></div>
-        </td>
+            <table>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
 
-        <td style="width:25px; min-width:25px; max-width:25px;">
-            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddMailBox()"></IconButton>
-        </td>
-    </tr>
-
-    <tr style="height:3px">
-        <td>
-            <div></div>
-        </td>
+                    <td style="width:25px; min-width:25px; max-width:25px;">
+                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddMailBox()"></IconButton>
+                    </td>
+                </tr>
+            </table>
+        </td>        
     </tr>
 
     <tr>
@@ -74,7 +74,8 @@
                                 <!-- Tools -->
                                 <td class="CellTools">
                                     <span class="CellSeparator"></span>
-                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditMailBox(item)"></IconButton>
+                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteMailBox(item)"></IconButton>
                                 </td>
                             </tr>
 

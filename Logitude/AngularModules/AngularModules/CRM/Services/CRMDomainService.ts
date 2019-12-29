@@ -14,6 +14,7 @@ import {SLAEscalationRecepientPM} from '../EntityPMs/SLAEscalationRecepientPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass'; 
 import {Guid} from '../../Infrastructure/Utilities/Guid';
 import { PerformanceLogger } from '../../Infrastructure/Utilities/PerformanceLogger';
+import { SupportMailboxPM } from '../EntityPMs/SupportMailboxPM';
 
 @Injectable()
 
@@ -1575,6 +1576,58 @@ export class CRMDomainService {
         return entityList;
     }
 
+    GetSupportMailboxsByTenant() {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSupportMailboxsByTenant?', {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+                var entity: SupportMailboxPM;
+                var allLists: SupportMailboxPM[];
+                allLists = new Array<SupportMailboxPM>();
+
+                result.forEach((item) => {
+                    entity = this.MapJsonToSupportMailboxPM(item);
+                    allLists.push(entity);
+                });
+
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = allLists;
+                return pmresponse;
+            });
+        });
+    }
+    MapJsonToSupportMailboxPM(jsonPM: any, mapParent: boolean = true, entityPM: SupportMailboxPM = null) {
+        if (!entityPM) {
+            entityPM = new SupportMailboxPM();
+        }
+
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties") {
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+
+        entityPM.IsDirty = false;
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+        }
+
+        else {
+            entityPM.OldEntityPM = null;
+        }
+
+        return entityPM;
+    }
 }
 
 export class DailySpotlightClass {
