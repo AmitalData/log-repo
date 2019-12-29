@@ -143,8 +143,8 @@ export class GLAccountInterestComponent extends BaseComponent{
                 }
 
                 var IsFailedDeleted: boolean = false;
-                this.entityArgs.EditComponent.ValidationErrorsList.forEach(s => s.includes(TextCodeTranslator.Translate("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired")) ? IsFailedDeleted=true :null);
-                if (IsFailedDeleted) {
+                this.entityArgs.EditComponent.ValidationErrorsList.forEach(s => s.includes(TextCodeTranslator.Translate("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired")) ? IsFailedDeleted = true : null);
+                if (IsFailedDeleted && !this.ActiveForInterest) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.BuildData();
