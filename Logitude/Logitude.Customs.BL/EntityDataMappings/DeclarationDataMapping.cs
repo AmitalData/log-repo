@@ -369,6 +369,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.CourierMasterId = courierMasterPM.Id;
                     entityPM.MAWBCourierMaster = courierMasterPM.MAWB;
                 }
+                bool fastWithoutCache_NotNeedName = true;
+                if (fastWithoutCache_NotNeedName)
+                {
+                    var repoDeclarationCourierStatus = new DeclarationCourierStatusRepository(entityPOCO.Tenant);
+                    var pocoDeclarationCourierStatus = repoDeclarationCourierStatus
+                        .GetDeclarationsByIds(new List<string>() { entityPOCO.Id }, entityPOCO.Tenant)
+                        .FirstOrDefault();
+                    if (pocoDeclarationCourierStatus !=null)
+                    {
+                        entityPM.CourierManifestStatusCode = pocoDeclarationCourierStatus.CourierManifestStatusCode;
+                        entityPM.CourierPaymentStatusCode = pocoDeclarationCourierStatus.CourierPaymentStatusCode;
+
+                    }
+                }
+                
             }
 
             if (entityPOCO.AcceptanceStatusCode != null)
