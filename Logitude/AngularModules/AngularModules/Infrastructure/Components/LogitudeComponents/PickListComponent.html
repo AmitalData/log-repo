@@ -510,9 +510,9 @@
                                     [class.InActive]="item.InActive">
 
                                     <div style="height:20px; font-size:10px; width:100%; position:relative; " (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
-                                        <div [style.width.px]="150"
+                                        <div 
                                              [style.min-width.px]="150"
-                                             [style.max-width]="150"
+                                             [style.max-width]="DropDownWidth"
                                              style="padding: 0px 1px; height:100%; font-size:10px; overflow:hidden;text-overflow:ellipsis; white-space:nowrap; position: relative; display: inline-block; " (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
                                             {{item.Value}}
                                         </div>
