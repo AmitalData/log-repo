@@ -1855,6 +1855,10 @@
     <Compile Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.Designer.cs">
       <DependentUpon>201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.cs" />
+    <Compile Include="Migrations\201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.Designer.cs">
+      <DependentUpon>201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
 
 
@@ -3203,6 +3207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.resx">
       <DependentUpon>201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.resx">
+      <DependentUpon>201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

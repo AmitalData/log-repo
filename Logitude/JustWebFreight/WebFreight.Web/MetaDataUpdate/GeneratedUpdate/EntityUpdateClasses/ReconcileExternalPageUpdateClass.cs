@@ -1391,7 +1391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERVT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReconcileExternalPageEventsFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconcileExternalPageObjectTable.Id, TabNameTextCodeId = ReconcileExternalPageEventsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERVT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReconcileExternalPageEventsFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconcileExternalPageObjectTable.Id, TabNameTextCodeId = ReconcileExternalPageEventsTextCode_TH0.Id, TabNameTextCodeCode = ReconcileExternalPageEventsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

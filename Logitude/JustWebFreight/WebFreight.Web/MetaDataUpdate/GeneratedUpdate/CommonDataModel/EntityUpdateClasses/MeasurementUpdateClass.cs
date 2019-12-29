@@ -685,9 +685,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MMGN",HtmlComponentName = "MeasurementGeneralComponent",HtmlComponentUrl = "./Common/Components/Maintenance/Measurement/MeasurementGeneralComponent", FeatureId = MeasurementGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.TabsControls.MeasurementGeneralTabControl", ObjectTableId = MeasurementObjectTable.Id, TabNameTextCodeId = MeasurementGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MMGN",HtmlComponentName = "MeasurementGeneralComponent",HtmlComponentUrl = "./Common/Components/Maintenance/Measurement/MeasurementGeneralComponent", FeatureId = MeasurementGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.TabsControls.MeasurementGeneralTabControl", ObjectTableId = MeasurementObjectTable.Id, TabNameTextCodeId = MeasurementGeneralTextCode_TH0.Id, TabNameTextCodeCode = MeasurementGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MeasurementEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MeasurementObjectTable.Id, TabNameTextCodeId = MeasurementEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MeasurementEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MeasurementObjectTable.Id, TabNameTextCodeId = MeasurementEventsTextCode_TH1.Id, TabNameTextCodeCode = MeasurementEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

@@ -41,6 +41,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
+            this.Property(t => t.TabNameTextCodeCode)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("ObjectTableTabs");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -51,6 +56,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IndexOrder).HasColumnName("IndexOrder");
             this.Property(t => t.ControlPath).HasColumnName("ControlPath");
             this.Property(t => t.FeatureId).HasColumnName("FeatureId");
+            this.Property(t => t.TabNameTextCodeCode).HasColumnName("TabNameTextCodeCode");
 
             // Relationships
             this.HasOptional(t => t.Feature)

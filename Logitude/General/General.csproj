@@ -647,6 +647,8 @@
     <Content Include="Main Branch\2019\11 - 2019\Day 26 [Abed] fill objectfieldcode on AdvancedQueryFilters - Copy.sql" />
     <Content Include="Main Branch\2019\11 - 2019\Day 27 [Abed] delete Constrant between advancedQueryFilters and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 01 [Samar] Opportunity Tenant Opened stage.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 23 [Wesam] Fill TabNameTextCodeCode on ObjectTableTabs.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 23 [Wesam] Delete Constraint between ObjectTableTabs and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 24 [Wesam] Delete Constraint between ObjectTable and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Wesam] Fill textcodefields on ObjectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 24 [Wesam] Fill textcodefields on ObjectTables.sql" />
