@@ -67,6 +67,8 @@ namespace WebFreight.Web.Helpers
         string supportEmail = "";
         InboundEmailGeneralHelperMethods helper;
         bool isInternalUser = false;
+        SupportMailbox supportMailBox;
+        TenantManagement tenantManagement;
 
         public InboundParseWebhook(EmailUpload emailDetails, AnalyzeQueue analyzeQueue)
         {
@@ -84,282 +86,288 @@ namespace WebFreight.Web.Helpers
             try
             {
                 helper = new InboundEmailGeneralHelperMethods(null);
-                TenantManagement tenantManagement = helper.GetTenantBySupportEmail(emailDetails.RecipientEmail);
-
+                tenantManagement = helper.GetTenantBySupportEmail(emailDetails.RecipientEmail);
+                
                 if (tenantManagement != null)
                 {
-                    supportEmail = tenantManagement.SupportEmail;
                     this.Tenant = tenantManagement.Id;
-
-                    ObjectTableRepository objectTableRepository = new ObjectTableRepository(this.Tenant);
-                    ObjectTable objectTable = objectTableRepository.GetObjectTableByName("Ticket", 0, true);
-
-                    webContext = WebFreightContext.GetContext(Tenant);
-
-                    myHeaderRep = new InboundEmailRepository(webContext);
-                    InboundEmailLineRepository repository = new InboundEmailLineRepository(webContext);
-
-                    crmContext = CRMContext.GetContext(Tenant);
-
-                    ticketRep = new TicketRepository(crmContext);
-                    CorrespondenceRepository correspondenceRep = new CorrespondenceRepository(crmContext);
-                    attachmentRep = new CorrespondencesAttachmentRepository(crmContext);
-
-                    contactRepository = new ContactRepository(Tenant);
-                    userRepository = new UserRepository(Tenant);
-
-                    Contact contact = contactRepository.GetSingleContactByEmailSpecificTenant(emailDetails.Sender, Tenant);
-
-                    // Ticket Classification 
-                    TicketClassificationRepository ticketClassificationRep = new TicketClassificationRepository(crmContext);
-                    TicketClassification classification = ticketClassificationRep.GetTicketClassificationByName("General", Tenant);
-
-                    //Ticket Stage 
-                    TicketStageRepository stageRep = new TicketStageRepository(crmContext);
-                    TicketStage stage = stageRep.GetTicketStageByCode("OP", Tenant);
-
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    supportMailBox = this.CheckIfSupportMailBoxExist(tenantManagement.SupportDomain);
+                    if (supportMailBox != null)
                     {
-                        #region Contact
-                        string contactId = null;
-                        string companyId = null;
+                        ObjectTableRepository objectTableRepository = new ObjectTableRepository(this.Tenant);
+                        ObjectTable objectTable = objectTableRepository.GetObjectTableByName("Ticket", 0, true);
 
+                        webContext = WebFreightContext.GetContext(Tenant);
 
-                        if (contact == null)
+                        myHeaderRep = new InboundEmailRepository(webContext);
+                        InboundEmailLineRepository repository = new InboundEmailLineRepository(webContext);
+
+                        crmContext = CRMContext.GetContext(Tenant);
+
+                        ticketRep = new TicketRepository(crmContext);
+                        CorrespondenceRepository correspondenceRep = new CorrespondenceRepository(crmContext);
+                        attachmentRep = new CorrespondencesAttachmentRepository(crmContext);
+
+                        contactRepository = new ContactRepository(Tenant);
+                        userRepository = new UserRepository(Tenant);
+
+                        Contact contact = contactRepository.GetSingleContactByEmailSpecificTenant(emailDetails.Sender, Tenant);
+
+                        // Ticket Classification 
+                        TicketClassificationRepository ticketClassificationRep = new TicketClassificationRepository(crmContext);
+                        TicketClassification classification = ticketClassificationRep.GetTicketClassificationByName("General", Tenant);
+
+                        //Ticket Stage 
+                        TicketStageRepository stageRep = new TicketStageRepository(crmContext);
+                        TicketStage stage = stageRep.GetTicketStageByCode("OP", Tenant);
+
+                        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                         {
-                            UserQuery userQuery = new UserQuery(Tenant);
-                            UserPM user = userQuery.GetSingleUserByEmailOrIdAndTenantOrTenantZero(null, emailDetails.Sender, Tenant);
+                            #region Contact
+                            string contactId = null;
+                            string companyId = null;
 
-                            if (user == null || (user != null && !user.IsCustomerCare))
+
+                            if (contact == null)
                             {
-                                contactId = IdCounter.GetNumber("Contact", Tenant).ToString();
-                                string englishname = "";
-                                if (!string.IsNullOrEmpty(emailDetails.Sender))
-                                {
-                                    englishname = emailDetails.Sender.Split('@')[0].ToString();
-                                }
-                                // create new contact 
-                                contact = new Contact()
-                                {
-                                    Id = contactId,
-                                    Tenant = Tenant,
-                                    Email = helper.GetCorrectEmailFormat(emailDetails.Sender),
-                                    EnglishName = englishname,
-                                    UserType = "R",
-                                    ComputedKey = (!string.IsNullOrEmpty(emailDetails.Sender) ? emailDetails.Sender : contactId),
-                                    SearchFields = englishname + "," + emailDetails.Sender,
-                                };
-                                contactRepository.Add(contact);
-                                contactRepository.SubmitChanges();
-                            }
-                            else
-                            {
-                                contact = contactRepository.GetSingleContactByEmailSpecificTenant(emailDetails.Sender, 0);
-                                if (contact != null)
-                                {
-                                    contactId = contact.Id;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            contactId = contact.Id;
-                            CardContactRepository myCardContactRepository = new CardContactRepository(Tenant);
-                            CardRepository myCardRepository = new CardRepository(Tenant);
+                                UserQuery userQuery = new UserQuery(Tenant);
+                                UserPM user = userQuery.GetSingleUserByEmailOrIdAndTenantOrTenantZero(null, emailDetails.Sender, Tenant);
 
-                            List<CardContact> listCardContact = myCardContactRepository.GetCardContactForContact(contactId, Tenant);
-
-                            if (listCardContact != null)
-                            {
-                                if (listCardContact.Count() == 1)
+                                if (user == null || (user != null && !user.IsCustomerCare))
                                 {
-                                    companyId = listCardContact.FirstOrDefault().CardId;
-                                }
-
-                                else if (listCardContact.Count() > 1)
-                                {
-                                    List<Card> listCard = myCardRepository.GetAllCardsByContactId(contactId, Tenant);
-
-                                    if (listCard.Count() == 1)
+                                    contactId = IdCounter.GetNumber("Contact", Tenant).ToString();
+                                    string englishname = "";
+                                    if (!string.IsNullOrEmpty(emailDetails.Sender))
                                     {
-                                        companyId = listCard.FirstOrDefault().Id;
+                                        englishname = emailDetails.Sender.Split('@')[0].ToString();
+                                    }
+                                    // create new contact 
+                                    contact = new Contact()
+                                    {
+                                        Id = contactId,
+                                        Tenant = Tenant,
+                                        Email = helper.GetCorrectEmailFormat(emailDetails.Sender),
+                                        EnglishName = englishname,
+                                        UserType = "R",
+                                        ComputedKey = (!string.IsNullOrEmpty(emailDetails.Sender) ? emailDetails.Sender : contactId),
+                                        SearchFields = englishname + "," + emailDetails.Sender,
+                                    };
+                                    contactRepository.Add(contact);
+                                    contactRepository.SubmitChanges();
+                                }
+                                else
+                                {
+                                    contact = contactRepository.GetSingleContactByEmailSpecificTenant(emailDetails.Sender, 0);
+                                    if (contact != null)
+                                    {
+                                        contactId = contact.Id;
                                     }
                                 }
                             }
-                        }
-
-                        #endregion
-
-                        isInternalUser = CheckedIfSenderInternaluser();
-                        IsContactUser = CheckIfSenderIsUser(contactId);
-
-                        string supportEmailHeader = emailDetails.RecipientEmail.ToLower().Split('@')[0];
-
-                        #region Ticket & Header
-                        if (!supportEmailHeader.Contains('+'))
-                        {
-                            IsFirstTicket = true;
-                            CreateNewTicketWithInboundEmail(contactId, companyId, objectTable.Id, classification, stage);
-                        }
-
-                        else
-                        {
-                            IsFirstTicket = false;
-                            string headerid = GetInboundEmailId(emailDetails.RecipientEmail.ToLower());
-                            myHeader = myHeaderRep.webFreightContext.InboundEmails.Where(d => d.Id == headerid).FirstOrDefault();
-                            TicketQueryService myQuery = new TicketQueryService(Tenant);
-                            myTicket = myQuery.GetSingle(myHeader.EntityId, true, false);
-                            myTicket.ChangeSetOp = ChangeSetOperation.Update;
-                            myTicket.IsCreatedFromOutSide = true;
-                            strippedBody = StrippedBodyPlain(emailDetails.StrippedBodyPlain);
-                            // owner reply from outside 
-                            if ((contactId != null && contactId == myTicket.OwnerId) && !isInternalUser)
+                            else
                             {
-                                if (myTicket.FirstResponseTime == null)
+                                contactId = contact.Id;
+                                CardContactRepository myCardContactRepository = new CardContactRepository(Tenant);
+                                CardRepository myCardRepository = new CardRepository(Tenant);
+
+                                List<CardContact> listCardContact = myCardContactRepository.GetCardContactForContact(contactId, Tenant);
+
+                                if (listCardContact != null)
                                 {
-                                    myTicket.FirstResponseTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                                    if (listCardContact.Count() == 1)
+                                    {
+                                        companyId = listCardContact.FirstOrDefault().CardId;
+                                    }
+
+                                    else if (listCardContact.Count() > 1)
+                                    {
+                                        List<Card> listCard = myCardRepository.GetAllCardsByContactId(contactId, Tenant);
+
+                                        if (listCard.Count() == 1)
+                                        {
+                                            companyId = listCard.FirstOrDefault().Id;
+                                        }
+                                    }
                                 }
-                            }
-                        }
-
-                        //creating a new ticket is allowed for users only
-                        if (!IsFirstTicket)
-                        {
-                            #region Ticket Stages
-
-                            if (myTicket.StageCode == "RE" || myTicket.StageCode == "WC")
-                            {
-                                TicketStage myStage = stageRep.GetTicketStageByCode("OP", Tenant);
-                                myTicket.StageId = myStage.Id;
-                                myTicket.StageCode = myStage.Code;
-                                myTicket.StageName = myStage.Name;
                             }
 
                             #endregion
 
-                            if (IsFirstTicket)
+                            isInternalUser = CheckedIfSenderInternaluser();
+                            IsContactUser = CheckIfSenderIsUser(contactId);
+
+                            string supportEmailHeader = emailDetails.RecipientEmail.ToLower().Split('@')[0];
+
+                            #region Ticket & Header
+                            if (!supportEmailHeader.Contains('+'))
                             {
-                                User myUser = userRepository.GetSingleUser(contact.Id, Tenant, false);
-                                if (myUser != null)
+                                IsFirstTicket = true;
+                                CreateNewTicketWithInboundEmail(contactId, companyId, objectTable.Id, classification, stage);
+                            }
+
+                            else
+                            {
+                                IsFirstTicket = false;
+                                string headerid = GetInboundEmailId(emailDetails.RecipientEmail.ToLower());
+                                myHeader = myHeaderRep.webFreightContext.InboundEmails.Where(d => d.Id == headerid).FirstOrDefault();
+                                TicketQueryService myQuery = new TicketQueryService(Tenant);
+                                myTicket = myQuery.GetSingle(myHeader.EntityId, true, false);
+                                myTicket.ChangeSetOp = ChangeSetOperation.Update;
+                                myTicket.IsCreatedFromOutSide = true;
+                                strippedBody = StrippedBodyPlain(emailDetails.StrippedBodyPlain);
+                                // owner reply from outside 
+                                if ((contactId != null && contactId == myTicket.OwnerId) && !isInternalUser)
                                 {
-                                    myTicket.InternalUsers = this.AppendEmails(myTicket.InternalUsers, contact.Email);
+                                    if (myTicket.FirstResponseTime == null)
+                                    {
+                                        myTicket.FirstResponseTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                                    }
                                 }
                             }
+
+                            //creating a new ticket is allowed for users only
+                            if (!IsFirstTicket)
+                            {
+                                #region Ticket Stages
+
+                                if (myTicket.StageCode == "RE" || myTicket.StageCode == "WC")
+                                {
+                                    TicketStage myStage = stageRep.GetTicketStageByCode("OP", Tenant);
+                                    myTicket.StageId = myStage.Id;
+                                    myTicket.StageCode = myStage.Code;
+                                    myTicket.StageName = myStage.Name;
+                                }
+
+                                #endregion
+
+                                if (IsFirstTicket)
+                                {
+                                    User myUser = userRepository.GetSingleUser(contact.Id, Tenant, false);
+                                    if (myUser != null)
+                                    {
+                                        myTicket.InternalUsers = this.AppendEmails(myTicket.InternalUsers, contact.Email);
+                                    }
+                                }
+                            }
+
+                            #endregion
+
+                            #region  Correspondence & Line
+                            string correspondenceId = IdCounter.GetNumber("Correspondence", Tenant).ToString();
+
+                            string myRecipientEmail = emailDetails.RecipientEmail;
+                            if (emailDetails.RecipientEmail != null && emailDetails.RecipientEmail.Contains("-in"))
+                            {
+                                myRecipientEmail = emailDetails.RecipientEmail.Split(new string[] { "-in" }, StringSplitOptions.None)[0].ToString() + emailDetails.RecipientEmail.Split(new string[] { "-in" }, StringSplitOptions.None)[1].ToString();
+                            }
+
+                            if (emailDetails.RecipientEmail != null && emailDetails.RecipientEmail.Contains("-ex"))
+                            {
+                                myRecipientEmail = emailDetails.RecipientEmail.Split(new string[] { "-ex" }, StringSplitOptions.None)[0].ToString() + emailDetails.RecipientEmail.Split(new string[] { "-ex" }, StringSplitOptions.None)[1].ToString();
+                            }
+
+                            string mySender = emailDetails.Sender;
+                            if (emailDetails.Sender != null && emailDetails.Sender.Contains("-in"))
+                            {
+                                mySender = emailDetails.Sender.Split(new string[] { "-in" }, StringSplitOptions.None)[0].ToString() + emailDetails.Sender.Split(new string[] { "-in" }, StringSplitOptions.None)[1].ToString();
+                            }
+
+                            if (emailDetails.Sender != null && emailDetails.Sender.Contains("-ex"))
+                            {
+                                mySender = emailDetails.Sender.Split(new string[] { "-ex" }, StringSplitOptions.None)[0].ToString() + emailDetails.Sender.Split(new string[] { "-ex" }, StringSplitOptions.None)[1].ToString();
+                            }
+
+                            // Inbound Line
+                            emailLine = new InboundEmailLine()
+                            {
+                                Id = IdCounter.GetNumber("InboundEmailLine", Tenant).ToString(),
+                                Tenant = this.Tenant,
+                                Sender = mySender,
+                                Recepient = myRecipientEmail,
+                                Subject = TruncateLongString(emailDetails.Subject, 250),
+                                Body = strippedBody,
+                                CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
+                                Direction = "I",
+                                InboundEmailId = myHeader.Id,
+                                EntityLineId = correspondenceId, /// Not completely 
+                                FullBody = emailDetails.FullBodyPlain,
+                                HTMLFullBody = emailDetails.BodyHtml,
+                            };
+
+                            CheckLineCcInternalUsers(null, emailLine);
+
+                            //if the internal user forward a message to the system, add him as the contact and to the notify internal 
+                            if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
+                            {
+                                emailLine.InternalUsers = this.AppendEmails(emailLine.InternalUsers, emailDetails.Sender);
+                            }
+
+                            repository.Add(emailLine);
+
+
+                            // Correspondnce Line
+                            CorrespondenceLine = new Correspondence()
+                            {
+                                Id = correspondenceId,
+                                Tenant = Tenant,
+                                EntityId = myTicket.Id,
+                                CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
+                                CreatedByContactId = contactId,
+                                IsInternal = isInternalUser,
+                                Description = strippedBody,
+                                ObjectTableId = objectTable.Id,
+                                NotifyMe = false,
+                                NotifyOwner = true,
+                                Direction = "I",
+                                HTMLFullBody = emailDetails.BodyHtml,
+                            };
+
+                            CheckLineCcInternalUsers(CorrespondenceLine, null);
+
+                            //if the internal user forward a message to the system, add him as the contact and to the notify internal 
+                            if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
+                            {
+                                CorrespondenceLine.IsInternal = false;
+                                CorrespondenceLine.InternalUsers = this.AppendEmails(CorrespondenceLine.InternalUsers, emailDetails.Sender);
+                            }
+
+                            correspondenceRep.Add(CorrespondenceLine);
+
+                            #region Attatchemnts
+
+                            if (emailDetails.AttachmentsFiles.Count > 0)
+                            {
+                                AttatchmetnsProcessing();
+                            }
+
+                            #endregion
+
+                            this.SendOtherCcInternalUsers();
+
+                            TicketUpdateService service = new TicketUpdateService(crmContext, new Dictionary<string, IContext>(), Tenant);
+                            service.Update(myTicket, true);
+                            #endregion
+
+                            webContext.SaveChanges();
+                            crmContext.SaveChanges();
+
+                            if (this.AnalyzeQueue != null)
+                            {
+                                this.AnalyzeQueue.EntityReference = myTicket.TicketNumber;
+                            }
+
+                            if (myTicket != null && CorrespondenceLine != null)
+                            {
+                                InboundEmailService inboundEmailService = new InboundEmailService(webContext);
+                                inboundEmailService.SendEmail(emailLine, myTicket.TicketNumber, myTicket.ContactId, myTicket.OwnerId, CorrespondenceLine.CreatedByContactId, myTicket.GuidId, myTicket.Id, CorrespondenceLine.ObjectTableId, myHeader.ObjectTableId);
+                            }
+
+                            scope.Complete();
                         }
-
-                        #endregion
-
-                        #region  Correspondence & Line
-                        string correspondenceId = IdCounter.GetNumber("Correspondence", Tenant).ToString();
-
-                        string myRecipientEmail = emailDetails.RecipientEmail;
-                        if (emailDetails.RecipientEmail != null && emailDetails.RecipientEmail.Contains("-in"))
-                        {
-                            myRecipientEmail = emailDetails.RecipientEmail.Split(new string[] { "-in" }, StringSplitOptions.None)[0].ToString() + emailDetails.RecipientEmail.Split(new string[] { "-in" }, StringSplitOptions.None)[1].ToString();
-                        }
-
-                        if (emailDetails.RecipientEmail != null && emailDetails.RecipientEmail.Contains("-ex"))
-                        {
-                            myRecipientEmail = emailDetails.RecipientEmail.Split(new string[] { "-ex" }, StringSplitOptions.None)[0].ToString() + emailDetails.RecipientEmail.Split(new string[] { "-ex" }, StringSplitOptions.None)[1].ToString();
-                        }
-
-                        string mySender = emailDetails.Sender;
-                        if (emailDetails.Sender != null && emailDetails.Sender.Contains("-in"))
-                        {
-                            mySender = emailDetails.Sender.Split(new string[] { "-in" }, StringSplitOptions.None)[0].ToString() + emailDetails.Sender.Split(new string[] { "-in" }, StringSplitOptions.None)[1].ToString();
-                        }
-
-                        if (emailDetails.Sender != null && emailDetails.Sender.Contains("-ex"))
-                        {
-                            mySender = emailDetails.Sender.Split(new string[] { "-ex" }, StringSplitOptions.None)[0].ToString() + emailDetails.Sender.Split(new string[] { "-ex" }, StringSplitOptions.None)[1].ToString();
-                        }
-
-                        // Inbound Line
-                        emailLine = new InboundEmailLine()
-                        {
-                            Id = IdCounter.GetNumber("InboundEmailLine", Tenant).ToString(),
-                            Tenant = this.Tenant,
-                            Sender = mySender,
-                            Recepient = myRecipientEmail,
-                            Subject = TruncateLongString(emailDetails.Subject, 250),
-                            Body = strippedBody,
-                            CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
-                            Direction = "I",
-                            InboundEmailId = myHeader.Id,
-                            EntityLineId = correspondenceId, /// Not completely 
-                            FullBody = emailDetails.FullBodyPlain,
-                            HTMLFullBody = emailDetails.BodyHtml,
-                        };
-
-                        CheckLineCcInternalUsers(null, emailLine);
-
-                        //if the internal user forward a message to the system, add him as the contact and to the notify internal 
-                        if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
-                        {
-                            emailLine.InternalUsers = this.AppendEmails(emailLine.InternalUsers, emailDetails.Sender);
-                        }
-
-                        repository.Add(emailLine);
-
-
-                        // Correspondnce Line
-                        CorrespondenceLine = new Correspondence()
-                        {
-                            Id = correspondenceId,
-                            Tenant = Tenant,
-                            EntityId = myTicket.Id,
-                            CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
-                            CreatedByContactId = contactId,
-                            IsInternal = isInternalUser,
-                            Description = strippedBody,
-                            ObjectTableId = objectTable.Id,
-                            NotifyMe = false,
-                            NotifyOwner = true,
-                            Direction = "I",
-                            HTMLFullBody = emailDetails.BodyHtml,
-                        };
-
-                        CheckLineCcInternalUsers(CorrespondenceLine, null);
-
-                        //if the internal user forward a message to the system, add him as the contact and to the notify internal 
-                        if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
-                        {
-                            CorrespondenceLine.IsInternal = false;
-                            CorrespondenceLine.InternalUsers = this.AppendEmails(CorrespondenceLine.InternalUsers, emailDetails.Sender);
-                        }
-
-                        correspondenceRep.Add(CorrespondenceLine);
-
-                        #region Attatchemnts
-
-                        if (emailDetails.AttachmentsFiles.Count > 0)
-                        {
-                            AttatchmetnsProcessing();
-                        }
-
-                        #endregion
-
-                        this.SendOtherCcInternalUsers();
-
-                        TicketUpdateService service = new TicketUpdateService(crmContext, new Dictionary<string, IContext>(), Tenant);
-                        service.Update(myTicket, true);
-                        #endregion
-
-                        webContext.SaveChanges();
-                        crmContext.SaveChanges();
-
-                        if (this.AnalyzeQueue != null)
-                        {
-                            this.AnalyzeQueue.EntityReference = myTicket.TicketNumber;
-                        }
-
-                        if (myTicket != null && CorrespondenceLine != null)
-                        {
-                            InboundEmailService inboundEmailService = new InboundEmailService(webContext);
-                            inboundEmailService.SendEmail(emailLine, myTicket.TicketNumber, myTicket.ContactId, myTicket.OwnerId, CorrespondenceLine.CreatedByContactId, myTicket.GuidId, myTicket.Id, CorrespondenceLine.ObjectTableId, myHeader.ObjectTableId);
-                        }
-
-                        scope.Complete();
+                    }
+                    else
+                    {
+                        this.SendNotExistMailboxEmail();
                     }
                 }
                 else
@@ -374,6 +382,20 @@ namespace WebFreight.Web.Helpers
                 AzureLog.SaveLogsInStorage("Inbound Parse Webhook error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
                 throw errorInfo;
             }
+        }
+
+        private SupportMailbox CheckIfSupportMailBoxExist(string supportDomain)
+        {
+            SupportMailbox supportMailbox = null;
+            var emails = helper.GetSupportEmail(helper.GetListOfFilteredEmails(emailDetails.RecipientEmail));
+            var mailBoxEmail = emails.Where(a => a.Contains(supportDomain)).FirstOrDefault();
+            if(mailBoxEmail != null)
+            {
+                this.supportEmail = mailBoxEmail;
+                SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(Tenant);
+                supportMailbox = mailboxRepository.GetSingleMailBoxByMailBoxName(mailBoxEmail.Split('@')[0], Tenant);
+            }
+            return supportMailbox;
         }
 
         private void SendNotExistMailboxEmail()
@@ -412,7 +434,7 @@ namespace WebFreight.Web.Helpers
                 {
                     ip = HttpContext.Current.Request.UserHostAddress;
                 }
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Ticket Not Exist mailbox Communicationlog", null, ip);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "MailBox of Ticket does Not Exist - Communicationlog", null, ip);
             }
         }
 
@@ -446,7 +468,6 @@ namespace WebFreight.Web.Helpers
                 DocumentId = id,
                 SearchFields = "ticketalert" + "," + subject,
                 CreateDateUTC = DateTime.UtcNow,
-                EntityId = myTicket.Id,
                 ObjectTableId = objectTableId,
             };
 
@@ -476,8 +497,17 @@ namespace WebFreight.Web.Helpers
         {
             StringBuilder HtmlTemplate = new StringBuilder();
             StringBuilder EnvelopeHtmlTemplate = new StringBuilder();
-            EnvelopeHtmlTemplate.Append("Dear [Sender],  \n\n The mailbox [full address] doesn't exist, please resend the ticket to [default mailbox] or any other defined mailbox. \n\n Regards");
+            EnvelopeHtmlTemplate.Append("Dear "+ emailDetails.Sender+ ",  <br /><br /> The mailbox " +  this.supportEmail +" doesn't exist, please resend the ticket to " + this.GetDefaultMailBox() + " or any other defined mailbox. <br /><br /> Regards");
             return EnvelopeHtmlTemplate.ToString();
+        }
+
+        private string GetDefaultMailBox()
+        {
+            var defaultMailBox = "";
+            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(Tenant);
+            SupportMailbox supportMailbox = mailboxRepository.GetDefaultMailBox(Tenant);
+            defaultMailBox = supportMailbox != null ? supportMailbox.Mailbox.Trim() + "@"+ tenantManagement.SupportDomain.Trim() : "";
+            return defaultMailBox;
         }
 
         private bool CheckIfSenderIsUser(string contactId)

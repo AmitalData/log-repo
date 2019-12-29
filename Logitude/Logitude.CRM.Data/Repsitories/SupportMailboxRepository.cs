@@ -34,6 +34,13 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.IsDefault && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+
+        public SupportMailbox GetSingleMailBoxByMailBoxName(string mailBox, int tenant)
+        {
+            return (from a in context.SupportMailboxes
+                    where a.Mailbox == mailBox && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
     }
 
 }
