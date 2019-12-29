@@ -105,10 +105,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
-                QueryColumnRepository repo = new QueryColumnRepository(tenant);
-                var temp = repo.GetSingleQueryColumn(id,tenant);
-                if (temp != null)
+                IWebFreightContext objectContext = WebFreightContext.GetContext(authToken.Tenant);
+                QueryColumnRepository repo = new QueryColumnRepository(authToken.Tenant);
+                var temp = repo.GetSingleQueryColumn(id, tenant);
+                if (temp != null && tenant != 0)
                 {
                     repo.Remove(temp);
                     repo.SubmitChanges();

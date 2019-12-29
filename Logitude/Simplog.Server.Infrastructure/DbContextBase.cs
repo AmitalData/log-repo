@@ -495,7 +495,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         where returnType : struct
         {
             Debug.WriteLine(sqlReturn1Row);
-            sqlReturn1Row = sqlReturn1Row.TrimEnd(" "[0]).TrimEnd(";"[0]);
+            ////sqlReturn1Row = sqlReturn1Row.TrimEnd(" "[0]).TrimEnd(";"[0]);
             using (var command = this.Database.Connection.CreateCommand())
             {
 

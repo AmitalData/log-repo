@@ -51,7 +51,7 @@ BEGIN
       WHERE Id            = v_MessageId;
     END;
   END IF;
-END");
+END;");
 
             this.AddUpSqlScript(@"create or replace PROCEDURE Queue_Peek(
     v_MessageId OUT NUMBER,
@@ -115,7 +115,7 @@ BEGIN
   CLOSE c_1;
 END;
   
-END");
+END;");
             this.AddUpSqlScript(
                 @"CREATE OR REPLACE PROCEDURE queue_setstatus (
     v_messageid   IN   NUMBER,
@@ -173,7 +173,7 @@ BEGIN
     WHERE
         id = v_messageid;
 
-END");
+END;");
 
             
             

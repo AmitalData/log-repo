@@ -2259,6 +2259,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
             _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList(3);
             _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList();
+            if(_CCUFILEMPM.ALLPRATMEHESLIST.Length > 1024) _CCUFILEMPM.ALLPRATMEHESLIST = _CCUFILEMPM.ALLPRATMEHESLIST.Substring(0, 1024);
 
 
             CreateCCUTRANSPVAL();

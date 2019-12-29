@@ -158,7 +158,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "PatchDistributionForm";
-            this.Text = "PatchDistributionForm";
+            this.Text = "Update-Database";
             this.Load += new System.EventHandler(this.PatchDistributionForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
