@@ -199,14 +199,6 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.ClosedMonth)) {
 
-            // begin: invoice row logic
-            if (this.EntityPM.PeriodTypeCode == "2") { //2-invoice
-                if (this.ClosedMonth+1 < this.accountingPeriod.ClosedMonth) {
-                    return;
-                }
-            }
-            //end
-
             if (this.ClosedMonth == 12)
                 return;
 
