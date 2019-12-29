@@ -1,3 +1,4 @@
+/// <reference path="../../../../../quotemodules/quoteothers/components/quotation/attachmentquotationcomponent.ts" />
 
 declare var window: any;
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
@@ -33,6 +34,9 @@ import {TicketPMService} from '../../../../../CRM/Services/StandardPMs/TicketPMS
 import {TicketClosureArgs} from '../../../../../CRM/Args';
 import {DownloadManager} from '../../../../../Infrastructure/Utilities/DownloadManager';
 import {QuoteDocumentVersionExtendedPMService} from '../../../../../Quote/Services/ExtendedPMs/QuoteDocumentVersionExtendedPMService';
+import {QuoteDocumentVersionPM} from '../../../../../Quote/EntityPMs/QuoteDocumentVersionPM';
+import {AttachmentsList} from '../../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
+
 
 @Component({
     moduleId: './CRMModules/CRMTickets/Components/EditTabs/MainTab/',
@@ -61,6 +65,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
         super();
         this.TenantPM = InfraSettings.TenantPM;
         this.TicketObjectTable = window.ObjectTables.filter(x => x.Name === "Ticket")[0];
+
     }
     ngOnInit() {
 
@@ -78,7 +83,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     Initialize() {
         this.InitializeLists();
         this.InitializeServices();
-        this.AddQuoationAttachemnt();
+        this.GetQuotationAttachment();
         this.CreateCorrespondence();
         this.InternalExternalEmailChecking();
         this.GetDocumentType();
@@ -785,27 +790,52 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
 
 
-    AddQuoationAttachemnt() {
+
+
+    QuotationAttachmentsLists: AttachmentsArgs[];
+    AddQuotationAttachemnt() {
+        if (this.ShowQuotationAttachmentLink == true) {
+            var windowArgs: any = {};
+            windowArgs.QuotationAttachmentsLists = this.QuotationAttachmentsLists;
+            windowArgs.TriggerViewModel = this;
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Width = 800;
+            logitudeWindow.Height = 500;
+            logitudeWindow.Title = "Attach Quotation";
+            logitudeWindow.WindowArgs = windowArgs;
+            logitudeWindow.Show("./QuoteModules/QuoteOthers/Components/Quotation/AttachmentQuotationComponent");
+        }
+
+    }
+
+    ShowQuotationAttachmentLink: boolean = false;
+    GetQuotationAttachment() {
         if (this.Ticket) {
             if (this.Ticket.EntityType && this.Ticket.QuoteId) {
                 var externalEntityObject: any = window.ObjectTables.filter(d => d.Id === this.Ticket.EntityType)[0];
                 if (externalEntityObject && externalEntityObject.Name == "Quote") {
                     if (this.quoteDocumentVersionExtendedPMService == null) this.quoteDocumentVersionExtendedPMService = new QuoteDocumentVersionExtendedPMService();
+                    this.QuotationAttachmentsLists = [];
+                    this.CurrentSession.StartBusyIndicatorLoading();
                     this.quoteDocumentVersionExtendedPMService.GetQuoteDocumentVersionByQuoteId(this.Ticket.QuoteId).subscribe((myResponse: ServiceResponse) => {
+                        this.CurrentSession.StopBusyIndicator();
                         if (!myResponse.HasError) {
-                            var quoteDocumentVersion: any = myResponse.Result;
-                            if (quoteDocumentVersion) {
-                                var attachment: AttachmentsArgs = new AttachmentsArgs(null);
-                                var fileName: string = "Quotation-" + this.Ticket.QuoteNumber + "-" + quoteDocumentVersion.VersionNumber;
-                                var attachment = new AttachmentsArgs(null);
-                                attachment.Tenant = SessionLocator.Tenant;
-                                attachment.FileName = fileName;
-                                attachment.FileSize = quoteDocumentVersion.FileSize;
-                                attachment.DocumentId = quoteDocumentVersion.DocumentId;
-                                attachment.FileExtension = quoteDocumentVersion.Extension;
-                                
-                                if (!this.AttachmentsList) this.AttachmentsList = [];
-                                this.AttachmentsList.push(attachment);
+                            var quoteDocumentVersionLists: any[] = myResponse.Result;
+                            if (quoteDocumentVersionLists && quoteDocumentVersionLists.length >0) {
+                                this.ShowQuotationAttachmentLink = true;
+                                quoteDocumentVersionLists.forEach(quoteDocumentVersion => {
+
+                                    var attachment: AttachmentsArgs = new AttachmentsArgs(null);
+                                    var fileName: string = "Quotation-" + this.Ticket.QuoteNumber + "-" + quoteDocumentVersion.VersionNumber;
+                                    attachment.Tenant = SessionLocator.Tenant;
+                                    attachment.FileName = fileName;
+                                    attachment.FileSize = quoteDocumentVersion.FileSize;
+                                    attachment.DocumentId = quoteDocumentVersion.DocumentId;
+                                    attachment.FileExtension = quoteDocumentVersion.Extension;
+                                    this.QuotationAttachmentsLists.push(attachment);
+                                });
+
+     
                             }
                         }
                     });
