@@ -109,8 +109,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                                           VersionTypeName = a.VersionType == "G" ? "Generated" : "Uploaded",
                                                                           FileName = a.Doc != null ? a.Doc.FileName : null,
                                                                           FileSize = a.Doc != null ? a.Doc.FileSize : null,
+                                                                          Extension = a.Doc != null ? a.Doc.Extension : null,
                                                                       };
-            return quoteDocumentVersion;
+            return quoteDocumentVersion.OrderBy(d=>d.VersionNumber);
         }
 
         public IQueryable<QuoteDocumentVersionPM> GetQuoteDocumentVersionPMsByQuoteIdAndTemplateId(string quoteId,string templateId ,int tenant)

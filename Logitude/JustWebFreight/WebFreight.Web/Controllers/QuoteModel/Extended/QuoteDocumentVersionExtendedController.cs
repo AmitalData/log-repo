@@ -26,8 +26,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteDocumentVersionQuery quoteDocumentVersionQuery = new QuoteDocumentVersionQuery(authToken.Tenant);
-                QuoteDocumentVersionPM quoteDocumentVersionPM = quoteDocumentVersionQuery.GetQuoteDocumentVersionPMByQuoteId(quoteId, authToken.Tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, quoteDocumentVersionPM);
+                List<QuoteDocumentVersionPM> quoteDocumentVersionPMLists = quoteDocumentVersionQuery.GetQuoteDocumentVersionPMsByQuoteId(quoteId, authToken.Tenant).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, quoteDocumentVersionPMLists);
             }
             catch (Exception ex)
             {
