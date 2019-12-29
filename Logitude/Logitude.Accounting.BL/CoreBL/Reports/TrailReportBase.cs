@@ -391,6 +391,17 @@ into groupBy_currency
                 GetFileContolAcc(_FullAccountingSetting))
                 //.Where(a => !a.Inactive)
                 ;
+            if (_TrailReportParam.GLAccountLevel_ChartOfAccountsIdList.Count > 0)
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(r => _TrailReportParam.GLAccountLevel_ChartOfAccountsIdList.Contains(r.ChartOfAccountsId));
+            }
+            if (_TrailReportParam.GLAccountLevel_ChartOfAccountsTypeCodeList.Count > 0)
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(r => _TrailReportParam.GLAccountLevel_ChartOfAccountsTypeCodeList.Contains(r.ChartOfAccountsTypeCode));
+            }
+
             if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
             {
                 myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
@@ -543,10 +554,33 @@ into groupBy_currency
     {
         public static ITrailReportBase CreateNew(TrailReportParam trailReportParam)
         {
-           
 
+            if (ReportLevel.GLAccount == trailReportParam.MyTrailReportLevel)
+            {
+                if (
+                    trailReportParam.GLAccountLevel_ChartOfAccountsIdList.Count>0
+                    &&
+                    trailReportParam.GLAccountLevel_ChartOfAccountsTypeCodeList.Count>0
+                    )
+                {
+                    throw new Exception("אנחנו נאפשר למשתמש להשתמש רק באחד מבין 2 הפילטרים החדשים!!!"
+                        + Environment.NewLine
+                        + " GLAccountLevel_ChartOfAccountsIdList/GLAccountLevel_ChartOfAccountsTypeCodeList "
+                        );
+                }
+            }
             if (ReportLevel.GLAccount != trailReportParam.MyTrailReportLevel && ! trailReportParam.Skip)
             {
+                if (trailReportParam.GLAccountLevel_ChartOfAccountsIdList.Count>0)
+                {
+                    throw new Exception("Only in TrailReportLevel.GLAccount GLAccountLevel_ChartOfAccountsIdList is allowed !!!");
+                }
+                if (trailReportParam.GLAccountLevel_ChartOfAccountsTypeCodeList.Count>0)
+                {
+                    throw new Exception("Only in TrailReportLevel.GLAccount GLAccountLevel_ChartOfAccountsTypeCodeList is allowed !!!");
+                }
+
+
                 if (trailReportParam.DetailedControlClients
                     ||
                     trailReportParam.DetailedControlFile

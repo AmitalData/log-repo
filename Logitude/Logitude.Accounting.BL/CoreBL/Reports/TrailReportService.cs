@@ -962,8 +962,40 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
         public bool IsRevenueExpenseReport { get; set; }
+
+
+
+        #region Task 60992: Trial Balance- New filters + multiple choice
+        /// <summary>
+        /// new filter Chart Of Account type with multiple choice option.
+        /// </summary>
+        List<string> _GLAccountLevel_ChartOfAccountsTypeCodeList;
+        public List<string> GLAccountLevel_ChartOfAccountsTypeCodeList {
+            get { 
+                _GLAccountLevel_ChartOfAccountsTypeCodeList = _GLAccountLevel_ChartOfAccountsTypeCodeList ?? new List<string>();
+                return _GLAccountLevel_ChartOfAccountsTypeCodeList;
+            }
+            set
+            {
+
+            }
+        }
+        /// <summary>
+        /// change the filter Chart Of Account to  multiple choice option. 
+        /// </summary>
+        List<string> _GLAccountLevel_ChartOfAccountsIdList;
+        public List<string> GLAccountLevel_ChartOfAccountsIdList 
+        {
+            get {
+                _GLAccountLevel_ChartOfAccountsIdList = _GLAccountLevel_ChartOfAccountsIdList ?? new List<string>();
+                return _GLAccountLevel_ChartOfAccountsIdList;
+            }
+            set { _GLAccountLevel_ChartOfAccountsIdList = value; }
+        }
+        #endregion
+
     }
-   
+
 
     public enum ReportLevel
     {
