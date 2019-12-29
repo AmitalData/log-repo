@@ -101,10 +101,23 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                     TariffType tariffType = GetTariffType(a.TypeCode, tenant);
                     list.TypeName = tariffType.Name != null ? tariffType.Name : "";
                     list.TransportModeCode = tariffType.TransportModeCode != null ? tariffType.TransportModeCode : "";
+                    list.TransportModeName = GetTransportModeName(tariffType.TransportModeCode, tenant);
                     entityList.Add(list);
                 }
             }
             return entityList;
+        }
+
+        private string GetTransportModeName(string code, int tenant)
+        {
+            TransportModeRepository transportModeRepository = new TransportModeRepository(tenant);
+            TransportMode transportMode = transportModeRepository.GetSingleTransportMode(code);
+            string transportModeName = "";
+            if (transportMode != null)
+            {
+                transportModeName = transportMode.Name != null ? transportMode.Name : ""; 
+            }
+            return transportModeName;
         }
 
         private TariffType GetTariffType(string typeCode, int tenant)

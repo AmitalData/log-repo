@@ -393,6 +393,11 @@ export class TariffPM {
     public set TransportModeCode(newValue: string) { if (this.transportModeCode != newValue) { this.transportModeCode = newValue; this.MarkAsDirty("TransportModeCode"); } }
        
 	 
+    private transportModeName: string;
+    public get TransportModeName() { return this.transportModeName; }
+    public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

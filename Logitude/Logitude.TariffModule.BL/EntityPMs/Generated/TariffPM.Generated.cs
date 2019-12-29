@@ -1521,6 +1521,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string transportModeName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransportModeName  
+	   {
+	    
+	     get
+		{
+		   return transportModeName;
+		 }
+		 set
+		 {
+		   if(transportModeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeName",OldValue=transportModeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transportModeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

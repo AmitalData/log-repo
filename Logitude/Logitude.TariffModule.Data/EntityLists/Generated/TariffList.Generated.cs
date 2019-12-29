@@ -72,6 +72,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public DateTime? LastActivityDate  { get; set; }
        [DataMember]
        public string TransportModeCode  { get; set; }
+       [DataMember]
+       public string TransportModeName  { get; set; }
    }
 
 }
