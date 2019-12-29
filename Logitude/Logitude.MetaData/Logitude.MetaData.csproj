@@ -179,6 +179,7 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierAreasPort.lxml">
@@ -561,6 +562,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InvoiceModel\SATPaymentMethod.lxml" />
+    <None Include="EntityFiles\Master\Master.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\MarkUpType.lxml" />
     <None Include="EntityFiles\InvoiceModel\AccountingPaymentMethod.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARPaymentStatus.lxml" />

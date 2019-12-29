@@ -86,6 +86,11 @@ GenerateMetaDataUpdateClass("../EntityFiles/QuoteModel","../../JustWebFreight/We
 GenerateAllUpdateClasses("../EntityFiles/ShipmentsModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel/EntityUpdateClasses","ShipmentsModel");
 GenerateMetaDataUpdateClass("../EntityFiles/ShipmentsModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel","ShipmentsModelUpdateClass");
 
+    
+    
+GenerateAllUpdateClasses("../EntityFiles/Master","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel/EntityUpdateClasses","ShipmentsModel");
+GenerateMetaDataUpdateClass("../EntityFiles/Master","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel","MasterModelUpdateClass");
+
  #>
 
 
