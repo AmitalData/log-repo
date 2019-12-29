@@ -368,6 +368,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pm;
         }
 
+        public string GetGLAccountDisplayNoAndLocalName(string gLAccountId, int tenant)
+        {
+            GLAccount gLAccountPOCO = null;
+            gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
+            string result = gLAccountPOCO.DisplayNumber + ',' + gLAccountPOCO.LocalName;
+            return result;
+        }
+
         public GLAccountPM GetSinglePMByInternalNumber(string internalNumber, int tenant)
         {
             GLAccount gLAccountPOCO = null;

@@ -7,6 +7,9 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -93,9 +96,32 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
-
+           ChargesTypePM chargesType = SetChargesTypetGLAccountFields(entityPM);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ReceivableCreditGLAcountLocalName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ReceivableCreditGLAcountNumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayableDebitGLAcountLocalName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayableDebitGLAcountNumber);
             entityPM.SearchFields = mySearchFields;
             entityPoco.SearchFields = mySearchFields;
+        }
+
+        private static ChargesTypePM SetChargesTypetGLAccountFields(ChargesTypePM chargesType)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            if (chargesType.ReceivableCreditGLAccountId != null) {
+                string fieldsValues = glAccountQuery.GetGLAccountDisplayNoAndLocalName(chargesType.ReceivableCreditGLAccountId, chargesType.Tenant);
+                string[] displayNoAndName = fieldsValues.Split(',');
+                chargesType.ReceivableCreditGLAcountLocalName = displayNoAndName[1];
+                chargesType.ReceivableCreditGLAcountNumber = displayNoAndName[0];
+            }
+            if (chargesType.PayableDebitGLAcountId != null)
+            {
+                string fieldsValues = glAccountQuery.GetGLAccountDisplayNoAndLocalName(chargesType.PayableDebitGLAcountId, chargesType.Tenant);
+                string[] displayNoAndName = fieldsValues.Split(',');
+                chargesType.PayableDebitGLAcountLocalName = displayNoAndName[1];
+                chargesType.PayableDebitGLAcountNumber = displayNoAndName[0];
+            }
+            return chargesType;
         }
     }
 }

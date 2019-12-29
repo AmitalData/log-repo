@@ -168,9 +168,27 @@ namespace Simplog.Data.CommonDataModel.Repositories
             {
                 string entityName = "Contact" + id + tenant;
                 Contact entity;
+                bool isWRCacheALLOWED = false;
+
+                var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+                if (iAppSettings != null)
+                {
+                    if (iAppSettings["WRCacheALLOWED"] != null)
+                    {
+                        string iValueText = iAppSettings["WRCacheALLOWED"] + "";
+                        if (!string.IsNullOrEmpty(iValueText))
+                        {
+                            if (iValueText.ToLower() == "true")
+                            {
+                                isWRCacheALLOWED = true;
+                            }
+                        }
+                    }
+                }
+
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
+                    if (HttpContext.Current != null || isWRCacheALLOWED)
                     {
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
