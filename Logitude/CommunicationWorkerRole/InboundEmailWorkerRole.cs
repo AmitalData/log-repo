@@ -64,6 +64,7 @@ namespace CommunicationWorkerRole
 
         List<DocumentsFilingPM> DocumentsFilings;
         User TicketUser;
+        int tenant = 0;
 
         public override void Run()
         {
@@ -73,7 +74,7 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        int tenant = 0;
+                        
                         queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
                         var response = queueservice.Receive();
                         LastActivity = DateTime.UtcNow;
@@ -144,6 +145,8 @@ namespace CommunicationWorkerRole
                     oldLines = inboundEmailLineRepository.GetInboundEmailLinesByInboudEmailId(newInboundEmailLine.InboundEmailId, newInboundEmailLine.Tenant);
                     Correspondence myCorrespondenceLine = correspondenceRep.GetSingle(newInboundEmailLine.EntityLineId, tenant);
                     StageName = GetTicketStageName(myCorrespondenceLine.EntityId, myCorrespondenceLine.ObjectTableId, tenant);
+
+                    this.GetSupportMailBoxEmail();
 
                     contactEmail = contactRep.GetEmailContactByIdAndTenant(tenant, contactId);
                     string ownerEmail = contactRep.GetEmailContactByIdAndTenant(tenant, ownerId);
@@ -309,27 +312,14 @@ namespace CommunicationWorkerRole
         private bool IsSupportEmail(string email)
         {
             bool myResult = false;
-
             if (!string.IsNullOrEmpty(email))
             {
-                email = email.ToLower();
-
-                switch (email)
-                {
-                    case "s@test.unifreight.co.il":
-                    case "support@ilcargo.com":
-                    case "support@icl.unifreight.co.il":
-                    case "support@fritz.unifreight.co.il":
-                    case "ticket@fritz.unifreight.co.il":
-                        {
-                            myResult = true;
-                            break;
-                        }
-                }
+                if (email.ToLower() == this.SupportEmail.ToLower())
+                    myResult = true;
             }
-
             return myResult;
         }
+
         private bool IsEmail(string email)
         {
             var myResult = true;
@@ -354,6 +344,7 @@ namespace CommunicationWorkerRole
             return myResult;
         }
 
+        Ticket Ticket;
         private string GetTicketStageName(string Id, string objectTableId, int tenant)
         {
             string stageName = "";
@@ -362,9 +353,9 @@ namespace CommunicationWorkerRole
             if (objectTable.Id == objectTableId)
             {
                 TicketRepository ticketRep = new TicketRepository(tenant);
-                Ticket ticket = ticketRep.GetSingle(Id, tenant);
+                Ticket = ticketRep.GetSingle(Id, tenant);
                 TicketStageRepository stageRep = new TicketStageRepository(tenant);
-                TicketStage ticketStage = stageRep.GetSingle(ticket.StageId, ticket.Tenant);
+                TicketStage ticketStage = stageRep.GetSingle(Ticket.StageId, Ticket.Tenant);
                 stageName = ticketStage.Name;
             }
 
@@ -438,9 +429,7 @@ namespace CommunicationWorkerRole
                 UserName = "Support";
             }
 
-            string tenantEmail = GetTenantManagementEmail(Tenant);
-            string from = "<" + UserName + "> " + tenantEmail;
-
+            string from = "<" + UserName + "> " + SupportEmail;
             CommunicationLog commLog = new CommunicationLog()
             {
                 Id = IdCounter.GetNumber("CommunicationLog", Tenant),
@@ -589,8 +578,7 @@ namespace CommunicationWorkerRole
                 UserName = "Support";
             }
 
-            string tenantEmail = GetTenantManagementEmail(Tenant);
-            string from = "<" + UserName + "> " + tenantEmail;
+            string from = "<" + UserName + "> " + SupportEmail;
 
             CommunicationLog commLog = new CommunicationLog()
             {
@@ -1286,17 +1274,25 @@ namespace CommunicationWorkerRole
             return myResult;
         }
 
-        public string GetTenantManagementEmail(int tenant)
+        public string SupportEmail = "";
+        public void GetSupportMailBoxEmail()
         {
-            string email = "";
+            var mailBox = this.GetDefaultSupportMailBox();
             TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
             TenantManagement myTenant = tenantManagementRepository.GetSingleTenantManagement(tenant);
             if (myTenant != null)
             {
-                email = myTenant.SupportEmail;
+                this.SupportEmail = mailBox + "@" + myTenant.SupportDomain;
             }
+        }
 
-            return email;
+        private string GetDefaultSupportMailBox()
+        {
+            string mailBox = null;
+            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(tenant);
+            SupportMailbox supportMailbox = mailboxRepository.GetSingle(Ticket.SupportMailboxId, tenant);
+            mailBox = supportMailbox != null ? supportMailbox.Mailbox : null;
+            return mailBox;
         }
 
         private string GetUserName(string id, int tenant)

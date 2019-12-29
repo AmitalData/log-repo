@@ -1005,6 +1005,7 @@ namespace WebFreight.Web.Helpers
                 TicketDescription = TruncateLongString(emailDetails.FullBodyPlain, 4000),
                 CompanyId = companyId,
                 GuidId = base64string,
+                SupportMailboxId = supportMailBox.Id,
             };
 
             if (IsContactUser && myTenant != null && myTenant.IsInternalTicketByDefault)
