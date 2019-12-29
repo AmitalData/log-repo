@@ -43,6 +43,10 @@ namespace Logitude.Customs.BL.PatchDistribution
 
 
             var myAssemblyDBMigrationModel = AssemblyDBMigrationModel.Parser(assemblyVersion);
+            if (myAssemblyDBMigrationModel.MajorVersion==0.0m)
+            {
+                return new PatchDistributionMatchModel() { };
+            }
             var myPatchDistributionMatchModel = new PatchDistributionMatchModel
             {
                 LastClosed_DBMigration = myLastClosed_DBMigration,
