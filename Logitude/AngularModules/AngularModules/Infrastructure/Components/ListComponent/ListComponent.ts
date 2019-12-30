@@ -2561,7 +2561,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     }
                 case "InterestReport":
                     {
-                        logWindow.Width = 320;
+                        logWindow.Width = 400;
                         logWindow.Height = 200;
                         break;
                     }
