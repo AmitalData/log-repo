@@ -30,8 +30,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string CreatedByUserId { get; set; }
 	      
         public virtual User CreatedByUser { get; set; }
-        [Column("UpdateDate")]
-	    public DateTime? UpdateDate { get; set; }
+        [Column("UpdateDateTime")]
+	    public DateTime? UpdateDateTime { get; set; }
         [ForeignKey("UpdatedByUser")]
         [Column("UpdatedByUserId")]
 	    public string UpdatedByUserId { get; set; }
@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("ReportNumber")]
 	    public string ReportNumber { get; set; }
         [Column("InterestCalculationDate")]
-	    public DateTime? InterestCalculationDate { get; set; }
+	    public DateTime InterestCalculationDate { get; set; }
         [Column("TotalAmount")]
 	    public decimal? TotalAmount { get; set; }
         [Column("OpenBalance")]

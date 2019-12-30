@@ -23,26 +23,26 @@ namespace Logitude.Accounting.BL
 		    var all = new List<InterestReportStatuseDetails>();  
             all.Add(new InterestReportStatuseDetails()
             {    
-                Code = "1", 
-                EnglishName = "Draft", 
-                SearchFields = "1,Draft,טיוטה", 
                 LocalName = "טיוטה", 
+                EnglishName = "Draft", 
+                Code = "1", 
+                SearchFields = "1,Draft,טיוטה", 
 			});
 			 
             all.Add(new InterestReportStatuseDetails()
             {    
-                Code = "2", 
-                EnglishName = "Invoice", 
-                SearchFields = "2,Invoice,הופקה חשבונית", 
                 LocalName = "הופקה חשבונית", 
+                EnglishName = "Invoice", 
+                Code = "2", 
+                SearchFields = "2,Invoice,הופקה חשבונית", 
 			});
 			 
             all.Add(new InterestReportStatuseDetails()
             {    
-                Code = "3", 
-                EnglishName = "Cancelled", 
-                SearchFields = "3,Cancelled,בוטל", 
                 LocalName = "בוטל", 
+                EnglishName = "Cancelled", 
+                Code = "3", 
+                SearchFields = "3,Cancelled,בוטל", 
 			});
 			
             return all;
@@ -50,15 +50,15 @@ namespace Logitude.Accounting.BL
 
 	    public void MapPoco(InterestReportStatuse newPoco)
         {   
-		    newPoco.Code = this.Code;  
+		    newPoco.LocalName = this.LocalName;  
 		    newPoco.EnglishName = this.EnglishName;  
-			newPoco.SearchFields = GetSearchFields(this);   
-		    newPoco.LocalName = this.LocalName;   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);    
         }
 
 		public string GetSearchFields(InterestReportStatuse rec)
         {   
-           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",");
+           return String.Concat(rec.LocalName,",",rec.EnglishName,",",rec.Code,",");
         }
    }
 }

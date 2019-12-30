@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string interestreportid)
+        public HttpResponseMessage GetSingle(string interestreportid, string interesttransactionid)
         {
 		  try
             {
@@ -64,7 +64,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 InterestReportLineQueryService interestReportLineQuery = new InterestReportLineQueryService(MyContext);
 				interestReportLineQuery.InitializeSettings();
-                InterestReportLinePM interestReportLinePM = interestReportLineQuery.GetSingle(interestreportid,true,false);
+                InterestReportLinePM interestReportLinePM = interestReportLineQuery.GetSingle(interestreportid, interesttransactionid,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

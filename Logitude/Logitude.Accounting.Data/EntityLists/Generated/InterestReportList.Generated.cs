@@ -23,7 +23,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string CreatedByUserId  { get; set; }
        [DataMember]
-       public DateTime? UpdateDate  { get; set; }
+       public DateTime? UpdateDateTime  { get; set; }
        [DataMember]
        public string UpdatedByUserId  { get; set; }
        [DataMember]
@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string ReportNumber  { get; set; }
        [DataMember]
-       public DateTime? InterestCalculationDate  { get; set; }
+       public DateTime InterestCalculationDate  { get; set; }
        [DataMember]
        public decimal? TotalAmount  { get; set; }
        [DataMember]
@@ -46,6 +46,18 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? GLAccountInterestCreditLimit  { get; set; }
        [DataMember]
        public string InterestReportStatusCode  { get; set; }
+       [DataMember]
+       public string CreatedByLocalName  { get; set; }
+       [DataMember]
+       public string GLAccountDisplayNumber  { get; set; }
+       [DataMember]
+       public string GLAccountLocalName  { get; set; }
+       [DataMember]
+       public string ARInvoiceNumber  { get; set; }
+       [DataMember]
+       public string UpdatedByLocalName  { get; set; }
+       [DataMember]
+       public string InterestReportStatusName  { get; set; }
    }
 
 }
