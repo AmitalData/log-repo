@@ -7,6 +7,7 @@ import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     moduleId: module.id,
@@ -21,6 +22,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
     public SalesmanFilterItems: ApiQueryFilters;
 
     entityResourceService: EntityResourceService = new EntityResourceService();
+    public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
 
     constructor() {
@@ -49,6 +51,14 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
         //this.UIProperties.SetRequired("Customer", "GLAccount", true);
         //this.UIProperties.SetRequired("NumberOfMonths", "GLAccount", true);
+
+        if(this.filterSelectedValue == "filter_vendor"){
+            this.UIProperties.SetEnabled("Salesman","GLAccount",false);
+            this.UIProperties.SetEnabled("Collector","GLAccount",false);
+        }else{
+            this.UIProperties.SetEnabled("Salesman","GLAccount",true);
+            this.UIProperties.SetEnabled("Collector","GLAccount",true);
+        }
 
     }
 
@@ -114,7 +124,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
 
     //row 2
-    
+
     private collector: string;
     public get Collector() { return this.collector; }
     public set Collector(value: string) {
@@ -132,7 +142,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
     }
 
     //row 3
-    
+
     private category1: string;
     public get Category1() { return this.category1; }
     public set Category1(value: string) {
@@ -219,6 +229,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
             var myFilterItems: QueryFilterItem[] = [];
             myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
+            myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
             myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
             myFilterItems.push(new QueryFilterItem("NumberOfMonths", this.NumberOfMonths, "Number"));
             myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
@@ -254,5 +265,38 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         this.SelectedCategory = item;
     }
     //#endregion
+
+    //#region Filter Methods
+    public filterSelectedValue: string = 'filter_customer';
+    public AccountTypeCode: string = '2';
+    FilterItemClicked(itemValue: string)
+    {
+        if (this.filterSelectedValue != itemValue) {
+            this.filterSelectedValue = itemValue;
+            this.FilterChanged();
+        }
+    }
+    FilterChanged()
+    {
+
+        this.Customer = null;
+        this.Salesman = null;
+        this.Collector = null;
+        switch (this.filterSelectedValue) {
+            case 'filter_customer':
+                this.AccountTypeCode = '2';
+                break;
+            case 'filter_vendor':
+                this.AccountTypeCode = '3';
+                break;
+            default:
+                break;
+        }
+
+        this.SetUIProperties();
+        this.ValidateDate();
+
+    }
+      //#endregion
 
 }
