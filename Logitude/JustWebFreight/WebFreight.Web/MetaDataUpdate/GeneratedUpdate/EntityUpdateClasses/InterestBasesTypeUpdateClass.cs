@@ -121,7 +121,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
-			      				    LocalDefaultText =  "בסיסי ריבית",
 			      				    DefaultText =  "Interest Bases Type",
 			      				    Code =  "a37b",
 			      				    Name =  " Query Group",
