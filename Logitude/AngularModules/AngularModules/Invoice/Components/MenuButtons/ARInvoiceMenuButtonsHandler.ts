@@ -1079,9 +1079,11 @@ export class ARInvoiceMenuButtonsHandler {
             myObjectTableName = "ARInvoice";
             myDocumentTypeCode = "999G";
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.DocumentFilingId) && SessionLocator.TenantPM.AccountingActivated == true) {
-                this.GetDocument();
-            } else {
+
+            if (SessionLocator.TenantPM.AccountingActivated == true) {
+                this.PrintFullAccountingInvoice();
+            }
+            else {
                
                 this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
 
@@ -1150,6 +1152,32 @@ export class ARInvoiceMenuButtonsHandler {
         });
 
 
+    }
+    private PrintFullAccountingInvoice() {
+        if (this.EntityPM.IsExternalEntity) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.DocumentFilingId)) {
+                this.ShowWarnigMessageForMissingDocument();                
+            }
+
+            else {
+                this.GetDocument();
+            }
+        }
+        else {
+            this.StartPrinting(this.EntityPM.Id, null, "ARInvoice", null, "999G", !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber);
+        }
+    }
+
+    private ShowWarnigMessageForMissingDocument() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 290;
+        confirmWindow.ShowCancelButton = false;
+        confirm
+        confirmWindow.ShowNoButton = false;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("ARInvoice.B.Ok");
+        confirmWindow.ShowWarningImage = true;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
+        confirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.O.MissingDocument"));
     }
 
     private savedConsolidationEntity;

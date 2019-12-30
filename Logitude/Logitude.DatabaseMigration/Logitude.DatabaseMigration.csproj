@@ -1859,6 +1859,10 @@
     <Compile Include="Migrations\201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.Designer.cs">
       <DependentUpon>201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.cs" />
+    <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
+      <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
 
 
@@ -3210,6 +3214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.resx">
       <DependentUpon>201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.resx">
+      <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
