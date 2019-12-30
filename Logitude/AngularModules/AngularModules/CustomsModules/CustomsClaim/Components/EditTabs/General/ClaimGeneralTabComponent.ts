@@ -603,7 +603,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                 this.IsClientPassportEnabled = false;
                 this.UIProperties.SetEnabled("ClientId", "Customs.Claim", true);
             }
-            //this.RefreshEntity(); 
+            this.BuildClienAddressesList();
         }
 
     }
