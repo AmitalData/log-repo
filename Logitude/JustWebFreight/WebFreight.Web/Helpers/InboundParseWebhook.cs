@@ -497,7 +497,8 @@ namespace WebFreight.Web.Helpers
         {
             StringBuilder HtmlTemplate = new StringBuilder();
             StringBuilder EnvelopeHtmlTemplate = new StringBuilder();
-            EnvelopeHtmlTemplate.Append("Dear "+ emailDetails.Sender+ ",  <br /><br /> The mailbox " +  this.supportEmail +" doesn't exist, please resend the ticket to " + this.GetDefaultMailBox() + " or any other defined mailbox. <br /><br /> Regards");
+            var senderName = emailDetails.Sender != null ? emailDetails.Sender .Split('@')[0] : emailDetails.Sender;
+            EnvelopeHtmlTemplate.Append("Dear "+ senderName + ",  <br /><br /> The mailbox " +  this.supportEmail +" doesn't exist, please resend the ticket to " + this.GetDefaultMailBox() + " or any other defined mailbox. <br /><br /> Regards");
             return EnvelopeHtmlTemplate.ToString();
         }
 
