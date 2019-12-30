@@ -197,6 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -260,6 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -322,6 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -384,6 +387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -446,6 +450,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -507,6 +512,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -569,6 +575,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -632,6 +639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -695,6 +703,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -757,6 +766,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -820,6 +830,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -882,6 +893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -944,6 +956,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1006,6 +1019,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1068,6 +1082,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1130,6 +1145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1193,6 +1209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1255,6 +1272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1317,6 +1335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1380,6 +1399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1442,6 +1462,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1505,6 +1526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1567,6 +1589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1629,6 +1652,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1691,6 +1715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1747,6 +1772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1803,6 +1829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1866,6 +1893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1928,6 +1956,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1990,6 +2019,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2052,6 +2082,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2114,6 +2145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2176,6 +2208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2238,6 +2271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2300,6 +2334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2362,6 +2397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2424,6 +2460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2487,6 +2524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2549,6 +2587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2611,6 +2650,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2675,6 +2715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2737,6 +2778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2800,6 +2842,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2862,6 +2905,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2924,6 +2968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2986,6 +3031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3049,6 +3095,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3111,6 +3158,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3174,6 +3222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3236,6 +3285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3299,6 +3349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3361,6 +3412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3424,6 +3476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3486,6 +3539,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3549,6 +3603,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3611,6 +3666,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3673,6 +3729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3734,6 +3791,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3795,6 +3853,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3856,6 +3915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3914,6 +3974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3972,6 +4033,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4030,6 +4092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4091,6 +4154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4147,6 +4211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4205,6 +4270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4263,6 +4329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4319,6 +4386,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4383,6 +4451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4445,6 +4514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4503,6 +4573,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4559,6 +4630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4615,6 +4687,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4672,6 +4745,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4733,6 +4807,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4790,6 +4865,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4851,6 +4927,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4908,6 +4985,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4969,6 +5047,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5026,6 +5105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5082,6 +5162,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5138,6 +5219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5199,6 +5281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5260,6 +5343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5316,6 +5400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5372,6 +5457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5428,6 +5514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5484,6 +5571,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5540,6 +5628,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5596,6 +5685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5659,6 +5749,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5717,6 +5808,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5775,6 +5867,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5837,6 +5930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5893,6 +5987,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5956,6 +6051,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6019,6 +6115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6081,6 +6178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6143,6 +6241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6206,6 +6305,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6267,6 +6367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6323,6 +6424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6379,6 +6481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6435,6 +6538,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6491,6 +6595,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6552,6 +6657,359 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ActiveForInterest",
+					  						OldFieldName =  "ActiveForInterest",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ActiveForInterest",
+					  						ListPropertyPath =  "ActiveForInterest",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ActiveForInterest",
+					  						DefaultText =  "Active for Interest",
+					  						FullLocalDefaultText =  "פעיל לריבית",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InterestCalculationStartDate",
+					  						OldFieldName =  "InterestCalculationStartDate",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InterestCalculationStartDate",
+					  						ListPropertyPath =  "InterestCalculationStartDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InterestCalculationStartDate",
+					  						DefaultText =  "Interest Calculation Start Date",
+					  						FullLocalDefaultText =  "תאריך לחישוב ריבית",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ActiveForInterestCreditInvoice",
+					  						OldFieldName =  "ActiveForInterestCreditInvoice",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ActiveForInterestCreditInvoice",
+					  						ListPropertyPath =  "ActiveForInterestCreditInvoice",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ActiveForInterestCreditInvoice",
+					  						DefaultText =  "Active for Interest Credit invoice",
+					  						FullLocalDefaultText =  "פעיל לחשבונית זיכוי",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MinimumInterestInvoiceBilling",
+					  						OldFieldName =  "MinimumInterestInvoiceBilling",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MinimumInterestInvoiceBilling",
+					  						ListPropertyPath =  "MinimumInterestInvoiceBilling",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  5,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MinimumInterestInvoiceBilling",
+					  						DefaultText =  "Minimum Interest Invoice billing",
+					  						FullLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "GLAccountInterestPeriods",
+					  						OldFieldName =  "GLAccountInterestPeriods",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "List",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "GLAccountInterestPeriods",
+					  						ListPropertyPath =  "GLAccountInterestPeriods",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  true,
+					  						MultiTableName =  "GLAccountInterestPeriod",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "GLAccountInterestPeriods",
+					  						DefaultText =  "GLAccount Interest Periods",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InterestCreditLimit",
+					  						OldFieldName =  "InterestCreditLimit",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InterestCreditLimit",
+					  						ListPropertyPath =  "InterestCreditLimit",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InterestCreditLimit",
+					  						DefaultText =  "Interest Credit",
+					  						FullLocalDefaultText =  "אשראי לריבית",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6647,444 +7105,444 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query GeneralLedgerAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_0.Id, Code = "General Ledger Accounts",  QueryGroupCode = "GLAC", IndexOrder = 0, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query GeneralLedgerAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_0.Id, NameTextCodeCode = GLAccountTextCode_0.Code, Code = "General Ledger Accounts",  QueryGroupCode = "GLAC", IndexOrder = 0, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn GeneralLedgerAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GeneralLedgerAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GeneralLedgerAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GeneralLedgerAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GeneralLedgerAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GeneralLedgerAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GeneralLedgerAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GeneralLedgerAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GeneralLedgerAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GeneralLedgerAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GeneralLedgerAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GeneralLedgerAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GeneralLedgerAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GeneralLedgerAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
-			  Query VendorAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_1.Id, Code = "Vendor Accounts",  QueryGroupCode = "VNAC", IndexOrder = 1, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query VendorAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_1.Id, NameTextCodeCode = GLAccountTextCode_1.Code, Code = "Vendor Accounts",  QueryGroupCode = "VNAC", IndexOrder = 1, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn VendorAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = VendorAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_2.Id, Code = "All Customers",  QueryGroupCode = "GLAC", IndexOrder = 2, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter AllCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = AllCustomersQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "3",PredefinedValue2 = null, QueryId = VendorAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query MyCustomersAsCollectorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_3.Id, Code = "MyCustomersAsCollectors",  QueryGroupCode = "GLAC", IndexOrder = 3, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_2.Id, NameTextCodeCode = GLAccountTextCode_2.Code, Code = "All Customers",  QueryGroupCode = "GLAC", IndexOrder = 2, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = MyCustomersAsCollectorsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = AllCustomersQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query DebetorsCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_4.Id, Code = "DebetorsCustomers",  QueryGroupCode = "GLAC", IndexOrder = 4, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyCustomersAsCollectorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_3.Id, NameTextCodeCode = GLAccountTextCode_3.Code, Code = "MyCustomersAsCollectors",  QueryGroupCode = "GLAC", IndexOrder = 3, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn DebetorsCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DebetorsCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DebetorsCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DebetorsCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DebetorsCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DebetorsCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DebetorsCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DebetorsCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter DebetorsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-
-             AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalBalanceInDue" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "LargerThan"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = MyCustomersAsCollectorsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query ActiveCustomersGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_5.Id, Code = "ActiveCustomersGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 5, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_5.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DebetorsCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_4.Id, NameTextCodeCode = GLAccountTextCode_4.Code, Code = "DebetorsCustomers",  QueryGroupCode = "GLAC", IndexOrder = 4, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ActiveCustomersGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DebetorsCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveCustomersGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DebetorsCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveCustomersGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DebetorsCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveCustomersGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DebetorsCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveCustomersGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DebetorsCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveCustomersGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DebetorsCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveCustomersGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DebetorsCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+			 QueryColumn DebetorsCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalBalanceInDue" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalBalanceInDue" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "LargerThan"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query InactiveCustomersGLAccountQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_6.Id, Code = "InactiveCustomersGLAccount",  QueryGroupCode = "GLAC", IndexOrder = 6, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ActiveCustomersGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_5.Id, NameTextCodeCode = GLAccountTextCode_5.Code, Code = "ActiveCustomersGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 5, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_5.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InactiveCustomersGLAccountQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveCustomersGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveCustomersGLAccountQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveCustomersGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveCustomersGLAccountQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveCustomersGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveCustomersGLAccountQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveCustomersGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveCustomersGLAccountQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveCustomersGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveCustomersGLAccountQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveCustomersGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveCustomersGLAccountQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveCustomersGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query ActiveGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_7.Id, Code = "ActiveGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 7, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_7.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query InactiveCustomersGLAccountQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_6.Id, NameTextCodeCode = GLAccountTextCode_6.Code, Code = "InactiveCustomersGLAccount",  QueryGroupCode = "GLAC", IndexOrder = 6, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ActiveGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveCustomersGLAccountQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveCustomersGLAccountQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveCustomersGLAccountQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveCustomersGLAccountQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveCustomersGLAccountQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveCustomersGLAccountQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveCustomersGLAccountQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ActiveGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter ActiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter ActiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query InactiveGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_8.Id, Code = "InactiveGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 8, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ActiveGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_7.Id, NameTextCodeCode = GLAccountTextCode_7.Code, Code = "ActiveGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 7, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_7.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InactiveGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InactiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter InactiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query OpenFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_9.Id, Code = "OpenFiles",  QueryGroupCode = "GLAC", IndexOrder = 9, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query InactiveGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_8.Id, NameTextCodeCode = GLAccountTextCode_8.Code, Code = "InactiveGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 8, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OpenFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenFilesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OpenFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter OpenFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id, Tenant = 0,Operator = "NotEqual"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query ClosedFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_10.Id, Code = "ClosedFiles",  QueryGroupCode = "GLAC", IndexOrder = 10, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_9.Id, NameTextCodeCode = GLAccountTextCode_9.Code, Code = "OpenFiles",  QueryGroupCode = "GLAC", IndexOrder = 9, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ClosedFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClosedFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClosedFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClosedFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClosedFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClosedFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClosedFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClosedFilesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClosedFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ClosedFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "5",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter ClosedFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id, Tenant = 0,Operator = "NotEqual"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AllFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_11.Id, Code = "AllFiles",  QueryGroupCode = "GLAC", IndexOrder = 11, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ClosedFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_10.Id, NameTextCodeCode = GLAccountTextCode_10.Code, Code = "ClosedFiles",  QueryGroupCode = "GLAC", IndexOrder = 10, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFilesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = AllFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ClosedFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "5",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+
+             AdvancedQueryFilter ClosedFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AllJobsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_12.Id, Code = "AllJobs",  QueryGroupCode = "GLAC", IndexOrder = 12, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_12.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_11.Id, NameTextCodeCode = GLAccountTextCode_11.Code, Code = "AllFiles",  QueryGroupCode = "GLAC", IndexOrder = 11, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllJobsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJobsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJobsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJobsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJobsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJobsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJobsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJobsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJobsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllJobsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "4",PredefinedValue2 = null, QueryId = AllJobsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "5",PredefinedValue2 = null, QueryId = AllFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query ActiveVendorsGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_13.Id, Code = "ActiveVendorsGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 13, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_13.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllJobsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_12.Id, NameTextCodeCode = GLAccountTextCode_12.Code, Code = "AllJobs",  QueryGroupCode = "GLAC", IndexOrder = 12, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_12.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ActiveVendorsGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJobsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveVendorsGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJobsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveVendorsGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJobsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveVendorsGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJobsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveVendorsGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJobsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveVendorsGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJobsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ActiveVendorsGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJobsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+			 QueryColumn AllJobsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
+			 QueryColumn AllJobsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllJobsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "4",PredefinedValue2 = null, QueryId = AllJobsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query InactiveVendorsGLAccountQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_14.Id, Code = "InactiveVendorsGLAccount",  QueryGroupCode = "GLAC", IndexOrder = 14, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_14.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ActiveVendorsGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_13.Id, NameTextCodeCode = GLAccountTextCode_13.Code, Code = "ActiveVendorsGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 13, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_13.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InactiveVendorsGLAccountQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveVendorsGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveVendorsGLAccountQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveVendorsGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveVendorsGLAccountQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveVendorsGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveVendorsGLAccountQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveVendorsGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveVendorsGLAccountQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveVendorsGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveVendorsGLAccountQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveVendorsGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InactiveVendorsGLAccountQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveVendorsGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "3",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query ClientAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_15.Id, Code = "Client Accounts",  QueryGroupCode = "CLAC", IndexOrder = 15, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_15.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query InactiveVendorsGLAccountQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_14.Id, NameTextCodeCode = GLAccountTextCode_14.Code, Code = "InactiveVendorsGLAccount",  QueryGroupCode = "GLAC", IndexOrder = 14, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_14.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ClientAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveVendorsGLAccountQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClientAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveVendorsGLAccountQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClientAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveVendorsGLAccountQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClientAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveVendorsGLAccountQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClientAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveVendorsGLAccountQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClientAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveVendorsGLAccountQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ClientAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
-  
-	      
+			 QueryColumn InactiveVendorsGLAccountQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
 
-			  Query AllGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_16.Id, Code = "All GLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 16, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_16.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn AllGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "3",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
-			 QueryColumn AllGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter AllGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = AllGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query OpenMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_17.Id, Code = "OpenMasters",  QueryGroupCode = "GLAC", IndexOrder = 17, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_17.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ClientAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_15.Id, NameTextCodeCode = GLAccountTextCode_15.Code, Code = "Client Accounts",  QueryGroupCode = "CLAC", IndexOrder = 15, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_15.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OpenMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClientAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenMastersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClientAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenMastersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClientAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenMastersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClientAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenMastersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClientAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenMastersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClientAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenMastersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClientAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+  
+	      
 
-			 QueryColumn OpenMastersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			  Query AllGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_16.Id, NameTextCodeCode = GLAccountTextCode_16.Code, Code = "All GLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 16, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_16.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn AllGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenMastersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OpenMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "4",PredefinedValue2 = null, QueryId = OpenMastersQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+			 QueryColumn AllGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter AllGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = AllGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query OpenMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_17.Id, NameTextCodeCode = GLAccountTextCode_17.Code, Code = "OpenMasters",  QueryGroupCode = "GLAC", IndexOrder = 17, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_17.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn OpenMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenMastersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenMastersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 2, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenMastersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 3, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenMastersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 4, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "IsMultiCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenMastersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 5, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenMastersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenMastersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenMastersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter OpenMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "4",PredefinedValue2 = null, QueryId = OpenMastersQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter OpenMastersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenMastersQuery.Id, Tenant = 0,Operator = "NotEqual"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenMastersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenMastersQuery.Id, Tenant = 0,Operator = "NotEqual"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -7099,21 +7557,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen GLAccountHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccount.HeaderScreen", Name = "Header Screen", ObjectTableId = GLAccountObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField GLAccountGLAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalBalanceInDue").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalBalanceInDue").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "LocalBalanceInDue").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "NextDueDate").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "NextDueDate").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "NextDueDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ReconcileMethodName").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ReconcileMethodName").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "ReconcileMethodName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "InternalNumber").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "InternalNumber").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "InternalNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    GLAccountObjectTable.HeaderScreenId = GLAccountHeaderScreenScreen0.Id;
 	   		  
@@ -7157,30 +7615,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature GLAccountAdditionalDataFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDITIONAL", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Additional", NameTextCodeDefaultText = "Additional Data", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode GLAccountEventsTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GLAccountEventsFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode GLAccountInterestTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Interest", DefaultText = "Interest",LocalDefaultText = "ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature GLAccountInterestFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.Interest", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GAIT", NameTextCodeDefaultText = "Interest", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode GLAccountEventsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature GLAccountEventsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAOV",HtmlComponentName = "GLAccountOverviewComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent", FeatureId = GLAccountOverviewFeature_TH0.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountOverviewTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAOV",HtmlComponentName = "GLAccountOverviewComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent", FeatureId = GLAccountOverviewFeature_TH0.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountOverviewTextCode_TH0.Id, TabNameTextCodeCode = GLAccountOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GATR",HtmlComponentName = "GLAccountTransactionsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent", FeatureId = GLAccountTransactionsFeature_TH1.Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountTransactionsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTransactionsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GATR",HtmlComponentName = "GLAccountTransactionsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent", FeatureId = GLAccountTransactionsFeature_TH1.Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountTransactionsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTransactionsTextCode_TH1.Id, TabNameTextCodeCode = GLAccountTransactionsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAGC",HtmlComponentName = "GLAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent", FeatureId = GLAccountGeneralFeature_TH2.Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountGeneralTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAGC",HtmlComponentName = "GLAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent", FeatureId = GLAccountGeneralFeature_TH2.Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountGeneralTextCode_TH2.Id, TabNameTextCodeCode = GLAccountGeneralTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAMR",HtmlComponentName = "ManageReconciliationsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent", FeatureId = GLAccountManageReconcFeature_TH3.Id, ControlPath = "Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageReconcTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAMR",HtmlComponentName = "ManageReconciliationsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent", FeatureId = GLAccountManageReconcFeature_TH3.Id, ControlPath = "Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageReconcTextCode_TH3.Id, TabNameTextCodeCode = GLAccountManageReconcTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLET",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = GLAccountExternalTransactionsFeature_TH4.Id, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountExternalTransactionsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLET",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = GLAccountExternalTransactionsFeature_TH4.Id, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountExternalTransactionsTextCode_TH4.Id, TabNameTextCodeCode = GLAccountExternalTransactionsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GMER",HtmlComponentName = "ManageExternalReconciliationTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", FeatureId = GLAccountManageExternalRecoFeature_TH5.Id, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageExternalRecoTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GMER",HtmlComponentName = "ManageExternalReconciliationTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", FeatureId = GLAccountManageExternalRecoFeature_TH5.Id, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageExternalRecoTextCode_TH5.Id, TabNameTextCodeCode = GLAccountManageExternalRecoTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLTX",HtmlComponentName = "GLAccountTaxWithholdingTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent", FeatureId = GLAccountTaxwithholdingFeature_TH6.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTaxwithholdingTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLTX",HtmlComponentName = "GLAccountTaxWithholdingTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent", FeatureId = GLAccountTaxwithholdingFeature_TH6.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTaxwithholdingTextCode_TH6.Id, TabNameTextCodeCode = GLAccountTaxwithholdingTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAAD",HtmlComponentName = "GLAccountAdditionalDataTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent", FeatureId = GLAccountAdditionalDataFeature_TH7.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountAdditionalDataTextCode_TH7.Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAAD",HtmlComponentName = "GLAccountAdditionalDataTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent", FeatureId = GLAccountAdditionalDataFeature_TH7.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountAdditionalDataTextCode_TH7.Id, TabNameTextCodeCode = GLAccountAdditionalDataTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GLAccountEventsFeature_TH8.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountEventsTextCode_TH8.Id, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAIT",HtmlComponentName = "GLAccountInterestComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountInterestComponent", FeatureId = GLAccountInterestFeature_TH8.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountInterestTextCode_TH8.Id, TabNameTextCodeCode = GLAccountInterestTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GLAccountEventsFeature_TH9.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountEventsTextCode_TH9.Id, TabNameTextCodeCode = GLAccountEventsTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -7829,6 +8293,114 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "AFIT",
+                EnglishName =  "Active for interest",
+                LocalName =  "הופעל במערכת ריבית",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "IFIT",
+                EnglishName =  "Inactive for interest",
+                LocalName =  "לא פעיל  במערכת ריבית",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "ISDT",
+                EnglishName =  "Interest Start Date",
+                LocalName =  "עודכנו נתוני ריבית",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "AFIC",
+                EnglishName =  "Active For Interest Credit Invoice",
+                LocalName =  " פעיל בזיכוי ריבית",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "MIIB",
+                EnglishName =  "Minimum Interest Invoice Billing",
+                LocalName =  "עודכן סכום מינימום לריבית",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "LUPD",
+                EnglishName =  "Line Updated",
+                LocalName =  " עודכנה שורת ריבית ",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -7841,7 +8413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCARDINDEX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PrintCardIndex", NameTextCodeDefaultText = "Print Card Index", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature GLAccountFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature GLAccountFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -7967,9 +8539,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountOExternalTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ExternalTransaction", DefaultText = "External Transaction",LocalDefaultText = @"תנועות חיצוניות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GLAccountTextCode_GLAccountODeleteExistInterestperiods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.DeleteExistInterestperiods", DefaultText = "You must delete the Interest periods record before Deactivating the customer",LocalDefaultText = @"יש למחוק הגדרת תקופות ריבית לפני חסימת לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOLineDateExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LineDateExist", DefaultText = "Line with the same date already exist",LocalDefaultText = @"קיימת כבר שורה עם תאריך זהה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOFieldInterestCalculationStartDateismandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.FieldInterestCalculationStartDateismandatory", DefaultText = "Field Interest Calculation Start Date is mandatory",LocalDefaultText = @"שדה תאריך הוא חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "At least one GLAccount Interest Periods record is required",LocalDefaultText = @"חובה להזין לפחות רשומה אחת של תקופת ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode GLAccountTextCode_GLAccountOCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Customer", DefaultText = "Customer",LocalDefaultText = @"לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Vendor", DefaultText = "Vendor",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    
