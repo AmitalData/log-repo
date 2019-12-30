@@ -289,7 +289,7 @@ export class MainMenuComponent {
                     }
 
                     case "General.MH.TariffModule": {
-                        myComponentPath = "./TariffModule/Components/Workspaces/TariffModuleWorkspaceComponent";
+                        myComponentPath = "./TariffModule/Components/Workspaces/TariffWorkspaceComponent";
                         break;
                     }
 

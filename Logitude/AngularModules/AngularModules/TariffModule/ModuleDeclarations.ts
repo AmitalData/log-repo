@@ -1,4 +1,4 @@
-import { TariffModuleWorkspaceComponent } from './Components/Workspaces/TariffModuleWorkspaceComponent';
+import { CostWorkspaceComponent } from './Components/Workspaces/CostWorkspaceComponent';
 import { TariffSettingComponent } from './Components/Workspaces/TariffSettingComponent';
 import { NewAirFreightCostComponent } from './Components/NewEntity/NewAirFreightCostComponent';
 import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComponent';
@@ -6,7 +6,8 @@ import { TariffSearchAirFreightPricesComponent } from './Components/Workspaces/T
 import { TariffPriceStepsComponent } from './Components/NewEntity/TariffPriceStepsComponent';
 import { WizardDimensionsComponent } from './Components/Workspaces/WizardDimensionsComponent';
 import { TariffHelperComponent } from './Components/Helpers/TariffHelperComponent';
-
+import { TariffWorkspaceComponent } from './Components/Workspaces/TariffWorkspaceComponent';
+import { SettingsWorkspaceComponent } from './Components/Workspaces/SettingsWorkspaceComponent';
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
 import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
@@ -23,7 +24,7 @@ import { OceanFCLVersionTabComponent } from './Components/EditTabs/Tariff/OceanF
 
 export const Components =
     [
-        TariffModuleWorkspaceComponent,
+        CostWorkspaceComponent,
         TariffSettingComponent,
         NewAirFreightCostComponent,
         FieldTemplateComponent,
@@ -43,6 +44,8 @@ export const Components =
         WizardDimensionsComponent,
         TariffHelperComponent,
         OceanFCLVersionTabComponent,
+        TariffWorkspaceComponent,
+        SettingsWorkspaceComponent,
     ];
 
 export const ControlsComponents =
@@ -55,7 +58,7 @@ export class ModuleDeclarations {
         var myResult: any = null;
 
         switch (name) {
-            case "TariffModuleWorkspaceComponent": { myResult = TariffModuleWorkspaceComponent; break; }
+            case "CostWorkspaceComponent": { myResult = CostWorkspaceComponent; break; }
             case "TariffSettingComponent": { myResult = TariffSettingComponent; break; }                
             case "NewAirFreightCostComponent": { myResult = NewAirFreightCostComponent; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
@@ -75,8 +78,10 @@ export class ModuleDeclarations {
             case "WizardDimensionsComponent": { myResult = WizardDimensionsComponent; break; }
             case "TariffHelperComponent": { myResult = TariffHelperComponent; break; }
             case "OceanFCLVersionTabComponent": { myResult = OceanFCLVersionTabComponent; break; }
+            case "TariffWorkspaceComponent": { myResult = TariffWorkspaceComponent; break; }
+            case "SettingsWorkspaceComponent": { myResult = SettingsWorkspaceComponent; break; }
         }
 
         return myResult;
-    }
+    } 
 }

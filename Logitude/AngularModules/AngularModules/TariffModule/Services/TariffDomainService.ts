@@ -313,6 +313,20 @@ export class TariffDomainService {
         }
         );
     }
+
+    GetRecentTariffs() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetRecentTariffs', {
+                headers: authHeader
+            }).map(response => {
+                var allLists = response.json();
+                return allLists;
+            });
+        });
+    }
+
 }
 
 export class TariffSummery {
