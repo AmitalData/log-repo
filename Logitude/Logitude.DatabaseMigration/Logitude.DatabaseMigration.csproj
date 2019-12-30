@@ -1846,6 +1846,10 @@
     <Compile Include="Migrations\201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.Designer.cs">
       <DependentUpon>201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.cs" />
+    <Compile Include="Migrations\201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.Designer.cs">
+      <DependentUpon>201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -3245,6 +3249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.resx">
       <DependentUpon>201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.resx">
+      <DependentUpon>201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
