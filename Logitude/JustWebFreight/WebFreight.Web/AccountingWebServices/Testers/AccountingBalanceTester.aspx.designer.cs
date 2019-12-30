@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebFreight.Web.AccountingWebServices.Testers {
-    
-    
-    public partial class AccountingBalanceTester {
-        
+namespace WebFreight.Web.AccountingWebServices.Testers
+{
+
+
+    public partial class AccountingBalanceTester
+    {
+
         /// <summary>
         /// Head1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
-        
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// _ButtonReverseTotal control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonReverseTotal;
-        
+
         /// <summary>
         /// _ButtonReverseTrans control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonReverseTrans;
-        
+
         /// <summary>
         /// _ButtonReverseGLBalance control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonReverseGLBalance;
-        
+
         /// <summary>
         /// _AccountingIntegrityService control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _AccountingIntegrityService;
-        
+
         /// <summary>
         /// _ButtonSysCheckTotalSumIsZero control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonSysCheckTotalSumIsZero;
-        
+
         /// <summary>
         /// _ButtonSysCheckLdegerTransSumIsZero control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonSysCheckLdegerTransSumIsZero;
-        
+
         /// <summary>
         /// _ButtonSysCheckGLAccJL2Total control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonSysCheckGLAccJL2Total;
-        
+
         /// <summary>
         /// _ButtonIsApprovedJournalTOTZero control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonIsApprovedJournalTOTZero;
-        
+
         /// <summary>
         /// _ButtonReverseDueDate control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonReverseDueDate;
-        
+
         /// <summary>
         /// _ButtonDueLocalBalance control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonDueLocalBalance;
-        
+
         /// <summary>
         /// _ButtonReverseTotalFIX control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonReverseTotalFIX;
-        
+
         /// <summary>
         /// _ButtonReverseGLBalanceFIX control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonReverseGLBalanceFIX;
-        
+
         /// <summary>
         /// _ButtonJournalApproveQueue control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonJournalApproveQueue;
-        
+
         /// <summary>
         /// _ButtonJournalApprove control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonJournalApprove;
-        
+
         /// <summary>
         /// _ButtonCreateRandomJournal control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonCreateRandomJournal;
-        
+
         /// <summary>
         /// _ButtonAging control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonAging;
-        
+
         /// <summary>
         /// _ButtonCurrBalanceByType control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonCurrBalanceByType;
-        
+
         /// <summary>
         /// _ButtonTreeMapCOA control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonTreeMapCOA;
-        
+
         /// <summary>
         /// ButtoBalanceByCollector control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtoBalanceByCollector;
-        
+
         /// <summary>
         /// ButtonLoadBankPages control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonLoadBankPages;
-        
+
         /// <summary>
         /// _ButtonCheckBalance control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonCheckBalance;
-        
+
         /// <summary>
         /// _ButtonLedgerTransactionBalance control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonLedgerTransactionBalance;
-        
+
         /// <summary>
         /// _ButtonExternalReconcile control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonExternalReconcile;
-        
+
         /// <summary>
         /// ButtonCardIndex control.
         /// </summary>
@@ -245,7 +247,16 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonCardIndex;
-        
+
+        /// <summary>
+        /// _ButtonCardIndexNew control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button _ButtonCardIndexNew;
+
         /// <summary>
         /// ButtonBuildTenant control.
         /// </summary>
@@ -254,7 +265,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonBuildTenant;
-        
+
         /// <summary>
         /// ButtonYearTransfer control.
         /// </summary>
@@ -263,7 +274,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonYearTransfer;
-        
+
         /// <summary>
         /// ButtonYearTransferCancel control.
         /// </summary>
@@ -272,7 +283,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonYearTransferCancel;
-        
+
         /// <summary>
         /// ButtonGetSystem1000 control.
         /// </summary>
@@ -281,7 +292,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonGetSystem1000;
-        
+
         /// <summary>
         /// ButtonLoadSystem1000 control.
         /// </summary>
@@ -290,7 +301,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonLoadSystem1000;
-        
+
         /// <summary>
         /// _MyLastAction control.
         /// </summary>
@@ -299,7 +310,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField _MyLastAction;
-        
+
         /// <summary>
         /// _myToken control.
         /// </summary>
@@ -308,7 +319,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField _myToken;
-        
+
         /// <summary>
         /// _TextBoxParam control.
         /// </summary>
@@ -317,7 +328,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox _TextBoxParam;
-        
+
         /// <summary>
         /// _LabelResult control.
         /// </summary>
@@ -326,7 +337,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox _LabelResult;
-        
+
         /// <summary>
         /// _LabelLog control.
         /// </summary>
@@ -335,7 +346,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox _LabelLog;
-        
+
         /// <summary>
         /// GridView1 control.
         /// </summary>
