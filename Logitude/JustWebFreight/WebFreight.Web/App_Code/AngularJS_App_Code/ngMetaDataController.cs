@@ -585,7 +585,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                               IsActive = a.IsActive,
                                               //IsDisabled
                                               LabelTextCodeId = a.LabelTextCodeId,
-                                              LabelTextCodeCode = a.TextCode.Code,
+                                              LabelTextCodeCode = a.LabelTextCodeCode,
                                               MenuButtonGroupId = a.MenuButtonGroupId,
                                               MenuButtonType = a.MenuButtonType,
                                               ParentMenuButtonId = a.ParentMenuButtonId,
