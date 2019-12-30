@@ -291,8 +291,6 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<InterestReport>().Property(x => x.GLAccountInterestCreditLimit).HasPrecision(18, 2);
 				
-			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.LineNumber).HasPrecision(6, 0);
-				
 			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.TotalAmount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.AccumulatedAmount).HasPrecision(18, 2);

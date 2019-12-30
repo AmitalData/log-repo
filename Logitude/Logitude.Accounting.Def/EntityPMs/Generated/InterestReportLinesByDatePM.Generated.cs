@@ -89,29 +89,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal lineNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal LineNumber  
-	   {
-	    
-	     get
-		{
-		   return lineNumber;
-		 }
-		 set
-		 {
-		   if(lineNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="decimal"};
-		    NotifyPropertyChanged(values);
-		   lineNumber=value;
-		   }
-			
-		 }
-	   }
 	  private DateTime fromDate ;
 	  	  
        
@@ -453,6 +430,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculationDetails",OldValue=calculationDetails,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   calculationDetails=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
 		   }
 			
 		 }
