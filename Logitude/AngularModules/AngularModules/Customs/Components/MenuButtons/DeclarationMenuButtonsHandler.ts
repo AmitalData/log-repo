@@ -148,6 +148,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
+        let parentButton: MenuButtonPM;
+
         if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
 
@@ -228,13 +230,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
 
                     if (button.EventCode == "Actions") {
-                        if (!this.EntityPM.IsAmendment) {
-                            button.IsDisabled = false;
-                        }
-                        else {
-                            button.IsDisabled = true;
-                            
-                        }
+
                          button.Width = 70;
                     }
 
@@ -295,6 +291,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "Vehicle Modifications") {
+                        debugger;
                         if (this.EntityPM.IsCourierDeclaration) {
                             button.IsHidden = true;
                         }
@@ -346,7 +343,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = false;
                         }
                     }
-
+                    if (this.EntityPM.IsAmendment) {
+                        parentButton = menuButtons.filter(x => x.EventCode == "Actions")[0];
+                        if (parentButton.Id == button.ParentMenuButtonId)
+                        button.IsDisabled = true;
+                    }
                 }
                 this.IsDisplayOnlyCheckDone = true;
                 return menuButtons;
