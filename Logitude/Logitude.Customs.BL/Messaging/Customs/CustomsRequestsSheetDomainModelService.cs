@@ -383,6 +383,16 @@ namespace Logitude.Customs.BL.Messaging.Customs
             //    AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
             //    return;
             //}
+
+            //im+eitan : in worker role no need to check 
+            if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()))
+            {
+                //2715 build from  UCBUD2LT --if (RequestParams.InterfaceTypeCode == "UCBUD2LT")
+                {
+                    return;
+                }
+            }
+            
             if (!SignQueue.Instance.IsPasiveSignMode())
             {
                 return;
