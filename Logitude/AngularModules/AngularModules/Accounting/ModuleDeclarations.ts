@@ -110,6 +110,9 @@ import { CashBookLineListTemplate } from './Components/ListTemplates/CashBookLin
 import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/InterestBasesTypeShortTitleComponent';
 import { GLAccountInterestComponent } from './Components/EditTabs/GLAccount/GLAccountInterestComponent';
 
+//import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
+
+
 
 
 export const Components =
