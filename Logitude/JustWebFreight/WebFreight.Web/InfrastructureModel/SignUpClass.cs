@@ -1635,7 +1635,7 @@ namespace WebFreight.Web.InfrastructureModel
         {
             foreach (Feature feature in tenantZeroFeatures)
             {
-                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Id == feature.NameTextCodeId).FirstOrDefault();
+                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == feature.NameTextCodeCode).FirstOrDefault();
                 TextCode featureText = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == feature.ObjectTableId).FirstOrDefault();
                 ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
@@ -1645,6 +1645,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Tenant = theTenant,
                     Code = feature.Code,
                     NameTextCodeId = featureText.Id,
+                    NameTextCodeCode = featureText.Code,
                     ObjectTableId = featureObjectTable.Id,
                     Id = IdCounter.GetNumber("Feature", theTenant).ToString(),
                 };

@@ -19,6 +19,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsOld { get; set; }
         public bool IsCoreFeature  { get; set; }
         public string ToggleCode { get; set; }
+        public string NameTextCodeCode { get; set; }
 
         [ForeignKey("FeatureTypeCode")]
         public FeatureType FeatureType { get; set; }

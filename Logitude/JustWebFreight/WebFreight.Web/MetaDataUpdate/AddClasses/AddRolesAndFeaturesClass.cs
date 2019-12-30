@@ -100,6 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         };
 
                         updatedFeature.NameTextCodeId = updatedTextCode.Id;
+                        updatedFeature.NameTextCodeCode = updatedTextCode.Code;
                         textCodeReposit.Add(updatedTextCode);
                     }
 
@@ -152,6 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         ObjectTableId = featureDetails.ObjectTableId,
                         Code = featureDetails.Code.Trim(),
                         NameTextCodeId = newTextCode.Id,
+                        NameTextCodeCode = newTextCode.Code,
                         FeatureTypeCode = featureDetails.FeatureTypeCode,
                         Packagable = featureDetails.Packagable,
                         IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
