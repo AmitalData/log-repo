@@ -123,7 +123,7 @@ namespace Logitude.DBMigrations.Models
 
                 if (!String.IsNullOrEmpty(tableScript))
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.DBType, tableScript, dxmlFileName);
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.DBType, tableScript);
                 }
 
                 if (!String.IsNullOrEmpty(tableRelationsScript))
@@ -269,7 +269,7 @@ namespace Logitude.DBMigrations.Models
             return connectionString;
         }
 
-        private GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string tableScript, string dxmlFileName)
+        private GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string tableScript)
         {
             if (dbType == "Global")
             {
