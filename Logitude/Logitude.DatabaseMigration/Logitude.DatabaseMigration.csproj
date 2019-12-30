@@ -1850,7 +1850,7 @@
     <Compile Include="Migrations\201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.Designer.cs">
       <DependentUpon>201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
