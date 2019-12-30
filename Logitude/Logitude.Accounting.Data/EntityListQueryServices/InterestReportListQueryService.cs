@@ -21,7 +21,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<InterestReportList> GetIqueryableList(IQueryable<InterestReport> iQueryable)
         {
-		IQueryable<InterestReportList> query = (from a in iQueryable
+
+
+        IQueryable<InterestReportList> query = (from a in iQueryable
                                             select new InterestReportList()
 											{
                      
@@ -81,8 +83,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
 			return iQueryable;
 		}
-		
-			}
+
+
+
+
+    }
 
 
 }
