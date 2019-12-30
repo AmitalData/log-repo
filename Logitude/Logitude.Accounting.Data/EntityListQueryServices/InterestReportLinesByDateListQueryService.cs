@@ -31,8 +31,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          InterestReportId = a.InterestReportId,
 					
-					                          LineNumber = a.LineNumber,
-					
 					                          FromDate = a.FromDate,
 					
 					                          ToDate = a.ToDate,

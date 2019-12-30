@@ -61,7 +61,7 @@ export class InterestPageComponent implements AfterViewInit {
         windowArgs.IsNew = true;
         var windowTitle = TextCodeTranslator.Translate("InterestReport");
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 420;
+        logWindow.Width = 320;
         logWindow.Height = 200;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = windowTitle;

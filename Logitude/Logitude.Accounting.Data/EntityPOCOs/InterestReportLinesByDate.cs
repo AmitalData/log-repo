@@ -28,8 +28,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string InterestReportId { get; set; }
 	      
         public virtual InterestReport InterestReport { get; set; }
-        [Column("LineNumber")]
-	    public decimal LineNumber { get; set; }
         [Column("FromDate")]
 	    public DateTime FromDate { get; set; }
         [Column("ToDate")]
@@ -60,6 +58,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal CalculatedCreditInterestAmount { get; set; }
         [Column("CalculationDetails")]
 	    public string CalculationDetails { get; set; }
+        [Column("LineNumber")]
+	    public int LineNumber { get; set; }
     }
 }
 	 

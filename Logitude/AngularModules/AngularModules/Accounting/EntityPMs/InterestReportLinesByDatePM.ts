@@ -39,11 +39,6 @@ export class InterestReportLinesByDatePM {
     public set InterestReportId(newValue: string) { if (this.interestReportId != newValue) { this.interestReportId = newValue; this.MarkAsDirty("InterestReportId"); } }
        
 	 
-    private lineNumber: number;
-    public get LineNumber() { return this.lineNumber; }
-    public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
-       
-	 
     private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(newValue: Date) { if (this.fromDate != newValue) { this.fromDate = newValue; this.MarkAsDirty("FromDate"); } }
@@ -117,6 +112,11 @@ export class InterestReportLinesByDatePM {
     private calculationDetails: string;
     public get CalculationDetails() { return this.calculationDetails; }
     public set CalculationDetails(newValue: string) { if (this.calculationDetails != newValue) { this.calculationDetails = newValue; this.MarkAsDirty("CalculationDetails"); } }
+       
+	 
+    private lineNumber: number;
+    public get LineNumber() { return this.lineNumber; }
+    public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
        
 	 
 
