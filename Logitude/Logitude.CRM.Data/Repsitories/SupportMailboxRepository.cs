@@ -21,7 +21,27 @@ namespace Logitude.CRM.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public bool CheckIfDefaultMailBoxCreated(int tenant)
+        {
+            return (from a in context.SupportMailboxes
+                      where a.IsDefault && a.Tenant == tenant
+                      select a).Any();
+        }
+
+        public SupportMailbox GetDefaultMailBox(int tenant)
+        {
+            return (from a in context.SupportMailboxes
+                    where a.IsDefault && !a.Inactive && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+        public SupportMailbox GetSingleMailBoxByMailBoxName(string mailBox, int tenant)
+        {
+            return (from a in context.SupportMailboxes
+                    where a.Mailbox == mailBox && !a.Inactive  && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+    }
 
 }
    
