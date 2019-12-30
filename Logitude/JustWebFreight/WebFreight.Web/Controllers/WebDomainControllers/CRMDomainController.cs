@@ -2169,6 +2169,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(commonDataContext);
+            CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(commonDataContext);
             IQueryable<OccasionContactSearchresult> contacts = this.GetCardContacts(args, commonDataContext, tenant);
 
             if (!string.IsNullOrEmpty(args.OccasionId))
@@ -2185,10 +2186,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 List<string> myproductsTypesList = this.GetList(args.ProductTypes, commonDataContext, tenant);
                 if (myproductsTypesList.Count() > 0)
                 {
-                    List<CardContactProduct> cardContactProducts = commonDataContext.CardContactProducts.Where(d => myproductsTypesList.Contains(d.ProductTypeCode)).ToList();
+                    List<CardContactProduct> cardContactProducts = cardContactProductRepository.GetCardContactProductsByProductTypes(myproductsTypesList, tenant);
 
-                    List<string> contactsIds = cardContactProducts.Select(s => s.CardContact.ContactId).ToList();
-                    contacts = contacts.Where(d => contactsIds.Contains(d.ContactId));
+                    if(cardContactProducts != null)
+                    {
+                        List<string> contactsIds = cardContactProducts.Select(s => s.CardContact.ContactId).ToList();
+                        contacts = contacts.Where(d => contactsIds.Contains(d.ContactId));
+                    }
                 }
             }
 
@@ -2197,10 +2201,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 List<string> myAdditionalServicesList = this.GetList(args.AdditionalServices, commonDataContext, tenant);
                 if (myAdditionalServicesList.Count() > 0)
                 {
-                    List<CardContactAdditionalService> cardContactAdditionalServices = commonDataContext.CardContactAdditionalServices.Where(d => myAdditionalServicesList.Contains(d.AdditionalServiceId)).ToList();
+                    List<CardContactAdditionalService> cardContactAdditionalServices = cardContactAdditionalServiceRepository.GetCardContactServicesByServicesList(myAdditionalServicesList, tenant);
 
-                    List<string> contactsIds = cardContactAdditionalServices.Select(s => s.CardContact.ContactId).ToList();
-                    contacts = contacts.Where(d => contactsIds.Contains(d.ContactId));
+                    if (cardContactAdditionalServices != null)
+                    {
+                        List<string> contactsIds = cardContactAdditionalServices.Select(s => s.CardContact.ContactId).ToList();
+                        contacts = contacts.Where(d => contactsIds.Contains(d.ContactId));
+                    }
                 }
             }
 

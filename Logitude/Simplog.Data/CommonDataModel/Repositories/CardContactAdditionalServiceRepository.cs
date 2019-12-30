@@ -35,6 +35,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select record);
         }
 
+        public List<CardContactAdditionalService> GetCardContactServicesByServicesList(List<string> myList, int tenant)
+        {
+            return (from record in context.CardContactAdditionalServices.Include("CardContact")
+                    where record.Tenant == tenant && myList.Contains(record.AdditionalServiceId)
+                    select record).ToList();
+        }
+
         public IQueryable<CardContactAdditionalService> GetAdditionalServicesByCardContactIdd(string cardContactId, int tenant)
         {
             return (from d in context.CardContactAdditionalServices
