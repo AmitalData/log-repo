@@ -13,7 +13,7 @@
                         <LogLabel [ObjectFieldName]="'Mailbox'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td style="width:150px;">
+                    <td style="width:200px;">
                         <LogTextBox [ObjectFieldName]="'Mailbox'" [Text]="Mailbox" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                     </td>
 
@@ -28,7 +28,19 @@
                     </td>
 
                     <td>
-                        <LogCheckBox [ObjectFieldName]="'IsDefault'" [Checked]="IsDefault" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        <table>
+                            <tr>
+                                <td style="width:25px;">
+                                    <LogCheckBox [ObjectFieldName]="'IsDefault'" [Checked]="IsDefault" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                                <td style="width: 15px;" *ngIf="IsDefaultInfoIconVisible">
+                                    <img src="./Images/Info.png" style="width: 15px; height:15px; float: left;" [title]="'If you want to mark another mailbox as default the edit that one'" />
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>                       
                     </td>
 
                     <td>
