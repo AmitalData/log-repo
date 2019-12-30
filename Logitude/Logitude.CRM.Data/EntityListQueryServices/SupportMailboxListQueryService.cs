@@ -15,48 +15,48 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.EntityLists;
 
 namespace Logitude.CRM.Data.EntityListQueryServices
-{ 
+{
 
     public partial class SupportMailboxListQueryService
     {
-	    private IQueryable<SupportMailboxList> GetIqueryableList(IQueryable<SupportMailbox> iQueryable)
+        private IQueryable<SupportMailboxList> GetIqueryableList(IQueryable<SupportMailbox> iQueryable)
         {
-		IQueryable<SupportMailboxList> query = (from a in iQueryable
-                                            select new SupportMailboxList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          CreateDate = a.CreateDate,
-					
-					                          CreatedByUserId = a.CreatedByUserId,
-					
-					                          UpdateDate = a.UpdateDate,
-					
-					                          UpdatedByUserId = a.UpdatedByUserId,
-					
-					                          Mailbox = a.Mailbox,
-					
-					                          Inactive = a.Inactive,
-					
-					                          IsDefault = a.IsDefault,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<SupportMailboxList> query = (from a in iQueryable
+                                                    select new SupportMailboxList()
+                                                    {
 
-		private IQueryable<SupportMailbox> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SupportMailbox> iQueryable, int tenant)
+                                                        Id = a.Id,
+
+                                                        Tenant = a.Tenant,
+
+                                                        CreateDate = a.CreateDate,
+
+                                                        CreatedByUserId = a.CreatedByUserId,
+
+                                                        UpdateDate = a.UpdateDate,
+
+                                                        UpdatedByUserId = a.UpdatedByUserId,
+
+                                                        Mailbox = a.Mailbox,
+
+                                                        Inactive = a.Inactive,
+
+                                                        IsDefault = a.IsDefault,
+
+                                                    });
+            return query;
+        }
+
+        private IQueryable<SupportMailbox> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<SupportMailbox> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<SupportMailbox> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<SupportMailbox> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<SupportMailbox> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<SupportMailbox> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
+
+    }
 
 
 }

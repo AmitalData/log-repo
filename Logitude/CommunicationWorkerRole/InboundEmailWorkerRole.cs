@@ -314,7 +314,7 @@ namespace CommunicationWorkerRole
             bool myResult = false;
             if (!string.IsNullOrEmpty(email))
             {
-                if (email.ToLower() == this.SupportEmail.ToLower())
+                if (email.ToLower().Split('@')[1] == this.SupportDomain.ToLower())
                     myResult = true;
             }
             return myResult;
@@ -1275,6 +1275,7 @@ namespace CommunicationWorkerRole
         }
 
         public string SupportEmail = "";
+        public string SupportDomain = "";
         public void GetSupportMailBoxEmail()
         {
             var mailBox = this.GetDefaultSupportMailBox();
@@ -1282,6 +1283,7 @@ namespace CommunicationWorkerRole
             TenantManagement myTenant = tenantManagementRepository.GetSingleTenantManagement(tenant);
             if (myTenant != null)
             {
+                SupportDomain = myTenant.SupportDomain;
                 this.SupportEmail = mailBox + "@" + myTenant.SupportDomain;
             }
         }

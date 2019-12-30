@@ -196,7 +196,7 @@ namespace WebFreight.Web.Helpers
                             isInternalUser = CheckedIfSenderInternaluser();
                             IsContactUser = CheckIfSenderIsUser(contactId);
 
-                            string supportEmailHeader = emailDetails.RecipientEmail.ToLower().Split('@')[0];
+                            string supportEmailHeader =RecipientEmail.ToLower().Split('@')[0];
 
                             #region Ticket & Header
                             if (!supportEmailHeader.Contains('+'))
@@ -208,7 +208,7 @@ namespace WebFreight.Web.Helpers
                             else
                             {
                                 IsFirstTicket = false;
-                                string headerid = GetInboundEmailId(emailDetails.RecipientEmail.ToLower());
+                                string headerid = GetInboundEmailId(RecipientEmail.ToLower());
                                 myHeader = myHeaderRep.webFreightContext.InboundEmails.Where(d => d.Id == headerid).FirstOrDefault();
                                 TicketQueryService myQuery = new TicketQueryService(Tenant);
                                 myTicket = myQuery.GetSingle(myHeader.EntityId, true, false);
@@ -255,15 +255,15 @@ namespace WebFreight.Web.Helpers
                             #region  Correspondence & Line
                             string correspondenceId = IdCounter.GetNumber("Correspondence", Tenant).ToString();
 
-                            string myRecipientEmail = emailDetails.RecipientEmail;
-                            if (emailDetails.RecipientEmail != null && emailDetails.RecipientEmail.Contains("-in"))
+                            string myRecipientEmail = RecipientEmail;
+                            if (RecipientEmail != null && RecipientEmail.Contains("-in"))
                             {
-                                myRecipientEmail = emailDetails.RecipientEmail.Split(new string[] { "-in" }, StringSplitOptions.None)[0].ToString() + emailDetails.RecipientEmail.Split(new string[] { "-in" }, StringSplitOptions.None)[1].ToString();
+                                myRecipientEmail = RecipientEmail.Split(new string[] { "-in" }, StringSplitOptions.None)[0].ToString() + RecipientEmail.Split(new string[] { "-in" }, StringSplitOptions.None)[1].ToString();
                             }
 
-                            if (emailDetails.RecipientEmail != null && emailDetails.RecipientEmail.Contains("-ex"))
+                            if (RecipientEmail != null && RecipientEmail.Contains("-ex"))
                             {
-                                myRecipientEmail = emailDetails.RecipientEmail.Split(new string[] { "-ex" }, StringSplitOptions.None)[0].ToString() + emailDetails.RecipientEmail.Split(new string[] { "-ex" }, StringSplitOptions.None)[1].ToString();
+                                myRecipientEmail =RecipientEmail.Split(new string[] { "-ex" }, StringSplitOptions.None)[0].ToString() +RecipientEmail.Split(new string[] { "-ex" }, StringSplitOptions.None)[1].ToString();
                             }
 
                             string mySender = emailDetails.Sender;
@@ -384,14 +384,17 @@ namespace WebFreight.Web.Helpers
             }
         }
 
+        private string RecipientEmail = ""; 
         private SupportMailbox CheckIfSupportMailBoxExist(string supportDomain)
         {
             SupportMailbox supportMailbox = null;
             var emails = helper.GetSupportEmail(helper.GetListOfFilteredEmails(emailDetails.RecipientEmail));
             var mailBoxEmail = emails.Where(a => a.Contains(supportDomain)).FirstOrDefault();
-            if(mailBoxEmail != null)
+
+            if (mailBoxEmail != null)
             {
                 this.supportEmail = mailBoxEmail;
+                RecipientEmail = emailDetails.RecipientEmail.Contains(";") ? emailDetails.RecipientEmail.Split(';').Where(a => a.Contains(mailBoxEmail)).FirstOrDefault() : emailDetails.RecipientEmail;
                 SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(Tenant);
                 supportMailbox = mailboxRepository.GetSingleMailBoxByMailBoxName(mailBoxEmail.Split('@')[0], Tenant);
             }
@@ -678,13 +681,13 @@ namespace WebFreight.Web.Helpers
 
             if (!string.IsNullOrEmpty(emailDetails.Sender))
             {
-                if (emailDetails.RecipientEmail.Contains("-in"))
+                if (RecipientEmail.Contains("-in"))
                 {
 
                     isInternal = true;
                 }
 
-                else if (emailDetails.RecipientEmail.Contains("-ex"))
+                else if (RecipientEmail.Contains("-ex"))
                 {
 
                     isInternal = false;
@@ -847,12 +850,12 @@ namespace WebFreight.Web.Helpers
 
             if (!string.IsNullOrEmpty(recipient))
             {
-                if (emailDetails.RecipientEmail.Contains("-in"))
+                if (RecipientEmail.Contains("-in"))
                 {
                     unikey = recipient.Split(new string[] { "-in" }, StringSplitOptions.None)[0].Split('+')[1].ToString();
                 }
 
-                else if (emailDetails.RecipientEmail.Contains("-ex"))
+                else if (RecipientEmail.Contains("-ex"))
                 {
                     unikey = recipient.Split(new string[] { "-ex" }, StringSplitOptions.None)[0].Split('+')[1].ToString();
                 }

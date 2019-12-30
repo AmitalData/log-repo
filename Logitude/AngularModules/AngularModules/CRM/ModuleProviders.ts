@@ -55,7 +55,7 @@ import {TicketStagePMService} from './Services/StandardPMs/TicketStagePMService'
 import { TicketTypePMService } from './Services/StandardPMs/TicketTypePMService';
 import { OccasionTypePMService } from './Services/StandardPMs/OccasionTypePMService';
 import { OccasionPMService } from './Services/StandardPMs/OccasionPMService';
-
+import { SupportMailboxListService } from './Services/StandardLists/SupportMailboxListService';
 
 
 // Menu Buttons 
@@ -107,6 +107,7 @@ export class ModuleProviders {
             case "OccasionStatusListService": { myResult = new OccasionStatusListService(); break; }
             case "OccasionListService": { myResult = new OccasionListService(); break; }
             case "OccasionContactListService": { myResult = new OccasionContactListService(); break; }
+            case "SupportMailboxListService": { myResult = new SupportMailboxListService(); break; }
 
             // PM
             case "ActivityOwnerHistoryPMService": { myResult = new ActivityOwnerHistoryPMService(); break; }
