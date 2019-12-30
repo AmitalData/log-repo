@@ -290,8 +290,8 @@ export class QuoteValidator {
     }
 
     public CheckDuplicateInCharges(entitpPM: QuotePM, charge: QuoteChargePM, errors: string[]) {
-        //if (entitpPM.QuoteCharges.filter(c => c.ChargesTypeCode === charge.ChargesTypeCode).length > 0) {
-        //    errors.push(charge.ChargesTypeName + " Charge is duplicated");
-        //}
+        if (entitpPM.QuoteCharges.filter(c => c.ChargesTypeCode === charge.ChargesTypeCode && c != charge).length > 0) {
+            errors.push(charge.ChargesTypeName + " Charge is duplicated");
+        }
     }
 }
