@@ -9,6 +9,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
     public class OccasionContactSearchresult
     {
         public string ContactId { get; set; }
+        public string CardContactId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Company { get; set; }
