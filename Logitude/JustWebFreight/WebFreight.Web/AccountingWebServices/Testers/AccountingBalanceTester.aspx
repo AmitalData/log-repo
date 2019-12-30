@@ -1147,6 +1147,7 @@ div#two {
                     <asp:Button id="ButtonCardIndex" runat="server" Text="Card Index" OnClick="_ButtonLedgerTransactionCardIndex_Click" />
                     <%--<asp:Button ID="ButtonCardGLAccountConnect" runat="server" Text="Card GLAccount Connect (Tenant)" OnClick="ButtonCardGLAccountConnect_Click" />--%>        
                     <button id="ButtonCardGLAccountConnect"  onclick="javascript:return OnClickButtonCardGLAccountConnect();">Card GLAccount Connect (Tenant)</button>        
+                    <asp:Button id="_ButtonCardIndexNew" runat="server" Text="Card Index New" OnClick="_ButtonCardIndexNew_Click" />
                 </li>
                 <li>
                     <button id="ButtonPostDatedChequeRedemptionBatch" onclick="javascript:return OnClickButtonPostDatedChequeRedemptionBatch();" >PostDatedChequeRedemptionBatch</button>
