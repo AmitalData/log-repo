@@ -61,6 +61,8 @@ GenerateAllUpdateClasses("../MetadataFiles","../../JustWebFreight/WebFreight.Web
 
 GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CRMUpdateClass");
 GenerateMetaDataUpdateClass("../MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","OccasionContactMetadataUpdateClass");
+//GenerateMetaDataUpdateClass("../MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CRMUpdateClass");
+
 
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.CRM.BL/CLoseTables");
 GenerateAllDomainServices("../EntityFiles","../.../JustWebFreight/WebFreight.Web/CRMModel","CRMContext","Logitude.CRM","CRMDomainService");
