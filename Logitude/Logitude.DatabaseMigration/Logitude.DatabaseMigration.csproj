@@ -1843,7 +1843,6 @@
     <Compile Include="Migrations\201912221352074_Mutaz.Designer.cs">
       <DependentUpon>201912221352074_Mutaz.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Migrations\201802141437145_ClassifiedREmarks.resx">
       <DependentUpon>201802141437145_ClassifiedREmarks.cs</DependentUpon>
