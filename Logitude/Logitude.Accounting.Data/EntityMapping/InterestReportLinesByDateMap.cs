@@ -47,17 +47,17 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CreditInterestPercentage).HasColumnName("CreditInterestPercentage").HasPrecision(4, 2);
 
-            this.Property(t => t.StandardInterestAmount).HasColumnName("StandardInterestAmount").HasPrecision(19, 3);
+            this.Property(t => t.StandardInterestAmount).HasColumnName("StandardInterestAmount").HasPrecision(18, 2);
 
-            this.Property(t => t.ExceptionalInterestAmount).HasColumnName("ExceptionalInterestAmount").HasPrecision(20, 4);
+            this.Property(t => t.ExceptionalInterestAmount).HasColumnName("ExceptionalInterestAmount").HasPrecision(18, 2);
 
-            this.Property(t => t.CreditInterestAmount).HasColumnName("CreditInterestAmount").HasPrecision(20, 4);
+            this.Property(t => t.CreditInterestAmount).HasColumnName("CreditInterestAmount").HasPrecision(18, 2);
 
-            this.Property(t => t.CalculatedStandInterestAmount).HasColumnName("CalculatedStandInterestAmount").HasPrecision(18, 2);
+            this.Property(t => t.CalculatedStandInterestAmount).HasColumnName("CalculatedStandInterestAmount").HasPrecision(20, 4);
 
-            this.Property(t => t.CalculatedExcepInterestAmount).HasColumnName("CalculatedExcepInterestAmount").HasPrecision(18, 2);
+            this.Property(t => t.CalculatedExcepInterestAmount).HasColumnName("CalculatedExcepInterestAmount").HasPrecision(20, 4);
 
-            this.Property(t => t.CalculatedCreditInterestAmount).HasColumnName("CalculatedCreditInterestAmount").HasPrecision(18, 2);
+            this.Property(t => t.CalculatedCreditInterestAmount).HasColumnName("CalculatedCreditInterestAmount").HasPrecision(20, 4);
 
             this.Property(t => t.CalculationDetails).HasColumnName("CalculationDetails").HasMaxLength(256).IsUnicode(true);
         }
