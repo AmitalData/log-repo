@@ -56,6 +56,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          GLAccountInterestCreditLimit = a.GLAccountInterestCreditLimit,
 					
 					                          InterestReportStatusCode = a.InterestReportStatusCode,
+                                              
+                                              //InterestReportStatusName = a.InterestReportStatuse==null?null: a.InterestReportStatuse.LocalName,
+
+                                              //UpdatedByLocalName = a.UpdatedByUser==null? null: a.UpdatedByUser.Contact==null? null : a.UpdatedByUser.Contact.LocalName,
+
+                                              //CreatedByLocalName =a.CreatedByUser==null?null : a.CreatedByUser.Contact==null?null : a.CreatedByUser.Contact.LocalName,
+
+                                              //GLAccountDisplayNumber = a.GLAccount==null ? null :a.GLAccount.DisplayNumber,
+
+                                              //ARInvoiceNumber =a.ARInvoice==null? null :a.ARInvoice.InvoiceNumber,
+
+                                              //GLAccountLocalName = a.GLAccount ==null ? null :a.GLAccount.LocalName
 					
 		                    	            });
             return query;

@@ -24,6 +24,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPM.Tenant);
             GLAccount gLAccount = gLAccountRepository.GetSingle(entityPM.GLAccountId, entityPM.Tenant);
             entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
+            ContactPM contact = GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !contact.DontShowLocal;
+            if (gLAccount.Inactive == true)
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotdefined", entityPM.Tenant, showLocals));
+            }
         }
 
         protected override void OnUpdating(InterestReportPM entityPM, InterestReport entityPOCO)
@@ -32,5 +38,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        public static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
     }
 }

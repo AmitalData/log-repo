@@ -11,7 +11,7 @@ namespace Logitude.DatabaseMigration.Migrations
             DropIndex("dbo.InterestReportLines", new[] { "InterestTransactionId" });
             DropPrimaryKey("dbo.InterestReportLines");
             AlterColumn("dbo.InterestReportLines", "InterestTransactionId", c => c.String(nullable: false, maxLength: 15, unicode: false));
-            AlterColumn("dbo.GLAccounts", "MinimumInterestInvoiceBilling", c => c.Int());
+            //AlterColumn("dbo.GLAccounts", "MinimumInterestInvoiceBilling", c => c.Int());
             DropColumn("dbo.InterestReports", "UpdateDate");
             AddPrimaryKey("dbo.InterestReportLines", new[] { "InterestReportId", "InterestTransactionId" });
             CreateIndex("dbo.InterestReportLinesByDates", "InterestReportId");

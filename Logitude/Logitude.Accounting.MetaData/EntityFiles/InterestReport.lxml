@@ -1589,6 +1589,7 @@
   <field
     Id="&quot;a26b53f8-97c3-4105-b7b6-c8fc41ce523d&quot;"
     FieldName="&quot;InterestReportStatusName&quot;"
+    OldFieldName="&quot;InterestReportStatusName&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1612,6 +1613,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;InterestReportStatusName&quot;"
     ListPropertyPath="&quot;InterestReportStatusName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1700,7 +1702,7 @@
       <QueryColumn
         QueryCode="&quot;Interest Report&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;InterestReportStatusCode&quot;"
+        ObjectFieldName="&quot;InterestReportStatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Interest Report&quot;"
@@ -1803,6 +1805,13 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;InterestReport.O.Customerisnotdefined&quot;"
+      DefaultText="&quot;Customer is not defined to interest&quot;"
+      LocalDefaultText="&quot;לקוח לא מוגדר לריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

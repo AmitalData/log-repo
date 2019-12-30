@@ -1304,6 +1304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportStatusName",
+					  						OldFieldName =  "InterestReportStatusName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1323,6 +1324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InterestReportStatusName",
 					  						ListPropertyPath =  "InterestReportStatusName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1392,7 +1394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InterestReportQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id, IndexOrder = 4, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "GLAccountLocalName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "GLAccountLocalName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id, IndexOrder = 5, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusCode" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusCode" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id, IndexOrder = 5, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn InterestReportQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id, IndexOrder = 6, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1502,7 +1504,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InterestReportTextCode_InterestReportOCustomerisnotdefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customerisnotdefined", DefaultText = "Customer is not defined to interest",LocalDefaultText = @"לקוח לא מוגדר לריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

@@ -48,12 +48,25 @@ export class InterestPageComponent implements AfterViewInit {
         windowArgs.IsNew = true;
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 720;
+        logWindow.Width = 680;
         logWindow.Height = 400;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = windowTitle;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent');
+    }
+
+    RunNewInterestReportWizard() {
+        var windowArgs: any = {};
+        windowArgs.IsNew = true;
+        var windowTitle = TextCodeTranslator.Translate("InterestReport");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 420;
+        logWindow.Height = 200;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = windowTitle;
+        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/NewEntity/NewInterestReportComponent');
     }
 
         ViewAccountingQuery(myQueryCode: string) {
