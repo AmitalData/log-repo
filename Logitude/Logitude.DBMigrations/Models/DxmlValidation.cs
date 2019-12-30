@@ -1,5 +1,4 @@
-﻿using Logitude.DBMigrations.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,13 +13,11 @@ namespace Logitude.DBMigrations.Models
         public DxmlValidation(string[] dxmlFiles)
         {
             DXMLFiles = dxmlFiles;
-            DXMLTables = GetDxmlTableDefinitions();
+            DXMLTables = GetDXMLTables();
         }
 
         public void Validate()
         {
-            Console.WriteLine("Validating DXML Files ...");
-
             string error = null;
 
             foreach (var dxmlTable in DXMLTables)
@@ -47,7 +44,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private List<DxmlTable> GetDxmlTableDefinitions()
+        private List<DxmlTable> GetDXMLTables()
         {
             List<DxmlTable> dxmlTableDefinitions = new List<DxmlTable>();
 

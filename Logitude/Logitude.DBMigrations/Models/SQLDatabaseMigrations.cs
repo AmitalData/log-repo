@@ -1,7 +1,5 @@
-﻿using Logitude.DBMigrations.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -9,12 +7,11 @@ namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
-        protected string ConnectionString;
-        
-        public SQLDatabaseMigrations(TableDefinition table, string connectionString)
+        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables)
         {
             ConnectionString = connectionString;
-            DXMLTable = table;
+            DXMLTable = dxmlTable;
+            DXMLTables = dxmlTables;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -150,15 +147,6 @@ namespace Logitude.DBMigrations.Models
         protected override List<RelationDefinition> GetRelationsForDBTable(string tableName, bool usingParentTable)
         {
             string tableObjectId = usingParentTable ? "parent_object_id" : "referenced_object_id";
-
-            //string queryString = @"SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName " +
-            //                      "FROM SYS.FOREIGN_KEY_COLUMNS ForeignKeyColumns " +
-            //                      "INNER JOIN SYS.TABLES ParentTable ON ParentTable.object_id = ForeignKeyColumns.parent_object_id " +
-            //                      "INNER JOIN SYS.COLUMNS ParentColumn ON ParentColumn.column_id = ForeignKeyColumns.parent_column_id AND ParentColumn.object_id = ParentTable.object_id " +
-            //                      "INNER JOIN SYS.TABLES ReferencedTable ON ReferencedTable.object_id = ForeignKeyColumns.referenced_object_id " +
-            //                      "INNER JOIN SYS.COLUMNS ReferencedColumn ON ReferencedColumn.column_id = ForeignKeyColumns.referenced_column_id AND ReferencedColumn.object_id = ReferencedTable.object_id " +
-            //                      "INNER JOIN SYS.OBJECTS SysObject ON SysObject.object_id = ForeignKeyColumns.constraint_object_id " +
-            //                      "WHERE ForeignKeyColumns." + tableObjectId + " = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
             
             string queryString = @"SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName, ParentTableSchema.name AS ParentTableSchemaName, ReferencedTableSchema.name AS ReferencedTableSchemaName, ReferencedColumn.column_id AS ReferencedColumnOrder " +
                       "FROM SYS.FOREIGN_KEY_COLUMNS ForeignKeyColumns " +
@@ -532,10 +520,10 @@ namespace Logitude.DBMigrations.Models
             }
             dropPrimaryKeyScript += "-- Drop The Primary Key Constraint\n";
             string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
-            dropPrimaryKeyScript += "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + "')";
+            dropPrimaryKeyScript += "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + primaryKeyConstraintName + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + " END" + "')";
             return dropPrimaryKeyScript + ";\n\n";
         }
-
+        
         protected override string GetSetNullableScript(ColumnMigration columnMigration)
         {
             bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
@@ -604,10 +592,10 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
-            string dropPrimaryKeyConstraintScript = "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + "');";
+            string dropPrimaryKeyConstraintScript = "EXEC('IF (OBJECT_ID(''" + TableMigrations.DxmlTableSchema + "." + primaryKeyConstraintName + "'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " DROP CONSTRAINT " + primaryKeyConstraintName + " END" + "');";
             return dropPrimaryKeyConstraintScript;
         }
-
+        
         protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
             string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "[" + c.Name + "]").ToArray());

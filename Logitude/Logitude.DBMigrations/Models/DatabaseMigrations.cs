@@ -1,8 +1,5 @@
-﻿using Logitude.DBMigrations.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -14,11 +11,12 @@ namespace Logitude.DBMigrations.Models
         protected TableDefinition CurrentTable;
         protected TableMigrations TableMigrations;
 
+        protected List<TableDefinition> DXMLTables;
         protected List<ColumnMigration> ColumnsMigrations = new List<ColumnMigration>();
+
+        protected string ConnectionString;
         protected bool AlterPrimaryKeyConstraint = false;
         protected bool PrimaryKeyColumnAdded = false;
-
-        protected List<TableDefinition> DXMLTables;
 
         public string GetScript()
         {
@@ -474,7 +472,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    if (name.ToLower().StartsWith("drop_"))
+                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_"))
                     {
                         return name.Substring(0, maxLength);
                     }
@@ -486,7 +484,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected TableDefinition FormatNames(TableDefinition table)
+        protected TableDefinition FormatCaseSensitiveNames(TableDefinition table)
         {
             if(table != null)
             {

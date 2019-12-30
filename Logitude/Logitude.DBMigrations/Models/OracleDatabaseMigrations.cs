@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Linq;
-using Logitude.DBMigrations.Helpers;
 using Oracle.DataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
 {
     public class OracleDatabaseMigrations : DatabaseMigrations
     {
-        protected string ConnectionString;
-
-        public OracleDatabaseMigrations(TableDefinition table, string connectionString)
+        public OracleDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables)
         {
             ConnectionString = connectionString;
-            DXMLTable = FormatNames(table);
-            DXMLTables = AppHelper.DXMLTables;
+            DXMLTable = FormatCaseSensitiveNames(dxmlTable);
+            DXMLTables = dxmlTables;
         }
         
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -149,7 +144,7 @@ namespace Logitude.DBMigrations.Models
                 ExitDatabaseMigrations(exception.Message);
             }
 
-            return FormatNames(currentTable);
+            return FormatCaseSensitiveNames(currentTable);
         }
 
         protected override List<RelationDefinition> GetRelationsForDBTable(string tableName, bool usingParentTable)//
@@ -539,10 +534,10 @@ namespace Logitude.DBMigrations.Models
             }
             dropPrimaryKeyScript += "-- Drop The Primary Key Constraint\n";
             string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
-            dropPrimaryKeyScript += "ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper() + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"";
+            dropPrimaryKeyScript += "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + primaryKeyConstraintName + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper() + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"'; END IF; END";
             return dropPrimaryKeyScript + ";\n\n";
         }
-
+        
         protected override string GetSetNullableScript(ColumnMigration columnMigration)
         {
             bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
@@ -599,7 +594,8 @@ namespace Logitude.DBMigrations.Models
             else if (IsTableHasPrimaryKeys(DXMLTable))
             {
                 alterPrimaryKeyScript += "-- Add Primary Key Constraint\n";
-                string primaryKeyConstraintName = "PK_" + GenerateRandomString();
+                string primaryKeyConstraintName = "PK_" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper() + "_" + GenerateRandomString();
+                primaryKeyConstraintName = FormatNameLength(primaryKeyConstraintName, null);
                 alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName);
             }
             return alterPrimaryKeyScript;
@@ -607,10 +603,10 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
-            string dropPrimaryKeyConstraintScript = "ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper() + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"" + ";";
+            string dropPrimaryKeyConstraintScript = "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + primaryKeyConstraintName + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper() + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"'; END IF; END;";
             return dropPrimaryKeyConstraintScript;
         }
-
+        
         protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
             string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + FormatNameLength(c.Name, c.ShortName).ToUpper() + "\"").ToArray());
@@ -632,7 +628,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetDropRelationScript(RelationDefinition relation)//
         {
             string dropRelationScript = "-- Drop Foreign Key Constraint For Column " + relation.ForeignKeyColumn.ToUpper() + " In Table " + relation.ParentTable.ToUpper() + " That Reference To Column " + relation.ReferencedColumn.ToUpper() + " In Table " + relation.ReferencedTable.ToUpper() + "\n";
-            dropRelationScript += "DECLARE cnt number; BEGIN SELECT COUNT(*) INTO cnt FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + relation.ForeignKeyConstraintName.ToUpper() + "'; IF (cnt <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + relation.ParentTable.ToUpper() + "\" DROP CONSTRAINT \"" + relation.ForeignKeyConstraintName.ToUpper() + "\"'; END IF; END;";
+            dropRelationScript += "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + relation.ForeignKeyConstraintName.ToUpper() + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + relation.ParentTable.ToUpper() + "\" DROP CONSTRAINT \"" + relation.ForeignKeyConstraintName.ToUpper() + "\"'; END IF; END";
             return dropRelationScript + ";\n\n";
         }
     }
