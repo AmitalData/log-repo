@@ -238,6 +238,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
             myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+            myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
@@ -298,5 +299,13 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     }
       //#endregion
+
+    // Filter Methods
+    public DateFilterSelectedValue: string = 'filter_Due';
+    DateFilterItemClicked(itemValue: string) {
+        if (this.DateFilterSelectedValue != itemValue) {
+            this.DateFilterSelectedValue = itemValue;
+        }
+    }
 
 }

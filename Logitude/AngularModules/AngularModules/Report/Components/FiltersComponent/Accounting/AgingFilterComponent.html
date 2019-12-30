@@ -56,35 +56,11 @@
         cursor: default;
     }
 
-
     .FiltersMenu li {
-        /* width: fit-content !important; */
-        width: 70px;
-        padding: 0 7px;
-        border-width: 1px;
-        margin-right: -1px;
-        /*background: #f7f7f7;*/
+        width: fit-content;
+        height: 22px;
+        padding: 0 10px;
     }
-
-    .FiltersMenu li:hover {
-        opacity: 0.9;
-    }
-    .FiltersMenu .SelectedFilter {
-        /*background: darkgrey !important;*/
-    }
-
-    .aboodRTLFilterMenu li:first-child, .aboodRTLFilterMenu li:last-child{
-        border-radius: 0;
-    }
-    .aboodRTLFilterMenu li:first-child{
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-    }
-    .aboodRTLFilterMenu li:last-child{
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-    }
-
 
 </style>
 
@@ -100,60 +76,32 @@
     </tr>
 
     <tr style="height: 32px;">
-        <td>
+
             <table class="AbdullahTable" *ngIf="isReady">
 
-                <!-- <tr>
-                    <td style="width: 150px; padding: 0 5px;" class="Label">
-                        {{ 'Accounting.General.O.FilterBy' | TextCodeTranslationPipe }}
+                <tr>
+                    <!-- GroupByDate -->
+                    <td style="width: 150px; padding-right: 5px;" class="Label">
+                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.GroupByDate'" [ObjectFieldName]="'GroupByDate'"
+                                  [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="width: 270px;" colspan="2">
-                        <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
-                            <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
-                                [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
-                                {{'GLAccount.O.Customer' | TextCodeTranslationPipe}}
+                    <td style="width: 180px;">
+                        <ul float-start class="FiltersMenu">
+                            <li id="filter_Due" (click)="DateFilterItemClicked('filter_Due')"
+                                [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Due'">
+                                {{ 'GLAccounts.O.Collecting' | TextCodeTranslationPipe }}
                             </li>
-                            <li float-start id="filter_vendor" (click)="FilterItemClicked('filter_vendor')" style="height: 22px;"
-                                [class.SelectedFilter]="filterSelectedValue === 'filter_vendor'">
-                                {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}
+                            <li id="filter_Accounting" (click)="DateFilterItemClicked('filter_Accounting')"
+                                [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Accounting'">
+                                {{ 'GLAccounts.O.Accounting' | TextCodeTranslationPipe }}
                             </li>
                         </ul>
                     </td>
 
-                    <td style="width: 35px;"></td>
-
-                    <td style="width: 185px; padding-right: 5px;" class="Label">
-
-                    </td>
-                    <td style="width: 155px;">
-
-                    </td>
-                    <td style="width: 100px;"></td>
-
-                    <td style="width: 100px; padding-right: 5px;" class="Label">
-
-                    </td>
-                    <td></td>
-                </tr> -->
-
-                <tr>
-                    <!-- AgingForDate -->
-                    <td style="width: 150px; padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.AgingForDate'" [ObjectFieldName]="'AgingForDate'"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td style="width: 135px;">
-                        <LogDatePicker [ObjectTableName]="'GLAccount'" [ObjectFieldName]="'AgingForDate'" [SelectedDateValue]="AgingForDate"
-                                       [DataContext]="DataContext" [HideColumns]="true" (OnBlurEvent)="ValidateDate()"></LogDatePicker>
-                    </td>
-                    <td style="width: 135px;"></td>
-
-                    <td style="width: 35px;"></td>
+                    <td style="width: 50px;"></td>
 
                     <!-- Customer -->
                     <td style="width: 185px; padding: 0 10px;" class="Label">
-                        <!-- <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.Customer'" [ObjectFieldName]="'Customer'"
-                                  [DataContext]="DataContext"></LogLabel> -->
                         <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                             <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
                                 [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
@@ -165,7 +113,7 @@
                             </li>
                         </ul>
                     </td>
-                    <td style="width: 155px;">
+                    <td style="width: 130px;">
                         <LogLov [ObjectFieldName]="'Customer'"
                                 [ObjectTableName]="'GLAccount'"
                                 [DataContext]="DataContext"
@@ -173,10 +121,13 @@
                                 [DependencyFilter2Value]="AccountTypeCode"
                                 [SelectedValue]="Customer"
                                 [LookUpTableName]="'GLAccount'"
-                                [HideColumns]="false">
+                                [HideColumns]="true">
                         </LogLov>
                     </td>
-                    <td style="width: 100px;"></td>
+
+                    <td style="width: 120px;"></td>
+
+                    <td style="width: 50px;"></td>
 
                     <td style="width: 100px; padding-right: 5px;" class="Label">
                         <div style="width: 90px;">
@@ -188,23 +139,15 @@
                 </tr>
 
                 <tr>
-                    <!-- SalesmanUserId -->
-                    <td style="padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
-                                  [DataContext]="DataContext"></LogLabel>
+                    <!-- AgingForDate -->
+                    <td style="width: 150px; padding-right: 5px;" class="Label">
+                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.AgingForDate'" [ObjectFieldName]="'AgingForDate'"
+                                    [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="">
-                        <!--[ObjectFieldName]="'SalesmanUserId'"-->
-                        <LogLov [ObjectFieldName]="'Salesman'"
-                                [ObjectTableName]="'GLAccount'"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'User'"
-                                [SelectedValue]="Salesman"
-                                [QueryFilterItems]="SalesmanFilterItems"
-                                [HideColumns]="true">
-                        </LogLov>
+                    <td style="width: 135px;padding-right: 40px;">
+                        <LogDatePicker [ObjectTableName]="'GLAccount'" [ObjectFieldName]="'AgingForDate'" [SelectedDateValue]="AgingForDate"
+                                        [DataContext]="DataContext" [HideColumns]="true" (OnBlurEvent)="ValidateDate()"></LogDatePicker>
                     </td>
-                    <td style=""></td>
 
                     <td></td>
 
@@ -213,9 +156,9 @@
                         <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'" [ObjectFieldName]="'NumberOfMonths'"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="width: 135px;">
+                    <td style="width: 100px;">
                         <LogTextBox [ObjectFieldName]="'NumberOfMonths'" [InputType]="'unsinteger'" [DataContext]="DataContext" [Text]="NumberOfMonths"
-                                    [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="false"></LogTextBox>
+                                    [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true"></LogTextBox>
 
                     </td>
 
@@ -227,42 +170,27 @@
                         <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="">
+                    <td style="padding-right: 40px;" >
                         <LogLov [ObjectFieldName]="'Collector'"
                                 [ObjectTableName]="'GLAccount'"
                                 [DataContext]="DataContext"
-                                [SelectedValue]="Collector"
                                 [LookUpTableName]="'User'"
                                 [HideColumns]="true">
                         </LogLov>
                     </td>
-                    <td style=""></td>
 
                     <td></td>
 
-                    <!-- CurrenciesDetailed -->
-                    <td style="padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.CurrenciesDetailed'"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td style="">
-                        <CheckBox [IsChecked]="CurrenciesDetailed"
-                                  (Checked)="CurrenciesDetailed = $event"></CheckBox>
-                    </td>
-                    <td style=""></td>
 
-                </tr>
-
-                <tr>
                     <!-- Category -->
-                    <td style="padding-right: 5px;" class="Label">
+                    <td style="width: 185px; padding-right: 5px;" class="Label">
                         <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'" [Text]="'Category'"
-                                  [DataContext]="DataContext"></LogLabel>
+                                [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td >
+                    <td style="width: 100px;">
                         <ComboBox [ItemsSource]="CategoriesList" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
                     </td>
-                    <td style="padding-left: 5px;">
+                    <td style="width: 130px; padding-left: 5px;">
                         <div [ngSwitch]="SelectedCategory" [class.disabled]="IsCategoryDisabled">
 
                             <!-- Category 1 -->
@@ -322,13 +250,43 @@
                             </div>
 
                         </div>
-
-
-
                     </td>
+
+
                     <td style=""></td>
 
                 </tr>
+
+                <tr>
+
+                     <!-- SalesmanUserId -->
+                     <td style="padding-right: 5px;" class="Label">
+                            <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
+                                        [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="padding-right: 40px;">
+                            <!--[ObjectFieldName]="'SalesmanUserId'"-->
+                            <LogLov [ObjectFieldName]="'Salesman'"
+                                    [ObjectTableName]="'GLAccount'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'User'"
+                                    [QueryFilterItems]="SalesmanFilterItems"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+                    <td></td>
+
+                    <!-- CurrenciesDetailed -->
+                    <td style="padding-right: 5px;" class="Label">
+                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.CurrenciesDetailed'"
+                            [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="">
+                        <CheckBox [IsChecked]="CurrenciesDetailed" (Checked)="CurrenciesDetailed = $event"></CheckBox>
+                    </td>
+
+                </tr>
+
 
                 <tr style="height: 15px;">
                     <td></td>
@@ -338,6 +296,6 @@
             <div *ngIf="!isReady" style="padding-top: 20px;padding-left: 20px;">
                 Loading...
             </div>
-        </td>
+
     </tr>
 </table>

@@ -9672,14 +9672,9 @@
         IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen
-    Name="&quot;Header Screen&quot;"
-    ObjectTableName="&quot;GLAccount&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    Code="&quot;GLAccount.HeaderScreen&quot;"
-    NumberOfColumns="5"
-    NumberOfRows="2">
+
+  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;GLAccount&quot;" NumberOfColumns="5" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;GLAccount.HeaderScreen&quot;">
+
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -10411,60 +10406,14 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
-  <MenuButtons
-    MenuButtonGroupType="&quot;GLAEdit&quot;"
-    MenuButtonGroupName="&quot;GLAEditButtonsGroup&quot;">
-    <MenuButton
-      EventCode="&quot;Reconcile&quot;"
-      DefaultText="&quot;Reconcile&quot;"
-      MenuButtonType="&quot;button&quot;"
-      Style="&quot;ApproveButtonStyle&quot;"
-      IndexOrder="0"
-      LocalDefaultText="&quot;התאם&quot;"
-      FeatureCode="&quot;RECOCILE&quot;"
-      IsPackagable="false"
-      TextCodeCode="&quot;GLAccount.B.Reconcile&quot;"
-      FeatureTextCodeCode="&quot;GLAccount.Features.Reconcile&quot;"
-      FeatureDefaultText="&quot;Reconcile&quot;" />
-    <MenuButton
-      EventCode="&quot;More&quot;"
-      DefaultText="&quot;More&quot;"
-      MenuButtonType="&quot;dropdownbutton&quot;"
-      IndexOrder="1"
-      LocalDefaultText="&quot;נוספים&quot;"
-      FeatureCode="&quot;MOREGLACCOUNT&quot;"
-      IsPackagable="false"
-      TextCodeCode="&quot;GLAccount.B.More&quot;"
-      FeatureTextCodeCode="&quot;GLAccount.Features.More&quot;"
-      FeatureDefaultText="&quot;More Buttons&quot;">
-      <MenuItem
-        EventCode="&quot;GLAccountInactive&quot;"
-        DefaultText="&quot;Inactive&quot;"
-        MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="0"
-        LocalDefaultText="&quot;חסימה&quot;"
-        FeatureCode="&quot;INACITVE&quot;"
-        IsPackagable="false"
-        TextCodeCode="&quot;GLAccount.B.Inactive&quot;"
-        FeatureTextCodeCode="&quot;GLAccount.Features.Inactive&quot;"
-        FeatureDefaultText="&quot;Inactive&quot;" />
-      <MenuItem
-        EventCode="&quot;GLAccountPrintCardIndex&quot;"
-        DefaultText="&quot;Print Card Index&quot;"
-        MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="1"
-        FeatureCode="&quot;PRINTCARDINDEX&quot;"
-        IsPackagable="false"
-        TextCodeCode="&quot;GLAccount.B.PrintCardIndex&quot;"
-        FeatureTextCodeCode="&quot;GLAccount.Features.PrintCardIndex&quot;"
-        FeatureDefaultText="&quot;Print Card Index&quot;" />
-      <MenuItem
-        EventCode="&quot;GLAccountReactivate&quot;"
-        DefaultText="&quot;Reactivate&quot;"
-        MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="0"
-        LocalDefaultText="&quot;הפעל מחדש&quot;"
-        IsPackagable="false" />
+
+  <MenuButtons MenuButtonGroupType="&quot;GLAEdit&quot;" MenuButtonGroupName="&quot;GLAEditButtonsGroup&quot;">
+    <MenuButton EventCode="&quot;Reconcile&quot;" DefaultText="&quot;Reconcile&quot;" MenuButtonType="&quot;button&quot;" Style="&quot;ApproveButtonStyle&quot;" IndexOrder="0" LocalDefaultText="&quot;התאם&quot;" FeatureCode="&quot;RECOCILE&quot;" IsPackagable="false" TextCodeCode="&quot;GLAccount.B.Reconcile&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.Reconcile&quot;" FeatureDefaultText="&quot;Reconcile&quot;" />
+    <MenuButton EventCode="&quot;More&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="1" LocalDefaultText="&quot;נוספים&quot;" FeatureCode="&quot;MOREGLACCOUNT&quot;" IsPackagable="false" TextCodeCode="&quot;GLAccount.B.More&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.More&quot;" FeatureDefaultText="&quot;More Buttons&quot;">
+      <MenuItem EventCode="&quot;GLAccountInactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;חסימה&quot;" FeatureCode="&quot;INACITVE&quot;" IsPackagable="false" TextCodeCode="&quot;GLAccount.B.Inactive&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.Inactive&quot;" FeatureDefaultText="&quot;Inactive&quot;" />
+      <MenuItem EventCode="&quot;GLAccountPrintCardIndex&quot;" DefaultText="&quot;Print Card Index&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" FeatureCode="&quot;PRINTCARDINDEX&quot;" IsPackagable="false" TextCodeCode="&quot;GLAccount.B.PrintCardIndex&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.PrintCardIndex&quot;" FeatureDefaultText="&quot;Print Card Index&quot;" />
+      <MenuItem EventCode="&quot;GLAccountReactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;הפעל מחדש&quot;" />
+
     </MenuButton>
   </MenuButtons>
   <DataContracts>
@@ -11598,6 +11547,8 @@
       IsSpellChecked="false" />
     <TextCode Code="&quot;GLAccount.O.Customer&quot;" DefaultText="&quot;Customer&quot;" LocalDefaultText="&quot;לקוחות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;GLAccount.O.Vendor&quot;" DefaultText="&quot;Vendor&quot;" LocalDefaultText="&quot;ספקים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.GroupByDate&quot;" DefaultText="&quot;Group By Date:&quot;" LocalDefaultText="&quot;לפי תאריך&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
