@@ -56,20 +56,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          GLAccountInterestCreditLimit = a.GLAccountInterestCreditLimit,
 					
 					                          InterestReportStatusCode = a.InterestReportStatusCode,
-                                              
-                                              //InterestReportStatusName = a.InterestReportStatuse==null?null: a.InterestReportStatuse.LocalName,
 
-                                              //UpdatedByLocalName = a.UpdatedByUser==null? null: a.UpdatedByUser.Contact==null? null : a.UpdatedByUser.Contact.LocalName,
+                                              CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
 
-                                              //CreatedByLocalName =a.CreatedByUser==null?null : a.CreatedByUser.Contact==null?null : a.CreatedByUser.Contact.LocalName,
+                                              UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
 
-                                              //GLAccountDisplayNumber = a.GLAccount==null ? null :a.GLAccount.DisplayNumber,
+                                              InterestReportStatusName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.LocalName,
 
-                                              //ARInvoiceNumber =a.ARInvoice==null? null :a.ARInvoice.InvoiceNumber,
+                                              GLAccountDisplayNumber = a.GLAccount == null ? null : a.GLAccount.DisplayNumber,
 
-                                              //GLAccountLocalName = a.GLAccount ==null ? null :a.GLAccount.LocalName
-					
-		                    	            });
+                                              ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
+
+                                              GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
+
+                                            });
             return query;
 		}
 
