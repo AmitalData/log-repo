@@ -8547,6 +8547,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "At least one GLAccount Interest Periods record is required",LocalDefaultText = @"חובה להזין לפחות רשומה אחת של תקופת ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GLAccountTextCode_GLAccountOCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Customer", DefaultText = "Customer",LocalDefaultText = @"לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Vendor", DefaultText = "Vendor",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+
    
 	    
 }
