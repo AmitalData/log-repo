@@ -10743,6 +10743,7 @@ namespace WebFreight.Web.ReportsWebServices
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
+            QueryFilterItem filterItem_GLAccountType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "GLAccountType").FirstOrDefault();
             QueryFilterItem filterItem_AgingForDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AgingForDate").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_NoOfMonth = queryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfMonths").FirstOrDefault();
@@ -10752,6 +10753,15 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_SalesmanId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalesmanId").FirstOrDefault();
             QueryFilterItem filterItem_Detailed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Detailed").FirstOrDefault();
 
+            //GLAccountType
+            string accountType = null;
+            if (filterItem_GLAccountType != null)
+            {
+                if (filterItem_GLAccountType.FieldValue != null)
+                {
+                    accountType = filterItem_GLAccountType.FieldValue.ToString();
+                }
+            }
 
             //agingForDate
             DateTime? agingForDate = null;
@@ -10872,7 +10882,7 @@ namespace WebFreight.Web.ReportsWebServices
                 AggregateByGLAccountCurrencies
          = currenciesDetailed,
 
-                Aging4AccountTypeCode = AgingReportParam.Aging4AccountTypeCodeEnum.Customer2,
+                Aging4AccountTypeCode = accountType == "2" ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3,
                 GroupByDate = AgingReportParam.DateEnum.DueDate,
                 AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
 
