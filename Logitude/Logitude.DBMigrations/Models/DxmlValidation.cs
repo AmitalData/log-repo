@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace Logitude.DBMigrations.Models
 {
-    public class DxmlValidation
+    public class DXMLValidation
     {
         private string[] DXMLFiles;
-        private List<DxmlTable> DXMLTables;
+        private List<DXMLTable> DXMLTables;
         
-        public DxmlValidation(string[] dxmlFiles)
+        public DXMLValidation(string[] dxmlFiles)
         {
             DXMLFiles = dxmlFiles;
             DXMLTables = GetDXMLTables();
@@ -44,17 +44,17 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private List<DxmlTable> GetDXMLTables()
+        private List<DXMLTable> GetDXMLTables()
         {
-            List<DxmlTable> dxmlTableDefinitions = new List<DxmlTable>();
+            List<DXMLTable> dxmlTableDefinitions = new List<DXMLTable>();
 
             foreach (var dxmlFile in DXMLFiles)
             {
                 string xmlString = File.ReadAllText(dxmlFile);
                 TableDefinition dxmlTableDefinition = xmlString.ParseXML<TableDefinition>();
-                DxmlTable dxmlTable = new DxmlTable
+                DXMLTable dxmlTable = new DXMLTable
                 {
-                    DxmlFileName = Path.GetFileName(dxmlFile),
+                    DXMLFileName = Path.GetFileName(dxmlFile),
                     TableDefinition = dxmlTableDefinition
                 };
                 dxmlTableDefinitions.Add(dxmlTable);
@@ -63,7 +63,7 @@ namespace Logitude.DBMigrations.Models
             return dxmlTableDefinitions;
         }
 
-        private string ValidatePrimaryKeys(DxmlTable dxmlTable)
+        private string ValidatePrimaryKeys(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -71,13 +71,13 @@ namespace Logitude.DBMigrations.Models
 
             if (wrongPrimaryKeyColumns.Any())
             {
-                error = "Invalid DXML Syntax: Primary Key Column [" + wrongPrimaryKeyColumns.First().Name + "] Cannot Be Nullable In [" + dxmlTable.DxmlFileName + "]";
+                error = "Invalid DXML Syntax: Primary Key Column [" + wrongPrimaryKeyColumns.First().Name + "] Cannot Be Nullable In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
         }
 
-        private string ValidateReferencedTables(DxmlTable dxmlTable)
+        private string ValidateReferencedTables(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -87,7 +87,7 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongReferencedTableName.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Referenced Table [" + relationsWithWrongReferencedTableName.First().ReferencedTable + "] For Relation In [" + dxmlTable.DxmlFileName + "]";
+                error = "Invalid DXML Syntax: Invalid Referenced Table [" + relationsWithWrongReferencedTableName.First().ReferencedTable + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
                 return error;
             }
 
@@ -95,14 +95,14 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongReferencedTableSchema.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Referenced Table Schema [" + relationsWithWrongReferencedTableSchema.First().ReferencedTableSchema + "] For Relation In [" + dxmlTable.DxmlFileName + "]";
+                error = "Invalid DXML Syntax: Invalid Referenced Table Schema [" + relationsWithWrongReferencedTableSchema.First().ReferencedTableSchema + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
                 return error;
             }
 
             return error;
         }
 
-        private string ValidateReferencedColumns(DxmlTable dxmlTable)
+        private string ValidateReferencedColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -111,13 +111,13 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongReferencedColumnName.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Referenced Column [" + relationsWithWrongReferencedColumnName.First().ReferencedColumn + "] For Relation In [" + dxmlTable.DxmlFileName + "]";
+                error = "Invalid DXML Syntax: Invalid Referenced Column [" + relationsWithWrongReferencedColumnName.First().ReferencedColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
         }
 
-        private string ValidateNumberOfReferencedColumns(DxmlTable dxmlTable)
+        private string ValidateNumberOfReferencedColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -125,13 +125,13 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongReferencedColumnsNumber.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Number Of Referenced Columns [" + relationsWithWrongReferencedColumnsNumber.First().ReferencedColumn + "] For Relation In [" + dxmlTable.DxmlFileName + "]";
+                error = "Invalid DXML Syntax: Invalid Number Of Referenced Columns [" + relationsWithWrongReferencedColumnsNumber.First().ReferencedColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
         }
 
-        private string ValidateForeignKeyColumns(DxmlTable dxmlTable)
+        private string ValidateForeignKeyColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -141,13 +141,13 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongForeignKeyColumnName.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Foreign Key Column [" + relationsWithWrongForeignKeyColumnName.First().ForeignKeyColumn + "] For Relation In [" + dxmlTable.DxmlFileName + "]";
+                error = "Invalid DXML Syntax: Invalid Foreign Key Column [" + relationsWithWrongForeignKeyColumnName.First().ForeignKeyColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
         }
 
-        private string ValidateNumberOfForeignKeyColumns(DxmlTable dxmlTable)
+        private string ValidateNumberOfForeignKeyColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -155,13 +155,13 @@ namespace Logitude.DBMigrations.Models
 
             if (relationsWithWrongForeignKeyColumnsNumber.Any())
             {
-                error = "Invalid DXML Syntax: Invalid Number Of Foreign Key Columns [" + relationsWithWrongForeignKeyColumnsNumber.First().ForeignKeyColumn + "] For Relation In [" + dxmlTable.DxmlFileName + "]";
+                error = "Invalid DXML Syntax: Invalid Number Of Foreign Key Columns [" + relationsWithWrongForeignKeyColumnsNumber.First().ForeignKeyColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;
         }
 
-        private string ValidateForeignKeyColumnsDataType(DxmlTable dxmlTable)
+        private string ValidateForeignKeyColumnsDataType(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -204,7 +204,7 @@ namespace Logitude.DBMigrations.Models
 
                     if (dataTypeNotSame)
                     {
-                        error = "Invalid DXML Syntax: Invalid Data Type For Foreign Key Column [" + relation.ForeignKeyColumn + "] For Relation In [" + dxmlTable.DxmlFileName + "]";
+                        error = "Invalid DXML Syntax: Invalid Data Type For Foreign Key Column [" + relation.ForeignKeyColumn + "] For Relation In [" + dxmlTable.DXMLFileName + "]";
                         break;
                     }
                 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.DBMigrations.Models
 {
-    public class DxmlTable
+    public class DXMLTable
     {
-        public string DxmlFileName { get; set; }
+        public string DXMLFileName { get; set; }
 
         public TableDefinition TableDefinition { get; set; }
     }

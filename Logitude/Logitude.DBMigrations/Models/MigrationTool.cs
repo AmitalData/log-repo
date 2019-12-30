@@ -234,7 +234,7 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine("Validating DXML Files ...");
 
-            DxmlValidation dxmlValidation = new DxmlValidation(dxmlFiles);
+            DXMLValidation dxmlValidation = new DXMLValidation(dxmlFiles);
             dxmlValidation.Validate();
         }
 
