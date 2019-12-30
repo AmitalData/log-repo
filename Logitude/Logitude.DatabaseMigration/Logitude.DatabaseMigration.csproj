@@ -1827,6 +1827,28 @@
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </Compile>
 
+    <Compile Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs" />
+    <Compile Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.Designer.cs">
+      <DependentUpon>201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.cs" />
+    <Compile Include="Migrations\201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.Designer.cs">
+      <DependentUpon>201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301142203_Mutaz_InterestReportLineByDate_UpdateFieldsFormat_of_LineNumber.cs" />
+    <Compile Include="Migrations\201912301142203_Mutaz_InterestReportLineByDate_UpdateFieldsFormat_of_LineNumber.Designer.cs">
+      <DependentUpon>201912301142203_Mutaz_InterestReportLineByDate_UpdateFieldsFormat_of_LineNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301148240_Mutaz_InterestReportLineByDate_Add_Field_LineNumber.cs" />
+    <Compile Include="Migrations\201912301148240_Mutaz_InterestReportLineByDate_Add_Field_LineNumber.Designer.cs">
+      <DependentUpon>201912301148240_Mutaz_InterestReportLineByDate_Add_Field_LineNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.cs" />
+    <Compile Include="Migrations\201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.Designer.cs">
+      <DependentUpon>201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -1878,6 +1900,12 @@
     <Compile Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.Designer.cs">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\201912221352074_Mutaz.cs" />
+    <Compile Include="Migrations\201912221352074_Mutaz.Designer.cs">
+      <DependentUpon>201912221352074_Mutaz.cs</DependentUpon>
+    </Compile>
+
     
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Migrations\201802141437145_ClassifiedREmarks.resx">
@@ -3196,6 +3224,11 @@
       <DependentUpon>201912220836314_WesamAddShortTextCodeCodeToTipsTable.cs</DependentUpon>
     </EmbeddedResource>
 
+    <EmbeddedResource Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.resx">
+      <DependentUpon>201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs</DependentUpon>
+    </EmbeddedResource>
+
+
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </EmbeddedResource>
@@ -3217,6 +3250,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.resx">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.resx">
+      <DependentUpon>201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301142203_Mutaz_InterestReportLineByDate_UpdateFieldsFormat_of_LineNumber.resx">
+      <DependentUpon>201912301142203_Mutaz_InterestReportLineByDate_UpdateFieldsFormat_of_LineNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301148240_Mutaz_InterestReportLineByDate_Add_Field_LineNumber.resx">
+      <DependentUpon>201912301148240_Mutaz_InterestReportLineByDate_Add_Field_LineNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.resx">
+      <DependentUpon>201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
