@@ -25,9 +25,9 @@ namespace Logitude.DBMigrations.Models
 
         public void RunTool()
         {
-            if (IsArgumentProvided(Arguments, "-root"))
+            if (IsArgumentProvided("-root"))
             {
-                string root = GetRoot(Arguments);
+                string root = GetRoot();
 
                 if (!String.IsNullOrEmpty(root))
                 {
@@ -41,7 +41,7 @@ namespace Logitude.DBMigrations.Models
 
                         SaveScript(generatedScript);
 
-                        if (IsArgumentProvided(Arguments, "-exe"))
+                        if (IsArgumentProvided("-exe"))
                         {
                             if (IsGeneratedScriptsEmpty(generatedScript))
                             {
@@ -209,19 +209,19 @@ namespace Logitude.DBMigrations.Models
             AppendToPerformanceData("Execute The Generated Scripts", stopwatch);
         }
 
-        private bool IsArgumentProvided(string[] args, string arg)
+        private bool IsArgumentProvided(string arg)
         {
-            string[] arguments = Array.ConvertAll(args, a => a.ToLower());
+            string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
             return (Array.IndexOf(arguments, arg) != -1);
         }
 
-        private string GetRoot(string[] args)
+        private string GetRoot()
         {
-            string[] arguments = Array.ConvertAll(args, a => a.ToLower());
+            string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
             int indexOfRootArgument = Array.IndexOf(arguments, "-root") + 1;
-            if (indexOfRootArgument < args.Length && indexOfRootArgument >= 0)
+            if (indexOfRootArgument < Arguments.Length && indexOfRootArgument >= 0)
             {
-                string root = args[indexOfRootArgument];
+                string root = Arguments[indexOfRootArgument];
                 return root;
             }
             else
