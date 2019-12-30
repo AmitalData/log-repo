@@ -421,7 +421,7 @@ namespace WebFreight.Web
             catch (Exception e)
             {
 
-                Logger.LogMe("ProductInfoSetting:" + e.ToString(), true);
+                Logger.LogMe("ProductInfoSetting:" + e.ToString(), false);
             }
             finally
             {
