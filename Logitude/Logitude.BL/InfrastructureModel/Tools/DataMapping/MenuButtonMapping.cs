@@ -17,6 +17,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             menuButton.MenuButtonType = menuButtonPM.MenuButtonType;
             menuButton.DropDownControl = menuButtonPM.DropDownControl;
             menuButton.Style = menuButtonPM.Style;
+            menuButton.LabelTextCodeCode = menuButtonPM.LabelTextCodeCode;
         }
     }
 }

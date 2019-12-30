@@ -58,6 +58,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             .HasMaxLength(250)
             .IsUnicode(false);
 
+            this.Property(t => t.LabelTextCodeCode)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("MenuButtons");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -65,7 +70,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.LabelTextCodeId).HasColumnName("LabelTextCodeId");
             this.Property(t => t.ParentMenuButtonId).HasColumnName("ParentMenuButtonId");
             this.Property(t => t.EventCode).HasColumnName("EventCode");
-            
+            this.Property(t => t.LabelTextCodeCode).HasColumnName("LabelTextCodeCode");
+
             this.Property(t => t.IsActive).HasColumnName("IsActive");
             this.Property(t => t.MenuButtonGroupId).HasColumnName("MenuButtonGroupId");
             this.Property(t => t.FeatureId).HasColumnName("FeatureId");

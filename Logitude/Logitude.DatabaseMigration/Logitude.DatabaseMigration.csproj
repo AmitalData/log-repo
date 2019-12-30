@@ -1826,7 +1826,6 @@
     <Compile Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.Designer.cs">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -1863,9 +1862,11 @@
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs" />
+    <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.Designer.cs">
+      <DependentUpon>201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-
-
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.Designer.cs">
       <DependentUpon>201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs</DependentUpon>
@@ -1878,7 +1879,6 @@
     <Compile Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.Designer.cs">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </Compile>
-    
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Migrations\201802141437145_ClassifiedREmarks.resx">
       <DependentUpon>201802141437145_ClassifiedREmarks.cs</DependentUpon>
@@ -3182,7 +3182,6 @@
     <EmbeddedResource Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.resx">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201912221319308_AddSupportMailboxTable.resx">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -3195,11 +3194,9 @@
     <EmbeddedResource Include="Migrations\201912220836314_WesamAddShortTextCodeCodeToTipsTable.resx">
       <DependentUpon>201912220836314_WesamAddShortTextCodeCodeToTipsTable.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201912240707376_WesamAddTextCodesFieldToObjectTablesTable.resx">
       <DependentUpon>201912240707376_WesamAddTextCodesFieldToObjectTablesTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -3217,6 +3214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.resx">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.resx">
+      <DependentUpon>201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
