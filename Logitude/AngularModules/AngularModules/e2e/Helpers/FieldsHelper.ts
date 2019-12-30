@@ -131,7 +131,13 @@ export class FieldsHelper {
                 this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
             }
             else {
-                item.click();
+                try {
+                    item.click();
+                }
+                catch (Exception) {
+                    console.log(Exception);
+                    this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+                }
                 var Newinput = element(by.id(Id)).getAttribute('value');
                 Newinput.then(p => {
                     if (p == "") {
@@ -139,7 +145,7 @@ export class FieldsHelper {
                         this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
                     } else {
                         this.WaitDropDownToBeClosed(className);
-                        this.WaitBusyIndicator();              
+                        this.WaitBusyIndicator();
                     }
                 });
             }
