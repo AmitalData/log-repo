@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (createdByContact == null)
                     createdByContact = contactQuery.GetSinglePMFromCache(entityPOCO.CreatedByUserId, 0); // user is customer care, get it from tenant 0
                 if (createdByContact != null)
-                    entityPM.CreatedByLocalName = showLocals ? createdByContact.LocalName : createdByContact.EnglishName;
+                    entityPM.CreatedByLocalName = /*showLocals ?*/ createdByContact.LocalName /*: createdByContact.EnglishName*/;
             }
 
             if (entityPOCO.UpdatedByUserId != null)
@@ -57,7 +57,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (updatedByContact == null)
                     updatedByContact = contactQuery.GetSinglePMFromCache(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
                 if (updatedByContact != null)
-                    entityPM.UpdatedByLocalName = showLocals ? updatedByContact.LocalName : updatedByContact.EnglishName;
+                    entityPM.UpdatedByLocalName = /*showLocals ? */updatedByContact.LocalName/* : updatedByContact.EnglishName*/;
             }
 
             if (entityPOCO.ARinvoiceId != null)
@@ -70,7 +70,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 InterestReportStatuseRepository interestReportStatuseRepository = new InterestReportStatuseRepository(entityPM.Tenant);
                 InterestReportStatuse interestReportStatuse = interestReportStatuseRepository.GetSingle(entityPOCO.InterestReportStatusCode);
-                entityPM.InterestReportStatusName = showLocals ? interestReportStatuse.LocalName:interestReportStatuse.EnglishName;
+                entityPM.InterestReportStatusName =/* showLocals ?*/ interestReportStatuse.LocalName/*:interestReportStatuse.EnglishName*/;
             }
         }
 
