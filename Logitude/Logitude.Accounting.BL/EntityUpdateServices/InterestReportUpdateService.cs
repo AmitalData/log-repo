@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
-            if (gLAccount.Inactive == true)
+            if (gLAccount.ActiveForInterest == false)
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotdefined", entityPM.Tenant, showLocals));
             }
