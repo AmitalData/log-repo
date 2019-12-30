@@ -14,6 +14,8 @@ import {SLAEscalationRecepientPM} from '../EntityPMs/SLAEscalationRecepientPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass'; 
 import {Guid} from '../../Infrastructure/Utilities/Guid';
 import { PerformanceLogger } from '../../Infrastructure/Utilities/PerformanceLogger';
+import { OccasionInviteePM } from '../EntityPMs/OccasionInviteePM';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { SupportMailboxPM } from '../EntityPMs/SupportMailboxPM';
 
 @Injectable()
@@ -21,6 +23,8 @@ import { SupportMailboxPM } from '../EntityPMs/SupportMailboxPM';
 export class CRMDomainService {
     private _apiUrl: string;
     private _http: Http;
+    private CurrentSession = SessionLocator.SelectedSession;    
+
     constructor() {
         this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CRMDomain';
@@ -1563,6 +1567,71 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+
+    GetOccasionContactsByFiltersAndUpdate(filters: ApiQueryFilters) {
+        var callTime = new Date();
+
+        var urlparameters = '/GetOccasionContactsByFiltersAndUpdate?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
+
+                var _mappedListsArray: Array<OccasionContactSearchresult> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: OccasionContactSearchresult;
+                        entity = this.MapOccasionContactSearchresult(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                serviceResponse.CallTime = callTime;
+                var servertime = response.headers.get('ServerExecutionTime');
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "User", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapOccasionContactSearchresult(jsonList: any) {
         var entityList: OccasionContactSearchresult;
         entityList = new OccasionContactSearchresult();
