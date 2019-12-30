@@ -1154,24 +1154,31 @@ export class ARInvoiceMenuButtonsHandler {
 
     }
     private PrintFullAccountingInvoice() {
-        if (this.EntityPM.IsExternalEntity && AppTool.IsNullOrEmpty(this.EntityPM.DocumentFilingId)) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 400;
-            confirmWindow.ShowCancelButton = false;
-            confirmWindow.ShowNoButton = false;
-            confirmWindow.YesButtonText = TextCodeTranslator.Translate("ARInvoice.B.Ok");
-            confirmWindow.ShowWarningImage = true;
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
-            confirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.O.MissingDocument"));
+        if (this.EntityPM.IsExternalEntity) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.DocumentFilingId)) {
+                this.ShowWarnigMessageForMissingDocument();                
+            }
 
-          
+            else {
+                this.GetDocument();
+            }
         }
-        else if (!this.EntityPM.IsExternalEntity && !AppTool.IsNullOrEmpty(this.EntityPM.DocumentFilingId)) {
-            this.GetDocument();
+        else {
+            this.StartPrinting(this.EntityPM.Id, null, "ARInvoice", null, "999G", !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber);
         }
-
     }
 
+    private ShowWarnigMessageForMissingDocument() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 290;
+        confirmWindow.ShowCancelButton = false;
+        confirm
+        confirmWindow.ShowNoButton = false;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("ARInvoice.B.Ok");
+        confirmWindow.ShowWarningImage = true;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
+        confirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.O.MissingDocument"));
+    }
 
     private savedConsolidationEntity;
     SaveConsolidation(msg: string) {
