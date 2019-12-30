@@ -137,6 +137,7 @@ import { InterestBasesPeriodPMService } from './Services/StandardPMs/InterestBas
 import { InterestBasesTypePMService } from './Services/StandardPMs/InterestBasesTypePMService';
 import { InterestReportListService } from './Services/StandardLists/InterestReportListService';
 import { InterestReportLineListService } from './Services/StandardLists/InterestReportLineListService';
+import { InterestReportStatuseListService } from './Services/StandardLists/InterestReportStatuseListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -234,6 +235,7 @@ export class ModuleProviders {
             case "TaxReportPMService": { myResult = new TaxReportPMService(); break; }
             case "TaxReportLineTransmitStatusListService": { myResult = new TaxReportLineTransmitStatusListService(); break; }
             case "GLAccountMoreDataPMService": { myResult = new GLAccountMoreDataPMService(); break; }
+            case "InterestReportStatuseListService": { myResult = new InterestReportStatuseListService(); break; }
 
             case "TaxReportStatusListService": { myResult = new TaxReportStatusListService(); break; }
             case "TaxReportLineTypeListService": { myResult = new TaxReportLineTypeListService(); break; }
