@@ -43,11 +43,17 @@ export class SupportMailBoxComponent {
         mailbox.CreatedByUserId = SessionLocator.LoggedUserId;
         mailbox.UpdatedByUserId = SessionLocator.LoggedUserId;
 
+        var defaultMailbox: string = null;
+        var defaultMailBox: SupportMailboxPM = this.MailBoxesList.filter(d => d.IsDefault)[0];
+        if (defaultMailBox != null) {
+            defaultMailbox = defaultMailBox.Mailbox
+        }
+
         var logWindow = new LogitudeWindow();
         logWindow.Width = 400;
         logWindow.Height = 300;
         logWindow.Title = "Add Support Mailbox";
-        logWindow.WindowArgs = { Mailbox: mailbox, IsNew: true, DefaultMailboxsCount: this.MailBoxesList.filter(d => d.IsDefault).length };
+        logWindow.WindowArgs = { Mailbox: mailbox, IsNew: true, DefaultMailbox: defaultMailbox };
         logWindow.Show('./CRMModules/CRMOthers/Components/SupportMailBox/AddEditSupportMailBoxComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "ok") {
@@ -57,11 +63,17 @@ export class SupportMailBoxComponent {
     }
 
     EditMailBox(mailbox: SupportMailboxPM) {
+        var defaultMailbox: string = null;
+        var defaultMailBox: SupportMailboxPM = this.MailBoxesList.filter(d => d.IsDefault && d.Id != mailbox.Id)[0];
+        if (defaultMailBox != null) {
+            defaultMailbox = defaultMailBox.Mailbox
+        }
+
         var logWindow = new LogitudeWindow();
         logWindow.Width = 400;
         logWindow.Height = 300;
         logWindow.Title = "Edit Support Mailbox";
-        logWindow.WindowArgs = { Mailbox: mailbox, IsNew: false, DefaultMailboxsCount: this.MailBoxesList.filter(d => d.IsDefault && d.Id != mailbox.Id).length };
+        logWindow.WindowArgs = { Mailbox: mailbox, IsNew: false, DefaultMailbox: defaultMailbox };
         logWindow.Show('./CRMModules/CRMOthers/Components/SupportMailBox/AddEditSupportMailBoxComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "ok") {

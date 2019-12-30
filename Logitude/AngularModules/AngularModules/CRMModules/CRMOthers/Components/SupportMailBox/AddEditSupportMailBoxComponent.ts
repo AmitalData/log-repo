@@ -6,6 +6,8 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { SupportMailboxPM } from '../../../../CRM/EntityPMs/SupportMailboxPM';
 import { SupportMailboxPMService } from '../../../../CRM/Services/StandardPMs/SupportMailboxPMService';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     moduleId: module.id,
@@ -18,7 +20,7 @@ export class AddEditSupportMailBoxComponent extends BaseComponent {
     public ObjectTableName: string = "SupportMailbox";
     public EntityPM: SupportMailboxPM;
     public IsNewEntity: boolean = false;
-    private DefaultMailboxsCount: number;
+    private DefaultMailbox: string;
     private myService: SupportMailboxPMService;
     public ValidationErrorsList: string[] = [];
     constructor() {
@@ -29,15 +31,35 @@ export class AddEditSupportMailBoxComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.EntityPM = args['Mailbox'];
         this.IsNewEntity = args['IsNew'];
-        this.DefaultMailboxsCount = args['DefaultMailboxsCount'];
+        this.DefaultMailbox = args['DefaultMailbox'];
 
         this.SetUIProperties();
         this.Clone();
     }
 
+    public IsDefaultInfoIconVisible: boolean = false;
     SetUIProperties() {
-        this.UIProperties.SetEnabled("IsDefault", this.ObjectTableName, !this.Inactive);
-        this.UIProperties.SetEnabled("Inactive", this.ObjectTableName, !this.IsDefault);
+        var isDefaultEnabled: boolean = true;
+        var inactiveEnabled: boolean = true;
+
+        if (this.IsNewEntity) {
+            
+        }
+
+        else {
+            if (this.IsDefault) {
+                isDefaultEnabled = false;
+                inactiveEnabled = false;
+                this.IsDefaultInfoIconVisible = true;
+            }
+
+            if (this.Inactive) {
+                isDefaultEnabled = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("IsDefault", this.ObjectTableName, isDefaultEnabled);
+        this.UIProperties.SetEnabled("Inactive", this.ObjectTableName, inactiveEnabled);
     }
 
     get Mailbox() { return this.EntityPM.Mailbox; }
@@ -52,7 +74,7 @@ export class AddEditSupportMailBoxComponent extends BaseComponent {
         if (this.EntityPM.IsDefault != value) {
             this.EntityPM.IsDefault = value;
 
-            this.SetUIProperties();
+            this.UIProperties.SetEnabled("Inactive", this.ObjectTableName, !value);
         }
     }
 
@@ -67,22 +89,33 @@ export class AddEditSupportMailBoxComponent extends BaseComponent {
     OkButtonClicked() {
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
-        if (this.EntityPM.IsDefault) {
-            if (this.DefaultMailboxsCount > 0) {
-                errors.push("Only one Mailbox can be marked as Default");
-            }
-        }
-
+        
         this.ValidationErrorsList = errors;
+        
         if (this.ValidationErrorsList.length == 0) {
-            if (this.IsNewEntity) {
-                this.Insert();
+            if (this.EntityPM.IsDefault && !AppTool.IsNullOrEmpty(this.DefaultMailbox)) {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Show("Please notice that the default mailbox already exists (" + this.DefaultMailbox + ") will be changed, ok?");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.Save();
+                    }
+                });
             }
+
             else {
-                this.Update();
-            }
+                this.Save();
+            }                       
         }        
+    }
+
+    private Save() {
+        if (this.IsNewEntity) {
+            this.Insert();
+        }
+        else {
+            this.Update();
+        }  
     }
 
     private Insert() {
