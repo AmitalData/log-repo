@@ -284,7 +284,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 
                 Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-                List<string> allTextCodesIds = myResult.Where(d => d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
                 List<string> allTextCodesCodes = myResult.Where(d => d.NameTextCodeCode != null).Select(s => s.NameTextCodeCode).ToList();
                 List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesCodes.Contains(d.Code) select d).ToList();
                 List<Translation> allTranslations = new List<Translation>();
@@ -297,7 +296,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         allTranslations = (from d in webFreightContext.Translations
                                            where d.TranslationHeaderCode == iTranslationHeader.Code
                                            && d.Tenant == tenant
-                                           && allTextCodesIds.Contains(d.TextCodeId)
+                                           && allTextCodesCodes.Contains(d.TextCodeCode)
                                            select d).ToList();
                     }
                 }
@@ -311,7 +310,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             item.TranslatedName = iTextCode.DefaultText;
 
-                            Translation iTranslation = allTranslations.Where(d => d.TextCodeId == item.NameTextCodeId).FirstOrDefault();
+                            Translation iTranslation = allTranslations.Where(d => d.TextCodeCode == item.NameTextCodeCode).FirstOrDefault();
                             if (iTranslation != null)
                             {
                                 item.TranslatedName = iTranslation.TranslatedText;
