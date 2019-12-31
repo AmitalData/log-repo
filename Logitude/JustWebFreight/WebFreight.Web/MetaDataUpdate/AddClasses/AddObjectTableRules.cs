@@ -96,9 +96,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static RuleConditionField AddRuleConditionField(RuleConditionFieldDetails ruleConditionFieldDetails, RuleConditionFieldRepository ruleConditionFieldRepository, Dictionary<string, RuleConditionField> tenantRuleConditionFields)
         {
-            if (tenantRuleConditionFields.Keys.Contains(ruleConditionFieldDetails.ObjectTableRuleId + ruleConditionFieldDetails.ObjectFieldId))
+            if (tenantRuleConditionFields.Keys.Contains(ruleConditionFieldDetails.ObjectTableRuleId + ruleConditionFieldDetails.ObjectFieldCode))
             {
-                RuleConditionField ruleConditionField = tenantRuleConditionFields[ruleConditionFieldDetails.ObjectTableRuleId + ruleConditionFieldDetails.ObjectFieldId];
+                RuleConditionField ruleConditionField = tenantRuleConditionFields[ruleConditionFieldDetails.ObjectTableRuleId + ruleConditionFieldDetails.ObjectFieldCode];
                 ruleConditionField.Operator = ruleConditionFieldDetails.Operator;
                 ruleConditionField.Value = ruleConditionFieldDetails.Value;
 
@@ -112,6 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                     Id = IdCounter.GetNumber("RuleConditionField", ruleConditionFieldDetails.Tenant).ToString(),
                     ObjectFieldId = ruleConditionFieldDetails.ObjectFieldId,
+                    ObjectFieldCode = ruleConditionFieldDetails.ObjectFieldCode,
                     ObjectTableRuleId = ruleConditionFieldDetails.ObjectTableRuleId,
                     Tenant = ruleConditionFieldDetails.Tenant,
                     Value = ruleConditionFieldDetails.Value,

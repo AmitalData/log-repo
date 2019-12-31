@@ -4909,65 +4909,65 @@ namespace WebFreight.Web.MetaDataUpdate
 
         void CreateAllTablesTips(Dictionary<string, Tip> tips, Dictionary<string, TextCode> textCodes)
         {
-            Tip airlineTip = AddTips.AddTip(new TipDetails()
-            {
-                Code = "AIRT",
-                Tenant = 0,
-                ShortTextCodeDefaultText = " - Airlines are listed  in this pane(%L) - To add a new Airline to your company press the 'new' button(%L)- To import an Airline to your company press the 'add' button(%L)",
-                ObjectTableId = AirlinesObject.Id,
-                VisibilityDefaultValue = true,
-                ShortTextCode = "Airline.Tip.General",
-                ShortTextCodeCode = "Airline.Tip.General",
-            }, TipRepository, TextCodeRepository, tips, textCodes);
-            AirlinesObject.MainTipCode = airlineTip.Code;
+            //Tip airlineTip = AddTips.AddTip(new TipDetails()
+            //{
+            //    Code = "AIRT",
+            //    Tenant = 0,
+            //    ShortTextCodeDefaultText = " - Airlines are listed  in this pane(%L) - To add a new Airline to your company press the 'new' button(%L)- To import an Airline to your company press the 'add' button(%L)",
+            //    ObjectTableId = AirlinesObject.Id,
+            //    VisibilityDefaultValue = true,
+            //    ShortTextCode = "Airline.Tip.General",
+            //    ShortTextCodeCode = "Airline.Tip.General",
+            //}, TipRepository, TextCodeRepository, tips, textCodes);
+            //AirlinesObject.MainTipCode = airlineTip.Code;
 
-            Tip portTip = AddTips.AddTip(new TipDetails()
-            {
-                Code = "PORT",
-                Tenant = 0,
-                ShortTextCodeDefaultText = " - Ports are listed  in this pane(%L) - To add a Port to your company press the 'add' button(%L)",
-                ObjectTableId = PortsObject.Id,
-                VisibilityDefaultValue = true,
-                ShortTextCode = "Port.Tip.General",
-                ShortTextCodeCode = "Port.Tip.General",
-            }, TipRepository, TextCodeRepository, tips, textCodes);
-            PortsObject.MainTipCode = portTip.Code;
+            //Tip portTip = AddTips.AddTip(new TipDetails()
+            //{
+            //    Code = "PORT",
+            //    Tenant = 0,
+            //    ShortTextCodeDefaultText = " - Ports are listed  in this pane(%L) - To add a Port to your company press the 'add' button(%L)",
+            //    ObjectTableId = PortsObject.Id,
+            //    VisibilityDefaultValue = true,
+            //    ShortTextCode = "Port.Tip.General",
+            //    ShortTextCodeCode = "Port.Tip.General",
+            //}, TipRepository, TextCodeRepository, tips, textCodes);
+            //PortsObject.MainTipCode = portTip.Code;
 
-            Tip shippingLineTip = AddTips.AddTip(new TipDetails()
-            {
-                Code = "SPLT",
-                Tenant = 0,
-                ShortTextCodeDefaultText = " - Shipping lines are listed  in this pane(%L) - To add a new shipping line to your company press the 'new' button(%L)- To import a shipping line to your company press the 'add' button(%L)  ",
-                ObjectTableId = ShippingLinesObject.Id,
-                VisibilityDefaultValue = true,
-                ShortTextCode = "ShippingLine.Tip.General",
-                ShortTextCodeCode = "ShippingLine.Tip.General",
-            }, TipRepository, TextCodeRepository, tips, textCodes);
-            ShippingLinesObject.MainTipCode = shippingLineTip.Code;
+            //Tip shippingLineTip = AddTips.AddTip(new TipDetails()
+            //{
+            //    Code = "SPLT",
+            //    Tenant = 0,
+            //    ShortTextCodeDefaultText = " - Shipping lines are listed  in this pane(%L) - To add a new shipping line to your company press the 'new' button(%L)- To import a shipping line to your company press the 'add' button(%L)  ",
+            //    ObjectTableId = ShippingLinesObject.Id,
+            //    VisibilityDefaultValue = true,
+            //    ShortTextCode = "ShippingLine.Tip.General",
+            //    ShortTextCodeCode = "ShippingLine.Tip.General",
+            //}, TipRepository, TextCodeRepository, tips, textCodes);
+            //ShippingLinesObject.MainTipCode = shippingLineTip.Code;
 
-            Tip orderDetailsTip = AddTips.AddTip(new TipDetails()
-            {
-                Code = "ORDT",
-                Tenant = 0,
-                ShortTextCodeDefaultText = " These are the ordered quantities and dimensions. The actual package details are managed via the Packages tab.",
-                ObjectTableId = ShipmentObject.Id,
-                VisibilityDefaultValue = true,
-                ShortTextCode = "Shipment.Tip.OrderDetails",
-                ShortTextCodeCode = "Shipment.Tip.OrderDetails",
-            }, TipRepository, TextCodeRepository, tips, textCodes);
+            //Tip orderDetailsTip = AddTips.AddTip(new TipDetails()
+            //{
+            //    Code = "ORDT",
+            //    Tenant = 0,
+            //    ShortTextCodeDefaultText = " These are the ordered quantities and dimensions. The actual package details are managed via the Packages tab.",
+            //    ObjectTableId = ShipmentObject.Id,
+            //    VisibilityDefaultValue = true,
+            //    ShortTextCode = "Shipment.Tip.OrderDetails",
+            //    ShortTextCodeCode = "Shipment.Tip.OrderDetails",
+            //}, TipRepository, TextCodeRepository, tips, textCodes);
 
-            Tip CustomerTenantAccessCardTip = AddTips.AddTip(new TipDetails()
-            {
-                Code = "NCDT",
-                Tenant = 0,
-                ShortTextCodeDefaultText = " Press \"+\" button to connect a customer to that request.",
-                ObjectTableId = CustomerTenantAccessCardObject.Id,
-                VisibilityDefaultValue = true,
-                ShortTextCode = "CustomerTenantAccessCard.Tip.NewCardTip",
-                ShortTextCodeCode = "CustomerTenantAccessCard.Tip.NewCardTip",
-            }, TipRepository, TextCodeRepository, tips, textCodes);
+            //Tip CustomerTenantAccessCardTip = AddTips.AddTip(new TipDetails()
+            //{
+            //    Code = "NCDT",
+            //    Tenant = 0,
+            //    ShortTextCodeDefaultText = " Press \"+\" button to connect a customer to that request.",
+            //    ObjectTableId = CustomerTenantAccessCardObject.Id,
+            //    VisibilityDefaultValue = true,
+            //    ShortTextCode = "CustomerTenantAccessCard.Tip.NewCardTip",
+            //    ShortTextCodeCode = "CustomerTenantAccessCard.Tip.NewCardTip",
+            //}, TipRepository, TextCodeRepository, tips, textCodes);
 
-            this.ObjectContext.SaveChanges();
+            //this.ObjectContext.SaveChanges();
         }
 
         private void CreateAgentSharedDocumentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)

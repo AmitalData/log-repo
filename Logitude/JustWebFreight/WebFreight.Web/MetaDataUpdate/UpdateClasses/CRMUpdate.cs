@@ -840,7 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             Dictionary<string, ObjectTableRule> TenantObjectTableRule = objectTableRuleRepository.GetObjectTableRules(0).ToDictionary(d => d.RuleCode, a => a);
             Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields = objectTableRuleFieldRepository.GetObjectTableRuleFields(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldId, a => a);
-            Dictionary<string, RuleConditionField> TenantRuleConditionFields = ruleConditionFieldRepository.GetRuleConditionFieldsByTenant(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldId, a => a);
+            Dictionary<string, RuleConditionField> TenantRuleConditionFields = ruleConditionFieldRepository.GetRuleConditionFieldsByTenant(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldCode, a => a);
             List<ObjectFieldValidation> TenantObjectFieldValidations = objectFieldValidationRepository.GetObjectFieldValidations(0).ToList();
 
             CreatelosingReasonRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations, TenantRuleConditionFields);
@@ -868,7 +868,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 RuleNotificationTypeCode = "ERR",
             }, objectTableRuleRepository, TenantObjectTableRule);
 
-            RuleConditionField IsBlocked_CondField = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails() { ObjectFieldId = addedManuallyField.Id, ObjectTableRuleId = blockNamesRule.Id, Operator = "Equals", Value = "False", Tenant = blockNamesRule.Tenant }, ruleConditionFieldRepository, TenantRuleConditionFields);
+            RuleConditionField IsBlocked_CondField = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails() { ObjectFieldId = addedManuallyField.Id, ObjectFieldCode = addedManuallyField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, Operator = "Equals", Value = "False", Tenant = blockNamesRule.Tenant }, ruleConditionFieldRepository, TenantRuleConditionFields);
 
             ObjectTableRuleField ClosingReasonNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonNameField.Id, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, objectTableRuleFieldRepository, TenantObjectTableRuleFields);
             ObjectTableRuleField ClosingReasonLocalNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonLocalNameField.Id, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, objectTableRuleFieldRepository, TenantObjectTableRuleFields);
