@@ -31,7 +31,7 @@ using Microsoft.Practices.Unity;
 using System.IO;
 using Logitude.Server.Tools;
 using Logitude.SystemLogs;
-using System.ServiceModel.Web;
+//using System.ServiceModel.Web;
 using System.ServiceModel;
 using System.Net.Http;
 using WebFreight.Web.WcfApi;
