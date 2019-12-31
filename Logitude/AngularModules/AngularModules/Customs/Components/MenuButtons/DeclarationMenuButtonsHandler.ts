@@ -162,13 +162,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 }
 
                 for (var i = 0; i < menuButtons.length; i++) {
+                    debugger;
                     var button = menuButtons[i];
                     if (button.EventCode == "More") {
                         button.IsDisabled = true;
                         button.IsHidden = true;
                   
                     }
-
+ 
                     if (button.EventCode == "SendDeclaration") {
                         if (this.IsDisplayOnly) {
                             button.IsDisabled = true;
