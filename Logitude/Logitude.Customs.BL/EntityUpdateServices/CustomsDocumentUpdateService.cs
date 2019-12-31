@@ -177,7 +177,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     UpdateDeclarationCourierStatus(entityPM);
                 }
-                if(entityPM.DocumentTypeCode == "380" && string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                if(string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     UpdateDeclarationCourierStatus380(entityPM);
                 }
@@ -735,10 +735,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateDeclarationCourierStatus380(CustomsDocumentPM entityPM)
         {
-
-            if (entityPM.DocumentTypeCode == "380")
+            ICustomContext context = MainContext as CustomContext;
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
+            CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
+            if (docType.IsCourierManadatory)
+                //if (entityPM.DocumentTypeCode == "380")
             {
-                ICustomContext context = MainContext as CustomContext;
+                //ICustomContext context = MainContext as CustomContext;
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
                 {
