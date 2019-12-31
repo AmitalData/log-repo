@@ -6,6 +6,9 @@ import { VehiclePM } from '../../Customs/EntityPMs/VehiclePM';
 import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../Infrastructure/Utilities/events/MenuButtonsEvents';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 export class VehicleEditComponentController implements IEditComponentController {
+    FilterTabs(allTabs: any[]) {
+         
+    }
     public MustRefresh: boolean = null;
     public MustRefreshMessage: string = null;
     public IsInBatchRequest: boolean = null;
