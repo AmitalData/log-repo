@@ -38,7 +38,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 myLedgerTransactionBalanceFilter.CallBack = null;
                 var myLedgerTransactionBalanceService = new LedgerTransactionBalanceService(_AccountingContext, myLedgerTransactionBalanceFilter);
                 myLedgerTransactionBalanceService.Run();
-
+                if (this._Param.IsReconciled.HasValue)
+                {
+                    bool IsReconciled =this._Param.IsReconciled.GetValueOrDefault();
+                    myLedgerTransactionBalanceService.Response.MyLedgerTransactionList = myLedgerTransactionBalanceService.Response.MyLedgerTransactionList
+                        .Where(r => r.IsReconciled = IsReconciled).ToList();
+                }
+                
                 CardIndexs.Add(myLedgerTransactionBalanceService.Response);
 
             }
@@ -104,6 +110,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string Category5Id { get; set; }
         public string AccountTypeCode { get; set; }
         public string ChartOfAccountsId { get; set; }
+
+        public bool? IsReconciled { get; set; }
 
     }
 }
