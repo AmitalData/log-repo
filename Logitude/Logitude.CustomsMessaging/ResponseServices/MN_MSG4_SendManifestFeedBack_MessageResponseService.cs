@@ -371,7 +371,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                     DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, true, false);
-                    if (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "V")
+                    if (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "V" && declarationCourierStatusPM.CourierPaymentStatusCode != "P" && declarationCourierStatusPM.CourierPaymentStatusCode != "O")
                     {
                         if (_MyDeclarationPM.TaxationDateTime < DateTime.Now.Date)
                         {
