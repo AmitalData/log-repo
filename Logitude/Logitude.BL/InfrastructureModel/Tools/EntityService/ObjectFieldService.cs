@@ -178,6 +178,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         {
                             Id = IdCounter.GetNumber("ObjectFieldValidation", theEntityPm.Tenant).ToString(),
                             ObjectFieldId = theEntityPm.Id,
+                            ObjectFieldCode = theEntityPm.FieldCode,
                             Tenant = fieldValidation.Tenant,
                             ValidationExpression = fieldValidation.ValidationExpression,
                             ErrorMessage = fieldValidation.ErrorMessage,
@@ -188,6 +189,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                         fieldValidation.Id = newFieldValidation.Id;
                         fieldValidation.ObjectFieldId = newFieldValidation.ObjectFieldId;
+                        fieldValidation.ObjectFieldCode = newFieldValidation.ObjectFieldCode;
                         objectFieldValidationRepository.Add(newFieldValidation);
                     }
                 }
@@ -214,6 +216,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         {
                             Id = IdCounter.GetNumber("ObjectFieldValidation", theEntityPm.Tenant).ToString(),
                             ObjectFieldId = theEntityPm.Id,
+                            ObjectFieldCode = theEntityPm.FieldCode,
                             Tenant = fieldValidation.Tenant,
                             ValidationExpression = fieldValidation.ValidationExpression,
                             ErrorMessage = fieldValidation.ErrorMessage,
@@ -224,6 +227,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                         fieldValidation.Id = newFieldValidation.Id;
                         fieldValidation.ObjectFieldId = newFieldValidation.ObjectFieldId;
+                        fieldValidation.ObjectFieldCode = newFieldValidation.ObjectFieldCode;
                         objectFieldValidationRepository.Add(newFieldValidation);
                     }
                 }

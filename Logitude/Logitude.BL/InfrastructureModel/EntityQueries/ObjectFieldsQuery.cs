@@ -143,7 +143,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
 
             ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
                                            where a.ObjectFieldId == fieldId && a.Tenant == tenant
@@ -457,7 +457,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
 
             return objectField;
         }
@@ -691,7 +691,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 objectField.MinLength = mod.MinLength;
             }
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
 
 
             return objectField;
