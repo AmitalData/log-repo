@@ -18,5 +18,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string DropDownControl { get; set; }
         public string Style { get; set; }
         public string ControlPath { get; set; }
+        public string FeatureUniqeCode { get; set; }
+
     }
 }

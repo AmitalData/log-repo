@@ -108,7 +108,7 @@ export class MaintenanceComponent {
 
         allMenusTables.forEach(item => {
 
-            if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
+            if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
 
                 if (item.Code == "MTCB") {
                     //CustomsSettingList customsSetting = DataProvider.GetCachedList<CustomsSettingList>("Customs.CustomsSetting").FirstOrDefault();
@@ -1676,4 +1676,5 @@ class MenusTablePM {
     public FeatureCode: string;
     public ShowMenuTable: boolean;
     public HtmlView: string;
+    public FeatureUniqeCode: string;
 }

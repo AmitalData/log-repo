@@ -1,4 +1,4 @@
-﻿export class FeaturePM {
+export class FeaturePM {
     public Id: string;
     public Tenant: number;
     public Code: string;
@@ -9,6 +9,8 @@
     public IsBusinessUnitEnabled: boolean;
     public IsOld: boolean;
     public IsCoreFeature: boolean;
+    public FeatureUniqeCode: string;
+
 
     // Dummy
     public ObjectTableName: string;

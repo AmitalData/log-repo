@@ -25,7 +25,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Perspective).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.EditWizardComponentPath).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.NameTextCodeCode).HasMaxLength(100).IsUnicode(false);
-
+            this.Property(t => t.FeatureUniqeCode)
+                .HasMaxLength(120)
+                .IsUnicode(false);
             // Table & Column Mappings
             this.ToTable("Queries");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -59,6 +61,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SharedWithSpecificUsers).HasColumnName("SharedWithSpecificUsers");
             this.Property(t => t.SharedByUserId).HasColumnName("SharedByUserId");
             this.Property(t => t.SpotlightModeActivated).HasColumnName("SpotlightModeActivated");
+            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
 
             // Relationships
             this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);

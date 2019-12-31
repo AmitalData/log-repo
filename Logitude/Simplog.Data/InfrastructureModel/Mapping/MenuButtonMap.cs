@@ -57,6 +57,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HtmlComponentPath)
             .HasMaxLength(250)
             .IsUnicode(false);
+            this.Property(t => t.FeatureUniqeCode)
+                .HasMaxLength(120)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("MenuButtons");
@@ -75,6 +78,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Width).HasColumnName("Width");
             this.Property(t => t.ControlPath).HasColumnName("ControlPath");
             this.Property(t => t.HtmlComponentPath).HasColumnName("HtmlComponentPath");
+            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

@@ -54,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsOld = a.IsOld,
                         IsCoreFeature = a.IsCoreFeature,
                         ToggleCode = a.ToggleCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).FirstOrDefault();
         }
 
@@ -75,6 +76,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsOld = a.IsOld,
                         IsCoreFeature = a.IsCoreFeature,
                         ToggleCode = a.ToggleCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
 
@@ -97,6 +99,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsCoreFeature = a.IsCoreFeature,
                         ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                         FeatureTypeName = a.FeatureType == null ? "" : a.FeatureType.Name,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
 
@@ -133,6 +136,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IsCustomRole = myRole.IsCustomRole,
                                    ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                                    ToggleCode = a.ToggleCode,
+                                   FeatureUniqeCode = a.FeatureUniqeCode
                                }).ToList();
                 #endregion
 
@@ -277,6 +281,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsOld = a.IsOld,
                                             IsCoreFeature = a.IsCoreFeature,
                                             ToggleCode = a.ToggleCode,
+                                            FeatureUniqeCode = a.FeatureUniqeCode
                                         }).ToList();
 
             List<FeaturePM> ffffff = features.Where(d => d.ObjectTableId == "1-1301").ToList();
@@ -417,6 +422,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IsOld = a.IsOld,
                                    IsCoreFeature = a.IsCoreFeature,
                                    ToggleCode = a.ToggleCode,
+                                   FeatureUniqeCode = a.FeatureUniqeCode
                                }).ToList();
                 #endregion
 
@@ -561,6 +567,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          IsOld = a.IsOld,
                                                          IsCoreFeature = a.IsCoreFeature,
                                                          ToggleCode = a.ToggleCode,
+                                                         FeatureUniqeCode = a.FeatureUniqeCode
                                                      });
                 #endregion
 
