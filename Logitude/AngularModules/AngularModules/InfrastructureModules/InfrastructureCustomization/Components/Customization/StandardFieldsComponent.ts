@@ -189,11 +189,11 @@ export class StandardFieldItem {
     constructor(field: ObjectFieldPM, public loadedFields: ObjectFieldPM[], public fieldsTranslations: FieldsTranslations[]) {
         this.ObjectField = field;
         this.ObjectFieldId = field.Id;
-        //Fix ObjectFieldTextCodeId when you add TextCodeCode to Translations table.
-        this.fullLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.FullNameTextCodeId)[0];
-        this.shortLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.ShortNameTextCodeId)[0];
-        this.listLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.ListTextCodeId)[0];
-        this.helpLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.HelpTextCodeId)[0];
+
+        this.fullLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.FullNameTextCodeCode)[0];
+        this.shortLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.ShortNameTextCodeCode)[0];
+        this.listLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.ListTextCodeCode)[0];
+        this.helpLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.HelpTextCodeCode)[0];
     }
 
     get DefaultText() { return this.ObjectField.FullNameTextCodeDefaultText; }

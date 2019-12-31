@@ -309,7 +309,7 @@ export class ObjectFieldPM {
 	 
     private helpTextCodeCode: string;
     public get HelpTextCodeCode() { return this.helpTextCodeCode; }
-    public set HelpTextCodeCode(newValue: string) { if (this.helpTextCodeCode != newValue) { this.helpTextCodeCode = newValue; this.MarkAsDirty("HelpTextTextCodeCode"); } }
+    public set HelpTextCodeCode(newValue: string) { if (this.helpTextCodeCode != newValue) { this.helpTextCodeCode = newValue; this.MarkAsDirty("HelpTextCodeCode"); } }
        
 	 
     private fullNameTextCodeCode: string;
