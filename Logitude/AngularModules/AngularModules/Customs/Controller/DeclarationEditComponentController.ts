@@ -6,17 +6,6 @@ import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
 import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../Infrastructure/Utilities/events/MenuButtonsEvents';
 
 export class DeclarationEditComponentController implements IEditComponentController {
-    FilterTabs(allTabs: any[]) {
-        let currentEntity: DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-        
-        if (!currentEntity.IsAmendment) {
-            var indexOfTab = allTabs.findIndex(t => t.Code == "DCCR");
-            if (indexOfTab > -1) {
-                allTabs.splice(indexOfTab, 1);
-            }
-
-        }
-    }
     public MustRefresh: boolean = null;
     public MustRefreshMessage: string = null;
     public IsInBatchRequest: boolean = null;
