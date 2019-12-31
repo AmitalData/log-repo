@@ -31,7 +31,7 @@ export class AddRuleFieldComponent extends BaseComponent {
     public ObjectFields: ObjectFieldPM[] = [];
     public DataContext: AddRuleFieldComponent = this;
     private ObjectTableId: string;
-    public SelectedObjectFieldId: string;
+    public SelectedObjectFieldCode: string;
     public RuleFieldTXTAreaId: string;
     public SelectedObjectField: ObjectFieldPM;
     FieldsLovQueryFilters: ApiQueryFilters;
@@ -102,7 +102,7 @@ export class AddRuleFieldComponent extends BaseComponent {
         logWindow.WindowClosed.subscribe(($event: any) => {
 
             if ($event) {
-                this.SelectedObjectFieldId = $event;
+                this.SelectedObjectFieldCode = $event;
             }
 
         });
@@ -113,9 +113,9 @@ export class AddRuleFieldComponent extends BaseComponent {
         this.Expression = null;
       this.HideLov = true;
       if (item) {
-        this.SelectedObjectField = this.ObjectFields.filter(f => f.Id == item.Id)[0];
-        if (item && this.SelectedObjectFieldId != item.Id) {
-          this.SelectedObjectFieldId = item.Id; item
+        this.SelectedObjectField = this.ObjectFields.filter(f => f.FieldCode == item.FieldCode)[0];
+        if (item && this.SelectedObjectFieldCode != item.FieldCode) {
+          this.SelectedObjectFieldCode = item.FieldCode; item
 
         }
       }
@@ -133,12 +133,12 @@ export class AddRuleFieldComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        if (this.SelectedObjectFieldId) {
+        if (this.SelectedObjectFieldCode) {
             if (this.Expression) {
-                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldId + ',' + this.Expression);
+                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldCode + ',' + this.Expression);
             }
             else {
-                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldId);
+                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldCode);
             }
         }
     }

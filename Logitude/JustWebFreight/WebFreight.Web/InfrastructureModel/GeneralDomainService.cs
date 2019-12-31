@@ -784,7 +784,8 @@ namespace WebFreight.Web.InfrastructureModel
             ruleField.ObjectTableRuleId = ruleFieldPM.ObjectTableRuleId;
             ruleField.SystemLevel = ruleFieldPM.SystemLevel;
             ruleField.Expression = ruleFieldPM.Expression;
-            ruleField.RuleNotificationTypeCode = ruleFieldPM.RuleNotificationTypeCode;            
+            ruleField.RuleNotificationTypeCode = ruleFieldPM.RuleNotificationTypeCode;
+            ruleField.ObjectFieldCode = ruleFieldPM.ObjectFieldCode;
         }
         #endregion
 

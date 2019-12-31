@@ -15,6 +15,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ObjectTableRuleId { get; set; }
         public string Expression { get; set; }
         public string RuleNotificationTypeCode { get; set; }
+        public string ObjectFieldCode { get; set; }
 
         //[Include]
         //[Association("ObjectTableRuleFieldObjectField", "ObjectFieldId", "Id", IsForeignKey = true)]

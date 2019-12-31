@@ -870,8 +870,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             RuleConditionField IsBlocked_CondField = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails() { ObjectFieldId = addedManuallyField.Id, ObjectTableRuleId = blockNamesRule.Id, Operator = "Equals", Value = "False", Tenant = blockNamesRule.Tenant }, ruleConditionFieldRepository, TenantRuleConditionFields);
 
-            ObjectTableRuleField ClosingReasonNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonNameField.Id, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, objectTableRuleFieldRepository, TenantObjectTableRuleFields);
-            ObjectTableRuleField ClosingReasonLocalNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonLocalNameField.Id, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, objectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ClosingReasonNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonNameField.Id, ObjectFieldCode = closingReasonNameField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, objectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ClosingReasonLocalNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonLocalNameField.Id, ObjectFieldCode = closingReasonLocalNameField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, objectTableRuleFieldRepository, TenantObjectTableRuleFields);
             
             objectContext.SaveChanges();
         }

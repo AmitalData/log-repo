@@ -63,7 +63,7 @@ namespace Logitude.BL.Validators
                 {
                     foreach (ObjectTableRuleField field in requiredObjectFields)
                     {
-                        ObjectField f = objectFieldList.FirstOrDefault(fd => fd.Id == field.ObjectFieldId);
+                        ObjectField f = objectFieldList.FirstOrDefault(fd => fd.FieldCode == field.ObjectFieldCode);
                         errorMessage = errorMessage + "," + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
                     }
 
