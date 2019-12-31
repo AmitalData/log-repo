@@ -1508,7 +1508,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     if (objectFieldValidationsDictionary.Count != 0)
                     {
                         objectField.ObjectFieldValidations = (from d in objectFieldValidationsDictionary
-                                                              where d.Value.ObjectFieldId == objectField.Id
+                                                              where d.Value.ObjectFieldCode == objectField.FieldCode
                                                               select d.Value).ToList();
                     }
 
