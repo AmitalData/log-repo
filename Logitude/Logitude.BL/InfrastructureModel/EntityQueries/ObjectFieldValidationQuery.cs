@@ -46,6 +46,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                    ValidationOrder = a.ValidationOrder,
                                                                    Condition = a.Condition,
                                                                    Code = a.Code,
+                                                                   ObjectFieldCode = a.ObjectFieldCode,
                                                                }).FirstOrDefault();
 
 
@@ -69,6 +70,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                    ValidationOrder = a.ValidationOrder,
                                                                    Condition = a.Condition,
                                                                    Code = a.Code,
+                                                                   ObjectFieldCode = a.ObjectFieldCode,
                                                                }).FirstOrDefault();
             return objectFieldValidationPm;
         }
@@ -90,16 +92,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                                 ValidationOrder = a.ValidationOrder,
                                                                                 Condition = a.Condition,
                                                                                 Code = a.Code,
+                                                                                ObjectFieldCode = a.ObjectFieldCode,
                                                                             }).AsQueryable();
             return objectFieldValidationPMs;
         }
 
-        public List<ObjectFieldValidationPM> GetObjectFieldValidationPMsByObjectFieldId(string objectFieldId, int tenant)
+        public List<ObjectFieldValidationPM> GetObjectFieldValidationPMsByObjectFieldCode(string objectFieldCode, int tenant)
         {
             List<ObjectFieldValidationPM> tenantZeroQuery;
             List<ObjectFieldValidationPM> currentTenantQuery;
             List<ObjectFieldValidationPM> query = new List<ObjectFieldValidationPM>();
-            string listName = "objectfieldvalidationpms" + objectFieldId + tenant;
+            string listName = "objectfieldvalidationpms" + objectFieldCode + tenant;
             List<ObjectTableRule> selectedRules = new List<ObjectTableRule>();
             if (CacheManager.CacheWrapper.Get(listName) == null)
             {
@@ -107,7 +110,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                //    WebFreightContext  webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
                     tenantZeroQuery = (from a in repository.context.ObjectFieldValidations
-                                       where (a.Tenant == 0) && a.ObjectFieldId == objectFieldId
+                                       where (a.Tenant == 0) && a.ObjectFieldCode == objectFieldCode
                                        select new ObjectFieldValidationPM()
                                        {
 
@@ -119,6 +122,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            ValidationOrder = a.ValidationOrder,
                                            Condition = a.Condition,
                                            Code = a.Code,
+                                           ObjectFieldCode = a.ObjectFieldCode,
                                        }).ToList();
 
 
@@ -128,7 +132,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                  //  WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
                     currentTenantQuery = (from a in repository.context.ObjectFieldValidations
-                                          where (a.Tenant == tenant) && a.ObjectFieldId == objectFieldId
+                                          where (a.Tenant == tenant) && a.ObjectFieldCode == objectFieldCode
                                           select new ObjectFieldValidationPM()
                                           {
 
@@ -140,6 +144,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                               ValidationOrder = a.ValidationOrder,
                                               Condition = a.Condition,
                                               Code = a.Code,
+                                              ObjectFieldCode = a.ObjectFieldCode,
                                           }).ToList();
 
                 }
@@ -181,6 +186,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            ValidationOrder = a.ValidationOrder,
                                            Condition = a.Condition,
                                            Code = a.Code,
+                                           ObjectFieldCode = a.ObjectFieldCode,
                                        }).ToList();
 
 
@@ -204,6 +210,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   ValidationOrder = a.ValidationOrder,
                                                   Condition = a.Condition,
                                                   Code = a.Code,
+                                                  ObjectFieldCode = a.ObjectFieldCode,
                                               }).ToList();
 
                     }

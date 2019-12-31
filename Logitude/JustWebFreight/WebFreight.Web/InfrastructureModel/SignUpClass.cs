@@ -1604,7 +1604,7 @@ namespace WebFreight.Web.InfrastructureModel
                         ValidationOrder = validation.ValidationOrder,
                         ValidationExpression = validation.ValidationExpression,
                         Code = validation.Code,
-
+                        ObjectFieldCode = newObjectField.FieldCode,
                     };
                     theObjectFieldValidationRepository.Add(newValidation);
                 }

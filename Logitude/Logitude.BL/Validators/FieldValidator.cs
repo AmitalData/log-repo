@@ -34,7 +34,7 @@ namespace Logitude.BL.Validators
             {
                 return new ValidationFieldResult(true, "");
             }
-            List<ObjectFieldValidationPM> validations = objectFieldValidations.Where(f => f.ObjectFieldId == field.Id).ToList();
+            List<ObjectFieldValidationPM> validations = objectFieldValidations.Where(f => f.ObjectFieldCode == field.FieldCode).ToList();
             if (validations.Count > 0)
             {
             ExpressionValidation expressionValidation = null;
