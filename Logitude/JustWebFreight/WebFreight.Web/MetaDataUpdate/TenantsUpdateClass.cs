@@ -158,6 +158,9 @@ namespace WebFreight.Web.MetaDataUpdate
 							ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
+                            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+                            masterModelUpdateClass.LoadObjectsTenantZero(context);
+
                             QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
                             quotemodelUpdateClass.LoadObjectsTenantZero(context);
 
@@ -428,6 +431,9 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+                            masterModelUpdateClass.LoadObjectsTenantZero(context);
 
                             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                             {
