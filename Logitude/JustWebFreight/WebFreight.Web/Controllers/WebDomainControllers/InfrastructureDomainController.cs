@@ -282,7 +282,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 FeatureQuery featureQuery = new FeatureQuery(iFeatureRepository);
                 List<FeaturePM> myResult = featureQuery.GetSelectedAndUnSelectedFeatures(RoleId, allowedPackages, tenant);
 
-
+                
                 Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
                 List<string> allTextCodesCodes = myResult.Where(d => d.NameTextCodeCode != null).Select(s => s.NameTextCodeCode).ToList();
                 List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesCodes.Contains(d.Code) select d).ToList();

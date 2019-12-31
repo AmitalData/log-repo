@@ -651,19 +651,27 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between Translations and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 23 [Wesam] Fill TabNameTextCodeCode on ObjectTableTabs.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 23 [Wesam] Delete Constraint between ObjectTableTabs and TextCode.sql" />
+
+    <Content Include="Main Branch\2019\12 - 2019\Day 26 [Wesam] Delete Constraint between ObjectTableRuleFields and objectField.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 26 [Wesam] Fill objectfieldcode on ObjectTableRuleFields.sql" />
+
     <Content Include="Main Branch\2019\12 - 2019\Day 24 [Wesam] Delete Constraint between ObjectTable and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Wesam] Fill textcodefields on ObjectFields.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Fill labeltextcodecode on MenuButtons.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 24 [Wesam] Fill textcodefields on ObjectTables.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Wesam] Delete Constraint between ObjectFields and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Fill ShortTextCodeCode on Tips.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Delete Constraint between Tips and TextCodes.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Delete Constraint between Queries and TextCodes.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Fill NameTextCodeCode on Queries.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Fill nametextcodecode on Features.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 22 [Wesam] Delete Constraint between Features and TextCodes.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 12 [Wesam] Fill objectfieldcode on ScreenFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 08 [Wesam] Delete Constraint between ScreenFields and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Fill objectfieldcode on QueryColumns.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Delete Constraint between QueryColumns and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Samar] delete ailrine area metadata.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between MenuButtons and TextCode.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />

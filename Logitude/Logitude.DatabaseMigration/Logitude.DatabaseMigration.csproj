@@ -1846,6 +1846,10 @@
     <Compile Include="Migrations\201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.Designer.cs">
       <DependentUpon>201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.cs" />
+    <Compile Include="Migrations\201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.Designer.cs">
+      <DependentUpon>201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs" />
     <Compile Include="Migrations\201912301451035_WesamAddTextCodeCodeToTranslationsTable.Designer.cs">
       <DependentUpon>201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs</DependentUpon>
@@ -1887,9 +1891,22 @@
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs" />
+    <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.Designer.cs">
+      <DependentUpon>201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.cs" />
+    <Compile Include="Migrations\201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.Designer.cs">
+      <DependentUpon>201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.Designer.cs">
       <DependentUpon>201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912230859457_AddSupportMailBoxToTicketTable_Maheera.cs" />
+    <Compile Include="Migrations\201912230859457_AddSupportMailBoxToTicketTable_Maheera.Designer.cs">
+      <DependentUpon>201912230859457_AddSupportMailBoxToTicketTable_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -3217,6 +3234,7 @@
     <EmbeddedResource Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.resx">
       <DependentUpon>201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs</DependentUpon>
     </EmbeddedResource>
+     
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </EmbeddedResource>
@@ -3249,6 +3267,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.resx">
       <DependentUpon>201912301247199_Mutaz_Update_LocalName_In_InterestReportStatues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.resx">
+      <DependentUpon>201912221212584_WesamAddNameTextCodeCodeToFeaturesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912230859457_AddSupportMailBoxToTicketTable_Maheera.resx">
+      <DependentUpon>201912230859457_AddSupportMailBoxToTicketTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.resx">
+      <DependentUpon>201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.resx">
+      <DependentUpon>201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912301451035_WesamAddTextCodeCodeToTranslationsTable.resx">
       <DependentUpon>201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs</DependentUpon>
