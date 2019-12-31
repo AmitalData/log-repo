@@ -691,8 +691,7 @@ export class EditComponent implements OnDestroy {
         allTabs = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId);
         allTabs = this.FilterTabs(allTabs);
         allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-
-        for (var i = 0; i < allTabs.length; i++) {
+         for (var i = 0; i < allTabs.length; i++) {
             var tab = allTabs[i];
 
             if (tab.ControlPath != null) {
@@ -709,6 +708,8 @@ export class EditComponent implements OnDestroy {
                         continue;
                     }
                 }
+
+
 
 
                 //if (tab.ControlPath.indexOf("WarehouseConnectionsTabComponent") != -1) {
@@ -887,16 +888,7 @@ export class EditComponent implements OnDestroy {
                 break;
             }
 
-            case "Customs.Declaration": {
-                //CustomsSettingList customsSetting = DataProvider.GetCachedList<CustomsSettingList>("Customs.CustomsSetting").FirstOrDefault();
-                //if (customsSetting != null) {
-                //    if (customsSetting.IsConnectedToUniFreight) {
-                //        tabItem = objectTableTabs.Where(t => t.Code == "DCMF").FirstOrDefault();
-                //        objectTableTabs.Remove(tabItem);
-                //    }
-                //}
-                break;
-            }
+          
             case "ARPayment": {
 
                 if (this.EntityPM.IsFullAccounting) {
@@ -912,7 +904,10 @@ export class EditComponent implements OnDestroy {
                 break;
             }
         }
-
+        this.EditComponentController.FilterTabs(allTabs);
+          
+          
+          
         return allTabs;
     }
     private OnEntityCreated() {
@@ -1824,6 +1819,10 @@ export class EditComponentDefaultController implements IEditComponentController 
     IsDisabled(itemTabCode: string): boolean {
         return false;
     }
+    FilterTabs(allTabs: any[]) {
+
+    }
+
 }
 export interface IEditComponentController {
     OnFirstTimeAfterSingleDataLoaded(CurrentEntity): Promise<boolean>;
@@ -1838,5 +1837,6 @@ export interface IEditComponentController {
     IsInBatchRequest: boolean;
     ResetMustRefresh(): void;
     IsDisabled(itemTabCode: string): boolean;
+    FilterTabs(allTabs: any[]);
 }
 
