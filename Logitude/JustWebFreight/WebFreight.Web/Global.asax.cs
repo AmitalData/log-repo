@@ -379,6 +379,10 @@ namespace WebFreight.Web
                     var myP19R03_0000_PatchDist = new P19R03_0001_PatchDist();
                     myP19R03_0000_PatchDist.Enshure_SeedDbMigrateTable();
 
+                    if (!LogitudeSettings.IsCostomsDeploy)
+                    {
+                        return;
+                    }
 
                     bool supressAlertProductMessage = !String.IsNullOrWhiteSpace( System.Configuration.ConfigurationManager.AppSettings.Get("supressAlertProductMessage"));
                     if (!supressAlertProductMessage)
@@ -386,6 +390,10 @@ namespace WebFreight.Web
                         var assemblyVersion = assemblyUtil.GetVersion(LogitudeSettings.ProductInfo);
                         var patchDistributionMatch = new PatchDistributionMatch();
                         var patchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
+                        if (patchDistributionMatchModel.MyAssemblyDBMigrationModel== null)
+                        {
+                            return;
+                        }
                         if (patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB ||
                             patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldSource)
                         {
@@ -413,7 +421,7 @@ namespace WebFreight.Web
             catch (Exception e)
             {
 
-                Logger.LogMe("ProductInfoSetting:" + e.ToString(), true);
+                Logger.LogMe("ProductInfoSetting:" + e.ToString(), false);
             }
             finally
             {

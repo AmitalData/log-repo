@@ -71,11 +71,15 @@ export class SendDeclarationComponent implements OnDestroy {
     }
     Run(args: any) {
         this.EntityPM = args.EntityPM;
-        if (!this.EntityPM.IsCourierDeclaration) {
+         if (!this.EntityPM.IsCourierDeclaration) {
             this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Send");
         }
         else {
             this.ButtonText = "שלח הצהרה"; // TextCodeTranslator.Translate("Customs.Declaration.O.SendDeclaration");
+        }
+
+        if (this.EntityPM.IsAmendment == true) {
+            this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.TH.SendAmendmentDeclaration");
         }
         if (this._WorkWithService) {
             this._SendDeclarationService.Run(args);
@@ -172,6 +176,7 @@ export class SendDeclarationService implements OnDestroy {
         else {
             this.ButtonText = "שלח הצהרה"; // TextCodeTranslator.Translate("Customs.Declaration.O.SendDeclaration");
         }
+ 
         this.Listen();
     }
     Listen() {

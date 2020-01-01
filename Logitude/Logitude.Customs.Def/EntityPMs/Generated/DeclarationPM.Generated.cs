@@ -4284,6 +4284,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierManifestStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierManifestStatusCode  
+	   {
+	    
+	     get
+		{
+		   return courierManifestStatusCode;
+		 }
+		 set
+		 {
+		   if(courierManifestStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierManifestStatusCode",OldValue=courierManifestStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierManifestStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string courierPaymentStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierPaymentStatusCode  
+	   {
+	    
+	     get
+		{
+		   return courierPaymentStatusCode;
+		 }
+		 set
+		 {
+		   if(courierPaymentStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierPaymentStatusCode",OldValue=courierPaymentStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierPaymentStatusCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
