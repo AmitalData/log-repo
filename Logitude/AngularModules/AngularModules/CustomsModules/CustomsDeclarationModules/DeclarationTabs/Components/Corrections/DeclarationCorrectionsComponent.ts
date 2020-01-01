@@ -99,7 +99,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         console.log("Declaration", this.EntityPM);
 
                         this.ReloadDeclarationCorrection();
-                        if (this.EntityPM.AmendmentDeficitInitiated) this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
+                        if (!this.EntityPM.AmendmentDeficitInitiated) this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);

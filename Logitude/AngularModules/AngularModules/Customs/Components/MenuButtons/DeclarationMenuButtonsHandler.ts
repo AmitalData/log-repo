@@ -162,8 +162,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 }
 
                 for (var i = 0; i < menuButtons.length; i++) {
-                    debugger;
-                    var button = menuButtons[i];
+                     var button = menuButtons[i];
                     if (button.EventCode == "More") {
                         button.IsDisabled = true;
                         button.IsHidden = true;
@@ -292,8 +291,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "Vehicle Modifications") {
-                        debugger;
-                        if (this.EntityPM.IsCourierDeclaration) {
+                         if (this.EntityPM.IsCourierDeclaration) {
                             button.IsHidden = true;
                         }
                     }
