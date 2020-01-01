@@ -653,7 +653,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     newPointer.Child1EntityCode = this.currenctSelectConnectTo ==3 ?"DeclarationAmendment" : null;
                     newPointer.Child2EntityCode = null;
                     newPointer.Child3EntityCode = null;
-                    newPointer.Child1EntityId = null;
+                    newPointer.Child1EntityId = this.currenctSelectConnectTo == 3 ? "3" : null;
                     newPointer.Child2EntityId = null;
                     newPointer.Child3EntityId = null;
                     newPointer.DocumentTypeCode = this.CustomsDocumentsTicket.DocumentTypeCode;
