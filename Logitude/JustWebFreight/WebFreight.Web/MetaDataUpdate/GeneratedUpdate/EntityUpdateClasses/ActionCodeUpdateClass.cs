@@ -406,7 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ActionCodeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActionCodeTextCode_0.Id, Code = "ActionCode",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = ActionCodeObjectTable.Id, QuerySection = "Customs.ActionCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActionCodeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ActionCodeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActionCodeTextCode_0.Id, Code = "ActionCode",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = ActionCodeObjectTable.Id, QuerySection = "Customs.ActionCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActionCodeFeature_0.Id,FeatureUniqeCode= ActionCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ActionCodeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id, IndexOrder = 0, ObjectFieldId = ActionCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ActionCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

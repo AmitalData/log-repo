@@ -1106,7 +1106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CountriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryTextCode_0.Id, NameTextCodeCode = CountryTextCode_0.Code, Code = "Countries",  QueryGroupCode = "COUT", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryObjectTable.Id, QuerySection = "Country", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CountryFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CountriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryTextCode_0.Id, NameTextCodeCode = CountryTextCode_0.Code, Code = "Countries",  QueryGroupCode = "COUT", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryObjectTable.Id, QuerySection = "Country", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CountryFeature_0.Id,FeatureUniqeCode= CountryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CountriesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id, IndexOrder = 0, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CountryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

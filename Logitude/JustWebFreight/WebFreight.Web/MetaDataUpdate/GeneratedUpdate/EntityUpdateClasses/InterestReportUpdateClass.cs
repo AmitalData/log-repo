@@ -980,7 +980,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InterestReportQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestReportTextCode_0.Id, NameTextCodeCode = InterestReportTextCode_0.Code, Code = "Interest Report",  QueryGroupCode = "25a2", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestReportObjectTable.Id, QuerySection = "InterestReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestReportFeature_0.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InterestReportQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestReportTextCode_0.Id, NameTextCodeCode = InterestReportTextCode_0.Code, Code = "Interest Report",  QueryGroupCode = "25a2", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestReportObjectTable.Id, QuerySection = "InterestReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestReportFeature_0.Id,FeatureUniqeCode= InterestReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 		   
 	    }
 

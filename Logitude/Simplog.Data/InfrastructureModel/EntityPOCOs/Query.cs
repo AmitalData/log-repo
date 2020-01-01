@@ -44,7 +44,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string FeatureUniqeCode { get; set; }
 
 
-        [ForeignKey("FeatureId")]
+        //[ForeignKey("FeatureId")]
         public virtual Feature Feature { get; set; }
 
         [ForeignKey("NameTextCodeId")]

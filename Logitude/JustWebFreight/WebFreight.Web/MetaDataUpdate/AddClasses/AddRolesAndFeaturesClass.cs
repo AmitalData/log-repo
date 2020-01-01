@@ -113,9 +113,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     updatedTextCode.InActive = false;
 
                     textCodeReposit.Update(updatedTextCode);//ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_919762609) הופר - מפתח אב לא נמצא
-                    featuresRepository.Update(updatedFeature);
+                    
 
                 }
+                featuresRepository.Update(updatedFeature);
                 //table.UpdateKey = NewKey;
                 //Repo.Update(table);
                 //Repo.SubmitChanges();

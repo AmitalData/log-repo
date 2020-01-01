@@ -1069,7 +1069,7 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 			  <#+ } if (!string.IsNullOrEmpty(EditWizardComponentPath) && EditWizardComponentPath != "&quot;&quot;")
     {
 			  #> EditWizardComponentPath = <#= EditWizardComponentPath #>,
-			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #>, Perspective = <#= Perspective #> }, queriesRepository, tenantQueries);
+			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id,FeatureUniqeCode= <#= TblName.Trim('"') #>Feature_<#= index #>.FeatureUniqeCode, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #>, Perspective = <#= Perspective #> }, queriesRepository, tenantQueries);
 	<#+
 	    int i = 0;
 	    foreach(XElement Column in QueryAtt.Elements("QueryColumns").FirstOrDefault().Elements("QueryColumn"))

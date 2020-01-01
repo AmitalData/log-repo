@@ -389,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query allcategories3Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category3TextCode_0.Id, NameTextCodeCode = Category3TextCode_0.Code, Code = "allcategories3",  QueryGroupCode = "77cf", IndexOrder = 0, Tenant = 0, ObjectTableId = Category3ObjectTable.Id, QuerySection = "Category3", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category3Feature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query allcategories3Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category3TextCode_0.Id, NameTextCodeCode = Category3TextCode_0.Code, Code = "allcategories3",  QueryGroupCode = "77cf", IndexOrder = 0, Tenant = 0, ObjectTableId = Category3ObjectTable.Id, QuerySection = "Category3", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category3Feature_0.Id,FeatureUniqeCode= Category3Feature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn allcategories3QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories3Query.Id, IndexOrder = 0, ObjectFieldId = Category3ObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == Category3ObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = Category3ObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == Category3ObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

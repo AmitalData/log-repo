@@ -664,7 +664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	      
 
 			  Query WebhookKeysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WebhookKeysTextCode_0.Id, NameTextCodeCode = WebhookKeysTextCode_0.Code, Code = "WebhookKeys",  EditWizardComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/WebhookKeys/WebhookKeysComponent",
-			   QueryGroupCode = "df4d", IndexOrder = 0, Tenant = 0, ObjectTableId = WebhookKeysObjectTable.Id, QuerySection = "WebhookKeys", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WebhookKeysFeature_0.Id, DefaultSortName = "PartnerName", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "df4d", IndexOrder = 0, Tenant = 0, ObjectTableId = WebhookKeysObjectTable.Id, QuerySection = "WebhookKeys", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WebhookKeysFeature_0.Id,FeatureUniqeCode= WebhookKeysFeature_0.FeatureUniqeCode, DefaultSortName = "PartnerName", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn WebhookKeysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id, IndexOrder = 0, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "PartnerName" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "PartnerName" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 

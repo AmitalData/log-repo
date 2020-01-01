@@ -602,7 +602,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportTextCode_0.Id, NameTextCodeCode = ReportTextCode_0.Code, Code = "All Reports",  QueryGroupCode = "RPRT", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportObjectTable.Id, QuerySection = "Report", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ReportFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportTextCode_0.Id, NameTextCodeCode = ReportTextCode_0.Code, Code = "All Reports",  QueryGroupCode = "RPRT", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportObjectTable.Id, QuerySection = "Report", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ReportFeature_0.Id,FeatureUniqeCode= ReportFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportsQuery.Id, IndexOrder = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 

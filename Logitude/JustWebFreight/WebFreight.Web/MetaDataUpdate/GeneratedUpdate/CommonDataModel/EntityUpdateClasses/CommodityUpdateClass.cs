@@ -447,7 +447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCommoditiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommodityTextCode_0.Id, NameTextCodeCode = CommodityTextCode_0.Code, Code = "All Commodities",  QueryGroupCode = "CMMD", IndexOrder = 0, Tenant = 0, ObjectTableId = CommodityObjectTable.Id, QuerySection = "Commodity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CommodityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCommoditiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommodityTextCode_0.Id, NameTextCodeCode = CommodityTextCode_0.Code, Code = "All Commodities",  QueryGroupCode = "CMMD", IndexOrder = 0, Tenant = 0, ObjectTableId = CommodityObjectTable.Id, QuerySection = "Commodity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CommodityFeature_0.Id,FeatureUniqeCode= CommodityFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCommoditiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommoditiesQuery.Id, IndexOrder = 1, ObjectFieldId = CommodityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommodityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommodityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommodityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 

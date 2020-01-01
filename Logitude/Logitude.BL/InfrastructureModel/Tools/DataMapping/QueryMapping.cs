@@ -39,6 +39,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.SharedByUserId = entityPM.SharedByUserId;
             entityPOCO.SpotlightModeActivated = entityPM.SpotlightModeActivated;
             entityPOCO.NameTextCodeCode = entityPM.NameTextCodeCode;
+            entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;
+
 
         }
     }
