@@ -315,7 +315,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsAmendment, 
 	         AmendmentOriginalDeclartation, 
 	         AmendmentCorrectedByUserName, 
-	         AmendmentStatusName,
+	         AmendmentStatusName, 
+	         CourierManifestStatusCode, 
+	         CourierPaymentStatusCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

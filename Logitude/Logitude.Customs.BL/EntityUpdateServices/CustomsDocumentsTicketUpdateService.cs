@@ -332,10 +332,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 //SendMessageToQueue(entityPM);
             }
-            if (entityPM.DocumentTypeCode == "380")
-            {
+            //if (entityPM.DocumentTypeCode == "380")
+            //{
                 UpdateDeclarationCourierStatus(entityPM);
-            }
+            //}
         }
 
         public void UpdateIsPartOfDeclaration(CustomsDocumentPM customDoc, CustomsDocumentsTicketPM ticket)
@@ -365,10 +365,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateDeclarationCourierStatus(CustomsDocumentsTicketPM entityPM)
         {
-            
-            if (entityPM.DocumentTypeCode == "380")
+            ICustomContext context = MainContext as CustomContext;
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
+            CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
+            if (docType.IsCourierManadatory)
+            //if (entityPM.DocumentTypeCode == "380")
             {
-                ICustomContext context = MainContext as CustomContext;
+                //ICustomContext context = MainContext as CustomContext;
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 if(entityPM.CustomsDocumentPointers != null && entityPM.CustomsDocumentPointers.Count() > 0) LogMessagingUtil.Instance.AppendLine("ticket pointer connected entity: " + entityPM.CustomsDocumentPointers.FirstOrDefault().ParentEntityId);
                 CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(context);
@@ -376,7 +379,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     LogMessagingUtil.Instance.AppendLine("found connected entity: " + connectedDeclarationPM.Id);
                     string status = null;
-                    List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(connectedDeclarationPM.Id, "", "", "", entityPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == "380").ToList();
+                    List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(connectedDeclarationPM.Id, "", "", "", entityPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == entityPM.DocumentTypeCode).ToList();
                     if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
                     {
                         status = "M";
