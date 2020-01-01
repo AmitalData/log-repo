@@ -334,6 +334,7 @@
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreaPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CardContactAdditionalServicePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CardContactProductPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CustomerOpenFilesAmountPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\DocumentsExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\LogBoxTenantSettingPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PaymentGatewayPartnerPM.cs" />

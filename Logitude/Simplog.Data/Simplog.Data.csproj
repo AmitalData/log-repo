@@ -182,6 +182,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerDeposition.cs" />
@@ -387,6 +388,7 @@
     <Compile Include="CommonDataModel\Mapping\CreditLimitSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerDepositionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerFieldsUpdateSettingMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CustomerOpenFilesAmountMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomersDataViewMap.cs">
       <SubType>Code</SubType>
     </Compile>

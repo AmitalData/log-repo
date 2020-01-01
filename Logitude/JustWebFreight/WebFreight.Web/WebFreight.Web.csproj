@@ -2337,6 +2337,7 @@
     <Compile Include="ExternalAPIs\V1\ARPaymentController.cs" />
     <Compile Include="ExternalAPIs\V1\BlobInfoController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
+    <Compile Include="ExternalAPIs\V1\CustomerOpenFilesAmount.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
     <Compile Include="ExternalAPIs\V1\MasterController.cs" />
     <Compile Include="ExternalAPIs\V1\JournalController.cs" />

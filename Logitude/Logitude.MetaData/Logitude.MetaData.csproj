@@ -182,6 +182,7 @@
     <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
     <None Include="EntityFiles\CommonDataModel\ComputingPartner.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerOpenFilesAmount.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerTenantAccessRequest.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierAreasPort.lxml">
