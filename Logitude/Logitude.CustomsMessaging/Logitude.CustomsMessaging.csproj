@@ -196,6 +196,7 @@
     <Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
     <Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
     <Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
     <Compile Include="MessagingServices\MN_NG_9022_CourierBOLQueryMessagingService.cs" />
@@ -415,7 +416,7 @@
     <Compile Include="ResponseServices\UniCourierBatchSend1170_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2715_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
-     <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />

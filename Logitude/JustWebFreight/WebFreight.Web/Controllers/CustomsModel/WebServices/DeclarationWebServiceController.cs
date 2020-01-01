@@ -414,7 +414,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
- 
+
+        public HttpResponseMessage PostSendDeclarationAmendment(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData;
+                var messagingService = new DF_MSG10000_ImportDeclarationMessagingService();
+                responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+
 
         public HttpResponseMessage PostSendManifest(MANIFESTRequestRequestParams requestParamsData)
         {
