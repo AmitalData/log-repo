@@ -566,7 +566,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
 
     FillConnectedToItems() {
         var connectedItems: ConnectedToItem[] = [];
-
+        var entity = this.CurrentSession.CurrentEditComponent.EntityPM;
         var connectedItem1 = new ConnectedToItem();
         connectedItem1.Id = 0;
         connectedItem1.Name = TextCodeTranslator.Translate("Customs.Declaration");
@@ -579,9 +579,19 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         connectedItem3.Id = 2;
         connectedItem3.Name = TextCodeTranslator.Translate("Customs.SupplierInvoiceItem");
 
+
         connectedItems.push(connectedItem1);
         connectedItems.push(connectedItem2);
         connectedItems.push(connectedItem3);
+
+        if (entity.IsAmendment) {
+            var connectedItem4 = new ConnectedToItem();
+            connectedItem4.Id = 3;
+            connectedItem4.Name = TextCodeTranslator.Translate("Customs.Declaration.O.CorrectionGeneral");
+            connectedItems.push(connectedItem4);
+        }
+
+
         return connectedItems;
     }
 
@@ -591,7 +601,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         }
 
         let connectedDocumentPointer;
-
+ 
         switch (customsDocumentPointerPM.Child1EntityCode) {
             case "SupplierInvoice":
                 if (customsDocumentPointerPM.Child2EntityCode == "SupplierInvoiceItem") {
@@ -607,6 +617,11 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                         "DisplayConnectedEntityNumber": customsDocumentPointerPM.Child1EntityId,
                     };
                 }
+                break;
+            case "DeclarationAmendment":
+                connectedDocumentPointer = {
+                    "SelectedIndex": 3,
+                };
                 break;
             default:
                 connectedDocumentPointer = {

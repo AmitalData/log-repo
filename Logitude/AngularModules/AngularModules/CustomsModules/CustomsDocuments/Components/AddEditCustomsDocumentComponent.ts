@@ -575,7 +575,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
-        var errors = [];
+         var errors = [];
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
             if (errors.length > 0) {
@@ -650,7 +650,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     newPointer.Tenant = SessionLocator.Tenant;
                     newPointer.ParentEntityId = this.ParentEntityId;
                     newPointer.ParentEntityCode = this.ParentEntityCode;
-                    newPointer.Child1EntityCode = null;
+                    newPointer.Child1EntityCode = this.currenctSelectConnectTo ==3 ?"DeclarationAmendment" : null;
                     newPointer.Child2EntityCode = null;
                     newPointer.Child3EntityCode = null;
                     newPointer.Child1EntityId = null;
@@ -752,7 +752,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     FillConnectedToItems() {
-        this.ConnectedToItems = this.iCustomsDocumentsController.FillConnectedToItems();
+         this.ConnectedToItems = this.iCustomsDocumentsController.FillConnectedToItems();
         //if (entityCode.toLowerCase() == "declaration") {
         //    var connectedItem1 = new ConnectedToItem();
         //    connectedItem1.Id = 0;
@@ -794,9 +794,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     SetDefaultConnectedEntityNumber() {
         this.iCustomsDocumentsController.SetDefaultConnectedEntityNumber(this.CustomsDocumentsTicket, this.EntityPM);
     }
-
+    currenctSelectConnectTo: number;
     ConnectedItemSelectionChanged(index: number) {
-        if (index != 0) {
+        this.currenctSelectConnectTo = index;
+        if (index != 0 && index != 3) {
             var selectInvoicesOnly = true;
             if (index == 2) {
                 selectInvoicesOnly = false;
