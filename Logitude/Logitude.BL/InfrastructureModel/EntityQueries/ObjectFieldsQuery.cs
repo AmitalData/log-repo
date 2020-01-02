@@ -144,9 +144,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
             objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
+            string fieldCode = repository.GetObjectFieldCodeById(fieldId, tenant);
 
             ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
-                                           where a.ObjectFieldId == fieldId && a.Tenant == tenant
+                                           where a.ObjectFieldCode == fieldCode && a.Tenant == tenant
                                            select a).FirstOrDefault();
             if (mod != null)
             {
@@ -575,8 +576,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public ObjectFieldPM GetStandardFieldsByFieldId(string fieldId, int tenant)
         {
+            string fieldCode = repository.GetObjectFieldCodeById(fieldId, tenant);
             ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
-                                           where a.ObjectFieldId == fieldId && a.Tenant == tenant
+                                           where a.ObjectFieldCode == fieldCode && a.Tenant == tenant
                                            select a).FirstOrDefault();
 
             ObjectFieldPM objectField = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
@@ -1481,7 +1483,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 objectFieldValidationsDictionary = objectFieldValidationQuery.GetObjectFieldValidationPMsByTenant(tenant).ToDictionary(objv => objv.Id, objv => objv);
 
                 Dictionary<string, ObjectFieldModification> objectFieldModificationsDictionary = new Dictionary<string, ObjectFieldModification>();
-                objectFieldModificationsDictionary = context.ObjectFieldModifications.Where(te => te.Tenant == tenant).ToDictionary(objm => objm.ObjectFieldId, objm => objm);
+                objectFieldModificationsDictionary = context.ObjectFieldModifications.Where(te => te.Tenant == tenant).ToDictionary(objm => objm.ObjectFieldCode, objm => objm);
 
                 ObjectTableRepository tableRep = new ObjectTableRepository(context);
 
@@ -1492,9 +1494,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
 					if (objectFieldModificationsDictionary.Count != 0 && tenant != 0)
 					{
-						if (objectFieldModificationsDictionary.Keys.Contains(objectField.Id))
+						if (objectFieldModificationsDictionary.Keys.Contains(objectField.FieldCode))
 						{
-							ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.Id];
+							ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.FieldCode];
 
 							if (mod != null)
 							{

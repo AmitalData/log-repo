@@ -159,6 +159,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public string GetObjectFieldCodeById(string id, int tenant)
+        {
+            return (from a in context.ObjectFields
+                    where a.Id == id && a.Tenant == tenant
+                    select a.Code).FirstOrDefault();
+        }
+
 
         public List<ObjectField> GetAutomationObjectFieldsByObjectTableId(string objectTableId, int tenant)
         {
@@ -457,10 +464,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public ObjectFieldModification GetObjectFieldModificationByObjectField(string objectfieldId, int tenant)
+        public ObjectFieldModification GetObjectFieldModificationByObjectField(string objectfieldCode, int tenant)
         {
             return (from a in context.ObjectFieldModifications
-                    where a.Tenant == tenant && a.ObjectFieldId == objectfieldId
+                    where a.Tenant == tenant && a.ObjectFieldCode == objectfieldCode
                     select a).FirstOrDefault();
         }
 
