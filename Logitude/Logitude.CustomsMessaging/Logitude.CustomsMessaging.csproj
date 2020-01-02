@@ -259,6 +259,7 @@
     <Compile Include="RequestServices\CL_MSG100_AddClientRequestService.cs" />
     <Compile Include="RequestServices\CL_NG_8343_ClientSearchByIDRequestService.cs" />
     <Compile Include="RequestServices\DF_9070_ExportDeclarationDataRequestService.cs" />
+    <Compile Include="RequestServices\DF_MSG2892_ImportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
     <Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
     <Compile Include="RequestServices\MN_NG_9022_CourierBOLQueryRequestService.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
     <Compile Include="ResponseServices\DE_NG_5108_DecisionMessageResponseService.cs" />
     <Compile Include="ResponseServices\DF_9071_ExportDeclarationDataResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\GP_1035_GatepassFeedbackMessageResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG8374_CargoSplitResponseService.cs" />
@@ -386,7 +388,7 @@
     <Compile Include="ResponseServices\COLT_NG_8212_MSG10041_CollateralAnswerMsgResponseService.cs" />
     <Compile Include="ResponseServices\DF_8213_CollateralAnswerApprovalMsgResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseService.cs" />
-    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2892_MSG14000_ImportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_8251_Web02_DeclarationStatus_ResponseService.cs" />
     <Compile Include="ResponseServices\D_NG_2716_MSG22001_AddAttachmentResponseService.cs" />

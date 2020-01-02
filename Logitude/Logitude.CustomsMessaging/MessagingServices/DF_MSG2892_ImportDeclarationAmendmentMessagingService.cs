@@ -16,6 +16,9 @@ using UnifreightIIG.Common.TheGateway;
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
+using UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference;
+using RequestHeader = UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.RequestHeader;
+using ESBRequestSigned = UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.ESBRequestSigned;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -23,10 +26,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
         : MessagingServiceBase<
         GenericRequestParams,
         INF_MSG_GenericResponseData,
-        DF_MSG10000_ImportDeclaration,
-        DF_NG_2754_MSG10004_ImportDeclarationResponse,
-        DF_MSG10000_ImportDeclarationRequestService,
-        DF_NG_2754_MSG10004_ImportDeclarationResponseService, RequestHeader>
+        DF_NG_2892_MSG14000_ImportDeclarationAmendmentRequestMsg,
+        INF_MSG_Generic,
+        DF_MSG2892_ImportDeclarationAmendmentRequestService,
+        DF_NG_2892_MSG14000_ImportDeclarationResponseService, RequestHeader>
     {
 
         
@@ -37,29 +40,29 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return "2892";
             }
         }
-        protected override DcaReceivedController GetDcaReceivedController(DF_NG_2754_MSG10004_ImportDeclarationResponse customsResponse, GenericRequestParams RequestParams)
+        protected override DcaReceivedController GetDcaReceivedController(INF_MSG_Generic customsResponse, GenericRequestParams RequestParams)
         {
             if (customsResponse==null)
             {
                 return null;
             }
-            if (customsResponse.Response == null)
-            {
-                return null;
-            }
-            if (customsResponse.Response.Declaration == null)
-            {
-                return null;
-            }
-            return new DcaReceivedController() { DcaAnalyzeAggregateKey = customsResponse.Response.Declaration.ID.Value };
+            //if (customsResponse.Response == null)
+            //{
+            //    return null;
+            //}
+            //if (customsResponse.Response.Declaration == null)
+            //{
+            //    return null;
+            //}
+            return new DcaReceivedController();// { DcaAnalyzeAggregateKey = customsResponse.Response.Declaration.ID.Value };
         }
 
-        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DF_NG_2754_MSG10004_ImportDeclarationResponse customsResponse)
+        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(INF_MSG_Generic customsResponse)
         {
             return new GenericRequestParams() {   RequestName="Should not Use !!"};
         }
 
-        protected override INF_MSG_GenericResponseData GetIIGBLExceptionFromReponseHeader(DF_NG_2754_MSG10004_ImportDeclarationResponse customsResponse)
+        protected override INF_MSG_GenericResponseData GetIIGBLExceptionFromReponseHeader(INF_MSG_Generic customsResponse)
         {
             try
             {
@@ -101,7 +104,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        protected override void PreCallWS(DF_MSG10000_ImportDeclaration customRequest, GenericRequestParams requestParams)
+        protected override void PreCallWS(DF_NG_2892_MSG14000_ImportDeclarationAmendmentRequestMsg customRequest, GenericRequestParams requestParams)
         {
             //TODO:yUVAL DELETE ...
             base.PreCallWS(customRequest, requestParams);
@@ -109,38 +112,38 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         
         
-        protected override DF_NG_2754_MSG10004_ImportDeclarationResponse CallWSSigned( 
+        protected override INF_MSG_Generic CallWSSigned( 
             byte[] customRequestSignedByteArry, GenericRequestParams requestParams, out string exceptionMessage)
         {
 
             exceptionMessage = null;
-            var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
+            var response = new INF_MSG_Generic();
 
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
             
 
-            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
-            {
-                _ResponseHeader = uifreightSdkGateway.GetChannel<IImportDeclarationSign>()
-                    .ImportDeclarationSign(
-                    this.RequestsSheetExternalId,
-                    base.CustomsSetting.CustomsAgentId,
-                    new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry },
-                    ref this._IIGGatewayMoreParams,
-                    out response);
-            }
+            //using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            //{
+            //    _ResponseHeader = uifreightSdkGateway.GetChannel<IImportDeclarationSign>()
+            //        .ImportDeclarationSign(
+            //        this.RequestsSheetExternalId,
+            //        base.CustomsSetting.CustomsAgentId,
+            //        //new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry ,  },
+            //        ref this._IIGGatewayMoreParams,
+            //        out response);
+            //}
 
 
             return response;
             
         }
-        protected override DF_NG_2754_MSG10004_ImportDeclarationResponse CallWS(
-            DF_MSG10000_ImportDeclaration customRequest, 
+        protected override INF_MSG_Generic CallWS(
+            DF_NG_2892_MSG14000_ImportDeclarationAmendmentRequestMsg customRequest, 
             GenericRequestParams requestParams, 
             out string exceptionMessage)
         {
             exceptionMessage = null;
-            var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
+            var response = new INF_MSG_Generic();
           
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
             BuildRequestContentHeaderB4Sign(customRequest);
@@ -148,8 +151,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
             {
-                _ResponseHeader = uifreightSdkGateway.GetChannel<IImportDeclaration>()
-                    .ImportDeclaration(
+                _ResponseHeader = uifreightSdkGateway.GetChannel<IImportDeclarationAmendmentOperation>()
+                    .ImportDeclarationAmendment(
                     this.RequestsSheetExternalId,
                     base.CustomsSetting.CustomsAgentId,
                     customRequest,

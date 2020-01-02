@@ -420,7 +420,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             try
             {
                 INF_MSG_GenericResponseData responseData;
-                var messagingService = new DF_MSG10000_ImportDeclarationMessagingService();
+                var messagingService = new DF_MSG2892_ImportDeclarationAmendmentMessagingService();
                 responseData = messagingService.Send(requestParamsData);
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
