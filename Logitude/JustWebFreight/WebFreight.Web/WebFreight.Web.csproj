@@ -2287,6 +2287,7 @@
     <Compile Include="DataProviders\PickUpDeliveryLine.Shared.cs" />
     <Compile Include="DataProviders\RevenueExpenseDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentAssemblyLine.Shared.cs" />
+    <Compile Include="DataProviders\ShipperReturnsDataProvider.cs" />
     <Compile Include="DataProviders\UnicargoExportDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentDetailsDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentInventoryDataProvider.cs" />
@@ -5227,6 +5228,7 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysCategoryManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />

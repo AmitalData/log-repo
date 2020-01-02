@@ -1,0 +1,121 @@
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:30px;">
+                    <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
+                </tr>
+
+                <tr style="height:30px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px;">Flight Date</td>
+                                <td style="width:40px;">From:</td>
+                                <td style="width:150px;">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px;">To:</td>
+                                <td style="width:150px;">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:70px;">Shipper:</td>
+                                <td style="width:150px;">
+                                    <LogLov [ObjectFieldName]="'ShipperId'"
+                                            [SelectedValue]="ShipperId"
+                                            [ObjectTableName]="'Shipment'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'" [NoObjectField]="true" 
+                                            [DependencyFilter1Value]="CardDependencyProperty1"
+                                            [DependencyFilter1IsList]="CardDependencyProperty1IsList"
+                                            >
+                                    </LogLov>
+                                </td>
+
+                                <!--run button-->
+                                <td style="width:20px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:80px;">
+                                    <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:30px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:110px;">
+                                    <div></div>
+                                </td>
+                                <td style="width:40px;">Origin:</td>
+                                <td style="width:150px;">
+                                    <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                            [SelectedValue]="MainCarriageFromPortId"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'" [NoObjectField]="true" 
+                                            [DependencyFilter1Value]="'A'" [DisplayMemberPath]="'EnglishName'" [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px;">Destination:</td>
+                                <td style="width:150px;">
+                                    <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                                            [SelectedValue]="MainCarriageFinalDestinationPortId"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'" [NoObjectField]="true" 
+                                            [DependencyFilter1Value]="'A'" [DisplayMemberPath]="'EnglishName'" [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:70px;">Subshipper:</td>
+                                <td style="width:150px;">
+                                    <LogTextBox [ObjectFieldName]="'Subshipper'" [InputType]="'text'" [DataContext]="DataContext"
+                                                [NoObjectField]="true"  [HideColumns]="true"></LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
