@@ -12,5 +12,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [Key]
         public string CustomerId { get; set; }
         public decimal TotalOpenFilesAmount { get; set; }
+        public int Tenant { get; set; }
     }
 }

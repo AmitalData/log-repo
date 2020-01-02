@@ -1858,6 +1858,10 @@
     <Compile Include="Migrations\202001011952246_CustomerOpenFileAmountMigration.Designer.cs">
       <DependentUpon>202001011952246_CustomerOpenFileAmountMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.cs" />
+    <Compile Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.Designer.cs">
+      <DependentUpon>202001020946537_CustomerOpenFileAmountTenantMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -3294,6 +3298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001011952246_CustomerOpenFileAmountMigration.resx">
       <DependentUpon>202001011952246_CustomerOpenFileAmountMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.resx">
+      <DependentUpon>202001020946537_CustomerOpenFileAmountTenantMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

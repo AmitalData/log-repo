@@ -13,6 +13,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [Key]
         public string CustomerId { get; set; }
         public decimal TotalOpenFilesAmount { get; set; }
+        public int Tenant { get; set; }
        
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }

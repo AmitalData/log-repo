@@ -227,6 +227,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Country.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Currency.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Customer.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\CustomerOpenFilesAmount.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\CustomField.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Department.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\DimensionsUnit.Generated.cs" />
@@ -244,6 +245,8 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CityQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ContactQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CurrencyQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerOpenFilesAmountQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerOpenFilesAmountQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs" />
@@ -345,6 +348,7 @@
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreaQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactAdditionalServiceQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactProductQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CustomerOpenFilesAmountQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\DocumentsExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\LogBoxTenantSettingQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PaymentGatewayPartnerQuery.cs" />
