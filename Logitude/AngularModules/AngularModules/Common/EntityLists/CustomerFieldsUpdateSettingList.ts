@@ -11,6 +11,7 @@ export class CustomerFieldsUpdateSettingList {
 		Tenant: number;
 		ObjectFieldId: string;
 		UpdateDirection: string;
-		ObjectFieldName: string;
+        ObjectFieldName: string;
+        ObjectFieldCode: string;
 	
 }

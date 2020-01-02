@@ -40,6 +40,7 @@ using Logitude.Server.Tools.Helpers;
                              Id = a.Id,
                              Tenant = a.Tenant,
                              ObjectFieldId = a.ObjectFieldId,
+                             ObjectFieldCode = a.ObjectFieldCode,
                              UpdateDirection = a.UpdateDirection,
                              ObjectFieldName = a.ObjectField != null ? a.ObjectField.FullNameTextCode != null ? a.ObjectField.FullNameTextCode.Code : "" : "",
                          }).FirstOrDefault();
@@ -60,6 +61,7 @@ using Logitude.Server.Tools.Helpers;
                                                                      Id = a.Id,
                                                                      Tenant = a.Tenant,
                                                                      ObjectFieldId = a.ObjectFieldId,
+                                                                     ObjectFieldCode = a.ObjectFieldCode,
                                                                      UpdateDirection = a.UpdateDirection,
                                                                      ObjectFieldName = a.ObjectField != null ? a.ObjectField.FieldName : "",
 
@@ -87,6 +89,7 @@ using Logitude.Server.Tools.Helpers;
                                                                    Id = a.Id,
                                                                    Tenant = a.Tenant,
                                                                    ObjectFieldId = a.ObjectFieldId,
+                                                                   ObjectFieldCode = a.ObjectFieldCode,
                                                                    UpdateDirection = a.UpdateDirection,
                                                                    ObjectFieldName = a.ObjectField != null ? a.ObjectField.FieldName : "",
 
@@ -105,6 +108,7 @@ using Logitude.Server.Tools.Helpers;
                                                                      Id = a.Id,
                                                                      Tenant = a.Tenant,
                                                                      ObjectFieldId = a.ObjectFieldId,
+                                                                     ObjectFieldCode = a.ObjectFieldCode,
                                                                      UpdateDirection = a.UpdateDirection,
                                                                      ObjectFieldName = a.ObjectField != null ? a.ObjectField.FieldName : "",
 
@@ -126,11 +130,11 @@ using Logitude.Server.Tools.Helpers;
 
 
 
-        public bool CheckIfExistCustomerFieldsUpdateSetting(string objectFieldId, int tenant)
+        public bool CheckIfExistCustomerFieldsUpdateSetting(string objectFieldCode, int tenant)
         {
             bool result = false;
             var query = (from a in repository.context.CustomerFieldsUpdateSettings
-                         where a.Tenant == tenant && a.ObjectFieldId == objectFieldId
+                         where a.Tenant == tenant && a.ObjectFieldCode == objectFieldCode
                          select new CustomerFieldsUpdateSettingPM()
                          {
                              Id = a.Id,
@@ -153,6 +157,7 @@ using Logitude.Server.Tools.Helpers;
                              Id = a.Id,
                              Tenant = a.Tenant,
                              ObjectFieldId = a.ObjectFieldId,
+                             ObjectFieldCode = a.ObjectFieldCode,
                              UpdateDirection = a.UpdateDirection,
                              ObjectFieldName = a.ObjectField != null ? a.ObjectField.FieldName : "",
                          }).FirstOrDefault();
