@@ -46,8 +46,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     Result = Service.GetAPInvoiceById(id, tenant);
                 }
+                else if (!string.IsNullOrEmpty(number) && !string.IsNullOrEmpty(externalId))
+                {
+                    Result = Service.GetAPInvoiceByInvoiceNumberAndExternalId(number, externalId, tenant);
+                }
 
-                else if(!string.IsNullOrEmpty(number))
+                else if (!string.IsNullOrEmpty(number))
                 {
                     Result = Service.GetAPInvoiceByInvoiceNumber(number, tenant);
                 }
