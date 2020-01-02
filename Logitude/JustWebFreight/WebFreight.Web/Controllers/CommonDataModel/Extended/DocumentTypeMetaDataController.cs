@@ -86,5 +86,38 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
 
         }
+
+
+        public HttpResponseMessage GetDocumentsFilingMetaDataValueByFilingIdAndCode(string documentsFilingId, string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                string type = null;
+                if (!string.IsNullOrEmpty(code))
+                {
+                    var documentTypeMetaDataRepo = new DocumentsMetaDataTypeRepository(authToken.Tenant);
+                    DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCode(code, authToken.Tenant);
+                    if (myDocumentsMetaDataType != null) type = myDocumentsMetaDataType.Id;
+                }
+                DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = null;
+                if (!string.IsNullOrEmpty(type))
+                {
+                    var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(authToken.Tenant);
+                    MyDocumentMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(documentsFilingId, type, authToken.Tenant);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, MyDocumentMetaDataValues);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
 }

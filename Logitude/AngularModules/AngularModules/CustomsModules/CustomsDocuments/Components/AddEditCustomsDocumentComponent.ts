@@ -25,6 +25,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { CustomDocumentViewerService } from '../../../Customs/Services/WebServices/CustomDocumentViewerService';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
+import { DocumentTypeMetaDataExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 
 @Component({
     moduleId: module.id,
@@ -977,6 +978,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.previousValueList = previousList;
         var custDocTypeMetaDataWebService: CustDocTypeMetaDataWebService = new CustDocTypeMetaDataWebService();
         var customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
+        var _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         custDocTypeMetaDataWebService.GetCustomDocumentTypeMetaDataByType(this.CustomsDocument.DocumentTypeCode).subscribe((res: ServiceResponse) => {
             this.customDocumentTypeMetaDataList = res.Result;
             this.customDocumentMetaDataValueList = this.CustomsDocument.CustomsDocumentMetaDataValues;
@@ -989,6 +991,19 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                         this.customDocumentTypeMetaDataList.forEach((metaData) => {
                             var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
                             if (value == null) {
+
+
+                                _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
+                                    .subscribe(myResult => {
+                                        if (!myResult.Result || myResult.Result.length == 0) {
+
+                                        }
+                                        else {
+
+                                        }
+                                    });
+
+
                                 value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
                                 value.MetaDataTypeCode = metaData.MetaDataTypeCode;
                                 value.Tenant = SessionLocator.Tenant;
