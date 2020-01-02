@@ -25,6 +25,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { CustomDocumentViewerService } from '../../../Customs/Services/WebServices/CustomDocumentViewerService';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
+import { DocumentTypeMetaDataExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 
 @Component({
     moduleId: module.id,
@@ -575,7 +576,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
-        var errors = [];
+         var errors = [];
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
             if (errors.length > 0) {
@@ -650,10 +651,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     newPointer.Tenant = SessionLocator.Tenant;
                     newPointer.ParentEntityId = this.ParentEntityId;
                     newPointer.ParentEntityCode = this.ParentEntityCode;
-                    newPointer.Child1EntityCode = null;
+                    newPointer.Child1EntityCode = this.currenctSelectConnectTo ==3 ?"DeclarationAmendment" : null;
                     newPointer.Child2EntityCode = null;
                     newPointer.Child3EntityCode = null;
-                    newPointer.Child1EntityId = null;
+                    newPointer.Child1EntityId = this.currenctSelectConnectTo == 3 ? "3" : null;
                     newPointer.Child2EntityId = null;
                     newPointer.Child3EntityId = null;
                     newPointer.DocumentTypeCode = this.CustomsDocumentsTicket.DocumentTypeCode;
@@ -752,7 +753,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     FillConnectedToItems() {
-        this.ConnectedToItems = this.iCustomsDocumentsController.FillConnectedToItems();
+         this.ConnectedToItems = this.iCustomsDocumentsController.FillConnectedToItems();
         //if (entityCode.toLowerCase() == "declaration") {
         //    var connectedItem1 = new ConnectedToItem();
         //    connectedItem1.Id = 0;
@@ -794,9 +795,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     SetDefaultConnectedEntityNumber() {
         this.iCustomsDocumentsController.SetDefaultConnectedEntityNumber(this.CustomsDocumentsTicket, this.EntityPM);
     }
-
+    currenctSelectConnectTo: number;
     ConnectedItemSelectionChanged(index: number) {
-        if (index != 0) {
+        this.currenctSelectConnectTo = index;
+        if (index != 0 && index != 3) {
             var selectInvoicesOnly = true;
             if (index == 2) {
                 selectInvoicesOnly = false;
@@ -976,6 +978,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.previousValueList = previousList;
         var custDocTypeMetaDataWebService: CustDocTypeMetaDataWebService = new CustDocTypeMetaDataWebService();
         var customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
+        var _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         custDocTypeMetaDataWebService.GetCustomDocumentTypeMetaDataByType(this.CustomsDocument.DocumentTypeCode).subscribe((res: ServiceResponse) => {
             this.customDocumentTypeMetaDataList = res.Result;
             this.customDocumentMetaDataValueList = this.CustomsDocument.CustomsDocumentMetaDataValues;
@@ -988,6 +991,19 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                         this.customDocumentTypeMetaDataList.forEach((metaData) => {
                             var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
                             if (value == null) {
+
+
+                                _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
+                                    .subscribe(myResult => {
+                                        if (!myResult.Result || myResult.Result.length == 0) {
+
+                                        }
+                                        else {
+
+                                        }
+                                    });
+
+
                                 value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
                                 value.MetaDataTypeCode = metaData.MetaDataTypeCode;
                                 value.Tenant = SessionLocator.Tenant;
