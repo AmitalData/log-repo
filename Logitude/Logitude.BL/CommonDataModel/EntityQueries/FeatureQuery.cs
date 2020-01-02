@@ -215,7 +215,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         {
                             foreach (PackageFeature item in allPackageFeatures)
                             {
-                                FeaturePM myFeature = allFeatures.Where(f => f.Id == item.FeatureId).FirstOrDefault();
+                                FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                                 if (myFeature != null)
                                 {
                                     if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
@@ -289,7 +289,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             foreach (PackageFeature item in packageFeature)
             {
                 FeaturePM feature = (from a in features
-                                     where a.Id == item.FeatureId
+                                     where a.FeatureUniqeCode == item.FeatureUniqeCode
                                      select a).FirstOrDefault();
 
                 if (feature != null)

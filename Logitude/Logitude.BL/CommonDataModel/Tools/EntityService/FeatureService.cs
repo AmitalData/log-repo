@@ -191,7 +191,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         Id = IdCounter.GetNumber("PackageFeature", tenant).ToString(),
                         PackageCode = entityPM.PackageCode,
                         FeatureId = entityPM.Id,
-                        Tenant = tenant
+                        Tenant = tenant,
+                        FeatureUniqeCode = entityPM.FeatureUniqeCode
                     };
 
                     packageFeatureRepository.Add(newPackageFeature);

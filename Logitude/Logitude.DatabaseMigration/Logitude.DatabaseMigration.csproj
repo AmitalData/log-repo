@@ -1878,6 +1878,10 @@
     <Compile Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.Designer.cs">
       <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs" />
+    <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.Designer.cs">
+      <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.Designer.cs">
@@ -3238,6 +3242,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.resx">
       <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.resx">
+      <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
