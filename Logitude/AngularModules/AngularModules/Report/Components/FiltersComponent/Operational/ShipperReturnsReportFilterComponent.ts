@@ -4,6 +4,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { ReportFliter } from '../../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
 import { ReportsPreviewComponent } from '../../../Components/ReportsPreviewComponent';
+import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -23,6 +24,9 @@ export class ShipperReturnsReportFilterComponent extends BaseComponent {
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
+        this.FromDate = DateTool.GetCurrentDateAsUtc();
+        this.FromDate.setMonth(this.FromDate.getMonth() - 1);
+        this.ToDate = DateTool.GetCurrentDateAsUtc();
     }
 
     public ShipperId: string;
@@ -51,6 +55,14 @@ export class ShipperReturnsReportFilterComponent extends BaseComponent {
             if (this.ToDate < this.FromDate) {
                 this.ValidationErrorsList.push("From date must be less than to date");
             }
+        }
+
+        if (AppTool.IsNullOrEmpty(this.ToDate)) {
+            this.ValidationErrorsList.push("To Date is required");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.FromDate)) {
+            this.ValidationErrorsList.push("From Date is required");
         }
 
         if (this.ValidationErrorsList.length == 0) {
