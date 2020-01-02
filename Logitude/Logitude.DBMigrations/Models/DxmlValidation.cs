@@ -83,7 +83,8 @@ namespace Logitude.DBMigrations.Models
 
             List<string> dxmlTablesNames = DXMLTables.Select(t => t.TableDefinition.Name).ToList();
 
-            List<RelationDefinition> relationsWithWrongReferencedTableName = dxmlTable.TableDefinition.Relations.Where(r => !dxmlTablesNames.Contains(r.ReferencedTable)).ToList();
+            List<RelationDefinition> relationsWithWrongReferencedTableName = dxmlTable.TableDefinition.Relations
+                .Where(r => !dxmlTablesNames.Contains(r.ReferencedTable)).ToList();
 
             if (relationsWithWrongReferencedTableName.Any())
             {
@@ -91,7 +92,8 @@ namespace Logitude.DBMigrations.Models
                 return error;
             }
 
-            List<RelationDefinition> relationsWithWrongReferencedTableSchema = dxmlTable.TableDefinition.Relations.Where(r => r.ReferencedTableSchema != DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable).First().TableDefinition.Schema).ToList();
+            List<RelationDefinition> relationsWithWrongReferencedTableSchema = dxmlTable.TableDefinition.Relations
+                .Where(r => r.ReferencedTableSchema != DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable).First().TableDefinition.Schema).ToList();
 
             if (relationsWithWrongReferencedTableSchema.Any())
             {
@@ -106,7 +108,11 @@ namespace Logitude.DBMigrations.Models
         {
             string error = null;
 
-            List<RelationDefinition> relationsWithWrongReferencedColumnName = dxmlTable.TableDefinition.Relations.Where(r => (!DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable).First().TableDefinition.Columns.Select(c => c.Name).Contains(r.ReferencedColumn) && !r.ReferencedColumn.Contains(",")) || (r.ReferencedColumn.Split(',').Where(cc => DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable).First().TableDefinition.Columns.Select(c => c.Name).All(c => c != cc)).Any() && r.ReferencedColumn.Contains(","))).ToList();
+            List<RelationDefinition> relationsWithWrongReferencedColumnName = dxmlTable.TableDefinition.Relations
+                .Where(r => (!DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable)
+                .First().TableDefinition.Columns.Select(c => c.Name).Contains(r.ReferencedColumn) && !r.ReferencedColumn.Contains(",")) || (r.ReferencedColumn.Split(',')
+                .Where(cc => DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable)
+                .First().TableDefinition.Columns.Select(c => c.Name).All(c => c != cc)).Any() && r.ReferencedColumn.Contains(","))).ToList();
 
 
             if (relationsWithWrongReferencedColumnName.Any())
@@ -121,7 +127,9 @@ namespace Logitude.DBMigrations.Models
         {
             string error = null;
 
-            List<RelationDefinition> relationsWithWrongReferencedColumnsNumber = dxmlTable.TableDefinition.Relations.Where(r => DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable).First().TableDefinition.Columns.Where(c => c.Constraints.PrimaryKey).Count() != r.ReferencedColumn.Split(',').Count()).ToList();
+            List<RelationDefinition> relationsWithWrongReferencedColumnsNumber = dxmlTable.TableDefinition.Relations
+                .Where(r => DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable)
+                .First().TableDefinition.Columns.Where(c => c.Constraints.PrimaryKey).Count() != r.ReferencedColumn.Split(',').Count()).ToList();
 
             if (relationsWithWrongReferencedColumnsNumber.Any())
             {
@@ -137,7 +145,9 @@ namespace Logitude.DBMigrations.Models
 
             List<string> dxmlTableColumnsNames = dxmlTable.TableDefinition.Columns.Select(c => c.Name).ToList();
 
-            List<RelationDefinition> relationsWithWrongForeignKeyColumnName = dxmlTable.TableDefinition.Relations.Where(r => (!dxmlTableColumnsNames.Contains(r.ForeignKeyColumn) && !r.ReferencedColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && r.ForeignKeyColumn.Contains(","))).ToList();
+            List<RelationDefinition> relationsWithWrongForeignKeyColumnName = dxmlTable.TableDefinition.Relations
+                .Where(r => (!dxmlTableColumnsNames.Contains(r.ForeignKeyColumn) && !r.ReferencedColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',')
+                .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && r.ForeignKeyColumn.Contains(","))).ToList();
 
             if (relationsWithWrongForeignKeyColumnName.Any())
             {
@@ -151,7 +161,8 @@ namespace Logitude.DBMigrations.Models
         {
             string error = null;
 
-            List<RelationDefinition> relationsWithWrongForeignKeyColumnsNumber = dxmlTable.TableDefinition.Relations.Where(r => r.ForeignKeyColumn.Split(',').Count() != r.ReferencedColumn.Split(',').Count()).ToList();
+            List<RelationDefinition> relationsWithWrongForeignKeyColumnsNumber = dxmlTable.TableDefinition.Relations
+                .Where(r => r.ForeignKeyColumn.Split(',').Count() != r.ReferencedColumn.Split(',').Count()).ToList();
 
             if (relationsWithWrongForeignKeyColumnsNumber.Any())
             {
@@ -172,31 +183,35 @@ namespace Logitude.DBMigrations.Models
                 for(int i = 0; i < foreignKeyColumns.Length; i++)
                 {
                     bool dataTypeNotSame = false;
-                    string referencedColumn = relation.ReferencedColumn.Split(',')[i];
+                    string referencedColumnName = relation.ReferencedColumn.Split(',')[i];
+
+                    ColumnDefinition referencedColumn = DXMLTables.Where(t => t.TableDefinition.Name == relation.ReferencedTable).First().TableDefinition.Columns
+                        .Where(c => c.Name == referencedColumnName).First();
 
                     string foreignKeyColumnType = dxmlTable.TableDefinition.Columns.Where(c => c.Name == foreignKeyColumns[i]).First().Type;
-                    string referencedColumnType = DXMLTables.Where(t => t.TableDefinition.Name == relation.ReferencedTable).First().TableDefinition.Columns.Where(c => c.Name == referencedColumn).First().Type;
+                    string referencedColumnType = referencedColumn.Type;
+                    
                     if (foreignKeyColumnType != referencedColumnType)
                     {
                         dataTypeNotSame = true;
                     }
 
                     int foreignKeyColumnSize = dxmlTable.TableDefinition.Columns.Where(c => c.Name == foreignKeyColumns[i]).First().Size;
-                    int referencedColumnSize = DXMLTables.Where(t => t.TableDefinition.Name == relation.ReferencedTable).First().TableDefinition.Columns.Where(c => c.Name == referencedColumn).First().Size;
+                    int referencedColumnSize = referencedColumn.Size;
                     if (foreignKeyColumnSize != referencedColumnSize)
                     {
                         dataTypeNotSame = true;
                     }
 
                     int foreignKeyColumnPrecision = dxmlTable.TableDefinition.Columns.Where(c => c.Name == foreignKeyColumns[i]).First().Precision;
-                    int referencedColumnPrecision = DXMLTables.Where(t => t.TableDefinition.Name == relation.ReferencedTable).First().TableDefinition.Columns.Where(c => c.Name == referencedColumn).First().Precision;
+                    int referencedColumnPrecision = referencedColumn.Precision;
                     if (foreignKeyColumnPrecision != referencedColumnPrecision)
                     {
                         dataTypeNotSame = true;
                     }
 
                     int foreignKeyColumnScale = dxmlTable.TableDefinition.Columns.Where(c => c.Name == foreignKeyColumns[i]).First().Scale;
-                    int referencedColumnScale = DXMLTables.Where(t => t.TableDefinition.Name == relation.ReferencedTable).First().TableDefinition.Columns.Where(c => c.Name == referencedColumn).First().Scale;
+                    int referencedColumnScale = referencedColumn.Scale;
                     if (foreignKeyColumnScale != referencedColumnScale)
                     {
                         dataTypeNotSame = true;
