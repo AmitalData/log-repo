@@ -11,12 +11,10 @@ namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
-        public string[] Arguments;
-
-        private readonly string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
-
-        private List<TableDefinition> DXMLTables;
+        private string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
         private string PerformanceData = "Description,Time(ms)\n";
+        private string[] Arguments;
+        private List<TableDefinition> DXMLTables;
 
         public MigrationTool(string[] args)
         {
@@ -106,29 +104,27 @@ namespace Logitude.DBMigrations.Models
 
             var stopwatch = Stopwatch.StartNew();
 
-            DXMLTables = GetDXMLTablesDefinitions(dxmlFiles);
+            List<DXMLTable> dxmlTables = GetDXMLTables(dxmlFiles);
 
-            foreach (var dxmlFile in dxmlFiles)
+            DXMLTables = dxmlTables.Select(d => d.TableDefinition).ToList();
+            
+            foreach (var dxmlTable in dxmlTables)
             {
-                string dxmlFileName = Path.GetFileName(dxmlFile);
-                Console.WriteLine("Generating Script For " + dxmlFileName + " ...");
+                Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
 
-                string xmlString = File.ReadAllText(dxmlFile);
-                TableDefinition dxmlTable = xmlString.ParseXML<TableDefinition>();
-
-                DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable);
+                DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition);
 
                 string tableScript = databaseMigrations.GetScript();
                 string tableRelationsScript = databaseMigrations.GetRelationsScript();
 
                 if (!String.IsNullOrEmpty(tableScript))
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.DBType, tableScript);
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
                 }
 
                 if (!String.IsNullOrEmpty(tableRelationsScript))
                 {
-                    relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.DBType, tableRelationsScript);
+                    relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
                 }
             }
 
@@ -329,17 +325,17 @@ namespace Logitude.DBMigrations.Models
             return generatedScript;
         }
 
-        private DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTable)
+        private DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition)
         {
-            string connectonString = GetConnectionString(dxmlTable.DBType);
+            string connectonString = GetConnectionString(dxmlTableDefinition.DBType);
 
             if (DatabaseType.ToLower() == "oracle")
             {
-                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTable, connectonString, DXMLTables);
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTables);
                 return oracleDatabaseMigrations;
             }
 
-            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTable, connectonString, DXMLTables);
+            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTables);
             return sqlDatabaseMigrations;
         }
 
@@ -400,18 +396,25 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private List<TableDefinition> GetDXMLTablesDefinitions(string[] dxmlFiles)
+        private List<DXMLTable> GetDXMLTables(string[] dxmlFiles)
         {
-            List<TableDefinition> dxmlTableDefinitions = new List<TableDefinition>();
+            List<DXMLTable> dxmlTables = new List<DXMLTable>();
 
             foreach (var dxmlFile in dxmlFiles)
             {
                 string xmlString = File.ReadAllText(dxmlFile);
                 TableDefinition dxmlTableDefinition = xmlString.ParseXML<TableDefinition>();
-                dxmlTableDefinitions.Add(dxmlTableDefinition);
+
+                DXMLTable dxmlTable = new DXMLTable
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    TableDefinition = dxmlTableDefinition
+                };
+
+                dxmlTables.Add(dxmlTable);
             }
 
-            return dxmlTableDefinitions;
+            return dxmlTables;
         }
 
         private bool IsGeneratedScriptsEmpty(GeneratedScript generatedScript)
