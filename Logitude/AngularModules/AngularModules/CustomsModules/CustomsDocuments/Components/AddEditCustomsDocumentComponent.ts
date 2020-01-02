@@ -993,15 +993,16 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                             if (value == null) {
 
 
-                                _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode).subscribe(myResult => {
-                                    if (!myResult.Result || myResult.Result.length == 0) {
+                                _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
+                                    .subscribe(myResult => {
+                                        if (!myResult.Result || myResult.Result.length == 0) {
 
-                                    }
-                                    else {
-                                    }
+                                        }
+                                        else {
 
-                                });
-                            
+                                        }
+                                    });
+
 
                                 value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
                                 value.MetaDataTypeCode = metaData.MetaDataTypeCode;
