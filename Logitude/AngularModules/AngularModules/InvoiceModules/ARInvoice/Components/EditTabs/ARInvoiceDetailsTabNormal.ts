@@ -71,6 +71,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.InitializeComponent();        
         this.SetUIProperties();        
         this.BuildScreenData();
+        this.ShowFixMe();
         this.Listen();
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
@@ -93,6 +94,25 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
 
         this.BuildInvoiceNumberFilters();
+    }
+
+    public IsFixMeButtonVisible: boolean = false;
+    ShowFixMe() {
+        this.IsFixMeButtonVisible = false;
+
+        if (this.EntityPM.Tenant == 570) {
+            if (AppTool.IsNullOrZero(this.EntityPM.InvoiceCurrencyExchangeRate) || AppTool.IsNullOrZero(this.EntityPM.ProfitCurrencyExchangeRate)) {
+                if (SessionLocator.LoggedUserId == "1-23905" || SessionLocator.LoggedUserId == "1-3840") {
+                    this.IsFixMeButtonVisible = true;
+                }
+            }
+        }
+    }
+    FixMeButtonFlicked() {
+        var currentDate = this.InvoiceDate;
+        this.InvoiceDate = null;
+        this.InvoiceDate = currentDate;
+        this.ShowFixMe();
     }
 
     private SaveCompletedEvent: any = null;

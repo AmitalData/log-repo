@@ -36,8 +36,12 @@ export class AddEditLCLChargeComponent {
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
+    public CheckChargeTypeDuplicationFlag: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;    
     private IsHyprid: boolean;
+    private ChargesTypeCode: string;
+    
+
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
         this.StepsItemsSource = new ObservableCollection([]);
@@ -66,7 +70,8 @@ export class AddEditLCLChargeComponent {
         this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
-        
+        this.ChargesTypeCode = this.EntityPM.ChargesTypeCode;
+
         this.DataContext.SetUIProperties();
         this.BuildItemsSource();
         this.BuildQueryFilters();
@@ -175,13 +180,25 @@ export class AddEditLCLChargeComponent {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
+
+    CheckChargeTypeDuplication() {
+        if (!this.DataContext.IsNew && (this.ChargesTypeCode != this.EntityPM.ChargesTypeCode)) {
+            this.CheckChargeTypeDuplicationFlag = true;
+        }
+        if (this.DataContext.IsNew) {
+            this.CheckChargeTypeDuplicationFlag = true;
+        }
+    }
+
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (this.IsHyprid) {
+        this.CheckChargeTypeDuplication();
+
+        if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
             var quoteValidator: QuoteValidator = new QuoteValidator();
             quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
         }

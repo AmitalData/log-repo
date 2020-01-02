@@ -213,8 +213,11 @@ namespace WebFreight.Web.CRMModel.DomainServices
                 entityLists = entityLists.OrderBy(d => d.Id);
             }
 
-            entityLists = entityLists.Skip(skippedEntities);
-            entityLists = entityLists.Take(queryOperations.PageSize);
+            if (!queryOperations.GetAll)
+            {
+                entityLists = entityLists.Skip(skippedEntities);
+                entityLists = entityLists.Take(queryOperations.PageSize);
+            }            
 
             List<OccasionContactList> listResult = entityLists.ToList();
             return listResult;

@@ -41,10 +41,10 @@
     }
 
     @keyframes sk-bouncedelay {
-      0%, 80%, 100% { 
+      0%, 80%, 100% {
         -webkit-transform: scale(0);
         transform: scale(0);
-      } 40% { 
+      } 40% {
         -webkit-transform: scale(1.0);
         transform: scale(1.0);
       }
@@ -56,6 +56,36 @@
         cursor: default;
     }
 
+
+    .FiltersMenu li {
+        /* width: fit-content !important; */
+        width: 70px;
+        padding: 0 7px;
+        border-width: 1px;
+        margin-right: -1px;
+        /*background: #f7f7f7;*/
+    }
+
+    .FiltersMenu li:hover {
+        opacity: 0.9;
+    }
+    .FiltersMenu .SelectedFilter {
+        /*background: darkgrey !important;*/
+    }
+
+    .aboodRTLFilterMenu li:first-child, .aboodRTLFilterMenu li:last-child{
+        border-radius: 0;
+    }
+    .aboodRTLFilterMenu li:first-child{
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    .aboodRTLFilterMenu li:last-child{
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+
 </style>
 
 <table>
@@ -66,21 +96,54 @@
     </tr>
 
     <tr>
-        <td style="color:#1B90CB; font-size:15px; line-height: 15px;">Filter By:</td>
+        <td style="color:#1B90CB; font-size:15px; line-height: 15px;">{{ 'Accounting.General.O.FilterBy' | TextCodeTranslationPipe }}</td>
     </tr>
 
     <tr style="height: 32px;">
         <td>
             <table class="AbdullahTable" *ngIf="isReady">
 
+                <!-- <tr>
+                    <td style="width: 150px; padding: 0 5px;" class="Label">
+                        {{ 'Accounting.General.O.FilterBy' | TextCodeTranslationPipe }}
+                    </td>
+                    <td style="width: 270px;" colspan="2">
+                        <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                            <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
+                                [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
+                                {{'GLAccount.O.Customer' | TextCodeTranslationPipe}}
+                            </li>
+                            <li float-start id="filter_vendor" (click)="FilterItemClicked('filter_vendor')" style="height: 22px;"
+                                [class.SelectedFilter]="filterSelectedValue === 'filter_vendor'">
+                                {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}
+                            </li>
+                        </ul>
+                    </td>
+
+                    <td style="width: 35px;"></td>
+
+                    <td style="width: 185px; padding-right: 5px;" class="Label">
+
+                    </td>
+                    <td style="width: 155px;">
+
+                    </td>
+                    <td style="width: 100px;"></td>
+
+                    <td style="width: 100px; padding-right: 5px;" class="Label">
+
+                    </td>
+                    <td></td>
+                </tr> -->
+
                 <tr>
                     <!-- AgingForDate -->
                     <td style="width: 150px; padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.AgingForDate'" [ObjectFieldName]="'AgingForDate'" 
+                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.AgingForDate'" [ObjectFieldName]="'AgingForDate'"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width: 135px;">
-                        <LogDatePicker [ObjectTableName]="'GLAccount'" [ObjectFieldName]="'AgingForDate'" [SelectedDateValue]="AgingForDate" 
+                        <LogDatePicker [ObjectTableName]="'GLAccount'" [ObjectFieldName]="'AgingForDate'" [SelectedDateValue]="AgingForDate"
                                        [DataContext]="DataContext" [HideColumns]="true" (OnBlurEvent)="ValidateDate()"></LogDatePicker>
                     </td>
                     <td style="width: 135px;"></td>
@@ -88,16 +151,27 @@
                     <td style="width: 35px;"></td>
 
                     <!-- Customer -->
-                    <td style="width: 185px; padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.Customer'" [ObjectFieldName]="'Customer'"
-                                  [DataContext]="DataContext"></LogLabel>
+                    <td style="width: 185px; padding: 0 10px;" class="Label">
+                        <!-- <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.Customer'" [ObjectFieldName]="'Customer'"
+                                  [DataContext]="DataContext"></LogLabel> -->
+                        <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                            <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
+                                [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
+                                {{'GLAccount.O.Customer' | TextCodeTranslationPipe}}
+                            </li>
+                            <li float-start id="filter_vendor" (click)="FilterItemClicked('filter_vendor')" style="height: 22px;"
+                                [class.SelectedFilter]="filterSelectedValue === 'filter_vendor'">
+                                {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}
+                            </li>
+                        </ul>
                     </td>
                     <td style="width: 155px;">
                         <LogLov [ObjectFieldName]="'Customer'"
                                 [ObjectTableName]="'GLAccount'"
                                 [DataContext]="DataContext"
                                 [DependencyFilter1Value]="false"
-                                [DependencyFilter2Value]="'2'"
+                                [DependencyFilter2Value]="AccountTypeCode"
+                                [SelectedValue]="Customer"
                                 [LookUpTableName]="'GLAccount'"
                                 [HideColumns]="false">
                         </LogLov>
@@ -125,6 +199,7 @@
                                 [ObjectTableName]="'GLAccount'"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'User'"
+                                [SelectedValue]="Salesman"
                                 [QueryFilterItems]="SalesmanFilterItems"
                                 [HideColumns]="true">
                         </LogLov>
@@ -135,7 +210,7 @@
 
                     <!-- NumberOfMonths -->
                     <td style="width: 120px; padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'" [ObjectFieldName]="'NumberOfMonths'" 
+                        <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'" [ObjectFieldName]="'NumberOfMonths'"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width: 135px;">
@@ -156,6 +231,7 @@
                         <LogLov [ObjectFieldName]="'Collector'"
                                 [ObjectTableName]="'GLAccount'"
                                 [DataContext]="DataContext"
+                                [SelectedValue]="Collector"
                                 [LookUpTableName]="'User'"
                                 [HideColumns]="true">
                         </LogLov>
@@ -190,7 +266,7 @@
                         <div [ngSwitch]="SelectedCategory" [class.disabled]="IsCategoryDisabled">
 
                             <!-- Category 1 -->
-                            <LogLov *ngSwitchCase="'Category 1'" 
+                            <LogLov *ngSwitchCase="'Category 1'"
                                     [ObjectFieldName]="'Category1'"
                                     [ObjectTableName]="'GLAccount'"
                                     [DataContext]="DataContext"
@@ -200,7 +276,7 @@
                             </LogLov>
 
                             <!-- Category 2 -->
-                            <LogLov *ngSwitchCase="'Category 2'" 
+                            <LogLov *ngSwitchCase="'Category 2'"
                                     [ObjectFieldName]="'Category2'"
                                     [ObjectTableName]="'GLAccount'"
                                     [DataContext]="DataContext"
@@ -210,7 +286,7 @@
                             </LogLov>
 
                             <!-- Category 3 -->
-                            <LogLov *ngSwitchCase="'Category 3'" 
+                            <LogLov *ngSwitchCase="'Category 3'"
                                     [ObjectFieldName]="'Category3'"
                                     [ObjectTableName]="'GLAccount'"
                                     [DataContext]="DataContext"
@@ -220,7 +296,7 @@
                             </LogLov>
 
                             <!-- Category 4 -->
-                            <LogLov *ngSwitchCase="'Category 4'" 
+                            <LogLov *ngSwitchCase="'Category 4'"
                                     [ObjectFieldName]="'Category4'"
                                     [ObjectTableName]="'GLAccount'"
                                     [DataContext]="DataContext"
@@ -230,7 +306,7 @@
                             </LogLov>
 
                             <!-- Category 5 -->
-                            <LogLov *ngSwitchCase="'Category 5'" 
+                            <LogLov *ngSwitchCase="'Category 5'"
                                     [ObjectFieldName]="'Category5'"
                                     [ObjectTableName]="'GLAccount'"
                                     [DataContext]="DataContext"
@@ -248,7 +324,7 @@
                         </div>
 
 
-                        
+
                     </td>
                     <td style=""></td>
 
