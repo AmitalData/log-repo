@@ -653,10 +653,8 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Delete Constraint between ObjectFieldValidations and objectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 23 [Wesam] Fill TabNameTextCodeCode on ObjectTableTabs.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 23 [Wesam] Delete Constraint between ObjectTableTabs and TextCode.sql" />
-
     <Content Include="Main Branch\2019\12 - 2019\Day 26 [Wesam] Delete Constraint between ObjectTableRuleFields and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 26 [Wesam] Fill objectfieldcode on ObjectTableRuleFields.sql" />
-
     <Content Include="Main Branch\2019\12 - 2019\Day 24 [Wesam] Delete Constraint between ObjectTable and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Wesam] Fill textcodefields on ObjectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Fill labeltextcodecode on MenuButtons.sql" />
@@ -674,6 +672,8 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Delete Constraint between QueryColumns and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Samar] delete ailrine area metadata.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between MenuButtons and TextCode.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between AirlineMessagingRules and objectFields.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on AirlineMessagingRules.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
