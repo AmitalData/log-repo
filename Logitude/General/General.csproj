@@ -673,7 +673,7 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 19 [Samar] delete ailrine area metadata.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between MenuButtons and TextCode.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between AirlineMessagingRules and objectFields.sql" />
-    <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on AirlineMessagingRules.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill rulefieldcode on AirlineMessagingRules.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
