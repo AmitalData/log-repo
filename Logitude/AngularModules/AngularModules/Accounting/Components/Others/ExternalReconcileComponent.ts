@@ -381,7 +381,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'DocumentDate'
         });
         //this.TransactionsColumns.push({
         //    FieldName: 'DocumentDate',
@@ -409,6 +411,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Source'
         });
 
         //this.TransactionsColumns.push({ // Check ReconcileMethodCode.GLAccounts:
@@ -419,7 +424,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
         //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
         //    IsCustomTemplate: true,
-        //});
+        //,
+        // ServerSideSortable: true,
+        // SortByName: 'Source'
+        // });
         //this.TransactionsColumns.push({
         //    FieldName: 'OpenAmount',
         //    DataTypeCode: 'String',
@@ -428,7 +436,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
         //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
         //    IsCustomTemplate: true
-        //});
+        //,
+        //     ServerSideSortable: true,
+        //     SortByName: 'Source'
+        // });
         this.TransactionsColumns.push({
             FieldName: 'ForeignAmount',
             DataTypeCode: 'String',
@@ -437,6 +448,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'ForeignAmount'
         });
         this.TransactionsColumns.push({
             FieldName: 'Reference1',
@@ -444,6 +458,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference1"), // 'Ref. 1',
             Styles: { width: '80px' },
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Reference1'
         });
         this.TransactionsColumns.push({
             FieldName: 'Reference2',
@@ -451,6 +468,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference2"), // 'Ref. 2',
             Styles: { width: '80px' },
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Reference2'
         });
         this.TransactionsColumns.push({
             FieldName: 'Reference3',
@@ -458,6 +478,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
             Styles: { width: '80px' },
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Reference3'
         });
         //this.TransactionsColumns.push({
         //    FieldName: 'JournalNumber',
@@ -467,7 +490,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
         //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
         //    IsCustomTemplate: true
-        //});
+        //,
+        //     ServerSideSortable: true,
+        //     SortByName: 'Source'
+        // });
 
         this.TransactionsColumns.push({
             FieldName: 'Notes',
@@ -477,6 +503,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'Notes'
         });
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
@@ -550,6 +579,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if(this.ObjectTableName == "BankAccount")
             filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
+
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
+
         var glaccountId = this.getGLAccountId();
 
         return this.entityListService.getReconciliationsByFilter("LedgerTransaction", glaccountId, filters);
@@ -563,6 +596,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         else if (this.ObjectTableName == "BankAccount")
             glaccountId = this.BankAccountPM.GLAccountId;
         return glaccountId;
+    }
+
+    OnSortInvoked(event){
+        this.TransactionSelectedLines = new ObservableCollection([]);
     }
 
     PushLine(row, RowIndex) {
