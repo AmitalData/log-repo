@@ -133,6 +133,12 @@ export class CustomsRequestMenuService {
             400, 410, "8228", null, null, null, true
         ));
 
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(""
+            , "PhysicalCheckComponent",
+            './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',
+            850, 410, "190",null, new RequestSheetState(false, false, false)
+        ));
+        
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסר התרה לתיק", "ReleaseGoods", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ReleaseGoodsComponent', 1010, 610, "2470", null, null, null, true));
@@ -152,7 +158,6 @@ export class CustomsRequestMenuService {
             this.ShowModalDefault(id, InterfaceTypeCode, RequestDescription);
             return;
         }
-
         this.ShowModal(list[0], id, null);
     }
 
@@ -202,7 +207,6 @@ export class CustomsRequestMenuService {
 
 
                 this.CurrentSession.StopBusyIndicator();
-
                 if (suppressHugeDataFeature && reqJson == "(item.DocumentData.Length * sizeof(Char) > sizeOf250KB)") {
 
 
@@ -354,7 +358,7 @@ export class CustomsRequestMenuService {
     }
 
     ShowAsRequestSheet(logitudeWindow, item: CustomsMenuItem, reqJson, resJson, menuArg, logId: string) {
-
+        debugger;
         var myRequestSheetState = item.requestSheetState || new RequestSheetState(true, true, false);
 
         logitudeWindow.ComponentLoaded.subscribe((compo) => {
@@ -362,7 +366,6 @@ export class CustomsRequestMenuService {
             if (myRequestsSheetMassagingView) {
                 myRequestsSheetMassagingView.MyCustomsMenuItem = item;
                 myRequestsSheetMassagingView.MyCommunicationLogId = logId;
-
                 myRequestsSheetMassagingView.CustomRequestContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
                 myRequestsSheetMassagingView.CustomResponseContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
                 myRequestsSheetMassagingView.CustomSendOptionsButtonIsDisable = myRequestSheetState.CustomSendOptionsButtonIsDisable;

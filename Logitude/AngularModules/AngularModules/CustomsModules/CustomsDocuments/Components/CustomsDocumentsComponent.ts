@@ -708,8 +708,6 @@ export class CustomsDocumentsComponent
             .GetRequestComminicationIdByEntityId2(SessionLocator.Tenant, "2715", "30", objecttable.Id, customsDocumentsTicket.customsDocumentsTicketPM.DocumentsFilingId)
             .subscribe((rsp) => {
                 var myCustomsRequestsSheet = rsp.Result;
-
-
                  this.CurrentSession.StopBusyIndicator();
                 if (myCustomsRequestsSheet) {
                     let customsRequestMenuService = new CustomsRequestMenuService();
