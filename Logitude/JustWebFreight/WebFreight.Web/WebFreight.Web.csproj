@@ -1005,6 +1005,7 @@
     <Compile Include="Controllers\AccountingModel\CardGLAccountConnectController.cs" />
     <Compile Include="Controllers\AccountingModel\CashbookOpController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
+    <Compile Include="Controllers\AccountingModel\ExternalReconciliationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingIntegrityCheckViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingNoteViewsController.Generated.cs" />
