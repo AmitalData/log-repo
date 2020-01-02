@@ -165,7 +165,7 @@ export class AddEditRuleComponent extends BaseComponent {
 
         for (var k in this.DataContext.RuleConditionFields) {
             var field = this.DataContext.RuleConditionFields[k];
-            var objectField: ObjectFieldPM = this.ObjectFields.filter(f => f.Id == field.ObjectFieldId)[0];
+            var objectField: ObjectFieldPM = this.ObjectFields.filter(f => f.FieldCode == field.ObjectFieldCode)[0];
             if (objectField) {
                 var mappedField = this.MapJsonToEntityPM(objectField);
                 this.AddFilterField(mappedField);
@@ -196,6 +196,7 @@ export class AddEditRuleComponent extends BaseComponent {
         systemLevelRule.RuleConditionFields.forEach(item => {
             var newField: RuleConditionFieldPM = new RuleConditionFieldPM(tenantLevelRule);
             newField.ObjectFieldId = item.ObjectFieldId;
+            newField.ObjectFieldCode = item.ObjectFieldCode;
             newField.ObjectFieldName = item.ObjectFieldName;
             newField.Operator = item.Operator;
             newField.Value = item.Value;
@@ -257,7 +258,7 @@ export class AddEditRuleComponent extends BaseComponent {
         if (this.SelectedConditionObjectFields == undefined) {
             this.SelectedConditionObjectFields = [];
         }
-        var conditionField = this.DataContext.RuleConditionFields.filter(d => d.ObjectFieldId == field.Id)[0];
+        var conditionField = this.DataContext.RuleConditionFields.filter(d => d.ObjectFieldCode == field.FieldCode)[0];
         if (conditionField) {
             var value = conditionField.Value;
             this.FieldsValues.SetFieldValue(field.Id, value);
@@ -485,6 +486,7 @@ export class AddEditRuleComponent extends BaseComponent {
                 var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
                 var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
                 newField.ObjectFieldId = item.ObjectField.Id;
+                newField.ObjectFieldCode = item.ObjectField.FieldCode;
                 newField.ObjectFieldName = item.ObjectField.FieldName;
                 newField.Operator = item.Operation.Code;
                 newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
@@ -537,6 +539,7 @@ export class AddEditRuleComponent extends BaseComponent {
                 var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
                 var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
                 newField.ObjectFieldId = item.ObjectField.Id;
+                newField.ObjectFieldCode = item.ObjectField.FieldCode;
                 newField.ObjectFieldName = item.ObjectField.FieldName;
                 newField.Operator = item.Operation.Code;
                 newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
