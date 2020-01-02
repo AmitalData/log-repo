@@ -826,7 +826,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private GLAccountPM GetGLAccountForLine(APInvoiceLinePM line)
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            GLAccountPM glaAccount = glAccountQuery.GetGLAccountByDisplayNumber(line.DebitAccount, tenant);
+            GLAccountPM glaAccount = glAccountQuery.GetGLAccountByInternalNumber(line.DebitAccount, tenant);
             return glaAccount;
         }
         #endregion
