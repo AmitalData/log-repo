@@ -372,12 +372,12 @@ namespace Logitude.Accounting.BL.CoreBL
             VatNumber = aPInvoice.VATNumber;
             if (aPInvoice.StatusCode == "AC")
             {
-                InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVATAmount)*-1;
+                InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVatableAmount)*-1;
                 InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency*-1 ?? 0;
             }
             else if (aPInvoice.StatusCode == "AD")
             {
-                InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVATAmount);
+                InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVatableAmount);
                 InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency ?? 0;
             }
         }
