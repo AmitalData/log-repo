@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.CommonDataModel.EntityPMs
+namespace Logitude.BL.CommonDataModel.EntityLists
 {
-   public class CustomerOpenFilesAmountPM
+   public class CustomerOpenFilesAmountList
     {
         [Key]
         public string CustomerId { get; set; }

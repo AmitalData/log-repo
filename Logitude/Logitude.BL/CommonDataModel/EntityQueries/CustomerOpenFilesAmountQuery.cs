@@ -41,12 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       
                                                     }).FirstOrDefault();
 
-       
-
-            CustomerOpenFilesAmountPM securedPm = new CustomerOpenFilesAmountPM();
-            SecuredMapping.GetMappedPM(customerOpenFilesAmount, securedPm, "CustomerOpenFilesAmount", tenant);
-
-            return securedPm;
+            
+            return customerOpenFilesAmount;
         }
 
      

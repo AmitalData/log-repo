@@ -40,6 +40,11 @@ export class CustomerOpenFilesAmountPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private customerCode: string;
+    public get CustomerCode() { return this.customerCode; }
+    public set CustomerCode(newValue: string) { if (this.customerCode != newValue) { this.customerCode = newValue; this.MarkAsDirty("CustomerCode"); } }
+       
+	 
 
     public OldEntityPM: CustomerOpenFilesAmountPM;
 		

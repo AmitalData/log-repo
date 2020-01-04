@@ -16,15 +16,17 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using System.Net;
 using System.Web.Http.ModelBinding;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Simplog.Data.CommonDataModel;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class CustomerOpenFilesAmountController : ApiController
     {
         CustomerOpenFilesAmount oldEntity;
+        CustomerOpenFilesAmountQueryService mappingService;
         public HttpResponseMessage Post(CustomerOpenFilesAmount customerOpenFilesAmount)
         {
-            CustomerOpenFilesAmount oldEntity =customerOpenFilesAmount;
             if (ModelState.IsValid)
             {
                 try
@@ -34,16 +36,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = GetAuthenticationToken();
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                        if (customerOpenFilesAmount != null)
-                        {
-                            oldEntity = LogitudeXmlSerializer.DeserializeObject<CustomerOpenFilesAmount>(LogitudeXmlSerializer.SerializeObjectToXmlString(customerOpenFilesAmount));
-                        }
-                        CustomerOpenFilesAmountQuery customerOpenFilesAmountQuery = new CustomerOpenFilesAmountQuery(tenant);
-                        CustomerOpenFilesAmountQueryService mappingService = new CustomerOpenFilesAmountQueryService(customerOpenFilesAmount.Tenant);
-                        CustomerOpenFilesAmountPM customerOpenFilesAmountPM = mappingService.CustomerOpenFilesAmountDataMappingAndValidatin(customerOpenFilesAmount, tenant);
-
+                        SetOldEntity(customerOpenFilesAmount);
+                        CustomerOpenFilesAmountPM customerOpenFilesAmountPM = GetCustomerOpenFilesAmountPM(customerOpenFilesAmount);                        
+                        customerOpenFilesAmountPM = mappingService.SetCustomerId(customerOpenFilesAmountPM);
+                        CreateOrUpdateCustomerOpenFilesAmountForCustomer(customerOpenFilesAmountPM);
                         APIHelper.AddCommunicationLog("D", oldEntity, customerOpenFilesAmount, "CustomerOpenFilesAmount", customerOpenFilesAmount.CustomerId, "CustomerOpenFilesAmount API", authToken.Tenant);
-
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, customerOpenFilesAmount);
                     }
@@ -57,6 +54,19 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 return CreateResponse(null, ModelState);
            }
+        }
+        
+        private CustomerOpenFilesAmountPM GetCustomerOpenFilesAmountPM(CustomerOpenFilesAmount customerOpenFilesAmount)
+        {
+            mappingService = new CustomerOpenFilesAmountQueryService(customerOpenFilesAmount.Tenant);
+             return  mappingService.CustomerOpenFilesAmountDataMappingAndValidatin(customerOpenFilesAmount, customerOpenFilesAmount.Tenant); }
+
+        private void SetOldEntity(CustomerOpenFilesAmount customerOpenFilesAmount)
+        {
+            if (customerOpenFilesAmount != null)
+            {
+                oldEntity = LogitudeXmlSerializer.DeserializeObject<CustomerOpenFilesAmount>(LogitudeXmlSerializer.SerializeObjectToXmlString(customerOpenFilesAmount));
+            }
         }
 
         private Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken GetAuthenticationToken()
@@ -83,5 +93,20 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
         }
 
+        private void CreateOrUpdateCustomerOpenFilesAmountForCustomer(CustomerOpenFilesAmountPM customerOpenFilesAmount) {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(customerOpenFilesAmount.Tenant);
+            CustomerOpenFilesAmountService CustomerOpenFilesAmountService = new CustomerOpenFilesAmountService(commonContext,customerOpenFilesAmount.Tenant);
+            bool exist= CheckIfCustomerOpenFilesAmountExist(customerOpenFilesAmount);
+            if (exist)  CustomerOpenFilesAmountService.Update(customerOpenFilesAmount);
+            else CustomerOpenFilesAmountService.Create(customerOpenFilesAmount);
+        }
+
+        private bool CheckIfCustomerOpenFilesAmountExist(CustomerOpenFilesAmountPM customerOpenFilesAmount)
+        {
+            CustomerOpenFilesAmountQuery customerOpenFilesAmountQuery = new CustomerOpenFilesAmountQuery(customerOpenFilesAmount.Tenant);
+            customerOpenFilesAmount = customerOpenFilesAmountQuery.GetSinglePMByCustomerId(customerOpenFilesAmount.CustomerId, customerOpenFilesAmount.Tenant);
+            if (customerOpenFilesAmount != null) return true; 
+            else return false;
+        }
     }
 }

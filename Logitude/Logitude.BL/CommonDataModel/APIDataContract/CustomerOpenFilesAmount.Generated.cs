@@ -26,6 +26,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public decimal TotalOpenFilesAmount { get; set; }
     
     public int Tenant { get; set; }
+    
+    public string Customer { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -67,7 +67,8 @@ using Simplog.Data.CommonDataModel;
 				   var temp = new CustomerOpenFilesAmount(); 
 				   temp.CustomerId = MyEntityPM.CustomerId;
 				   temp.TotalOpenFilesAmount = MyEntityPM.TotalOpenFilesAmount;
-				   temp.Tenant = MyEntityPM.Tenant;					
+				   temp.Tenant = MyEntityPM.Tenant;
+				   temp.Customer = MyEntityPM.CustomerCode;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -92,7 +93,8 @@ using Simplog.Data.CommonDataModel;
 					} 
 					temp.CustomerId = MyEntity.CustomerId;
 					temp.TotalOpenFilesAmount = MyEntity.TotalOpenFilesAmount;
-					temp.Tenant = MyEntity.Tenant;					   
+					temp.Tenant = MyEntity.Tenant;
+					temp.CustomerCode = MyEntity.Customer;					   
 					   return temp;
 		    }
             catch (Exception ex)
