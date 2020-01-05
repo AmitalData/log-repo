@@ -1,3 +1,0 @@
-Cannot Find Path For UserLastSettings Table
-Cannot Find Path For TariffLinesContainersPrices Table
-Cannot Find Path For InterestReportStatuses Table
