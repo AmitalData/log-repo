@@ -432,6 +432,10 @@
     <Compile Include="Migrations\201912251658203_AddDeclarationAmendment.Designer.cs">
       <DependentUpon>201912251658203_AddDeclarationAmendment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001051239465_dbCustomsAutonomyKeywords.cs" />
+    <Compile Include="Migrations\202001051239465_dbCustomsAutonomyKeywords.Designer.cs">
+      <DependentUpon>202001051239465_dbCustomsAutonomyKeywords.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -742,6 +746,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912251658203_AddDeclarationAmendment.resx">
       <DependentUpon>201912251658203_AddDeclarationAmendment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051239465_dbCustomsAutonomyKeywords.resx">
+      <DependentUpon>202001051239465_dbCustomsAutonomyKeywords.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
