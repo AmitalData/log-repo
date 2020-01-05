@@ -15,7 +15,7 @@ namespace Logitude.LXMLFixer
 
             int moduleNumber = Convert.ToInt32(Console.ReadLine());
 
-            while(moduleNumber < 1 || moduleNumber > 11)
+            while (moduleNumber < 1 || moduleNumber > 11)
             {
                 Console.WriteLine("Invalid Input, Try Again\n");
                 moduleNumber = Convert.ToInt32(Console.ReadLine());

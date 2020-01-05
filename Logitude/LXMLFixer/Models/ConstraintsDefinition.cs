@@ -16,7 +16,12 @@ namespace Logitude.LXMLFixer.Models
         [XmlIgnore]
         public bool PrimaryKeySpecified { get { return PrimaryKey; } }
 
+        [XmlAttribute]
+        public bool ForeignKey { get; set; }
 
+        [XmlIgnore]
+        public bool ForeignKeySpecified { get { return PrimaryKey; } }
+        
         [XmlAttribute()]
         public bool Nullable { get; set; }
 

@@ -123,6 +123,16 @@ namespace Logitude.LXMLFixer.Models
                                     mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Nullable," + dxmlColumn.Constraints.Nullable + "," + lxmlColumn.Constraints.Nullable + "\n";
                                     appendTableMistakesData = true;
                                 }
+                                if(dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any() && !lxmlColumn.Constraints.ForeignKey)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Foreign Key," + "TRUE" + "," + "FALSE" + "\n";
+                                    appendTableMistakesData = true;
+                                }
+                                if (!dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any() && lxmlColumn.Constraints.ForeignKey)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Foreign Key," + "FALSE" + "," + "TRUE" + "\n";
+                                    appendTableMistakesData = true;
+                                }
                             }
                         }
 
@@ -580,6 +590,7 @@ namespace Logitude.LXMLFixer.Models
             try
             {
                 List<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
+                List<RelationDefinition> relationDefinitions = new List<RelationDefinition>();
 
                 XDocument xmlDocument = XDocument.Load(lxmlFile);
                 IEnumerable<XElement> dbFiledXmlElements = xmlDocument.Descendants("field").Where(x => x.Attribute("HasDataBaseField").Value == "true");
@@ -596,6 +607,8 @@ namespace Logitude.LXMLFixer.Models
                     int numberOfDigits = field.Attribute("NumberOfDigits") == null ? 0 : Convert.ToInt32(field.Attribute("NumberOfDigits").Value);
                     int digitsAfterPoint = field.Attribute("DigitsAfterPoint") == null ? 0 : Convert.ToInt32(field.Attribute("DigitsAfterPoint").Value);
 
+                    bool isForeignKey = field.Attribute("IsForeignKey") == null ? false : field.Attribute("IsForeignKey").Value == "true";
+
                     string columnDefinitionDataType = GetColumnDefinitionDataType(dataType, isFixedLength);
                     bool columnDefinitionNullableConstraint = GetNullableForConstraintsDefinition(isRequired, isNullable, isPrimaryKey, columnDefinitionDataType);
                     
@@ -609,6 +622,7 @@ namespace Logitude.LXMLFixer.Models
                         Constraints = new ConstraintsDefinition
                         {
                             PrimaryKey = isPrimaryKey,
+                            ForeignKey = isForeignKey,
                             Nullable = columnDefinitionNullableConstraint
                         }
                     };
