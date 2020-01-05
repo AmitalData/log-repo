@@ -690,7 +690,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     LinkAddReportFromLibraryClick() {
-        var windowTitle = "New BI Report";
+        var windowTitle = "Add Report From Library";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 750;
         logWindow.Height = 600;
