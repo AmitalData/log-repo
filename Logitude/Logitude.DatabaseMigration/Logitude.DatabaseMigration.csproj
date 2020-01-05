@@ -1926,18 +1926,14 @@
     <Compile Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.Designer.cs">
       <DependentUpon>201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    
 
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
       <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
-
-
-    <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.cs" />
-    <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
-      <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
-
     </Compile>
+
+   
 
     <Compile Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs" />
     <Compile Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.Designer.cs">
@@ -3326,9 +3322,7 @@
     </EmbeddedResource>
 
 
-    <EmbeddedResource Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.resx">
-      <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
-    </EmbeddedResource>
+ 
 
   </ItemGroup>
   <ItemGroup>
