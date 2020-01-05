@@ -234,8 +234,7 @@
     <Compile Include="CoreBL\Reports\CardIndexReportService.cs" />
     <Compile Include="CoreBL\RevaluationService.cs" />
 
-    <Compile Include="CoreBL\Reports\CardIndexReportService.cs" />
-
+ 
     <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />
     <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
     <Compile Include="CoreBL\IYearTransferService.cs" />
