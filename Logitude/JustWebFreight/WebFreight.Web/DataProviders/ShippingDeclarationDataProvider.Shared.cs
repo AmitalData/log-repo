@@ -283,6 +283,7 @@ namespace WebFreight.Web.DataProviders
         public string FreightLocationId { get; set; }
         public string FreightLocationName { get; set; }
         public string FreightLocationAddress { get; set; }
+        public string FreightLocationAddressWithPhone { get; set; }
         public string FreightLocationCode { get; set; }
 
         public string ShipperContactDetails { get; set; }

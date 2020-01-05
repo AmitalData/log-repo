@@ -468,6 +468,8 @@ namespace WebFreight.Web.WebServices
                             if (warehouseAddress != null)
                             {
                                 myDataProvider.FreightLocationAddress += Environment.NewLine + DataProviders.General.GetAddress(warehouseAddress);
+                                myDataProvider.FreightLocationAddressWithPhone = myDataProvider.FreightLocationAddress + Environment.NewLine + (warehouseAddress.PhoneNumber != null ? "Tel: " + warehouseAddress.PhoneNumber + " " : "");
+
                             }
                         }
                     }
