@@ -126,6 +126,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -198,6 +199,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -272,6 +274,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Code&quot;"
@@ -347,6 +350,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -421,6 +425,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -495,6 +500,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;InActive&quot;"
@@ -568,6 +574,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BankAccountId&quot;"
@@ -614,11 +621,11 @@
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;CreditCardType&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="3"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;CreditCardType.GeneralTabScreen&quot;">
+    Code="&quot;CreditCardType.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="3">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -640,11 +647,11 @@
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;CreditCardType&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="1"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;CreditCardType.HeaderScreen&quot;">
+    Code="&quot;CreditCardType.HeaderScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
     <ScreenFields>
       <ScreenField
         Column="0"
