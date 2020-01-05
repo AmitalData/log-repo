@@ -11,9 +11,15 @@ namespace Logitude.LXMLFixer
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Choose The Desired Modules\n1: Accounting\n2: Booking\n3: CRM\n4: Customs\n5: Old Modules\n6: Social\n7: Tarrifs\n8: Time Management\n9: Warehouse\n");
+            Console.WriteLine("Choose The Desired Modules\n1: Accounting\n2: Booking\n3: CRM\n4: Customs\n5: Old Modules\n6: Social\n7: Tarrifs\n8: Time Management\n9: Warehouse\n10: Infrastructure\n11: All Modules\n");
 
             int moduleNumber = Convert.ToInt32(Console.ReadLine());
+
+            while(moduleNumber < 1 || moduleNumber > 11)
+            {
+                Console.WriteLine("Invalid Input, Try Again\n");
+                moduleNumber = Convert.ToInt32(Console.ReadLine());
+            }
 
             LXMLFilesFixer fixer = new LXMLFilesFixer(moduleNumber);
 

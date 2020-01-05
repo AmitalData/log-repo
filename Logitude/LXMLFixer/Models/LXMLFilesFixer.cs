@@ -23,8 +23,16 @@ namespace Logitude.LXMLFixer.Models
         {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             ModuleName = GetModuleName(moduleNumber);
-            LXMLFilesRoot = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + ConfigurationManager.AppSettings[ModuleName + "_LXMLFilesRoot"];
-            DXMLFilesRoot = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + ConfigurationManager.AppSettings[ModuleName + "_DXMLFilesRoot"];
+            if(ModuleName == "AllModules")
+            {
+                LXMLFilesRoot = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + @"\Logitude";
+                DXMLFilesRoot = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + @"\Logitude";
+            }
+            else
+            {
+                LXMLFilesRoot = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + ConfigurationManager.AppSettings[ModuleName + "_LXMLFilesRoot"];
+                DXMLFilesRoot = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + ConfigurationManager.AppSettings[ModuleName + "_DXMLFilesRoot"];
+            }
         }
 
         public void ExtractLXMLFilesMistakes()
@@ -837,8 +845,12 @@ namespace Logitude.LXMLFixer.Models
                     return "TimeManagement";
                 case 9:
                     return "Warehouse";
+                case 10:
+                    return "Infrastructure";
+                case 11:
+                    return "AllModules";
                 default:
-                    return "OldModules";
+                    return "AllModules";
             }
         }
     }

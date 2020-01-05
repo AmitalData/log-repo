@@ -60,6 +60,10 @@
     <None Include="Reports\Accounting\LXMLFilesFixedMistakes.csv" />
     <None Include="Reports\Accounting\LXMLFilesIgnoredMistakes.csv" />
     <None Include="Reports\Accounting\LXMLFilesMistakes.csv" />
+    <None Include="Reports\AllModules\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\AllModules\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\AllModules\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\AllModules\LXMLFilesMistakes.csv" />
     <None Include="Reports\Booking\DXMLFilesThatNotFound.csv" />
     <None Include="Reports\Booking\LXMLFilesFixedMistakes.csv" />
     <None Include="Reports\Booking\LXMLFilesIgnoredMistakes.csv" />
@@ -72,6 +76,10 @@
     <None Include="Reports\Customs\LXMLFilesFixedMistakes.csv" />
     <None Include="Reports\Customs\LXMLFilesIgnoredMistakes.csv" />
     <None Include="Reports\Customs\LXMLFilesMistakes.csv" />
+    <None Include="Reports\Infrastructure\DXMLFilesThatNotFound.csv" />
+    <None Include="Reports\Infrastructure\LXMLFilesFixedMistakes.csv" />
+    <None Include="Reports\Infrastructure\LXMLFilesIgnoredMistakes.csv" />
+    <None Include="Reports\Infrastructure\LXMLFilesMistakes.csv" />
     <None Include="Reports\OldModules\DXMLFilesThatNotFound.csv" />
     <None Include="Reports\OldModules\LXMLFilesFixedMistakes.csv" />
     <None Include="Reports\OldModules\LXMLFilesIgnoredMistakes.csv" />
