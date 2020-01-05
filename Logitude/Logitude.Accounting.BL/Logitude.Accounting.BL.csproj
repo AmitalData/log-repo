@@ -145,6 +145,8 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\GLAccountTotalDateTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\GLAccountTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\IntegrityCheckStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\InterestEntityTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\InterestReportStatuseDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalStatusTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OpenFormatReportStatusDetails.Generated.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="CloseTables\EnumGenerated\GLAccountTotalDateTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GLAccountTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\IntegrityCheckStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InterestReportStatuseStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\PeriodTypeStruct.Generated.cs" />
@@ -192,7 +195,9 @@
     <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchFixIntegrityCheckErrorsService.cs" />
     <Compile Include="CoreBL\Batch\BatchAccFunctionalTestTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
+    <Compile Include="CoreBL\Batch\BatchRevaluationService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />
@@ -214,6 +219,7 @@
     <Compile Include="CoreBL\CashbookService.cs" />
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />
     <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
+    <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
     <Compile Include="CoreBL\OpenFormatReportService.cs" />
     <Compile Include="CoreBL\Reconcile\AutoReconcileARPaymentService.cs" />
@@ -222,8 +228,14 @@
     <Compile Include="CoreBL\Dashboard\ChartOfAccountBalanceM.cs" />
     <Compile Include="CoreBL\Dashboard\ChartOfAccountDashboard.cs" />
     <Compile Include="CoreBL\Reconcile\ICreateAutoReconcileWhileStreamingService.cs" />
+    <Compile Include="CoreBL\Reconcile\LedgerTransactionsSorter.cs" />
     <Compile Include="CoreBL\Reports\BalanceGroupByCollectorService.cs" />
+
     <Compile Include="CoreBL\Reports\CardIndexReportService.cs" />
+    <Compile Include="CoreBL\RevaluationService.cs" />
+
+    <Compile Include="CoreBL\Reports\CardIndexReportService.cs" />
+
     <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />
     <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
     <Compile Include="CoreBL\IYearTransferService.cs" />
@@ -341,12 +353,21 @@
     <Compile Include="EntityDataMappings\Generated\GLAccountCounterDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountCurrencyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountInterestPeriodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountMoreDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountTotalByMonthDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountTotalDateTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountWithholdingTaxDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\IntegrityCheckStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestBasesPeriodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestBasesTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestEntityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportLinesByDateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportStatuseDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestTransactionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalActionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalAdditionalDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalDataMapping.Generated.cs" />
@@ -387,12 +408,21 @@
     <Compile Include="EntityDataMappings\GLAccountCounterDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountCurrencyDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GLAccountInterestPeriodDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountMoreDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountTotalByMonthDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountTotalDateTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountWithholdingTaxDataMapping.cs" />
     <Compile Include="EntityDataMappings\IntegrityCheckStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestBasesPeriodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestBasesTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestEntityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportLinesByDateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportStatuseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestTransactionDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalActionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalAdditionalDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalDataMapping.cs" />
@@ -466,10 +496,19 @@
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountCounterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountInterestPeriodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountMoreDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountTotalDateTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountWithholdingTaxQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\IntegrityCheckStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestBasesPeriodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestBasesTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestEntityTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportLinesByDateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportStatuseQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestTransactionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalAdditionalDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalExternalReconcileQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalMoreDataQueryService.Generated.cs" />
@@ -500,6 +539,7 @@
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionDTO.cs" />
+    <Compile Include="EntityQueryServices\InterestBasesTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalStatusTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalTypeQueryService.cs" />
@@ -517,6 +557,7 @@
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\BankCodeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\CashBookLineUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\InterestTransactionUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\ReconciliationServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\CashBookUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\GLAccountUpdateServiceExt.cs" />
@@ -544,10 +585,19 @@
     <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountCounterUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountInterestPeriodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountMoreDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountTotalDateTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountWithholdingTaxUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\IntegrityCheckStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestBasesPeriodUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestBasesTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestEntityTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportLinesByDateUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportStatuseUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestTransactionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalAdditionalDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalExternalReconcileUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalMoreDataUpdateService.Generated.cs" />
@@ -574,6 +624,9 @@
     <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\InterestReportUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\InterestBasesTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\InterestTransactionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\JournalExternalReconcileUpdateService.cs" />
     <Compile Include="EntityUpdateServices\JournalReconcileUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OpenFormatReportUpdateService.cs" />
@@ -744,6 +797,10 @@
     <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
       <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733F914-0E16-4412-84DF-D98232DD43E9}</Project>
+      <Name>Logitude.CRM.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
       <Project>{F0039DBE-4A1A-4755-8F37-E4005EA74746}</Project>
