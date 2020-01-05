@@ -1882,6 +1882,10 @@
     <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.Designer.cs">
       <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs" />
+    <Compile Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.Designer.cs">
+      <DependentUpon>202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.Designer.cs">
@@ -3245,6 +3249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.resx">
       <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.resx">
+      <DependentUpon>202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
