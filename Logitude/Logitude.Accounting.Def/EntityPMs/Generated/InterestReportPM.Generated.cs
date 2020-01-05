@@ -549,6 +549,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string interestReportStatusLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InterestReportStatusLocalName  
+	   {
+	    
+	     get
+		{
+		   return interestReportStatusLocalName;
+		 }
+		 set
+		 {
+		   if(interestReportStatusLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestReportStatusLocalName",OldValue=interestReportStatusLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   interestReportStatusLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

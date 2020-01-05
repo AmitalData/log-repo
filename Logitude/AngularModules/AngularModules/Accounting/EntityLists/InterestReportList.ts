@@ -31,6 +31,7 @@ export class InterestReportList {
 	UpdatedByLocalName: string;
 	InterestReportStatusName: string;
 	SearchFields: string;
+	InterestReportStatusLocalName: string;
 	
 }
  

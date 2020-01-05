@@ -121,6 +121,16 @@ export class FieldTemplateComponent {
             }
         }
 
+        if (this.ObjectTableName == "InterestReport" && this.FieldName == "InterestReportStatusName") {
+
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
+                this.FieldValue = this.Entity.InterestReportStatusName;
+            }
+            else {
+                this.FieldValue = this.Entity.InterestReportStatusLocalName;
+            }
+        }
+
         if (this.ObjectTableName == "OpenFormatReport" && this.FieldName == "CreatedByUserName") {
 
             if (SessionLocator.LoggedUserPM.DontShowLocal) {

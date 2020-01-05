@@ -139,6 +139,11 @@ export class InterestReportPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private interestReportStatusLocalName: string;
+    public get InterestReportStatusLocalName() { return this.interestReportStatusLocalName; }
+    public set InterestReportStatusLocalName(newValue: string) { if (this.interestReportStatusLocalName != newValue) { this.interestReportStatusLocalName = newValue; this.MarkAsDirty("InterestReportStatusLocalName"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		
