@@ -37,6 +37,7 @@ namespace Logitude.DXMLGenerator.Models
             {
                 foreach (var table in dbTables)
                 {
+                    
                     Console.WriteLine("Generating DXML File For " + table.Name + " Table ...");
                     SerializeAndSaveTable(table);
                 }

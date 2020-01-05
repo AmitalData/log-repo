@@ -21,6 +21,9 @@
   <Column Name="RuleNotificationTypeCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ObjectFieldCode" Type="varchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ObjectTableRuleId" ReferencedTable="ObjectTableRules" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="RuleNotificationTypeCode" ReferencedTable="RuleNotificationTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />

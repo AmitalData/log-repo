@@ -21,6 +21,9 @@
   <Column Name="UserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ObjectFieldCode" Type="varchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="QueryId" ReferencedTable="Queries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="UserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

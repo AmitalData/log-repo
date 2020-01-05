@@ -15,6 +15,9 @@
   <Column Name="ObjectTableId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="ShortTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="ShortTextCode" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

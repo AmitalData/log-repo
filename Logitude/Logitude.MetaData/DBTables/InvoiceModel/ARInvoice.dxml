@@ -183,7 +183,7 @@
   <Column Name="OperationalDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DateForVATInterest" Type="datetime">
+  <Column Name="DateForInterest" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SplitJournalByCurrency" Type="bit">
@@ -306,11 +306,14 @@
   <Column Name="IsInvoiceNumberFromStock" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="DocumentFilingId" Type="nvarchar" Size="-1">
+  <Column Name="DocumentFilingId" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
     <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByPartner" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
   </Column>
   <Relation ForeignKeyColumn="CancelledByARInvoiceId" ReferencedTable="ARInvoices" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="TransferStatusCode" ReferencedTable="ARInvoiceTransferStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />

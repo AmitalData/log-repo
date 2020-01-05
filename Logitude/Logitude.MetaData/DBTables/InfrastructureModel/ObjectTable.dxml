@@ -150,6 +150,12 @@
   <Column Name="LovDisplayMemberPathLocal" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="DescriptionTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NewButtonTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="EntityResourceLastUpdate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>

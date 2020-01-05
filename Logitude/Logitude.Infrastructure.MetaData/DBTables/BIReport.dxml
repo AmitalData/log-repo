@@ -42,9 +42,16 @@
   <Column Name="BIReportFolderId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="LastRunDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastRunByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="DWQueryId" ReferencedTable="DWQueries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="TypeCode" ReferencedTable="BIReportsTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="BIReportFolderId" ReferencedTable="BIReportFolders" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="LastRunByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

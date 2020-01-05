@@ -18,6 +18,9 @@
   <Column Name="Operator" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ObjectFieldCode" Type="varchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="ObjectTableRuleId" ReferencedTable="ObjectTableRules" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

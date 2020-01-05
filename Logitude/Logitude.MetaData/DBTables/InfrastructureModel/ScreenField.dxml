@@ -18,6 +18,9 @@
   <Column Name="ObjectFieldId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="ObjectFieldCode" Type="varchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="ScreenId" ReferencedTable="Screens" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

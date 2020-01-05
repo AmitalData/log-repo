@@ -24,5 +24,8 @@
   <Column Name="Condition" Type="varchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ObjectFieldCode" Type="varchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

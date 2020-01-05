@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CarrierAreasPorts" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CarrierAreaId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AddedDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AddedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CarrierAreaId" ReferencedTable="CarrierAreas" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="PortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AddedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+</Table>

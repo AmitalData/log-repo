@@ -165,6 +165,9 @@
   <Column Name="FirstApproveDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="CreatedByPartner" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="VendorId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="PaymentTermId" ReferencedTable="PaymentTerms" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="InvoiceCurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

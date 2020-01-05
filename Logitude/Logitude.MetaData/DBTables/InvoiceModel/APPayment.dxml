@@ -150,6 +150,15 @@
   <Column Name="AutomaticPaymentCheque" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="AccountingCancelationDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DontIncludeInDeductionReport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CancelationNotes" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="PrintedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="LocalCurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

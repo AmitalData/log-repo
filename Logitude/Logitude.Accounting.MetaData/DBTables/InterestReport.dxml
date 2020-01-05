@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="InterestReports" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GLAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ReportNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InterestCalculationDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalAmount" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpenBalance" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CloseBalance" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ARinvoiceId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceAmount" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GLAccountInterestCreditLimit" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InterestReportStatusCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="GLAccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ARinvoiceId" ReferencedTable="ARInvoices" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="InterestReportStatusCode" ReferencedTable="InterestReportStatuses" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+</Table>

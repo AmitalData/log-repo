@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CarrierAreas" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CarrierId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Description" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransportModeCode" Type="char" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="CarrierId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="TransportModeCode" ReferencedTable="TransportModes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+</Table>

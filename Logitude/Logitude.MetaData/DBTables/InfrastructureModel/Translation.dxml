@@ -27,6 +27,9 @@
   <Column Name="UpdateDateGMT" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="TextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="TranslationHeaderCode" ReferencedTable="TranslationHeaders" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="TextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="TranslatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

@@ -24,6 +24,9 @@
   <Column Name="FeatureId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="TabNameTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="HtmlComponentName" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>

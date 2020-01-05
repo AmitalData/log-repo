@@ -45,5 +45,17 @@
   <Column Name="DeclarationWCOXml" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="IsUserIDNumberRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserIdNumberUpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UserIdNumberXMLData" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UserIdNumber" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="Id" ReferencedTable="Shipments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

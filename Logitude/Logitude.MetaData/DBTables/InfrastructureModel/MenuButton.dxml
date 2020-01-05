@@ -45,6 +45,9 @@
   <Column Name="HtmlComponentPath" Type="varchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="LabelTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="LabelTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="MenuButtonGroupId" ReferencedTable="MenuButtonGroups" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ParentMenuButtonId" ReferencedTable="MenuButtons" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

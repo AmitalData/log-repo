@@ -195,6 +195,9 @@
   <Column Name="IsExternalEntity" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CreatedByPartner" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="PrintByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="LocalCurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

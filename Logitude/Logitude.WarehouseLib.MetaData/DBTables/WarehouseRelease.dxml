@@ -148,7 +148,7 @@
   <Relation ForeignKeyColumn="TransportModeId" ReferencedTable="TransportModes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ShipmentLevelCode" ReferencedTable="ShipmentLevels" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="DirectionId" ReferencedTable="Directions" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
-  <Relation ForeignKeyColumn="FromPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FromPortId" ReferencedTable="Warehouses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ToPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ToPartnerCardId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ToAddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

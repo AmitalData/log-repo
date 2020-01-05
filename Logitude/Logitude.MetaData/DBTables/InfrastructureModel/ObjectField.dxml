@@ -222,6 +222,18 @@
   <Column Name="DisplayOnLookUpLocal" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="FullNameTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HelpTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ListTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShortNameTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="DisplayInAutomationAsEnitity" Type="bit">
     <Constraints Nullable="false" />
   </Column>

@@ -1287,6 +1287,12 @@
   <Column Name="NotInvoicedReceivablesAmount" Type="float">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="CreatedByPartner" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FirstARInvoiceApprovalDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="LocalCustomsTransmissionsStatusCode" ReferencedTable="CustomsTransmissionsStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="LocalCustomsSentByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="CountryForStatisticsId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

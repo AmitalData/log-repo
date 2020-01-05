@@ -192,6 +192,9 @@
   <Column Name="EntityType" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="SupportMailboxId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="CreatedByContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="CompanyId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
@@ -210,4 +213,5 @@
   <Relation ForeignKeyColumn="CreatedbyType" ReferencedTable="TicketCreatedByTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="CustomerContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="EntityType" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="SupportMailboxId" ReferencedTable="SupportMailboxes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

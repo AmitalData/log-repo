@@ -141,6 +141,24 @@
   <Column Name="UpdateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="AllowEditChequePayToName" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ActiveForInterest" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InterestCalculationStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ActiveForInterestCreditInvoice" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MinimumInterestInvoiceBilling" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InterestCreditLimit" Type="decimal" Precision="18" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="AccountTypeCode" ReferencedTable="GLAccountTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="RevenueExpenseType" ReferencedTable="RevenueExpenseTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />

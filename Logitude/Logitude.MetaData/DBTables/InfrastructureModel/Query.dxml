@@ -90,6 +90,9 @@
   <Column Name="SpotlightModeActivated" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="NameTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="UserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="OriginalQueryId" ReferencedTable="Queries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

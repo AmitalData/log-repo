@@ -369,6 +369,9 @@
   <Column Name="MainAdditionalPackageApplied" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="SupportDomain" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="Id" ReferencedTable="GlobalTenants" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="RecurringPeriodCode" ReferencedTable="RecurringPeriods" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="PaymentMethodCode" ReferencedTable="PaymentMethods" ReferencedColumn="Code" ReferencedTableSchema="dbo" />

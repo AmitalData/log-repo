@@ -171,6 +171,9 @@
   <Column Name="IsAutonomy" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CreatedByPartner" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="SalesmanUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="CountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

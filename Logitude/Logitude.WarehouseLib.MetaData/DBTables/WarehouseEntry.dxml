@@ -168,6 +168,18 @@
   <Column Name="Ratio" Type="float">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ToTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FromTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FromCountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToCountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
   <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="CustomerId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
@@ -182,4 +194,6 @@
   <Relation ForeignKeyColumn="DirectionId" ReferencedTable="Directions" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ShipmentTypeId" ReferencedTable="ShipmentTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="ConsigneeId" ReferencedTable="Cards" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FromCountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ToCountryId" ReferencedTable="Countries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

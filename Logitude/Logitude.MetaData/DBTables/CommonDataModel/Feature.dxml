@@ -33,6 +33,9 @@
   <Column Name="ToggleCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="NameTextCodeCode" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="NameTextCodeId" ReferencedTable="TextCodes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="FeatureTypeCode" ReferencedTable="FeatureTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />

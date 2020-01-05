@@ -294,6 +294,12 @@
   <Column Name="ApplyVATForAllPartners" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="HideFCLAllIn" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowCustomersInAgentsLOV" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
   <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="AddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
   <Relation ForeignKeyColumn="LocalAddressId" ReferencedTable="Addresses" ReferencedColumn="Id" ReferencedTableSchema="dbo" />

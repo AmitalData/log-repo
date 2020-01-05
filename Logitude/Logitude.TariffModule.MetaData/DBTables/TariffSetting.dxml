@@ -12,4 +12,10 @@
   <Column Name="DefaultWarningPercentage" Type="float">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="AirDefaultStepsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LCLDefaultStepsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>
