@@ -18,5 +18,6 @@
         public bool ActiveForNew { get; set; }
         public bool ActiveForUpdate { get; set; }
         public bool AdvancedCondition { get; set; }
+        public string TriggerFieldCode { get; set; }
     }
 }
