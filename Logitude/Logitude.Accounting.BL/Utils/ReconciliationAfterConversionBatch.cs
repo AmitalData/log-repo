@@ -168,6 +168,11 @@ namespace Logitude.Accounting.BL.Utils
                 _NoLines.Add(groupKey);
                 rv = false;
             }
+            else if (journalLineRecoList.Count == 1)
+            {
+                _WrongSumToMatch.Add(groupKey);
+                rv = false;
+            }
             else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
             {
                 _WrongAction.Add(groupKey);
