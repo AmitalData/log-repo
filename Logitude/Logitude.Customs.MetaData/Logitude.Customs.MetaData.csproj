@@ -107,6 +107,7 @@
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
     <None Include="EntityFiles\ContinuousRequestType.lxml" />
+    <None Include="EntityFiles\CustomsAutonomyKeyword.lxml" />
     <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
     <None Include="EntityFiles\ApprovedProfession.lxml">
       <SubType>Designer</SubType>
