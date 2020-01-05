@@ -1952,19 +1952,13 @@ namespace MeatadataGeneratorTool
                 tableElement.SetAttribute("ShortName", table.DBTableShortName);
             }
 
-
             string dbTableOldNames = null;
 
-            if (!String.IsNullOrEmpty(table.DBTableOldNames))
+            if (!string.IsNullOrEmpty(table.DBTableOldNames))
             {
                 if (table.DBTableOldNames.Contains(","))
                 {
                     var oldNamesExceptName = table.DBTableOldNames.Split(',').Where(x => x != table.DBTableName);
-
-                    //if (!string.IsNullOrEmpty(table.DBTableShortName))
-                    //{
-                    //    oldNamesExceptName = oldNamesExceptName.Where(x => x != table.DBTableShortName).Distinct();
-                    //}
 
                     dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
                 }
@@ -1974,7 +1968,7 @@ namespace MeatadataGeneratorTool
                 }
             }
 
-            if (!String.IsNullOrEmpty(dbTableOldNames))
+            if (!string.IsNullOrEmpty(dbTableOldNames))
             {
                 tableElement.SetAttribute("OldNames", dbTableOldNames);
             }
@@ -2022,11 +2016,6 @@ namespace MeatadataGeneratorTool
                     {
                         var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName);
 
-                        //if (!string.IsNullOrEmpty(fieldShortName))
-                        //{
-                        //    oldNamesExceptName = oldNamesExceptName.Where(x => x != fieldShortName).Distinct();
-                        //}
-
                         oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
                     }
                     else
@@ -2069,22 +2058,37 @@ namespace MeatadataGeneratorTool
                 constraintsElement.SetAttribute("Nullable", dxmlColumnNullable ? "true" : "false");
             }
 
+
+            List<string> processedForeignKeyFields = new List<string>();
+
             foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField && f.IsForeignKey))
             {
-                XmlElement relationElement = doc.CreateElement("Relation");
-                tableElement.AppendChild(relationElement);
-
-                string fieldName = field.FieldName;
-                string fieldForeignEntity = field.ForeignEntity;
-                ForeignEntityData foreignEntityData = GetForeignEntityData(fieldForeignEntity);
-
-                relationElement.SetAttribute("ForeignKeyColumn", fieldName);
-
-                if(foreignEntityData != null)
+                if (!processedForeignKeyFields.Contains(field.FieldName))
                 {
-                    relationElement.SetAttribute("ReferencedTable", foreignEntityData.ReferencedTable);
-                    relationElement.SetAttribute("ReferencedColumn", foreignEntityData.ReferencedColumn);
-                    relationElement.SetAttribute("ReferencedTableSchema", foreignEntityData.ReferencedTableSchema);
+                    XmlElement relationElement = doc.CreateElement("Relation");
+                    tableElement.AppendChild(relationElement);
+
+                    string fieldNavigationPropertyName = field.NavigationPropertyName;
+
+                    string[] filedsWithSameNavigationPropertyName = table.ObsList.Where(f => f.IsDBField && f.IsForeignKey && f.NavigationPropertyName == fieldNavigationPropertyName).Select(f => f.FieldName).ToArray();
+
+                    string foreignKeyColumn = filedsWithSameNavigationPropertyName.Length == 1 ? filedsWithSameNavigationPropertyName[0] : string.Join(",", filedsWithSameNavigationPropertyName);
+
+                    relationElement.SetAttribute("ForeignKeyColumn", foreignKeyColumn);
+
+                    ForeignEntityData foreignEntityData = GetForeignEntityData(field.ForeignEntity);
+
+                    if (foreignEntityData != null)
+                    {
+                        relationElement.SetAttribute("ReferencedTable", foreignEntityData.ReferencedTable);
+                        relationElement.SetAttribute("ReferencedColumn", foreignEntityData.ReferencedColumn);
+                        relationElement.SetAttribute("ReferencedTableSchema", foreignEntityData.ReferencedTableSchema);
+                    }
+
+                    foreach (string fieldName in filedsWithSameNavigationPropertyName)
+                    {
+                        processedForeignKeyFields.Add(fieldName);
+                    }
                 }
             }
 
@@ -2287,13 +2291,11 @@ namespace MeatadataGeneratorTool
         
         private static ForeignEntityData GetForeignEntityData(string foreignEntity)
         {
-            string directOpenPath = App.DirectOpenPath;
-            string[] lxmlFiles = Directory.GetFiles(directOpenPath.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + @"\Logitude\", foreignEntity + ".lxml", SearchOption.AllDirectories);
+            string foreignEntityLXMLFilePath = GetForeignEntityLXMLFilePath(foreignEntity);
 
-            if(lxmlFiles.Length > 0)
+            if (foreignEntityLXMLFilePath != null)
             {
-                //MessageBox.Show(lxmlFiles[0]);
-                XDocument xmlDocument = XDocument.Load(lxmlFiles[0]);
+                XDocument xmlDocument = XDocument.Load(foreignEntityLXMLFilePath);
 
                 string referencedTable = xmlDocument.Root.Attribute("DBTableName") == null ? null : xmlDocument.Root.Attribute("DBTableName").Value.Split('"')[1].Split('"')[0];
                 string referencedTableSchema = xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode") == null ? null : xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode").Value;
@@ -2312,9 +2314,48 @@ namespace MeatadataGeneratorTool
             return null;
         }
 
-        private static string GetForeignEntityLXMLFilePath()
+        private static string GetForeignEntityLXMLFilePath(string foreignEntity)
         {
-            return "";
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string logitudePath = projectDirectory.Split(new string[] { @"\Logitude" }, StringSplitOptions.None)[0];
+            
+            string[] modulesPaths = new string[]
+            {
+                @"\Logitude\Logitude.Accounting.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.BookingLib.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.CRM.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.Customs.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.Social.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.TariffModule.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.TimeManagement.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.WarehouseLib.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.Infrastructure.MetaData\EntityFiles\",
+                @"\Logitude\Logitude.MetaData\EntityFiles\CommonDataModel\",
+                @"\Logitude\Logitude.MetaData\EntityFiles\GlobalModel\",
+                @"\Logitude\Logitude.MetaData\EntityFiles\InfrastructureModel\",
+                @"\Logitude\Logitude.MetaData\EntityFiles\InvoiceModel\",
+                @"\Logitude\Logitude.MetaData\EntityFiles\QuoteModel\",
+                @"\Logitude\Logitude.MetaData\EntityFiles\ShipmentsModel\",
+                @"\Logitude\Logitude.MetaData\EntityFiles\SystemLogsModel\"
+            };
+
+            foreach(var modulePath in modulesPaths)
+            {
+                string path = logitudePath + modulePath + foreignEntity + ".lxml";
+                if (File.Exists(path))
+                {
+                    return path;
+                }
+            }
+
+            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", foreignEntity + ".lxml", SearchOption.AllDirectories);
+
+            if (lxmlFilesUnderRoot.Length > 0)
+            {
+                return lxmlFilesUnderRoot[0];
+            }
+
+            return null;
         }
 
         private class ForeignEntityData
