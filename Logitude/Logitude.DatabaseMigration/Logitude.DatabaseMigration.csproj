@@ -1856,6 +1856,13 @@
       <DependentUpon>201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs</DependentUpon>
     </Compile>
 
+    <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.cs" />
+    <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.Designer.cs">
+      <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+
+
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -3301,6 +3308,10 @@
 
     <EmbeddedResource Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.resx">
       <DependentUpon>201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.resx">
+      <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
     </EmbeddedResource>
 
   </ItemGroup>
