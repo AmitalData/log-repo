@@ -112,6 +112,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string EntityReference { get; set; }
     
     public string EntityType { get; set; }
+    
+    public string VendorGLAccount { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
