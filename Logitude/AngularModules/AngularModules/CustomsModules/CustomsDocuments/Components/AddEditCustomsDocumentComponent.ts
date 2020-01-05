@@ -977,28 +977,33 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                             if (value == null) {
 
 
-                                _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode).subscribe(myResult => {
-                                    if (!myResult.Result || myResult.Result.length == 0) {
-
-                                    }
-                                    else {
-                                    }
-
-                                });
-                            
-
-                                value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
-                                value.MetaDataTypeCode = metaData.MetaDataTypeCode;
-                                value.Tenant = SessionLocator.Tenant;
-                                value.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
-                                value.ChangeSetOp = "Insert";
-                                if (docTypeRes.Result) {
-                                    if (docTypeRes.Result.AutoSetOriginalDocumentTrue) {
-                                        if (value.MetaDataTypeCode == "87") {
-                                            value.MetaDataValue = "True";
+                                _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
+                                    .subscribe(myDocFilingResult => {
+                                        value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
+                                        value.MetaDataTypeCode = metaData.MetaDataTypeCode;
+                                        value.Tenant = SessionLocator.Tenant;
+                                        value.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
+                                        value.ChangeSetOp = "Insert";
+                                        if (docTypeRes.Result) {
+                                            if (docTypeRes.Result.AutoSetOriginalDocumentTrue) {
+                                                if (value.MetaDataTypeCode == "87") {
+                                                    value.MetaDataValue = "True";
+                                                }
+                                            }
                                         }
-                                    }
-                                }
+                                        if (!myDocFilingResult.Result || myDocFilingResult.Result.length == 1) {
+                                            if (AppTool.IsNullOrEmpty(value.MetaDataValue) && !AppTool.IsNullOrEmpty(myDocFilingResult.Result.MetaDataValue))
+                                                {
+                                                value.MetaDataValue = myDocFilingResult.Result.MetaDataValue;
+                                            }
+                                        }
+                                        else {
+
+                                        }
+                                    });
+
+
+                                
                                 this.customDocumentMetaDataValueList.push(value);
                             }
                         });
