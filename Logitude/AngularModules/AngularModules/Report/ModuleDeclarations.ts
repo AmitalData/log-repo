@@ -28,8 +28,7 @@ import {InventoryReportFilterConmponent} from './Components/FilterReportComponen
 import {OpenShipmentsByCustomerFilterComponent} from './Components/FilterReportComponent/OpenShipmentsByCustomerFilterComponent';
 import { UnicargoExportReportFilterComponent } from './Components/FiltersComponent/Operational/UnicargoExportReportFilterComponent';
 import { ShipmentsEventsListFilterComponent } from './Components/FiltersComponent/Operational/ShipmentsEventsListFilterComponent';
-
-
+import { FlightBookingsManifestFilterComponent } from './Components/FiltersComponent/Operational/FlightBookingsManifestFilterComponent';
 
 // Accounting
 import {AccountingLedgerFilterComponent} from './Components/FilterReportComponent/AccountingLedgerFilterComponent';
@@ -51,8 +50,6 @@ import { DetailedShipmentChargesAnalysisComponent } from './Components/FiltersCo
 import { VendorChargesAnalysisFilterComponent } from './Components/FiltersComponent/Accounting/VendorChargesAnalysisFilterComponent';
 import { AutomationTestReportFilterComponent } from './Components/FilterReportComponent/AutomationTestReportFilterComponent';
 
-
-
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
 
@@ -70,19 +67,14 @@ import {UsersByTenantReportFilterComponent} from './Components/FiltersComponent/
 import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Operational/LicenseManagementFilterComponent';
 import { VehiclesFilterComponent } from './Components/FiltersComponent/Operational/VehiclesFilterComponent';
 
-
-
-
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
 import {WorkDaysPerProjectFilterComponent} from './Components/FilterReportComponent/WorkDaysPerProjectFilterComponent';
 import { TasksOfNoProjectsFilterComponent } from './Components/FilterReportComponent/TasksOfNoProjectsFilterComponent';
 import { WorkDaysPerCategoryFilterComponent } from './Components/FilterReportComponent/WorkDaysPerCategoryFilterComponent';
 
-
 //Shipment Details
 import { ShipmentDetailsFilterComponent } from './Components/FilterReportComponent/ShipmentDetailsFilterComponent';
-
 
 //VDK Templates
 import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
@@ -152,6 +144,7 @@ export const Components =
         UnicargoExportReportFilterComponent,
         ShipmentsEventsListFilterComponent,
         AutomationTestReportFilterComponent,
+        FlightBookingsManifestFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -223,7 +216,7 @@ export class ModuleDeclarations {
             case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }   
             case "ShipmentsEventsListFilterComponent": { myResult = ShipmentsEventsListFilterComponent; break; }   
             case "AutomationTestReportFilterComponent": { myResult = AutomationTestReportFilterComponent; break; }  
-          
+            case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; } 
         }
 
         return myResult;

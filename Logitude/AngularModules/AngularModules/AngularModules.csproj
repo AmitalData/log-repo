@@ -1095,6 +1095,7 @@
     <Content Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Operational\FlightBookingsManifestFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.html" />
@@ -3555,6 +3556,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\FlightBookingsManifestFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.ts" />
