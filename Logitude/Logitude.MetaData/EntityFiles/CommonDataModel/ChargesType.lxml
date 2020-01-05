@@ -18,6 +18,8 @@
   IsNewWizard="true"
   LookUp1="&quot;Code&quot;"
   LookUp2="&quot;EnglishName&quot;"
+  CodeField="&quot;Code&quot;"
+  NameField="&quot;EnglishName&quot;"
   KeyPropertyPath="&quot;Id&quot;"
   AutoCompleteSearchWindow="true"
   IsClosed="false"
