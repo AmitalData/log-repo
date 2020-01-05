@@ -2472,6 +2472,56 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetSupportMailboxsByTenant()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                SupportMailboxQueryService queryService = new SupportMailboxQueryService(tenant);
+                List<SupportMailboxPM> myList = queryService.GetSupportMailboxsByTenant(tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDeleteMailBox(string entityId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICRMContext objectContext = CRMContext.GetContext(tenant);
+                SupportMailboxRepository repository = new SupportMailboxRepository(objectContext);
+                SupportMailbox mailbox = repository.GetSingle(entityId, tenant);
+
+                if(mailbox != null)
+                {
+                    repository.Remove(mailbox);
+                    repository.SubmitChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     public class MeetingSummary

@@ -784,7 +784,8 @@ namespace WebFreight.Web.InfrastructureModel
             ruleField.ObjectTableRuleId = ruleFieldPM.ObjectTableRuleId;
             ruleField.SystemLevel = ruleFieldPM.SystemLevel;
             ruleField.Expression = ruleFieldPM.Expression;
-            ruleField.RuleNotificationTypeCode = ruleFieldPM.RuleNotificationTypeCode;            
+            ruleField.RuleNotificationTypeCode = ruleFieldPM.RuleNotificationTypeCode;
+            ruleField.ObjectFieldCode = ruleFieldPM.ObjectFieldCode;
         }
         #endregion
 
@@ -2419,7 +2420,7 @@ namespace WebFreight.Web.InfrastructureModel
             List<Translation> defaultTranslationsList = TranslationRepository.GetTranslationsByTenant(tenant).Where(t => t.TextCode.Id == Id).ToList();
             foreach (Translation translation in defaultTranslationsList)
             {
-                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Id == translation.TextCodeId).FirstOrDefault();
+                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Code == translation.TextCodeCode).FirstOrDefault();
                 defaultTranslationsDictionary.Add(textcode.Code, translation);
             }
 
@@ -2464,6 +2465,7 @@ namespace WebFreight.Web.InfrastructureModel
             ft.DefaultTextPlural = defaultTextCode.DefaultTextPlural;
             ft.Code = defaultTextCode.Code;
             ft.TextCodeId = defaultTextCode.Id;
+            ft.TextCodeCode = defaultTextCode.Code;
             ft.TranslationTenent = tenant;
             //ft.TranslationLanguageCode = translationLanguageCode;
             ft.TypeCode = defaultTextCode.TextCodeTypeCode;
@@ -2510,7 +2512,7 @@ namespace WebFreight.Web.InfrastructureModel
              List<Translation> defaultTranslationsList = TranslationRepository.GetTranslationsByTenant(tenant).Where(t => t.TextCode.Code == txtCode).ToList();
              foreach (Translation translation in defaultTranslationsList)
              {
-                 TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Id == translation.TextCodeId).FirstOrDefault();
+                 TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Code == translation.TextCodeCode).FirstOrDefault();
                  defaultTranslationsDictionary.Add(textcode.Code, translation);
              }
 
@@ -2555,6 +2557,7 @@ namespace WebFreight.Web.InfrastructureModel
             ft.DefaultTextPlural = defaultTextCode.DefaultTextPlural;
             ft.Code = defaultTextCode.Code;
             ft.TextCodeId = defaultTextCode.Id;
+            ft.TextCodeCode = defaultTextCode.Code;
             ft.TranslationTenent = tenant;
             //ft.TranslationLanguageCode = translationLanguageCode;
             ft.TypeCode = defaultTextCode.TextCodeTypeCode;
@@ -2606,13 +2609,13 @@ namespace WebFreight.Web.InfrastructureModel
 
             foreach (Translation translation in translationsList)
             {
-                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Id == translation.TextCodeId).FirstOrDefault();
+                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Code == translation.TextCodeCode).FirstOrDefault();
                 translationsDictionary.Add(textcode.Code, translation);
             }
 
             foreach (Translation translation in defaultTranslationsList)
             {
-                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Id == translation.TextCodeId).FirstOrDefault();
+                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Code == translation.TextCodeCode).FirstOrDefault();
                 defaultTranslationsDictionary.Add(textcode.Code, translation);
             }
 
@@ -2678,6 +2681,7 @@ namespace WebFreight.Web.InfrastructureModel
                 ft.DefaultTextPlural = tc.DefaultTextPlural;
                 ft.Code = tc.Code;
                 ft.TextCodeId = tc.Id;
+                ft.TextCodeCode = tc.Code;
                 ft.TranslationTenent = translationTenant;
                 ft.TranslationLanguageCode = translationLanguageCode;
                 ft.TypeCode = tc.TextCodeTypeCode;
@@ -2729,13 +2733,13 @@ namespace WebFreight.Web.InfrastructureModel
 
             foreach (Translation translation in translationsList)
             {
-                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Id == translation.TextCodeId).FirstOrDefault();
+                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Code == translation.TextCodeCode).FirstOrDefault();
                 translationsDictionary.Add(textcode.Code, translation);
             }
 
             foreach (Translation translation in defaultTranslationsList)
             {
-                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Id == translation.TextCodeId).FirstOrDefault();
+                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Code == translation.TextCodeCode).FirstOrDefault();
                 defaultTranslationsDictionary.Add(textcode.Code, translation);
             }
 
@@ -2801,6 +2805,7 @@ namespace WebFreight.Web.InfrastructureModel
                 ft.DefaultTextPlural = tc.DefaultTextPlural;
                 ft.Code = tc.Code;
                 ft.TextCodeId = tc.Id;
+                ft.TextCodeCode = tc.Code;
                 ft.TranslationTenent = translationTenant;
                 ft.TranslationLanguageCode = translationLanguageCode;
                 ft.TypeCode = tc.TextCodeTypeCode;
@@ -3578,6 +3583,7 @@ namespace WebFreight.Web.InfrastructureModel
                     ft.DefaultTextPlural = tc.DefaultTextPlural;
                     ft.Code = tc.Code;
                     ft.TextCodeId = tc.Id;
+                    ft.TextCodeCode = tc.Code;
                     ft.TranslationTenent = translationTenant;
                     ft.TypeCode = tc.TextCodeTypeCode;
                     ft.ObjectTableName = tc.ObjectTable.Name;
@@ -3644,7 +3650,7 @@ namespace WebFreight.Web.InfrastructureModel
             List<Translation> defaultTranslationsList = defaultDomain.GetTranslations(0).Where(d => d.TranslationHeaderCode == translationLanguageCode).ToList();//TranslationRepository.GetTranslations().Where(w => w.TranslationHeader.Tenant == 0 && w.TranslationHeader.Description == translationLanguage).ToList<Translation>();
             foreach (TextCode tc in textCodesList)
             {
-                Translation translaion = translaionList.Where(t => t.TextCodeId == tc.Id).FirstOrDefault();
+                Translation translaion = translaionList.Where(t => t.TextCodeCode == tc.Code).FirstOrDefault();
                 //Translation translaion = translaionList.Where(t => t.TextCode.Code == tc.Code && tc.TextCodeTypeCode == typeCode).FirstOrDefault();
 
                 FieldsTranslations ft = new FieldsTranslations();
@@ -3686,6 +3692,7 @@ namespace WebFreight.Web.InfrastructureModel
                 ft.DefaultTextPlural = tc.DefaultTextPlural;
                 ft.Code = tc.Code;
                 ft.TextCodeId = tc.Id;
+                ft.TextCodeCode = tc.Code;
                 ft.TypeCode = tc.TextCodeTypeCode;
                 ft.ObjectTableID = tc.ObjectTableId;
                 ft.TranslationTenent = translationTenant;
@@ -3751,7 +3758,7 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
             TextCodeRepository textCodeRepository = new TextCodeRepository(ObjectContext);
-            TextCode textCode = textCodeRepository.GetSingleTextCode(currentFieldTranslation.TextCodeId);
+            TextCode textCode = textCodeRepository.GetSingleTextCodeByCode(currentFieldTranslation.TextCodeCode);
 
             TextCodeRepository = new TextCodeRepository(ObjectContext);
             TranslationRepository = new TranslationRepository(ObjectContext);
@@ -3819,6 +3826,7 @@ namespace WebFreight.Web.InfrastructureModel
                     if (newTranslaion.TextCode != null)
                     {
                         newTranslaion.TextCodeId = newTranslaion.TextCode.Id;
+                        newTranslaion.TextCodeCode = newTranslaion.TextCode.Code;
                         newTranslaion.TranslatedText = currentFieldTranslation.TranslatedText;
                         newTranslaion.TranslatedTextPlural = currentFieldTranslation.TranslatedTextPlural;
 
@@ -3900,13 +3908,13 @@ namespace WebFreight.Web.InfrastructureModel
 
             foreach (Translation translation in translationsList)
             {
-                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Id == translation.TextCodeId).FirstOrDefault();
+                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Code == translation.TextCodeCode).FirstOrDefault();
                 translationsDictionary.Add(textcode.Code, translation);
             }
 
             foreach (Translation translation in defaultTranslationsList)
             {
-                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Id == translation.TextCodeId).FirstOrDefault();
+                TextCode textcode = TextCodeRepository.GetTenantTextCodesWithTenantZero(translation.Tenant).Where(t => t.Code == translation.TextCodeCode).FirstOrDefault();
                 defaultTranslationsDictionary.Add(textcode.Code, translation);
             }
 
@@ -3972,6 +3980,7 @@ namespace WebFreight.Web.InfrastructureModel
                 ft.DefaultTextPlural = tc.DefaultTextPlural;
                 ft.Code = tc.Code;
                 ft.TextCodeId = tc.Id;
+                ft.TextCodeCode = tc.Code;
                 ft.TranslationTenent = tenant;
                 ft.TranslationLanguageCode = language;
                 ft.TypeCode = tc.TextCodeTypeCode;

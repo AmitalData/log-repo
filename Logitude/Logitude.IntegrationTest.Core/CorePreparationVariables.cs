@@ -9,6 +9,6 @@ namespace Logitude.IntegrationTest.Core
 {
     public class CorePreparationVariables
     {
-        public TenantPM TenantPM { get; set; }
+        public static TenantPM TenantPM { get; set; }
     }
 }

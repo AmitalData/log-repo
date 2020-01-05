@@ -11,6 +11,7 @@ export class FeaturePM {
     public IsCoreFeature: boolean;
     public FeatureUniqeCode: string;
 
+    public NameTextCodeCode: string;
 
     // Dummy
     public ObjectTableName: string;
@@ -19,7 +20,6 @@ export class FeaturePM {
     public IsCustomRole: boolean;
     public IsCustomRoleFeature: boolean;
     public PackageCode: string;
-    public NameTextCodeCode: string;
     public TranslatedName: string;
     public Exists: boolean;
 

@@ -16,6 +16,7 @@ import {Guid} from '../../Infrastructure/Utilities/Guid';
 import { PerformanceLogger } from '../../Infrastructure/Utilities/PerformanceLogger';
 import { OccasionInviteePM } from '../EntityPMs/OccasionInviteePM';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { SupportMailboxPM } from '../EntityPMs/SupportMailboxPM';
 
 @Injectable()
 
@@ -1644,6 +1645,76 @@ export class CRMDomainService {
         return entityList;
     }
 
+    GetSupportMailboxsByTenant() {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSupportMailboxsByTenant?', {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+                var entity: SupportMailboxPM;
+                var allLists: SupportMailboxPM[];
+                allLists = new Array<SupportMailboxPM>();
+
+                result.forEach((item) => {
+                    entity = this.MapJsonToSupportMailboxPM(item);
+                    allLists.push(entity);
+                });
+
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = allLists;
+                return pmresponse;
+            });
+        });
+    }
+    MapJsonToSupportMailboxPM(jsonPM: any, mapParent: boolean = true, entityPM: SupportMailboxPM = null) {
+        if (!entityPM) {
+            entityPM = new SupportMailboxPM();
+        }
+
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties") {
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+
+        entityPM.IsDirty = false;
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+        }
+
+        else {
+            entityPM.OldEntityPM = null;
+        }
+
+        return entityPM;
+    }
+
+    DeleteMailBox(entityId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetDeleteMailBox?entityId=' + entityId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myResult = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 
 export class DailySpotlightClass {

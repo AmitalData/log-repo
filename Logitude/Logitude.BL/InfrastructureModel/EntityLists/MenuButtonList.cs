@@ -20,5 +20,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string ControlPath { get; set; }
         public string FeatureUniqeCode { get; set; }
 
+        public string LabelTextCodeCode { get; set; }
     }
 }

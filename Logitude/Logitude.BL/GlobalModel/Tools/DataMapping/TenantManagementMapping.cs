@@ -133,6 +133,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.IsINTTRAOnlyDemo = entityPM.IsINTTRAOnlyDemo;
             entityPOCO.MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied;
             entityPOCO.TotalPrice = entityPM.TotalPrice;
+            entityPOCO.SupportDomain = entityPM.SupportDomain;
 
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

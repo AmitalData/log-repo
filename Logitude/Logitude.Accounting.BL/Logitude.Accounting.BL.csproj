@@ -195,6 +195,7 @@
     <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchFixIntegrityCheckErrorsService.cs" />
     <Compile Include="CoreBL\Batch\BatchAccFunctionalTestTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchRevaluationService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="CoreBL\Reconcile\ICreateAutoReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\Reconcile\LedgerTransactionsSorter.cs" />
     <Compile Include="CoreBL\Reports\BalanceGroupByCollectorService.cs" />
+    <Compile Include="CoreBL\Reports\CardIndexReportService.cs" />
     <Compile Include="CoreBL\RevaluationService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />
     <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
@@ -618,6 +620,7 @@
     <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\InterestReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestBasesTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestTransactionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\JournalExternalReconcileUpdateService.cs" />

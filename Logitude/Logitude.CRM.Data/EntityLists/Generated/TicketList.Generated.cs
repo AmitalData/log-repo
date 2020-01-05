@@ -248,6 +248,8 @@ namespace Logitude.CRM.Data.EntityLists
        public string EntityType  { get; set; }
        [DataMember]
        public string EntityNumber  { get; set; }
+       [DataMember]
+       public string SupportMailboxId  { get; set; }
    }
 
 }

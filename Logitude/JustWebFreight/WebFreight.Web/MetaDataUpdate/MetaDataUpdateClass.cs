@@ -65060,7 +65060,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         Tenant = tenant,
                         ValidationOrder = validation.ValidationOrder,
                         ValidationExpression = validation.ValidationExpression,
-
+                        ObjectFieldCode = newObjectField.FieldCode,
                         Code = validation.Code,
                     };
                     ObjectFieldValidationRepository.Add(newValidation);

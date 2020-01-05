@@ -140,16 +140,16 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         {
             if (entityPM.SupportActivated)
             {
-                if (string.IsNullOrEmpty(entityPM.SupportEmail))
+                if (string.IsNullOrEmpty(entityPM.SupportDomain))
                 {
-                    throw new Exception("Support Email is Required");
+                    throw new Exception("Support Domain is Required");
                 }
 
                 else
                 {
-                    if (entityRepository.CheckSupportEmailTenantManagement(entityPM.SupportEmail, entityPM.Id))
+                    if (entityRepository.CheckSupportEmailTenantManagement(entityPM.SupportDomain, entityPM.Id))
                     {
-                        throw new Exception("Support Email is used");
+                        throw new Exception("Support Domain is used");
                     }
                 }
             }

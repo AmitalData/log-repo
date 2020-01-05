@@ -12,14 +12,13 @@ using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
 
 namespace Logitude.CRM.BL.EntityDataMappings
-{
-   
+{   
    public partial class SupportMailboxDataMapping: IMapping<SupportMailboxPM, SupportMailbox>
    {
-
         public void CustomPMToPOCO(SupportMailboxPM entityPM, SupportMailbox entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            entityPOCO.Id = entityPM.Id;
         }
 
         public void CustomPOCOToPM(SupportMailboxPM entityPM, SupportMailbox entityPOCO)
@@ -27,7 +26,5 @@ namespace Logitude.CRM.BL.EntityDataMappings
             //throw new NotImplementedException();
         }
    }
-
-
 }
    

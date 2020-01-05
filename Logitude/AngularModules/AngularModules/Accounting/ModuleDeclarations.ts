@@ -109,6 +109,8 @@ import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityC
 import { CashBookLineListTemplate } from './Components/ListTemplates/CashBookLineListTemplate';
 import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/InterestBasesTypeShortTitleComponent';
 import { GLAccountInterestComponent } from './Components/EditTabs/GLAccount/GLAccountInterestComponent';
+import { NewInterestReportComponent } from './Components/NewEntity/NewInterestReportComponent';
+import { InterestReportGeneralTabComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -224,7 +226,9 @@ export const Components =
         NewIntegrityCheckComponent,
         AddEditInterestBasesPeriodComponent,
         InterestBasesTypeShortTitleComponent,
-        ExtReconcileAdjustBankFeeComponent
+        ExtReconcileAdjustBankFeeComponent,
+        NewInterestReportComponent,
+        InterestReportGeneralTabComponent
     ];
 
 export class ModuleDeclarations {
@@ -260,6 +264,7 @@ export class ModuleDeclarations {
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
+            case "NewInterestReportComponent": { myResult = NewInterestReportComponent; break; }
 
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
@@ -307,6 +312,8 @@ export class ModuleDeclarations {
             case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break;}
             case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
             case "GLAccountInterestComponent": { myResult = GLAccountInterestComponent; break; }
+            case "InterestReportGeneralTabComponent": { myResult = InterestReportGeneralTabComponent; break; }
+
              //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }

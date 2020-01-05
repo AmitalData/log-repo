@@ -6,9 +6,6 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
 
 declare var window: any;
@@ -26,7 +23,7 @@ export class InterestPageComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     public isRTL: boolean = false;
     public ObjectTableName = "InterestBasesType";
-    constructor(private entityPMService: EntityPMService) {
+    constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
 
@@ -51,12 +48,25 @@ export class InterestPageComponent implements AfterViewInit {
         windowArgs.IsNew = true;
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 720;
+        logWindow.Width = 680;
         logWindow.Height = 400;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = windowTitle;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent');
+    }
+
+    RunNewInterestReportWizard() {
+        var windowArgs: any = {};
+        windowArgs.IsNew = true;
+        var windowTitle = TextCodeTranslator.Translate("InterestReport");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 400;
+        logWindow.Height = 200;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = windowTitle;
+        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/NewEntity/NewInterestReportComponent');
     }
 
         ViewAccountingQuery(myQueryCode: string) {
@@ -77,6 +87,13 @@ export class InterestPageComponent implements AfterViewInit {
                      
                         break;
                     }
+                case "Interest Report":
+                    {
+                        displayTitle = TextCodeTranslator.Translate("InterestReport.Q.InterestReport");
+                        tableName = "InterestReport";
+
+                        break;
+                    }
                  default: { break; }
             }
 
@@ -85,7 +102,6 @@ export class InterestPageComponent implements AfterViewInit {
             listArgs.ObjectTableName = tableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Interest");
-            listArgs.NewButtonLabel = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

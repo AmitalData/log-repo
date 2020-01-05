@@ -57,6 +57,7 @@ namespace Logitude.IntegrationTest.Core
             IntegrationTestException ex = JsonConvert.DeserializeObject<IntegrationTestException>(stringResult);
             if (string.IsNullOrEmpty(ex.ErrorMessage))
             {
+                response.EnsureSuccessStatusCode();
                 JObject jObject = JObject.Parse(stringResult);
                 JToken token = jObject["Result"];
                 if (token!=null)
@@ -91,23 +92,5 @@ namespace Logitude.IntegrationTest.Core
             return url;
         }
 
-        public static string GetRandomString(int length)
-        {
-            Random random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-        public static string GetUniqueIdByDate()
-        {
-            long ticks = DateTime.Now.Ticks;
-            byte[] bytes = BitConverter.GetBytes(ticks);
-            string id = Convert.ToBase64String(bytes)
-                                    .Replace('+', '_')
-                                    .Replace('/', '-')
-                                    .TrimEnd('=');
-            return id;
-        }
-    
     }
 }

@@ -100,9 +100,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         TextCodeTypeCode = "O",
                     };
 
-                    updatedFeature.NameTextCodeId = updatedTextCode.Id;
-                    textCodeReposit.Add(updatedTextCode);
-                }
+                        updatedFeature.NameTextCodeId = updatedTextCode.Id;
+                        updatedFeature.NameTextCodeCode = updatedTextCode.Code;
+                        textCodeReposit.Add(updatedTextCode);
+                    }
 
                 else
                 {
@@ -147,20 +148,21 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
                 }
 
-                Feature newFeature = new Feature()
-                {
-                    Id = IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
-                    Tenant = featureDetails.Tenant,
-                    ObjectTableId = featureDetails.ObjectTableId,
-                    Code = featureDetails.Code.Trim(),
-                    NameTextCodeId = newTextCode.Id,
-                    FeatureTypeCode = featureDetails.FeatureTypeCode,
-                    Packagable = featureDetails.Packagable,
-                    IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
-                    IsOld = false,
-                    IsCoreFeature = featureDetails.IsCoreFeature,
-                    FeatureUniqeCode = featureDetails.FeatureUniqeCode
-                };
+                    Feature newFeature = new Feature()
+                    {
+                        Id = IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
+                        Tenant = featureDetails.Tenant,
+                        ObjectTableId = featureDetails.ObjectTableId,
+                        Code = featureDetails.Code.Trim(),
+                        NameTextCodeId = newTextCode.Id,
+                        NameTextCodeCode = newTextCode.Code,
+                        FeatureTypeCode = featureDetails.FeatureTypeCode,
+                        Packagable = featureDetails.Packagable,
+                        IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
+                        IsOld = false,
+                        IsCoreFeature = featureDetails.IsCoreFeature,
+                        FeatureUniqeCode = featureDetails.FeatureUniqeCode
+                    };
 
                 featuresRepository.Add(newFeature);
                 //table.UpdateKey = NewKey;

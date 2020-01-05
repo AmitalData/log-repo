@@ -25,6 +25,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string HtmlComponentPath { get; set; }
         public string FeatureUniqeCode { get; set; }
 
+        public string LabelTextCodeCode { get; set; }
 
         [ForeignKey("FeatureId")]
         public Feature Feature { get; set; }

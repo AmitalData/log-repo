@@ -45,7 +45,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         UpdatedByUserId, 
 	         Mailbox, 
 	         Inactive, 
-	         IsDefault,
+	         IsDefault, 
+	         UpdatedByUserName, 
+	         CreatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

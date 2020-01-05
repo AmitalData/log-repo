@@ -21,8 +21,12 @@ namespace Logitude.Accounting.Data.EntityPOCOs
            [Column("Tenant")]
 	    public int Tenant { get; set; }
      [Key]
+        [ForeignKey("InterestReport")]
         [Column("InterestReportId")]
 	    public string InterestReportId { get; set; }
+	      
+        public virtual InterestReport InterestReport { get; set; }
+     [Key]
         [ForeignKey("InterestTransaction")]
         [Column("InterestTransactionId")]
 	    public string InterestTransactionId { get; set; }

@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Interest Report Statuse&quot;"
-  Code="&quot;0f40&quot;"
+  Code="&quot;9ccc&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -143,7 +143,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;InterestReportStatuse&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="30"
     IsRequired="false"
@@ -391,20 +391,20 @@
   </EventTypes>
   <Records>
     <Record
-      Code="&quot;1&quot;"
+      LocalName="&quot;טיוטה&quot;"
       EnglishName="&quot;Draft&quot;"
-      SearchFields="&quot;1,Draft,טיוטה&quot;"
-      LocalName="&quot;טיוטה&quot;" />
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,Draft,טיוטה&quot;" />
     <Record
-      Code="&quot;2&quot;"
+      LocalName="&quot;הופקה חשבונית&quot;"
       EnglishName="&quot;Invoice&quot;"
-      SearchFields="&quot;2,Invoice,הופקה חשבונית&quot;"
-      LocalName="&quot;הופקה חשבונית&quot;" />
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,Invoice,הופקה חשבונית&quot;" />
     <Record
-      Code="&quot;3&quot;"
+      LocalName="&quot;בוטל&quot;"
       EnglishName="&quot;Cancelled&quot;"
-      SearchFields="&quot;3,Cancelled,בוטל&quot;"
-      LocalName="&quot;בוטל&quot;" />
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,Cancelled,בוטל&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -498,7 +498,7 @@ export class RulesValidator {
 
             for (var k in requiredFields) {
                 var field = requiredFields[k];
-                var obField = this._tenantObjectFields.filter(x => x.Id === field.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
+                var obField = this._tenantObjectFields.filter(x => x.FieldCode === field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
                 var requiredError = TextCodeTranslator.Translate("General.M.FieldIsRequired");
                 var fieldTrans = TextCodeTranslator.Translate(obField.FullNameTextCodeCode);
                 requiredError = requiredError.replace("%FieldName", fieldTrans);
@@ -614,7 +614,7 @@ export class RulesValidator {
         var targetRuleFields: Array<ObjectTableRuleFieldPM> = this._objectTableRuleFields.filter(rf => rf.ObjectFieldName == propertyName && rf.ObjectTableRuleTypeCode == "REQ");
         for (var k in targetRuleFields) {
             var field = targetRuleFields[k];
-            var currField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == field.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
+            var currField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
             if (currField != null) {
                 if (table.Id == currField.ObjectTableId) {
                     var rule: ObjectTableRulePM = this._requiredFieldRules.filter(r => r.Id == field.ObjectTableRuleId)[0];
@@ -670,7 +670,7 @@ export class RulesValidator {
         var propertyValue: Object = null;
         for (var k in ruleFields) {
             var ruleField = ruleFields[k];
-            var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == ruleField.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
+            var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == ruleField.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
             if (objectField != null) {
                 if (this.HasProperty(entity, objectField.FieldName)) {
                     if (required && entity.UIProperties) {
@@ -819,7 +819,7 @@ export class RulesValidator {
         else {
             for (var k in ruleFields) {
                 var ruleField = ruleFields[k];
-                var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == ruleField.ObjectFieldId)[0];
+                var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == ruleField.ObjectFieldCode)[0];
                 if (objectField != null && objectField.AutomaticField == false) {
                     if (entity != null) {
 
@@ -904,7 +904,7 @@ export class RulesValidator {
         for (var k in ruleFields) {
             var ruleField = ruleFields[k];
             //var objectField: ObjectFieldPM = ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
-            var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == ruleField.ObjectFieldId)[0];
+            var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == ruleField.ObjectFieldCode)[0];
             if (objectField != null) {// ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
                 if (ruleField.RuleNotificationTypeCode == "ERR") {
                     //propertyInf = type1.GetProperty(objectField.FieldName);

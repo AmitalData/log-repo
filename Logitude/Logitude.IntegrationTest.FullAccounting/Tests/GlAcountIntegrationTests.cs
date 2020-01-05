@@ -22,26 +22,49 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     public class GlAcountIntegrationTests
     {
         [TestMethod]
-        public void GlACcount_Vendor458GLPM_Update()
+        public async Task UpdateGlAcount_Put_Successful()
         {
-            Task.Run(async () =>
-            {
-                GLAccountPM entityPM = await GlACcount_Vendor458GLPM_GetSingle();
-                entityPM.LocalName = "GE:" + RestClientService.GetRandomString(5);
-                entityPM.EnglishName = "GE:" + RestClientService.GetRandomString(5);
-                HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "GLAccounts");
-
-
-                GLAccountPM GLAccountVendor458GLPM = RestClientService.ParseResponse<GLAccountPM>(response);
-                Assert.AreEqual(GLAccountVendor458GLPM.Id, entityPM.Id);
-            }).GetAwaiter().GetResult();
+            GLAccountPM entityPM = await GetSingle();
+            entityPM.LocalName = "GE:" + VariablesGenerater.GetRandomString(5);
+            entityPM.EnglishName = "GE:" + VariablesGenerater.GetRandomString(5);
+            HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "GLAccounts");
+            GLAccountPM GLAccountPM = RestClientService.ParseResponse<GLAccountPM>(response);
+            Assert.AreEqual(GLAccountPM.Id, entityPM.Id);
         }
-        private async Task<GLAccountPM> GlACcount_Vendor458GLPM_GetSingle()
+        [TestMethod]
+        public  async Task CreateGlAcount_Post_Successful()
+        {
+            GLAccountPM entityPM = GetNewGlAccountPM();
+            HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "GLAccounts");
+            GLAccountPM gLAccountPM = RestClientService.ParseResponse<GLAccountPM>(response);
+            Assert.IsNotNull(gLAccountPM.Id);
+        }
+        private static GLAccountPM GetNewGlAccountPM()
+        {
+          
+            GLAccountPM gLAccountPM = new GLAccountPM();
+            gLAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            gLAccountPM.EnglishName = "GE:" + VariablesGenerater.GetCharactersRandomString(4);
+            gLAccountPM.LocalName = "GE:" + VariablesGenerater.GetCharactersRandomString(4);
+            gLAccountPM.DisplayNumber = "GE:" + VariablesGenerater.GetNumbersRandomString(4);
+            gLAccountPM.SearchFields = gLAccountPM.EnglishName + "," + gLAccountPM.DisplayNumber;
+            gLAccountPM.AccountTypeCode = "1";
+            gLAccountPM.RevenueExpenseType = "3";
+            gLAccountPM.ChartOfAccountsId = FullAccountingVariables.ChartOfAccountBankBK771Id;
+            gLAccountPM.ChartOfAccountsTypeCode = "5";
+            gLAccountPM.ReconcileMethodCode = "0";
+            gLAccountPM.CurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            gLAccountPM.NewGLAccountCardId = FullAccountingVariables.CustomerTestGlCust12PMCSId;
+            return gLAccountPM;
+        }
+
+        private async Task<GLAccountPM> GetSingle()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("GLAccounts/GetSingle?id=" + FullAccountingVariables.GLAccountVendor458GLPMId);
-            GLAccountPM GLAccountVendor458GLPM = RestClientService.ParseResponse<GLAccountPM>(response);
-            return GLAccountVendor458GLPM;
+            GLAccountPM GLAccount = RestClientService.ParseResponse<GLAccountPM>(response);
+            return GLAccount;
         }
+
 
     }
 }

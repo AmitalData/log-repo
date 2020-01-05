@@ -150,6 +150,8 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.SLAId).HasColumnName("SLAId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.EntityType).HasColumnName("EntityType").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SupportMailboxId).HasColumnName("SupportMailboxId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

@@ -11,7 +11,6 @@ export class InterestReportLinesByDateList {
 	Id: string;
 	Tenant: number;
 	InterestReportId: string;
-	LineNumber: number;
 	FromDate: Date;
 	ToDate: Date;
 	TotalInterestDays: number;
@@ -27,6 +26,7 @@ export class InterestReportLinesByDateList {
 	CalculatedExcepInterestAmount: number;
 	CalculatedCreditInterestAmount: number;
 	CalculationDetails: string;
+	LineNumber: number;
 	
 }
  

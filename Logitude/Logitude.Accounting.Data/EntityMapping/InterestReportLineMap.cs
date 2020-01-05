@@ -21,13 +21,13 @@ namespace Logitude.Accounting.Data.EntityMapping
         { 
 				this.ToTable("InterestReportLines");
 		
-		    this.HasKey(t => new { t.InterestReportId });
+		    this.HasKey(t => new { t.InterestReportId, t.InterestTransactionId });
 	 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
             this.Property(t => t.InterestReportId).HasColumnName("InterestReportId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.InterestTransactionId).HasColumnName("InterestTransactionId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.InterestTransactionId).HasColumnName("InterestTransactionId").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

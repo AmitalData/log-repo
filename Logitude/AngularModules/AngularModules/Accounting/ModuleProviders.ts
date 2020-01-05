@@ -86,6 +86,8 @@ import { ExternalReconciliationPMService } from './Services/StandardPMs/External
 import { GLAccountMoreDataPMService } from './Services/StandardPMs/GLAccountMoreDataPMService';
 import { TaxDeductionReportPMService } from './Services/StandardPMs/TaxDeductionReportPMService';
 import { OpenFormatReportPMService } from './Services/StandardPMs/OpenFormatReportPMService';
+import { InterestReportLinePMService } from './Services/StandardPMs/InterestReportLinePMService';
+import { InterestReportPMService } from './Services/StandardPMs/InterestReportPMService';
 
 //#endregion
 import { AccountingPeriodExtendedListService } from './Services/ExtendedLists/AccountingPeriodExtendedListService';
@@ -133,6 +135,9 @@ import { InterestBasesPeriodListService } from './Services/StandardLists/Interes
 import { InterestBasesTypeListService } from './Services/StandardLists/InterestBasesTypeListService';
 import { InterestBasesPeriodPMService } from './Services/StandardPMs/InterestBasesPeriodPMService';
 import { InterestBasesTypePMService } from './Services/StandardPMs/InterestBasesTypePMService';
+import { InterestReportListService } from './Services/StandardLists/InterestReportListService';
+import { InterestReportLineListService } from './Services/StandardLists/InterestReportLineListService';
+import { InterestReportStatuseListService } from './Services/StandardLists/InterestReportStatuseListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -189,6 +194,8 @@ export class ModuleProviders {
             case "TaxReportListService": { myResult = new TaxReportListService(); break; }
             case "TaxDeductionReportListService": { myResult = new TaxDeductionReportListService(); break; }
             case "OpenFormatReportListService": { myResult = new OpenFormatReportListService(); break; }
+            case "InterestReportListService": { myResult = new InterestReportListService(); break; }
+            case "InterestReportLineListService": { myResult = new InterestReportLineListService(); break; }
 
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
             case "OpenFormatReportPMService": { myResult = new OpenFormatReportPMService(); break; }
@@ -219,6 +226,8 @@ export class ModuleProviders {
             case "CashBookPMService": { myResult = new CashBookPMService(); break; }
             case "RevaluationPMService": { myResult = new RevaluationPMService(); break; }
             case "TaxWithholdingAssessOfficePMService": { myResult = new TaxWithholdingAssessOfficePMService(); break; }
+            case "InterestReportPMService": { myResult = new InterestReportPMService(); break; }
+            case "InterestReportLinePMService": { myResult = new InterestReportLinePMService(); break; }
 
             case "AccountingCompanyTypePMService": { myResult = new AccountingCompanyTypePMService(); break; }
             case "WithholdingTaxDeductionTypePMService": { myResult = new WithholdingTaxDeductionTypePMService(); break; }
@@ -226,6 +235,7 @@ export class ModuleProviders {
             case "TaxReportPMService": { myResult = new TaxReportPMService(); break; }
             case "TaxReportLineTransmitStatusListService": { myResult = new TaxReportLineTransmitStatusListService(); break; }
             case "GLAccountMoreDataPMService": { myResult = new GLAccountMoreDataPMService(); break; }
+            case "InterestReportStatuseListService": { myResult = new InterestReportStatuseListService(); break; }
 
             case "TaxReportStatusListService": { myResult = new TaxReportStatusListService(); break; }
             case "TaxReportLineTypeListService": { myResult = new TaxReportLineTypeListService(); break; }
