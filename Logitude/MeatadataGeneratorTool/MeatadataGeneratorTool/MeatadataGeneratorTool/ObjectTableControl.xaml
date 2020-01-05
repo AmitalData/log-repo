@@ -320,8 +320,8 @@
                                             <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Code Field:" />
                                             <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Name Field:" />
                                             <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="DB Table Short Name:" />
-                                            <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="DXML Database Type:" />
-                                            <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="DXML Database Schema:" />
+                                            <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Database Type:" />
+                                            <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Database Schema:" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasApiHelper, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields, Mode=TwoWay}" />

@@ -2544,14 +2544,14 @@ namespace MeatadataGeneratorTool
 
             if (string.IsNullOrEmpty(DxmlDatabaseTypeCode))
             {
-                ErrorMessages = "Dxml Database Type is Required";
+                ErrorMessages = "Database Type is Required";
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
 
             if (string.IsNullOrEmpty(DxmlDatabaseSchemaCode))
             {
-                ErrorMessages = "Dxml Database Schema is Required";
+                ErrorMessages = "Database Schema is Required";
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
@@ -2686,8 +2686,21 @@ namespace MeatadataGeneratorTool
                 {
                     //UpdateObsList(this);
                     succeeded = true;
+
+                    Stopwatch stopWatch1 = new Stopwatch();
+                    stopWatch1.Start();
                     XmlGeneratorClass.GenerateXmlFileFromTool(this);
+                    stopWatch1.Stop();
+                    string generateLXMLTime = stopWatch1.ElapsedMilliseconds.ToString();
+
+                    Stopwatch stopWatch2 = new Stopwatch();
+                    stopWatch2.Start();
                     XmlGeneratorClass.GenerateDXMLFileFromTool(this);
+                    stopWatch2.Stop();
+                    string generateDXMLTime = stopWatch2.ElapsedMilliseconds.ToString();
+
+                    MessageBox.Show("Generate LXML Time(ms): " + generateLXMLTime + "\nGenerate DXML Time(ms): " + generateDXMLTime);
+
                     // App.CurrentControl.Close();
                     Environment.Exit(0);
                 }
