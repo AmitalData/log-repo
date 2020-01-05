@@ -9,6 +9,6 @@ namespace Logitude.BL.Interfaces
 {
     public interface IQuoteTemplateReportHelper
     {
-        byte[] BuildQuoteTemplatePdfReport(string quoteId,string quoteTemplateId,string userId,int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null);
+        byte[] BuildQuoteTemplatePdfReport(string quoteId,string quoteTemplateId,string userId,int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null, int? versionNumber = null);
     }
 }

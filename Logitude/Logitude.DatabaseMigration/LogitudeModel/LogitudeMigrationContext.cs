@@ -3621,6 +3621,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+        public IDbSet<TariffLinesContainersPrice> TariffLinesContainersPrices
+        {
+            get;
+            set;
+
+        }
         #endregion
 
 
@@ -4445,6 +4451,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TariffVersionAllInChargeMap());
             modelBuilder.Configurations.Add(new TariffSurchargesUpdateMap());
             modelBuilder.Configurations.Add(new TariffSurchargesUpdateMethodMap());
+            modelBuilder.Configurations.Add(new TariffLinesContainersPriceMap());
             #endregion
 
             #region Infrastructure Generated

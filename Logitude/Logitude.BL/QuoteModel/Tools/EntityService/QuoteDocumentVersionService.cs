@@ -71,7 +71,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             byte[] pdfData = new byte[] { };
             if (entityPM.VersionType == "G")
             {
-                pdfData = quoteTemplateService.GetQuoteTemplatePdfReport(entityPM.QuoteId, entityPM.QuoteTemplateId, entityPM.CreatedByUserId, entityPM.Tenant,null);
+                pdfData = quoteTemplateService.GetQuoteTemplatePdfReport(entityPM.QuoteId, entityPM.QuoteTemplateId, entityPM.CreatedByUserId, entityPM.Tenant,null, null, entityPM.VersionNumber);
             }
 
             DocumentRepository documentRep = new DocumentRepository(commonContext);

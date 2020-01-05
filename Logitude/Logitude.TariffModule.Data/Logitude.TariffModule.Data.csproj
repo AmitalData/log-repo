@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="EntityKeys\TariffKeys.cs" />
     <Compile Include="EntityKeys\TariffLineKeys.cs" />
+    <Compile Include="EntityKeys\TariffLinesContainersPriceKeys.cs" />
     <Compile Include="EntityKeys\TariffSettingKeys.cs" />
     <Compile Include="EntityKeys\TariffSurchargesUpdateKeys.cs" />
     <Compile Include="EntityKeys\TariffSurchargesUpdateMethodKeys.cs" />
@@ -95,24 +96,28 @@
     <Compile Include="EntityKeys\TariffVersionAllInChargeKeys.cs" />
     <Compile Include="EntityKeys\TariffVersionKeys.cs" />
     <Compile Include="EntityListQueryServices\Generated\TariffLineListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TariffLinesContainersPriceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TariffListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TariffSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TariffSurchargesUpdateListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TariffSurchargesUpdateMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TariffTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\TariffLineListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TariffLinesContainersPriceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TariffListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TariffSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TariffSurchargesUpdateListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TariffSurchargesUpdateMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TariffTypeListQueryService.cs" />
     <Compile Include="EntityLists\Generated\TariffLineList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TariffLinesContainersPriceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TariffList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TariffSettingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TariffSurchargesUpdateList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TariffSurchargesUpdateMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TariffTypeList.Generated.cs" />
     <Compile Include="EntityMapping\TariffLineMap.cs" />
+    <Compile Include="EntityMapping\TariffLinesContainersPriceMap.cs" />
     <Compile Include="EntityMapping\TariffMap.cs" />
     <Compile Include="EntityMapping\TariffSettingMap.cs" />
     <Compile Include="EntityMapping\TariffSurchargesUpdateMap.cs" />
@@ -122,6 +127,7 @@
     <Compile Include="EntityMapping\TariffVersionMap.cs" />
     <Compile Include="EntityPOCOs\Tariff.cs" />
     <Compile Include="EntityPOCOs\TariffLine.cs" />
+    <Compile Include="EntityPOCOs\TariffLinesContainersPrice.cs" />
     <Compile Include="EntityPOCOs\TariffSetting.cs" />
     <Compile Include="EntityPOCOs\TariffSurchargesUpdate.cs" />
     <Compile Include="EntityPOCOs\TariffSurchargesUpdateMethod.cs" />
@@ -131,6 +137,7 @@
     <Compile Include="ITariffModuleContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Generated\TariffLineRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\TariffLinesContainersPriceRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TariffRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TariffSettingRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TariffSurchargesUpdateMethodRepository.Generated.cs" />
@@ -139,6 +146,7 @@
     <Compile Include="Repositories\Generated\TariffVersionAllInChargeRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TariffVersionRepository.Generated.cs" />
     <Compile Include="Repositories\TariffLineRepository.cs" />
+    <Compile Include="Repositories\TariffLinesContainersPriceRepository.cs" />
     <Compile Include="Repositories\TariffRepository.cs" />
     <Compile Include="Repositories\TariffSettingRepository.cs" />
     <Compile Include="Repositories\TariffSurchargesUpdateMethodRepository.cs" />
