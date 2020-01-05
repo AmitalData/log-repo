@@ -1513,6 +1513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 						FeatureId = AnalyzeQueueFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = AnalyzeQueueFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

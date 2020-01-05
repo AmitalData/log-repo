@@ -4081,6 +4081,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = WarehouseReleaseFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = WarehouseReleaseFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -4098,6 +4099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = WarehouseReleaseFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = WarehouseReleaseFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

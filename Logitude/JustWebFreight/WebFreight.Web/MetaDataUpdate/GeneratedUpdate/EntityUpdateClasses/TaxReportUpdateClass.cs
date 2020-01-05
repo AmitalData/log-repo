@@ -2229,6 +2229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TaxReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2246,6 +2247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הורדה",
+						FeatureUniqeCode=  TaxReportFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton TaxReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2263,6 +2265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxReportFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+						FeatureUniqeCode=  TaxReportFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

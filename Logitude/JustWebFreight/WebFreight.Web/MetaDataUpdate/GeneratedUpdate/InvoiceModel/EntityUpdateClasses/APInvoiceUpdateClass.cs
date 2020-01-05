@@ -5699,6 +5699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = APInvoiceFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = "שמור",
+						FeatureUniqeCode = APInvoiceFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5716,6 +5717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = APInvoiceFeature_MB1.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
+						FeatureUniqeCode = APInvoiceFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5733,6 +5735,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = APInvoiceFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = "הדפסה",
+						FeatureUniqeCode = APInvoiceFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5750,6 +5753,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton APInvoiceMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5767,6 +5771,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB30.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  APInvoiceFeature_MB30.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton APInvoiceMenuButton31 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5784,6 +5789,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB31.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  APInvoiceFeature_MB31.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton APInvoiceMenuButton32 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5801,6 +5807,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton APInvoiceMenuButton33 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5818,6 +5825,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB32.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+						FeatureUniqeCode=  APInvoiceFeature_MB32.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton APInvoiceMenuButton34 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5835,6 +5843,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APInvoiceFeature_MB33.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  APInvoiceFeature_MB33.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

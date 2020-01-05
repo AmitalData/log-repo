@@ -2999,6 +2999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = JournalFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = JournalFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3016,6 +3017,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = JournalFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = JournalFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3033,6 +3035,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = JournalFeature_MB2.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = JournalFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3050,6 +3053,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton JournalMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3067,6 +3071,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  JournalFeature_MB30.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  JournalFeature_MB30.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton JournalMenuButton31 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3084,6 +3089,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  JournalFeature_MB31.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  JournalFeature_MB31.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

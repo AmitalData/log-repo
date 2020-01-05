@@ -25495,6 +25495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton MasterMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25512,6 +25513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25529,6 +25531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25546,6 +25549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB02.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton03 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25563,6 +25567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB03.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB03.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton04 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25580,6 +25585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton05 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25597,6 +25603,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB04.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB04.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton06 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25614,6 +25621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton07 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25631,6 +25639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton08 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25648,6 +25657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB05.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB05.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton09 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25665,6 +25675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB06.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB06.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton010 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25682,6 +25693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB07.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB07.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton011 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25699,6 +25711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB08.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB08.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

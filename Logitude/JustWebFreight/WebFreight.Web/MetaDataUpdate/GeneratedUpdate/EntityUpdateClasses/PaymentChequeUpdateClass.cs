@@ -3147,6 +3147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = PaymentChequeFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = "שמור כטיוטה",
+						FeatureUniqeCode = PaymentChequeFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3164,6 +3165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = PaymentChequeFeature_MB1.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
+						FeatureUniqeCode = PaymentChequeFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3181,6 +3183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton PaymentChequeMenuButton20 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3198,6 +3201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB20.Id,
 						Style = null,
 						LocalDefaultText = "הדפסת המחאה",
+						FeatureUniqeCode=  PaymentChequeFeature_MB20.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton PaymentChequeMenuButton21 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3215,6 +3219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB21.Id,
 						Style = null,
 						LocalDefaultText = "ביטול המחאה",
+						FeatureUniqeCode=  PaymentChequeFeature_MB21.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

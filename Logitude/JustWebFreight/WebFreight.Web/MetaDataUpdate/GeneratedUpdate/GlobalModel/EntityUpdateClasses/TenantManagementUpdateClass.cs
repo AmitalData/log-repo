@@ -8970,6 +8970,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 						FeatureId = TenantManagementFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = TenantManagementFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

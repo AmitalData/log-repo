@@ -1372,7 +1372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	         Screen APILogsGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APILogs.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = APILogsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            //ScreenField APILogsAPILogsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField APILogsAPILogsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Direction").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Direction").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -1517,6 +1517,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton APILogsMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1534,6 +1535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 						FeatureId=  APILogsFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  APILogsFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

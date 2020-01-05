@@ -2804,6 +2804,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "More",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TruckerMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2821,6 +2822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  TruckerFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "נתק כרטיס",
+						FeatureUniqeCode=  TruckerFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

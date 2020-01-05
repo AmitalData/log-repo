@@ -14495,6 +14495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14512,6 +14513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB1.Id,
 						Style = "RedButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14529,6 +14531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14546,6 +14549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB3.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB3.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14563,6 +14567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton QuoteMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14580,6 +14585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB40.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB40.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14597,6 +14603,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB41.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB41.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14614,6 +14621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB42.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB42.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton43 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14631,6 +14639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton44 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14648,6 +14657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB43.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB43.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton45 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14665,6 +14675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB44.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB44.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton46 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14682,6 +14693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton47 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14699,6 +14711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB45.Id,
 						Style = null,
 						LocalDefaultText = "Convert to LCL",
+						FeatureUniqeCode=  QuoteFeature_MB45.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton48 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14716,6 +14729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB46.Id,
 						Style = null,
 						LocalDefaultText = "Convert to FCL",
+						FeatureUniqeCode=  QuoteFeature_MB46.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

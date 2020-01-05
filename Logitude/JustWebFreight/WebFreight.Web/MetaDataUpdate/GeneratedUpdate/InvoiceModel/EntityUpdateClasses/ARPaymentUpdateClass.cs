@@ -6148,6 +6148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = ARPaymentFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
+						FeatureUniqeCode = ARPaymentFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -6165,6 +6166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = ARPaymentFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = "הדפסה",
+						FeatureUniqeCode = ARPaymentFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -6182,6 +6184,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = ARPaymentFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = ARPaymentFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -6199,6 +6202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ARPaymentMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6216,6 +6220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB30.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ARPaymentFeature_MB30.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ARPaymentMenuButton31 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6233,6 +6238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB31.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ARPaymentFeature_MB31.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ARPaymentMenuButton32 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6250,6 +6256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ARPaymentMenuButton33 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6267,6 +6274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB32.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+						FeatureUniqeCode=  ARPaymentFeature_MB32.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ARPaymentMenuButton34 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6284,6 +6292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB33.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ARPaymentFeature_MB33.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ARPaymentMenuButton35 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6301,6 +6310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB34.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ARPaymentFeature_MB34.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

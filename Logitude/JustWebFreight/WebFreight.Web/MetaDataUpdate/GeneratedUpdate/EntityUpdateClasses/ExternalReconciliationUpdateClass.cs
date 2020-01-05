@@ -1020,6 +1020,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = ExternalReconciliationFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = "ביטול התאמה",
+						FeatureUniqeCode = ExternalReconciliationFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

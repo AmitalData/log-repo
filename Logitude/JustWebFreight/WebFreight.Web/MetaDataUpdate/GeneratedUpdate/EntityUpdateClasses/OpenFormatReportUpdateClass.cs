@@ -1206,6 +1206,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "יותר",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton OpenFormatReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1223,6 +1224,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpenFormatReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הורדה",
+						FeatureUniqeCode=  OpenFormatReportFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton OpenFormatReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1240,6 +1242,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpenFormatReportFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "PDF הורד קובץ ",
+						FeatureUniqeCode=  OpenFormatReportFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

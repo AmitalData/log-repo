@@ -2653,6 +2653,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = BankAccountFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = "התאם",
+						FeatureUniqeCode = BankAccountFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

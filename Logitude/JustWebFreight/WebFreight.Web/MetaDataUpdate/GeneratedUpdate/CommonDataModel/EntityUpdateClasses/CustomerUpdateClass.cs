@@ -10299,6 +10299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = CustomerFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = CustomerFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -10316,6 +10317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = CustomerFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = CustomerFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -10333,6 +10335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = CustomerFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = CustomerFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -10350,6 +10353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = CustomerFeature_MB3.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = CustomerFeature_MB3.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -10367,6 +10371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = CustomerFeature_MB4.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = CustomerFeature_MB4.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -10384,6 +10389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton CustomerMenuButton50 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -10401,6 +10407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomerFeature_MB50.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  CustomerFeature_MB50.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton CustomerMenuButton51 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -10418,6 +10425,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomerFeature_MB51.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  CustomerFeature_MB51.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton CustomerMenuButton52 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -10435,6 +10443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomerFeature_MB52.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  CustomerFeature_MB52.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton CustomerMenuButton53 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -10452,6 +10461,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomerFeature_MB53.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  CustomerFeature_MB53.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton CustomerMenuButton54 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -10469,6 +10479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomerFeature_MB54.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  CustomerFeature_MB54.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton CustomerMenuButton55 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -10486,6 +10497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomerFeature_MB55.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  CustomerFeature_MB55.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton CustomerMenuButton56 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -10503,6 +10515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomerFeature_MB56.Id,
 						Style = null,
 						LocalDefaultText = "נתק כרטיס",
+						FeatureUniqeCode=  CustomerFeature_MB56.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

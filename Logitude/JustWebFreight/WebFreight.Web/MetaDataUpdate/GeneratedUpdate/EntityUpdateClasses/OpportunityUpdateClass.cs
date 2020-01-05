@@ -5258,6 +5258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5275,6 +5276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB1.Id,
 						Style = "RedButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5292,6 +5294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5309,6 +5312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB3.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB3.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5326,6 +5330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB4.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB4.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5343,6 +5348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton OpportunityMenuButton50 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5360,6 +5366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB50.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  OpportunityFeature_MB50.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton OpportunityMenuButton51 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5377,6 +5384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB51.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  OpportunityFeature_MB51.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton OpportunityMenuButton52 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5394,6 +5402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB52.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  OpportunityFeature_MB52.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton OpportunityMenuButton53 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5411,6 +5420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB53.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  OpportunityFeature_MB53.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
