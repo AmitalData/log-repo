@@ -192,14 +192,28 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public TextCode GetSingleTextCodeByTenant(string id, int tenant)
+        public TextCode GetSingleTextCodeByCode(string code)
         {
             return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
-                    where a.Id == id && a.Tenant == tenant
+                    where a.Code == code
                     select a).FirstOrDefault();
         }
 
-       
+        public TextCode GetSingleTextCodeByTenant(string code, int tenant)
+        {
+            return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
+                    where a.Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+        public string GetSingleTextCodeByCode(string code, int tenant)
+        {
+            return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
+                    where a.Code == code && a.Tenant == tenant
+                    select a.Id).FirstOrDefault();
+        }
+
+
         public int GetTextCodesCountForDefaultTranslation(int tenant, string objectTableId, string isSpellCheckedCode, string textCodeTypeCode, DateTime? selectedCheckDate, string checkDateFiler, string searchText)
         {
             int result = 0;

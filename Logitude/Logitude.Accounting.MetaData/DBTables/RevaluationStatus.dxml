@@ -3,14 +3,13 @@
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="100">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Name" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Revaluations" ParentColumnName="Status" ReferencedTableName="RevaluationStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.RevaluationStatuses_Status" />
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

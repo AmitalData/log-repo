@@ -46,6 +46,8 @@ export class AccountingWorkspaceComponent {
         this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("InterestBasesType").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("InterestBasesPeriod").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("InterestReport").subscribe((response: any) => { });
+
     }
 
     CheckFeatures() {
@@ -209,12 +211,17 @@ export class AccountingWorkspaceComponent {
                             if (this.Page_Receivable == null) {
                                 this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
                                     this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {
-
-                                        SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Receivable/ReceivablePageComponent", myLocation.viewContainerRef)
-                                            .then(cmpRef => {
-                                                this.Page_Receivable = cmpRef.instance;
-                                                this.Page_Receivable.InitComponent();
+                                        this._entityResourceService.getEntityResourceByTableName("GLAccountInterestPeriod",0).subscribe((response: any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
+                                                SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Receivable/ReceivablePageComponent", myLocation.viewContainerRef)
+                                                    .then(cmpRef => {
+                                                        this.Page_Receivable = cmpRef.instance;
+                                                        this.Page_Receivable.InitComponent();
+                                                    });
                                             });
+
+                                        });
+                               
                                     });
                                 });
                             }

@@ -285,6 +285,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return null;
             }
+            if (pm.Inactive.GetValueOrDefault())
+            {
+                return null;
+            }
             return pm;
         }
 

@@ -1,57 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Occasions" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EndDateTime" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Goal" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IndustryId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InvitedContacts" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="InvitedCustomers" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Location" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Name" Type="nvarchar" Size="100">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="OccasionStatusId" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="OccasionTypeId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="OwnerId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ParticipatedContacts" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ParticipatedCustomers" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="StartDateTime" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="UpdateDate" Type="datetime">
@@ -60,5 +18,52 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="OccasionInvitees" ParentColumnName="OccasionId" ReferencedTableName="Occasions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OccasionInvitees_dbo.Occasions_OccasionId" />
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="nvarchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="StartDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EndDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Goal" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Location" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OwnerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IndustryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OccasionTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OccasionStatusId" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ParticipatedCustomers" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ParticipatedContacts" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InvitedCustomers" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InvitedContacts" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="OwnerId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="IndustryId" ReferencedTable="Industries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="OccasionTypeId" ReferencedTable="OccasionTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="OccasionStatusId" ReferencedTable="OccasionStatuses" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

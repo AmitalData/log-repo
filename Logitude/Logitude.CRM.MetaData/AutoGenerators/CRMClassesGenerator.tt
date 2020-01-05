@@ -45,7 +45,10 @@ GenerateAllRepositories("../EntityFiles","../../Logitude.CRM.Data/Repsitories","
 GenerateAllEntityMaps("../EntityFiles","../../Logitude.CRM.Data/EntityMapping");
 
 GenerateAllPMs("../EntityFiles","../../Logitude.CRM.BL/EntityPMs");
+
 GenerateAllLists("../EntityFiles","../../Logitude.CRM.Data/EntityLists");
+GenerateAllLists("../MetadataFiles","../../Logitude.CRM.Data/EntityLists");
+
 GenerateAllMappingClasss("../EntityFiles","../../Logitude.CRM.BL/EntityDataMappings"); 
 
 GenerateAllUpdateServices("../EntityFiles","../../Logitude.CRM.BL/EntityUpdateServices","CRMContext");
@@ -54,7 +57,13 @@ GenerateAllQueryServices("../EntityFiles","../../Logitude.CRM.BL/EntityQueryServ
 GenerateAllListQueryServices("../EntityFiles","../../Logitude.CRM.Data/EntityListQueryServices","CRMContext");
 
 GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CRMModel");
+GenerateAllUpdateClasses("../MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CRMModel");
+
 GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CRMUpdateClass");
+GenerateMetaDataUpdateClass("../MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","OccasionContactMetadataUpdateClass");
+//GenerateMetaDataUpdateClass("../MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CRMUpdateClass");
+
+
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.CRM.BL/CLoseTables");
 GenerateAllDomainServices("../EntityFiles","../.../JustWebFreight/WebFreight.Web/CRMModel","CRMContext","Logitude.CRM","CRMDomainService");
  
@@ -66,10 +75,15 @@ GenerateAllControllers("../EntityFiles","../.../JustWebFreight/WebFreight.Web/Co
 
 // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------
 GenerateAllPMTS("../EntityFiles","../../AngularModules/AngularModules/CRM/EntityPMs");
+
 GenerateAllListTS("../EntityFiles","../../AngularModules/AngularModules/CRM/EntityLists");
+GenerateAllListTS("../MetadataFiles","../../AngularModules/AngularModules/CRM/EntityLists");
+
 
 GenerateAllServices("../EntityFiles","../../AngularModules/AngularModules/CRM/Services/StandardPMs","CRM");
 GenerateAllListServices("../EntityFiles","../../AngularModules/AngularModules/CRM/Services/StandardLists","CRM");
+GenerateAllListServices("../MetadataFiles","../../AngularModules/AngularModules/CRM/Services/StandardLists","CRM");
+
  #>
 
 

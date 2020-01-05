@@ -158,6 +158,9 @@ namespace WebFreight.Web.MetaDataUpdate
 							ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
+                            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+                            masterModelUpdateClass.LoadObjectsTenantZero(context);
+
                             QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
                             quotemodelUpdateClass.LoadObjectsTenantZero(context);
 
@@ -429,6 +432,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
+                            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+                            masterModelUpdateClass.LoadObjectsTenantZero(context);
+
                             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                             {
                                 MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
@@ -566,6 +572,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             customUpdateClass.LoadEventTypes();
 
                             //CRM
+                            OccasionContactMetadataUpdateClass occasionContactMetadataUpdateClass = new OccasionContactMetadataUpdateClass();
+                            occasionContactMetadataUpdateClass.LoadObjectsTenantZero(context);
+
                             CRMUpdateClass cRMUpdateClass = new CRMUpdateClass();
                             cRMUpdateClass.LoadObjectsTenantZero(context);
 

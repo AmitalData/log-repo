@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="BusinessHours" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+  <Column Name="Name" Type="nvarchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Description" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FridayFromHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FridayToHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="Is247" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsFridayEnabeled" Type="bit">
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsMondayEnabeled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsSaturdayEnabeled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsSundayEnabeled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsThursdayEnabeled" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsTuesdayEnabeled" Type="bit">
@@ -45,57 +39,63 @@
   <Column Name="IsWednesdayEnabeled" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="IsThursdayEnabeled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsFridayEnabeled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSaturdayEnabeled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSundayEnabeled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="MondayFromHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MondayToHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Name" Type="nvarchar" Size="60">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SaturdayFromHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SaturdayToHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SundayFromHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SundayToHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ThursdayFromHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ThursdayToHour" Type="time">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="TuesdayFromHour" Type="time">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TuesdayToHour" Type="time">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="WednesdayFromHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ThursdayFromHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FridayFromHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SaturdayFromHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SundayFromHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MondayToHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TuesdayToHour" Type="time">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="WednesdayToHour" Type="time">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="SLALines" ParentColumnName="BusinessHoursId" ReferencedTableName="BusinessHours" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SLALines_dbo.BusinessHours_BusinessHoursId" />
-  <Relation ParentTableName="BusinessHoursHolidays" ParentColumnName="BusinessHourId" ReferencedTableName="BusinessHours" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessHoursHolidays_dbo.BusinessHours_BusinessHourId" />
+  <Column Name="ThursdayToHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FridayToHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SaturdayToHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SundayToHour" Type="time">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

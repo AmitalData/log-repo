@@ -98,11 +98,14 @@ namespace MetaDataGenerator
 
 
 			allFields = fieldsRep.GetObjectFieldsByTenant(0).Where(f => f.ObjectTableId == table.Id).Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable").ToList();
-			allTextCodes = textCodesRep.GetTextCodesByTenantAndObjectTable(0, table.Name).ToList();
+            if (table.Name != "Master")
+                allTextCodes = textCodesRep.GetTextCodesByTenantAndObjectTable(0, table.Name).ToList();
+            else
+                allTextCodes = textCodesRep.GetTextCodesByTenant(0).ToList();
 
 
 
-			allQueries = queryRep.GetQueriesByTenant(0).ToList();
+            allQueries = queryRep.GetQueriesByTenant(0).ToList();
 			allQueryColumns = queryColumnRep.GetQueryColumnsByTenant(0).ToList();
 			allQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenant(0).ToList();
 
@@ -121,10 +124,28 @@ namespace MetaDataGenerator
 
 
 
+        public bool FormatExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
+        {
+           using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+				if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+				{
+					 
+
+					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+					 
+
+				}
+			}
+            return true;
+        }
 
 
-
-		public bool AppendExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
+        public bool AppendExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
         {
             directoryPath = directoryPath + @"\";
             foreach (ObjectTable table in modelTables)
@@ -518,8 +539,8 @@ namespace MetaDataGenerator
         private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields, bool updateLXML = false)
         {
 			string tableName = table.Name;
-			if (table.Name.ToLower() == "master")
-				tableName = "Shipment";
+			//if (table.Name.ToLower() == "master")
+			//	tableName = "Shipment";
 
 			string modelName = "CommonDataModel";
             string qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + tableName);
@@ -572,7 +593,7 @@ namespace MetaDataGenerator
             System.Type tableListClass = System.Type.GetType(qListName);
 
 
-            if (tableClass == null && tableName != "General")// && tablePMClass == null)
+            if (tableClass == null && tableName != "General" && tableName != "Master")// && tablePMClass == null)
             {
                 return false;
             }

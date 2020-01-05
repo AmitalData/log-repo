@@ -32,14 +32,12 @@ namespace Logitude.HybridTest.ServicesTest
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(contactPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.ContactId = serviceResponse.Result;
         }
 
         [TestMethod]
         public void Test_Contact_GetContactPMByEmail()
         {
-            if(HybridData.ContactId == null)
-                Test_Contact_UPSERT();
+            Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",
@@ -50,17 +48,18 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "HybridContact@logitudeworld.com", EnvironmentGlobalParams.MainTenant, serviceResponse };
-            ContactPM contact = (ContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Contact PM By Email Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            ContactPM contact = (ContactPM)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Contact PM By Email Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Contact PM By Email Failed! " + serviceOutcome.Response.Result);
             Assert.AreEqual(contact.EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
 
         [TestMethod]
         public void Test_Contact_GetContactList()
         {
-            if (HybridData.ContactId == null)
-                Test_Contact_UPSERT();
+            Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",
@@ -77,17 +76,18 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            ContactList[] contacts = (ContactList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            ContactList[] contacts = (ContactList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.Result);
             Assert.AreEqual(contacts[0].EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
 
         [TestMethod]
         public void Test_Contact_GetContactByExternalId()
         {
-            if (HybridData.ContactId == null)
-                Test_Contact_UPSERT();
+            Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",
@@ -98,9 +98,11 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.ContactCode, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            ContactPM contact = (ContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Contact By External Id Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            ContactPM contact = (ContactPM)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Contact By External Id Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Contact By External Id Failed! " + serviceOutcome.Response.Result);
             Assert.AreEqual(contact.EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
     }

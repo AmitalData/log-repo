@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Stages" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsSelectable" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MaxDays" Type="int">
+  <Column Name="Code" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Name" Type="nvarchar" Size="60">
@@ -27,8 +18,13 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Opportunities" ParentColumnName="LastStageIdBeforeClosure" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Stages_LastStageIdBeforeClosure" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="StageId" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Stages_StageId" />
-  <Relation ParentTableName="OpportunityStages" ParentColumnName="FromStageId" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityStages_dbo.Stages_FromStageId" />
-  <Relation ParentTableName="OpportunityStages" ParentColumnName="ToStageId" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityStages_dbo.Stages_ToStageId" />
+  <Column Name="IsSelectable" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MaxDays" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

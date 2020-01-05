@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Clients" Schema="Customs" DBType="Main">
-  <Column Name="BirthDate" Type="datetime">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FullName" Type="nvarchar" Size="55">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ClientTypeSpecificCode" Type="varchar" Size="6">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Code" Type="varchar" Size="15">
+  <Column Name="IsActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalFirstName" Type="nvarchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+  <Column Name="LocalLastName" Type="nvarchar" Size="19">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DunsNumber" Type="varchar" Size="9">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EnglishBirthPlace" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EnglishCorporationName" Type="varchar" Size="55">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="EnglishFatherName" Type="varchar" Size="20">
+  <Column Name="LocalCorporationName" Type="nvarchar" Size="55">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="EnglishFirstName" Type="varchar" Size="41">
@@ -30,72 +36,60 @@
   <Column Name="EnglishLastName" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FacilitationTypeCode" Type="varchar" Size="15">
+  <Column Name="EnglishCorporationName" Type="varchar" Size="55">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FullName" Type="nvarchar" Size="55">
+  <Column Name="BirthDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="GenderCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IsActive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsExporter" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsImporter" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LocalCorporationName" Type="nvarchar" Size="55">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LocalFirstName" Type="nvarchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="LocalLastName" Type="nvarchar" Size="19">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PassportCountryCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PassportExpirationDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PassportFirstName" Type="varchar" Size="41">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PassportIssueDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PassportLastName" Type="varchar" Size="30">
+  <Column Name="DunsNumber" Type="varchar" Size="9">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="PassportNumber" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="PassportCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="PassportTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+  <Column Name="PassportFirstName" Type="varchar" Size="41">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="PassportLastName" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishBirthPlace" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishFatherName" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PassportExpirationDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PassportIssueDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsImporter" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ClientAddresses" ParentColumnName="ClientId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ClientAddresses_Customs.Clients_ClientId" />
-  <Relation ParentTableName="ClientDrivingLicenses" ParentColumnName="ClientId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ClientDrivingLicenses_Customs.Clients_ClientId" />
-  <Relation ParentTableName="ImporterDespositions" ParentColumnName="ImporterlId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ImporterDespositions_Customs.Clients_ImporterlId" />
-  <Relation ParentTableName="Declarations" ParentColumnName="EntitleImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.Clients_EntitleImporterId" />
-  <Relation ParentTableName="Declarations" ParentColumnName="ImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.Clients_ImporterId" />
-  <Relation ParentTableName="Declarations" ParentColumnName="TransferImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.Clients_TransferImporterId" />
-  <Relation ParentTableName="PaymentOrders" ParentColumnName="ImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrders_Customs.Clients_ImporterId" />
-  <Relation ParentTableName="Vehicles" ParentColumnName="ImporterIdentityId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Vehicles_Customs.Clients_ImporterIdentityId" />
-  <Relation ParentTableName="Tapags" ParentColumnName="ImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Tapags_Customs.Clients_ImporterId" />
-  <Relation ParentTableName="CustomsPartnersItems" ParentColumnName="CustomerId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsPartnersItems_Customs.Clients_CustomerId" />
-  <Relation ParentTableName="Claims" ParentColumnName="ClientId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Claims_Customs.Clients_ClientId" />
+  <Column Name="IsExporter" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FacilitationTypeCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="ClientTypeSpecificCode" ReferencedTable="CustomerTypeGenerals" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="GenderCode" ReferencedTable="Genders" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="PassportCountryCode" ReferencedTable="CustomsCountries" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="PassportTypeCode" ReferencedTable="PassportTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="FacilitationTypeCode" ReferencedTable="FacilitationTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

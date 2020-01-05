@@ -6,11 +6,10 @@
   <Column Name="Name" Type="varchar" Size="60">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="ViewOrder" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Tenants" ParentColumnName="VatFormatTypeCode" ReferencedTableName="VatFormatType" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.VatFormatType_VatFormatTypeCode" />
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

@@ -3,18 +3,16 @@
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="40">
+  <Column Name="LocalName" Type="nvarchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Inactive" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="40">
+  <Column Name="EnglishName" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Declarations" ParentColumnName="MainImporterEntitlemntTypeCode" ReferencedTableName="EntitlementTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.EntitlementTypes_MainImporterEntitlemntTypeCode" />
-  <Relation ParentTableName="Declarations" ParentColumnName="ImporterEntitlementTypeCode" ReferencedTableName="EntitlementTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.EntitlementTypes_ImporterEntitlementTypeCode" />
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

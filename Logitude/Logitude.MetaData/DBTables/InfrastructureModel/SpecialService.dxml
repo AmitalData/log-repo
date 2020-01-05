@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="SpecialServices" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="char" Size="6">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Code" Type="char" Size="6">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="SpecialServiceEnglishName" Type="varchar" Size="40">
@@ -15,7 +15,7 @@
   <Column Name="SpecialServiceLocalName" Type="nvarchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
   </Column>
 </Table>

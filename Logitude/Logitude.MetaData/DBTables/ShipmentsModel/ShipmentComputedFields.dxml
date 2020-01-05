@@ -1,52 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ShipmentComputedFields" Schema="dbo" DBType="Main">
-  <Column Name="Commodity" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ContainersNumbers" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DocumentsSearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FinalDeliveryATA" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FinalDeliveryATD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FinalDeliveryETA" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FinalDeliveryETD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FirstPickupATA" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FirstPickupATD" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FirstPickupLocation" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ImporterDepositionRequestDetails" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsDepositionRequired" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsDigitalSignRequired" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsMissingDocuments" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsRequestedDocuments" Type="bit">
-    <Constraints Nullable="false" />
+  <Column Name="DocumentsSearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="LastDocumentDateTime" Type="datetime">
     <Constraints Nullable="true" />
@@ -57,13 +21,50 @@
   <Column Name="MissingDocumentsNames" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="NumberOfHouses" Type="int">
+  <Column Name="IsRequestedDocuments" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="RequestedDocumentsCount" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="NumberOfHouses" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="IsDigitalSignRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsDepositionRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ImporterDepositionRequestDetails" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Commodity" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FirstPickupLocation" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContainersNumbers" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FirstPickupATD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FirstPickupATA" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FinalDeliveryETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FinalDeliveryETA" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FinalDeliveryATD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FinalDeliveryATA" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="Id" ReferencedTable="Shipments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

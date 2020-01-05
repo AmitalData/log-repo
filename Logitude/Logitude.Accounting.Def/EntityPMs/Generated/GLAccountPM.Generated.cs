@@ -2378,6 +2378,156 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? activeForInterest ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? ActiveForInterest  
+	   {
+	    
+	     get
+		{
+		   return activeForInterest;
+		 }
+		 set
+		 {
+		   if(activeForInterest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterest",OldValue=activeForInterest,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   activeForInterest=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? interestCalculationStartDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? InterestCalculationStartDate  
+	   {
+	    
+	     get
+		{
+		   return interestCalculationStartDate;
+		 }
+		 set
+		 {
+		   if(interestCalculationStartDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationStartDate",OldValue=interestCalculationStartDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   interestCalculationStartDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool? activeForInterestCreditInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? ActiveForInterestCreditInvoice  
+	   {
+	    
+	     get
+		{
+		   return activeForInterestCreditInvoice;
+		 }
+		 set
+		 {
+		   if(activeForInterestCreditInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterestCreditInvoice",OldValue=activeForInterestCreditInvoice,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   activeForInterestCreditInvoice=value;
+		   }
+			
+		 }
+	   }
+	  private int? minimumInterestInvoiceBilling ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? MinimumInterestInvoiceBilling  
+	   {
+	    
+	     get
+		{
+		   return minimumInterestInvoiceBilling;
+		 }
+		 set
+		 {
+		   if(minimumInterestInvoiceBilling != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   minimumInterestInvoiceBilling=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<GLAccountInterestPeriodPM> gLAccountInterestPeriods;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("GLAccountInterestPeriodGLAccount", "Id","GLAccountId")]
+	   [DataMember]
+	   public virtual List<GLAccountInterestPeriodPM> GLAccountInterestPeriods  
+	   {
+	        get
+             {
+                 if (gLAccountInterestPeriods == null)
+                 {
+                     gLAccountInterestPeriods = new List<GLAccountInterestPeriodPM>();
+                 }
+                 return gLAccountInterestPeriods;
+              }
+             set { gLAccountInterestPeriods = value; }
+	    }
+		   
+	   private List<GLAccountInterestPeriodPM>  deletedGLAccountInterestPeriods;
+	   public virtual List<GLAccountInterestPeriodPM> DeletedGLAccountInterestPeriods  
+	   {
+	        get
+             {
+                 if ( deletedGLAccountInterestPeriods == null)
+                 {
+                      deletedGLAccountInterestPeriods = new List<GLAccountInterestPeriodPM>();
+                 }
+                 return  deletedGLAccountInterestPeriods;
+              }
+             set {  deletedGLAccountInterestPeriods = value; }
+	    }
+	  	  private decimal? interestCreditLimit ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? InterestCreditLimit  
+	   {
+	    
+	     get
+		{
+		   return interestCreditLimit;
+		 }
+		 set
+		 {
+		   if(interestCreditLimit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCreditLimit",OldValue=interestCreditLimit,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   interestCreditLimit=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

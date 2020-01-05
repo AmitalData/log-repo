@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var System: any;
 import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, Injector,  EventEmitter} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
@@ -294,8 +294,8 @@ export class LogLovComponent implements OnInit {
                 }
                 else {
                     objectFieldAvailable = true;
-                    if (this.ObjectField.HelpTextCodeId != null) {
-                    this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
+                    if (this.ObjectField.HelpTextCodeCode != null) {
+                    this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
 
                     if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                         if (this.ObjectFieldHelp.length > 1) {

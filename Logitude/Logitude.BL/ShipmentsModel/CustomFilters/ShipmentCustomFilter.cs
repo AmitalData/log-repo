@@ -266,7 +266,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                         ( d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "D")
                                         && d.DirectionId == "E"
                                         && d.TransportModeId == "O"
-                                        && d.INTTRABookingTransStatusCode != "NST"
+                                        && d.INTTRABookingTransStatusCode != "NST" && d.INTTRABookingStatusCode != "SI"
                                         && d.MainCarriageATD == null
                                         select d;
                     }

@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ObjectFieldValidations" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="4">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Condition" Type="varchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ErrorMessage" Type="varchar" Size="250">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ObjectFieldId" Type="varchar" Size="15">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="Code" Type="varchar" Size="4">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ValidationExpression" Type="varchar" Size="250">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="ErrorMessage" Type="varchar" Size="250">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectFieldId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="ValidationOrder" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="Condition" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

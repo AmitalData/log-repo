@@ -71,7 +71,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          HasCustomFields = a.HasCustomFields,
                                          CustomFieldsCount = a.CustomFieldsCount,
                                          DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                         DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                         DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                          SearchFields = a.SearchFields,
                                          IsSaveButtonVisible = a.IsSaveButtonVisible,
                                          MainTipCode = a.MainTipCode,
@@ -84,7 +84,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          HasDynamicHeader = a.HasDynamicHeader,
                                          IsLookUp = a.IsLookUp,
                                          HasDocuments = a.HasDocuments,
-                                         NewButtonTextCodeCode = a.NewButtonTextCode.Code,
+                                         NewButtonTextCodeCode = a.NewButtonTextCodeCode,
                                          HasCustomValidator = a.HasCustomValidator,
                                          ClientModuleName = a.ClientModuleName,
                                          ServerModuleName = a.ServerModuleName,
@@ -114,7 +114,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 where a.Tenant == 0 && a.LastUpdateDate > sinceDate
                                 select new ObjectTablePM()
                                 {
-                                    NewButtonTextCodeCode = a.NewButtonTextCode.Code,
+                                    NewButtonTextCodeCode = a.NewButtonTextCodeCode,
                                     LookUp1 = a.LookUp1,
                                     LookUp2 = a.LookUp2,
                                     AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -143,7 +143,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     HasCustomFields = a.HasCustomFields,
                                     CustomFieldsCount = a.CustomFieldsCount,
                                     DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                    DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                    DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                     SearchFields = a.SearchFields,
                                     IsSaveButtonVisible = a.IsSaveButtonVisible,
                                     MainTipCode = a.MainTipCode,
@@ -193,7 +193,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                        where a.Tenant == tenant
                                        select new ObjectTablePM()
                                        {
-                                           NewButtonTextCodeCode = a.NewButtonTextCode.Code,
+                                           NewButtonTextCodeCode = a.NewButtonTextCodeCode,
                                            LookUp1 = a.LookUp1,
                                            LookUp2 = a.LookUp2,
                                            AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -222,7 +222,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            HasCustomFields = a.HasCustomFields,
                                            CustomFieldsCount = a.CustomFieldsCount,
                                            DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                           DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                           DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                            SearchFields = a.SearchFields,
                                            IsSaveButtonVisible = a.IsSaveButtonVisible,
                                            MainTipCode = a.MainTipCode,
@@ -266,7 +266,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                         where a.Tenant == 0
                                         select new ObjectTablePM()
                                         {
-                                            NewButtonTextCodeCode = a.NewButtonTextCode.Code,
+                                            NewButtonTextCodeCode = a.NewButtonTextCodeCode,
                                             LookUp1 = a.LookUp1,
                                             LookUp2 = a.LookUp2,
                                             AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -295,7 +295,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             HasCustomFields = a.HasCustomFields,
                                             CustomFieldsCount = a.CustomFieldsCount,
                                             DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                            DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                            DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                             SearchFields = a.SearchFields,
                                             IsSaveButtonVisible = a.IsSaveButtonVisible,
                                             MainTipCode = a.MainTipCode,
@@ -356,7 +356,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    where (a.Tenant == tenant && a.InActive == false)
                                                    select new ObjectTablePM()
                                                    {
-                                                       NewButtonTextCodeCode = a.NewButtonTextCode.Code,
+                                                       NewButtonTextCodeCode = a.NewButtonTextCodeCode,
                                                        LookUp1 = a.LookUp1,
                                                        LookUp2 = a.LookUp2,
                                                        AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -385,7 +385,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        HasCustomFields = a.HasCustomFields,
                                                        CustomFieldsCount = a.CustomFieldsCount,
                                                        DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                       DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                                       DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                                        SearchFields = a.SearchFields,
                                                        IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                        MainTipCode = a.MainTipCode,
@@ -437,7 +437,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                where (a.Tenant == tenant && a.InActive == false)
                                                select new ObjectTablePM()
                                                {
-                                                   NewButtonTextCodeCode = a.NewButtonTextCode.Code,
+                                                   NewButtonTextCodeCode = a.NewButtonTextCodeCode,
                                                    LookUp1 = a.LookUp1,
                                                    LookUp2 = a.LookUp2,
                                                    AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -466,7 +466,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    HasCustomFields = a.HasCustomFields,
                                                    CustomFieldsCount = a.CustomFieldsCount,
                                                    DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                   DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                                   DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                                    SearchFields = a.SearchFields,
                                                    IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                    MainTipCode = a.MainTipCode,
@@ -515,7 +515,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                where (a.Tenant == 0 && a.InActive == false)
                                                select new ObjectTablePM()
                                                {
-                                                   NewButtonTextCodeCode = a.NewButtonTextCode.Code,
+                                                   NewButtonTextCodeCode = a.NewButtonTextCodeCode,
                                                    LookUp1 = a.LookUp1,
                                                    LookUp2 = a.LookUp2,
                                                    AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -544,7 +544,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    HasCustomFields = a.HasCustomFields,
                                                    CustomFieldsCount = a.CustomFieldsCount,
                                                    DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                   DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                                   DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                                    SearchFields = a.SearchFields,
                                                    IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                    MainTipCode = a.MainTipCode,
@@ -598,7 +598,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select new ObjectTablePM()
                                         {
-                                            NewButtonTextCodeCode = a.NewButtonTextCode.Code,
+                                            NewButtonTextCodeCode = a.NewButtonTextCodeCode,
                                             LookUp1 = a.LookUp1,
                                             LookUp2 = a.LookUp2,
                                             AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -627,7 +627,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             HasCustomFields = a.HasCustomFields,
                                             CustomFieldsCount = a.CustomFieldsCount,
                                             DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                            DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                            DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                             SearchFields = a.SearchFields,
                                             IsSaveButtonVisible = a.IsSaveButtonVisible,
                                             MainTipCode = a.MainTipCode,
@@ -776,7 +776,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      IsMain = a.IsMain,
                                                      IsRestrictable = a.IsRestrictable,
                                                      DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                     DescriptionTextCodeCode = a.DescriptionTextCode.Code,
+                                                     DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                                      SearchFields = a.SearchFields,
                                                      IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                      MainTipCode = a.MainTipCode,
@@ -834,6 +834,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsMain = a.IsMain,
                                                    IsRestrictable = a.IsRestrictable,
                                                    DescriptionTextCodeId = a.DescriptionTextCodeId,
+                                                   DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                                    SearchFields = a.SearchFields,
                                                    IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                    MainTipCode = a.MainTipCode,

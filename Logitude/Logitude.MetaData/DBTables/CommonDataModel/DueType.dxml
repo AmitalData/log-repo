@@ -9,9 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ShipmentAWBPrintOnlies" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentAWBPrintOnlies_dbo.DueTypes_DueTypeCode" />
-  <Relation ParentTableName="ChargesTypes" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.DueTypes_DueTypeCode" />
-  <Relation ParentTableName="IATACodes" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.IATACodes_dbo.DueTypes_DueTypeCode" />
-  <Relation ParentTableName="ShipmentPayables" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.DueTypes_DueTypeCode" />
-  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="DueTypeCode" ReferencedTableName="DueTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.DueTypes_DueTypeCode" />
 </Table>

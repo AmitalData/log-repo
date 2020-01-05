@@ -201,6 +201,11 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string EntityType { get; set; }
 	      
         public virtual ObjectTable ObjectTable { get; set; }
+        [ForeignKey("SupportMailbox")]
+        [Column("SupportMailboxId")]
+	    public string SupportMailboxId { get; set; }
+	      
+        public virtual SupportMailbox SupportMailbox { get; set; }
     }
 }
 	 

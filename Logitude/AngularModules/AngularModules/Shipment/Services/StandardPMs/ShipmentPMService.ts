@@ -40,6 +40,8 @@ import {ShipmentAssemblyPM} from '../../EntityPMs/ShipmentAssemblyPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { LoginService } from '../../../Infrastructure/Services/LoginService';
+
 
 @Injectable()
 
@@ -140,7 +142,22 @@ export class ShipmentPMService {
 
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string,Tenant:number) {
 
-        var myCustomURL = "http://13.93.36.4/api/shipment";
+        var myCustomURL = "https://pre.amital.co.il/api/shipment";
+        //var myAuthHeader = new Headers();
+        //myAuthHeader.append('Content-Type', 'application/json');
+        //myAuthHeader.append('Accept', 'application/json');
+        //myAuthHeader.append('token', SessionInfo.Token);
+        //loginService.AuthHeader = myAuthHeader;
+        //loginService.GetGlobalSetting().subscribe(Setting => {
+        //    if (Setting) {
+        //        if (Setting.DeploymentStage == "amitalstorage") {
+        //            var myCustomURL = "http://13.93.36.4/api/shipment";
+        //        }
+        //    }
+        //});
+        if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
+            myCustomURL = this._apiUrl;
+        }
         var authHeader = new Headers();
         //authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         //authHeader.append('CallTimKey', ServiceHelper.GetLoggedUserToken());

@@ -30,9 +30,7 @@ namespace Logitude.XSD.INTTRA.BL
                     //Value = "ShippingInstruction", (_OLD32)
                     Value = INTTRA_Out.MessageTypeValues.ShippingInstruction,
                 },
-
-                DocumentIdentifier = myDocumentIdentifier,
-
+                DocumentIdentifier = this.Context.iNTTRAGeneralMethods.FormatString(myDocumentIdentifier, 35),
                 DateTime = new INTTRA_Out.DateTime()
                 {
                     DateType = INTTRA_Out.DateTimeDateType.Document,

@@ -19,6 +19,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private readonly string const_ThereIsntAnyGLAccounts= "There Isn't Any GLAccounts";
         private readonly string const_DifftotBalanceInLocalCurrencyMinusaccBalanceInLocalCurrency= "Diff = tot.BalanceInLocalCurrency-acc.BalanceInLocalCurrency";
         private readonly string const_ThereIsntAnyGLAccountTotalByMonths= "There Isn't Any GLAccountTotalByMonths";
+        private readonly string const_TotalOpenAmountInTransactionDiffBalanceInLocalCurrency = "בדיקה שסך סכום פתוח של תנועות בכרטיס שווה ליתרה חשבונאית של כרטיס";
 
         public ReverseEngineerGLAccountBalance(int currTenant)
         {
@@ -39,6 +40,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 var myGLAccountMoreDataRepo = new GLAccountMoreDataRepository(_AccountingContext);
 
                 var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
+                var myLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
+
                 var quaryAllGLAccount =
                     (from acc in myGLAccountRepo.GetAll(_Tenant)
                      join md in myGLAccountMoreDataRepo.GetAll(_Tenant) on acc.Id equals md.AccountId
@@ -119,13 +122,45 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     );
 
-                var q = qNotInTot.Union(qNotInGLAcc).Union(qDiff);
+
+                var qTotOpenAmountInTrans = (
+                   from tran in myLedgerTransactionRepository.GetAll(_Tenant)
+                   group tran by tran.AccountId into gTransByAcc
+
+                   select new GLAccountBalanceDTO
+                   {
+                       AccountId = gTransByAcc.Key,
+
+                       BalanceInLocalCurrency = gTransByAcc.Sum(r => r.OpenAmount),
+                       CHANGE_TYPE = ""
+                   }
+
+                   );
+                var qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency = (
+                from tot in quaryablMonthTotals
+                join totOpenAmountInTrans in qTotOpenAmountInTrans
+                on tot.AccountId equals totOpenAmountInTrans.AccountId
+                where (tot.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency >= 0.001m || tot.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency <= -0.001m)
+                select new GLAccountBalanceDTO
+                {
+                    AccountId = tot.AccountId,
+
+                    BalanceInLocalCurrency = tot.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency,
+                    CHANGE_TYPE = const_TotalOpenAmountInTransactionDiffBalanceInLocalCurrency
+                }
+
+                );
+
+
+                var qThe = qNotInTot.Union(qNotInGLAcc).Union(qDiff)
+                    .Union(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency); ;
                 bool UnionreturnsDistinctvalues = true;
                 if (UnionreturnsDistinctvalues)
                 {
-                    q = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff);
+                    qThe = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff)
+                        .Concat(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency); ;
                 }
-                    var l = q.ToList();
+                var l = qThe.ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "ReverseEngineerGLAccountBalance",

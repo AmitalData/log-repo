@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {GLAccountWithholdingTaxPM} from './GLAccountWithholdingTaxPM';
+import {GLAccountInterestPeriodPM} from './GLAccountInterestPeriodPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -562,6 +563,65 @@ export class GLAccountPM {
     private allowEditChequePayToName: boolean;
     public get AllowEditChequePayToName() { return this.allowEditChequePayToName; }
     public set AllowEditChequePayToName(newValue: boolean) { if (this.allowEditChequePayToName != newValue) { this.allowEditChequePayToName = newValue; this.MarkAsDirty("AllowEditChequePayToName"); } }
+       
+	 
+    private activeForInterest: boolean;
+    public get ActiveForInterest() { return this.activeForInterest; }
+    public set ActiveForInterest(newValue: boolean) { if (this.activeForInterest != newValue) { this.activeForInterest = newValue; this.MarkAsDirty("ActiveForInterest"); } }
+       
+	 
+    private interestCalculationStartDate: Date;
+    public get InterestCalculationStartDate() { return this.interestCalculationStartDate; }
+    public set InterestCalculationStartDate(newValue: Date) { if (this.interestCalculationStartDate != newValue) { this.interestCalculationStartDate = newValue; this.MarkAsDirty("InterestCalculationStartDate"); } }
+       
+	 
+    private activeForInterestCreditInvoice: boolean;
+    public get ActiveForInterestCreditInvoice() { return this.activeForInterestCreditInvoice; }
+    public set ActiveForInterestCreditInvoice(newValue: boolean) { if (this.activeForInterestCreditInvoice != newValue) { this.activeForInterestCreditInvoice = newValue; this.MarkAsDirty("ActiveForInterestCreditInvoice"); } }
+       
+	 
+    private minimumInterestInvoiceBilling: number;
+    public get MinimumInterestInvoiceBilling() { return this.minimumInterestInvoiceBilling; }
+    public set MinimumInterestInvoiceBilling(newValue: number) { if (this.minimumInterestInvoiceBilling != newValue) { this.minimumInterestInvoiceBilling = newValue; this.MarkAsDirty("MinimumInterestInvoiceBilling"); } }
+       
+	 
+     
+	private gLAccountInterestPeriods: GLAccountInterestPeriodPM[];
+    get  GLAccountInterestPeriods() {
+        if (this.gLAccountInterestPeriods == null) {
+            this.gLAccountInterestPeriods = [];
+        }
+
+        return this.gLAccountInterestPeriods;
+    }
+    set  GLAccountInterestPeriods(newValue: GLAccountInterestPeriodPM[]) {
+        if (this.gLAccountInterestPeriods != newValue) {
+            this.gLAccountInterestPeriods = newValue;
+        }
+    }
+    public AddGLAccountInterestPeriod(item: GLAccountInterestPeriodPM) {
+        if (item != null) {
+            var index = this. GLAccountInterestPeriods.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. GLAccountInterestPeriods.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveGLAccountInterestPeriod(item: GLAccountInterestPeriodPM) {
+        if (item != null) {
+            var index = this. GLAccountInterestPeriods.indexOf(item);
+            if (index > -1) {
+                this. GLAccountInterestPeriods.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public GLAccountInterestPeriods: Array<GLAccountInterestPeriodPM>= [];
+     private interestCreditLimit: number;
+    public get InterestCreditLimit() { return this.interestCreditLimit; }
+    public set InterestCreditLimit(newValue: number) { if (this.interestCreditLimit != newValue) { this.interestCreditLimit = newValue; this.MarkAsDirty("InterestCreditLimit"); } }
        
 	 
 

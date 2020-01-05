@@ -138,6 +138,16 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
 
             this.Property(t => t.AllowEditChequePayToName).HasColumnName("AllowEditChequePayToName");
+
+            this.Property(t => t.ActiveForInterest).HasColumnName("ActiveForInterest");
+
+            this.Property(t => t.InterestCalculationStartDate).HasColumnName("InterestCalculationStartDate");
+
+            this.Property(t => t.ActiveForInterestCreditInvoice).HasColumnName("ActiveForInterestCreditInvoice");
+
+            this.Property(t => t.MinimumInterestInvoiceBilling).HasColumnName("MinimumInterestInvoiceBilling");
+
+            this.Property(t => t.InterestCreditLimit).HasColumnName("InterestCreditLimit").HasPrecision(18, 2);
         }
     }
 }

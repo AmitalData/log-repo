@@ -3,16 +3,19 @@
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="QuoteTemplateSectionId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="QuoteId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="QuoteTemplateId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="QuoteTemplateSectionId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="QuoteTemplateSectionId" ReferencedTable="QuoteTemplateSections" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="QuoteId" ReferencedTable="Quotes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="QuoteTemplateId" ReferencedTable="QuoteTemplates" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

@@ -3,10 +3,10 @@
   <Column Name="Id" Type="varchar" Size="40">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ObjectFieldsUpdateDateGMT" Type="datetime">
+  <Column Name="TranslationsUpdateDateGMT" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TranslationsUpdateDateGMT" Type="datetime">
+  <Column Name="ObjectFieldsUpdateDateGMT" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
 </Table>

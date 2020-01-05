@@ -88,10 +88,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         if (args != null) {
-            
+            var isAutorun = false; 
             if (args['ShipmentPM']) {
                 this.ShipmentPM = args['ShipmentPM'];
                 this.IsGeneratePayablesVisible = true;
+                isAutorun = true;
             }
             if (args['FatherComponent']) {
                 this.FatherComponent = args['FatherComponent'];
@@ -113,10 +114,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 this.weightCode = args['ChargeableWeightUnit'];
             }
             if (args['GrossWeight']) {
-                this.grossWeight = args['GrossWeight'];
+                this.GrossWeight = args['GrossWeight'];
             }
             if (args['GrossWeightUnit']) {
-                this.grossWeightCode = args['GrossWeightUnit'];
+                this.GrossWeightCode = args['GrossWeightUnit'];
             }
             if (args['Volume']) {
                 this.volume = args['Volume'];
@@ -129,8 +130,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
             this.SetLabels();
             this.SetUIProperties();
-            this.SearchButtonClicked();
             this.SetPortsDependencyFilterValue();
+           
+            if (isAutorun) {
+                this.SearchButtonClicked();
+            }
         }
     }
 

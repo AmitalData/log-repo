@@ -1,19 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="QuoteTemplates" Schema="dbo" DBType="Main">
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FooterDocId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
   </Column>
   <Column Name="HeaderDocId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="FooterDocId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteTemplateSettingId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="nvarchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTemplate" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OriginalQuoteTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="varchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsDefault" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TemplateTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="InActive" Type="bit">
     <Constraints Nullable="false" />
@@ -21,47 +51,14 @@
   <Column Name="IsCopiedAtSignup" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsDefault" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="IsEnabledForCustomers" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsTemplate" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Name" Type="nvarchar" Size="60">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="OriginalQuoteTemplateId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="QuoteTemplateSettingId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SearchFields" Type="varchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="TemplateTypeCode" Type="varchar" Size="1">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdateDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Relation ParentTableName="QuoteDocumentVersions" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteDocumentVersions_dbo.QuoteTemplates_QuoteTemplateId" />
-  <Relation ParentTableName="QuoteTemplateDetailsFields" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateDetailsFields_dbo.QuoteTemplates_QuoteTemplateId" />
-  <Relation ParentTableName="QuoteTemplateExcludedSections" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateExcludedSections_dbo.QuoteTemplates_QuoteTemplateId" />
-  <Relation ParentTableName="QuoteTemplateSections" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSections_dbo.QuoteTemplates_QuoteTemplateId" />
-  <Relation ParentTableName="QuoteTemplateHeaderFields" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateHeaderFields_dbo.QuoteTemplates_QuoteTemplateId" />
-  <Relation ParentTableName="QuoteTemplateTextCodes" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateTextCodes_dbo.QuoteTemplates_QuoteTemplateId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.QuoteTemplates_QuoteTemplateId" />
-  <Relation ParentTableName="ProductTypes" ParentColumnName="QuotationDefaultTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ProductTypes_dbo.QuoteTemplates_QuotationDefaultTemplateId" />
-  <Relation ParentTableName="ProductTypes" ParentColumnName="RoutingRQuoteDefaultTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ProductTypes_dbo.QuoteTemplates_RoutingRQuoteDefaultTemplateId" />
-  <Relation ParentTableName="QuoteTemplates" ParentColumnName="OriginalQuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplates_dbo.QuoteTemplates_OriginalQuoteTemplateId" />
+  <Relation ForeignKeyColumn="HeaderDocId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FooterDocId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="QuoteTemplateSettingId" ReferencedTable="QuoteTemplateSettings" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="OriginalQuoteTemplateId" ReferencedTable="QuoteTemplates" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="TemplateTypeCode" ReferencedTable="QuoteTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

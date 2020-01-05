@@ -12,5 +12,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomsDocumentsTickets" ParentColumnName="VerificationStatusTypeCode" ReferencedTableName="CustomsVerificationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsTickets_Customs.CustomsVerificationStatusTypes_VerificationStatusTypeCode" />
 </Table>

@@ -179,16 +179,20 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ComputingPartner.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerTenantAccessRequest.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsExecutionLog.lxml" />
-    <None Include="EntityFiles\CommonDataModel\AirlineAreasPort.lxml">
+    <None Include="EntityFiles\CommonDataModel\CarrierAreasPort.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\CommonDataModel\AirlineArea.lxml">
+    <None Include="EntityFiles\CommonDataModel\CarrierArea.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\CardContactProduct.lxml" />
     <None Include="EntityFiles\CommonDataModel\CheckDigitControlAlgorithm.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentType.lxml" />
     <None Include="EntityFiles\CommonDataModel\NumberFormat.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -415,6 +419,7 @@
     <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\GlobalModel\LogitudeLead.lxml" />
     <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -560,6 +565,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InvoiceModel\SATPaymentMethod.lxml" />
+    <None Include="EntityFiles\Master\Master.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\MarkUpType.lxml" />
     <None Include="EntityFiles\InvoiceModel\AccountingPaymentMethod.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARPaymentStatus.lxml" />
@@ -585,9 +593,11 @@
     </None>
     <None Include="EntityFiles\QuoteModel\QuoteType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AccountingInformationIdentifier.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\AWBAdditionalHandlingInfo.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBChargesCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerFollowUp.lxml" />
     <None Include="EntityFiles\ShipmentsModel\CustomsTransferHeader.lxml" />
     <None Include="EntityFiles\ShipmentsModel\CustomsTransferLine.lxml" />
     <None Include="EntityFiles\ShipmentsModel\CustomsTransferType.lxml" />

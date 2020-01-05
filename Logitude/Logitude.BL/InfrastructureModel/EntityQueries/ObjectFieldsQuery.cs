@@ -87,10 +87,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                              ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                             ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                             HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                             ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                             HelpTextCodeCode = a.HelpTextCodeCode,
+                                             ListTextCodeCode = a.ListTextCodeCode,
                                              ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                              ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                              HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -143,7 +143,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
 
             ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
                                            where a.ObjectFieldId == fieldId && a.Tenant == tenant
@@ -200,7 +200,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      MultiLine = a.MultiLine,
                                                      MultiTableId = a.MultiTableId,
                                                      ObjectTableId = a.ObjectTableId,
-                                                     ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                     ListTextCodeCode = a.ListTextCodeCode,
                                                      Operator = a.Operator,
                                                      PMPropertyPath = a.PMPropertyPath,
                                                      SystemMaxLength = a.SystemMaxLength,
@@ -233,6 +233,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      RecordType = a.RecordType,
                                                      DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                      FieldCode = a.FieldCode,
+                                                     FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                     ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                     HelpTextCodeCode = a.HelpTextCodeCode,
                                                  };
             return result;
         }
@@ -334,6 +337,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -394,10 +401,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                              ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                             ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                             HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                             ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                             HelpTextCodeCode = a.HelpTextCodeCode,
+                                             ListTextCodeCode = a.ListTextCodeCode,
                                              ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                              ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                              HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -450,7 +457,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
 
             return objectField;
         }
@@ -508,10 +515,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -623,10 +630,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                              ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                             ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                             HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                             ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                             HelpTextCodeCode = a.HelpTextCodeCode,
+                                             ListTextCodeCode = a.ListTextCodeCode,
                                              ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                              ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                              HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -684,7 +691,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 objectField.MinLength = mod.MinLength;
             }
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
 
 
             return objectField;
@@ -743,10 +750,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -855,10 +862,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -965,10 +972,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                         FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                         ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                        FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                        ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                        HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                        ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                        FullNameTextCodeCode = a.FullNameTextCodeCode,
+                        ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                        HelpTextCodeCode = a.HelpTextCodeCode,
+                        ListTextCodeCode = a.ListTextCodeCode,
                         ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                         ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                         HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1075,10 +1082,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1185,10 +1192,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectField.ObjectTable_LookUpTable != null ? a.ObjectField.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.ObjectField.FullNameTextCode != null ? a.ObjectField.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ObjectField.ShortNameTextCode != null ? a.ObjectField.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.ObjectField.FullNameTextCode != null ? a.ObjectField.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ObjectField.ShortNameTextCode != null ? a.ObjectField.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.ObjectField.HelpTextCode != null ? a.ObjectField.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ObjectField.ListTextCode != null ? a.ObjectField.ListTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.ObjectField.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ObjectField.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.ObjectField.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ObjectField.ListTextCodeCode,
                                                     ObjectTable_MultiTableName = a.ObjectField.ObjectTable_MultiTable != null ? a.ObjectField.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ObjectField.ListTextCode != null ? a.ObjectField.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.ObjectField.HelpTextCode != null ? a.ObjectField.HelpTextCode.DefaultText : null,
@@ -1294,10 +1301,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                               FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                               ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                              FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                              ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                              HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                              ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                              FullNameTextCodeCode = a.FullNameTextCodeCode,
+                              ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                              HelpTextCodeCode = a.HelpTextCodeCode,
+                              ListTextCodeCode = a.ListTextCodeCode,
                               ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                               ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                               HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1404,10 +1411,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1501,7 +1508,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     if (objectFieldValidationsDictionary.Count != 0)
                     {
                         objectField.ObjectFieldValidations = (from d in objectFieldValidationsDictionary
-                                                              where d.Value.ObjectFieldId == objectField.Id
+                                                              where d.Value.ObjectFieldCode == objectField.FieldCode
                                                               select d.Value).ToList();
                     }
 
@@ -1515,54 +1522,54 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         objectField.ObjectTable_MultiTableName = objectTables.Where(t => t.Id == objectField.MultiTableId).FirstOrDefault().Name;//tableRep.GetSingleObjectTable(objectField.MultiTableId, objectField.Tenant, true).Name;
                     }
 
-                    if (objectField.FullNameTextCodeId != null)
+                    if (objectField.FullNameTextCodeCode != null)
                     {
-                        TextCode fullnamecode = textCodes.Where(t => t.Id == objectField.FullNameTextCodeId).FirstOrDefault();
-                        fullnamecode = fullnamecode ?? textcodesRepository.GetSingleTextCode(objectField.FullNameTextCodeId);
+                        TextCode fullnamecode = textCodes.Where(t => t.Code == objectField.FullNameTextCodeCode).FirstOrDefault();
+                        fullnamecode = fullnamecode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.FullNameTextCodeCode);
 
                         if (fullnamecode != null)
                         {
                             objectField.FullNameTextCodeDefaultText = fullnamecode.DefaultText;
                             objectField.FullNameTextCodeLocalDefaultText = fullnamecode.LocalDefaultText;
-                            objectField.FullNameTextCodeCode = fullnamecode.Code;
+                            //objectField.FullNameTextCodeCode = fullnamecode.Code;
                         }
                        
                     }
 
-                    if (objectField.ShortNameTextCodeId != null)
+                    if (objectField.ShortNameTextCodeCode != null)
                     {
-                        TextCode shortnamecode = textCodes.Where(t => t.Id == objectField.ShortNameTextCodeId).FirstOrDefault();
-                        shortnamecode = shortnamecode ?? textcodesRepository.GetSingleTextCode(objectField.ShortNameTextCodeId);
+                        TextCode shortnamecode = textCodes.Where(t => t.Code == objectField.ShortNameTextCodeCode).FirstOrDefault();
+                        shortnamecode = shortnamecode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.ShortNameTextCodeCode);
 
                         if (shortnamecode != null)
                         {
                             objectField.ShortNameTextCodeDefaultText = shortnamecode.DefaultText;
-                            objectField.ShortNameTextCodeCode = shortnamecode.Code;
+                            //objectField.ShortNameTextCodeCode = shortnamecode.Code;
                         }
                        
                     }
 
-                    if (objectField.HelpTextCodeId != null)
+                    if (objectField.HelpTextCodeCode != null)
                     {
-                        TextCode helpcode = textCodes.Where(t => t.Id == objectField.HelpTextCodeId).FirstOrDefault();
-                        helpcode = helpcode ?? textcodesRepository.GetSingleTextCode(objectField.HelpTextCodeId);
+                        TextCode helpcode = textCodes.Where(t => t.Id == objectField.HelpTextCodeCode).FirstOrDefault();
+                        helpcode = helpcode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.HelpTextCodeCode);
 
                         if (helpcode != null)
                         {
-                            objectField.HelpTextTextCodeCode = helpcode.Code;
+                            //objectField.HelpTextTextCodeCode = helpcode.Code;
                             objectField.HelpTextCodeDefaultText = helpcode.DefaultText;
                         }
                        
                     }
 
-                    if (objectField.ListTextCodeId != null)
+                    if (objectField.ListTextCodeCode != null)
                     {
-                        TextCode listcode = textCodes.Where(t => t.Id == objectField.ListTextCodeId).FirstOrDefault();
-                        listcode = listcode ?? textcodesRepository.GetSingleTextCode(objectField.ListTextCodeId);
+                        TextCode listcode = textCodes.Where(t => t.Id == objectField.ListTextCodeCode).FirstOrDefault();
+                        listcode = listcode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.ListTextCodeCode);
 
                         if (listcode != null)
                         {
-                            objectField.ListTextCodeCode = listcode.Code;
+                            //objectField.ListTextCodeCode = listcode.Code;
                             objectField.ListTextCodeDefaultText = listcode.DefaultText;
                         }
                        
@@ -1629,10 +1636,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1811,6 +1818,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              RecordType = a.RecordType,
                                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                              FieldCode = a.FieldCode,
+                                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                             HelpTextCodeCode = a.HelpTextCodeCode,
+                                                             ListTextCodeCode = a.ListTextCodeCode,
                                                          }).ToList();
 
                             currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -1921,6 +1932,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          RecordType = a.RecordType,
                                                          DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                          FieldCode = a.FieldCode,
+                                                         FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                         ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                         HelpTextCodeCode = a.HelpTextCodeCode,
+                                                         ListTextCodeCode = a.ListTextCodeCode,
                                                      }).ToList();
 
                         currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -2030,6 +2045,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       RecordType = a.RecordType,
                                                       DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                       FieldCode = a.FieldCode,
+                                                      FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                      ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                      HelpTextCodeCode = a.HelpTextCodeCode,
+                                                      ListTextCodeCode = a.ListTextCodeCode,
                                                   }).ToList();
 
                         zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2141,6 +2160,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   RecordType = a.RecordType,
                                                   DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                   FieldCode = a.FieldCode,
+                                                  FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                  ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                  HelpTextCodeCode = a.HelpTextCodeCode,
+                                                  ListTextCodeCode = a.ListTextCodeCode,
                                               }).ToList();
 
                     zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2206,7 +2229,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              Tenant = a.Tenant,
                                              UniqueField = a.UniqueField,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                             HelpTextCodeCode = a.HelpTextCodeCode,
+                                             ListTextCodeCode = a.ListTextCodeCode,
                                              ValidForQuerySection2 = a.ValidForQuerySection2,
                                              ValidForQuerySection1 = a.ValidForQuerySection1,
                                              IsRestrictable = a.IsRestrictable,
@@ -2264,8 +2290,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     DisplayLongName = a.DisplayLongName,
                                                     FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
                                                     RecordType = a.RecordType,
@@ -2333,10 +2361,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,

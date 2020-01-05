@@ -712,6 +712,7 @@ export class FieldsTranslations {
     }
     
     public TextCodeId: string;
+    public TextCodeCode: string;
     public Code: string;
     
     private translatedText: string;

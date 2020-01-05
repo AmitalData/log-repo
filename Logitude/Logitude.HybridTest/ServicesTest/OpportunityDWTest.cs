@@ -22,10 +22,12 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, DateTime.Today.AddYears(-1), DateTime.Now, 0, 10, serviceResponse };
-            OpportunityDW[] opportunities = (OpportunityDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Opportunities By Dates Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Opportunities By Dates Failed! " + serviceResponse.Result);
-            if(opportunities.Length == 0)
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            OpportunityDW[] opportunities = (OpportunityDW[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Opportunities By Dates Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Opportunities By Dates Failed! " + serviceOutcome.Response.Result);
+            if (opportunities.Length == 0)
                 Assert.Inconclusive("There Isn't Opportunity From Last Year!");
         }
 
@@ -42,9 +44,11 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, DateTime.Today.AddYears(-1), DateTime.Now, serviceResponse };
-            int opportunitiescount = (int)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Opportunities Count By Dates Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Opportunities Count By Dates Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            int opportunitiescount = (int)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Opportunities Count By Dates Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Opportunities Count By Dates Failed! " + serviceOutcome.Response.Result);
             if (opportunitiescount == 0)
                 Assert.Inconclusive("There Isn't Opportunity From Last Year!");
         }
@@ -62,9 +66,11 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, DateTime.Today.AddYears(-1), 0, 10, serviceResponse };
-            OpportunityDW[] opportunities = (OpportunityDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Opportunities By Update Date Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Opportunities By Update Date Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            OpportunityDW[] opportunities = (OpportunityDW[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Opportunities By Update Date Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Opportunities By Update Date Failed! " + serviceOutcome.Response.Result);
             if (opportunities.Length == 0)
                 Assert.Inconclusive("There Isn't Opportunity From Last Year!");
         }
@@ -82,9 +88,11 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, DateTime.Today.AddYears(-1), serviceResponse };
-            int opportunitiescount = (int)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Opportunities Count By Update Date Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Opportunities Count By Update Date Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            int opportunitiescount = (int)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Opportunities Count By Update Date Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Opportunities Count By Update Date Failed! " + serviceOutcome.Response.Result);
             if (opportunitiescount == 0)
                 Assert.Inconclusive("There Isn't Opportunity From Last Year!");
         }

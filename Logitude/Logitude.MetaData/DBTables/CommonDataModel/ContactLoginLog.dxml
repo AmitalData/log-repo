@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ContactLoginLogs" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IP" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="Browser" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ComputerId" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ContactAgent" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ContactId" Type="varchar" Size="15">
@@ -15,19 +18,17 @@
   <Column Name="GMTDateTime" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="nvarchar" Size="128">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IP" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="LocalDateTime" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="ComputerId" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContactAgent" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="Via" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

@@ -12,10 +12,12 @@
   <Column Name="LineNumber" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ProcessTypeCode" Type="varchar" Size="7">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="ProcessTypeCode" Type="varchar" Size="7">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber" ReferencedTable="SupplierInvoiceItems" ReferencedColumn="DeclarationId,CounterKey,LineNumber" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="ProcessTypeCode" ReferencedTable="ItemGovernmentProcedureTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

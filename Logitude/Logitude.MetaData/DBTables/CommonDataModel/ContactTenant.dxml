@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ContactTenants" Schema="dbo" DBType="Main">
-  <Column Name="ContactId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="TenantId" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Restrictions" ParentColumnName="ContactTenantId" ReferencedTableName="ContactTenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Restrictions_dbo.ContactTenants_ContactTenantId" />
-  <Relation ParentTableName="ContactTenantRoleSet" ParentColumnName="ContactTenantId" ReferencedTableName="ContactTenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactTenantRoleSet_dbo.ContactTenants_ContactTenantId" />
+  <Column Name="ContactId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="TenantId" ReferencedTable="Tenants" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

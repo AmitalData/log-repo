@@ -40,7 +40,7 @@ namespace Logitude.XSD.INTTRA.BL
         public List<string> Errors { get; set; }
         public ICommonDataContext CommonContext;
         private ComputingPartnerTranslationHelper computingPartnerHelper;
-        private INTTRAGeneralMethods iNTTRAGeneralMethods;
+        public INTTRAGeneralMethods iNTTRAGeneralMethods;
         public INTTRADataContext(int teannt, string shipmentId, Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact, ICommonDataContext CommonContext)
         {
             this.Tenant = teannt;

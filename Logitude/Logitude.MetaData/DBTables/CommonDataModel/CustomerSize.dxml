@@ -3,7 +3,7 @@
   <Column Name="Id" Type="nvarchar" Size="128">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Name" Type="nvarchar" Size="-1">
@@ -12,11 +12,10 @@
   <Column Name="OrderNumber" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="Customers" ParentColumnName="CustomerSizeId" ReferencedTableName="CustomerSizes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.CustomerSizes_CustomerSizeId" />
 </Table>

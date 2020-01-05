@@ -68,6 +68,7 @@
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
     <None Include="EntityFiles\GLAccountCounter.lxml" />
+    <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
     <None Include="EntityFiles\IntegrityCheckStatus.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -83,6 +84,12 @@
     <None Include="EntityFiles\ExternalPageAdditionalData.lxml" />
     <None Include="EntityFiles\InterestBasesPeriod.lxml" />
     <None Include="EntityFiles\InterestBasesType.lxml" />
+    <None Include="EntityFiles\InterestEntityType.lxml" />
+    <None Include="EntityFiles\InterestReport.lxml" />
+    <None Include="EntityFiles\InterestReportLine.lxml" />
+    <None Include="EntityFiles\InterestReportLinesByDate.lxml" />
+    <None Include="EntityFiles\InterestReportStatuse.lxml" />
+    <None Include="EntityFiles\InterestTransaction.lxml" />
     <None Include="EntityFiles\JournalAdditionalData.lxml" />
     <None Include="EntityFiles\JournalExternalReconcile.lxml">
       <SubType>Designer</SubType>

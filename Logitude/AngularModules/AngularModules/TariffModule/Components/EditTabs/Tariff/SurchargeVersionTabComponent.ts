@@ -697,7 +697,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         var args: UpdateTariffArgs = new UpdateTariffArgs();
         args.Version = this.CurrentVersion;
         args.TariffCharges = this.tariffCharges;
-        args.AirlineId = this.EntityPM.SellerId;
+        args.CarrierId = this.EntityPM.SellerId;
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1100;

@@ -11,7 +11,15 @@ export class FieldsHelper {
             var Button = element(by.cssContainingText(className, Text)).click();
         });
     }
-
+    WaitElementToBeDisplayedInTheList(className: string, Text: string) {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.cssContainingText(className, Text))), 100000).then(a => {
+            browser.wait(EC.elementToBeClickable(element(by.cssContainingText(className, Text))), 100000).then(a => {
+                browser.wait(EC.presenceOf(element(by.id('ListDataLoaded'))), 1000000).then(a => function () {
+                });
+            });
+        });
+    }
     WaitActionButtonAndClick(containerClassName: string, isLast: boolean) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.className(containerClassName))), 100000).then(a => {
@@ -49,8 +57,6 @@ export class FieldsHelper {
         });
     }
 
-
-  
     WaitEditComponentBusyIndicator() {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.invisibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000000).then(a => { });
@@ -125,7 +131,13 @@ export class FieldsHelper {
                 this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
             }
             else {
-                item.click();
+                try {
+                    item.click();
+                }
+                catch (Exception) {
+                    console.log(Exception);
+                    this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+                }
                 var Newinput = element(by.id(Id)).getAttribute('value');
                 Newinput.then(p => {
                     if (p == "") {
@@ -133,7 +145,7 @@ export class FieldsHelper {
                         this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
                     } else {
                         this.WaitDropDownToBeClosed(className);
-                        this.WaitBusyIndicator();              
+                        this.WaitBusyIndicator();
                     }
                 });
             }

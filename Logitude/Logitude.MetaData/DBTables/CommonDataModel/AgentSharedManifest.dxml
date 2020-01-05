@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="AgentSharedManifests" Schema="dbo" DBType="Main">
-  <Column Name="AgentId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="AgentReference" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CancelledBySenderAgent" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ChargeableWeight" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DirectionId" Type="char" Size="1">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FromPortId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="GrossWeight" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ManifestXML" Type="nvarchar" Size="-1">
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AgentReference" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Master" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PackagesQuantity" Type="int">
-    <Constraints Nullable="true" />
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ManifestXML" Type="nvarchar" Size="-1">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
@@ -45,25 +33,44 @@
   <Column Name="ShipmentTypeId" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="StatusCode" Type="varchar" Size="4">
+  <Column Name="TransportModeId" Type="char" Size="1">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="GrossWeight" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChargeableWeight" Type="float">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="TEU" Type="float">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="PackagesQuantity" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AgentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DirectionId" Type="char" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FromPortId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="ToPortId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TransportModeId" Type="char" Size="1">
+  <Column Name="StatusCode" Type="varchar" Size="4">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="UpdateDate" Type="datetime">
+  <Column Name="CancelledBySenderAgent" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ShipmentLevelCode" ReferencedTable="ShipmentLevels" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ShipmentTypeId" ReferencedTable="ShipmentTypes" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="AgentId" ReferencedTable="Agents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FromPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ToPortId" ReferencedTable="Ports" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="StatusCode" ReferencedTable="SharedManifestsStatuses" ReferencedColumn="StatusCode" ReferencedTableSchema="dbo" />
 </Table>

@@ -611,6 +611,8 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
                             this.QuoteNumber = quote.QuoteNumber;
                             this.QuoteId = quote.Id;
                             this.CompanyId = quote.CustomerId;
+                            this.ViewQuoteClicked();
+
                         }
                     }
                 });

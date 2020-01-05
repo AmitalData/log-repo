@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CardContactProducts" Schema="dbo" DBType="Main">
-  <Column Name="CardContactId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="ProductTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CardContactId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ProductTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="CardContactId" ReferencedTable="CardContacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ProductTypeCode" ReferencedTable="ProductTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

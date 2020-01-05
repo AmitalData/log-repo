@@ -6,19 +6,22 @@
   <Column Name="CounterKey" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="SeizureAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SeizureFactorCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="SeizureLinoNo" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="SeizureMethodCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="SeizureFactorCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SeizureMethodCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SeizureAmount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="ClaimId,CounterKey" ReferencedTable="ClaimsRelatedEntities" ReferencedColumn="ClaimId,EntityCounterKey" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="SeizureFactorCode" ReferencedTable="SeizureFactorTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="SeizureMethodCode" ReferencedTable="SeizureMethodTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

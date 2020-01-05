@@ -162,7 +162,9 @@ export class LicensesManagementComponent implements OnDestroy {
         }
 
         var index: number = 0;
-        SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
+
+        var loop_licenses: TenantManagementLicensePM[] = SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode.toLowerCase() === b.PackageCode.toLowerCase()) ? 0 : (a.PackageCode.toLowerCase() < b.PackageCode.toLowerCase()) ? -1 : 1 });
+        loop_licenses.forEach(item => {
             index++;
 
             if (index <= 10) {
@@ -199,7 +201,9 @@ export class LicensesManagementComponent implements OnDestroy {
         }
 
         var index: number = 0;
-        SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
+
+        var loop_licenses: TenantManagementLicensePM[] = SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode.toLowerCase() === b.PackageCode.toLowerCase()) ? 0 : (a.PackageCode.toLowerCase() < b.PackageCode.toLowerCase()) ? -1 : 1 });
+        loop_licenses.forEach(item => {
             index++;
 
             if (index <= 10) {

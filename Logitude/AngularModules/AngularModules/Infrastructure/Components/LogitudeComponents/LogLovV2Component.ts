@@ -667,8 +667,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                 }
                                 else {
                                     objectFieldAvailable = true;
-                                    if (this.ObjectField.HelpTextCodeId != null) {
-                                        this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
+                                    if (this.ObjectField.HelpTextCodeCode != null) {
+                                        this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
 
                                         if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                                             if (this.ObjectFieldHelp.length > 1) {
@@ -677,45 +677,52 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                             }
                                         }
                                     }
-                                    if (this.ObjectField.DependencyFilter1Value) {
-                                        if (this.ObjectField.DependencyFilter1Type == "Constant") {
-                                            this.DependencyFilter1Value = this.ObjectField.DependencyFilter1Value;
-                                            this.DependencyFilter1IsList = this.ObjectField.DependencyFilter1IsList;
-                                        }
-                                        else {
 
-                                            this.DependencyFilter1Value = this.DataContext[this.ObjectField.DependencyFilter1Value];
+                                    if (this.DependencyFilter1Value == null || this.DependencyFilter1Value === undefined) {
+                                        if (this.ObjectField.DependencyFilter1Value) {
+                                            if (this.ObjectField.DependencyFilter1Type == "Constant") {
+                                                this.DependencyFilter1Value = this.ObjectField.DependencyFilter1Value;
+                                                this.DependencyFilter1IsList = this.ObjectField.DependencyFilter1IsList;
+                                            }
+                                            else {
+
+                                                this.DependencyFilter1Value = this.DataContext[this.ObjectField.DependencyFilter1Value];
+                                            }
+                                        }
+                                        else if (this.ObjectField.ControlField1) {
+                                            this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
                                         }
                                     }
-                                    else if (this.ObjectField.ControlField1) {
-                                        this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
+                                   
+                                    if (this.DependencyFilter2Value == null || this.DependencyFilter2Value === undefined) {
+                                        if (this.ObjectField.DependencyFilter2Value) {
+                                            if (this.ObjectField.DependencyFilter2Type == "Constant") {
+                                                this.DependencyFilter2Value = this.ObjectField.DependencyFilter2Value;
+                                                this.DependencyFilter2IsList = this.ObjectField.DependencyFilter2IsList;
+                                            }
+                                            else {
+                                                this.DependencyFilter2Value = this.DataContext[this.ObjectField.DependencyFilter2Value];
+                                            }
+                                        }
+                                        else if (this.ObjectField.ControlField2) {
+                                            this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
+                                        }
                                     }
 
-                                    if (this.ObjectField.DependencyFilter2Value) {
-                                        if (this.ObjectField.DependencyFilter2Type == "Constant") {
-                                            this.DependencyFilter2Value = this.ObjectField.DependencyFilter2Value;
-                                            this.DependencyFilter2IsList = this.ObjectField.DependencyFilter2IsList;
-                                        }
-                                        else {
-                                            this.DependencyFilter2Value = this.DataContext[this.ObjectField.DependencyFilter2Value];
-                                        }
-                                    }
-                                    else if (this.ObjectField.ControlField2) {
-                                        this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
-                                    }
+                                    if (this.DependencyFilter3Value == null || this.DependencyFilter3Value === undefined) {
+                                        if (this.ObjectField.DependencyFilter3Value) {
+                                            if (this.ObjectField.DependencyFilter3Type == "Constant") {
+                                                this.DependencyFilter3Value = this.ObjectField.DependencyFilter3Value;
+                                                this.DependencyFilter3IsList = this.ObjectField.DependencyFilter3IsList;
+                                            }
+                                            else {
 
-                                    if (this.ObjectField.DependencyFilter3Value) {
-                                        if (this.ObjectField.DependencyFilter3Type == "Constant") {
-                                            this.DependencyFilter3Value = this.ObjectField.DependencyFilter3Value;
-                                            this.DependencyFilter3IsList = this.ObjectField.DependencyFilter3IsList;
+                                                this.DependencyFilter3Value = this.DataContext[this.ObjectField.DependencyFilter3Value];
+                                            }
                                         }
-                                        else {
-
-                                            this.DependencyFilter3Value = this.DataContext[this.ObjectField.DependencyFilter3Value];
+                                        else if (this.ObjectField.ControlField3) {
+                                            this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
                                         }
-                                    }
-                                    else if (this.ObjectField.ControlField3) {
-                                        this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
                                     }
 
                                     if (this.ObjectField.ControlField1 || this.ObjectField.ControlField2 || this.ObjectField.ControlField3) {

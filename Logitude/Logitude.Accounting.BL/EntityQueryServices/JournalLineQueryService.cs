@@ -62,20 +62,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var pre_q = from j_lines in this.repository.GetAll(tenant)
                         .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
                          && rec.ExternalReconcileNumber != "0"
-                         && rec.ExternalReconcileNumber != "0.00"
+                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000"
                          && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0
                          && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
                         select j_lines;
             List<JournalLine> jl_list = pre_q.ToList();
+            List<String> jL_Id_list = jl_list.Select(i => i.JournalId).ToList<String>();
 
-//            var q = (from jl in this.repository.GetAll(tenant)
             var q = (from jl in jl_list
-                         .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
-                         && rec.ExternalReconcileNumber != "0"
-                         && rec.ExternalReconcileNumber != "0.00"
-                         && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0
-                         && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
-                     join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && r.IsReconciled == false)
+//                         .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
+//                         && rec.ExternalReconcileNumber != "0"
+//                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000"
+//                         && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0
+//                         && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
+                     join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && jL_Id_list.Contains(r.JournalId) && r.IsReconciled == false)
                      on new { jl.JournalId, jl.Line }
                      equals new { trans.JournalId, Line = trans.JournalLineNumber }
                      into joinT

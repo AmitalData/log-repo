@@ -69,6 +69,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool calculatePayables;
         private bool calculateReceivables;
         private bool isUpdatingRegistryDate;
+        private bool isUpdatingFirstApprovalDate;
         private string serviceContextUser;
         public Shipment entityPoco { get; set; }
         private ShipmentPM entityPM;
@@ -327,6 +328,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityRepository.SubmitChanges();
 
                         this.RunRegistryDateProcedure(houseShipment.Id);
+                        this.RunFirstApprovalDateProcedure(houseShipment.Id);
 
                         calculateProfit = true;
                         calculatePayables = true;
@@ -491,6 +493,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
+                    this.UpdateCrossDockRelease();
 
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
                     this.UpdateShipmentFollowUpsCollection();
@@ -561,6 +564,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 foreach (string myShipmentId in this.deletedHousesIds)
                 {
                     this.RunRegistryDateProcedure(myShipmentId);
+                    this.RunFirstApprovalDateProcedure(myShipmentId);
 
                     RunStoredProcedureClass.UpdateShipmentFinalArrivalDate(myShipmentId, tenant);
 
@@ -571,6 +575,36 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+
+        #region UpdateCrossDockRelease
+        private void UpdateCrossDockRelease()
+        {
+            if (entityPM.MainCarriageATD == null) ChangeCrossDockReleaseStatus("RELE", "CREA");
+            else if (entityPM.MainCarriageATD != null)
+            {
+                EntityStatus departedStatus = EntityStatusRepository.GetSingleEntityStatusByCode("SDEP", entityPM.Tenant, true);
+                if (departedStatus != null)
+                {
+                    EntityStatus entityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPM.StatusId, entityPM.Tenant, true);
+                    if (entityStatus != null && entityStatus.StatusWeight>= departedStatus.StatusWeight) ChangeCrossDockReleaseStatus("CREA", "RELE");
+                }
+            }
+        }
+        private void ChangeCrossDockReleaseStatus(string fromStatusCode, string toStatusCode)
+        {
+            bool isWarehouseReleaseStatusHasChange = false;
+            WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
+            List<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetAll(entityPM.Tenant).Where(d => d.ShipmentId == entityPM.Id && d.StatusCode == fromStatusCode).ToList();
+            foreach (WarehouseRelease item in warehouseReleases)
+            {
+                item.StatusCode = toStatusCode;
+                warehouseReleaseRepository.Update(item);
+                isWarehouseReleaseStatusHasChange = true;
+            }
+            if (isWarehouseReleaseStatusHasChange) warehouseReleaseRepository.SubmitChanges();
+
+        }
+        #endregion
 
         private void UpdateShipmentComputedFields()
         {
@@ -1298,6 +1332,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.entityPM.CalculateProfit = true;
                     this.entityPM.CalculateReceivables = true;
                     this.isUpdatingRegistryDate = true;
+                    this.isUpdatingFirstApprovalDate = true;
                 }
             }
 
@@ -1340,6 +1375,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.RunRegistryDateProcedure(this.entityPM.Id);
             }
 
+            if (this.isUpdatingFirstApprovalDate)
+            {
+                this.RunFirstApprovalDateProcedure(this.entityPM.Id);
+            }
+
             if (entityPM.CalculateProfit && !entityPM.IsHybrid)
             {
                 UpdateShipmentProfitClass.UpdateProfit(entityPM.Id, entityPM.Tenant);
@@ -1372,6 +1412,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.EstimatedFinalArrivalDate = updatedPOCO.EstimatedFinalArrivalDate;
                 entityPM.ActualFinalArrivalDate = updatedPOCO.ActualFinalArrivalDate;
                 entityPM.RegistryDate = updatedPOCO.RegistryDate;
+                entityPM.FirstARInvoiceApprovalDate = updatedPOCO.FirstARInvoiceApprovalDate;
             }
 
             if (isReloadingConsoles)
@@ -2666,6 +2707,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             if (entityMasterData.ProrateReceivables)
                             {
                                 this.isUpdatingRegistryDate = true;
+                                this.isUpdatingFirstApprovalDate = true;
                             }
                         }
                     }
@@ -3083,6 +3125,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     else if (entityPM.IsShipmentAdditionalCloudDataChange)
                     {
                         shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
+                        shipmentAdditionalCloudData.ApprovedByUserName = null;
+                        shipmentAdditionalCloudData.DenyReason = null;
+                        shipmentAdditionalCloudData.ApproveDateTime = null;
                         shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                     }
 
@@ -6289,6 +6334,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityRepository.SubmitChanges();
 
                 this.RunRegistryDateProcedure(houseShipment.Id);
+                this.RunFirstApprovalDateProcedure(houseShipment.Id);
 
                 calculateProfit = true;
                 calculatePayables = true;
@@ -6798,6 +6844,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             RunStoredProcedureClass.UpdateShipmentRegistryDate(myShipmentId, entityPM.Tenant);
         }
+        private void RunFirstApprovalDateProcedure(string myShipmentId)
+        {
+            RunStoredProcedureClass.UpdateShipmentFirstApprovalDate(myShipmentId, entityPM.Tenant);
+        }
+
         private void ComputeIsAssemblyField()
         {
             List<ShipmentAssemblyPM> myList = this.entityPM.ShipmentAssemblies.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();

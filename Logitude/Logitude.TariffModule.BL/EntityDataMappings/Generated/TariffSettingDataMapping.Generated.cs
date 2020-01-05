@@ -25,7 +25,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Id, 
 	         DefaultPriceSteps, 
 	         Tenant, 
-	         DefaultWarningPercentage,
+	         DefaultWarningPercentage, 
+	         AirDefaultStepsId, 
+	         LCLDefaultStepsId,
 	      }
 
 
@@ -35,7 +37,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Id, 
 	         DefaultPriceSteps, 
 	         Tenant, 
-	         DefaultWarningPercentage,
+	         DefaultWarningPercentage, 
+	         AirDefaultStepsId, 
+	         LCLDefaultStepsId, 
+	         AirDefaultSteps, 
+	         LCLDefaultSteps,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -57,6 +63,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultWarningPercentage))
             {
 				entityPOCO.DefaultWarningPercentage = entityPM.DefaultWarningPercentage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirDefaultStepsId))
+            {
+				entityPOCO.AirDefaultStepsId = entityPM.AirDefaultStepsId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLDefaultStepsId))
+            {
+				entityPOCO.LCLDefaultStepsId = entityPM.LCLDefaultStepsId;
 			}
 			}
 
@@ -83,6 +99,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.DefaultWarningPercentage = entityPOCO.DefaultWarningPercentage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AirDefaultStepsId))
+            {
+					entityPM.AirDefaultStepsId = entityPOCO.AirDefaultStepsId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LCLDefaultStepsId))
+            {
+					entityPM.LCLDefaultStepsId = entityPOCO.LCLDefaultStepsId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffSettingPM entityPM, TariffSettingPM oldEntityPM)
@@ -102,6 +128,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultWarningPercentage))
             {
                 oldEntityPM.DefaultWarningPercentage = entityPM.DefaultWarningPercentage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirDefaultStepsId))
+            {
+                oldEntityPM.AirDefaultStepsId = entityPM.AirDefaultStepsId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLDefaultStepsId))
+            {
+                oldEntityPM.LCLDefaultStepsId = entityPM.LCLDefaultStepsId;
             }
 			
 		}

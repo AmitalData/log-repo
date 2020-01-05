@@ -12,7 +12,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string EventCode { get; set; }
-        public string LabelTextCodeId { get; set; }
+        public string                LabelTextCodeId { get; set; }
         public string MenuButtonGroupId { get; set; }
         public string ParentMenuButtonId { get; set; }
         public int Index { get; set; }

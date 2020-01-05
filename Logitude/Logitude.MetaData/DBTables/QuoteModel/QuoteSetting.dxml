@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="QuoteSettings" Schema="dbo" DBType="Main">
-  <Column Name="AutomaticallyCloseDays" Type="int">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CopyAgent" Type="bit">
+  <Column Name="CopyShipper" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CopyConsignee" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CopyMainCarriage" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CopyPickup" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CopyDelivery" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CopyChargesTypes" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CopyChargesCost" Type="bit">
@@ -12,40 +30,22 @@
   <Column Name="CopyChargesSale" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CopyChargesTypes" Type="bit">
+  <Column Name="EditMainCarriage" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CopyConsignee" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CopyDelivery" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CopyExchangeRates" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CopyMainCarriage" Type="bit">
+  <Column Name="CopyAgent" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CopyNotify" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CopyPickup" Type="bit">
+  <Column Name="CopyExchangeRates" Type="bit">
     <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CopyShipper" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="EditMainCarriage" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="IsSaleAsCostCurrency" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="AutomaticallyCloseDays" Type="int">
     <Constraints Nullable="false" />
   </Column>
 </Table>

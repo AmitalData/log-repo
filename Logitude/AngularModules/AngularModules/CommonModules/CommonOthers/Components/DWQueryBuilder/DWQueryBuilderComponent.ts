@@ -68,6 +68,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public Height: number = 110;
     public IconSize: number = 17;
     private IsCopy: boolean = false;
+    private CopyBIReportsFromTenant: number;
     private ComponentRef;
     mouseover(MyItem) {
         if (MyItem.HelpText) {
@@ -244,16 +245,29 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsCopy = args.IsCopy;
         this.ComponentRef = args.ComponentRef;
         this.BackCompleted = args.BackCompleted;
+        this.CopyBIReportsFromTenant = args.BIReportsTenant;
         //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
-            this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
-                if (!myResult.HasError) {
-                    this.ID = myResult.Result.SubQueryData.Id;
+            if (this.CopyBIReportsFromTenant || this.CopyBIReportsFromTenant == 0) {
+                this._DWSubQueryPMService.getByQueryIdFromTenant(this.QID, this.CopyBIReportsFromTenant).subscribe(myResult => {
+                    if (!myResult.HasError) {
+                        this.ID = myResult.Result.SubQueryData.Id;
 
-                    this.EditButtonClicked();
+                        this.EditButtonClicked();
 
-                }
-            });
+                    }
+                });
+            }
+            else {
+                this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
+                    if (!myResult.HasError) {
+                        this.ID = myResult.Result.SubQueryData.Id;
+
+                        this.EditButtonClicked();
+
+                    }
+                });
+            }
         }
     }
 
@@ -550,6 +564,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
             return;
         }
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
+        if (item.HasTree) {
+            var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
+            if (defaultItem) {
+                view.Code = defaultItem.Code;
+            }
+        }
         if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
             //view.ParentDataTypeCode = "LookUp";
             if (view.Code == '[Full Date]') {
@@ -927,33 +947,35 @@ export class DWQueryBuilderComponent extends BaseComponent {
         MyFilter.FilterItems.forEach((field) => {
             
             if (field.FilterItems.length == 0) {
-                if (field.DataTypeCode && field.TextValue && field.TextValue != "IsNull" && field.TextValue != "IsNotNull" && field.TextValue.indexOf(';') < 0) {
-                    switch (field.DataTypeCode.toLowerCase()) {
-                        case 'integer':
-                        case 'double':
-                        case 'decimal':
-                            {
-                                var val: number;
+                if (field.TextValue != true) {
+                    if (field.DataTypeCode && field.TextValue && field.TextValue != "IsNull" && field.TextValue != "IsNotNull" && field.TextValue.indexOf(';') < 0) {
+                        switch (field.DataTypeCode.toLowerCase()) {
+                            case 'integer':
+                            case 'double':
+                            case 'decimal':
+                                {
+                                    var val: number;
 
-                                if ((field.TextValue + "").indexOf(',') == -1) {
-                                    val = Number(field.TextValue);
-                                }
+                                    if ((field.TextValue + "").indexOf(',') == -1) {
+                                        val = Number(field.TextValue);
+                                    }
 
-                                if (isNaN(Number(val))) {
-                                    Valid = false;
+                                    if (isNaN(Number(val))) {
+                                        Valid = false;
+                                    }
                                 }
+                            default: {
+                                break;
                             }
-                        default: {
-                            break;
+
                         }
 
                     }
 
                 }
-
-            }
-            else {
-                this.ValidFiltersValues(field);
+                else {
+                    this.ValidFiltersValues(field);
+                }
             }
 
         });
@@ -1093,7 +1115,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         //}
                         this.ID = myResult.Result.Id;
                         this.QID = myResult.Result.DWQueryId
-                        this.EditButtonClicked();
+                        this.EditButtonClicked(true);
 
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace) {
@@ -1124,69 +1146,80 @@ export class DWQueryBuilderComponent extends BaseComponent {
         });
     }
     NotExist: boolean = true;
-    EditButtonClicked() {
+    EditButtonClicked(getSingle: boolean = false) {
         this.SelectedFieldsDataSource = [];
         this.SelectedFiltersDataSource = [];
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ..");
         if (!AppTool.IsNullOrEmpty(this.ID)) {
-            var QueryData = new DWQueryData();
-            this._DWSubQueryPMService.get(this.ID).subscribe(myResult => {
-                if (myResult.Result == null) {
-                    this.messageWindow.Width = 300;
-                    this.messageWindow.Height = 150;
-                    this.messageWindow.Title = "Query Doesn't Exist";
-                    this.messageWindow.Message = "Query With the Id " + this.ID + " does not exist";
-                    this.messageWindow.Show(this.messageWindow.Message);
-                    this.NotExist = true;
-                    return;
-                }
-                else {
-                    this.NotExist = false;
-                }
-                if (!myResult.HasError) {
-                    QueryData = myResult.Result;
+            if ((this.CopyBIReportsFromTenant || this.CopyBIReportsFromTenant == 0) && !getSingle) {
+                this._DWSubQueryPMService.getFromTenant(this.ID, this.CopyBIReportsFromTenant).subscribe(myResult => {
+                    this.BuildData(myResult);
+                });
+            }
+            else {
+                this._DWSubQueryPMService.get(this.ID).subscribe(myResult => {
+                    this.BuildData(myResult);
+                });
+            }
+        }
+    }
 
-                    ////////////////////////////////////////////////
+    BuildData(myResult) {
+        var QueryData = new DWQueryData();
+        if (myResult.Result == null) {
+            this.messageWindow.Width = 300;
+            this.messageWindow.Height = 150;
+            this.messageWindow.Title = "Query Doesn't Exist";
+            this.messageWindow.Message = "Query With the Id " + this.ID + " does not exist";
+            this.messageWindow.Show(this.messageWindow.Message);
+            this.NotExist = true;
+            return;
+        }
+        else {
+            this.NotExist = false;
+        }
+        if (!myResult.HasError) {
+            QueryData = myResult.Result;
 
-                    var tempColumns = this.SelectedFieldsDataSource;
-                    QueryData.Columns.forEach((field) => {
-                        var view = new DWObjectFieldsDetails(field, this);
-                        view.ParentDataTypeCode = field.ParentDataTypeCode;
-                        view.DisplayName = field.DisplayName;
-                        view.DimensionTableDisplayName = field.DimensionTableDisplayName;
+            ////////////////////////////////////////////////
 
-                        view.ParentCode = field.ParentCode;
-                        view.ParentDimTabelName = field.ParentDimTabelName;
+            var tempColumns = this.SelectedFieldsDataSource;
+            QueryData.Columns.forEach((field) => {
+                var view = new DWObjectFieldsDetails(field, this);
+                view.ParentDataTypeCode = field.ParentDataTypeCode;
+                view.DisplayName = field.DisplayName;
+                view.DimensionTableDisplayName = field.DimensionTableDisplayName;
 
-                        tempColumns.push(view);
+                view.ParentCode = field.ParentCode;
+                view.ParentDimTabelName = field.ParentDimTabelName;
 
-                    });
+                tempColumns.push(view);
 
-                    this.SelectedFieldsDataSource = this.ResetIndexes(tempColumns);
-
-                    //////////////////////////////////////////
-
-                    ////////////////////////////////////////////////
-                    if (QueryData.Filters) {
-                        var DWObjectField = new DWObjectFieldsDetails(null, this);
-                        DWObjectField.IsGroup = true;
-                        DWObjectField.setAndOrOperation(QueryData.Filters.AndOr, false);
-                        DWObjectField.IndexOrder = this.SelectedFiltersDataSource.length;
-                        var MyFilter = this.RestoreFilters(QueryData.Filters, DWObjectField);
-                        var temp = [];
-                        temp.push(MyFilter);
-                        this.SelectedFiltersDataSource = temp;
-                    }
-                    else {
-                        this.SelectedFiltersDataSource = [];
-                    }
-                    if (this.CurrentSession.CurrentWindow) {
-                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    }
-                    //this.PreviewData(true, []);
-                    //////////////////////////////////////////
-                }
             });
+
+            this.SelectedFieldsDataSource = this.ResetIndexes(tempColumns);
+
+            //////////////////////////////////////////
+
+            ////////////////////////////////////////////////
+            if (QueryData.Filters) {
+                var DWObjectField = new DWObjectFieldsDetails(null, this);
+                DWObjectField.IsGroup = true;
+                DWObjectField.setAndOrOperation(QueryData.Filters.AndOr, false);
+                DWObjectField.IndexOrder = this.SelectedFiltersDataSource.length;
+                var MyFilter = this.RestoreFilters(QueryData.Filters, DWObjectField);
+                var temp = [];
+                temp.push(MyFilter);
+                this.SelectedFiltersDataSource = temp;
+            }
+            else {
+                this.SelectedFiltersDataSource = [];
+            }
+            if (this.CurrentSession.CurrentWindow) {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            }
+            //this.PreviewData(true, []);
+            //////////////////////////////////////////
         }
     }
 
@@ -1194,6 +1227,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field, this);
+            if (view.HasTree) {
+                var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
+                if (defaultItem) {
+                    view.Code = defaultItem.Code;
+                }
+            }
             if (field.FilterItems.length == 0) {
                 if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
 

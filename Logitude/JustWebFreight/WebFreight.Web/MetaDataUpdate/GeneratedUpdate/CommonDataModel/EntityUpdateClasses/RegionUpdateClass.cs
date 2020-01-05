@@ -382,7 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllRegionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RegionTextCode_0.Id, Code = "All Regions",  QueryGroupCode = "RGQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RegionObjectTable.Id, QuerySection = "Region", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RegionFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllRegionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RegionTextCode_0.Id, NameTextCodeCode = RegionTextCode_0.Code, Code = "All Regions",  QueryGroupCode = "RGQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RegionObjectTable.Id, QuerySection = "Region", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RegionFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllRegionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id, IndexOrder = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == RegionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == RegionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -400,7 +400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen RegionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Region.HeaderScreen", Name = "Header Screen", ObjectTableId = RegionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField RegionRegionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RegionRegionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionHeaderScreenScreen0.Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    RegionObjectTable.HeaderScreenId = RegionHeaderScreenScreen0.Id;
 	   		  
@@ -408,11 +408,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen RegionGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Region.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = RegionObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField RegionRegionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RegionRegionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RegionRegionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RegionRegionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RegionRegionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RegionRegionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -433,9 +433,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RGGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RegionGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = RegionObjectTable.Id, TabNameTextCodeId = RegionGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RGGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RegionGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = RegionObjectTable.Id, TabNameTextCodeId = RegionGeneralTextCode_TH0.Id, TabNameTextCodeCode = RegionGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RegionEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RegionObjectTable.Id, TabNameTextCodeId = RegionEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RegionEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RegionObjectTable.Id, TabNameTextCodeId = RegionEventsTextCode_TH1.Id, TabNameTextCodeCode = RegionEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

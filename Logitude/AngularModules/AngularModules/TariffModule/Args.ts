@@ -4,5 +4,5 @@ import { TariffVersionPM } from './EntityPMs/TariffVersionPM';
 export class UpdateTariffArgs {
     Version: TariffVersionPM;
     TariffCharges: CodeNameClass[];
-    AirlineId: string;
+    CarrierId: string;
 }

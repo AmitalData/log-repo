@@ -44,6 +44,26 @@ export class TariffSettingPM {
     public set DefaultWarningPercentage(newValue: number) { if (this.defaultWarningPercentage != newValue) { this.defaultWarningPercentage = newValue; this.MarkAsDirty("DefaultWarningPercentage"); } }
        
 	 
+    private airDefaultStepsId: string;
+    public get AirDefaultStepsId() { return this.airDefaultStepsId; }
+    public set AirDefaultStepsId(newValue: string) { if (this.airDefaultStepsId != newValue) { this.airDefaultStepsId = newValue; this.MarkAsDirty("AirDefaultStepsId"); } }
+       
+	 
+    private lCLDefaultStepsId: string;
+    public get LCLDefaultStepsId() { return this.lCLDefaultStepsId; }
+    public set LCLDefaultStepsId(newValue: string) { if (this.lCLDefaultStepsId != newValue) { this.lCLDefaultStepsId = newValue; this.MarkAsDirty("LCLDefaultStepsId"); } }
+       
+	 
+    private airDefaultSteps: string;
+    public get AirDefaultSteps() { return this.airDefaultSteps; }
+    public set AirDefaultSteps(newValue: string) { if (this.airDefaultSteps != newValue) { this.airDefaultSteps = newValue; this.MarkAsDirty("AirDefaultSteps"); } }
+       
+	 
+    private lCLDefaultSteps: string;
+    public get LCLDefaultSteps() { return this.lCLDefaultSteps; }
+    public set LCLDefaultSteps(newValue: string) { if (this.lCLDefaultSteps != newValue) { this.lCLDefaultSteps = newValue; this.MarkAsDirty("LCLDefaultSteps"); } }
+       
+	 
 
     public OldEntityPM: TariffSettingPM;
 		

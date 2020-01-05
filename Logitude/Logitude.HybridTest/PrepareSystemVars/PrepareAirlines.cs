@@ -12,10 +12,10 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static void PrepareAirlinesVars()
         {
-            UpsertAirlineIdHA();
-            UpsertAirlineIdHL();
+            UpsertAirlineCodeHA();
+            UpsertAirlineCodeHL();
         }
-        private static void UpsertAirlineIdHA()
+        private static void UpsertAirlineCodeHA()
         {
             AirlinePM airlinePM = new AirlinePM()
             {
@@ -27,9 +27,8 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(airlinePM);
-            HybridData.AirlineIdHA = serviceResponse.Result;
         }
-        private static void UpsertAirlineIdHL()
+        private static void UpsertAirlineCodeHL()
         {
             AirlinePM airlinePM = new AirlinePM()
             {
@@ -41,7 +40,6 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(airlinePM);
-            HybridData.AirlineIdHL = serviceResponse.Result;
         }
         private static Response AssertResponse<T>(T entityPM)
         {

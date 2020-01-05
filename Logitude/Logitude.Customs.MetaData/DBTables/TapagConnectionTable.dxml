@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="TapagConnectionTables" Schema="Customs" DBType="Main">
-  <Column Name="CustomsNumeral" Type="int">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CustomsTapagFile" Type="varchar" Size="25">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DeclarationId" Type="varchar" Size="15">
+  <Column Name="TapagId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="RequestFileNumber" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="TapagId" Type="varchar" Size="15">
+  <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CustomsTapagFile" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomsNumeral" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RequestFileNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="TapagId" ReferencedTable="Tapags" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="DeclarationId" ReferencedTable="Declarations" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
 </Table>

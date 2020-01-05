@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="GLAccountTotalByMonths" ParentColumnName="DateTypeCode" ReferencedTableName="GLAccountTotalDateTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.GLAccountTotalByMonths_dbo.GLAccountTotalDateTypes_DateTypeCode" />
 </Table>

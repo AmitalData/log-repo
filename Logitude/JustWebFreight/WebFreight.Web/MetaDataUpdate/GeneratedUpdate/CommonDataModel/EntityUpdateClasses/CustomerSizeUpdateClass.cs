@@ -382,7 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCustomerSizesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerSizeTextCode_0.Id, Code = "All Customer Sizes",  QueryGroupCode = "CUSS", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerSizeObjectTable.Id, QuerySection = "CustomerSize", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerSizeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCustomerSizesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerSizeTextCode_0.Id, NameTextCodeCode = CustomerSizeTextCode_0.Code, Code = "All Customer Sizes",  QueryGroupCode = "CUSS", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerSizeObjectTable.Id, QuerySection = "CustomerSize", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerSizeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCustomerSizesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id, IndexOrder = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -402,9 +402,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerSizeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomerSizeObjectTable.HeaderScreenId = CustomerSizeHeaderScreenScreen0.Id;
 	   		  
@@ -412,11 +412,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerSizeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -437,9 +437,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CZGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerSizeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomerSizeObjectTable.Id, TabNameTextCodeId = CustomerSizeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CZGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerSizeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomerSizeObjectTable.Id, TabNameTextCodeId = CustomerSizeGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomerSizeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CZEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerSizeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerSizeObjectTable.Id, TabNameTextCodeId = CustomerSizeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CZEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerSizeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerSizeObjectTable.Id, TabNameTextCodeId = CustomerSizeEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomerSizeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

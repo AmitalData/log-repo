@@ -58,6 +58,8 @@ GenerateMetaDataUpdateClass("~/../../../Logitude.WarehouseLib.MetaData/EntityFil
 
 GenerateAllUpdateClasses("~/../../../Logitude.CRM.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CRMModel");
 GenerateMetaDataUpdateClass("~/../../../Logitude.CRM.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CRMUpdateClass"); //
+GenerateAllUpdateClasses("~/../../../Logitude.CRM.MetaData/MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CRMModel");
+GenerateMetaDataUpdateClass("~/../../../Logitude.CRM.MetaData/MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","OccasionContactMetadataUpdateClass"); //
 
 GenerateAllUpdateClasses("~/../../../Logitude.Infrastructure.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","Infrastructure");
 GenerateMetaDataUpdateClass("~/../../../Logitude.Infrastructure.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","InfrastructureUpdateClass");
@@ -83,6 +85,11 @@ GenerateMetaDataUpdateClass("../EntityFiles/QuoteModel","../../JustWebFreight/We
     
 GenerateAllUpdateClasses("../EntityFiles/ShipmentsModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel/EntityUpdateClasses","ShipmentsModel");
 GenerateMetaDataUpdateClass("../EntityFiles/ShipmentsModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel","ShipmentsModelUpdateClass");
+
+    
+    
+GenerateAllUpdateClasses("../EntityFiles/Master","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel/EntityUpdateClasses","ShipmentsModel");
+GenerateMetaDataUpdateClass("../EntityFiles/Master","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel","MasterModelUpdateClass");
 
  #>
 

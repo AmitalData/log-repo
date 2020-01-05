@@ -222,14 +222,14 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-        public IDbSet<AirlineArea> AirlineAreas
+        public IDbSet<CarrierArea> CarrierAreas
         {
             get;
             set;
         }
 
 
-        public IDbSet<AirlineAreasPort> AirlineAreasPorts
+        public IDbSet<CarrierAreasPort> CarrierAreasPorts
         {
             get;
             set;
@@ -3035,8 +3035,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<OccasionType> OccasionTypes { get; set; }
         public IDbSet<OccasionStatus> OccasionStatuses { get; set; }
         public IDbSet<OccasionInvitee> OccasionInvitees { get; set; }
+        public IDbSet<SupportMailbox> SupportMailboxes { get; set; }
 
-        
         #endregion
 
         #region Social Context
@@ -3410,7 +3410,35 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<GLAccountCounter> GLAccountCounters { get; set; }
         public IDbSet<InterestBasesType> InterestBasesTypes { get; set; }
         public IDbSet<InterestBasesPeriod> InterestBasesPeriods {get; set;}
+        public IDbSet<GLAccountInterestPeriod> GLAccountInterestPeriods
+        {
+            get; set;
 
+        }
+        public IDbSet<InterestTransaction> InterestTransactions { get; set; }
+        public IDbSet<InterestEntityType> InterestEntityTypes { get; set; }
+        public IDbSet<InterestReport> InterestReports
+        {
+            get; set;
+
+        }
+
+        public IDbSet<InterestReportStatuse> InterestReportStatuses
+        {
+            get; set;
+
+        }
+
+        public IDbSet<InterestReportLine> InterestReportLines
+        {
+            get; set;
+
+        }
+        public IDbSet<InterestReportLinesByDate> InterestReportLinesByDates
+        {
+            get; set;
+
+        }
         #endregion
 
         #region Warehouse Context
@@ -3695,6 +3723,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+        public IDbSet<PriceStep> PriceSteps
+        {
+            get;
+            set;
+        }
         #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -3768,8 +3801,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OccasionStatusMap());
             modelBuilder.Configurations.Add(new OccasionTypeMap());
             modelBuilder.Configurations.Add(new OccasionInviteeMap());
+            modelBuilder.Configurations.Add(new SupportMailboxMap());
 
-            
             #endregion
 
             #region Booking
@@ -4307,6 +4340,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new GLAccountTotalDateTypeMap());
             modelBuilder.Configurations.Add(new GLAccountCurrencyMap());
             modelBuilder.Configurations.Add(new GLAccountMoreDataMap());
+            modelBuilder.Configurations.Add(new GLAccountInterestPeriodMap());
+            modelBuilder.Configurations.Add(new InterestReportLinesByDateMap());
 
             modelBuilder.Configurations.Add(new GLAccountTypeMap());
             modelBuilder.Configurations.Add(new JournalMap());
@@ -4371,8 +4406,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new GLAccountCounterMap());
             modelBuilder.Configurations.Add(new InterestBasesTypeMap());
             modelBuilder.Configurations.Add(new InterestBasesPeriodMap());
-
-
+            modelBuilder.Configurations.Add(new InterestTransactionMap());
+            modelBuilder.Configurations.Add(new InterestEntityTypeMap());
+            modelBuilder.Configurations.Add(new InterestReportMap());
+            modelBuilder.Configurations.Add(new InterestReportStatuseMap());
+            modelBuilder.Configurations.Add(new InterestReportLineMap());
             #endregion
 
             #region WareHouse
@@ -4424,6 +4462,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
             modelBuilder.Configurations.Add(new BIReportFolderMap());
+            modelBuilder.Configurations.Add(new PriceStepMap());
             #endregion
 
             modelBuilder.Configurations.Add(new BlobFileMap());
@@ -4556,8 +4595,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
-            modelBuilder.Configurations.Add(new AirlineAreaMap());
-            modelBuilder.Configurations.Add(new AirlineAreasPortMap());
+            modelBuilder.Configurations.Add(new CarrierAreaMap());
+            modelBuilder.Configurations.Add(new CarrierAreasPortMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());

@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="MobileNotificationLogs" Schema="dbo" DBType="Global">
-  <Column Name="AndroidStatus" Type="varchar" Size="1">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DoneDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="varchar" Size="40">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Email" Type="varchar" Size="70">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NotificationMessage" Type="nvarchar" Size="500">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="EntityId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="Exception" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="40">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="Log" Type="varchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="IOSStatus" Type="varchar" Size="1">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsDelete" Type="bit">
+  <Column Name="AndroidStatus" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NumberOfRetriesIOS" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NumberOfRetriesAndroid" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsException" Type="bit">
@@ -33,34 +45,22 @@
   <Column Name="IsRead" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Log" Type="varchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="NotificationMessage" Type="nvarchar" Size="500">
+  <Column Name="IsDelete" Type="bit">
     <Constraints Nullable="false" />
-  </Column>
-  <Column Name="NotificationMessageAndroid" Type="nvarchar" Size="500">
-    <Constraints Nullable="true" />
   </Column>
   <Column Name="NotificationMessageIOS" Type="nvarchar" Size="500">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="NumberOfRetriesAndroid" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="NotificationMessageAndroid" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
   </Column>
-  <Column Name="NumberOfRetriesIOS" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="XML" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
-  <Column Name="ObjectTableId" Type="varchar" Size="15">
+  <Column Name="DoneDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SourceEventDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="XML" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
 </Table>

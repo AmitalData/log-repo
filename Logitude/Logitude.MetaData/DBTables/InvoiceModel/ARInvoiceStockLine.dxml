@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ARInvoiceStockLines" Schema="dbo" DBType="Main">
-  <Column Name="ARInvoiceId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ARInvoiceStockId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CreateDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IsUsed" Type="bit">
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ARInvoiceStockId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Number" Type="varchar" Size="20">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ShipmentNumber" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="UpdateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="IsUsed" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ARInvoiceId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="ARInvoiceStockId" ReferencedTable="ARInvoiceStocks" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ARInvoiceId" ReferencedTable="ARInvoices" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

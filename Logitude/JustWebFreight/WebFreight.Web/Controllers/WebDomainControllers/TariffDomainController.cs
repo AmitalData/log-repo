@@ -46,6 +46,9 @@ using WebFreight.Web.Helpers.APIHelpers;
 using System.Reflection;
 using Stimulsoft.Report.Export;
 using Logitude.BL.Helpers;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.EntityLists;
+using Logitude.TariffModule.Data.EntityListQueryServices;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -170,9 +173,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                 Id = d.Id,
                                                 Tenant = d.Tenant,
                                                 DefaultPriceSteps = d.DefaultPriceSteps,
-                                                DefaultWarningPercentage = d.DefaultWarningPercentage
+                                                DefaultWarningPercentage = d.DefaultWarningPercentage,
+                                                AirDefaultStepsId = d.AirDefaultStepsId, 
+                                                LCLDefaultStepsId = d.LCLDefaultStepsId,
                                             }).FirstOrDefault();
 
+                IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
+                PriceStep airPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.AirDefaultStepsId select d).FirstOrDefault();
+                PriceStep lclPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.LCLDefaultStepsId select d).FirstOrDefault();
+                entityPM.AirDefaultSteps = airPriceSteps != null ? airPriceSteps.Steps : null;
+                entityPM.LCLDefaultSteps = lclPriceSteps != null ? lclPriceSteps.Steps : null;
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
             }
             catch (Exception ex)
@@ -2829,8 +2839,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant)
         {
             List<FromToClass> myResult = new List<FromToClass>();
-            AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(tenant);
-            AirlineAreaRepository airlineAreasRepository = new AirlineAreaRepository(tenant);
+            CarrierAreasPortRepository carrierAreasPortRepository = new CarrierAreasPortRepository(tenant);
+            CarrierAreaRepository carrierAreasRepository = new CarrierAreaRepository(tenant);
             var surchargeLogItem = new SurchargeLog();
             List<string> areasFromPorts = new List<string>();
             List<string> areasToPorts = new List<string>();
@@ -2865,15 +2875,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         else if (to[0] == "Area")
                         {
-                            List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
-                            var area = airlineAreasRepository.GetSingleAirlineArea(to[1], tenant);
+                            List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(to[1], tenant);
+                            var area = carrierAreasRepository.GetSingleCarrierArea(to[1], tenant);
                             if (isFirstTime && area != null)
                             {
                                 areasToPorts.Add(area.Name);
                             }
                             if (areasPorts != null && areasPorts.Count > 0)
                             {
-                                foreach (AirlineAreasPort port in areasPorts)
+                                foreach (CarrierAreasPort port in areasPorts)
                                 {
                                     FromToClass routItem = new FromToClass()
                                     {
@@ -2890,13 +2900,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else if (from[0] == "Area")
                 {
-                    List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(from[1], tenant);
+                    List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(from[1], tenant);
                     if (areasPorts != null && areasPorts.Count > 0)
                     {
-                        var area = airlineAreasRepository.GetSingleAirlineArea(from[1], tenant);
+                        var area = carrierAreasRepository.GetSingleCarrierArea(from[1], tenant);
                         areasFromPorts.Add(area.Name);
                         var isFirstTimeAreaLoop = true;
-                        foreach (AirlineAreasPort port in areasPorts)
+                        foreach (CarrierAreasPort port in areasPorts)
                         {
                             foreach (string item_to in toList)
                             {
@@ -2920,15 +2930,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 }
                                 else if (to[0] == "Area")
                                 {
-                                    List<AirlineAreasPort> toAreasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
-                                    var toarea = airlineAreasRepository.GetSingleAirlineArea(to[1], tenant);
+                                    List<CarrierAreasPort> toAreasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(to[1], tenant);
+                                    var toarea = carrierAreasRepository.GetSingleCarrierArea(to[1], tenant);
                                     if (isFirstTime && isFirstTimeAreaLoop && toarea != null)
                                     {
                                         areasToPorts.Add(toarea.Name);
                                     }
                                     if (toAreasPorts != null && toAreasPorts.Count > 0)
                                     {
-                                        foreach (AirlineAreasPort toPort in toAreasPorts)
+                                        foreach (CarrierAreasPort toPort in toAreasPorts)
                                         {
                                             FromToClass routItem = new FromToClass()
                                             {
@@ -3000,6 +3010,33 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             TariffVersionQueryService iTariffVersionQueryService = new TariffVersionQueryService(iContext);          
             List<TariffVersionPM> entityPMs = iTariffVersionQueryService.GetAllVersionsWithLines(tariffId, tenant);
             return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
+        }
+        public HttpResponseMessage GetRecentTariffs()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+                
+                string mail = SecurityUtility.GetAuthenticatedUser();
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM contact = contactQuery.GetContactByEmailOnly(mail, tenant);
+
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(tenant);
+                TariffListQueryService tariffListQueryservice = new TariffListQueryService(iContext);
+                List<TariffList> myResult = tariffListQueryservice.GetRecentTariffs(contact.Id, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 

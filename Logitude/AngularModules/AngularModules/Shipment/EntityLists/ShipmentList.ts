@@ -438,5 +438,6 @@ export class ShipmentList {
 		ARInvoices: string;
 		NotInvoicedReceivablesAmount: number;
 		CreatedByPartner: string;
+		FirstARInvoiceApprovalDate: Date;
 	
 }

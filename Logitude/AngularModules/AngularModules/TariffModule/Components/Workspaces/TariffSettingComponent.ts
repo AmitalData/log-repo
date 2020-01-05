@@ -8,6 +8,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSettingPMService } from '../../../TariffModule/Services/StandardPMs/TariffSettingPMService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -24,6 +25,8 @@ export class TariffSettingComponent extends BaseComponent {
     private myService: TariffSettingPMService;
     private myDomainService: TariffDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsAirEditBtnEnabled = false;
+    public IsLCLEditBtnEnabled = false;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -46,12 +49,30 @@ export class TariffSettingComponent extends BaseComponent {
 
                     this.BuildItemsSource();
                     this.IsResourcesReady = true;
+                    this.SetUIPropertiesForEditButtons();
+                    this.SetUIPropertiesOfFields();
                 }
             });
         });
     }
 
-    
+    private SetUIPropertiesForEditButtons() {
+        this.IsLCLEditBtnEnabled = false;
+        this.IsAirEditBtnEnabled = false;
+
+        if (!AppTool.IsNullOrEmpty(this.AirDefaultStepsId)) {
+            this.IsAirEditBtnEnabled = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
+            this.IsLCLEditBtnEnabled = true;
+        }
+    }
+
+    private SetUIPropertiesOfFields() {
+        this.UIProperties.SetRequired("AirDefaultStepsId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AirDefaultStepsId));
+        this.UIProperties.SetRequired("LCLDefaultStepsId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.LCLDefaultStepsId));
+    }
+
     get DefaultWarningPercentage() {
         if (this.EntityPM != null) {
             return this.EntityPM.DefaultWarningPercentage;
@@ -63,10 +84,37 @@ export class TariffSettingComponent extends BaseComponent {
         }
     }
 
+    get LCLDefaultStepsId() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.LCLDefaultStepsId;
+        }
+    }
+    set LCLDefaultStepsId(value: string) {
+        if (this.EntityPM.LCLDefaultStepsId != value) {
+            this.EntityPM.LCLDefaultStepsId = value;
+            this.SetUIPropertiesForEditButtons();
+            this.SetUIPropertiesOfFields();
+        }
+    }
+
+    get AirDefaultStepsId() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.AirDefaultStepsId;
+        }
+    }
+    set AirDefaultStepsId(value: string) {
+        if (this.EntityPM.AirDefaultStepsId != value) {
+            this.EntityPM.AirDefaultStepsId = value;
+            this.SetUIPropertiesForEditButtons();
+            this.SetUIPropertiesOfFields();
+        }
+    }
+
     get DefaultPriceSteps() { return this.EntityPM.DefaultPriceSteps; }
     set DefaultPriceSteps(value: string) {
         if (this.EntityPM.DefaultPriceSteps != value) {
             this.EntityPM.DefaultPriceSteps = value;
+           
         }
     }
 
@@ -111,7 +159,7 @@ export class TariffSettingComponent extends BaseComponent {
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
-        if (!this.EntityPM.IsDirty) {
+        if (!this.EntityPM.IsDirty && !AppTool.IsNullOrEmpty(this.AirDefaultStepsId) && !AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
             this.CurrentSession.CloseCurrentWindow();
         }
         else {
@@ -143,6 +191,14 @@ export class TariffSettingComponent extends BaseComponent {
 
             if (!isValidSort) {
                 errors.push("Price steps must be sorted");
+            }
+
+            if (AppTool.IsNullOrEmpty(this.AirDefaultStepsId)) {
+                errors.push("Air Default Steps field is required");
+            }
+
+            if (AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
+                errors.push("LCL Default Steps field is required");
             }
 
             this.ValidationErrorsList =  this.ValidationErrorsList.concat(errors);
@@ -182,6 +238,41 @@ export class TariffSettingComponent extends BaseComponent {
                 }
             }
         }
+    }
+
+    EditPriceStepsClicked(type: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Edit Price Steps";
+        if (type == "LCL") {
+            logWindow.WindowArgs = this.LCLDefaultStepsId;
+        }
+        else if (type == "Air") {
+            logWindow.WindowArgs = this.AirDefaultStepsId;
+        }
+        this.ShowPriceStepsWindow(logWindow, type);
+    }
+
+    AddPriceStepsClicked(type: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "New Price Steps";
+        logWindow.WindowArgs = null;
+        this.ShowPriceStepsWindow(logWindow, type);
+    }
+
+    ShowPriceStepsWindow(logWindow: LogitudeWindow, type: string) {
+        logWindow.Show("./InfrastructureModules/InfrastructureOthers/Components/PriceSteps/PriceStepsGeneralTabComponent");
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if (d && d != "cancel") {
+                    if (type == "LCL") {
+                        this.LCLDefaultStepsId = s.EntityPM.Id;
+                    }
+                    else if (type == "Air") {
+                        this.AirDefaultStepsId = s.EntityPM.Id;
+                    }
+                }
+            });
+        });
     }
 }
 

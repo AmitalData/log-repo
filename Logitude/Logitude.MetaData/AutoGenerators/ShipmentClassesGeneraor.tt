@@ -40,6 +40,10 @@ this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 
 GenerateAllUpdateClasses("../EntityFiles/ShipmentsModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel/EntityUpdateClasses","ShipmentsModel");
 GenerateMetaDataUpdateClass("../EntityFiles/ShipmentsModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel","ShipmentsModelUpdateClass");
+
+GenerateAllUpdateClasses("../EntityFiles/Master","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel/EntityUpdateClasses","ShipmentsModel");
+GenerateMetaDataUpdateClass("../EntityFiles/Master","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel","MasterModelUpdateClass");
+
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/ShipmentsModel","../../Logitude.BL/ShipmentsModel/CloseTables","ShipmentsModel");
 
  

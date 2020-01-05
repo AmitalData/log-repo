@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ReconcileExternalPageLines" Schema="dbo" DBType="Main">
-  <Column Name="CreditAmount" Type="decimal" Precision="15" Scale="2">
+  <Column Name="ReconcileExternalPageId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LineNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="DebitAmount" Type="decimal" Precision="15" Scale="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="ReferenceDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Reference" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsReconciled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReconcileRemarks" Type="nvarchar" Size="400">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreditAmount" Type="decimal" Precision="15" Scale="2">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="InProgressExternalReconcile" Type="bit">
     <Constraints Nullable="false" />
@@ -15,33 +42,5 @@
   <Column Name="InReconcileProgress" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IsReconciled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LineNumber" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Notes" Type="nvarchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ReconcileExternalPageId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ReconcileRemarks" Type="nvarchar" Size="400">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Reference" Type="nvarchar" Size="30">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ReferenceDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="4000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Relation ParentTableName="ExternalReconciliationLines" ParentColumnName="ExternalPageLineId" ReferencedTableName="ReconcileExternalPageLines" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ExternalReconciliationLines_dbo.ReconcileExternalPageLines_ExternalPageLineId" />
-  <Relation ParentTableName="JournalExternalReconciles" ParentColumnName="ReconcileExternalPageLineId" ReferencedTableName="ReconcileExternalPageLines" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalExternalReconciles_dbo.ReconcileExternalPageLines_ReconcileExternalPageLineId" />
+  <Relation ForeignKeyColumn="ReconcileExternalPageId" ReferencedTable="ReconcileExternalPages" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

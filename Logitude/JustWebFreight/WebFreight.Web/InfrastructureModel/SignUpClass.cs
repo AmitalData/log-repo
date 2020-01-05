@@ -1465,9 +1465,10 @@ namespace WebFreight.Web.InfrastructureModel
                     Tenant = theTenant,
                 };
                 theTextCodeRepository.Add(newTextCode);
-                if (tenantZeroObjectTable.DescriptionTextCodeId == textCode.Id)
+                if (tenantZeroObjectTable.DescriptionTextCodeCode == textCode.Code)
                 {
                     currentTenantObjectTable.DescriptionTextCodeId = newTextCode.Id;
+                    currentTenantObjectTable.DescriptionTextCodeCode = newTextCode.Code;
                     theObjectTableRepository.Update(currentTenantObjectTable);
 
                 }
@@ -1504,24 +1505,24 @@ namespace WebFreight.Web.InfrastructureModel
 
                 TextCode zeroShortTextCode = null;
                 TextCode currentShortTextCode = null;
-                if (zeroObject.ShortNameTextCodeId != null)
+                if (zeroObject.ShortNameTextCodeCode != null)
                 {
-                    zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.ShortNameTextCodeId).FirstOrDefault();
+                    zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ShortNameTextCodeCode).FirstOrDefault();
                     currentShortTextCode = currentTenantTextCodes[zeroShortTextCode.Code + theTenant + currentObjectTable.Id];
                 }
 
-                TextCode zerofullTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.FullNameTextCodeId).FirstOrDefault();
+                TextCode zerofullTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.FullNameTextCodeCode).FirstOrDefault();
                 TextCode currentfullTextCode = currentTenantTextCodes[zerofullTextCode.Code + theTenant + currentObjectTable.Id];
 
                 TextCode zeroListTextCode = null;
                 TextCode currentListTextCode = null;
-                if (zeroObject.ListTextCodeId != null)
+                if (zeroObject.ListTextCodeCode != null)
                 {
-                    zeroListTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.ListTextCodeId).FirstOrDefault();
+                    zeroListTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ListTextCodeCode).FirstOrDefault();
                     currentListTextCode = currentTenantTextCodes[zeroListTextCode.Code + theTenant + currentObjectTable.Id];
                 }
 
-                TextCode zeroHelpTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.HelpTextCodeId).FirstOrDefault();
+                TextCode zeroHelpTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.HelpTextCodeCode).FirstOrDefault();
                 TextCode currentHelpTextCode = currentTenantTextCodes[zeroHelpTextCode.Code + theTenant + currentObjectTable.Id];
 
 
@@ -1583,6 +1584,10 @@ namespace WebFreight.Web.InfrastructureModel
                     HtmlListComponentUrl = zeroObject.HtmlListComponentUrl,
                     HtmlHeaderComponentName = zeroObject.HtmlHeaderComponentName,
                     HtmlListComponentName = zeroObject.HtmlListComponentName,
+                    FullNameTextCodeCode = currentfullTextCode.Code,
+                    HelpTextCodeCode = currentHelpTextCode != null ? currentHelpTextCode.Code : null,
+                    ListTextCodeCode = currentListTextCode != null ? currentListTextCode.Code : null,
+                    ShortNameTextCodeCode = currentShortTextCode != null ? currentShortTextCode.Code : null,
                 };
 
                 theObjectFieldsRepository.Add(newObjectField);
@@ -1599,7 +1604,7 @@ namespace WebFreight.Web.InfrastructureModel
                         ValidationOrder = validation.ValidationOrder,
                         ValidationExpression = validation.ValidationExpression,
                         Code = validation.Code,
-
+                        ObjectFieldCode = newObjectField.FieldCode,
                     };
                     theObjectFieldValidationRepository.Add(newValidation);
                 }
@@ -1630,7 +1635,7 @@ namespace WebFreight.Web.InfrastructureModel
         {
             foreach (Feature feature in tenantZeroFeatures)
             {
-                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Id == feature.NameTextCodeId).FirstOrDefault();
+                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == feature.NameTextCodeCode).FirstOrDefault();
                 TextCode featureText = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == feature.ObjectTableId).FirstOrDefault();
                 ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
@@ -1640,6 +1645,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Tenant = theTenant,
                     Code = feature.Code,
                     NameTextCodeId = featureText.Id,
+                    NameTextCodeCode = featureText.Code,
                     ObjectTableId = featureObjectTable.Id,
                     Id = IdCounter.GetNumber("Feature", theTenant).ToString(),
                 };
@@ -1994,7 +2000,7 @@ namespace WebFreight.Web.InfrastructureModel
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == tab.ObjectTableId).FirstOrDefault();
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
-                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Id == tab.TabNameTextCodeId).FirstOrDefault();
+                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == tab.TabNameTextCodeCode).FirstOrDefault();
                 TextCode text = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
 
                 ObjectTableTab newTab = new ObjectTableTab()
@@ -2003,6 +2009,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Code = tab.Code,
                     ObjectTableId = currentObjectTable.Id,
                     TabNameTextCodeId = text.Id,
+                    TabNameTextCodeCode = text.Code,
                     IndexOrder = tab.IndexOrder,
                     ControlPath = tab.ControlPath,
                     Id = IdCounter.GetNumber("ObjectTableTab", theTenant).ToString(),
@@ -2085,7 +2092,7 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ScreenFieldPM field in fieldsList)
             {
 
-                ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == field.ObjectFieldId).FirstOrDefault();
+                ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.FieldCode == field.ObjectFieldCode).FirstOrDefault();
 
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == field.ObjectFieldObjectTableName).FirstOrDefault();
                 ObjectField currentObjectField = currentTenantObjectFields.Where(d => d.FieldName == zeroObjectField.FieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
@@ -2099,7 +2106,8 @@ namespace WebFreight.Web.InfrastructureModel
                     ScreenId = currentScreen.Id,
                     Tenant = theTenant,
                     Row = field.Row,
-                    Column = field.Column
+                    Column = field.Column,
+                    ObjectFieldCode = currentObjectField.FieldCode
                 };
                 theScreenFieldsRepository.Add(newField);
             }
@@ -2166,6 +2174,7 @@ namespace WebFreight.Web.InfrastructureModel
                     SystemLevel = ruleField.SystemLevel,
                     RuleNotificationTypeCode = ruleField.RuleNotificationTypeCode,
                     Expression = ruleField.Expression,
+                    ObjectFieldCode = objectField.FieldCode,
                 };
 
                 theObjectTableRuleFieldRepository.Add(newRuleField);
@@ -2193,6 +2202,7 @@ namespace WebFreight.Web.InfrastructureModel
                     IndexOrder = q.IndexOrder,
                     DisplayCount = q.DisplayCount,
                     NameTextCodeId = textCode.Id,
+                    NameTextCodeCode = textCode.Code,
                     QueryGroupCode = q.QueryGroupCode,
                     IsAddNewEntityEnabled = q.IsAddNewEntityEnabled,
                     DefaultSortDirection = q.DefaultSortDirection,

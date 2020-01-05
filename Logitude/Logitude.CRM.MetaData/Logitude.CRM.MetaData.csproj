@@ -169,6 +169,7 @@
     </None>
     <None Include="EntityFiles\SLALine.lxml" />
     <None Include="EntityFiles\Stage.lxml" />
+    <None Include="EntityFiles\SupportMailbox.lxml" />
     <None Include="EntityFiles\Ticket.lxml" />
     <None Include="EntityFiles\TicketClassification.lxml" />
     <None Include="EntityFiles\Correspondence.lxml">
@@ -181,6 +182,9 @@
     <None Include="EntityFiles\TicketStage.lxml" />
     <None Include="EntityFiles\TicketType.lxml" />
     <None Include="EntityFiles\TimeUnit.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="MetadataFiles\OccasionContact.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

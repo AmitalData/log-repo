@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="AccountingIntegrityChecks" ParentColumnName="StatusCode" ReferencedTableName="IntegrityCheckStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AccountingIntegrityChecks_dbo.IntegrityCheckStatuses_StatusCode" />
 </Table>

@@ -233,20 +233,22 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToLCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsCancelled) {
-                                button.IsDisabled = true;
-                            }
+                            if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
 
-                            else {
-                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
-                            }                            
+                            }
+
+                            else {
+                                button.IsHidden = true;
+                            }                           
                         }
+
                         else {
                             button.IsHidden = true;
                         }
@@ -254,19 +256,20 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToFCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsCancelled) {
-                                button.IsDisabled = true;
-                            }
+                            if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
 
-                            else {
-                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
                             }
+
+                            else {
+                                button.IsHidden = true;
+                            } 
                         }
                         else {
                             button.IsHidden = true;
@@ -1465,7 +1468,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
             for (var k in requiredFields) {
                 var field = requiredFields[k];
-                var obField = _tenantObjectFields.filter(x => x.Id === field.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
+                var obField = _tenantObjectFields.filter(x => x.FieldCode === field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
                 var requiredError = TextCodeTranslator.Translate("General.M.FieldIsRequired");
                 var fieldTrans = TextCodeTranslator.Translate(obField.FullNameTextCodeCode);
                 requiredError = requiredError.replace("%FieldName", fieldTrans);

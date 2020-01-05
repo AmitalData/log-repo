@@ -460,12 +460,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
 
-                    if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
-                    {
-                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
-                        throw new ApplicationException("Can't update " + fieldLabel);
-                    }
-
                     if (entityPM.DueDate != entityPOCO.DueDate)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.DueDate", entityPM.Tenant);
@@ -478,11 +472,19 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
 
-                    if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
-                    {
-                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
-                        throw new ApplicationException("Can't update " + fieldLabel);
-                    }
+
+                    //if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
+                    //{
+                    //    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
+                    //    throw new ApplicationException("Can't update " + fieldLabel);
+                    //}
+
+                    //if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
+                    //{
+                    //    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
+                    //    throw new ApplicationException("Can't update " + fieldLabel);
+                    //}
+
                 }
             }
         }
@@ -517,7 +519,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
-                    double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                    double? exchangeRate = entityPM.InvoiceCurrencyExchangeRate;
                     double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
                     if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
                     {
@@ -775,22 +777,28 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (!entityPM.HasCreditLimitOverrideFeature)
                         {
-                            string myCustomerId = entityPM.BillToId;
-
                             if (mySettings.InvoiceCreationBlock)
                             {
+                                string errorText_Blocking = "Credit limit setting is blocking invoice for";
+                                string myPartnerText = TranslateTextsClass.Translate("ARInvoice.F.BillToId", tenant) + ": " + entityPM.BillToName;
+
                                 // Bill to may be other partners. (not Customr)
                                 CustomerRepository myCustomerRepository = new CustomerRepository(myCommonContext);
-                                Customer myCustomer = myCustomerRepository.GetSingleCustomer(myCustomerId, tenant, false);
+                                Customer myCustomer = myCustomerRepository.GetSingleCustomer(entityPM.BillToId, tenant, false);
                                 if (myCustomer != null)
                                 {
                                     if (myCustomer.IsCreditLimitEnabled)
                                     {
+                                        if (myCustomer.BlockNewInvoiceCreation)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + " " + myPartnerText);
+                                        }
+
                                         if (myCustomer.CreditLimitAmount != null)
                                         {
                                             ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(myContext);
                                             ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
-                                            double? myResult = invoiceQuery.GetCustomerCreditLimitActualAmount(myCustomerId, tenant);
+                                            double? myResult = invoiceQuery.GetCustomerCreditLimitActualAmount(entityPM.BillToId, tenant);
 
                                             double LimitAmount = myCustomer.CreditLimitAmount == null ? 0 : myCustomer.CreditLimitAmount.Value;
                                             double ActualBalance = myResult == null ? 0 : myResult.Value;
@@ -815,6 +823,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                                 LimitError += "The current balance stands on " + String.Format("{0:N2}", ActualBalance) + " (" + myLocalCurrencyCode + ").";
 
                                                 throw new ApplicationException(LimitError);
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                else
+                                {
+                                    AgentRepository myAgentRepository = new AgentRepository(myCommonContext);
+                                    Agent myAgent = myAgentRepository.GetSingleAgent(tenant, entityPM.BillToId);
+                                    if (myAgent != null)
+                                    {
+                                        if (myAgent.IsCreditLimitEnabled)
+                                        {
+                                            if (myAgent.BlockNewInvoiceCreation)
+                                            {
+                                                throw new ApplicationException(errorText_Blocking + " " + myPartnerText);
                                             }
                                         }
                                     }

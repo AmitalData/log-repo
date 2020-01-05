@@ -508,7 +508,9 @@ AccountBalanceM endAccountBalanceService)
             bool openBalancePlease_ReCalcYearTransfer = false;
             endAccountBalanceService.CalculateBalance(
                 openBalancePlease_ReCalcYearTransfer,
-                _Param.DateTypeCode,To, includeAccoutingDateLTransaction, false);
+                _Param.DateTypeCode,To,
+                _Param.CheckHaveAccountingQueued,
+                includeAccoutingDateLTransaction, false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -525,7 +527,9 @@ AccountBalanceM endAccountBalanceService)
             bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
             startAccountBalanceService.CalculateBalance(
                 openBalancePlease_ReCalcYearTransfer,
-                _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,_Param.From, includeAccoutingDateLTransaction, false);
+                _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,_Param.From,
+                _Param.CheckHaveAccountingQueued,
+                includeAccoutingDateLTransaction, false);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }

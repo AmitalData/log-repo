@@ -762,6 +762,23 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- AllowCustomersInAgentsLOV -->
+                                                                                <tr class="FormFieldRow" *ngIf="AllowCustomersInAgentsLOVVisible">
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 280px;">
+                                                                                                    <LogLabel [ObjectFieldName]="'AllowCustomersInAgentsLOV'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'AllowCustomersInAgentsLOV'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
                                                                                 <tr>
                                                                                     <td colspan="2">
                                                                                         <div></div>

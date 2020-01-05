@@ -197,7 +197,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var q = (from a in context.Journals
                      where a.Tenant == tenant
-                     where !a.IsLedgerCreated //index 
+                     where a.IsLedgerCreated== false//index 
                      where (a.StatusCode == "2" || a.StatusCode == "3")
                      //3 voided 
                      //2	Approved	מאושר	2,Approved,מאושר	0
@@ -238,6 +238,17 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
         }
 
+        public IQueryable<Journal> GetQueryableBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
+        {
+            fromTruncateTime = fromTruncateTime.Date;
+            toTruncateTime = toTruncateTime.Date;
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where EntityFunctions.TruncateTime(a.AccountingDate) >= fromTruncateTime && EntityFunctions.TruncateTime(a.AccountingDate) <= toTruncateTime
+                     select a);
+            return q;
+
+        }
         public IQueryable<Journal> GetQueryableApprovedBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
         {
             var q = (from a in context.Journals
@@ -377,6 +388,7 @@ namespace Logitude.Accounting.Data.Repositories
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
                             where entityIdS.Contains(a.AccountingEntityId)
+                                    && a.AccountingEntityCode == "2"
                             select a);
 
             return journals;

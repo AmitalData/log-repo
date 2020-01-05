@@ -516,11 +516,11 @@ export class EditComponent implements OnDestroy {
 
 
         if (SessionLocator.TenantPM.AccountingActivated) {
-            var myObjectTable = window.ObjectTables.filter(x => x.Name === "APInvoice")[0];
-            var myObjectTableId = myObjectTable.Id;
+            var objectTable = window.ObjectTables.filter(x => x.Name === "APInvoice")[0];
+            var objectTableId = objectTable.Id;
 
-            headerScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "APInvoice.FullACCHeaderScreen")[0];
-            objectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
+            headerScreen = window.Screens.filter(d => d.ObjectTableId === objectTableId && d.Code == "APInvoice.FullACCHeaderScreen")[0];
+            objectFields = window.ObjectFields.filter(d => d.ObjectTableId === objectTableId);
             this.GenerateHeaderScreen(headerScreen,objectFields);
         }
         else {
@@ -619,7 +619,7 @@ export class EditComponent implements OnDestroy {
 
                         var myScreenField = myScreenFields.filter(f => f.Column == c && f.Row == r)[0];
                         if (myScreenField != null) {
-                            var myObjectField = ObjectFields.filter(d => d.Id === myScreenField.ObjectFieldId)[0];
+                            var myObjectField = ObjectFields.filter(d => d.FieldCode === myScreenField.ObjectFieldCode)[0];
                             if (myObjectField != null) {
 
                                 myRow.Label = TextCodeTranslator.Translate(myObjectField.FullNameTextCodeCode);
@@ -735,6 +735,12 @@ export class EditComponent implements OnDestroy {
                                 break;
                             }
                         case "GAOV":
+                            {
+                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                    myTabsSorted.push(tab);
+                                break;
+                            }
+                        case "GAIT":
                             {
                                 if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
                                     myTabsSorted.push(tab);
@@ -1039,6 +1045,12 @@ export class EditComponent implements OnDestroy {
                     case "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab": {
                         myComponentName = "AddressesTabComponent";
                         myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AddressesTabComponent";
+                        break;
+                    }
+
+                    case "Simplog.FreightLib.Views.Areas": {
+                        myComponentName = "AreasTabComponent";
+                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AreasTabComponent";
                         break;
                     }
 

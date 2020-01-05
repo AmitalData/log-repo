@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="CashBookLines" Schema="dbo" DBType="Main">
+  <Column Name="CashBookId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
   <Column Name="ARPChequeId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="CashBookId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="IsDeposited" Type="bit">
     <Constraints Nullable="false" />
@@ -12,7 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="4000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="CashBookId" ReferencedTable="CashBooks" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ARPChequeId" ReferencedTable="ARPaymentCheques" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

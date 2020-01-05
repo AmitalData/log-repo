@@ -6,11 +6,10 @@
   <Column Name="EnglishName" Type="varchar" Size="60">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="LocalName" Type="nvarchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="PaymentCheques" ParentColumnName="PaymentChequeStatusCode" ReferencedTableName="PaymentChequeStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.PaymentChequeStatuses_PaymentChequeStatusCode" />
+  <Column Name="LocalName" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

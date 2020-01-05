@@ -224,5 +224,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from a in context.Tenants where a.Id == id select a.VatNumber).FirstOrDefault();
         }
+
+        public bool TenantExist(int id)
+        {
+            return context.Tenants.Any(a => a.Id == id);
+        }
     }
 }

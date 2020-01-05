@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="OceanInsightsStatuses" Schema="dbo" DBType="Main">
-  <Column Name="CommunicationLogId" Type="varchar" Size="15">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OceanInsightsRequestId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ContentDocumentId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CommunicationLogId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="OceanInsightsRequestId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="OceanInsightsRequestId" ReferencedTable="OceanInsightsRequests" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ContentDocumentId" ReferencedTable="Documents" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CommunicationLogId" ReferencedTable="CommunicationLogs" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

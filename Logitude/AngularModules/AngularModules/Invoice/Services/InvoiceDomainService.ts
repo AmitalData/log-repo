@@ -364,11 +364,11 @@ export class InvoiceDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetCustomerCreditLimitActualAmount(myCustomerId: string) {
+    GetCustomerCreditLimitActualAmount(myCustomerId: string, invoiceId: string = null) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId;
+        var url = this._apiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId + "&invoiceId=" + invoiceId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {

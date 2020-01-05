@@ -307,7 +307,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 foreach (ObjectTableRuleField field in requiredFields)
                                 {
-                                    ObjectField f = ObjectFieldRepository.GetSingleObjectFieldById(field.ObjectFieldId, authToken.Tenant);
+                                    ObjectField f = ObjectFieldRepository.GetSingleObjectFieldByCode(field.ObjectFieldCode, authToken.Tenant);
                                     errorMessage = errorMessage + ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
                                 }
                             }

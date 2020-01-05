@@ -12,7 +12,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             screenField.Row = screenFieldPM.Row;
             screenField.ScreenId = screenFieldPM.ScreenId;
             screenField.Tenant = screenFieldPM.Tenant;
-            
+            screenField.ObjectFieldCode = screenFieldPM.ObjectFieldCode;
+
         }
     }
 }

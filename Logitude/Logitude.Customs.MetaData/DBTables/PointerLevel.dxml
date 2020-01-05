@@ -3,14 +3,13 @@
   <Column Name="Code" Type="varchar" Size="1">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="EnglishName" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="LocalName" Type="nvarchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomDocumentTypes" ParentColumnName="PointerLevel" ReferencedTableName="PointerLevels" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomDocumentTypes_Customs.PointerLevels_PointerLevel" />
+  <Column Name="EnglishName" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
 </Table>

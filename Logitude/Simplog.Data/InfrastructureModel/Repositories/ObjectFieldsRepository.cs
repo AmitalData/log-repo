@@ -293,8 +293,25 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             string objectFieldsListName = objectTableName.ToLower() + "customobjectfields" + tenant;
 
+            bool isWRCacheALLOWED = false;
+
+            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+            if (iAppSettings != null)
+            {
+                if (iAppSettings["WRCacheALLOWED"] != null)
+                {
+                    string iValueText = iAppSettings["WRCacheALLOWED"] + "";
+                    if (!string.IsNullOrEmpty(iValueText))
+                    {
+                        if (iValueText.ToLower() == "true")
+                        {
+                            isWRCacheALLOWED = true;
+                        }
+                    }
+                }
+            }
             List<ObjectField> objectfields = new List<ObjectField>();
-            if (HttpContext.Current != null)
+            if (HttpContext.Current != null || isWRCacheALLOWED)
             {
                 if (CacheManager.CacheWrapper.Get(objectFieldsListName) == null)
                 {
@@ -494,12 +511,17 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.SaveChanges();
         }
 
-
-
         public ObjectField GetSingleObjectFieldById(string id, int tenant)
         {
             return (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
                     where a.Id == id
+                    select a).FirstOrDefault();
+        }
+
+        public ObjectField GetSingleObjectFieldByCode(string code, int tenant)
+        {
+            return (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
+                    where a.Code == code
                     select a).FirstOrDefault();
         }
 

@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="AnalyzeQueues" ParentColumnName="Status" ReferencedTableName="AnalyzeQueueStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AnalyzeQueues_dbo.AnalyzeQueueStatus_Status" />
 </Table>

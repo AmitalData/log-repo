@@ -109,8 +109,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                                           VersionTypeName = a.VersionType == "G" ? "Generated" : "Uploaded",
                                                                           FileName = a.Doc != null ? a.Doc.FileName : null,
                                                                           FileSize = a.Doc != null ? a.Doc.FileSize : null,
+                                                                          Extension = a.Doc != null ? a.Doc.Extension : null,
                                                                       };
-            return quoteDocumentVersion;
+            return quoteDocumentVersion.OrderBy(d=>d.VersionNumber);
         }
 
         public IQueryable<QuoteDocumentVersionPM> GetQuoteDocumentVersionPMsByQuoteIdAndTemplateId(string quoteId,string templateId ,int tenant)
@@ -140,8 +141,34 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return quoteDocumentVersion;
         }
 
+        public QuoteDocumentVersionPM GetQuoteDocumentVersionPMByQuoteId(string quoteid, int tenant)
+        {
+            QuoteDocumentVersionPM entity;
+            entity = (from a in repository.quotesContext.QuoteDocumentVersions.Include("Doc")
+                      where a.Tenant == tenant && a.QuoteId == quoteid 
+                      select new QuoteDocumentVersionPM()
+                      {
+                          QuoteId = a.QuoteId,
+                          VersionNumber = a.VersionNumber,
+                          Tenant = a.Tenant,
+                          CreateDate = a.CreateDate,
+                          UpdateDate = a.UpdateDate,
+                          CreatedByUserId = a.CreatedByUserId,
+                          UpdatedByUserId = a.UpdatedByUserId,
+                          VersionType = a.VersionType,
+                          DocumentId = a.DocumentId,
+                          SendDate = a.SendDate,
+                          IsSent = a.IsSent,
+                          QuoteTemplateId = a.QuoteTemplateId,
+                          FileName = a.Doc != null ? a.Doc.FileName : null,
+                          FileSize = a.Doc != null ? a.Doc.FileSize : null,
+                          Extension = a.Doc != null ? a.Doc.Extension : null,
+                      }).OrderByDescending(d=>d.VersionNumber).FirstOrDefault();
 
-      
+            return entity;
+
+        }
+
 
         public QuoteDocumentVersion GetFirstQuoteDocumentVersionForTenant(int tenant)
         {

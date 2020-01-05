@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="250">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="DocumentTypes" ParentColumnName="DocumentsDataProviderCode" ReferencedTableName="DocumentsDataProviders" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.DocumentTypes_dbo.DocumentsDataProviders_DocumentsDataProviderCode" />
 </Table>

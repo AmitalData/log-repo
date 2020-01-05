@@ -1,45 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="BankDeposits" Schema="dbo" DBType="Main">
-  <Column Name="AccountingDate" Type="datetime">
-    <Constraints Nullable="false" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="CashBookId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DepositBankAccountId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DepositCurrencyId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DepositDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="DepositNumber" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="IsCanceled" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LocalDepositAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="UpdateDate" Type="datetime">
@@ -48,5 +18,39 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="BankDepositLines" ParentColumnName="DepositId" ReferencedTableName="BankDeposits" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankDepositLines_dbo.BankDeposits_DepositId" />
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepositNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DepositDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DepositCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalDepositAmount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DepositBankAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CashBookId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AccountingDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCanceled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="UpdatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DepositCurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DepositBankAccountId" ReferencedTable="BankAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CashBookId" ReferencedTable="CashBooks" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

@@ -233,6 +233,24 @@ namespace Logitude.BL.DataContracts
                 cn.Close();
             }
         }
+        public static void UpdateShipmentFirstApprovalDate(string myShipmentId, int tenant)
+        {
+            string strConnString = GetConnection(tenant);
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("dbo.usp_ComputeShipmentFirstApprovalDate", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter param1 = new SqlParameter("@ShipmentId", SqlDbType.VarChar);
+                param1.Direction = ParameterDirection.Input;
+                param1.Value = myShipmentId;
+                cmd.Parameters.Add(param1);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+        }
 
         public static void DDD()
         {

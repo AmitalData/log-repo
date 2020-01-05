@@ -167,7 +167,6 @@ namespace WebFreight.Web.DataProviders
         public List<InvoicesReport> InvoicesReportList { get; set; }
         public List<InvoiceTotals> InvoiceTotalsList { get; set; }
         public List<InvoicesReport> InvoicesReportList_NotSorted { get; set; }
-
         //invoice totlas
         public string SubTotalLocalCurr { get; set; }
         public string SubTotalInvoiceCurr { get; set; }
@@ -457,8 +456,13 @@ namespace WebFreight.Web.DataProviders
             public string ARInvoiceField8 { get; set; }
             public string ARInvoiceField9 { get; set; }
             public string ARInvoiceField10 { get; set; }
-
             public string Salesman { get; set; }
+            public double? ExpenseCharges { get; set; }
+            public double? SubTotalInLocalCurrency { get; set; }
+            public double? VATInLocalCurrency { get; set; }
+            public double? GrandTotalInLocalCurrency { get; set; }
+            public double? ExpenseChargesInLocalCurrency { get; set; }
+            public string UUID { get; set; }
         }
 
         public class InvoiceTotals

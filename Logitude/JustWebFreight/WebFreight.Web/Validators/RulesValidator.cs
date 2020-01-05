@@ -174,7 +174,7 @@ namespace WebFreight.Web.Validators
             foreach (ObjectTableRuleField ruleField in ruleFields)
             {
                 ObjectField objectField = (from a in objectFieldList
-                                           where a.Id == ruleField.ObjectFieldId && (a.Tenant == tenant || a.Tenant == 0)
+                                           where a.FieldCode == ruleField.ObjectFieldCode && (a.Tenant == tenant || a.Tenant == 0)
                                            select a).FirstOrDefault();
                 if (ruleField.RuleNotificationTypeCode == "ERR")
                 {

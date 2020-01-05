@@ -3,13 +3,15 @@
   <Column Name="Id" Type="nvarchar" Size="128">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ProductTypeCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="UserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ProductTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="UserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ProductTypeCode" ReferencedTable="ProductTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

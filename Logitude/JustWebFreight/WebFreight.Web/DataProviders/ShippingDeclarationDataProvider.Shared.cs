@@ -443,5 +443,6 @@ namespace WebFreight.Web.DataProviders
         public string Notify2Address_WithName { get; set; }
         public string PickUpInstructions { get; set; }
         public string DeliveryInstructions { get; set; }
+        public string ConnectedQuoteNumber { get; set; }
     }
 }

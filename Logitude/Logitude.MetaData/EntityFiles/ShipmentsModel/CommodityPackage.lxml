@@ -1,7 +1,41 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;60999053-b82a-45bf-8ea5-d4230d95ae97&quot;" ObjectTableName="&quot;CommodityPackage&quot;" DBTableName="&quot;CommodityPackages&quot;" ObjectTableSingular="&quot;Commodity Package&quot;" ObjectTablePlural="&quot;CommodityPackages&quot;" DefaultText="&quot;Commodity Package&quot;" Name="&quot;CommodityPackage&quot;" IsNewWizard="false" HasCustomValidator="false" KeyPropertyPath="&quot;Id&quot;" AutoCompleteSearchWindow="false" IsClosed="false" CacheOnClient="false" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableEditFromLOV="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="true" IsAutoComplete="false" CustomFieldsCount="0" HasCustomFields="false" InActive="false" SearchFields="&quot;CommodityPackage,CommodityPackages,,Id,&quot;" IsSaveButtonVisible="true" EnableSecurity="true" ObjectTableTypeCode="&quot;BR&quot;" IsComposition="true" ParentTableName="&quot;ShipmentCommodity&quot;" MaxNumberOfCustomFields="0" AllowCustomFields="false" HasDynamicHeader="false" HasDocuments="false" IsLookUp="false" IsEditable="true">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;60999053-b82a-45bf-8ea5-d4230d95ae97&quot;"
+  ObjectTableName="&quot;CommodityPackage&quot;"
+  DBTableName="&quot;CommodityPackages&quot;"
+  ObjectTableSingular="&quot;Commodity Package&quot;"
+  ObjectTablePlural="&quot;CommodityPackages&quot;"
+  DefaultText="&quot;Commodity Package&quot;"
+  Name="&quot;CommodityPackage&quot;"
+  IsNewWizard="false"
+  HasCustomValidator="false"
+  KeyPropertyPath="&quot;Id&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="false"
+  CacheOnClient="false"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableEditFromLOV="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="true"
+  IsAutoComplete="false"
+  CustomFieldsCount="0"
+  HasCustomFields="false"
+  InActive="false"
+  SearchFields="&quot;CommodityPackage,CommodityPackages,,Id,&quot;"
+  IsSaveButtonVisible="true"
+  EnableSecurity="true"
+  ObjectTableTypeCode="&quot;BR&quot;"
+  IsComposition="true"
+  ParentTableName="&quot;ShipmentCommodity&quot;"
+  MaxNumberOfCustomFields="0"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  HasDocuments="false"
+  IsLookUp="false"
+  IsEditable="true">
   <EventTypes />
-  <AdditionalTextCodes>
-  </AdditionalTextCodes>
+  <AdditionalTextCodes></AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="OpportunityTypes" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column Name="Code" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="Name" Type="nvarchar" Size="40">
     <Constraints Nullable="false" />
@@ -18,5 +15,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Opportunities" ParentColumnName="OpportunityTypeId" ReferencedTableName="OpportunityTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.OpportunityTypes_OpportunityTypeId" />
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

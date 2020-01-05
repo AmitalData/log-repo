@@ -6,5 +6,4 @@
   <Column Name="Description" Type="varchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Translations" ParentColumnName="TranslationHeaderCode" ReferencedTableName="TranslationHeaders" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Translations_dbo.TranslationHeaders_TranslationHeaderCode" />
 </Table>

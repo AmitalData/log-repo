@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="TariffVersions" Schema="dbo" DBType="Main">
-  <Column Name="ApproveDate" Type="datetime">
-    <Constraints Nullable="true" />
+  <Column Name="TariffId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ApprovedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
+  <Column Name="Version" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="CreateDate" Type="datetime">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ExpirationDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InitialEnddate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsDraft" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ParentVersionNumber" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
@@ -30,13 +18,27 @@
   <Column Name="StartDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TariffId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="ExpirationDate" Type="datetime">
+    <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Version" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="IsDraft" Type="bit">
+    <Constraints Nullable="false" />
   </Column>
+  <Column Name="ApproveDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ApprovedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ParentVersionNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InitialEnddate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ApprovedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

@@ -14,11 +14,26 @@ export class AgentSharedManifestList {
 		UpdateDate: Date;
 		CreateDate: Date;
 		UpdatedByUserId: string;
-        ManifestXML: string;
-        SearchFields: string;
-        AgentName: string;
-        ShipmentLevelName: string;
-        Routing: string;
-        CancelledBySenderAgent: boolean;
-      
-}  
+		ManifestXML: string;
+		SearchFields: string;
+		TransportModeId: string;
+		GrossWeight: number;
+		ChargeableWeight: number;
+		TEU: number;
+		PackagesQuantity: number;
+		TransportModeName: string;
+		DirectionName: string;
+		ShipmentLevelName: string;
+		AgentName: string;
+		AgentId: string;
+		DirectionId: string;
+		FromPortId: string;
+		ToPortId: string;
+		StatusCode: string;
+		Routing: string;
+		StatusName: string;
+		ShipmentLevelCode: string;
+		ShipmentTypeId: string;
+		CancelledBySenderAgent: boolean;
+	
+}

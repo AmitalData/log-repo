@@ -132,6 +132,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountCurrencyMap());
 	
+            modelBuilder.Configurations.Add(new GLAccountInterestPeriodMap());
+	
             modelBuilder.Configurations.Add(new GLAccountMoreDataMap());
 	
             modelBuilder.Configurations.Add(new GLAccountTotalByMonthMap());
@@ -147,6 +149,18 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new InterestBasesPeriodMap());
 	
             modelBuilder.Configurations.Add(new InterestBasesTypeMap());
+	
+            modelBuilder.Configurations.Add(new InterestEntityTypeMap());
+	
+            modelBuilder.Configurations.Add(new InterestReportMap());
+	
+            modelBuilder.Configurations.Add(new InterestReportLineMap());
+	
+            modelBuilder.Configurations.Add(new InterestReportLinesByDateMap());
+	
+            modelBuilder.Configurations.Add(new InterestReportStatuseMap());
+	
+            modelBuilder.Configurations.Add(new InterestTransactionMap());
 	
             modelBuilder.Configurations.Add(new JournalMap());
 	
@@ -241,6 +255,14 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<FullAccountingSetting>().Property(x => x.DefaultTaxWithholdPercentage).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<GLAccount>().Property(x => x.InterestCreditLimit).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.StandardAddInterestPercent).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.ExceptionalAddInterestPercent).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.CreditAddInterestPercent).HasPrecision(4, 2);
+				
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.BalanceInLocalCurrency).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.LocalBalanceInDue).HasPrecision(16, 2);
@@ -258,6 +280,42 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.ForeignAmountCredit).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<InterestBasesPeriod>().Property(x => x.InterestRate).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.TotalAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.OpenBalance).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.CloseBalance).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.InvoiceAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReport>().Property(x => x.GLAccountInterestCreditLimit).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.TotalAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.AccumulatedAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.StandardInterestPercentage).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.ExceptionalInterestPercentage).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CreditInterestPercentage).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.StandardInterestAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.ExceptionalInterestAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CreditInterestAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CalculatedStandInterestAmount).HasPrecision(20, 4);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CalculatedExcepInterestAmount).HasPrecision(20, 4);
+				
+			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.CalculatedCreditInterestAmount).HasPrecision(20, 4);
+				
+			modelBuilder.Entity<InterestTransaction>().Property(x => x.LocalAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<InterestTransaction>().Property(x => x.ForeignAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<JournalLine>().Property(x => x.LocalAmount).HasPrecision(16, 2);
 				
@@ -786,6 +844,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<GLAccountInterestPeriod> GLAccountInterestPeriods 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<GLAccountMoreData> GLAccountMoreDatas 
 	 {
 	      get; set;
@@ -829,6 +893,42 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<InterestBasesType> InterestBasesTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestEntityType> InterestEntityTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReport> InterestReports 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReportLine> InterestReportLines 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReportLinesByDate> InterestReportLinesByDates 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReportStatuse> InterestReportStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestTransaction> InterestTransactions 
 	 {
 	      get; set;
 	 

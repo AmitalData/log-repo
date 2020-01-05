@@ -49,11 +49,16 @@ namespace WebFreight.Web.Helpers
                     //{
                     //    InnerTables.Add(Myfilter);
                     //}
+                    /*the following Code Should be written again :( ---- Rabaia*/
                     if (Myfilter.TextValue != null && !string.IsNullOrEmpty(Myfilter.TextValue.ToString()))
                     {
                         if ((((Myfilter.ParentDataTypeCode == "Dimension" || Myfilter.ParentDataTypeCode.ToLower() == "lookup" || Myfilter.ParentDataTypeCode.ToLower() == "date") && string.IsNullOrEmpty(Myfilter.DimensionTableDisplayName)) || !string.IsNullOrEmpty(Myfilter.DimensionTableDisplayName)) && ((!string.IsNullOrEmpty(Myfilter.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == Myfilter.DimensionTableDisplayName).Count() == 0) || (string.IsNullOrEmpty(Myfilter.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == Myfilter.Name).Count() == 0)))// && InnerTables.Where(a => a.ParentDimTabelName == field.ParentDimTabelName).Count() == 0
                         {
-                            InnerTables.Add(Myfilter);
+                            if (!InnerTables.Any(a => a.DisplayName == Myfilter.DimensionTableDisplayName))
+                            {
+                                InnerTables.Add(Myfilter);
+                            }
+
                         }
                     }
 
@@ -97,7 +102,7 @@ namespace WebFreight.Web.Helpers
                     if (Myfilter.TextValue != null && !string.IsNullOrEmpty(Myfilter.TextValue.ToString()))
                     {
 
-                   
+
                         var filter = Myfilter;
                         var OperationSimpol = "";
                         if (filter.Operation == null)
@@ -107,7 +112,7 @@ namespace WebFreight.Web.Helpers
                             filter.Operation.Name = filter.OperationName;
                         }
 
-                  
+
                         string parameterValue = Myfilter.TextValue.ToString();
                         string parameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString();
 
@@ -121,8 +126,9 @@ namespace WebFreight.Web.Helpers
                         {
                             PDim = "[" + filter.ParentDimTabelName + filter.DimensionTableDisplayName + "]";
                             OTBL = "[" + filter.DWObjectTableCode + filter.DimensionTableDisplayName + "]";
-                        }  
-                        if (filter.DataTypeCode!="Date" && filter.DataTypeCode != "DateTime"){
+                        }
+                        if (filter.DataTypeCode != "Date" && filter.DataTypeCode != "DateTime")
+                        {
                             if (filter.Operation.Code == "Equals")
                             {
                                 //if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
@@ -157,11 +163,11 @@ namespace WebFreight.Web.Helpers
                                 {
                                     parameterValue = filter.TextValue.ToString().ToLower() == "true" ? "1" : "0";
                                     OperationSimpol = " not IN (" + parameterName + ")";
-                              
+
                                 }
                                 else
                                 {
-                                  
+
                                     SqlCommandDefinition sqlCommandDefinitionMultiValue = GetMultiValueFilterAsSqlCommandDefinition(filter.TextValue.ToString(), " not IN ( ", sqlCommandDefinition.Parameters.Count());
                                     sqlCommandDefinition.Parameters = sqlCommandDefinition.Parameters.Concat(sqlCommandDefinitionMultiValue.Parameters).ToList();
                                     OperationSimpol = sqlCommandDefinitionMultiValue.SQLString;
@@ -183,7 +189,7 @@ namespace WebFreight.Web.Helpers
                             }
                             else if (filter.Operation.Code == "GreaterThanOrEqual")
                             {
-                                OperationSimpol = " >=  " + parameterName; 
+                                OperationSimpol = " >=  " + parameterName;
                             }
                             else if (filter.Operation.Code == "LargerThan")
                             {
@@ -196,11 +202,11 @@ namespace WebFreight.Web.Helpers
                             else if (filter.Operation.Code == "LessThanOrEqual")
                             {
                                 OperationSimpol = " <=  " + parameterName;
-                            }  
+                            }
                             if (filter.Operation.Code == "IsNull")
                             {
-                               
-                                WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ?PDim : OTBL) + "." + filter.Code + " = '' " + " ) " + AndOr + " ";
+
+                                WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " = '' " + " ) " + AndOr + " ";
                             }
                             else if (filter.Operation.Code == "IsNotNull")
                             {
@@ -211,7 +217,7 @@ namespace WebFreight.Web.Helpers
                                 if (string.IsNullOrEmpty(parameterValue)) parameterValue = filter.TextValue.ToString();
 
                                 string fieldName = (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code;
-   
+
                                 if (filter.IsCustom && filter.Operation.Code == "StartsWith")
                                 {
                                     fieldName = "CONVERT(sysname," + fieldName + ")";
@@ -220,9 +226,21 @@ namespace WebFreight.Web.Helpers
                                 {
                                     sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterName, Value = parameterValue, DataType = filter.DataTypeCode, Operation = filter.Operation.Code });
                                 }
-                                WhereStmt += fieldName + OperationSimpol + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                                if (WhereStmt.Length >= 4 && (WhereStmt.Substring(WhereStmt.Length - 4).Contains("And") || WhereStmt.Substring(WhereStmt.Length - 4).Contains("Or")))
+                                {
+                                    WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
+                                }
+                                if (WhereStmt != " where  ( ")
+                                {
+                                    WhereStmt += " " + AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                }
+                                else
+                                {
+                                    WhereStmt += fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                }
+                                //WhereStmt += AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
 
-                         
+
                             }
                         }
                         else
@@ -232,16 +250,27 @@ namespace WebFreight.Web.Helpers
                             string dataWarehouseDateFieldSqlString = dataWarehouseHelper.ResolveWarehoueDateField(((!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code), filter.OperationCode, filter.TextValue.ToString(), Tenant);
                             SqlCommandDefinition sqlCommandDefinitionDateFilter = GetDateFieldValueFilterAsSqlCommandDefinition(dataWarehouseDateFieldSqlString, sqlCommandDefinition.Parameters.Count());
                             sqlCommandDefinition.Parameters = sqlCommandDefinition.Parameters.Concat(sqlCommandDefinitionDateFilter.Parameters).ToList();
+                            if (WhereStmt.Length >= 4 && (WhereStmt.Substring(WhereStmt.Length - 4).Contains("And") || WhereStmt.Substring(WhereStmt.Length - 4).Contains("Or")))
+                            {
+                                WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
+                            }
+                            if (WhereStmt != " where  ( ")
+                            {
+                                WhereStmt += " " + AndOr + " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                            }
+                            else
+                            {
+                                WhereStmt += sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                            }
 
-                            WhereStmt += sqlCommandDefinitionDateFilter.SQLString + " " + AndOr + " ";
-                         
+
                         }
 
 
 
                     }
-                 
-              
+
+
                 }
             }
 
@@ -262,7 +291,7 @@ namespace WebFreight.Web.Helpers
 
         private SqlCommandDefinition GetDateFieldValueFilterAsSqlCommandDefinition(string sqlString, int parametersCount)
         {
-            SqlCommandDefinition sqlCommandDefinition = new SqlCommandDefinition() { Parameters = new List<SqlParameterDetails>()};
+            SqlCommandDefinition sqlCommandDefinition = new SqlCommandDefinition() { Parameters = new List<SqlParameterDetails>() };
             string result = sqlString;
             int sqlParametersCount = parametersCount;
             while (result.Contains("<DataFieldValue>") && result.Contains("</DataFieldValue>"))
@@ -290,7 +319,7 @@ namespace WebFreight.Web.Helpers
             }
             else return "";
         }
-        private SqlCommandDefinition GetMultiValueFilterAsSqlCommandDefinition(string textValue, string operationSimpol , int parametersCount)
+        private SqlCommandDefinition GetMultiValueFilterAsSqlCommandDefinition(string textValue, string operationSimpol, int parametersCount)
         {
             int sqlParametersCount = parametersCount;
             SqlCommandDefinition sqlCommandDefinition = new SqlCommandDefinition() { Parameters = new List<SqlParameterDetails>() };
@@ -298,7 +327,7 @@ namespace WebFreight.Web.Helpers
             if (!string.IsNullOrEmpty(textValue))
             {
                 string[] stringSeparators = new string[] { ";;" };
-                var values = textValue.Replace("'","''").Split(stringSeparators,StringSplitOptions.None);
+                var values = textValue.Replace("'", "''").Split(stringSeparators, StringSplitOptions.None);
                 if (values.Length > 0)
                 {
                     foreach (var item in values)
@@ -309,7 +338,7 @@ namespace WebFreight.Web.Helpers
                         sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterName, Value = item, DataType = "MultiValue" });
                     }
                     result += (")");
-                    result = result.Replace(",)", ")"); 
+                    result = result.Replace(",)", ")");
                 }
                 else result += ")";
             }
@@ -334,7 +363,7 @@ namespace WebFreight.Web.Helpers
             var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(DWQueryParam.Filters);
             var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(ColumnsXML);
             var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
-            
+
             bool HasMeasurement = Columns.Where(a => a.IsMeasurement == true).Count() > 0;
             var InnerTables = new List<DWObjectFieldsDetails>();
             //this.SampleData = [];
@@ -355,9 +384,9 @@ namespace WebFreight.Web.Helpers
                 }
                 if ((((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(field.DimensionTableDisplayName)) || !string.IsNullOrEmpty(field.DimensionTableDisplayName)) && ((!string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.DimensionTableDisplayName).Count() == 0) || (string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.Name).Count() == 0)))// && InnerTables.Where(a => a.ParentDimTabelName == field.ParentDimTabelName).Count() == 0
                 {
-                    InnerTables.Add(field); 
+                    InnerTables.Add(field);
                 }
-                if ((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") &&  string.IsNullOrEmpty(field.DimensionTableDisplayName))
+                if ((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(field.DimensionTableDisplayName))
                 {
                     field.DimensionTableDisplayName = field.Name;
                 }
@@ -385,7 +414,7 @@ namespace WebFreight.Web.Helpers
                         else
                         {
                             SelectStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
-                        } 
+                        }
                         GroupByStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ",");
                     }
                     else
@@ -407,7 +436,7 @@ namespace WebFreight.Web.Helpers
                 {
                     FromTables.Add(field.DWObjectTableCode);
                 }
-                
+
             }
 
 
@@ -438,23 +467,23 @@ namespace WebFreight.Web.Helpers
                 var Key = OFieldQuery.GetPrimaryKeyFieldForDWObjectTable(mytbl.ParentDimTabelName);
                 //MeFactName = OFieldQuery.GetFactTableCode(mytbl.ParentDimTabelName);
                 var FactKey = mytbl.DimensionTableDisplayName;//.Split(' ')[0];
-                
+
                 if ((mytbl.ParentDataTypeCode == "Dimension" || mytbl.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(mytbl.DimensionTableDisplayName))
                 {
                     FactKey = mytbl.DisplayName;// DisplayName.Split(' ')[0];//OFieldQuery.GetFactKeyFieldForDWDimTable(Fact, mytbl.ParentDimTabelName);
-                    
+
                     //if (!FactKey.Contains("]"))
                     //{
                     //    FactKey = FactKey + "]";
                     //}
                 }
-                else if(mytbl.HideTree)
+                else if (mytbl.HideTree)
                 {
                     if (!mytbl.IsCustom)
                     {
                         FactKey = OFieldQuery.GetDWObjectFieldCodeByNameDimTable(mytbl.ParentDimTabelName, mytbl.DisplayName.Replace("[", "").Replace("]", ""));
                     }
-        
+
                 }
                 if (FactKey != null && !FactKey.Contains("["))
                 {
@@ -463,12 +492,12 @@ namespace WebFreight.Web.Helpers
 
                 //this.AllFieldsDataSource.filter(a => a.DimensionTableCode == mytbl.ParentDimTabelName)[0];
                 //(FactKey.DataTypeCode.ToLower() == "lookup" || FactKey.DataTypeCode.ToLower() == "dimension") ? FactKey.DisplayName : 
-                FinalSelectStmt += " inner join "  + mytbl.ParentDimTabelName + " " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + " on " + Fact + "." + (FactKey) + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + "." + Key.Code;
+                FinalSelectStmt += " inner join " + mytbl.ParentDimTabelName + " " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + " on " + Fact + "." + (FactKey) + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + "." + Key.Code;
 
 
             }
             var OrderByString = "" + Fact + ".Id_Number";
-            
+
             //var HasAggregate = false;
             if (DWQueryParam.Columns.Where(a => a.IsMeasurement).Count() > 0)
             {
@@ -482,7 +511,7 @@ namespace WebFreight.Web.Helpers
             string offsetPagingString = "";
             if (LogitudeSettings.LogitudeURL != "http://localhost:9996" && DWQueryParam.PageSize != 0)
             {
-                offsetPagingString = (" OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY"); 
+                offsetPagingString = (" OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY");
             }
 
             string FinalQuery = "";
@@ -497,7 +526,7 @@ namespace WebFreight.Web.Helpers
             }
             string TenantWhere = ".[Parent Tenant] = ";
             var DWSettings = new DWHSettingRepository(Tenant);
-            var temp = DWSettings.GetSingleDWHSetting(Tenant); 
+            var temp = DWSettings.GetSingleDWHSetting(Tenant);
             var isParentTenant = DWSettings.IsParentTenant(Tenant);
             if (!isParentTenant)//temp != null &&  temp.Tenant != temp.ParentTenant)
             {
@@ -517,7 +546,7 @@ namespace WebFreight.Web.Helpers
                 FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
             }
 
-            sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() {ParameterName = "@Tenant", Value = Tenant.ToString() });
+            sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@Tenant", Value = Tenant.ToString() });
 
 
             FinalQuery = FinalQuery + PagingString + offsetPagingString;
@@ -556,7 +585,7 @@ namespace WebFreight.Web.Helpers
                     {
                         commandSourceData.Parameters.Add(GetNewInstanceFromSqlParameter(sqlParameter.ParameterName, sqlParameter.Value));
                     }
- 
+
                     SqlDataReader reader = commandSourceData.ExecuteReader();
                     dataTable.Load(reader);
                     reader.Close();
@@ -570,28 +599,28 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public  SqlParameter  GetNewInstanceFromSqlParameter(string parameterName, string parameterValue)
+        public SqlParameter GetNewInstanceFromSqlParameter(string parameterName, string parameterValue)
         {
             return new SqlParameter() { ParameterName = parameterName, Value = parameterValue };
         }
 
-        public  string GetSQLStringFromSqlCommandDefinition(SqlCommandDefinition sqlCommandDefinition)
+        public string GetSQLStringFromSqlCommandDefinition(SqlCommandDefinition sqlCommandDefinition)
         {
             string query = sqlCommandDefinition.SQLString;
             foreach (SqlParameterDetails sqlParameter in sqlCommandDefinition.Parameters)
             {
                 string paramValue = sqlParameter.Value;
-                if (sqlParameter.Operation == "StartsWith" || sqlParameter.DataType== "MultiValue" || sqlParameter.DataType == "Date") paramValue = "'" + paramValue + "'";
+                if (sqlParameter.Operation == "StartsWith" || sqlParameter.DataType == "MultiValue" || sqlParameter.DataType == "Date") paramValue = "'" + paramValue + "'";
                 query = query.Replace(sqlParameter.ParameterName, paramValue);
             }
             return query;
         }
 
-   
-       
+
+
 
     }
-   
+
     public class SqlParameterDetails
     {
 

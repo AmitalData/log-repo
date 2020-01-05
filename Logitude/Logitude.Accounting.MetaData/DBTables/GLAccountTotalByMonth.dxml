@@ -3,31 +3,34 @@
   <Column Name="AccountId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="CurrencyId" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="DateTypeCode" Type="varchar" Size="1">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ForeignAmountCredit" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ForeignAmountDebit" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LocalAmountCredit" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LocalAmountDebit" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="false" />
+  <Column Name="Year" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Month" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Year" Type="int">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="LocalAmountDebit" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="false" />
   </Column>
+  <Column Name="LocalAmountCredit" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ForeignAmountDebit" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ForeignAmountCredit" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="AccountId" ReferencedTable="GLAccounts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="DateTypeCode" ReferencedTable="GLAccountTotalDateTypes" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="CurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

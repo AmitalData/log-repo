@@ -1,54 +1,300 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;eb9f1ee9-c5f1-41c0-8bca-86b2d74408ba&quot;" ObjectTableName="&quot;DocsOut&quot;" IsNew="false" DBTableName="&quot;DocumentOuts&quot;" OldDBTableName="&quot;DocumentOuts&quot;" ObjectTableSingular="&quot;Docs Out&quot;" ObjectTablePlural="&quot;Docs Outs&quot;" HasCustomFilter="false" HasCustomFields="false" HasHelper="false" HasShortTitle="false" HasFiltersMenu="false" HasCustomValidator="false" IsEditable="true" IsNewWizard="false" KeyPropertyPath="&quot;Id&quot;" AutoCompleteSearchWindow="false" IsClosed="false" CacheOnClient="false" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="true" IsAutoComplete="false" EnableEditFromLOV="false" InActive="false" IsSaveButtonVisible="true" IsComposition="true" EnableSecurity="true" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;MD&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Docs Out&quot;" Code="&quot;b709&quot;" Name="&quot;DocsOut&quot;" GenerateDomainService="false" NoViewController="false" NoPMController="false" NoTS="false" HasCompactSearch="false" ApplyDefaultValues="false" HasMenuButtons="false" ApplyOnPropertyChangedCode="false" HasApiHelper="false" AllowedForComputingPartners="false" Code1="&quot;bdc0&quot;" Name1="&quot; Query Group&quot;" CustomFieldsCount="0" DisableSearchBox="false" HasDocuments="false" IsLookUp="false" SearchFields="&quot;DocsOut,DocumentOuts,,Id,&quot;">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;eb9f1ee9-c5f1-41c0-8bca-86b2d74408ba&quot;"
+  ObjectTableName="&quot;DocsOut&quot;"
+  IsNew="false"
+  DBTableName="&quot;DocumentOuts&quot;"
+  OldDBTableName="&quot;DocumentOuts&quot;"
+  ObjectTableSingular="&quot;Docs Out&quot;"
+  ObjectTablePlural="&quot;Docs Outs&quot;"
+  HasCustomFilter="false"
+  HasCustomFields="false"
+  HasHelper="false"
+  HasShortTitle="false"
+  HasFiltersMenu="false"
+  HasCustomValidator="false"
+  IsEditable="true"
+  IsNewWizard="false"
+  KeyPropertyPath="&quot;Id&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="false"
+  CacheOnClient="false"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="true"
+  IsAutoComplete="false"
+  EnableEditFromLOV="false"
+  InActive="false"
+  IsSaveButtonVisible="true"
+  IsComposition="true"
+  EnableSecurity="true"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;MD&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Docs Out&quot;"
+  Code="&quot;b709&quot;"
+  Name="&quot;DocsOut&quot;"
+  GenerateDomainService="false"
+  NoViewController="false"
+  NoPMController="false"
+  NoTS="false"
+  HasCompactSearch="false"
+  ApplyDefaultValues="false"
+  HasMenuButtons="false"
+  ApplyOnPropertyChangedCode="false"
+  HasApiHelper="false"
+  AllowedForComputingPartners="false"
+  Code1="&quot;bdc0&quot;"
+  Name1="&quot; Query Group&quot;"
+  CustomFieldsCount="0"
+  DisableSearchBox="false"
+  HasDocuments="false"
+  IsLookUp="false"
+  SearchFields="&quot;DocsOut,DocumentOuts,,Id,&quot;">
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;DocsOut&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;DocsOut&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;DocsOut&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;DocsOut&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocsOut.M.SelectCopyThenRebuild&quot;" DefaultText="&quot;Please select a copy then rebuild!&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.M.NoTemplatesFound&quot;" DefaultText="&quot;No templates found for this document!&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.M.RebuildThenPrintAgain&quot;" DefaultText="&quot;Please Rebuild Then Print Again!&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.M.NoDocumentFound&quot;" DefaultText="&quot;No Document Found!&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.M.ExportDocumentFailed&quot;" DefaultText="&quot;Export Document Failed&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.M.SpecifyRecepient&quot;" DefaultText="&quot;Please specify at least one recepient&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Get&quot;" DefaultText="&quot;Get&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Set&quot;" DefaultText="&quot;Set&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.DocumentEditor&quot;" DefaultText="&quot;Document Editor&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.EditedFields&quot;" DefaultText="&quot;edited fields&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.NumberOfEditedFields&quot;" DefaultText="&quot;Number of Edited fields&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.TemplatesError&quot;" DefaultText="&quot;Templates Error&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.SendMessage&quot;" DefaultText="&quot;Send Message&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.AvailableDocuments&quot;" DefaultText="&quot;Available Documents&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Edit&quot;" DefaultText="&quot;Edit&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.View&quot;" DefaultText="&quot;View&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Send&quot;" DefaultText="&quot;Send&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.PrintSend&quot;" DefaultText="&quot;Print/Send&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Print&quot;" DefaultText="&quot;Print&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.StartEdit&quot;" DefaultText="&quot;Start Edit&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.EndEdit&quot;" DefaultText="&quot;End Edit&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Reset&quot;" DefaultText="&quot;Reset&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Apply&quot;" DefaultText="&quot;Apply&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Close&quot;" DefaultText="&quot;Close&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Save&quot;" DefaultText="&quot;Save&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Rebuild&quot;" DefaultText="&quot;Rebuild&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.SaveSelectedAsDefault&quot;" DefaultText="&quot;Save Selected As Default&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.PrintAllCopies&quot;" DefaultText="&quot;Print All Copies&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.DocsOut&quot;" DefaultText="&quot;Docs Out&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.VerticalShift&quot;" DefaultText="&quot;Vertical Shift&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.MM&quot;" DefaultText="&quot;mm&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.HorizontalShift&quot;" DefaultText="&quot;Horizontal Shift&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.Templates&quot;" DefaultText="&quot;Templates&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.AdditionalFields&quot;" DefaultText="&quot;Additional Fields&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.LastBuildDate&quot;" DefaultText="&quot;Last Build Date&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.B.Search&quot;" DefaultText="&quot;Search&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.Actions&quot;" DefaultText="&quot;Actions&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.Name&quot;" DefaultText="&quot;Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.ReferenceNo&quot;" DefaultText="&quot;Reference No.&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.IssuedBy&quot;" DefaultText="&quot;Issued By&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.IssuedDate&quot;" DefaultText="&quot;Issued Date&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocsOut.O.FollowUp&quot;" DefaultText="&quot;Follow Up&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.M.SelectCopyThenRebuild&quot;"
+      DefaultText="&quot;Please select a copy then rebuild!&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.M.NoTemplatesFound&quot;"
+      DefaultText="&quot;No templates found for this document!&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.M.RebuildThenPrintAgain&quot;"
+      DefaultText="&quot;Please Rebuild Then Print Again!&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.M.NoDocumentFound&quot;"
+      DefaultText="&quot;No Document Found!&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.M.ExportDocumentFailed&quot;"
+      DefaultText="&quot;Export Document Failed&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.M.SpecifyRecepient&quot;"
+      DefaultText="&quot;Please specify at least one recepient&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Get&quot;"
+      DefaultText="&quot;Get&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Set&quot;"
+      DefaultText="&quot;Set&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.DocumentEditor&quot;"
+      DefaultText="&quot;Document Editor&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.EditedFields&quot;"
+      DefaultText="&quot;edited fields&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.NumberOfEditedFields&quot;"
+      DefaultText="&quot;Number of Edited fields&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.TemplatesError&quot;"
+      DefaultText="&quot;Templates Error&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.SendMessage&quot;"
+      DefaultText="&quot;Send Message&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.AvailableDocuments&quot;"
+      DefaultText="&quot;Available Documents&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Edit&quot;"
+      DefaultText="&quot;Edit&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.View&quot;"
+      DefaultText="&quot;View&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Send&quot;"
+      DefaultText="&quot;Send&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.PrintSend&quot;"
+      DefaultText="&quot;Print/Send&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Print&quot;"
+      DefaultText="&quot;Print&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.StartEdit&quot;"
+      DefaultText="&quot;Start Edit&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.EndEdit&quot;"
+      DefaultText="&quot;End Edit&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Reset&quot;"
+      DefaultText="&quot;Reset&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Apply&quot;"
+      DefaultText="&quot;Apply&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Close&quot;"
+      DefaultText="&quot;Close&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Save&quot;"
+      DefaultText="&quot;Save&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Rebuild&quot;"
+      DefaultText="&quot;Rebuild&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.SaveSelectedAsDefault&quot;"
+      DefaultText="&quot;Save Selected As Default&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.PrintAllCopies&quot;"
+      DefaultText="&quot;Print All Copies&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.DocsOut&quot;"
+      DefaultText="&quot;Docs Out&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.VerticalShift&quot;"
+      DefaultText="&quot;Vertical Shift&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.MM&quot;"
+      DefaultText="&quot;mm&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.HorizontalShift&quot;"
+      DefaultText="&quot;Horizontal Shift&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.Templates&quot;"
+      DefaultText="&quot;Templates&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.AdditionalFields&quot;"
+      DefaultText="&quot;Additional Fields&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.LastBuildDate&quot;"
+      DefaultText="&quot;Last Build Date&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.B.Search&quot;"
+      DefaultText="&quot;Search&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.Actions&quot;"
+      DefaultText="&quot;Actions&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.Name&quot;"
+      DefaultText="&quot;Name&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.ReferenceNo&quot;"
+      DefaultText="&quot;Reference No.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.IssuedBy&quot;"
+      DefaultText="&quot;Issued By&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.IssuedDate&quot;"
+      DefaultText="&quot;Issued Date&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.O.FollowUp&quot;"
+      DefaultText="&quot;Follow Up&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

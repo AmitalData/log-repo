@@ -43,10 +43,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ledgerIds.Add(line.LedgerTransactionId);
             }
 
-
-            //TransferTransactionsExternalReconciliationService movingService = new TransferTransactionsExternalReconciliationService(entityPM);
-            //movingService.HandleTransferAccountTransactions();
-
             base.OnCreating(entityPM, entityParentPM);
         }
         
@@ -81,10 +77,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference1).FirstOrDefault();
                         if (aRPaymentCheque != null)
                         {
-                            aRPaymentCheque.StatusCode = "6";
-                            aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
-                            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                            aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+                            UpdateARPaymentCheque(aRPaymentCheque, "6");
                         }
                         
                     }
@@ -94,10 +87,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference2).FirstOrDefault();
                         if (aRPaymentCheque != null)
                         {
-                            aRPaymentCheque.StatusCode = "6";
-                            aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
-                            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                            aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+                           
+                            UpdateARPaymentCheque(aRPaymentCheque, "6");
                         }
 
                     }
@@ -128,6 +119,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM);
         }
+        private void UpdateARPaymentCheque(ARPaymentChequePM aRPaymentCheque, string status)
+        {
+            aRPaymentCheque.StatusCode =status;
+            aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
+            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, aRPaymentCheque.Tenant);
+            aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+            
+        }
+
         protected override void OnUpdating(ExternalReconciliationPM entityPM, ExternalReconciliation entityPOCO)
         {
 

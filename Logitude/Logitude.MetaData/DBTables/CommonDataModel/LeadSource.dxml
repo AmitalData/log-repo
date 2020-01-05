@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="LeadSources" Schema="dbo" DBType="Main">
-  <Column Name="Code" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InActive" Type="bit">
-    <Constraints Nullable="false" />
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="Name" Type="varchar" Size="60">
     <Constraints Nullable="false" />
@@ -18,6 +15,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Customers" ParentColumnName="LeadSourceId" ReferencedTableName="LeadSources" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.LeadSources_LeadSourceId" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="LeadSourceId" ReferencedTableName="LeadSources" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.LeadSources_LeadSourceId" />
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
 </Table>

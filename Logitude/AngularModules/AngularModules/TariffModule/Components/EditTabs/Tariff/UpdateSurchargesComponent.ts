@@ -7,7 +7,7 @@ import { UpdateTariffArgs } from '../../../Args';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PortList } from '../../../../Common/EntityLists/PortList';
-import { AirlineAreaList } from '../../../../Common/EntityLists/AirlineAreaList';
+import { CarrierAreaList } from '../../../../Common/EntityLists/CarrierAreaList';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffDomainService, UpdateSurchargeArgs } from '../../../Services/TariffDomainService';
@@ -27,8 +27,8 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public Logs: ObservableCollection;
     public ValidationErrorsList: string[] = [];
     public TariffChargesObsList: TariffCharge[];
-    public FromAirlineAreas: AirlineAreaClass[];
-    public ToAirlineAreas: AirlineAreaClass[];
+    public FromCarrierAreas: CarrierAreaClass[];
+    public ToCarrierAreas: CarrierAreaClass[];
     public FromTariffAreaDropButton: string = "FromTariffAreaDropButton";
     public ToTariffAreaDropButton: string = "ToTariffAreaDropButton";
     public FromSearchAreaId: string = "FromSearchAreaId";
@@ -46,7 +46,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         this.EntityPM = arg.Version;
         this.FillLogs();
         this.FillTariffCharges(arg.TariffCharges);
-        this.LoadAirlineAreas(arg.AirlineId);
+        this.LoadCarrierAreas(arg.CarrierId);
     }
 
     SetUIProperties() {
@@ -57,14 +57,14 @@ export class UpdateSurchargesComponent extends BaseComponent {
         this.UIProperties.SetRequired("StartDate", null, isStartDateRequired);
     }
 
-    private AreasList: AirlineAreaList[] =[];
-    private LoadAirlineAreas(airlineId: string) {
+    private AreasList: CarrierAreaList[] =[];
+    private LoadCarrierAreas(carrierId: string) {
         var service: CommonDomainService = new CommonDomainService();
-        service.GetAirlineAreas(airlineId).subscribe((myResponse: ServiceResponse) => {
+        service.GetCarrierAreas(carrierId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AreasList = myResponse.Result;
-                this.FillAirlineAreas("From");
-                this.FillAirlineAreas("To");
+                this.FillCarrierAreas("From");
+                this.FillCarrierAreas("To");
             }
         });
     }
@@ -86,9 +86,9 @@ export class UpdateSurchargesComponent extends BaseComponent {
             }
         });
     }
-    FillAirlineAreas(type: string) {
+    FillCarrierAreas(type: string) {
         if (type == "From") {
-            var data: AirlineAreaList[] = [];
+            var data: CarrierAreaList[] = [];
             if (this.FromSearchText == null || this.FromSearchText == "") {
                 data = this.AreasList;
             }
@@ -98,16 +98,16 @@ export class UpdateSurchargesComponent extends BaseComponent {
 
             }
 
-            this.FromAirlineAreas = [];
+            this.FromCarrierAreas = [];
 
             data.forEach((i) => {
-                var itemTogleButton: AirlineAreaClass = new AirlineAreaClass(i, this);
-                this.FromAirlineAreas.push(itemTogleButton);
+                var itemTogleButton: CarrierAreaClass = new CarrierAreaClass(i, this);
+                this.FromCarrierAreas.push(itemTogleButton);
             });
         }
 
         else if (type == "To") {
-            var data: AirlineAreaList[] = [];
+            var data: CarrierAreaList[] = [];
             if (this.ToSearchText == null || this.ToSearchText == "") {
                 data = this.AreasList;
             }
@@ -117,11 +117,11 @@ export class UpdateSurchargesComponent extends BaseComponent {
 
             }
 
-            this.ToAirlineAreas = [];
+            this.ToCarrierAreas = [];
 
             data.forEach((i) => {
-                var itemTogleButton: AirlineAreaClass = new AirlineAreaClass(i, this);
-                this.ToAirlineAreas.push(itemTogleButton);
+                var itemTogleButton: CarrierAreaClass = new CarrierAreaClass(i, this);
+                this.ToCarrierAreas.push(itemTogleButton);
             });
         }
     }
@@ -232,17 +232,17 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public get FromSearchText() { return this.fromSearchText; }
     public set FromSearchText(newValue: string) {
         this.fromSearchText = newValue;
-        this.FillAirlineAreas("From");
+        this.FillCarrierAreas("From");
     }
 
     public toSearchText: string = null;
     public get ToSearchText() { return this.toSearchText; }
     public set ToSearchText(newValue: string) {
         this.toSearchText = newValue;
-        this.FillAirlineAreas("To");
+        this.FillCarrierAreas("To");
     }
 
-    AddArea(item: AirlineAreaClass, i, type: string) {
+    AddArea(item: CarrierAreaClass, i, type: string) {
         if (item.IsChecked) {
             if (type == "From") {
                 if (this.FromObsList.filter(d => d.Id == item.Id && d.Indication == "Area").length == 0) {
@@ -298,7 +298,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             }
 
             if (item.Indication == "Area") {
-                this.FillAirlineAreas("From");
+                this.FillCarrierAreas("From");
             }
         }
 
@@ -309,7 +309,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             }
 
             if (item.Indication == "Area") {
-                this.FillAirlineAreas("To");
+                this.FillCarrierAreas("To");
             }
         }
     }
@@ -491,7 +491,7 @@ export class DestinationClass extends BaseComponent{
     public Code: string;
     public Id: string;
     public Type: string;
-    constructor(public fatherComponent: UpdateSurchargesComponent, type: string, Port: PortList, airlineArea: AirlineAreaList) {
+    constructor(public fatherComponent: UpdateSurchargesComponent, type: string, Port: PortList, carrierArea: CarrierAreaList) {
         super();
 
         this.Type = type;
@@ -503,23 +503,23 @@ export class DestinationClass extends BaseComponent{
             this.Id = Port.Id;
         }
 
-        if (airlineArea != null) {
+        if (carrierArea != null) {
             this.Indication = "Area";
-            this.DisplayText = airlineArea.Name;
-            this.Id = airlineArea.Id;
+            this.DisplayText = carrierArea.Name;
+            this.Id = carrierArea.Id;
         }
     }
 }
 
-export class AirlineAreaClass {
-    public entityList: AirlineAreaList;
+export class CarrierAreaClass {
+    public entityList: CarrierAreaList;
     public get Name() { return this.entityList.Name; }
 
     public get Foreground() { return this.IsChecked ? "#FF6E7172" : "#FF282E30"; }
 
     public get Id() { return this.entityList.Id; }
 
-    constructor(itemList: AirlineAreaList, private Parent: UpdateSurchargesComponent) {
+    constructor(itemList: CarrierAreaList, private Parent: UpdateSurchargesComponent) {
         this.entityList = itemList;
         this.isChecked = Parent.FromObsList.filter(d => d.Id == this.entityList.Id && d.Indication == "Area")[0] != null;
     }

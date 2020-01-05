@@ -39,10 +39,12 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { serviceResponse };
-            IncotermList[] incoterms = (IncotermList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Incoterms Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Incoterms Failed! " + serviceResponse.Result);
-            if(incoterms.Length == 0)
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            IncotermList[] incoterms = (IncotermList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Incoterms Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Incoterms Failed! " + serviceOutcome.Response.Result);
+            if (incoterms.Length == 0)
                 Assert.Inconclusive("There Isn't Any Incoterm!");
         }
     }

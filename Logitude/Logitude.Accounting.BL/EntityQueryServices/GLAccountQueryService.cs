@@ -38,9 +38,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountKeys gLAccountKeys = entityKeys as GLAccountKeys;
 
             GLAccountWithholdingTaxQueryService gLAccountWithholdingTaxQueryService = new GLAccountWithholdingTaxQueryService(context);
-
-
             entityPM.GLAccountWithholdingTaxes = gLAccountWithholdingTaxQueryService.GetMulti(gLAccountKeys, true);
+
+            GLAccountInterestPeriodQueryService gLAccountInterestPeriodQueryService = new GLAccountInterestPeriodQueryService(context);
+            entityPM.GLAccountInterestPeriods = gLAccountInterestPeriodQueryService.GetMulti(gLAccountKeys, true);
 
             if (entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
@@ -365,6 +366,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
             GLAccountPM pm = this.GetEntityPM(gLAccountPOCO);
             return pm;
+        }
+
+        public string GetGLAccountDisplayNoAndLocalName(string gLAccountId, int tenant)
+        {
+            GLAccount gLAccountPOCO = null;
+            gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
+            string result = gLAccountPOCO.DisplayNumber + ',' + gLAccountPOCO.LocalName;
+            return result;
         }
 
         public GLAccountPM GetSinglePMByInternalNumber(string internalNumber, int tenant)
@@ -1005,7 +1014,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
            return  (from a in context.GLAccounts
                                    where a.CustomerGLAccountId == accountId && a.CurrencyId == currency && a.Tenant == tenant
-                                   select new GLAccountPM() {
+                                   && a.Inactive == false//Task 61118: Service for retrieving the splitted GLAccounts- change logic if GLAccountCurrencies is block
+                                    select new GLAccountPM() {
                                        Id = a.Id,
                                        CurrencyId = a.CurrencyId,
                                        DisplayNumber =a.DisplayNumber,

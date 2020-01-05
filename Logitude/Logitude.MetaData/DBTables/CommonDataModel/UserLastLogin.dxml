@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="UserLastLogins" Schema="dbo" DBType="Main">
-  <Column Name="ComputerId" Type="varchar" Size="40">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ComputerId" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="LoginDateTime" Type="datetime">
     <Constraints Nullable="true" />
@@ -12,4 +12,5 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ForeignKeyColumn="Id" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

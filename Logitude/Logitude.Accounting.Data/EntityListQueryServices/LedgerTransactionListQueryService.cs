@@ -10,6 +10,7 @@ using System.Reflection;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.Data.Utilities;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -435,7 +436,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Where(rec => rec.IsReconciled == false)
                 .Where(rec => rec.InReconcileProgress == false)// Seee CreateJournalReconcileService!!!
                 .Where(rec => rec.AccountId == AccountId)
-                .OrderBy(rec => rec.AccountingDate)
+                //.OrderBy(rec => rec.AccountingDate)
                 //.Take(MaxTotal);
                 ;
             return query2;
@@ -476,6 +477,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             const int MaxTotal = 99001;
 
             query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+
+            LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+            {
+                Tenant = tenant,
+                AccountId = AccountId,
+                QueryOperations = queryOperations,
+                Transactions = query2,
+            };
+            LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+            query2 = transactionsSorter.SortQuery();
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
@@ -573,11 +584,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<LedgerTransactionList>(listQueryOperation, query2);
-            ApplyOrderBy(queryOperations, query2, tenant);
+
+            query2 = ApplyOrderBy(queryOperations, query2, tenant);
+
+
             return query2;
         }
 
-        private void ApplyOrderBy(QueryOperations queryOperations, IQueryable<LedgerTransactionList> query2, int tenant)
+        private IQueryable<LedgerTransactionList> ApplyOrderBy(QueryOperations queryOperations, IQueryable<LedgerTransactionList> query2, int tenant)
         {
             GenericSort sortClass = new GenericSort();
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
@@ -648,6 +662,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 query2 = query2.OrderBy(d => d.JournalId);
             }
+            return query2;
         }
 
         public int GetRecoCount(string glAccountId, int tenant)
@@ -771,6 +786,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public LedgerTransactionBalanceFilterCallBack CallBack { get; set; }
         public string DateTypeCode { get; set; }
+        public bool CheckHaveAccountingQueued { get; set; }
     }
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack
     {

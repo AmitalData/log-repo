@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="APInvoicePayments" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ForeignAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExchangeRate" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="APInvoiceId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="APPaymentId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ExchangeRate" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ForeignAmount" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="ForeignCurrencyId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="LocalAmount" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PaymentAmount" Type="float">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="APInvoiceId" ReferencedTable="APInvoices" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="APPaymentId" ReferencedTable="APPayments" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ForeignCurrencyId" ReferencedTable="Currencies" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

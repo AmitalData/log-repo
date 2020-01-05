@@ -20,8 +20,7 @@ namespace Logitude.IntegrationTest.Customs.Declaration
             Task.Run(async () =>
             {
                 
-                var token = await LoginService.GetLoginTokenByUserEmailAndTenant();
-                Assert.IsNotNull(token);
+                await LoginService.GetLoginTokenByUserEmailAndTenant();
 
             }).GetAwaiter().GetResult();
         }

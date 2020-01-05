@@ -123,7 +123,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             ContactRepository contactRep = new ContactRepository(entityPm.Tenant);
             string contactEmail = contactRep.GetEmailContactByIdAndTenant(entityPm.Tenant, entityPm.CreatedByContactId);
 
-            string senderEmail = this.GetSenderEmail(entityPm.Tenant, ticket.GuidId);
+            string senderEmail = this.GetSenderEmail(entityPm.Tenant, ticket.GuidId, ticket.SupportMailboxId);
             InboundEmailLinePM line = new InboundEmailLinePM()
             {
                 Tenant = entityPm.Tenant,
@@ -144,26 +144,34 @@ namespace WebFreight.Web.CRMModel.DomainServices
             inboundEmailService.ApplyEmailSending(line, entityPm.EntityId, myTable.Id, ticket.GuidId, entityPm.NotifyMe, entityPm.CreatedByContactId, myInboundEmail.ObjectTableId);
         }
 
-        public string GetSenderEmail(int tenant,string guidId)
+        public string GetSenderEmail(int tenant,string guidId, string supportMailboxId)
         {
             string email = "";
-            //string senderEmail = "support+" + ticket.GuidId + "@sandboxf630eae2c7034dd681286d71bd2f47bf.mailgun.org";
+            var mailBox = this.GetDefaultSupportMailBox(supportMailboxId, tenant);
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 TenantManagement myTenant = tenantManagementRepository.GetSingleTenantManagement(tenant);
                 if (myTenant != null)
                 {
-                    string supportEmail = myTenant.SupportEmail;
-                    if (!string.IsNullOrEmpty(supportEmail))
-                        email = supportEmail.Split('@')[0] +"+"+ guidId + "@" + supportEmail.Split('@')[1];
+                    string supportDomain = myTenant.SupportDomain;
+                    if (!string.IsNullOrEmpty(supportDomain))
+                        email = mailBox + "+"+ guidId + "@" + supportDomain;
                 }
-
                 scope.Complete();
             }
-          
             return email; 
         }
+
+        private string GetDefaultSupportMailBox(string supportMailboxId, int tenant)
+        {
+            string mailBox = null;
+            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(tenant);
+            SupportMailbox supportMailbox = mailboxRepository.GetSingle(supportMailboxId, tenant);
+            mailBox = supportMailbox != null ? supportMailbox.Mailbox : null;
+            return mailBox;
+        }
+
 
         private int CalculateLinesForCurrentTicket(CorrespondencePM entityPm)
         {

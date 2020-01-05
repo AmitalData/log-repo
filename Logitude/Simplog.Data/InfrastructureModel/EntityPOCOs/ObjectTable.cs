@@ -62,6 +62,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
+        public string DescriptionTextCodeCode { get; set; }
+        public string NewButtonTextCodeCode { get; set; }
 
         public DateTime? EntityResourceLastUpdate { get; set; }
         public bool DisableSearchBox { get; set; }

@@ -9,5 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="BatchTaskExecutions" ParentColumnName="StatusCode" ReferencedTableName="BatchTaskExecutionStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.BatchTaskExecutions_dbo.BatchTaskExecutionStatus_StatusCode" />
 </Table>

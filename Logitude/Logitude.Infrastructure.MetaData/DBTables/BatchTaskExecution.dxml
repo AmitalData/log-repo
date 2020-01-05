@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="BatchTaskExecutions" Schema="dbo" DBType="Main">
-  <Column Name="CallStack" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ClassName" Type="varchar" Size="120">
-    <Constraints Nullable="true" />
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
@@ -12,16 +12,25 @@
   <Column Name="CreatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="DoneDateTime" Type="datetime">
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ClassName" Type="varchar" Size="120">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrametersXml" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StatusCode" Type="varchar" Size="1">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ErrorLog" Type="nvarchar" Size="4000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Id" Type="varchar" Size="15">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="StartDateTime" Type="datetime">
+    <Constraints Nullable="true" />
   </Column>
-  <Column Name="PrametersXml" Type="nvarchar" Size="4000">
+  <Column Name="DoneDateTime" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ProgressMessage" Type="nvarchar" Size="120">
@@ -30,19 +39,12 @@
   <Column Name="ProgressPercentage" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="SearchFields" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="StartDateTime" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="StatusCode" Type="varchar" Size="1">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Subject" Type="nvarchar" Size="200">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="CallStack" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
+  <Relation ForeignKeyColumn="CreatedByUserId" ReferencedTable="Users" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="StatusCode" ReferencedTable="BatchTaskExecutionStatus" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

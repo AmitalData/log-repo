@@ -9,6 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Customers" ParentColumnName="BeforeDeactiveStatusCode" ReferencedTableName="CustomerStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Customers_dbo.CustomerStatus_BeforeDeactiveStatusCode" />
-  <Relation ParentTableName="Customers" ParentColumnName="CustomerStatusCode" ReferencedTableName="CustomerStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Customers_dbo.CustomerStatus_CustomerStatusCode" />
 </Table>

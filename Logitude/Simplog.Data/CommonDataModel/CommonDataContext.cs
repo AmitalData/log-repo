@@ -131,7 +131,8 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
-            modelBuilder.Configurations.Add(new AirlineAreaMap());
+            modelBuilder.Configurations.Add(new CarrierAreaMap());
+            modelBuilder.Configurations.Add(new CarrierAreasPortMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());
@@ -481,8 +482,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<Department> Departments { get; set; }
         public IDbSet<Branch> Branches { get; set; }
         public IDbSet<Airline> Airlines { get; set; }
-        public IDbSet<AirlineArea> AirlineAreas { get; set; }
-        public IDbSet<AirlineAreasPort> AirlineAreasPorts { get; set; }
+        public IDbSet<CarrierArea> CarrierAreas { get; set; }
+        public IDbSet<CarrierAreasPort> CarrierAreasPorts { get; set; }
 
         public IDbSet<ShippingLine> ShippingLines { get; set; }
         public IDbSet<Trucker> Truckers { get; set; }

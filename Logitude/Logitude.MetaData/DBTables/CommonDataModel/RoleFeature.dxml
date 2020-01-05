@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="RoleFeatures" Schema="dbo" DBType="Main">
-  <Column Name="FeatureAccessLevelCode" Type="varchar" Size="2">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="FeatureId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="IsDeleted" Type="bit">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="RoleId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="FeatureId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="FeatureAccessLevelCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsDeleted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="RoleId" ReferencedTable="Roles" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FeatureId" ReferencedTable="Features" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="FeatureAccessLevelCode" ReferencedTable="FeatureAccessLevels" ReferencedColumn="Code" ReferencedTableSchema="dbo" />
 </Table>

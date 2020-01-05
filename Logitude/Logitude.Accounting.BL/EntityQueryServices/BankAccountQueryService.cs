@@ -76,5 +76,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return EntityPM;
         }
 
+
+        public BankAccountPM GetLightBankAccount(string id, int tenant)
+        {
+            BankAccount bankAccount = repository.GetSingleBankAccount(id, tenant);
+
+            if (bankAccount != null)
+            {
+                EntityPM = new BankAccountPM();
+                mapping.POCOToPM(EntityPM, bankAccount);
+            }
+
+            return EntityPM;
+        }
     }
 }

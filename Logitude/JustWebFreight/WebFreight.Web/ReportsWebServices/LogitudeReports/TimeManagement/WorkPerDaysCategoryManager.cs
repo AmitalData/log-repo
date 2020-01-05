@@ -241,6 +241,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private WorkDaysPerGategoryData itemRecord = null;
         private void BuildReportData()
         {
+
             var iQueryable_List = (
                                    (from EmployeeTimes in iQueryable_EmployeeTimes
                                     join Projects in iQueryable_Projects on EmployeeTimes.ProjectId equals Projects.Id
@@ -265,6 +266,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                                     select new
                                     {
+                                        Year = g.Key.Year,
+                                        Month = g.Key.Month,
+                                        Day = g.Key.Day,
+                                        EmployeeUserId = g.Key.EmployeeUserId,
+                                        WINumber = g.Key.WINumber,
+                                        Description = g.Key.Description,
                                         ProjectId = g.Key.ProjectId,
                                         ProjectName = g.Key.Name,
                                         ProjectNumber = g.Key.ProjectNumber,
@@ -293,6 +300,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                     } into g
                                     select new
                                     {
+                                        Year = g.Key.Year,
+                                        Month = g.Key.Month,
+                                        Day = g.Key.Day,
+                                        EmployeeUserId = g.Key.EmployeeUserId,
+                                        WINumber = g.Key.WINumber,
+                                        Description = g.Key.Description,
                                         ProjectId = g.Key.ProjectId,
                                         ProjectName = "",
                                         ProjectNumber = "",
@@ -339,6 +352,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             if (this.iDataProvider.GategoryRecordList.Count > 0)
             {
                 this.CalculateAllTotalsOfCategoryFields();
+
             }
         }
 
@@ -436,24 +450,31 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 itemRecord.TotalGategoryDays = this.GetDaysFormatFromMinutes(itemRecord.TotalGategoryDaysDouble);
             }
         }
-
         private string GetDaysFormatFromMinutes(double minutes)
         {
             string iResult = "";
+
             if (minutes != 0)
             {
                 TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
+
+
                 double TotalHours = minutes / 60;
+
                 int iDays = (int)(TotalHours / 9);
                 double Hours = TotalHours % 9;
                 double iHours = Math.Round(Hours / 9, 2);
-                iResult = iDays + "." + iHours.ToString().Replace("0.", "").PadRight(1, '0');
+
+                iResult = iDays + ":" + iHours.ToString().Replace("0.", "").PadRight(2, '0');
+
                 if (minutes < 0)
                 {
                     iResult = "- " + iResult;
                 }
             }
+
             return iResult;
         }
+
     }
 }

@@ -81,7 +81,7 @@
                                                                                     <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
                                                                                         <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
                                                                                             <table style="width:100%">
-                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of FromAirlineAreas; let i = index">
+                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of FromCarrierAreas; let i = index">
                                                                                                     <td style="width:22px">
                                                                                                         <div style="width:22px">
                                                                                                             <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'From')"></CheckBox>
@@ -202,7 +202,7 @@
                                                                                     <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
                                                                                         <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
                                                                                             <table style="width:100%">
-                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of ToAirlineAreas; let i = index">
+                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of ToCarrierAreas; let i = index">
                                                                                                     <td style="width:22px">
                                                                                                         <div style="width:22px">
                                                                                                             <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'To')"></CheckBox>
@@ -417,7 +417,9 @@
                             </tr>
                         </table>
                     </td>
+
                     <td style=" width:10px;"></td>
+
                     <!--Right Side-->
                     <td>
                         <table>

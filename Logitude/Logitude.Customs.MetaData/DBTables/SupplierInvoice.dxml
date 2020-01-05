@@ -1,79 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="SupplierInvoices" Schema="Customs" DBType="Main">
-  <Column Name="AccountTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="AccumalationStateCode" Type="varchar" Size="3">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ActualPayedAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ActualPayedCurrencyTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Column Name="ExchangeRate" Type="decimal" Precision="12" Scale="10">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="FreightCurrencyTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IncotermCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InsruanceCurrencyTypeCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InsruancePercentage" Type="decimal" Precision="7" Scale="4">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InsuranceAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InvoiceAmount" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="InvoiceAmountInUSD" Type="decimal" Precision="16" Scale="2">
-    <Constraints Nullable="true" />
   </Column>
   <Column Name="InvoiceCounterKey" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InvoiceCurrencyTypeCode" Type="varchar" Size="3">
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SequenceNumeric" Type="int">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="InvoiceNumber" Type="varchar" Size="35">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="IsAccumalated" Type="bit">
-    <Constraints Nullable="false" />
+  <Column Name="IssueDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AccountTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="IsPreference" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="IssueCountryCode" Type="varchar" Size="2">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IssueDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PaymentTermsCode" Type="varchar" Size="17">
+  <Column Name="PreferenceDocumentTypeCode" Type="varchar" Size="8">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="PaymentTypeCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PreferenceDocumentTypeCode" Type="varchar" Size="8">
+  <Column Name="InvoiceCurrencyTypeCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="SequenceNumeric" Type="int">
+  <Column Name="InvoiceAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="ActualPayedCurrencyTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ActualPayedAmount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VendorId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IncotermCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IssueCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentTermsCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="TotalFreightInFreightCurrency" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
@@ -81,19 +60,47 @@
   <Column Name="TotalFreightInNIS" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
+  <Column Name="ExchangeRate" Type="decimal" Precision="12" Scale="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InsruanceCurrencyTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InsuranceAmount" Type="decimal" Precision="16" Scale="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InsruancePercentage" Type="decimal" Precision="7" Scale="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FreightCurrencyTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsAccumalated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AccumalationStateCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="UnfInvoiceCounterKey" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VendorComissionPercentage" Type="decimal" Precision="7" Scale="4">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VendorId" Type="varchar" Size="15">
+  <Column Name="InvoiceAmountInUSD" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.SupplierInvoices_DeclarationId_CounterKey" />
-  <Relation ParentTableName="SupplierInvoiceFreightAmounts" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceFreightAmounts_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
-  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
-  <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="CounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.SupplierInvoices_DeclarationId_CounterKey" />
-  <Relation ParentTableName="SupplierInvoiceFreightAmounts" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceFreightAmounts_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
-  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
+  <Relation ForeignKeyColumn="DeclarationId" ReferencedTable="Declarations" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="AccountTypeCode" ReferencedTable="InvoiceTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="PreferenceDocumentTypeCode" ReferencedTable="TradeAgreements" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="PaymentTypeCode" ReferencedTable="PaymentTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="InvoiceCurrencyTypeCode" ReferencedTable="CurrencyTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="ActualPayedCurrencyTypeCode" ReferencedTable="CurrencyTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="VendorId" ReferencedTable="CustomsVendors" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="IncotermCode" ReferencedTable="TermsOfSaleTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="IssueCountryCode" ReferencedTable="CustomsCountries" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="PaymentTermsCode" ReferencedTable="CustomsPaymentTerms" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="InsruanceCurrencyTypeCode" ReferencedTable="CurrencyTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="FreightCurrencyTypeCode" ReferencedTable="CurrencyTypes" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="AccumalationStateCode" ReferencedTable="AccumalationStates" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

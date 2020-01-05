@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="Restrictions" Schema="dbo" DBType="Main">
-  <Column Name="ContactTenantId" Type="varchar" Size="15">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ObjectFieldId" Type="varchar" Size="15">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ObjectTableId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Tenant" Type="int">
+  <Column Name="ObjectFieldId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Value" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="ContactTenantId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ForeignKeyColumn="ObjectTableId" ReferencedTable="ObjectTables" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ObjectFieldId" ReferencedTable="ObjectFields" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
+  <Relation ForeignKeyColumn="ContactTenantId" ReferencedTable="ContactTenants" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

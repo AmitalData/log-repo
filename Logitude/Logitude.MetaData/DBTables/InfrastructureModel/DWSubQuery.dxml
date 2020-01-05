@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DWSubQueries" Schema="dbo" DBType="Main">
-  <Column Name="ColumnsXML" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
+  <Column Name="Id" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
   </Column>
   <Column Name="DWFactTableCode" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
@@ -9,16 +12,14 @@
   <Column Name="DWQueryId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="FiltersXML" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Id" Type="nvarchar" Size="128">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="SQLString" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="FiltersXML" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
+  <Column Name="ColumnsXML" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="DWQueryId" ReferencedTable="DWQueries" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

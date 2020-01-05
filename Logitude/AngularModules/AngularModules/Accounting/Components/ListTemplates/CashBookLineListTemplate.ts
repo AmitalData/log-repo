@@ -58,7 +58,7 @@ export class CashBookLineListTemplate {
                 });
         }
     }
-    
+
     OpenARPayment(id) {
         // open ARPayment screen
         if (!AppTool.IsNullOrEmpty(id)) {

@@ -631,8 +631,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OperationalDate).HasColumnName("OperationalDate");
             this.Property(t => t.ReleasingAgentId).HasColumnName("ReleasingAgentId");
             this.Property(t => t.ReleasingAgentAddressId).HasColumnName("ReleasingAgentAddressId");
-           
-
             this.Property(t => t.ReleasingAgentContactId).HasColumnName("ReleasingAgentContactId");
             this.Property(t => t.ReleasingAgentReference1).HasColumnName("ReleasingAgentReference1");
             this.Property(t => t.ReleasingAgentReference2).HasColumnName("ReleasingAgentReference2");
@@ -712,6 +710,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OrderGrossWeightEdited).HasColumnName("OrderGrossWeightEdited");
             this.Property(t => t.OrderChargeableWeightEdited).HasColumnName("OrderChargeableWeightEdited");
             this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
+            this.Property(t => t.FirstARInvoiceApprovalDate).HasColumnName("FirstARInvoiceApprovalDate");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

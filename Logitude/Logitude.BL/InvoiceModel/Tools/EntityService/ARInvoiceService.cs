@@ -2255,6 +2255,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
+                        if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId=="CS")
+                        {
+                            CreateInterestTransactionLine(null, record);
+                        }
                     }
 
                     Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
@@ -2772,6 +2776,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateReceivable(item);
                     this.isUpdateTotalVats = true;
                     myLineNumber += 1;
+                    //if (IsFullAccountingActivated(entityPM.Tenant))
+                    //{
+                    //    CreateInterestTransactionLine(item, null);
+                    //}
                 }
             }
 
@@ -2822,6 +2830,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         default: { break; }
                     }
+                    
                 }
             }
         }
@@ -2839,7 +2848,65 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLineRepository.SubmitChanges();
             }
+            if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS")
+            {
+                CreateInterestTransactionLine(item, null);
+            }
         }
+        int invoiceLineNumber = 0;
+        DateTime? dateForInterest;
+        private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat)
+        {
+            ++invoiceLineNumber;
+             dateForInterest = entityPM.DateForInterest == null ? DateTime.Now : entityPM.DateForInterest;
+            InterestTransactionPM interestTransaction = new InterestTransactionPM();
+            if (invoiceLine != null) {
+
+                interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine);
+            }
+            if (invoiceTotalVat != null)
+            {
+                interestTransaction= CreateInterestTransactionLineForVatLine(invoiceTotalVat);
+            }
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+            interestTransactionUpdateService.Create(interestTransaction);
+        }
+        private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat)
+        {
+            InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
+            {
+
+                InterestEntityTypeCode = "1",
+                EntityId = invoiceTotalVat.ARInvoiceId,
+                OriginalEntityLineNumber = invoiceLineNumber,
+                LocalAmount = (decimal)invoiceTotalVat.LocalVATAmount,
+                ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
+                InterestValueDate = (DateTime)dateForInterest,
+                Tenant = entityPM.Tenant,
+                CurrencyId = entityPM.InvoiceCurrencyId,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+            return InterestTransactionVatLine;
+        }
+
+        private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
+        {
+            dateForInterest = invoiceLine.DateForInterest == null ? DateTime.Now : invoiceLine.DateForInterest;
+            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+            {
+                InterestEntityTypeCode = "1",
+                EntityId = invoiceLine.ARInvoiceId,
+                OriginalEntityLineNumber = invoiceLine.LineNumber,
+                LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
+                ForeignAmount = (decimal?)invoiceLine.ForiegnCurrencyAmount,
+                InterestValueDate = (DateTime)dateForInterest,//(DateTime)invoiceLine.DateForInterest == null? DateTime.Now : (DateTime)invoiceLine.DateForInterest ,
+                Tenant = invoiceLine.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                CurrencyId = invoiceLine.ForiegnCurrencyId,
+            };
+            return interestTransaction;
+        }
+
         private void UpdateInvoiceLine(ARInvoiceLinePM item)
         {
             ARInvoiceLine invoiceLine = invoiceLineRepository.GetSingleInvoiceLine(item.Id);
@@ -3652,6 +3719,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (this.isVoidingInvoice)
             {
                 this.UpdateShipmentRegistryDate();
+                this.UpdSatehipmentFirstApprovalDate();
             }
         }
         private void OnApprovingInvoice()
@@ -3674,6 +3742,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.UpdateShipmentRegistryDate();
+                this.UpdSatehipmentFirstApprovalDate();
             }
         }
         private void UpdateShipmentRegistryDate()
@@ -3716,9 +3785,54 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.RunRegistryDateProcedure(this.entityPM.MainEntityId);
             }
         }
+        private void UpdSatehipmentFirstApprovalDate()
+        {
+            if (this.entityPM.IsConsolidationInvoice)
+            {
+                #region
+                List<string> allConstituentsIds = new List<string>();
+
+                if (this.isNewEntity)
+                {
+                    allConstituentsIds = entityPM.ConstituentInvoices.Select(s => s.Id).ToList();
+                }
+
+                else
+                {
+                    allConstituentsIds = invoiceConstituentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+                }
+
+                if (allConstituentsIds.Count > 0)
+                {
+                    List<string> allConstituentsShipmentsIds
+                        = (from d in objectContext.ARInvoices
+                           where d.Tenant == this.tenant
+                           && d.MainEntityId != null
+                           && d.IsConstituentInvoice == true
+                           && allConstituentsIds.Contains(d.Id)
+                           select d.MainEntityId).ToList();
+
+                    foreach (string id in allConstituentsShipmentsIds)
+                    {
+                        this.RunFirstApprovalDateProcedure(id);
+                    }
+                }
+                #endregion
+            }
+
+            else if (this.entityPM.MainEntityId != null)
+            {
+                this.RunFirstApprovalDateProcedure(this.entityPM.MainEntityId);
+            }
+        }
+
         private void RunRegistryDateProcedure(string myShipmentId)
         {
             RunStoredProcedureClass.UpdateShipmentRegistryDate(myShipmentId, entityPM.Tenant);
+        }
+        private void RunFirstApprovalDateProcedure(string myShipmentId)
+        {
+            RunStoredProcedureClass.UpdateShipmentFirstApprovalDate(myShipmentId, entityPM.Tenant);
         }
 
         private void CheckLinesVatExcempt(ARInvoicePM invoicePM, bool isApprovingInvoice)

@@ -1432,7 +1432,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAccountingSystemsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingSystemTextCode_0.Id, Code = "All Accounting Systems",  QueryGroupCode = "ACCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingSystemObjectTable.Id, QuerySection = "AccountingSystem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingSystemFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAccountingSystemsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingSystemTextCode_0.Id, NameTextCodeCode = AccountingSystemTextCode_0.Code, Code = "All Accounting Systems",  QueryGroupCode = "ACCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingSystemObjectTable.Id, QuerySection = "AccountingSystem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingSystemFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllAccountingSystemsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingSystemObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1478,9 +1478,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AccountingSystemHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingSystem.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountingSystemObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id, ObjectFieldCode = AccountingSystemObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id, ObjectFieldCode = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingSystemObjectTable.HeaderScreenId = AccountingSystemHeaderScreenScreen0.Id;
 	   		  
@@ -1499,7 +1499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AyGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingSystemGeneralFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.AccountingSystemGeneralTabControl", ObjectTableId = AccountingSystemObjectTable.Id, TabNameTextCodeId = AccountingSystemGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AyGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingSystemGeneralFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.AccountingSystemGeneralTabControl", ObjectTableId = AccountingSystemObjectTable.Id, TabNameTextCodeId = AccountingSystemGeneralTextCode_TH0.Id, TabNameTextCodeCode = AccountingSystemGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

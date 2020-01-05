@@ -12,5 +12,4 @@
   <Column Name="ShowInLOV" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Shipments" ParentColumnName="ShipmentCustomerTypeCode" ReferencedTableName="ShipmentCustomerTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.ShipmentCustomerTypes_ShipmentCustomerTypeCode" />
 </Table>

@@ -50,6 +50,10 @@ namespace WebFreight.Web.DataProviders
 
             public double? DaysPastDue31_45 { get; set; }
             public double? DaysPastDue46_60 { get; set; }
+            public double? DaysPastDue61_75 { get; set; }
+            public double? DaysPastDue76_90 { get; set; }
+            public double? DaysPastDue91_105 { get; set; }
+            public double? DaysPastDue106_120 { get; set; }
         }
     }
 }

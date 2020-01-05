@@ -3153,8 +3153,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     var myMarkUpValueInput = value.replace("-", "").replace("+", "").replace("%", "");
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
-
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3185,7 +3189,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3223,7 +3232,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3254,7 +3268,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3292,7 +3312,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3323,7 +3348,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3361,7 +3392,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3392,7 +3428,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3430,7 +3472,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3461,7 +3508,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3499,7 +3552,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3530,7 +3588,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;

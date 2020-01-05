@@ -169,6 +169,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         HtmlComponentPath = menuButtonDetails.HtmlComponentPath,
                         Id = IdCounter.GetNumber("MenuButton", menuButtonDetails.Tenant).ToString(),
                         LabelTextCodeId = newTextCode.Id,
+                        LabelTextCodeCode = newTextCode.Code,
                         Style = menuButtonDetails.Style
                     };
                     menuButtonRepository.Add(newMenuButton);

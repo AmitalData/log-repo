@@ -49,6 +49,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<GLAccount> GLAccounts { get; }
 		 IDbSet<GLAccountCounter> GLAccountCounters { get; }
 		 IDbSet<GLAccountCurrency> GLAccountCurrencies { get; }
+		 IDbSet<GLAccountInterestPeriod> GLAccountInterestPeriods { get; }
 		 IDbSet<GLAccountMoreData> GLAccountMoreDatas { get; }
 		 IDbSet<GLAccountTotalByMonth> GLAccountTotalByMonths { get; }
 		 IDbSet<GLAccountTotalDateType> GLAccountTotalDateTypes { get; }
@@ -57,6 +58,12 @@ namespace Logitude.Accounting.Data
 		 IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; }
 		 IDbSet<InterestBasesPeriod> InterestBasesPeriods { get; }
 		 IDbSet<InterestBasesType> InterestBasesTypes { get; }
+		 IDbSet<InterestEntityType> InterestEntityTypes { get; }
+		 IDbSet<InterestReport> InterestReports { get; }
+		 IDbSet<InterestReportLine> InterestReportLines { get; }
+		 IDbSet<InterestReportLinesByDate> InterestReportLinesByDates { get; }
+		 IDbSet<InterestReportStatuse> InterestReportStatuses { get; }
+		 IDbSet<InterestTransaction> InterestTransactions { get; }
 		 IDbSet<Journal> Journals { get; }
 		 IDbSet<JournalActionType> JournalActionTypes { get; }
 		 IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; }

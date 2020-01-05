@@ -12,10 +12,10 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static void PrepareShippingLinesVars()
         {
-            UpsertShippingLineIdHSL();
-            UpsertShippingLineIdHSL2();
+            UpsertShippingLineCodeHSL();
+            UpsertShippingLineCodeHSL2();
         }
-        private static void UpsertShippingLineIdHSL()
+        private static void UpsertShippingLineCodeHSL()
         {
             ShippingLinePM shippingLinePM = new ShippingLinePM()
             {
@@ -27,9 +27,8 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(shippingLinePM);
-            HybridData.ShippingLineIdHSL = serviceResponse.Result;
         }
-        private static void UpsertShippingLineIdHSL2()
+        private static void UpsertShippingLineCodeHSL2()
         {
             ShippingLinePM shippingLinePM = new ShippingLinePM()
             {
@@ -41,7 +40,6 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(shippingLinePM);
-            HybridData.ShippingLineIdHSL = serviceResponse.Result;
         }
         private static Response AssertResponse<T>(T entityPM)
         {

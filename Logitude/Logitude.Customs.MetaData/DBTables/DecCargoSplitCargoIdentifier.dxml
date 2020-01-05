@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DecCargoSplitCargoIdentifiers" Schema="Customs" DBType="Main">
-  <Column Name="CargoIdentifierKey1" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CargoIdentifierKey2" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CargoIdentifierKey3" Type="varchar" Size="35">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="DeclarationCargoSplitId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
@@ -18,4 +9,14 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Column Name="CargoIdentifierKey1" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CargoIdentifierKey2" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CargoIdentifierKey3" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ForeignKeyColumn="DeclarationCargoSplitId" ReferencedTable="DeclarationCargoSplits" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
 </Table>

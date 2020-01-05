@@ -9,7 +9,4 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Shipments" ParentColumnName="OtherParticipantIdCode1" ReferencedTableName="OtherParticipantIds" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.OtherParticipantIds_OtherParticipantIdCode1" />
-  <Relation ParentTableName="Shipments" ParentColumnName="OtherParticipantIdCode2" ReferencedTableName="OtherParticipantIds" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.OtherParticipantIds_OtherParticipantIdCode2" />
-  <Relation ParentTableName="Shipments" ParentColumnName="OtherParticipantIdCode3" ReferencedTableName="OtherParticipantIds" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.OtherParticipantIds_OtherParticipantIdCode3" />
 </Table>

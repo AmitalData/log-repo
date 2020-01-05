@@ -1,0 +1,402 @@
+<style type="text/css">
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+</style>
+<div  class="TabHolder">
+    <table>
+        <tr *ngIf="IsNew && ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td>{{'Accounting.General.O.Interest' | TextCodeTranslationPipe}}</td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr style="height: 1px;vertical-align:top">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 700px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <!-- ActiveForInterest -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 200px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'ActiveForInterest'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogCheckBox [ObjectFieldName]="'ActiveForInterest'" [HideColumns]="true"
+                                                                         [Checked]="ActiveForInterest" [ObjectTableName]="ObjectTableName"
+                                                                         [DataContext]="DataContext"></LogCheckBox>
+                                                            <!--(ValueChanged)="InactiveChecked($event)"-->
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- InterestCalculationStartDate -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 200px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'InterestCalculationStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <LogDatePicker [ObjectFieldName]="'InterestCalculationStartDate'" [ObjectTableName]="ObjectTableName"
+                                                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </tr>
+                                                        <tr style="height:20px;">
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <!-- ActiveForInterestCreditInvoice -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 200px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'ActiveForInterestCreditInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogCheckBox [ObjectFieldName]="'ActiveForInterestCreditInvoice'" [HideColumns]="true"
+                                                                         [Checked]="ActiveForInterestCreditInvoice" [ObjectTableName]="ObjectTableName"
+                                                                         [DataContext]="DataContext"></LogCheckBox>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- MinimumInterestInvoiceBilling -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 200px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'MinimumInterestInvoiceBilling'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+
+                                                                <LogTextBoxV2 [DigitsAfterPoint]="0" [FocusOnMe]="'true'" [ObjectFieldName]="'MinimumInterestInvoiceBilling'"  [DataContext]="DataContext"
+                                                                [Text]="MinimumInterestInvoiceBilling" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBoxV2>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div>
+                                <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="!EntityPM.ActiveForInterest" (click)="AddLine()"></IconButton>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <logitude-edit-grid
+                                    GridWidth="100%"
+                                    GridHeight="100%"
+                                    [ItemSource]="GLAccountInterestPeriodsList"
+                                    [HeaderHeight]="25"
+                                    [UseVirtuallization]="true"
+                                    [IsReadOnly]="false"
+                                    (RowEnded)="OnRowEnded($event)"
+                                    (Ondblclick)="OnFocus()">
+                                    
+                    <!--PeriodStartDate-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="PeriodStartDateHeader" [binding]="'PeriodStartDate'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.PeriodStartDate | DateTimeToDatePipe}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogDatePicker [ObjectFieldName]="'PeriodStartDate'" [ObjectTableName]="'GLAccountInterestPeriod'"
+                                               [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--StandardInterestRateBaseId-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'180'" [header]="StandardInterestRateBaseIdHeader" [binding]="'StandardInterestRateBaseId'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.StandardInterestRateBaseName}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogLov [ObjectFieldName]="'StandardInterestRateBaseId'"
+                                        [ObjectTableName]="'GLAccountInterestPeriod'"
+                                        [DataContext]="item"
+                                        (SelectedItemChanged)="item.StandardInterestRateBase = $event"
+                                        [LookUpTableName]="'InterestBasesType'"
+                                        [DisplayMemberPath]="'LocalName'"
+                                        [HideColumns]="true"
+                                        [DisplayMemberPath]="'LocalName'"
+                                        [RunToggleMode]="true"
+                                        [FocusOnMe]="'true'">
+                                </LogLov>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--StandardAddInterestPercent-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'220'" [header]="StandardAdditionalInterestPercentageHeader" [binding]="'StandardAddInterestPercent'">
+                        <log-cell-template template="let item" #logcelltemplate>
+
+                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span> {{item.StandardAddInterestPercent}} </span>
+                             </div>
+
+                             <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                 <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'StandardAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
+                                             [Text]="item.StandardAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
+                             </div>
+
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--ExceptionalInterestRateBaseId-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'220'" [header]="ExceptionalInterestRateBaseIdHeader" [binding]="'ExceptionalInterestRateBaseId'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.ExceptionalInterestRateName}} </span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogLov [ObjectFieldName]="'ExceptionalInterestRateBaseId'"
+                                        [ObjectTableName]="'GLAccountInterestPeriod'"
+                                        [DataContext]="item"
+                                        (SelectedItemChanged)="item.ExceptionalInterestRateBase = $event"
+                                        [LookUpTableName]="'InterestBasesType'"
+                                        [DisplayMemberPath]="'LocalName'"
+                                        [HideColumns]="true"
+                                        [DisplayMemberPath]="'LocalName'"
+                                        [RunToggleMode]="true"
+                                        [FocusOnMe]="'true'">
+                                </LogLov>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--ExceptionalAddInterestPercent-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'230'" [header]="ExceptionalAdditionalInterestPercentageHeader" [binding]="'ExceptionalAddInterestPercent'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.ExceptionalAddInterestPercent}}</span>
+                             </div>
+                            <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'ExceptionalAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
+                                            [Text]="item.ExceptionalAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--CreditInterestRateBaseId-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'160'" [header]="CreditInterestRateBaseIdHeader" [binding]="'CreditInterestRateBaseId'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span> {{item.CreditInterestRateBaseName}} </span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogLov [ObjectFieldName]="'CreditInterestRateBaseId'"
+                                        [ObjectTableName]="'GLAccountInterestPeriod'"
+                                        [DataContext]="item"
+                                        (SelectedItemChanged)="item.CreditInterestRateBase = $event"
+                                        [LookUpTableName]="'InterestBasesType'"
+                                        [DisplayMemberPath]="'LocalName'"
+                                        [HideColumns]="true"
+                                        [DisplayMemberPath]="'LocalName'"
+                                        [RunToggleMode]="true"
+                                        [FocusOnMe]="'true'">
+                                </LogLov>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--CreditAddInterestPercent-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'210'" [header]="CreditAdditionalInterestPercentageHeader" [binding]="'CreditAddInterestPercent'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.CreditAddInterestPercent}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'CreditAddInterestPercent'" [InputType]="'sigdouble'" [DataContext]="item"
+                                            [Text]="item.CreditAddInterestPercent" [ObjectTableName]="'GLAccountInterestPeriod'" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--UpdatedByUser-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="UpdatedByUserHeader" >
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div  [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.UpdatedByUserName}}</span>
+                            </div>
+                          </log-cell-template>
+                    </log-column>
+
+                    <!--UpdateDateTime-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="UpdateDateTimeHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdateDateTime | DateTimeToDatePipe}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--NULL-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'50'" [header]="' '" class="CellTools">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
+                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3"  (click)="RemoveLine(item)"></IconButton>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                </logitude-edit-grid>
+            </td>
+        </tr>
+    </table>
+</div>

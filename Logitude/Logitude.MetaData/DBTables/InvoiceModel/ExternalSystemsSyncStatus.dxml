@@ -3,6 +3,12 @@
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Subject" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
   <Column Name="ProgressDetails" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
@@ -10,12 +16,6 @@
     <Constraints Nullable="true" />
   </Column>
   <Column Name="StatusDate" Type="datetime">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="Subject" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
 </Table>

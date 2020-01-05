@@ -3,6 +3,12 @@
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
+  <Column Name="MamanSpecialActionCode" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="MamanLabelText1" Type="nvarchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
@@ -18,16 +24,13 @@
   <Column Name="MamanLabelText5" Type="nvarchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="MamanSpecialActionCode" Type="varchar" Size="2">
-    <Constraints PrimaryKey="true" Nullable="false" />
+  <Column Name="MamanSpecialActionStatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="MamanSpecialActionsErrorXml" Type="nvarchar" Size="1200">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="MamanSpecialActionStatusCode" Type="varchar" Size="3">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
-  </Column>
+  <Relation ForeignKeyColumn="DeclarationId" ReferencedTable="Declarations" ReferencedColumn="Id" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="MamanSpecialActionCode" ReferencedTable="MamanSpecialActions" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
+  <Relation ForeignKeyColumn="MamanSpecialActionStatusCode" ReferencedTable="MamanSpecialActionStatuses" ReferencedColumn="Code" ReferencedTableSchema="Customs" />
 </Table>

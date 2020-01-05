@@ -6,5 +6,4 @@
   <Column Name="Name" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="MenusTables" ParentColumnName="MenuTypeCode" ReferencedTableName="MenuTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.MenusTables_dbo.MenuTypes_MenuTypeCode" />
 </Table>

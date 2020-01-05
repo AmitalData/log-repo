@@ -58,10 +58,22 @@ namespace Logitude.Accounting.BL.CoreBL
             AddAcitivityLog(entityPM, loggedContactId, ObjectTableId);
 
 
+            var myAccountingEntityDetails = new AccountingEntityDetails();
+            var myAccEntityReconciliation10 = myAccountingEntityDetails
+                .GetAll()
+                .FirstOrDefault(r => r.EnglishName =="Adjustment");
+
 
             if (entityPM.TypeCode == "0" && entityPM.AccountingEntityReference == null) // Manual
             {
-                entityPM.AccountingEntityReference = entityPM.JournalNumber;
+                if (myAccEntityReconciliation10.Code == entityPM.AccountingEntityCode)
+                {
+                    //entityPM.AccountingEntityReference = will be enter WhileStreaming ;
+                }
+                else
+                {
+                    entityPM.AccountingEntityReference = entityPM.JournalNumber;
+                }
             }
             var DateTimeNow = GetDateTimeNow();
 
@@ -79,7 +91,18 @@ namespace Logitude.Accounting.BL.CoreBL
                 entityPM.CreatedByUserId = loggedContactId;
 
             entityPM.IsVoided = entityPM.IsVoided ?? false;
-            if (String.IsNullOrWhiteSpace(entityPM.AccountingEntityId)) entityPM.AccountingEntityId = entityPM.Id;
+            if (String.IsNullOrWhiteSpace(entityPM.AccountingEntityId))
+            {
+                if (myAccEntityReconciliation10.Code == entityPM.AccountingEntityCode)
+                {
+                    //do not set  entityPM.AccountingEntityId!!! will be enter WhileStreaming 
+                }
+                else
+                {
+                    entityPM.AccountingEntityId = entityPM.Id;
+                }
+                
+            }
             if (String.IsNullOrWhiteSpace(entityPM.TypeCode)) entityPM.TypeCode = "0"; //Manual
             if (String.IsNullOrWhiteSpace(entityPM.AccountingEntityCode)) entityPM.AccountingEntityCode = "1"; //Journal
             if (String.IsNullOrWhiteSpace(entityPM.CreatedByUserId)) entityPM.CreatedByUserId = AuthenticationUtil.GetAuthenticatedUser();// "1-14733"; //Alex //COMPILE//

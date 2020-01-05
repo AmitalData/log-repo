@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="SharedLogisticsContactLastLogins" Schema="dbo" DBType="Main">
+  <Column Name="ContactId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
   <Column Name="CardId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="ContactId" Type="varchar" Size="15">
+  <Column Name="PartnerTypeId" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Via" Type="varchar" Size="20">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   <Column Name="LoginDateTime" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PartnerTypeId" Type="varchar" Size="2">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Via" Type="varchar" Size="20">
-    <Constraints PrimaryKey="true" Nullable="false" />
-  </Column>
-  <Relation ParentTableName="Contacts" ParentColumnName="SharedLogisticsContactLastLogin_ContactId" ReferencedTableName="SharedLogisticsContactLastLogins" ReferencedColumnName="ContactId" ForeignKeyConstraintName="FK_dbo.Contacts_dbo.SharedLogisticsContactLastLogins_SharedLogisticsContactLastLogin_ContactId_SharedLogisticsContactLastLogin_C" />
-  <Relation ParentTableName="Contacts" ParentColumnName="SharedLogisticsContactLastLogin_CardId" ReferencedTableName="SharedLogisticsContactLastLogins" ReferencedColumnName="CardId" ForeignKeyConstraintName="FK_dbo.Contacts_dbo.SharedLogisticsContactLastLogins_SharedLogisticsContactLastLogin_ContactId_SharedLogisticsContactLastLogin_C" />
-  <Relation ParentTableName="Contacts" ParentColumnName="SharedLogisticsContactLastLogin_PartnerTypeId" ReferencedTableName="SharedLogisticsContactLastLogins" ReferencedColumnName="PartnerTypeId" ForeignKeyConstraintName="FK_dbo.Contacts_dbo.SharedLogisticsContactLastLogins_SharedLogisticsContactLastLogin_ContactId_SharedLogisticsContactLastLogin_C" />
-  <Relation ParentTableName="Contacts" ParentColumnName="SharedLogisticsContactLastLogin_Via" ReferencedTableName="SharedLogisticsContactLastLogins" ReferencedColumnName="Via" ForeignKeyConstraintName="FK_dbo.Contacts_dbo.SharedLogisticsContactLastLogins_SharedLogisticsContactLastLogin_ContactId_SharedLogisticsContactLastLogin_C" />
+  <Relation ForeignKeyColumn="ContactId" ReferencedTable="Contacts" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>

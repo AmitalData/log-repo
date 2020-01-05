@@ -624,6 +624,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         {
                             CustomData.PaymentData = ForwardToPaymentLink(result, myParams);
                         }
+                        else
+                        {
+                            CustomData.PaymentData = new PaymentData();
+                            CustomData.PaymentData.currency = dict["currency"];
+                            CustomData.PaymentData.sum = dict["sum"];
+                            CustomData.PaymentData.op = dict["op"];
+                            CustomData.PaymentData.DCdisable = dict["DCdisable"];
+                            CustomData.PaymentData.DclickTK = dict["DclickTK"];
+                            //CustomData.PaymentData.thtk = dict["thtk"];
+                            CustomData.PaymentData.TargetEnv = dict["TargetEnv"];
+                        }
                     }
 
                 }

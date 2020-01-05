@@ -388,6 +388,16 @@ export class TariffPM {
     public set ContainerType5Id(newValue: string) { if (this.containerType5Id != newValue) { this.containerType5Id = newValue; this.MarkAsDirty("ContainerType5Id"); } }
        
 	 
+    private transportModeCode: string;
+    public get TransportModeCode() { return this.transportModeCode; }
+    public set TransportModeCode(newValue: string) { if (this.transportModeCode != newValue) { this.transportModeCode = newValue; this.MarkAsDirty("TransportModeCode"); } }
+       
+	 
+    private transportModeName: string;
+    public get TransportModeName() { return this.transportModeName; }
+    public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

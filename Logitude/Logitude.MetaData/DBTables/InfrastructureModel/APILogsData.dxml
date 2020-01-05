@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="APILogsData" Schema="dbo" DBType="Main">
-  <Column Name="DiagnosticLog" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ExceptionsMessage" Type="nvarchar" Size="-1">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DiagnosticLog" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
   <Column Name="RequestData" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
@@ -15,7 +15,8 @@
   <Column Name="ResponseData" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="Tenant" Type="int">
-    <Constraints Nullable="false" />
+  <Column Name="ExceptionsMessage" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
   </Column>
+  <Relation ForeignKeyColumn="Id" ReferencedTable="APILogs" ReferencedColumn="Id" ReferencedTableSchema="dbo" />
 </Table>
