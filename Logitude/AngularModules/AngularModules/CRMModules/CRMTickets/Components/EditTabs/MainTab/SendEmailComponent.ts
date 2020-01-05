@@ -813,28 +813,17 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
             if (this.Ticket.EntityType && this.Ticket.QuoteId) {
                 var externalEntityObject: any = window.ObjectTables.filter(d => d.Id === this.Ticket.EntityType)[0];
                 if (externalEntityObject && externalEntityObject.Name == "Quote") {
-                    if (this.quoteDocumentVersionExtendedPMService == null) this.quoteDocumentVersionExtendedPMService = new QuoteDocumentVersionExtendedPMService();
                     this.QuotationAttachmentsLists = [];
                     this.CurrentSession.StartBusyIndicatorLoading();
-                    this.quoteDocumentVersionExtendedPMService.GetQuoteDocumentVersionByQuoteId(this.Ticket.QuoteId).subscribe((myResponse: ServiceResponse) => {
+                    this._documentsFilingExtendedPMService.GetQuoationDocumentsFilingByQuoteIdAndObjectTableIdAndDocumentTypeCode(this.Ticket.QuoteId, externalEntityObject.Id, 'QUOTE').subscribe((myResponse: ServiceResponse) => {
                         this.CurrentSession.StopBusyIndicator();
                         if (!myResponse.HasError) {
-                            var quoteDocumentVersionLists: any[] = myResponse.Result;
-                            if (quoteDocumentVersionLists && quoteDocumentVersionLists.length >0) {
+                            var quoteDocumentVersion: any = myResponse.Result;
+                            if (quoteDocumentVersion) {
                                 this.ShowQuotationAttachmentLink = true;
-                                quoteDocumentVersionLists.forEach(quoteDocumentVersion => {
-
-                                    var attachment: AttachmentsArgs = new AttachmentsArgs(null);
-                                    var fileName: string = "Quotation-" + this.Ticket.QuoteNumber + "-" + quoteDocumentVersion.VersionNumber;
-                                    attachment.Tenant = SessionLocator.Tenant;
-                                    attachment.FileName = fileName;
-                                    attachment.FileSize = quoteDocumentVersion.FileSize;
-                                    attachment.DocumentId = quoteDocumentVersion.DocumentId;
-                                    attachment.FileExtension = quoteDocumentVersion.Extension;
-                                    this.QuotationAttachmentsLists.push(attachment);
-                                });
-
-     
+                                var attachment: AttachmentsArgs = new AttachmentsArgs(quoteDocumentVersion);
+                                this.QuotationAttachmentsLists.push(attachment);
+                
                             }
                         }
                     });
