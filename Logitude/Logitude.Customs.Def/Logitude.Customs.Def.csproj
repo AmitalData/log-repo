@@ -183,6 +183,7 @@
     <Compile Include="EntityPMs\Generated\CustomMetaDataTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsAddressTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsAirlinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsAutonomyKeywordPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBookPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBookTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBranchPM.Generated.cs" />
