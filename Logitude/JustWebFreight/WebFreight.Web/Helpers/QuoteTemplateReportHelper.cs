@@ -59,7 +59,7 @@ namespace Logitude.BL.Helpers
         string replyTo = "";
         string cc = "";
         string bcc = ""; 
-        public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null)
+        public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null, int? versionNumber = null)
         {
 
 
@@ -171,11 +171,7 @@ namespace Logitude.BL.Helpers
             quoteTemplateBuildArges.UserId = userId;
             quoteTemplateBuildArges.QuoteTemplateSectionPMLists = templateSections;
             quoteTemplateBuildArges.QuoteTemplatePM = template;
-
-
-
-
-
+            quoteTemplateBuildArges.VersionNumber = versionNumber;
 
 
             HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
@@ -238,7 +234,7 @@ namespace Logitude.BL.Helpers
             else pdfConverter.PdfFooterOptions.FooterHeight = 1;
 
 
-
+            
 
             //Body
 
@@ -1446,6 +1442,12 @@ namespace Logitude.BL.Helpers
                 quotePM = BuildingQuotePM();
             }
 
+            if (quoteTemplateBuildArges.VersionNumber != null)
+            {
+                quotePM.QuoteVersion =  quotePM.QuoteNumber + "-" + (int)quoteTemplateBuildArges.VersionNumber;   
+            }
+
+
             Tenant = quotePM.Tenant;
             string FieldValue = "";
             string FieldName = "";
@@ -1749,7 +1751,7 @@ namespace Logitude.BL.Helpers
             int tenant = quoteTemplateBuildArges.Tenant;
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
             if (quotePM == null) quotePM = BuildingQuotePM();
-
+            if (quoteTemplateBuildArges.VersionNumber != null) quotePM.QuoteVersion = quotePM.QuoteNumber + "-" + (int)quoteTemplateBuildArges.VersionNumber;
             Tenant = quotePM.Tenant;
             string FieldValue = "";
             string FieldName = "";
@@ -2305,7 +2307,7 @@ namespace Logitude.BL.Helpers
             }
             else if (fieldname == "QUOTENUMBER")
             {
-                FieldValue = quotePM.QuoteNumber;
+                FieldValue = !string.IsNullOrEmpty(quotePM.QuoteVersion) ? quotePM.QuoteVersion : quotePM.QuoteNumber;
             }
             else if (fieldname == "PICKUPFROM")
             {
@@ -2454,7 +2456,7 @@ namespace Logitude.BL.Helpers
 
             if (fieldname == "QUOTENUMBER")
             {
-                FieldValue = quotePM.QuoteNumber;
+                FieldValue =!string.IsNullOrEmpty(quotePM.QuoteVersion)? quotePM.QuoteVersion : quotePM.QuoteNumber;
             }
 
             else if (fieldname == "EXPIRATIONDATE" && quotePM.ExpirationDate != null)
@@ -3786,8 +3788,8 @@ namespace Logitude.BL.Helpers
         public bool HideQuoteHeaderFromPdf { get; set; }
         public string RequestArea { get; set; }
         public bool FirstSectionInBody { get; set; }
+        public int? VersionNumber { get; set; }
 
-        
 
     }
 
