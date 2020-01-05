@@ -1005,6 +1005,7 @@
     <Compile Include="Controllers\AccountingModel\CardGLAccountConnectController.cs" />
     <Compile Include="Controllers\AccountingModel\CashbookOpController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
+    <Compile Include="Controllers\AccountingModel\ExternalReconciliationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingIntegrityCheckViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingNoteViewsController.Generated.cs" />
@@ -1907,10 +1908,12 @@
     <Compile Include="Controllers\SystemLogsModel\Extended\FileLoggerController.cs" />
     <Compile Include="Controllers\SystemLogsModel\PerformanceLogsController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Extended\TariffVersionExtendedController.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffLinesContainersPriceViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffLinesContainersPriceController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffSettingController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
@@ -2748,6 +2751,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SprintUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SupportMailboxUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLinesContainersPriceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSurchargesUpdateMethodUpdateClass.cs" />

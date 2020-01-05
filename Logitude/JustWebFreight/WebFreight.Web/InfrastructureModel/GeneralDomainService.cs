@@ -821,6 +821,7 @@ namespace WebFreight.Web.InfrastructureModel
         {
             ruleConditionField.Tenant = ruleConditionFieldPM.Tenant;
             ruleConditionField.ObjectFieldId = ruleConditionFieldPM.ObjectFieldId;
+            ruleConditionField.ObjectFieldCode = ruleConditionFieldPM.ObjectFieldCode;
             ruleConditionField.ObjectTableRuleId = ruleConditionFieldPM.ObjectTableRuleId;
             ruleConditionField.Operator = ruleConditionFieldPM.Operator;
             ruleConditionField.Value = ruleConditionFieldPM.Value;

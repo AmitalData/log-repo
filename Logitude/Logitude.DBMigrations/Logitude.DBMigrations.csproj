@@ -46,11 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\AppHelper.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ColumnMigration.cs" />
     <Compile Include="Models\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
+    <Compile Include="Models\DXMLTable.cs" />
+    <Compile Include="Models\DXMLValidation.cs" />
+    <Compile Include="Models\MigrationTool.cs" />
     <Compile Include="Models\RelationsScript.cs" />
     <Compile Include="Models\GeneratedScript.cs" />
     <Compile Include="Models\OracleDatabaseMigrations.cs" />
@@ -62,7 +64,7 @@
     <Compile Include="Models\TableMigrations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\XMLParser.cs" />
+    <Compile Include="Models\XMLParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

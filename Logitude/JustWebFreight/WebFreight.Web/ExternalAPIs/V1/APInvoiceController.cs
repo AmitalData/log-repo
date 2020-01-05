@@ -1,4 +1,6 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -158,11 +160,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
                             apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
-                            
+
                             // VendorGLAccountId
-                            CardQuery cardQuery = new CardQuery(tenant);
-                            CardPM vendor = cardQuery.GetSinglePM(apinvoicePM.VendorId, tenant);
-                            apinvoicePM.VendorGLAccountId = vendor.GLAccountId;
+                            apinvoicePM.VendorGLAccountId = GetVendorGLAccountId(tenant, apinvoicePM);
 
                             // SET approved
                             apinvoicePM.SetVoided = false;
@@ -214,6 +214,41 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
+        }
+
+        private string GetVendorGLAccountId(int tenant, APInvoicePM apinvoicePM)
+        {
+            string id;
+            if (!string.IsNullOrWhiteSpace(apinvoicePM.VendorGLAccountId))
+            {
+                GLAccountPM glaccountPM = GetGLAccountById(tenant, apinvoicePM.VendorGLAccountId);
+                id = glaccountPM.Id;
+            }
+            else
+            {
+                CardPM vendor = GetCardById(tenant, apinvoicePM.VendorId);
+                id = vendor.GLAccountId;
+            }
+
+            return id;
+        }
+
+        private GLAccountPM GetGLAccountById(int tenant, string v)
+        {
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+            GLAccountPM glaccountPM = gLAccountQuery.GetSinglePMByInternalNumber(v, tenant);
+            if (glaccountPM == null)
+                throw new ApplicationException("Cannot find Vendor GLAccount: " + v);
+            return glaccountPM;
+        }
+
+        private CardPM GetCardById(int tenant, string cardId)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM vendor = cardQuery.GetSinglePM(cardId, tenant);
+            //if (vendor == null)
+            //    throw new ApplicationException("Cannot find vendor: " + cardId);
+            return vendor;
         }
 
         private void MapLines(APInvoice apinvoice, int tenant, APInvoicePM apinvoicePM)

@@ -866,7 +866,7 @@ export class RulesValidator {
         // var propertyInf: PropertyInfo = null;
         for (var k in ruleConditionFields) {
             var condfield = ruleConditionFields[k];
-            var fieldPM: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == condfield.ObjectFieldId)[0];
+            var fieldPM: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == condfield.ObjectFieldCode)[0];
             var value: string = entity[condfield.ObjectFieldName];
             var valueString = FieldValueResolver.GetFieldStringValue(fieldPM, value);
             var fieldValue = condfield.Value;

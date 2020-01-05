@@ -352,9 +352,11 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                     this.OperatorList.push(new Operator("Changed", "CHANGED"));
                 }
             }
-            this.OperatorList.push(new Operator("Is Empty", "ISEMPTY"));
-            this.OperatorList.push(new Operator("Is not Empty", "ISNOTEMPTY"));
+
         }
+
+        this.OperatorList.push(new Operator("Is Empty", "ISEMPTY"));
+        this.OperatorList.push(new Operator("Is not Empty", "ISNOTEMPTY"));
 
 
         if (isChangeOperator) {

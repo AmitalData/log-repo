@@ -1,5 +1,4 @@
-﻿using Logitude.DBMigrations.Models;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
@@ -8,26 +7,84 @@ using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
 
-namespace Logitude.DBMigrations.Helpers
+namespace Logitude.DBMigrations.Models
 {
-    public static class AppHelper
+    public class MigrationTool
     {
-        private static string PerformanceData = "Description,Time(ms)\n";
+        private string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
+        private string PerformanceData = "Description,Time(ms)\n";
+        private string[] Arguments;
+        private List<TableDefinition> DXMLTables;
 
-        public static string[] GetDXMLFilesFromRoot(string root)
+        public MigrationTool(string[] args)
         {
+            Arguments = args;
+        }
+
+        public void RunTool()
+        {
+            if (IsArgumentProvided("-root"))
+            {
+                string root = GetRoot();
+
+                if (!String.IsNullOrEmpty(root))
+                {
+                    string[] dxmlFiles = GetDXMLFilesFromRoot(root);
+
+                    if (dxmlFiles != null)
+                    {
+                        ValidateDXMLFiles(dxmlFiles);
+
+                        GeneratedScript generatedScript = GenerateScriptFromDXMLFiles(dxmlFiles);
+
+                        SaveScript(generatedScript);
+
+                        if (IsArgumentProvided("-exe"))
+                        {
+                            if (IsGeneratedScriptsEmpty(generatedScript))
+                            {
+                                Console.WriteLine("There Are No Changes To Execute");
+                            }
+                            else
+                            {
+                                ExecuteScript(generatedScript);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("There Is No DXML Files Found Under The Specified Root");
+                    }
+
+                    ExportPerformanceData();
+                }
+                else
+                {
+                    Console.WriteLine("There Is No Root Found For Looking About DXML Files");
+                }
+            }
+            else
+            {
+                Console.WriteLine("There Is No Root Found For Looking About DXML Files");
+            }
+        }
+
+        private string[] GetDXMLFilesFromRoot(string root)
+        {
+            Console.WriteLine("Reading DXML Files From The Root ...");
+
             try
             {
                 var stopwatch = Stopwatch.StartNew();
 
-                string DXMLFilesPath = Path.Combine(root);
-                string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml", SearchOption.AllDirectories);
+                string dxmlFilesPath = Path.Combine(root);
+                string[] dxmlFiles = Directory.GetFiles(dxmlFilesPath, "*.dxml", SearchOption.AllDirectories);
 
                 AppendToPerformanceData("Get DXML Files From Root", stopwatch);
 
-                if (DXMLFiles.Length > 0)
+                if (dxmlFiles.Length > 0)
                 {
-                    return DXMLFiles;
+                    return dxmlFiles;
                 }
                 else
                 {
@@ -40,35 +97,34 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-        public static GeneratedScript GenerateScriptFromDXMLFiles(string[] DXMLFiles)
+        private GeneratedScript GenerateScriptFromDXMLFiles(string[] dxmlFiles)
         {
             GeneratedScript generatedScript = new GeneratedScript();
             RelationsScript relationsScript = new RelationsScript();
 
             var stopwatch = Stopwatch.StartNew();
 
-            foreach (var dxmlFile in DXMLFiles)
+            List<DXMLTable> dxmlTables = GetDXMLTables(dxmlFiles);
+
+            DXMLTables = dxmlTables.Select(d => d.TableDefinition).ToList();
+            
+            foreach (var dxmlTable in dxmlTables)
             {
-                string dxmlFileName = Path.GetFileName(dxmlFile);
-                Console.WriteLine("Generating Script For " + dxmlFileName + " ...");
+                Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
 
-                string xmlString = File.ReadAllText(dxmlFile);
-                TableDefinition dxmlTable = xmlString.ParseXML<TableDefinition>();
-
-                DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable);
+                DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition);
 
                 string tableScript = databaseMigrations.GetScript();
                 string tableRelationsScript = databaseMigrations.GetRelationsScript();
-                //string tableRelationsScript = null;
 
                 if (!String.IsNullOrEmpty(tableScript))
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.DBType, tableScript, dxmlFileName);
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
                 }
 
                 if (!String.IsNullOrEmpty(tableRelationsScript))
                 {
-                    relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.DBType, tableRelationsScript);
+                    relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
                 }
             }
 
@@ -79,7 +135,7 @@ namespace Logitude.DBMigrations.Helpers
             return generatedScript;
         }
 
-        public static void SaveScript(GeneratedScript generatedScript)
+        private void SaveScript(GeneratedScript generatedScript)
         {
             var stopwatch = Stopwatch.StartNew();
 
@@ -100,7 +156,7 @@ namespace Logitude.DBMigrations.Helpers
             AppendToPerformanceData("Save The Generated Scripts", stopwatch);
         }
 
-        public static void ExecuteScript(GeneratedScript generatedScript)
+        private void ExecuteScript(GeneratedScript generatedScript)
         {
             var stopwatch = Stopwatch.StartNew();
 
@@ -149,19 +205,19 @@ namespace Logitude.DBMigrations.Helpers
             AppendToPerformanceData("Execute The Generated Scripts", stopwatch);
         }
 
-        public static bool IsArgumentProvided(string[] args, string arg)
+        private bool IsArgumentProvided(string arg)
         {
-            string[] arguments = Array.ConvertAll(args, a => a.ToLower());
+            string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
             return (Array.IndexOf(arguments, arg) != -1);
         }
 
-        public static string GetRoot(string[] args)
+        private string GetRoot()
         {
-            string[] arguments = Array.ConvertAll(args, a => a.ToLower());
+            string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
             int indexOfRootArgument = Array.IndexOf(arguments, "-root") + 1;
-            if (indexOfRootArgument < args.Length && indexOfRootArgument >= 0)
+            if (indexOfRootArgument < Arguments.Length && indexOfRootArgument >= 0)
             {
-                string root = args[indexOfRootArgument];
+                string root = Arguments[indexOfRootArgument];
                 return root;
             }
             else
@@ -170,15 +226,22 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-        public static void ExportPerformanceData()
+        private void ValidateDXMLFiles(string[] dxmlFiles)
+        {
+            Console.WriteLine("Validating DXML Files ...");
+
+            DXMLValidation dxmlValidation = new DXMLValidation(dxmlFiles);
+            dxmlValidation.Validate();
+        }
+
+        private void ExportPerformanceData()
         {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string csvFilePath = Path.Combine(projectDirectory, @"Reports\DBMigrationsPerformance.csv");
             File.WriteAllText(csvFilePath, PerformanceData);
-            Console.WriteLine("\nPerformance Time Extracted To /Reports/DBMigrationsPerformance.csv\n");
         }
 
-        private static string GetConnectionString(string dbType)
+        private string GetConnectionString(string dbType)
         {
             string connectionString;
 
@@ -202,25 +265,22 @@ namespace Logitude.DBMigrations.Helpers
             return connectionString;
         }
 
-        private static GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string tableScript, string dxmlFileName)
+        private GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string tableScript)
         {
             if (dbType == "Global")
             {
-                //generatedScript.GlobalScript += "/* Generated Script For " + dxmlFileName + " */\n";
                 generatedScript.GlobalScript += tableScript;
                 generatedScript.GlobalScript += "\n";
                 return generatedScript;
             }
             else if (dbType == "Main")
             {
-                //generatedScript.MainScript += "/* Generated Script For " + dxmlFileName + " */\n";
                 generatedScript.MainScript += tableScript;
                 generatedScript.MainScript += "\n";
                 return generatedScript;
             }
             else if (dbType == "SystemLogs")
             {
-                //generatedScript.SystemLogsScript += "/* Generated Script For " + dxmlFileName + " */\n";
                 generatedScript.SystemLogsScript += tableScript;
                 generatedScript.SystemLogsScript += "\n";
                 return generatedScript;
@@ -231,7 +291,7 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-        private static RelationsScript AppendToRelationsScript(RelationsScript relationsScript, string dbType, string tableRelationsScript)
+        private RelationsScript AppendToRelationsScript(RelationsScript relationsScript, string dbType, string tableRelationsScript)
         {
             if (dbType == "Global")
             {
@@ -257,7 +317,7 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-        private static GeneratedScript AppendRelationsScriptToGeneratedScript(GeneratedScript generatedScript, RelationsScript relationsScript)
+        private GeneratedScript AppendRelationsScriptToGeneratedScript(GeneratedScript generatedScript, RelationsScript relationsScript)
         {
             generatedScript.GlobalScript += relationsScript.GlobalScript;
             generatedScript.MainScript += relationsScript.MainScript;
@@ -265,40 +325,38 @@ namespace Logitude.DBMigrations.Helpers
             return generatedScript;
         }
 
-        private static DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTable)
+        private DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition)
         {
-            string databseType = ConfigurationManager.AppSettings["DatabseType"];
-            string connectonString = GetConnectionString(dxmlTable.DBType);
+            string connectonString = GetConnectionString(dxmlTableDefinition.DBType);
 
-            if (databseType.ToLower() == "oracle")
+            if (DatabaseType.ToLower() == "oracle")
             {
-                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTable, connectonString);
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTables);
                 return oracleDatabaseMigrations;
             }
 
-            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTable, connectonString);
+            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTables);
             return sqlDatabaseMigrations;
         }
-        
-        private static string ExecuteScript(string script, string dbType)
+
+        private string ExecuteScript(string script, string dbType)
         {
-            string databseType = ConfigurationManager.AppSettings["DatabseType"];
             string connectionString = GetConnectionString(dbType);
 
-            if (databseType.ToLower() == "oracle")
+            if (DatabaseType.ToLower() == "oracle")
             {
                 OracleConnection oracleConnection = new OracleConnection(connectionString);
 
                 try
                 {
-                    string[] commands = script.Split(';');
+                    string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
                     commands = commands.Take(commands.Count() - 1).ToArray();
-                    
+
                     foreach (var command in commands)
                     {
                         OracleCommand oracleCommand = new OracleCommand();
                         oracleCommand.Connection = oracleConnection;
-                        oracleCommand.CommandText = command;
+                        oracleCommand.CommandText = (command.EndsWith(" END") ? command + ";" : command);
                         oracleConnection.Open();
                         oracleCommand.ExecuteNonQuery();
                         oracleConnection.Close();
@@ -317,7 +375,7 @@ namespace Logitude.DBMigrations.Helpers
 
                 try
                 {
-                    string[] commands = script.Split(';');
+                    string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
                     commands = commands.Take(commands.Count() - 1).ToArray();
 
                     foreach (var command in commands)
@@ -338,7 +396,33 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-        private static void AppendToPerformanceData(string description, Stopwatch stopwatch)
+        private List<DXMLTable> GetDXMLTables(string[] dxmlFiles)
+        {
+            List<DXMLTable> dxmlTables = new List<DXMLTable>();
+
+            foreach (var dxmlFile in dxmlFiles)
+            {
+                string xmlString = File.ReadAllText(dxmlFile);
+                TableDefinition dxmlTableDefinition = xmlString.ParseXML<TableDefinition>();
+
+                DXMLTable dxmlTable = new DXMLTable
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    TableDefinition = dxmlTableDefinition
+                };
+
+                dxmlTables.Add(dxmlTable);
+            }
+
+            return dxmlTables;
+        }
+
+        private bool IsGeneratedScriptsEmpty(GeneratedScript generatedScript)
+        {
+            return String.IsNullOrEmpty(generatedScript.GlobalScript) && String.IsNullOrEmpty(generatedScript.MainScript) && String.IsNullOrEmpty(generatedScript.SystemLogsScript);
+        }
+
+        private void AppendToPerformanceData(string description, Stopwatch stopwatch)
         {
             stopwatch.Stop();
             PerformanceData += description + "," + stopwatch.ElapsedMilliseconds + "\n";
