@@ -104,6 +104,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomMetaDataType> CustomMetaDataTypes { get; }
 		 IDbSet<CustomsAddressType> CustomsAddressTypes { get; }
 		 IDbSet<CustomsAirline> CustomsAirlines { get; }
+		 IDbSet<CustomsAutonomyKeyword> CustomsAutonomyKeywords { get; }
 		 IDbSet<CustomsBook> CustomsBooks { get; }
 		 IDbSet<CustomsBookType> CustomsBookTypes { get; }
 		 IDbSet<CustomsBranch> CustomsBranches { get; }
