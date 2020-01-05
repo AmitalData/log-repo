@@ -219,7 +219,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         if (!this.ShowBusyIndicator) {
             this.ShowBusyIndicator = true;
             this.ReportFliter = this.FillReportFilter(filter);
-            //if (!this.IsHaveRunReportViewWorkerRoleToggleFeature || (this.IsHaveRunReportViewWorkerRoleToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
+            if (!this.IsHaveRunReportViewWorkerRoleToggleFeature || (this.IsHaveRunReportViewWorkerRoleToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
 
                 this.IsRunReportSucceeded = false;
                 this.IsRunReportFailed = false;
@@ -249,11 +249,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 });
 
 
-            //}
+            }
 
-            //else {
-            //    this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
-            //}
+            else {
+                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
+            }
         }
     }
 
