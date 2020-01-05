@@ -499,23 +499,23 @@ namespace Logitude.IntegrationTest.Shipment
             QuoteStageList currentTenantQuoteStageList = RestClientService.ParseResponse<QuoteStageList>(response);
             return currentTenantQuoteStageList != null ? currentTenantQuoteStageList.Id : null;
         }
-        public static async Task<string> GetVendorId(string vendorName)
-        {
-            HttpResponseMessage response = await RestClientService.GetAsync("vendorviews" + QueryFiltersPreparation.GetUrlParameters(vendorName));
-            VendorPM currenctVendorPM = RestClientService.ParseResponse<VendorPM>(response);
-            if (currenctVendorPM == null)
-            {
-                currenctVendorPM = await CreateVendor(vendorName);
-            }
-            return currenctVendorPM.Id;
-        }
-        public static async Task<VendorPM> CreateVendor(string vendorName)
-        {
-            //VendorPM vendorPM = CreateVendorPM(vendorName);
+        //public static async Task<string> GetVendorId(string vendorName)
+        //{
+        //    HttpResponseMessage response = await RestClientService.GetAsync("vendorviews" + QueryFiltersPreparation.GetUrlParameters(vendorName));
+        //    VendorPM currenctVendorPM = RestClientService.ParseResponse<VendorPM>(response);
+        //    if (currenctVendorPM == null)
+        //    {
+        //        currenctVendorPM = await CreateVendor(vendorName);
+        //    }
+        //    return currenctVendorPM.Id;
+        //}
+        //public static async Task<VendorPM> CreateVendor(string vendorName)
+        //{
+        //    //VendorPM vendorPM = CreateVendorPM(vendorName);
             //HttpResponseMessage response = await RestClientService.PostAsync(vendorPM, "PartnersDomain");
             //vendorPM = RestClientService.ParseResponse<VendorPM>(response);
             //return vendorPM;
-        }
+        //}
         //public static VendorPM CreateVendorPM(string vendorName)
         //{
         //    VendorPM vendorPM = new VendorPM();
