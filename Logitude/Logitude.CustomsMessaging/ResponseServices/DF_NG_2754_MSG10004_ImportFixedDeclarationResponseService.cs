@@ -160,7 +160,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 ExcludeConsignment = declarationOrg.ExcludeConsignment,
                 IsClose = declarationOrg.IsClose,
                 //AdditionalDocument ********************
-                AgentId = GetAgent(declaration),
                 IsAmendment = true,
                 AmendmentOriginalDeclartation = declarationOrg.Id,
                 Consignments = GetConsignments(declaration , tenant),
@@ -176,7 +175,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //GetDeclarationConsignment
                 //declarationGoodsShipment.AdditionalDocument
             };
-            if(declaration.GovernmentProcedure!= null)
+
+                GetAgent(declaration , ref declarationPM); 
+
+            if (declaration.GovernmentProcedure!= null)
             {
                 declarationPM.ProcedureCurrentCode = declaration.GovernmentProcedure.CurrentCode.Value;
 
@@ -252,20 +254,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var importer in declaration.Importer)
             {
                 if (importer.ID != null)
-               switch(GetValueCodeType(importer.DMExtensions.RoleCode))
                 {
-                    case "4":
-                        {
-                            declarationPM.ImporterTypeCode = importer.ID.schemeID;
-                            declarationPM.ImporterAddress = importer.DMExtensions.Address;
-                            declarationPM.ImporterName = importer.DMExtensions.Name;
-                            declarationPM.MainImporterEntitlemntTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
-                         if (importer.ID.schemeID=="2" || importer.ID.schemeID == "3")   declarationPM.ImporterPassCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
-
-                            switch (importer.ID.schemeID)
+                    switch (GetValueCodeType(importer.DMExtensions.RoleCode))
+                    {
+                        case "4":
                             {
-                                case "1":
-                                    {
+                                declarationPM.ImporterTypeCode = importer.ID.schemeID;
+                                declarationPM.ImporterAddress = importer.DMExtensions.Address;
+                                declarationPM.ImporterName = importer.DMExtensions.Name;
+                                declarationPM.MainImporterEntitlemntTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
+                                if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.ImporterPassCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
+
+                                switch (importer.ID.schemeID)
+                                {
+                                    case "1":
+                                        {
                                             var queryService = new ClientQueryService(context);
                                             var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
                                             if (importerPM == null)
@@ -277,79 +280,113 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                             }
                                             break;
-                                    }
+                                        }
 
-                                case "3":
-                                case "2":
-                                    {
-                                        declarationPM.ImporterPassportNumber = importer.ID.Value;
-                                        break;
-                                    }
+                                    case "3":
+                                    case "2":
+                                        {
+                                            declarationPM.ImporterPassportNumber = importer.ID.Value;
+                                            break;
+                                        }
 
+                                }
+                                break;
                             }
-                            break;
-                        }
 
-                    case "5":
-                        {
-                            switch (importer.ID.schemeID)
+                        case "5":
                             {
-                                case "1":
-                                    {
-                                        declarationPM.TransferImporterId = importer.ID.Value;
-                                        break;
-                                    }
+                                switch (importer.ID.schemeID)
+                                {
+                                    case "1":
+                                        {
+                                            declarationPM.TransferImporterId = importer.ID.Value;
+                                            break;
+                                        }
 
-                                case "3":
-                                case "2":
-                                    {
-                                        declarationPM.TransferPassportNumber = importer.ID.Value;
-                                        break;
-                                    }
+                                    case "3":
+                                    case "2":
+                                        {
+                                            declarationPM.TransferPassportNumber = importer.ID.Value;
+                                            break;
+                                        }
+
+                                }
+                                declarationPM.TransferImporterTypeCode = importer.ID.schemeID;
+                                declarationPM.TransferImporterAddress = importer.DMExtensions.Address;
+                                declarationPM.TransferImporterName = importer.DMExtensions.Name;
+                                declarationPM.TransImporterEntitleTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
+                                if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.TransferImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
+
+                                break;
 
                             }
-                            declarationPM.TransferImporterTypeCode = importer.ID.schemeID;
-                            declarationPM.TransferImporterAddress = importer.DMExtensions.Address;
-                            declarationPM.TransferImporterName = importer.DMExtensions.Name;
-                            declarationPM.TransImporterEntitleTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
-                            if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.TransferImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
-                            break;
-
-                        }
-
-                    case "6":
-                        {
-
-                            switch (importer.ID.schemeID)
+                        case "6":
                             {
-                                case "1":
-                                    {
-                                        declarationPM.EntitleImporterId = importer.ID.Value;
-                                        break;
-                                    }
 
-                                case "3":
-                                case "2":
-                                    {
-                                        declarationPM.EntitlePassportNumber = importer.ID.Value;
-                                        break;
-                                    }
+                                switch (importer.ID.schemeID)
+                                {
+                                    case "1":
+                                        {
+                                            declarationPM.EntitleImporterId = importer.ID.Value;
+                                            break;
+                                        }
 
+                                    case "3":
+                                    case "2":
+                                        {
+                                            declarationPM.EntitlePassportNumber = importer.ID.Value;
+                                            break;
+                                        }
+
+                                }
+                                declarationPM.EntitleImporterTypeCode = importer.ID.schemeID;
+                                declarationPM.EntitleImporterAddress = importer.DMExtensions.Address;
+                                declarationPM.EntitleImporterName = importer.DMExtensions.Name;
+                                declarationPM.ImporterEntitlementTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
+                                if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.EntitleImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
+
+
+                                break;
                             }
-                            declarationPM.EntitleImporterTypeCode = importer.ID.schemeID;
-                            declarationPM.EntitleImporterAddress = importer.DMExtensions.Address;
-                            declarationPM.EntitleImporterName = importer.DMExtensions.Name;
-                            declarationPM.ImporterEntitlementTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
-                            if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.EntitleImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
-
-                            break;
-                        }
+                    }
 
                 }
+                else
+                {
+                    if (importer.DMExtensions != null)
+                    {
+                       switch(importer.DMExtensions.RoleCode.Value)
+                        {
+                            case "4":
+                                {
+                                    declarationPM.ImporterAddress = importer.DMExtensions.Address;
+                                    declarationPM.ImporterName = importer.DMExtensions.Name;
+                                 //   declarationPM.impo = GetValueTextType(importer.DMExtensions.IssueLocation);
 
-               
+                                    break;
+                                }
+                            case "5":
+                                {
+                                    declarationPM.TransferImporterAddress = importer.DMExtensions.Address;
+                                    declarationPM.TransferImporterName = importer.DMExtensions.Name;
+                                    declarationPM.TransferImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
+
+                                    break;
+                                }
+                            case "6":
+                                {  //  declarationPM.EntitleImporterTypeCode = "4";
+                                    declarationPM.EntitleImporterAddress = importer.DMExtensions.Address;
+                                    declarationPM.EntitleImporterName = importer.DMExtensions.Name;
+                                    declarationPM.EntitleImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
+
+                                    break;
+                                }
+
+                        }
+                            }
+                }
 
 
             }
@@ -489,13 +526,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
       
 
-        private string  GetAgent(Declaration declaration)
+        private string  GetAgent(Declaration declaration ,ref DeclarationPM declarationPM)
         {
             if (declaration.Agent != null && declaration.Agent.Count() > 0)
             {
-                var agent = declaration.Agent.FirstOrDefault(x => GetValueCodeType(x.RoleCode) == "1");
+                var agent = declaration.Agent.FirstOrDefault(x => GetValueCodeType(x.RoleCode) != "1");
                 if (agent != null)
-                    return GetValueIDType(agent.ID);
+                {
+                    declarationPM.AgentId= GetValueIDType(agent.ID);
+                    
+                }
+                     
             }
 
             return null;

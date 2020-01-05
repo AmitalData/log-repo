@@ -900,7 +900,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             var declarationDMExtensionsAdditionalDocumentList = new List<DeclarationDMExtensionsAdditionalDocument>();
             var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
-            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationPM.Id, ParentEntityCode = "Declaration" }, declarationPM.Tenant);
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(new GetTicketsParams() { ParentEntityId = declarationPM.Id, ParentEntityCode = "Declaration" }, declarationPM.Tenant);
 
             foreach (var customsDocumentPM in customsDocumentPMList)
             {
@@ -1092,7 +1092,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
 
             var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
-            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = supplierInvoicePM.DeclarationId, ParentEntityCode = "Declaration", Child1EntityCode = "SupplierInvoice", Child1EntityId = supplierInvoicePM.InvoiceCounterKey.ToString() }, supplierInvoicePM.Tenant);
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(new GetTicketsParams() { ParentEntityId = supplierInvoicePM.DeclarationId, ParentEntityCode = "Declaration", Child1EntityCode = "SupplierInvoice", Child1EntityId = supplierInvoicePM.InvoiceCounterKey.ToString() }, supplierInvoicePM.Tenant);
 
             foreach (var customsDocumentPM in customsDocumentPMList)
             {
@@ -1287,7 +1287,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //var customsDocumentsTicketPMList = customsDocumentsTicketQueryService.GetCustomsDocumentsTickets(new GetTicketsParams() { ParentEntityId = supplierInvoiceItemPM.DeclarationId, ParentEntityCode = "Declaration", Child1EntityCode = "SupplierInvoice", Child1EntityId = supplierInvoiceItemPM.CounterKey.ToString(), Child2EntityCode = "SupplierInvoiceItem", Child2EntityId = supplierInvoiceItemPM.LineNumber.ToString() }, supplierInvoiceItemPM.Tenant);
 
             var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
-            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = supplierInvoiceItemPM.DeclarationId, ParentEntityCode = "Declaration", Child1EntityCode = "SupplierInvoice", Child1EntityId = supplierInvoiceItemPM.CounterKey.ToString(), Child2EntityCode = "SupplierInvoiceItem", Child2EntityId = supplierInvoiceItemPM.LineNumber.ToString() }, supplierInvoiceItemPM.Tenant);
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(new GetTicketsParams() { ParentEntityId = supplierInvoiceItemPM.DeclarationId, ParentEntityCode = "Declaration", Child1EntityCode = "SupplierInvoice", Child1EntityId = supplierInvoiceItemPM.CounterKey.ToString(), Child2EntityCode = "SupplierInvoiceItem", Child2EntityId = supplierInvoiceItemPM.LineNumber.ToString() }, supplierInvoiceItemPM.Tenant);
             foreach (var customsDocumentPM in customsDocumentPMList)
             {
                 //if (documentTicketItem.Child1EntityCode == "SupplierInvoice" && documentTicketItem.Child1EntityId == supplierInvoiceItemPM.CounterKey.ToString() && documentTicketItem.Child2EntityCode == "SupplierInvoiceItem" && documentTicketItem.Child2EntityId == supplierInvoiceItemPM.LineNumber.ToString())

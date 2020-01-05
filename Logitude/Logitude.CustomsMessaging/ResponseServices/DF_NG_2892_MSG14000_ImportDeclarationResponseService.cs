@@ -139,7 +139,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
-                this.MyRequestSheetParam.RequestDescription = "משוב להצהרה  " + this._MyDeclarationPM.DeclarationNumber;
+                this.MyRequestSheetParam.RequestDescription = "משוב לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
                  
             }
              float oldVersionId;
