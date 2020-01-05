@@ -58,11 +58,15 @@ export class GLAccountInterestComponent extends BaseComponent{
             this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
             this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
             this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", true);
+            this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", true);
+
         }
         else {
             this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", false);
             this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
             this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
+            this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
+
         }
     }
     SetWindowArgs(args) {
@@ -205,7 +209,12 @@ export class GLAccountInterestComponent extends BaseComponent{
     set MinimumInterestInvoiceBilling(newValue: number) {
             this.EntityPM.MinimumInterestInvoiceBilling = newValue;
     }
-
+    get InterestCreditLimit() {
+        return this.EntityPM.InterestCreditLimit;
+    }
+    set InterestCreditLimit(newValue: number) {
+        this.EntityPM.InterestCreditLimit = newValue;
+    }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
