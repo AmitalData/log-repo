@@ -230,9 +230,9 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (this.SelectedAutomationEntity) {
             recordType = this.SelectedAutomationEntity.Name;
             if (this.AddEditAutomationsViewModel.IsMasterShipment) {
-                if (this.SelectedAutomationEntity.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId) {
-                    recordType = "";
-                }
+                //if (this.SelectedAutomationEntity.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId) {
+                //    recordType = "";
+                //}
             }
         }
         return recordType;
