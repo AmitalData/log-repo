@@ -1812,6 +1812,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0003_QueueMessagesShrink.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0004_DeleteQMessWhenDone.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0006_QueueMessagesShrinkTk2.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0007_AutonomyKeywords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />
