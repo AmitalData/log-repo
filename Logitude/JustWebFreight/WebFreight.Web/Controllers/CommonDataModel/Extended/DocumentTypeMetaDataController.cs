@@ -1,7 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -95,20 +97,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                string type = null;
-                if (!string.IsNullOrEmpty(code))
-                {
-                    var documentTypeMetaDataRepo = new DocumentsMetaDataTypeRepository(authToken.Tenant);
-                    DocumentsMetaDataType myDocumentsMetaDataType = documentTypeMetaDataRepo.GetSingleDocumentsMetaDataTypeByCode(code, authToken.Tenant);
-                    if (myDocumentsMetaDataType != null) type = myDocumentsMetaDataType.Id;
-                }
-                DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = null;
-                if (!string.IsNullOrEmpty(type))
-                {
-                    var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(authToken.Tenant);
-                    MyDocumentMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(documentsFilingId, type, authToken.Tenant);
-                }
+                ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                var myDocumentsFilingService = new DocumentsFilingService(MyContext,authToken.Tenant);
+                DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = myDocumentsFilingService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(documentsFilingId,code);
 
                 return Request.CreateResponse(HttpStatusCode.OK, MyDocumentMetaDataValues);
 
