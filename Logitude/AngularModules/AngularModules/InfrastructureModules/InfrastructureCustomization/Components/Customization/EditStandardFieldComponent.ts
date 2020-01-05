@@ -36,7 +36,7 @@ export class EditStandardFieldComponent extends BaseComponent {
     SetWindowArgs(args: StandardFieldItem) {
         this.EditedFieldItem = args;  
 
-        this.generalService.GetSingleObjectFieldFromZeroTenant(args.ObjectFieldId).subscribe(myResult => {
+        this.generalService.GetSingleObjectFieldByFieldCodeFromZeroTenant(args.ObjectFieldCode).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;

@@ -163,7 +163,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             return (from a in context.ObjectFields
                     where a.Id == id && a.Tenant == tenant
-                    select a.Code).FirstOrDefault();
+                    select a.FieldCode).FirstOrDefault();
         }
 
 
