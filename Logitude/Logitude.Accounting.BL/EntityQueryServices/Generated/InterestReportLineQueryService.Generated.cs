@@ -48,9 +48,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             mapping = new InterestReportLineDataMapping();
         }
 		 
-		public  InterestReportLinePM GetSingle(string interestreportid,bool getComposition, bool getFromCache)
+		public  InterestReportLinePM GetSingle(string interestreportid, string interesttransactionid,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new InterestReportLineKeys(){ InterestReportId = interestreportid };
+             EntityKeys = new InterestReportLineKeys(){ InterestReportId = interestreportid, InterestTransactionId = interesttransactionid };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(InterestReportLine entityPOCO)
         {
-            InterestReportLineKeys entityKeys = new InterestReportLineKeys() { InterestReportId = entityPOCO.InterestReportId,  };
+            InterestReportLineKeys entityKeys = new InterestReportLineKeys() { InterestReportId = entityPOCO.InterestReportId, InterestTransactionId = entityPOCO.InterestTransactionId,  };
             return entityKeys;
         }
      

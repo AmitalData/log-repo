@@ -70,12 +70,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
 		        entityPM.CreatedByUserId = loggedContact.Id;
 		    }
-					
-			DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-							 
-
-		    entityPM.UpdateDate =  myDate;
-                      
+					 
 
 			if (loggedContact != null)
             {
@@ -87,10 +82,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         
 		protected override void FillDefaultValuesOnUpdate(InterestReportPM entityPM)
         {       
-           
-		    DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-			entityPM.UpdateDate =  myDate;
-					  
+             
             string email = "system@tenant" + entityPM.Tenant + ".com";
             if (HttpContext.Current != null)
             {

@@ -25,7 +25,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         InterestReportId, 
-	         LineNumber, 
 	         FromDate, 
 	         ToDate, 
 	         TotalInterestDays, 
@@ -40,7 +39,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CalculatedStandInterestAmount, 
 	         CalculatedExcepInterestAmount, 
 	         CalculatedCreditInterestAmount, 
-	         CalculationDetails,
+	         CalculationDetails, 
+	         LineNumber,
 	      }
 
 
@@ -50,7 +50,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         InterestReportId, 
-	         LineNumber, 
 	         FromDate, 
 	         ToDate, 
 	         TotalInterestDays, 
@@ -65,7 +64,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CalculatedStandInterestAmount, 
 	         CalculatedExcepInterestAmount, 
 	         CalculatedCreditInterestAmount, 
-	         CalculationDetails,
+	         CalculationDetails, 
+	         LineNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -82,11 +82,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestReportId))
             {
 				entityPOCO.InterestReportId = entityPM.InterestReportId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
-            {
-				entityPOCO.LineNumber = entityPM.LineNumber;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromDate))
@@ -163,6 +158,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.CalculationDetails = entityPM.CalculationDetails;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+				entityPOCO.LineNumber = entityPM.LineNumber;
+			}
 			}
 
 		public void POCOToPM(InterestReportLinesByDatePM entityPM, InterestReportLinesByDate entityPOCO)
@@ -181,11 +181,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestReportId))
             {
 					entityPM.InterestReportId = entityPOCO.InterestReportId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
-            {
-					entityPM.LineNumber = entityPOCO.LineNumber;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromDate))
@@ -263,6 +258,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CalculationDetails = entityPOCO.CalculationDetails;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
+            {
+					entityPM.LineNumber = entityPOCO.LineNumber;
+            }
+
 		}
 
 		public void PMToOldPM(InterestReportLinesByDatePM entityPM, InterestReportLinesByDatePM oldEntityPM)
@@ -277,11 +277,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestReportId))
             {
                 oldEntityPM.InterestReportId = entityPM.InterestReportId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
-            {
-                oldEntityPM.LineNumber = entityPM.LineNumber;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromDate))
@@ -357,6 +352,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalculationDetails))
             {
                 oldEntityPM.CalculationDetails = entityPM.CalculationDetails;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+                oldEntityPM.LineNumber = entityPM.LineNumber;
             }
 			
 		}

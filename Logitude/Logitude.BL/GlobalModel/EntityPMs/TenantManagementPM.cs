@@ -343,6 +343,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool MainAdditionalPackageApplied { get; set; }
         public double? TotalPrice { get; set; }
 
-
+        public string SupportDomain { get; set; }
     }
 }

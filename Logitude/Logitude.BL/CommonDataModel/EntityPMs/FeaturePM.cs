@@ -22,6 +22,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsCoreFeature { get; set; }
         public string ToggleCode { get; set; }
         public string FeatureUniqeCode { get; set; }
+        public string NameTextCodeCode { get; set; }
 
         // Dummy
         public string ObjectTableName { get; set; }
@@ -32,7 +33,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsCustomRoleFeature { get; set; }
         public string PackageCode { get; set; }
         public string AccessLevelCode { get; set; }
-        public string NameTextCodeCode { get; set; }
         public string TranslatedName { get; set; }
 
         public bool Exists { get; set; }

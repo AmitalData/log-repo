@@ -189,14 +189,13 @@ namespace WebFreight.Web.Helpers
             return lastText;
         }
 
-        public TenantManagement GetTenant(string supportEmail)
+        public TenantManagement GetTenantBySupportEmail(string supportEmail)
         {
             TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
             List<string> emails = GetListOfFilteredEmails(supportEmail);
             emails = this.GetSupportEmail(emails);
             TenantManagement myTenant = new TenantManagement();
             myTenant = tenantManagementRepository.GetSingleTenantManagementPMByListOfEmails(emails);
-
             return myTenant;
         }
 

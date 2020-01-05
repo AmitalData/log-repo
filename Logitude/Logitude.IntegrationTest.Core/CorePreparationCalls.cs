@@ -23,6 +23,7 @@ namespace Logitude.IntegrationTest.Core
             var stringResult = response.Content.ReadAsStringAsync().Result;
             TenantPM tenantPM = JsonConvert.DeserializeObject<TenantPM>(stringResult);
             IntegrationTestLoginParameters.TenantPM = tenantPM;
+            CorePreparationVariables.TenantPM = tenantPM;
         }
     }
 }

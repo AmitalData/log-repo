@@ -19,6 +19,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             menuButton.Style = menuButtonPM.Style;
             menuButton.FeatureUniqeCode = menuButtonPM.FeatureUniqeCode;
 
+            menuButton.LabelTextCodeCode = menuButtonPM.LabelTextCodeCode;
         }
     }
 }

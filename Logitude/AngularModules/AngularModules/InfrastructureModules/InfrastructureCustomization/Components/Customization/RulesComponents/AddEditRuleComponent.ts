@@ -165,7 +165,7 @@ export class AddEditRuleComponent extends BaseComponent {
 
         for (var k in this.DataContext.RuleConditionFields) {
             var field = this.DataContext.RuleConditionFields[k];
-            var objectField: ObjectFieldPM = this.ObjectFields.filter(f => f.Id == field.ObjectFieldId)[0];
+            var objectField: ObjectFieldPM = this.ObjectFields.filter(f => f.FieldCode == field.ObjectFieldCode)[0];
             if (objectField) {
                 var mappedField = this.MapJsonToEntityPM(objectField);
                 this.AddFilterField(mappedField);
@@ -196,6 +196,7 @@ export class AddEditRuleComponent extends BaseComponent {
         systemLevelRule.RuleConditionFields.forEach(item => {
             var newField: RuleConditionFieldPM = new RuleConditionFieldPM(tenantLevelRule);
             newField.ObjectFieldId = item.ObjectFieldId;
+            newField.ObjectFieldCode = item.ObjectFieldCode;
             newField.ObjectFieldName = item.ObjectFieldName;
             newField.Operator = item.Operator;
             newField.Value = item.Value;
@@ -209,6 +210,7 @@ export class AddEditRuleComponent extends BaseComponent {
             let ruleField: ObjectTableRuleFieldPM = new ObjectTableRuleFieldPM();
             ruleField.Id = 'New';
             ruleField.ObjectFieldId = item.ObjectFieldId;
+            ruleField.ObjectFieldCode = item.ObjectFieldCode;
             ruleField.ObjectTableRuleId = tenantLevelRule.Id;
             ruleField.SystemLevel = false;
             ruleField.Tenant = SessionLocator.Tenant;
@@ -256,7 +258,7 @@ export class AddEditRuleComponent extends BaseComponent {
         if (this.SelectedConditionObjectFields == undefined) {
             this.SelectedConditionObjectFields = [];
         }
-        var conditionField = this.DataContext.RuleConditionFields.filter(d => d.ObjectFieldId == field.Id)[0];
+        var conditionField = this.DataContext.RuleConditionFields.filter(d => d.ObjectFieldCode == field.FieldCode)[0];
         if (conditionField) {
             var value = conditionField.Value;
             this.FieldsValues.SetFieldValue(field.Id, value);
@@ -484,6 +486,7 @@ export class AddEditRuleComponent extends BaseComponent {
                 var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
                 var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
                 newField.ObjectFieldId = item.ObjectField.Id;
+                newField.ObjectFieldCode = item.ObjectField.FieldCode;
                 newField.ObjectFieldName = item.ObjectField.FieldName;
                 newField.Operator = item.Operation.Code;
                 newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
@@ -536,6 +539,7 @@ export class AddEditRuleComponent extends BaseComponent {
                 var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
                 var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
                 newField.ObjectFieldId = item.ObjectField.Id;
+                newField.ObjectFieldCode = item.ObjectField.FieldCode;
                 newField.ObjectFieldName = item.ObjectField.FieldName;
                 newField.Operator = item.Operation.Code;
                 newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
@@ -609,24 +613,25 @@ export class AddEditRuleComponent extends BaseComponent {
             if ($event) {
 
                 var expression = null;
-                var objectFieldId = $event;
+                var objectFieldCode = $event;
                 if (this.DataContext.RuleTypeCode == 'SETV') {
-                    objectFieldId = $event.split(',')[0];
+                    objectFieldCode = $event.split(',')[0];
                     if ($event.split(',').length > 1) {
                         expression = $event.split(',')[1];
                     }
                 }
-                var selectedField: ObjectFieldPM = this.ObjectFields.filter(f => f.Id == objectFieldId)[0];
+                var selectedField: ObjectFieldPM = this.ObjectFields.filter(f => f.FieldCode == objectFieldCode)[0];
 
                 if (selectedField) {
-                    if (!this.currentRuleFields.filter(f => f.ObjectFieldId == selectedField.Id)[0]) {
+                    if (!this.currentRuleFields.filter(f => f.ObjectFieldCode == selectedField.FieldCode)[0]) {
                         var ruleField: ObjectTableRuleFieldPM = null;
 
-                        if (!this.removedFields.filter(f => f.ObjectFieldId == selectedField.Id)[0]) {
+                        if (!this.removedFields.filter(f => f.ObjectFieldCode == selectedField.FieldCode)[0]) {
                            
                             ruleField = new ObjectTableRuleFieldPM();
                             ruleField.Id = 'New';
                             ruleField.ObjectFieldId = selectedField.Id;
+                            ruleField.ObjectFieldCode = selectedField.FieldCode;
                             ruleField.ObjectTableRuleId = this.DataContext.Id;
                             ruleField.SystemLevel = false;
                             ruleField.Tenant = SessionLocator.Tenant;
@@ -642,7 +647,7 @@ export class AddEditRuleComponent extends BaseComponent {
                         }
 
                         else {
-                            ruleField = this.removedFields.filter(f => f.ObjectFieldId == selectedField.Id)[0];
+                            ruleField = this.removedFields.filter(f => f.ObjectFieldCode == selectedField.FieldCode)[0];
                             ruleField.Expression = expression;
                             var index = this.removedFields.indexOf(ruleField);
                             if (index > -1) {

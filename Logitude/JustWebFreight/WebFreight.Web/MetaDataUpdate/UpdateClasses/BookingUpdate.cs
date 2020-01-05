@@ -169,8 +169,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             ruleConditionFieldRepository = new RuleConditionFieldRepository(objectContext);
 
             Dictionary<string, ObjectTableRule> TenantObjectTableRule = objectTableRuleRepository.GetObjectTableRules(0).ToDictionary(d => d.RuleCode, a => a);
-            Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields = objectTableRuleFieldRepository.GetObjectTableRuleFields(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldId, a => a);
-            Dictionary<string, RuleConditionField> TenantRuleConditionFields = ruleConditionFieldRepository.GetRuleConditionFieldsByTenant(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldId, a => a);
+
+            Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields = objectTableRuleFieldRepository.GetObjectTableRuleFields(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldCode, a => a);
+
+            Dictionary<string, RuleConditionField> TenantRuleConditionFields = ruleConditionFieldRepository.GetRuleConditionFieldsByTenant(0).ToDictionary(d => d.ObjectTableRuleId + d.ObjectFieldCode, a => a);
+
             List<ObjectFieldValidation> TenantObjectFieldValidations = objectFieldValidationRepository.GetObjectFieldValidations(0).ToList();
 
             CreateObjectFieldValidations(TenantObjectFieldValidations);

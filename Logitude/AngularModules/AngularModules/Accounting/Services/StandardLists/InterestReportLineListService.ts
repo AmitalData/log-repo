@@ -30,13 +30,13 @@ export class InterestReportLineListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/interestreportlineviews';  
     }
 
-    getSingle(interestreportid: string) {
+    getSingle(interestreportid: string, interesttransactionid: string) {
 	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'interestreportid=' + interestreportid, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'interestreportid=' + interestreportid+'&'+'interesttransactionid=' + interesttransactionid, { headers: authHeader }).map(response => {
 
                 var list = response.json();
                     
@@ -51,7 +51,7 @@ export class InterestReportLineListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestReportLine", "GetSingleList", 'interestreportid=' + interestreportid); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestReportLine", "GetSingleList", 'interestreportid=' + interestreportid+'&'+'interesttransactionid=' + interesttransactionid); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);

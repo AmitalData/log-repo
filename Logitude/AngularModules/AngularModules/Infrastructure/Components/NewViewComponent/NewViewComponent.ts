@@ -1470,7 +1470,7 @@ export class NewViewComponent {
             myService.update(this.EntityPM).subscribe(myResult => {
                 if (!SessionLocator.UseCachedData) {
                     textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe(res => {
-                        window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeId != myResult.Result.NameTextCodeId);
+                        window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeCode != myResult.Result.NameTextCodeCode);
                         window.TranslationsCache = window.TranslationsCache.filter(d => d.Code != myResult.Result.NameTextCodeCode);
                         window.TextCodesTranslations.push(res);
                         window.TranslationsCache.push(res);

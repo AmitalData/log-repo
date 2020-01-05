@@ -46,11 +46,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.Tenant = entityPM.Tenant;
 			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestTransactionId))
-            {
-				entityPOCO.InterestTransactionId = entityPM.InterestTransactionId;
-			}
 			}
 
 		public void POCOToPM(InterestReportLinePM entityPM, InterestReportLine entityPOCO)
@@ -80,11 +75,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestTransactionId))
-            {
-                oldEntityPM.InterestTransactionId = entityPM.InterestTransactionId;
             }
 			
 		}

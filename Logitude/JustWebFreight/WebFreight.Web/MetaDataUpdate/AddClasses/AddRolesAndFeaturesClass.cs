@@ -100,9 +100,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         TextCodeTypeCode = "O",
                     };
 
-                    updatedFeature.NameTextCodeId = updatedTextCode.Id;
-                    textCodeReposit.Add(updatedTextCode);
-                }
+                        updatedFeature.NameTextCodeId = updatedTextCode.Id;
+                        updatedFeature.NameTextCodeCode = updatedTextCode.Code;
+                        textCodeReposit.Add(updatedTextCode);
+                    }
 
                 else
                 {
@@ -159,7 +160,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
                     IsOld = false,
                     IsCoreFeature = featureDetails.IsCoreFeature,
-                    FeatureUniqeCode = featureDetails.FeatureUniqeCode
+                    FeatureUniqeCode = featureDetails.FeatureUniqeCode,
+                    NameTextCodeCode = newTextCode.Code,
                 };
 
                 featuresRepository.Add(newFeature);

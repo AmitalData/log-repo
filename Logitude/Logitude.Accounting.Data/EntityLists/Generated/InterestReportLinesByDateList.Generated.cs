@@ -21,8 +21,6 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string InterestReportId  { get; set; }
        [DataMember]
-       public decimal LineNumber  { get; set; }
-       [DataMember]
        public DateTime FromDate  { get; set; }
        [DataMember]
        public DateTime ToDate  { get; set; }
@@ -52,6 +50,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal CalculatedCreditInterestAmount  { get; set; }
        [DataMember]
        public string CalculationDetails  { get; set; }
+       [DataMember]
+       public int LineNumber  { get; set; }
    }
 
 }

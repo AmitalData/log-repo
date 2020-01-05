@@ -34,10 +34,10 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
 
 
     public get ShowConnectToCardButton() : boolean {
-        if(this.CardList)
-            return this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'VD' || this.CardList.PartnerTypeId == 'AC';
+        //if(this.CardList)
+        //    return this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'VD' || this.CardList.PartnerTypeId == 'AC';
 
-        return false;
+        return true;
     }
 
     constructor(private entityArgs: EntityArgs) {

@@ -351,7 +351,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
                 CreatedByContactId = entityPM.CreatedByContactId,
             };
 
-            string senderEmail = GetSenderEmail(entityPM.Tenant, entityPM.GuidId);
+            string senderEmail = GetSenderEmail(entityPM.Tenant, entityPM.GuidId, entityPM.SupportMailboxId);
 
             InboundEmailLinePM line = new InboundEmailLinePM()
             {

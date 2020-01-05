@@ -40,6 +40,7 @@
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountSearchWindowComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountTaxWithholdingTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\NewConnectedGLAccountComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\AddEditInterestBasesPeriod\AddEditInterestBasesPeriodComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.html" />
@@ -85,6 +86,7 @@
     <Content Include="Accounting\Components\NewEntity\NewCashBookComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankCodeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankAccountComponent.html" />
+    <Content Include="Accounting\Components\NewEntity\NewInterestReportComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewChartOfAccountComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewGLAccountComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewIntegrityCheckComponent.html" />
@@ -102,6 +104,7 @@
     <Content Include="Accounting\Components\Others\JournalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ExternalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
+    <Content Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.html" />
@@ -184,6 +187,9 @@
     <Content Include="CRMModules\CRMOthers\Components\Questionnaire\QuestionnaireAnswersComponent.html" />
     <Content Include="CRMModules\CRMOthers\Components\SLA\AddEditEscalationComponent.html" />
     <Content Include="CRMModules\CRMOthers\Components\SLA\NewSLAComponent.html" />
+    <Content Include="CRMModules\CRMOthers\Components\SLA\SLAMainWindowComponent.html" />
+    <Content Include="CRMModules\CRMOthers\Components\SupportMailBox\AddEditSupportMailBoxComponent.html" />
+    <Content Include="CRMModules\CRMOthers\Components\SupportMailBox\SupportMailBoxComponent.html" />
     <Content Include="CRMModules\CRMOthers\Components\TicketSettings\TicketSettingsComponent.html" />
     <Content Include="CRMModules\CRMStages\Components\StageGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMTickets\Components\EditTabs\Audit\TicketAuditTabComponent.html" />
@@ -407,6 +413,7 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\GLAccountInterestComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Interest\DetailsTab\AddEditInterestBasesPeriod\AddEditInterestBasesPeriodComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
@@ -422,6 +429,7 @@
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\NewEntity\NewInterestReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewIntegrityCheckComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
@@ -429,6 +437,8 @@
     <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -450,12 +460,19 @@
     <TypeScriptCompile Include="Accounting\Services\StandardLists\IntegrityCheckStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestBasesPeriodListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestBasesTypeListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestReportLineListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestReportLinesByDateListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestReportListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestReportStatuseListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\JournalAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\AccountingIntegrityCheckPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestBasesPeriodPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestBasesTypePMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestReportLinePMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestReportLinesByDatePMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
@@ -556,6 +573,8 @@
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\Questionnaire\QuestionnaireAnswersComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\SLA\AddEditEscalationComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\SLA\NewSLAComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOthers\Components\SupportMailBox\AddEditSupportMailBoxComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOthers\Components\SupportMailBox\SupportMailBoxComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOthers\Components\TicketSettings\TicketSettingsComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMStages\Components\StageGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\EditTabs\Audit\TicketAuditTabComponent.ts" />

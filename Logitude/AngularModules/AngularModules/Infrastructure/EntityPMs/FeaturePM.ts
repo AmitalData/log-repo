@@ -9,6 +9,7 @@ export class FeaturePM {
     public IsBusinessUnitEnabled: boolean;
     public IsOld: boolean;
     public IsCoreFeature: boolean;
+    public NameTextCodeCode: string;
     public FeatureUniqeCode: string;
 
 
@@ -19,7 +20,6 @@ export class FeaturePM {
     public IsCustomRole: boolean;
     public IsCustomRoleFeature: boolean;
     public PackageCode: string;
-    public NameTextCodeCode: string;
     public TranslatedName: string;
     public Exists: boolean;
 

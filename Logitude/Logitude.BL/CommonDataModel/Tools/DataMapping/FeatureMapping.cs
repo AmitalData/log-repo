@@ -29,6 +29,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsCoreFeature = entityPM.IsCoreFeature;
             entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;
 
+            entityPOCO.NameTextCodeCode = entityPM.NameTextCodeCode;
         }
     }
 }

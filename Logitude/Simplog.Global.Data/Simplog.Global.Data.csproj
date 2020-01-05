@@ -393,6 +393,14 @@
     <Compile Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.Designer.cs">
       <DependentUpon>201911100712389_Settings_QBO_Fields_Khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.cs" />
+    <Compile Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.Designer.cs">
+      <DependentUpon>201912230848314_AddSupportDomainToTenantManagement_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs" />
+    <Compile Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.Designer.cs">
+      <DependentUpon>201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -540,6 +548,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.resx">
       <DependentUpon>201911100712389_Settings_QBO_Fields_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.resx">
+      <DependentUpon>201912230848314_AddSupportDomainToTenantManagement_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.resx">
+      <DependentUpon>201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

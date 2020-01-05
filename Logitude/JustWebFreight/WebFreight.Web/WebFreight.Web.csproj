@@ -1005,6 +1005,7 @@
     <Compile Include="Controllers\AccountingModel\CardGLAccountConnectController.cs" />
     <Compile Include="Controllers\AccountingModel\CashbookOpController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
+    <Compile Include="Controllers\AccountingModel\ExternalReconciliationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingIntegrityCheckViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingNoteViewsController.Generated.cs" />
@@ -2531,6 +2532,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerTenantAccessCardsBatchUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerTenantAccessCardUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerTenantAccessRequestUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerTenantAccessStatusTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerTenantAccessUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerUpdateClass.cs" />
@@ -2796,6 +2798,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapTransactionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\LogitudeLeadUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentChannelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentMethodUpdateClass.cs" />
@@ -2897,15 +2900,18 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\QuoteModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AccountingInformationIdentifierUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBAdditionalHandlingInfoUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBChargesCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerFollowUpUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferHeaderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\HarmonizeCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\INTTRABookingStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\INTTRABookingTransStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\MasterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\MessagingStockUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBOCIUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBSpecialHandlingCodeUpdateClass.cs" />
@@ -2939,6 +2945,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\SpecialServicesTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\MasterModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\ShipmentsModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TariffModuleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TimeManagementUpdateClass.cs" />
@@ -5253,6 +5260,7 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysCategoryManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />

@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(InterestReportLinePM entityPM)
         {
-            InterestReportLineKeys entityKeys = new InterestReportLineKeys() { InterestReportId = entityPM.InterestReportId };
+            InterestReportLineKeys entityKeys = new InterestReportLineKeys() { InterestReportId = entityPM.InterestReportId, InterestTransactionId = entityPM.InterestTransactionId };
             return entityKeys;
         }
 

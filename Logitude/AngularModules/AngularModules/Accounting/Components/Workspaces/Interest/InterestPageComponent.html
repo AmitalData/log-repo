@@ -75,15 +75,24 @@
                                                 <div>
                                                     <table>
                                                         <tr>
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('Interest Bases')"> {{ 'InterestBasesType.Q.InterestBases' | TextCodeTranslationPipe }}</p>
-                                                                        </td>
-                                                                    </tr>
+                                                            <td style="width:190px;">
+                                                                <p class="QueryLink" (click)="ViewAccountingQuery('Interest Bases')"> {{ 'InterestBasesType.Q.InterestBases' | TextCodeTranslationPipe }}</p>
+                                                            </td>
+                                                        </tr>
 
-                                                                </table>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>{{ 'InterestReport.Q.InterestReport' | TextCodeTranslationPipe }}</div>
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <button class="Button" (click)="RunNewInterestReportWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:190px;">
+                                                                <p class="QueryLink" (click)="ViewAccountingQuery('Interest Report')"> {{ 'InterestReport.Q.InterestReport' | TextCodeTranslationPipe }}</p>
                                                             </td>
                                                         </tr>
 

@@ -115,6 +115,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 return;
 
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
+            {
+                entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
