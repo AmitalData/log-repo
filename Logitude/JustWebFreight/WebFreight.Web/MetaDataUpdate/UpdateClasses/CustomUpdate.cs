@@ -16779,7 +16779,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 EnglishName = "Declaration Changed By Customs",
                 Tenant = 0,
                 AddedManually = false,
-                LocalName = "בוצע תיקון הצהרה ע'י המכס",
+                LocalName = "בוצע תיקון הצהרה",
                 ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
