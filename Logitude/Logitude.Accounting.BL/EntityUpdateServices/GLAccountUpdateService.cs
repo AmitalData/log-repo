@@ -540,7 +540,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             FillForeignFields(entityPM);
             FillSearchFields(entityPM);
-            SendHybridTask(entityPM);
+          
 
         }
         private TenantPM GetTenantPM(int tenantId)
@@ -1368,6 +1368,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.AfterUpdating(entityPM, entityParentPM);
             // Update Card GLAccountId [Maheera]
             UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
+            SendHybridTask(entityPM);
         }
         public bool FullAccountingProvider { get; set; }
         protected override void Validate(GLAccountPM entityPM)
