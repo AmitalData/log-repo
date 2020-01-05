@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -27,7 +28,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         private ShipmentRepository shipmentRepository;
         private CustomFieldResolver customFieldResolver;
         private ShipperReturnsDataProvider iDataProvider;
-        private IQueryable<ShipmentJoinPackageList> iQueryable_ShipmentPackages;
+        private IQueryable<ShipmentJoinPackageList> iQueryable_JoinShipmentPackages;
 
         public ShipperReturnsManager(byte[] xmlFilters, int tenant)
         {
@@ -139,141 +140,84 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
         private void BuildSourceData()
         {
-            this.iQueryable_ShipmentPackages = (from shipment in shipmentRepository.context.Shipments.Include("ShipperCard")
-                                                join shipmentPackage in shipmentRepository.context.ShipmentPackages.Include("PackageType")
-                                                on shipment.Id equals shipmentPackage.ShipmentId into JoinedData
-                                                join sm in shipmentRepository.context.ShipmentMasterDatas.Include("MainCarriageFromPort").Include("MainCarriageToPort").Include("MainCarriageFinalDestinationPort").Include("MainCarriageCarrierCard")
-                                                on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
-                                                from jd in JoinedData.DefaultIfEmpty()
-                                                from m in shipmentJoin.DefaultIfEmpty()
-                                                where shipment.Tenant == tenant && shipment.TransportModeId == "A"
-                                                select new ShipmentJoinPackageList()
-                                                {
-                                                    Id = shipment.Id + (!string.IsNullOrEmpty(jd.Id) ? jd.Id : ""),
-                                                    ShipmentId = shipment.Id,
-                                                    PackageId = jd.Id,
-                                                    DirectionId = shipment.DirectionId,
-                                                    ShipmentNumber = shipment.ShipmentNumber,
-                                                    CreateDateTime = shipment.CreateDateTime,
-                                                    ShipperName = shipment.ShipperCard != null ? shipment.ShipperCard.EnglishName : null,
-                                                    ShipperId = shipment.ShipperId,
-                                                    ContainerNumber = jd.ContainerNumber,
-                                                    ShipmentTypeId = shipment.ShipmentTypeId,
-                                                    StatusName = shipment.EntityStatus.Name,
-                                                    AgentReference1 = shipment.AgentReference1,
-                                                    AgentReference2 = shipment.AgentReference2,
-                                                    CustomerReference1 = shipment.CustomerReference1,
-                                                    CustomerReference2 = shipment.CustomerReference2,
-                                                    TransportModeId = shipment.TransportModeId,
-                                                    AgentId = shipment.AgentId,
-                                                    ShipmentLevelCode = shipment.ShipmentLevelCode,
-                                                    Field1 = shipment.Field1,
-                                                    Field2 = shipment.Field2,
-                                                    Field3 = shipment.Field3,
-                                                    Field4 = shipment.Field4,
-                                                    Field5 = shipment.Field5,
-                                                    Field6 = shipment.Field6,
-                                                    Field7 = shipment.Field7,
-                                                    Field8 = shipment.Field8,
-                                                    Field9 = shipment.Field9,
-                                                    Field10 = shipment.Field10,
-                                                    Field11 = shipment.Field11,
-                                                    Field12 = shipment.Field12,
-                                                    Field13 = shipment.Field13,
-                                                    Field14 = shipment.Field14,
-                                                    Field15 = shipment.Field15,
-                                                    Field16 = shipment.Field16,
-                                                    Field17 = shipment.Field17,
-                                                    Field18 = shipment.Field18,
-                                                    Field19 = shipment.Field19,
-                                                    Field20 = shipment.Field20,
-                                                    Field21 = shipment.Field21,
-                                                    Field22 = shipment.Field22,
-                                                    Field23 = shipment.Field23,
-                                                    Field24 = shipment.Field24,
-                                                    Field25 = shipment.Field25,
-                                                    Field26 = shipment.Field26,
-                                                    Field27 = shipment.Field27,
-                                                    Field28 = shipment.Field28,
-                                                    Field29 = shipment.Field29,
-                                                    Field30 = shipment.Field30,
-                                                    Field31 = shipment.Field31,
-                                                    Field32 = shipment.Field32,
-                                                    Field33 = shipment.Field33,
-                                                    Field34 = shipment.Field34,
-                                                    Field35 = shipment.Field35,
-                                                    Field36 = shipment.Field36,
-                                                    Field37 = shipment.Field37,
-                                                    Field38 = shipment.Field38,
-                                                    Field39 = shipment.Field39,
-                                                    Field40 = shipment.Field40,
-                                                    IsCancelled = shipment.IsCancelled,
-                                                    DescriptionofGoods = shipment.DescriptionOfGoods,
-                                                    House = shipment.House,
-                                                    ConsigneeName = shipment.ConsigneeName,
-                                                    ShipmentPackageReference1 = jd.Reference1,
-                                                    ShipmentPackageReference2 = jd.Reference2,
-                                                    ShipmentPackageReference3 = jd.Reference3,
-                                                    ShipmentPackageReference4 = jd.Reference4,
-                                                    OnCarriageToPortId = shipment.OnCarriageToPortId,
-                                                    OnCarriageATD = shipment.OnCarriageATD,
-                                                    OnCarriageATA = shipment.OnCarriageATA,
-                                                    OnCarriageETA = shipment.OnCarriageETA,
-                                                    MainCarriageETD = m.MainCarriageETD,
-                                                    ATD = m.MainCarriageATD,
-                                                    ContainerNotes = jd.Notes,
-                                                    PackagesGrossWeight = jd.Weight,
-                                                    PackagesVolumetricWeight = jd.VolumetricWeight,
-                                                    PackagesQuantity = jd.Quantity,
-                                                    ContainerFollowUp = jd.IsDeliveryFU,
-                                                    SplitOnCarriage = shipment.SplitOnCarriage,
-                                                    PackageOnCarriageATA = jd.OnCarriageATA,
-                                                    PackageOnCarriageATD = jd.OnCarriageATD,
-                                                    PackageOnCarriageETA = jd.OnCarriageETA,
-                                                    PackageDliveryId = jd.DeliveryId,
-                                                    IncotermId = shipment.IncotermId,
-                                                    ShipperAddressId = shipment.ShipperAddressId,
-                                                    ConsigneeAddressId = shipment.ConsigneeAddressId,
-                                                    Volume = shipment.Volume,
-                                                    PackageVolume = jd.Volume,
-                                                    Reference1 = jd.Reference1,
-                                                    NumberOfContainers = shipment.NumberOfContainers,
-                                                    MainCarriageFinalDestinationPortId = shipment.LastFinalDestination,
-                                                    MainCarriageCarrierPrefix = m.MainCarriageCarrierPrefix + m.MainCarriageCarrierNumber,
-                                                });
+            this.iQueryable_JoinShipmentPackages = (from shipment in shipmentRepository.context.Shipments
+                                                    join shipmentPackage in shipmentRepository.context.ShipmentPackages
+                                                    on shipment.Id equals shipmentPackage.ShipmentId into JoinedData
+                                                    join sm in shipmentRepository.context.ShipmentMasterDatas
+                                                    on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
+                                                    from jd in JoinedData.DefaultIfEmpty()
+                                                    from m in shipmentJoin.DefaultIfEmpty()
+                                                    where shipment.Tenant == tenant && shipment.TransportModeId == "A"
+                                                    select new ShipmentJoinPackageList()
+                                                    {
+                                                        Id = shipment.Id + (!string.IsNullOrEmpty(jd.Id) ? jd.Id : ""),
+                                                        ShipmentId = shipment.Id,
+                                                        PackageId = jd.Id,
+                                                        ShipmentNumber = shipment.ShipmentNumber,
+                                                        CreateDateTime = shipment.CreateDateTime,
+                                                        ShipperName = shipment.ShipperCard != null ? shipment.ShipperCard.EnglishName : null,
+                                                        ShipperId = shipment.ShipperId,
+                                                        Field1 = shipment.Field1,
+                                                        Field2 = shipment.Field2,
+                                                        Field3 = shipment.Field3,
+                                                        Field4 = shipment.Field4,
+                                                        Field5 = shipment.Field5,
+                                                        Field6 = shipment.Field6,
+                                                        Field7 = shipment.Field7,
+                                                        Field8 = shipment.Field8,
+                                                        Field9 = shipment.Field9,
+                                                        DescriptionofGoods = shipment.DescriptionOfGoods,
+                                                        House = shipment.House,
+                                                        ConsigneeName = shipment.ConsigneeName,
+                                                        ShipmentPackageReference1 = jd.Reference1,
+                                                        ShipmentPackageReference2 = jd.Reference2,
+                                                        ShipmentPackageReference3 = jd.Reference3,
+                                                        ShipmentPackageReference4 = jd.Reference4,
+                                                        MainCarriageETD = m.MainCarriageETD,
+                                                        ATD = m.MainCarriageATD,
+                                                        PackagesGrossWeight = jd.Weight,
+                                                        PackagesVolumetricWeight = jd.VolumetricWeight,
+                                                        PackagesQuantity = jd.Quantity,
+                                                        ShipperAddressId = shipment.ShipperAddressId,
+                                                        ConsigneeAddressId = shipment.ConsigneeAddressId,
+                                                        Volume = shipment.Volume,
+                                                        PackageVolume = jd.Volume,
+                                                        Reference1 = jd.Reference1,
+                                                        MasterNumber =  !string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "",
+                                                        MainCarriageCarrierPrefix = m.MainCarriageCarrierPrefix + m.MainCarriageCarrierNumber,
+                                                    });
            
-            if (this.iQueryable_ShipmentPackages != null)
+            if (this.iQueryable_JoinShipmentPackages != null)
             {
-                this.iQueryable_ShipmentPackages = this.iQueryable_ShipmentPackages.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ATD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) || System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                this.iQueryable_JoinShipmentPackages = this.iQueryable_JoinShipmentPackages.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ATD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) || System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
 
-                this.iQueryable_ShipmentPackages = this.iQueryable_ShipmentPackages.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ATD) <= System.Data.Entity.DbFunctions.TruncateTime(toDate) || System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                this.iQueryable_JoinShipmentPackages = this.iQueryable_JoinShipmentPackages.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ATD) <= System.Data.Entity.DbFunctions.TruncateTime(toDate) || System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
                 if (!string.IsNullOrEmpty(this.shipperId))
                 {
-                    iQueryable_ShipmentPackages = iQueryable_ShipmentPackages.Where(d => d.ShipperId == this.shipperId);
+                    iQueryable_JoinShipmentPackages = iQueryable_JoinShipmentPackages.Where(d => d.ShipperId == this.shipperId);
                 }
                 if (!string.IsNullOrEmpty(this.mainCarriageFromPortId))
                 {
-                    iQueryable_ShipmentPackages = iQueryable_ShipmentPackages.Where(d => d.MainCarriageFromPortId == this.mainCarriageFromPortId);
+                    iQueryable_JoinShipmentPackages = iQueryable_JoinShipmentPackages.Where(d => d.MainCarriageFromPortId == this.mainCarriageFromPortId);
                 }
                 if (!string.IsNullOrEmpty(this.mainCarriageFinalDestinationPortId))
                 {
-                    iQueryable_ShipmentPackages = iQueryable_ShipmentPackages.Where(d => d.MainCarriageFinalDestinationPortId == this.mainCarriageFinalDestinationPortId);
+                    iQueryable_JoinShipmentPackages = iQueryable_JoinShipmentPackages.Where(d => d.MainCarriageFinalDestinationPortId == this.mainCarriageFinalDestinationPortId);
                 }
 
                 if (!string.IsNullOrEmpty(this.subshipper))
                 {
-                    iQueryable_ShipmentPackages = iQueryable_ShipmentPackages.Where(d => d.Reference1 == this.subshipper);
+                    iQueryable_JoinShipmentPackages = iQueryable_JoinShipmentPackages.Where(d => d.Reference1 == this.subshipper);
                 }
             }
         }
 
         private void BuildReportData()
         {
-            if (this.iQueryable_ShipmentPackages != null)
+            if (this.iQueryable_JoinShipmentPackages != null)
             {
                 var packages = new List<ShipperReturnsPackagesList>();
-                var data = iQueryable_ShipmentPackages.ToList();
-                foreach (var item in data)
+                foreach (var item in iQueryable_JoinShipmentPackages)
                 {
                     var itemRecord = new ShipperReturnsPackagesList();
                     itemRecord.FlightNumber = item.MainCarriageCarrierPrefix;
@@ -285,7 +229,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     itemRecord.GrossWeight = item.PackagesGrossWeight;
                     itemRecord.Volume = item.PackageVolume;
                     itemRecord.VolumetricWeight = item.PackagesVolumetricWeight;
-                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, itemRecord, iDataProvider);
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, itemRecord);
                     packages.Add(itemRecord);
                 }
                 this.iDataProvider.ShipperReturnsPackagesList = packages;
