@@ -242,6 +242,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsAirlineMap());
 	
+            modelBuilder.Configurations.Add(new CustomsAutonomyKeywordMap());
+	
             modelBuilder.Configurations.Add(new CustomsBookMap());
 	
             modelBuilder.Configurations.Add(new CustomsBookTypeMap());
@@ -1626,6 +1628,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsAirline> CustomsAirlines 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsAutonomyKeyword> CustomsAutonomyKeywords 
 	 {
 	      get; set;
 	 

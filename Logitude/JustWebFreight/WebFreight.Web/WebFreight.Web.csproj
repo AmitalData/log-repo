@@ -1362,6 +1362,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomMetaDataTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsAddressTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsAirlineViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsAutonomyKeywordViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsBookTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsBookViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsBranchViewsController.Generated.cs" />
@@ -1579,6 +1580,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomBankController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomDocumentTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsAirlineController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsAutonomyKeywordController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsBookController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsClosedTableController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsCollateralController.Generated.cs" />
@@ -1982,6 +1984,7 @@
     <Compile Include="CustomModel\DomainServices\CustomDomainService.FreightPaymentMethod.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.PointerLevel.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.StorageStatus.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CustomsAutonomyKeywordDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\PendingByKeywordDomainService.Generated.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\BlockListInWarehouseDetailExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\BlockListInWarehouseDetailProvider.cs" />
@@ -2644,6 +2647,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CouriersVatUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAirlineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAutonomyKeywordUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentsDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsInsuranceCompanyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPartnerFtpUpdateClass.cs" />
