@@ -600,6 +600,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     OnSortInvoked(event){
         this.TransactionSelectedLines = new ObservableCollection([]);
+        this.ExtPageSelectedLines = new ObservableCollection([]);
     }
 
     PushLine(row, RowIndex) {
@@ -699,7 +700,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '100px' },
             HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'ReferenceDate'
         });
         this.ExtPageColumns.push({
             FieldName: 'Amount',
@@ -708,7 +711,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '120px' },
             HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Amount'
         });
         this.ExtPageColumns.push({
             FieldName: 'Reference',
@@ -717,7 +722,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '150px' },
             HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Reference'
         });
 
         this.ExtPageColumns.push({
@@ -727,7 +734,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '150px' },
             HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Notes'
         });
 
         ReconcileEventManager.ExtPageCheckBoxChecked.subscribe(($event) => {
@@ -797,6 +806,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.PageIndex = skip + 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;
+
+
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
 
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
 

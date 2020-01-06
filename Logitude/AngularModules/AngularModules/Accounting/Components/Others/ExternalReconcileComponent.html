@@ -660,7 +660,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'DocumentDate'"
                                         [header]="'LedgerTransaction.F.DocumentDate' | TextCodeTranslationPipe"
                                         [width]="'100'" [binding]="'DocumentDate'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -670,7 +670,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'SourceNumber'"
                                         [header]="'LedgerTransaction.F.Source' | TextCodeTranslationPipe"
                                         [width]="'100'" [binding]="'Source'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -684,7 +684,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'ForeignAmount'"
                                         [header]="'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe"
                                         [width]="'120'" [binding]="'ForeignAmount'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -695,7 +695,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference1'"
                                         [header]="'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe"
                                         [width]="'80'" [binding]="'Reference1'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -705,7 +705,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference2'"
                                         [header]="'LedgerTransaction.F.Reference2' | TextCodeTranslationPipe"
                                         [width]="'80'" [binding]="'Reference3'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -715,7 +715,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference3'"
                                         [header]="'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe"
                                         [width]="'80'" [binding]="'Reference4'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -725,7 +725,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Notes'"
                                         [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'120'"
                                         [binding]="'Notes'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -787,7 +787,7 @@
                                     [autoLoad]="true" [QueryChangeEvent]="ExtPageonQueryChangeEvent"
                                     [IsCustomTemplate]="true" [PassAdditionalDataToTemplates]="true"
                                     (CountReady)="onCountReadyExtPage($event)" [ColumnsReady]="ExtPageColumnsReady"
-                                    [MarkIsChecked]="ExtPageMarkIsChecked" (DataLoaded)="ExtPageonDataLoaded()">
+                                    [MarkIsChecked]="ExtPageMarkIsChecked" (DataLoaded)="ExtPageonDataLoaded()" (SortInvoked)="OnSortInvoked($event)">
                                 </logitude-grid>
                             </div>
                         </td>
@@ -819,7 +819,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'ReferenceDate'"
                                         [header]="'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe"
                                         [width]="'100'" [binding]="'ReferenceDate'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -829,7 +829,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Amount'"
                                         [header]="'ReconcileExternalPageLine.F.Amount' | TextCodeTranslationPipe"
                                         [width]="'120'" [binding]="'Amount'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -841,7 +841,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Reference'"
                                         [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe"
                                         [width]="'150'" [binding]="'Reference'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
@@ -851,7 +851,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Notes'"
                                         [header]="'ReconcileExternalPageLine.F.Notes' | TextCodeTranslationPipe"
                                         [width]="IsAutoReconcile ? '100' : '150'" [binding]="'Notes'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
