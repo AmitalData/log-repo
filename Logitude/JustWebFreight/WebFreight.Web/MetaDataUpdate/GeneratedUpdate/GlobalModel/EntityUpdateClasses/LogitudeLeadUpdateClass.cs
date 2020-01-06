@@ -1840,7 +1840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLogitudeLeadsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeLeadTextCode_0.Id, NameTextCodeCode = LogitudeLeadTextCode_0.Code, Code = " All Logitude Leads",  QueryGroupCode = "LLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeLeadObjectTable.Id, QuerySection = "LogitudeLead", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeLeadFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLogitudeLeadsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeLeadTextCode_0.Id, NameTextCodeCode = LogitudeLeadTextCode_0.Code, Code = " All Logitude Leads",  QueryGroupCode = "LLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeLeadObjectTable.Id, QuerySection = "LogitudeLead", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeLeadFeature_0.Id,FeatureUniqeCode= LogitudeLeadFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllLogitudeLeadsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1943,7 +1943,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LLGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeLeadGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.LogitudeLeads.LogitudeLeadGeneralControl", ObjectTableId = LogitudeLeadObjectTable.Id, TabNameTextCodeId = LogitudeLeadGeneralTextCode_TH0.Id, TabNameTextCodeCode = LogitudeLeadGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LLGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeLeadGeneralFeature_TH0.Id,FeatureUniqeCode = LogitudeLeadGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.LogitudeLeads.LogitudeLeadGeneralControl", ObjectTableId = LogitudeLeadObjectTable.Id, TabNameTextCodeId = LogitudeLeadGeneralTextCode_TH0.Id, TabNameTextCodeCode = LogitudeLeadGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

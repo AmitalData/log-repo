@@ -20,6 +20,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 helper.ObjectTableId = objectTableHelperDetails.ObjectTableId;
                 helper.Tenant = objectTableHelperDetails.Tenant;
                 helper.FeatureId = objectTableHelperDetails.FeatureId;
+                helper.FeatureUniqeCode = objectTableHelperDetails.FeatureUniqeCode;
+
 
                 helperRepository.Update(helper);
             }
@@ -32,6 +34,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     ControlPath = objectTableHelperDetails.ControlPath,
                     Code = objectTableHelperDetails.Code,
                     FeatureId=objectTableHelperDetails.FeatureId,
+                    FeatureUniqeCode = objectTableHelperDetails.FeatureUniqeCode,
                     Id = IdCounter.GetNumber("ObjectTableHelperControl", objectTableHelperDetails.Tenant).ToString(),
 
                 };

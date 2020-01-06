@@ -1475,7 +1475,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CARC",HtmlComponentName = "",HtmlComponentUrl = "./SharedLogistics/Components/RelatedCustomerComponent", FeatureId = CustomerTenantAccessRelatedCustomerFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.CustomerTenantAccessCard.RelatedCustomerControl", ObjectTableId = CustomerTenantAccessObjectTable.Id, TabNameTextCodeId = CustomerTenantAccessRelatedCustomerTextCode_TH0.Id, TabNameTextCodeCode = CustomerTenantAccessRelatedCustomerTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CARC",HtmlComponentName = "",HtmlComponentUrl = "./SharedLogistics/Components/RelatedCustomerComponent", FeatureId = CustomerTenantAccessRelatedCustomerFeature_TH0.Id,FeatureUniqeCode = CustomerTenantAccessRelatedCustomerFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.CustomerTenantAccessCard.RelatedCustomerControl", ObjectTableId = CustomerTenantAccessObjectTable.Id, TabNameTextCodeId = CustomerTenantAccessRelatedCustomerTextCode_TH0.Id, TabNameTextCodeCode = CustomerTenantAccessRelatedCustomerTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

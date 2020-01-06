@@ -644,7 +644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IEFG",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/InboundEmailGeneralTabComponent", FeatureId = InboundEmailGeneralFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.InboundEmail.InboundEmailInfoTab", ObjectTableId = InboundEmailObjectTable.Id, TabNameTextCodeId = InboundEmailGeneralTextCode_TH0.Id, TabNameTextCodeCode = InboundEmailGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IEFG",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/InboundEmailGeneralTabComponent", FeatureId = InboundEmailGeneralFeature_TH0.Id,FeatureUniqeCode = InboundEmailGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.InboundEmail.InboundEmailInfoTab", ObjectTableId = InboundEmailObjectTable.Id, TabNameTextCodeId = InboundEmailGeneralTextCode_TH0.Id, TabNameTextCodeCode = InboundEmailGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
