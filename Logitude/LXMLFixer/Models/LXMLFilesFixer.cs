@@ -14,7 +14,7 @@ namespace Logitude.LXMLFixer.Models
         private string DXMLFilesRoot;
         private string ModuleName;
 
-        private string LXMLMistakesData = "";
+        private string LXMLMistakesData = "DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value\n";
         private string DXMLFilesThatNotFound = "";
         private string LXMLFixedMistakesData = "";
         private string LXMLIgnoredMistakesData = "";
@@ -44,101 +44,86 @@ namespace Logitude.LXMLFixer.Models
                 foreach (var lxmlFile in lxmlFiles)
                 {
                     string lxmlFileName = Path.GetFileName(lxmlFile);
+                    string entityName = lxmlFileName.Split('.')[0];
+                    string dxmlFileName = entityName + ".dxml";
 
                     Console.WriteLine("Extract Mistakes For " + lxmlFileName + " ...");
-
-                    string mistakesData = "";
-                    bool appendTableMistakesData = false;
-                    string entityName = lxmlFileName.Split('.')[0];
 
                     TableDefinition lxmlTableDefinition = GetTableDefinitionForLXMLFile(lxmlFile);
                     TableDefinition dxmlTableDefinition = GetTableDefinitionForDXMLFile(entityName);
 
                     if (dxmlTableDefinition != null && lxmlTableDefinition != null)
                     {
-                        mistakesData += "DXML Table, LXML Table\n";
-                        mistakesData += dxmlTableDefinition.Name + "," + lxmlTableDefinition.Name;
-
                         if (dxmlTableDefinition.Name != lxmlTableDefinition.Name)
                         {
-                            mistakesData += "," + "Incorrect Table Name In LXML File";
-                            appendTableMistakesData = true;
+                            LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Table," + dxmlTableDefinition.Name + "," + lxmlTableDefinition.Name + ",Name," + dxmlTableDefinition.Name + "," + lxmlTableDefinition.Name + "\n";
                         }
-
-                        mistakesData += "\n";
 
                         if (dxmlTableDefinition.DBType != lxmlTableDefinition.DBType)
                         {
-                            mistakesData += "DXML DBType, LXML DBType\n";
-                            mistakesData += dxmlTableDefinition.DBType + "," + lxmlTableDefinition.DBType + "\n";
-                            appendTableMistakesData = true;
+                            LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Table," + dxmlTableDefinition.Name + "," + lxmlTableDefinition.Name + ",DBType," + dxmlTableDefinition.DBType + "," + lxmlTableDefinition.DBType + "\n";
                         }
 
                         if (dxmlTableDefinition.Schema != lxmlTableDefinition.Schema)
                         {
-                            mistakesData += "DXML Schema, LXML Schema\n";
-                            mistakesData += dxmlTableDefinition.Schema + "," + lxmlTableDefinition.Schema + "\n";
-                            appendTableMistakesData = true;
+                            LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Table," + dxmlTableDefinition.Name + "," + lxmlTableDefinition.Name + ",Schema," + dxmlTableDefinition.Schema + "," + lxmlTableDefinition.Schema + "\n";
                         }
-
-                        mistakesData += "DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
 
                         foreach (var dxmlColumn in dxmlTableDefinition.Columns)
                         {
                             ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name == dxmlColumn.Name).FirstOrDefault();
+
                             if (lxmlColumn == null)
                             {
-                                mistakesData += dxmlColumn.Name + ",Not Found,-,-,-" + "\n";
-                                appendTableMistakesData = true;
+                                LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + "NULL" + ",Name," + dxmlColumn.Name + "," + "NULL" + "\n";
+
+                                if (dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any())
+                                {
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + "NULL" + ",Foreign Key," + "TRUE" + "," + "NULL" + "\n";
+                                }
                             }
                             else
                             {
                                 if (dxmlColumn.Type != lxmlColumn.Type)
                                 {
-                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Type," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
-                                    appendTableMistakesData = true;
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + lxmlColumn.Name + ",Type," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
                                 }
+
                                 if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Precision != lxmlColumn.Precision)
                                 {
-                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Precision," + dxmlColumn.Precision + "," + lxmlColumn.Precision + "\n";
-                                    appendTableMistakesData = true;
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + lxmlColumn.Name + ",Precision," + dxmlColumn.Precision + "," + lxmlColumn.Precision + "\n";
                                 }
+
                                 if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Scale != lxmlColumn.Scale)
                                 {
-                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Scale," + dxmlColumn.Scale + "," + lxmlColumn.Scale + "\n";
-                                    appendTableMistakesData = true;
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + lxmlColumn.Name + ",Scale," + dxmlColumn.Scale + "," + lxmlColumn.Scale + "\n";
                                 }
+
                                 if (dxmlColumn.Size != lxmlColumn.Size)
                                 {
-                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Size," + dxmlColumn.Size + "," + lxmlColumn.Size + "\n";
-                                    appendTableMistakesData = true;
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + lxmlColumn.Name + ",Size," + dxmlColumn.Size + "," + lxmlColumn.Size + "\n";
                                 }
+
                                 if (dxmlColumn.Constraints.PrimaryKey != lxmlColumn.Constraints.PrimaryKey)
                                 {
-                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Primary Key," + dxmlColumn.Constraints.PrimaryKey + "," + lxmlColumn.Constraints.PrimaryKey + "\n";
-                                    appendTableMistakesData = true;
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + lxmlColumn.Name + ",Primary Key," + dxmlColumn.Constraints.PrimaryKey + "," + lxmlColumn.Constraints.PrimaryKey + "\n";
                                 }
+
                                 if (dxmlColumn.Constraints.Nullable != lxmlColumn.Constraints.Nullable)
                                 {
-                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Nullable," + dxmlColumn.Constraints.Nullable + "," + lxmlColumn.Constraints.Nullable + "\n";
-                                    appendTableMistakesData = true;
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + lxmlColumn.Name + ",Nullable," + dxmlColumn.Constraints.Nullable + "," + lxmlColumn.Constraints.Nullable + "\n";
                                 }
+
                                 if(dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any() && !lxmlColumn.Constraints.ForeignKey)
                                 {
-                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Foreign Key," + "TRUE" + "," + "FALSE" + "\n";
-                                    appendTableMistakesData = true;
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + lxmlColumn.Name + ",Foreign Key," + "TRUE" + "," + "FALSE" + "\n";
                                 }
+
                                 if (!dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any() && lxmlColumn.Constraints.ForeignKey)
                                 {
-                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Foreign Key," + "FALSE" + "," + "TRUE" + "\n";
-                                    appendTableMistakesData = true;
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Column," + dxmlColumn.Name + "," + lxmlColumn.Name + ",Foreign Key," + "FALSE" + "," + "TRUE" + "\n";
                                 }
                             }
-                        }
-
-                        if (appendTableMistakesData)
-                        {
-                            LXMLMistakesData += mistakesData + "\n\n";
                         }
                     }
                     else
@@ -178,7 +163,6 @@ namespace Logitude.LXMLFixer.Models
             if (lxmlFiles != null)
             {
                 string lxmlIgnoredMistakesData = "LXML File,DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
-                bool appendIgnoredMistakesData = false;
 
                 foreach (var lxmlFile in lxmlFiles)
                 {
@@ -244,7 +228,6 @@ namespace Logitude.LXMLFixer.Models
                             if (lxmlColumn == null)
                             {
                                 lxmlIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + "Not Found" + "," + "-" + "," + "-" + "," + "-" + "\n";
-                                appendIgnoredMistakesData = true;
                             }
                             else
                             {
@@ -253,7 +236,6 @@ namespace Logitude.LXMLFixer.Models
                                     if(dxmlColumn.Type == "char" || dxmlColumn.Type == "varchar")
                                     {
                                         lxmlIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + lxmlColumn.Name + "," + "Type" + "," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
-                                        appendIgnoredMistakesData = true;
                                     }
                                     else
                                     {
@@ -518,10 +500,7 @@ namespace Logitude.LXMLFixer.Models
                     }
                 }
 
-                if (appendIgnoredMistakesData)
-                {
-                    LXMLIgnoredMistakesData += lxmlIgnoredMistakesData;
-                }
+                LXMLIgnoredMistakesData += lxmlIgnoredMistakesData;
 
                 ExportFixedMistakesData();
                 ExportIgnoredMistakesData();
@@ -772,7 +751,18 @@ namespace Logitude.LXMLFixer.Models
                             element = doc.Descendants(attr.ElementName).Where(x => x.Attribute(attr.AttributeFilter.Name).Value == attr.AttributeFilter.Value).Single();
                         }
 
-                        element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
+                        if(attr.AttributeValue == null)
+                        {
+                            XAttribute elementAttribute = element.Attribute(attr.AttributeName);
+                            if(elementAttribute != null && !String.IsNullOrEmpty(elementAttribute.Value))
+                            {
+                                elementAttribute.Remove();
+                            }
+                        }
+                        else
+                        {
+                            element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
+                        }
 
                         string elementText = attr.ElementName;
                         if (attr.AttributeFilter != null)
@@ -780,7 +770,7 @@ namespace Logitude.LXMLFixer.Models
                             elementText += "[" + attr.AttributeFilter.Name + "='" + attr.AttributeFilter.Value + "']";
                         }
 
-                        fixedMistakesData += elementText + "," + attr.AttributeName + "," + attr.OldAttributeValue + "," + attr.AttributeValue + "\n";
+                        fixedMistakesData += elementText + "," + attr.AttributeName + "," + (!String.IsNullOrEmpty(attr.OldAttributeValue) ? attr.OldAttributeValue : "NULL") + "," + (!String.IsNullOrEmpty(attr.AttributeValue) ? attr.AttributeValue : "NULL") + "\n";
                     }
                 }
 
