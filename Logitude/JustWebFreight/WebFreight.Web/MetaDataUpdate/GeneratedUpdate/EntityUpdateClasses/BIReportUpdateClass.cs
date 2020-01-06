@@ -1139,7 +1139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ALLBIREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BIReportTextCode_0.Id, NameTextCodeCode = BIReportTextCode_0.Code, Code = "ALLBIREPORTS",  EditWizardName = "",
 			   EditWizardComponentPath = "",
-			   QueryGroupCode = "df7a", IndexOrder = 0, Tenant = 0, ObjectTableId = BIReportObjectTable.Id, QuerySection = "BIReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BIReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "df7a", IndexOrder = 0, Tenant = 0, ObjectTableId = BIReportObjectTable.Id, QuerySection = "BIReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BIReportFeature_0.Id,FeatureUniqeCode= BIReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ALLBIREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 0, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 

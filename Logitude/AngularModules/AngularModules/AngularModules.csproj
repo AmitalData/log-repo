@@ -104,6 +104,7 @@
     <Content Include="Accounting\Components\Others\JournalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ExternalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
+    <Content Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.html" />
@@ -328,6 +329,7 @@
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.html" />
@@ -436,6 +438,8 @@
     <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -940,6 +944,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.ts" />

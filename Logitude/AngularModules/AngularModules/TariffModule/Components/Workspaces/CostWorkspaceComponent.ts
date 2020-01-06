@@ -134,7 +134,7 @@ export class CostWorkspaceComponent implements OnInit {
     public NewTariff(code: string) {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 850;
-        logWindow.Height = 500;
+        logWindow.Height = 550;
         var windowTitle = "";
         var typeCode = "";
         switch (code) {

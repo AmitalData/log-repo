@@ -1854,8 +1854,11 @@
     <Compile Include="Migrations\201912301451035_WesamAddTextCodeCodeToTranslationsTable.Designer.cs">
       <DependentUpon>201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.cs" />
+    <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.Designer.cs">
+      <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -1892,6 +1895,26 @@
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.cs" />
+    <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
+      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs" />
+    <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.Designer.cs">
+      <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs" />
+    <Compile Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.Designer.cs">
+      <DependentUpon>201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.Designer.cs">
+      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs" />
+    <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.Designer.cs">
+      <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs" />
     <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.Designer.cs">
       <DependentUpon>201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs</DependentUpon>
@@ -1900,7 +1923,6 @@
     <Compile Include="Migrations\201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.Designer.cs">
       <DependentUpon>201912260652122_WesamAddObjectFieldCodeToObjectTableRuleFieldsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs" />
     <Compile Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.Designer.cs">
       <DependentUpon>201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs</DependentUpon>
@@ -1913,7 +1935,10 @@
     <Compile Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.Designer.cs">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs" />
+    <Compile Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.Designer.cs">
+      <DependentUpon>201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
       <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
@@ -3240,7 +3265,6 @@
     <EmbeddedResource Include="Migrations\201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.resx">
       <DependentUpon>201912221024278_Mutaz_UpdatePrimaryKeysInInterestReportTables.cs</DependentUpon>
     </EmbeddedResource>
-     
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </EmbeddedResource>
@@ -3291,6 +3315,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
+      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.resx">
+      <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.resx">
+      <DependentUpon>201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.resx">
+      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.resx">
+      <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.resx">
+      <DependentUpon>201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.resx">
+      <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

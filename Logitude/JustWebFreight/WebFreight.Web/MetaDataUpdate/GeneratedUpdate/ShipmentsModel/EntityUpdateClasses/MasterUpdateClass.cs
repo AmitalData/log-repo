@@ -25106,7 +25106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OperationalOpenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_0.Id, NameTextCodeCode = MasterTextCode_0.Code, Code = "Operational Open",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 0, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query OperationalOpenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_0.Id, NameTextCodeCode = MasterTextCode_0.Code, Code = "Operational Open",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 0, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_0.Id,FeatureUniqeCode= MasterFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OperationalOpenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalOpenQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -25133,7 +25133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_1.Id, NameTextCodeCode = MasterTextCode_1.Code, Code = "Follow Ups",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAFU", IndexOrder = 1, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "MasterFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MasterFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_1.Id, NameTextCodeCode = MasterTextCode_1.Code, Code = "Follow Ups",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAFU", IndexOrder = 1, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "MasterFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MasterFeature_1.Id,FeatureUniqeCode= MasterFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn FollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -25164,7 +25164,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AccountingOpenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_2.Id, NameTextCodeCode = MasterTextCode_2.Code, Code = "Accounting Open",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 2, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AccountingOpenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_2.Id, NameTextCodeCode = MasterTextCode_2.Code, Code = "Accounting Open",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 2, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_2.Id,FeatureUniqeCode= MasterFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AccountingOpenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingOpenQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -25189,7 +25189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_3.Id, NameTextCodeCode = MasterTextCode_3.Code, Code = "All Masters",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 3, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_3.Id, NameTextCodeCode = MasterTextCode_3.Code, Code = "All Masters",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 3, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_3.Id,FeatureUniqeCode= MasterFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -25213,7 +25213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CancelledMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_4.Id, NameTextCodeCode = MasterTextCode_4.Code, Code = "Cancelled Masters",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 4, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CancelledMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MasterTextCode_4.Id, NameTextCodeCode = MasterTextCode_4.Code, Code = "Cancelled Masters",  SpotlightDataTemplate = "MasterSpotlightDataTemplate",  QueryGroupCode = "MAST", IndexOrder = 4, Tenant = 0, ObjectTableId = MasterObjectTable.Id, QuerySection = "Master", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MasterFeature_4.Id,FeatureUniqeCode= MasterFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledMastersQuery.Id, IndexOrder = 0, ObjectFieldId = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MasterObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MasterObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 

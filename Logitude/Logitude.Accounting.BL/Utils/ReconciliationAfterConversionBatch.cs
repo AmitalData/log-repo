@@ -61,6 +61,7 @@ namespace Logitude.Accounting.BL.Utils
                 _WrongAction = new List<string>();
                 _WrongSum = new List<string>();
                 _WrongSumToMatch = new List<string>();
+                long _counter = 0;
 
                 foreach (IGrouping<String, JournalLineLedgerTransactionDTO> group in journalLineGroups)
                 {
@@ -82,15 +83,25 @@ namespace Logitude.Accounting.BL.Utils
                     }
                 }
                 reconciableGroupList.Sort((x, y) => x._Ref.CompareTo(y._Ref));
-                reconciableGroupList.ForEach(recoGroup =>
+                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
                 {
-                    string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
-                    if (!String.IsNullOrWhiteSpace(gLAccountId))
+                    reconciableGroupList.ForEach(recoGroup =>
                     {
-                        ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
-                        madeList.Add(recoGroup._Ref);
-                    }
-                });
+                        string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
+                        if (!String.IsNullOrWhiteSpace(gLAccountId))
+                        {
+                            ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
+                            _counter++;
+                            if (_counter%100 == 0)
+                            {
+                                scope.Complete();
+                            }
+                            
+                            madeList.Add(recoGroup._Ref);
+                        }
+                    });
+                    scope.Complete();
+                }
                 _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
             }
             catch (Exception e)
@@ -157,6 +168,11 @@ namespace Logitude.Accounting.BL.Utils
                 _NoLines.Add(groupKey);
                 rv = false;
             }
+            else if (journalLineRecoList.Count == 1)
+            {
+                _WrongSumToMatch.Add(groupKey);
+                rv = false;
+            }
             else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
             {
                 _WrongAction.Add(groupKey);
@@ -188,8 +204,8 @@ namespace Logitude.Accounting.BL.Utils
 
         private void ReconcileOneRef(List<JournalLineReco> journalLineRecoList, string gLAccountId, LedgerTransactionQueryService ledgerTransactionQueryService)
         {
-            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-            {
+ //           using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+ //           {
                 try
                 {
                     List<LedgerTransaction> ledger = GetLedger(journalLineRecoList);
@@ -199,14 +215,14 @@ namespace Logitude.Accounting.BL.Utils
                     reconciliationPM.CreatedByReconciliationAfterConversion = true;
                     CreateReconciliationService service = new CreateReconciliationService();
                     RecoCallback recoCallback = service.CreateReconciliation(reconciliationPM);
-                    scope.Complete();
+ //                   scope.Complete();
                 }
                 catch (Exception e)
                 {
                     //scope.Dispose();
                     throw new Exception("ReconciliationAfterConversionBatch failed while performing ReconcileOneRef ", e);
                 }
-            }
+ //           }
         }
 
         private class ReconciableGroup

@@ -327,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketStageTextCode_0.Id, NameTextCodeCode = TicketStageTextCode_0.Code, Code = "All Ticket Stages",  QueryGroupCode = "TAQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketStageObjectTable.Id, QuerySection = "TicketStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketStageFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTicketStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketStageTextCode_0.Id, NameTextCodeCode = TicketStageTextCode_0.Code, Code = "All Ticket Stages",  QueryGroupCode = "TAQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketStageObjectTable.Id, QuerySection = "TicketStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketStageFeature_0.Id,FeatureUniqeCode= TicketStageFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTicketStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketStagesQuery.Id, IndexOrder = 0, ObjectFieldId = TicketStageObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketStageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketStageObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketStageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -2,7 +2,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Logitude.DBMigrations.Helpers
+namespace Logitude.DBMigrations.Models
 {
     public static class XMLParser
     {

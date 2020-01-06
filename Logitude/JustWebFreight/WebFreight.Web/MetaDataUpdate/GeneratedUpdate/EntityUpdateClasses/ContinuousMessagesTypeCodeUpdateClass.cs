@@ -371,7 +371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ContinuousMessagesTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousMessagesTypeCodeTextCode_0.Id, Code = "ContinuousMessagesType",  QueryGroupCode = "6b46", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, QuerySection = "Customs.ContinuousMessagesTypeCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousMessagesTypeCodeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ContinuousMessagesTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousMessagesTypeCodeTextCode_0.Id, Code = "ContinuousMessagesType",  QueryGroupCode = "6b46", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, QuerySection = "Customs.ContinuousMessagesTypeCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousMessagesTypeCodeFeature_0.Id,FeatureUniqeCode= ContinuousMessagesTypeCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ContinuousMessagesTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id, IndexOrder = 0, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

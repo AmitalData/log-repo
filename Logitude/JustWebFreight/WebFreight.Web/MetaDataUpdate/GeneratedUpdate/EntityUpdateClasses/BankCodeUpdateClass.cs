@@ -501,7 +501,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query BankCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankCodeTextCode_0.Id, NameTextCodeCode = BankCodeTextCode_0.Code, Code = "BankCodes",  QueryGroupCode = "99b6", IndexOrder = 0, Tenant = 0, ObjectTableId = BankCodeObjectTable.Id, QuerySection = "BankCode", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankCodeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query BankCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankCodeTextCode_0.Id, NameTextCodeCode = BankCodeTextCode_0.Code, Code = "BankCodes",  QueryGroupCode = "99b6", IndexOrder = 0, Tenant = 0, ObjectTableId = BankCodeObjectTable.Id, QuerySection = "BankCode", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankCodeFeature_0.Id,FeatureUniqeCode= BankCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn BankCodesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id, IndexOrder = 0, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

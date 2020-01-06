@@ -9823,6 +9823,9 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false" />
+
+	  <DCField DCFieldName="&quot;VendorGLAccount&quot;" FieldName="&quot;VendorGLAccountId&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;VendorGLAccount&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
+
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

@@ -390,7 +390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AgentTalkBackTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentTalkBackTypeTextCode_0.Id, Code = "AgentTalkBackType",  QueryGroupCode = "016d", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentTalkBackTypeObjectTable.Id, QuerySection = "Customs.AgentTalkBackType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentTalkBackTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query AgentTalkBackTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentTalkBackTypeTextCode_0.Id, Code = "AgentTalkBackType",  QueryGroupCode = "016d", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentTalkBackTypeObjectTable.Id, QuerySection = "Customs.AgentTalkBackType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentTalkBackTypeFeature_0.Id,FeatureUniqeCode= AgentTalkBackTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AgentTalkBackTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentTalkBackTypeQuery.Id, IndexOrder = 0, ObjectFieldId = AgentTalkBackTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentTalkBackTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -1606,7 +1606,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						RecordType =  "Shipment",
+					  						RecordType =  "Master",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -15229,10 +15229,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						RecordType =  "Master",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EstimateProfitInProfitCurrency",
@@ -40191,7 +40192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_0.Id, NameTextCodeCode = ShipmentTextCode_0.Code, Code = "Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 0, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_0.Id, NameTextCodeCode = ShipmentTextCode_0.Code, Code = "Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 0, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_0.Id,FeatureUniqeCode= ShipmentFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40222,7 +40223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query MastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_1.Id, NameTextCodeCode = ShipmentTextCode_1.Code, Code = "Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 1, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_1.Id, NameTextCodeCode = ShipmentTextCode_1.Code, Code = "Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 1, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_1.Id,FeatureUniqeCode= ShipmentFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40253,7 +40254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query OpenReceivablesShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_2.Id, NameTextCodeCode = ShipmentTextCode_2.Code, Code = "Open Receivables Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 2, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_2.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenReceivablesShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_2.Id, NameTextCodeCode = ShipmentTextCode_2.Code, Code = "Open Receivables Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 2, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_2.Id,FeatureUniqeCode= ShipmentFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenReceivablesShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenReceivablesShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40284,7 +40285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query OpenPayablesMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_3.Id, NameTextCodeCode = ShipmentTextCode_3.Code, Code = "Open Payables Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 3, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_3.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenPayablesMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_3.Id, NameTextCodeCode = ShipmentTextCode_3.Code, Code = "Open Payables Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 3, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_3.Id,FeatureUniqeCode= ShipmentFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenPayablesMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPayablesMastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40316,7 +40317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query ExpectedDeparturesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_4.Id, NameTextCodeCode = ShipmentTextCode_4.Code, Code = "Expected Departures",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 4, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_4.Id, DefaultSortName = "MainCarriageETD", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "SHIP", IndexOrder = 4, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_4.Id,FeatureUniqeCode= ShipmentFeature_4.FeatureUniqeCode, DefaultSortName = "MainCarriageETD", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ExpectedDeparturesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpectedDeparturesQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FWBStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "FWBStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40352,7 +40353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query AirlinesUpdatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_5.Id, NameTextCodeCode = ShipmentTextCode_5.Code, Code = "Airlines Updates",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 5, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_5.Id, DefaultSortName = "CarrierLastStatusDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "SHIP", IndexOrder = 5, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_5.Id,FeatureUniqeCode= ShipmentFeature_5.FeatureUniqeCode, DefaultSortName = "CarrierLastStatusDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AirlinesUpdatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesUpdatesQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CarrierLastStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "CarrierLastStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40387,7 +40388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_6.Id, NameTextCodeCode = ShipmentTextCode_6.Code, Code = "All Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 6, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_6.Id, NameTextCodeCode = ShipmentTextCode_6.Code, Code = "All Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 6, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_6.Id,FeatureUniqeCode= ShipmentFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40420,7 +40421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_7.Id, NameTextCodeCode = ShipmentTextCode_7.Code, Code = "My Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 7, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_7.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_7.Id, NameTextCodeCode = ShipmentTextCode_7.Code, Code = "My Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 7, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_7.Id,FeatureUniqeCode= ShipmentFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40453,7 +40454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_8.Id, NameTextCodeCode = ShipmentTextCode_8.Code, Code = "All Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 8, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_8.Id, NameTextCodeCode = ShipmentTextCode_8.Code, Code = "All Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 8, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_8.Id,FeatureUniqeCode= ShipmentFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40484,7 +40485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_9.Id, NameTextCodeCode = ShipmentTextCode_9.Code, Code = "All Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 9, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_9.Id, NameTextCodeCode = ShipmentTextCode_9.Code, Code = "All Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 9, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_9.Id,FeatureUniqeCode= ShipmentFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40515,7 +40516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ImportShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_10.Id, NameTextCodeCode = ShipmentTextCode_10.Code, Code = "ImportShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 10, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ImportShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_10.Id, NameTextCodeCode = ShipmentTextCode_10.Code, Code = "ImportShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 10, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_10.Id,FeatureUniqeCode= ShipmentFeature_10.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ImportShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40546,7 +40547,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CancelledShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_11.Id, NameTextCodeCode = ShipmentTextCode_11.Code, Code = "Cancelled Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 11, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CancelledShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_11.Id, NameTextCodeCode = ShipmentTextCode_11.Code, Code = "Cancelled Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 11, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_11.Id,FeatureUniqeCode= ShipmentFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40578,7 +40579,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query SentFSRQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_12.Id, NameTextCodeCode = ShipmentTextCode_12.Code, Code = "SentFSR",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 12, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_12.Id, DefaultSortName = "LastFSRStatusRequestDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "SHIP", IndexOrder = 12, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_12.Id,FeatureUniqeCode= ShipmentFeature_12.FeatureUniqeCode, DefaultSortName = "LastFSRStatusRequestDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn SentFSRQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentFSRQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40599,7 +40600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CustomerShipmentActualDataQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_13.Id, NameTextCodeCode = ShipmentTextCode_13.Code, Code = "CustomerShipmentActualData",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 13, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_13.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomerShipmentActualDataQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_13.Id, NameTextCodeCode = ShipmentTextCode_13.Code, Code = "CustomerShipmentActualData",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 13, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_13.Id,FeatureUniqeCode= ShipmentFeature_13.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CustomerShipmentActualDataQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerShipmentActualDataQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40632,7 +40633,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CreditLimitBlockedShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_14.Id, NameTextCodeCode = ShipmentTextCode_14.Code, Code = "CreditLimitBlockedShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 14, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_14.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CreditLimitBlockedShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_14.Id, NameTextCodeCode = ShipmentTextCode_14.Code, Code = "CreditLimitBlockedShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 14, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_14.Id,FeatureUniqeCode= ShipmentFeature_14.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CreditLimitBlockedShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreditLimitBlockedShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40663,7 +40664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ExpDepNotTransmittedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_15.Id, NameTextCodeCode = ShipmentTextCode_15.Code, Code = "ExpDepNotTransmitted",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 15, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_15.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ExpDepNotTransmittedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_15.Id, NameTextCodeCode = ShipmentTextCode_15.Code, Code = "ExpDepNotTransmitted",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 15, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_15.Id,FeatureUniqeCode= ShipmentFeature_15.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ExpDepNotTransmittedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpDepNotTransmittedQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40694,7 +40695,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ShippingInstructionsLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_16.Id, NameTextCodeCode = ShipmentTextCode_16.Code, Code = "ShippingInstructionsLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 16, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_16.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ShippingInstructionsLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_16.Id, NameTextCodeCode = ShipmentTextCode_16.Code, Code = "ShippingInstructionsLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 16, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_16.Id,FeatureUniqeCode= ShipmentFeature_16.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ShippingInstructionsLast7DaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippingInstructionsLast7DaysQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRASIStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRASIStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40723,7 +40724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ContainerStatusLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_17.Id, NameTextCodeCode = ShipmentTextCode_17.Code, Code = "ContainerStatusLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 17, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_17.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ContainerStatusLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_17.Id, NameTextCodeCode = ShipmentTextCode_17.Code, Code = "ContainerStatusLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 17, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_17.Id,FeatureUniqeCode= ShipmentFeature_17.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ContainerStatusLast7DaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40751,7 +40752,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query EBookingInProgressQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_18.Id, NameTextCodeCode = ShipmentTextCode_18.Code, Code = "EBookingInProgress",  EditWizardName = "SimulatorBookingComponent",
-			   QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id,FeatureUniqeCode= ShipmentFeature_18.FeatureUniqeCode, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn EBookingInProgressQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingTransStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingTransStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 

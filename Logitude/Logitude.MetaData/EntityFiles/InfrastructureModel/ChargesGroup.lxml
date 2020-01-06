@@ -58,6 +58,7 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   SearchFields="&quot;ChargesGroup,ChargesGroups,,Id,&quot;">
   <field
     Id="&quot;cd2f2407-f4f7-4833-9395-33a03a8374b2&quot;"
@@ -127,6 +128,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -200,6 +202,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Code&quot;"
@@ -273,6 +276,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -347,6 +351,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -420,6 +425,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -492,6 +498,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Local Name&quot;"
@@ -562,6 +569,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -602,11 +610,11 @@
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;ChargesGroup&quot;"
-    NumberOfColumns="3"
-    NumberOfRows="1"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;ChargesGroup.HeaderScreen&quot;">
+    Code="&quot;ChargesGroup.HeaderScreen&quot;"
+    NumberOfColumns="3"
+    NumberOfRows="1">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -628,11 +636,11 @@
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;ChargesGroup&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="4"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;ChargesGroup.GeneralTabScreen&quot;">
+    Code="&quot;ChargesGroup.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="4">
     <ScreenFields>
       <ScreenField
         Column="0"

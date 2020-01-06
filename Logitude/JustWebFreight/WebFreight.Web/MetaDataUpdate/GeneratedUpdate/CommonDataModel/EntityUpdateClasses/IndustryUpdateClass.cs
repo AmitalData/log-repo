@@ -387,7 +387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IndustryTextCode_0.Id, NameTextCodeCode = IndustryTextCode_0.Code, Code = "All Lead Sources",  QueryGroupCode = "IDST", IndexOrder = 0, Tenant = 0, ObjectTableId = IndustryObjectTable.Id, QuerySection = "Industry", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IndustryFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IndustryTextCode_0.Id, NameTextCodeCode = IndustryTextCode_0.Code, Code = "All Lead Sources",  QueryGroupCode = "IDST", IndexOrder = 0, Tenant = 0, ObjectTableId = IndustryObjectTable.Id, QuerySection = "Industry", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IndustryFeature_0.Id,FeatureUniqeCode= IndustryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllLeadSourcesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id, IndexOrder = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
