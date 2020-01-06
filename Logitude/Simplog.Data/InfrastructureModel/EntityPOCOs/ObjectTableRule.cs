@@ -26,10 +26,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool ActiveForUpdate { get; set; }
         public bool Internal { get; set; }
         public bool AdvancedCondition { get; set; }
+        public string TriggerFieldCode { get; set; }
         //[Include]
         //[Association("ObjectTableRuleObjectTable", "ObjectTableId", "Id", IsForeignKey = true)]
 
-         [ForeignKey("ObjectTableId")]
+        [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
 
         //[Include]

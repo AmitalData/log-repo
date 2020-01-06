@@ -94,6 +94,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 RuleTypeCode = "SETV",
                 TriggerFieldId = limitedLength.Id,
+                TriggerFieldCode = limitedLength.FieldCode,
                 SystemLevel = true,
 
                 ActiveForNew = false,
@@ -546,6 +547,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 RuleTypeCode = "DUPL",
                 TriggerFieldId = warehouseCode.Id,
+                TriggerFieldCode = warehouseCode.FieldCode,
                 SystemLevel = true,
                 OutputMessage = "This warehouse already exists",
                 ActiveForNew = true,
@@ -660,6 +662,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 RuleTypeCode = "SETV",
                 TriggerFieldId = addressCountryId.Id,
+                TriggerFieldCode = addressCountryId.FieldCode,
                 SystemLevel = true,
 
                 ActiveForNew = false,
@@ -1470,6 +1473,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 RuleTypeCode = "SETV",
                 TriggerFieldId = IncotermId.Id,
+                TriggerFieldCode = IncotermId.FieldCode,
                 SystemLevel = true,
                 OutputMessage = "The HAWBFBLBL is used by another shipment",
                 ActiveForNew = false,

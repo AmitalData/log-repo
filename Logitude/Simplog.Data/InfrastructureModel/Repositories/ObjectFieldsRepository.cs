@@ -520,9 +520,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public ObjectField GetSingleObjectFieldById(string id, int tenant)
         {
-            return (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
-                    where a.Id == id
-                    select a).FirstOrDefault();
+            var field = (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
+                         where a.Id == id
+                         select a).FirstOrDefault();
+            if (field == null)
+                field = (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
+                         where a.FieldCode == id
+                         select a).FirstOrDefault();
+
+            return field;
         }
 
         public ObjectField GetSingleObjectFieldByCode(string code, int tenant)
