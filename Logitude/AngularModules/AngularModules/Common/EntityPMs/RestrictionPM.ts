@@ -43,7 +43,12 @@ export class RestrictionPM {
     private objectFieldId: string;
     public get ObjectFieldId() { return this.objectFieldId; }
     public set ObjectFieldId(newValue: string) { if (this.objectFieldId != newValue) { this.objectFieldId = newValue; this.MarkAsDirty("ObjectFieldId"); } }
-       
+
+
+    private objectFieldCode: string;
+    public get ObjectFieldCode() { return this.objectFieldCode; }
+    public set ObjectFieldCode(newValue: string) { if (this.objectFieldCode != newValue) { this.objectFieldCode = newValue; this.MarkAsDirty("ObjectFieldCode"); } }
+
 	 
     private value: string;
     public get Value() { return this.value; }

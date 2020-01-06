@@ -16,6 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ObjectFieldId { get; set; }
         public string Value { get; set; }
         public string ContactTenantId { get; set; }
+        public string ObjectFieldCode { get; set; }
 
         public string UserId { get; set; }
         public string ObjectFieldName { get; set; }
