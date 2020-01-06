@@ -2305,7 +2305,7 @@ namespace MeatadataGeneratorTool
 
                 return new ForeignEntityData
                 {
-                    ReferencedTable = referencedTable,
+                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
                     ReferencedTableSchema = referencedTableSchema,
                     ReferencedColumn = referencedColumn
                 };
