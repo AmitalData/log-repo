@@ -3358,7 +3358,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.resx">
       <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
-
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.resx">
       <DependentUpon>201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs</DependentUpon>
 
@@ -3384,12 +3384,11 @@
     <EmbeddedResource Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.resx">
       <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
+
 
     <EmbeddedResource Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.resx">
       <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
     </EmbeddedResource>
-
   </ItemGroup>
 
   <ItemGroup>
