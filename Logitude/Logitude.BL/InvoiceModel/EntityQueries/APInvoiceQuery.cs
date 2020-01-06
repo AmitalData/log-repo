@@ -66,6 +66,19 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return mappedInvoicePM;
         }
 
+        public APInvoicePM GetSinglePMByNumberAndExternalId(string number,string externalId, int tenant)
+        {
+            IQueryable<APInvoicePM> invoices = GetAPInvoiceIQueryable();
+
+            APInvoicePM invoicePM = invoices.Where(d => 
+            d.InvoiceNumber == number 
+            && d.Tenant == tenant
+            && d.ExternalAccountingEntityId == externalId).FirstOrDefault();
+
+            APInvoicePM mappedInvoicePM = GetMappedEntity(tenant, invoicePM);
+
+            return mappedInvoicePM;
+        }
         public APInvoicePM GetSinglePMByInternalNumber(string number, int tenant)
         {
             IQueryable<APInvoicePM> invoices = GetAPInvoiceIQueryable();
