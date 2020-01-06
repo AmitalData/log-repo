@@ -590,6 +590,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
+        public HttpResponseMessage GetSingleObjectFieldByFieldCodeFromZeroTenant(string fieldCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(0);
+                ObjectFieldPM objectFieldPM = objectFieldQuery.GetObjectFieldByFieldCode(fieldCode, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, objectFieldPM);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         public HttpResponseMessage GetSingleObjectFieldByFieldNameAndTableId(string fieldName, string tableId)
         {
             try
