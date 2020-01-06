@@ -419,7 +419,7 @@ namespace Logitude.Customs.Data.Repsitories
             return declarations;
         }
 
-        public IQueryable<Declaration> GetNotConnectedDeclaratins(int tenant)
+        public IQueryable<Declaration> GetNotConnectedDeclarations(int tenant)
         {
             bool joinIt = false;
 
