@@ -381,6 +381,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 MyResponseData.CargoResultList.TotalWeight = customResponse.Cargo.totalWeight.ToString("N2");
                 MyResponseData.CargoResultList.MasterBolNumber = customResponse.Cargo.MasterBolNumber;
                 MyResponseData.CargoResultList.BillOfLadingNumber = customResponse.Cargo.BillOfLadingNumber;
+                if(string.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) && !string.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
+                {
+                    MyResponseData.CargoResultList.MasterBolNumber = customResponse.Cargo.BillOfLadingNumber;
+                    MyResponseData.CargoResultList.BillOfLadingNumber = null;
+                }
                 //Yuval Chalup 19.09.2016 T-23023 (Add the IF only - to avoid CargoAdditionalData.FirstOrDefault() NULL)
                 if (customResponse.Cargo.CargoAdditionalData != null)
                 {
@@ -807,11 +812,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (!String.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) || !String.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
                             {
-
-
                                 FileAdditionalData myFileAdditionalData = new FileAdditionalData();
                                 myFileAdditionalData.HAWB = customResponse.Cargo.BillOfLadingNumber;
                                 myFileAdditionalData.MAWB = customResponse.Cargo.MasterBolNumber;
+
+                                if (string.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) && !string.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
+                                {
+                                    myFileAdditionalData.MAWB = customResponse.Cargo.BillOfLadingNumber;
+                                    myFileAdditionalData.HAWB = null;
+                                }
                                 return myFileAdditionalData;
                             }
                         }
