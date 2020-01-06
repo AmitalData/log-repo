@@ -912,6 +912,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             }
                         }
                     }
+
+                    entityList.OpenShipments= SetCustomerOpenShipments(entityList);
                     #endregion
                 }
 
@@ -982,6 +984,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             return entityList;
+        }
+        private decimal SetCustomerOpenShipments(CardList card)
+        {
+            CustomerOpenFilesAmountQuery customerOpenFilesAmountQuery = new CustomerOpenFilesAmountQuery(card.Tenant);
+            CustomerOpenFilesAmountPM customerOpenFilesAmount = customerOpenFilesAmountQuery.GetSinglePMByCustomerId(card.Id, card.Tenant);
+            if (customerOpenFilesAmount != null)
+            {
+                return customerOpenFilesAmount.TotalOpenFilesAmount;
+            }
+            else return 0;
+
         }
 
         public IQueryable<CardList> GetIQueryableEntityList(IQueryable<Card> iQueryable)

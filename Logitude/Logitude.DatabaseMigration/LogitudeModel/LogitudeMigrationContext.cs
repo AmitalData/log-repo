@@ -77,7 +77,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
 
         #region Common Context
-
+        public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
+        
         public IDbSet<MetodoPago> MetodoPagos { get; set; }
         public IDbSet<BlobFile> BlobFiles
         {
@@ -5005,6 +5006,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWHBuildStatusMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
+            modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
 
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
@@ -5024,7 +5026,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-
+            
             base.OnModelCreating(modelBuilder);
         }
     }
