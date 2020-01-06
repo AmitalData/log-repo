@@ -1874,6 +1874,10 @@
     <Compile Include="Migrations\202001051238437_WesamAddObjectFieldCodeToRestrictionTable.Designer.cs">
       <DependentUpon>202001051238437_WesamAddObjectFieldCodeToRestrictionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs" />
+    <Compile Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.Designer.cs">
+      <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -3363,6 +3367,9 @@
 
     <EmbeddedResource Include="Migrations\202001051238437_WesamAddObjectFieldCodeToRestrictionTable.resx">
       <DependentUpon>202001051238437_WesamAddObjectFieldCodeToRestrictionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.resx">
+      <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
 
