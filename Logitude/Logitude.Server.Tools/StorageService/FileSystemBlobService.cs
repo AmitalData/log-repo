@@ -11,6 +11,7 @@ namespace Logitude.Server.Tools.StorageService
     public class FileSystemBlobService : IBlobService
     {
         //master master.PR1 changes (needed only on master branch
+        //master master.PR1 hot fix (needed  on master & R5 branches)
         public byte[] Read(BlobFileInfo fileInfo)
         {
             byte[] result = null;
