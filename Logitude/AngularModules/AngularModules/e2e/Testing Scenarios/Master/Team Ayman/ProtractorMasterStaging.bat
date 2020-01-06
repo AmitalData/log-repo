@@ -8,7 +8,11 @@ c:
 cd C:\Program Files (x86)\Jenkins\workspace\LogitudeTestDevOps\Logitude\AngularModules\AngularModules
 
 
-FOR /L %%A IN (1,1,1) DO (  
+FOR /L %%A IN (1,1,1) DO (
+   -------------------------------------------------- Opportunities-------------------------------------------------------------------------------------------------
+
+    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.CRM.CRMType="opportunity" --suite=login,CRM > D:\E2ETeamAyman\prot.log 2>&1
+    CALL :CheckError "opportunity"
     --------------------------------------------------Direct-------------------------------------------------------------------------------------------------
 
     cmd /c call npm run e2e -- --params.Env="test_staging" --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --suite=login,NewShipment >D:\E2ETeamAyman\prot.log 2>&1
