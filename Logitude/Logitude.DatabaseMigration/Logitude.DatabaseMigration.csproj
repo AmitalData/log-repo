@@ -1858,6 +1858,7 @@
     <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.Designer.cs">
       <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs" />
     <Compile Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.Designer.cs">
       <DependentUpon>202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs</DependentUpon>
@@ -1878,6 +1879,12 @@
     <Compile Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.Designer.cs">
       <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs" />
+    <Compile Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.Designer.cs">
+      <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -3336,6 +3343,7 @@
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -3350,10 +3358,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.resx">
       <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+
+    <EmbeddedResource Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.resx">
+      <DependentUpon>201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs</DependentUpon>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.resx">
       <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.resx">
       <DependentUpon>202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -3371,6 +3384,12 @@
     <EmbeddedResource Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.resx">
       <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+
+    <EmbeddedResource Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.resx">
+      <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
 
   <ItemGroup>
