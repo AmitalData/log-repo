@@ -125,6 +125,33 @@ namespace Logitude.LXMLFixer.Models
                                 }
                             }
                         }
+
+                        foreach(var dxmlRelation in dxmlTableDefinition.Relations)
+                        {
+                            RelationDefinition lxmlRelation = lxmlTableDefinition.Relations.Where(r => r.ForeignKeyColumn == dxmlRelation.ForeignKeyColumn).FirstOrDefault();
+
+                            if(lxmlRelation == null)
+                            {
+                                LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Relation," + dxmlRelation.ForeignKeyColumn.Replace(",","/") + "," + "NULL" + ",Foreign Key Column," + dxmlRelation.ForeignKeyColumn.Replace(",", "/") + "," + "NULL" + "\n";
+                            }
+                            else
+                            {
+                                if(dxmlRelation.ReferencedTable != lxmlRelation.ReferencedTable)
+                                {
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Relation," + dxmlRelation.ForeignKeyColumn.Replace(",", "/") + "," + lxmlRelation.ForeignKeyColumn.Replace(",", "/") + ",Referenced Table," + dxmlRelation.ReferencedTable + "," + lxmlRelation.ReferencedTable + "\n";
+                                }
+
+                                if (dxmlRelation.ReferencedTableSchema != lxmlRelation.ReferencedTableSchema)
+                                {
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Relation," + dxmlRelation.ForeignKeyColumn.Replace(",", "/") + "," + lxmlRelation.ForeignKeyColumn.Replace(",", "/") + ",Referenced Table Schema," + dxmlRelation.ReferencedTableSchema + "," + lxmlRelation.ReferencedTableSchema + "\n";
+                                }
+
+                                if (dxmlRelation.ReferencedColumn != lxmlRelation.ReferencedColumn)
+                                {
+                                    LXMLMistakesData += dxmlFileName + "," + lxmlFileName + ",Relation," + dxmlRelation.ForeignKeyColumn.Replace(",", "/") + "," + lxmlRelation.ForeignKeyColumn.Replace(",", "/") + ",Referenced Column," + dxmlRelation.ReferencedColumn.Replace(",", "/") + "," + lxmlRelation.ReferencedColumn.Replace(",", "/") + "\n";
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -517,17 +544,17 @@ namespace Logitude.LXMLFixer.Models
         {
             try
             {
-                string LXMLFilesPath = Path.Combine(LXMLFilesRoot);
-                string[] LXMLFiles = Directory.GetFiles(LXMLFilesPath, "*.lxml", SearchOption.AllDirectories);
-
+                string lxmlFilesPath = Path.Combine(LXMLFilesRoot);
+                string[] lxmlFiles = Directory.GetFiles(lxmlFilesPath, "*.lxml", SearchOption.AllDirectories);
+                
                 if (exceptCustomsModule)
                 {
-                    LXMLFiles = LXMLFiles.Where(x => !x.ToLower().Contains("logitude.customs.metadata")).ToArray();
+                    lxmlFiles = lxmlFiles.Where(x => !x.ToLower().Contains("logitude.customs.metadata")).ToArray();
                 }
 
-                if (LXMLFiles.Length > 0)
+                if (lxmlFiles.Length > 0)
                 {
-                    return LXMLFiles;
+                    return lxmlFiles;
                 }
                 else
                 {
@@ -609,6 +636,42 @@ namespace Logitude.LXMLFixer.Models
                     columnDefinitions.Add(columnDefinition);
                 }
 
+                List<string> processedForeignKeyFields = new List<string>();
+                IEnumerable<XElement> dbForeignKeyFiledXmlElements = xmlDocument.Descendants("field").Where(x => x.Attribute("HasDataBaseField").Value == "true" && x.Attribute("IsForeignKey") != null && x.Attribute("IsForeignKey").Value == "true");
+                foreach(var field in dbForeignKeyFiledXmlElements)
+                {
+                    if (!processedForeignKeyFields.Contains(field.Attribute("FieldName").Value.Split('"')[1].Split('"')[0]))
+                    {
+                        string fieldNavigationPropertyName = field.Attribute("NavigationPropertyName") == null ? null : field.Attribute("NavigationPropertyName").Value;
+
+                        string[] filedsWithSameNavigationPropertyName = dbForeignKeyFiledXmlElements.Where(x => x.Attribute("NavigationPropertyName") != null && x.Attribute("NavigationPropertyName").Value == fieldNavigationPropertyName && fieldNavigationPropertyName != null).Select(x => x.Attribute("FieldName").Value.Split('"')[1].Split('"')[0]).ToArray();
+
+                        string foreignKeyColumn = filedsWithSameNavigationPropertyName.Length == 1 ? filedsWithSameNavigationPropertyName[0] : string.Join(",", filedsWithSameNavigationPropertyName);
+
+                        string foreignEntity = field.Attribute("ForeignEntity") == null ? null : field.Attribute("ForeignEntity").Value;
+
+                        ForeignEntityData foreignEntityData = GetForeignEntityData(foreignEntity);
+
+                        if (foreignEntityData != null)
+                        {
+                            RelationDefinition relationDefinition = new RelationDefinition
+                            {
+                                ForeignKeyColumn = foreignKeyColumn,
+                                ReferencedTable = foreignEntityData.ReferencedTable,
+                                ReferencedColumn = foreignEntityData.ReferencedColumn,
+                                ReferencedTableSchema = foreignEntityData.ReferencedTableSchema
+                            };
+
+                            relationDefinitions.Add(relationDefinition);
+                        }
+
+                        foreach (string fieldName in filedsWithSameNavigationPropertyName)
+                        {
+                            processedForeignKeyFields.Add(fieldName);
+                        }
+                    }
+                }
+                
                 string dbTableName = xmlDocument.Root.Attribute("DBTableName") == null ? null : xmlDocument.Root.Attribute("DBTableName").Value.Split('"')[1].Split('"')[0];
                 string dbType = xmlDocument.Root.Attribute("DxmlDatabaseTypeCode") == null ? null : xmlDocument.Root.Attribute("DxmlDatabaseTypeCode").Value;
                 string dbSchema = xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode") == null ? null : xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode").Value;
@@ -618,7 +681,8 @@ namespace Logitude.LXMLFixer.Models
                     Name = dbTableName.Contains("Customs.") ? dbTableName.Split('.')[1] : dbTableName,
                     Schema = dbSchema,
                     DBType = dbType,
-                    Columns = columnDefinitions
+                    Columns = columnDefinitions,
+                    Relations = relationDefinitions
                 };
 
                 return lxmlTableDefinition;
@@ -874,7 +938,7 @@ namespace Logitude.LXMLFixer.Models
 
                 return new ForeignEntityData
                 {
-                    ReferencedTable = referencedTable,
+                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
                     ReferencedTableSchema = referencedTableSchema,
                     ReferencedColumn = referencedColumn
                 };
@@ -882,7 +946,6 @@ namespace Logitude.LXMLFixer.Models
 
             return null;
         }
-
 
         private static string GetForeignEntityLXMLFilePath(string foreignEntity)
         {
