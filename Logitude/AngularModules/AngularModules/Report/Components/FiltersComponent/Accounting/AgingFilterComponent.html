@@ -62,6 +62,19 @@
         padding: 0 10px;
     }
 
+
+    .aboodRTLFilterMenu li:first-child, .aboodRTLFilterMenu li:last-child{
+        border-radius: 0;
+    }
+    .aboodRTLFilterMenu li:first-child{
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    .aboodRTLFilterMenu li:last-child{
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
 </style>
 
 <table>
@@ -86,7 +99,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width: 180px;">
-                        <ul float-start class="FiltersMenu">
+                        <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
                             <li id="filter_Due" (click)="DateFilterItemClicked('filter_Due')"
                                 [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Due'">
                                 {{ 'GLAccounts.O.Collecting' | TextCodeTranslationPipe }}
