@@ -25,7 +25,7 @@ import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../Customs/EntityPMs/ConsignmentPM';
 import { EntityResourceService } from '../Services/EntityResourceService';
 import { EntityPMService } from '../Services/EntityPMService';
-import { CourierMasterService } from '../../Customs/Services/Others/CourierMasterService';
+import { CourierMasterPMService } from '../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 
 
@@ -691,13 +691,12 @@ export class AmitalGatewayUtil {
             let isSaved: boolean = false;
             let BackButtonLabel = "תיק עמילות"
             var windowArgs: any = {};
-            let courierMasterService: CourierMasterService = new CourierMasterService();
+            let courierMasterService: CourierMasterPMService = new CourierMasterPMService();
 
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
                     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                        //entityPMService.getSingle("Customs.CourierMaster", selectedCourierMasterId).then((res: any) => {
-                        courierMasterService.getCourierMasterByDeclarationId(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
+                        courierMasterService.get(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
                                 if (myResponse.HasError) {
                                     console.log("Error while getting EntityPM", myResponse);
                                 }

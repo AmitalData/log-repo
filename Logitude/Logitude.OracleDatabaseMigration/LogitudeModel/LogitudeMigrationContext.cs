@@ -2186,6 +2186,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<CustomsAutonomyKeyword> CustomsAutonomyKeywords
+        {
+            get; set;
+
+        }
         public IDbSet<CustomsBook> CustomsBooks
         {
             get;
@@ -4676,6 +4681,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new FilingInboxAttachmentLogMap());
             modelBuilder.Configurations.Add(new ReportExecutionLogMap());
             modelBuilder.Configurations.Add(new CustomsAirlineMap());
+            modelBuilder.Configurations.Add(new CustomsAutonomyKeywordMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();

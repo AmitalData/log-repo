@@ -340,10 +340,18 @@ namespace Logitude.Customs.BL.BL
         {
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == "380" && r.DocumentStatusCode == "1").ToList();
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentStatusCode == "1").ToList();
             if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
             {
-                return true;
+                CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+                foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMList)
+                {
+                    CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
+                    if (docType.IsCourierManadatory)
+                    {
+                        return true;
+                    }                      
+                }
             }
 
             return false;

@@ -337,6 +337,7 @@
     <Compile Include="EntityDataMappings\CustomMetaDataTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsAddressTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsAirlineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsAutonomyKeywordDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsBookDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsBookTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsBranchDataMapping.cs" />
@@ -503,6 +504,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomMetaDataTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsAddressTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsAirlineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsAutonomyKeywordDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsBookDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsBookTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsBranchDataMapping.Generated.cs" />
@@ -878,6 +880,7 @@
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ConsignmentPackDangerQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsAutonomyKeywordQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DecDangersContactsQueryService.Generated.cs" />
@@ -1335,6 +1338,7 @@
     <Compile Include="EntityUpdateServices\Generated\CourierStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CouriersVatUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsAirlineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsAutonomyKeywordUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsDocumentsDefinitionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsInsuranceCompanyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsPartnerFtpUpdateService.Generated.cs" />

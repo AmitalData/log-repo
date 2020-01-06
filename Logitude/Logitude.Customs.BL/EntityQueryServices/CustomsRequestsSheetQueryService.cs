@@ -164,7 +164,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
-
+"2892",
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -254,7 +254,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
-       "UCB8212"     };
+       "UCB8212"
+                ,"2892"};
             return intrefaceTypeListDisplayOnly;
         }
 

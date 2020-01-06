@@ -198,6 +198,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return customsDocumentListPMs;
         }
 
+        public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(GetTicketsParams parameters, int tenant)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
+            var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
+            var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
+                     where  cdp.Child1EntityCode!= "DeclarationAmendment"
+                     join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+                     select cdt
+                        );
+            var q2 = (from cdt in q
+                       join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
+                      select cd
+                         );
+ 
+
+            q2 = q2.Distinct();
+            var customsDocumentListPocos = q2.ToList();
+            var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
+            return customsDocumentListPMs;
+        }
         public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDocParentOnly(GetTicketsParams parameters, int tenant, bool getComposition = false)
         {
             ICustomContext context = MainContext as CustomContext;
