@@ -494,6 +494,7 @@ namespace WebFreight.Web.WebServices
                         if (freightLocationWarehouseAddress.PhoneNumber != null || freightLocationWarehouseAddress.FaxNumber != null)
                         {
                             myDataProvider.FreightLocationAddress = myDataProvider.FreightLocationAddress + Environment.NewLine + (freightLocationWarehouseAddress.PhoneNumber != null ? "Tel: " + freightLocationWarehouseAddress.PhoneNumber + " " : "") + (freightLocationWarehouseAddress.FaxNumber != null ? "Fax: " + freightLocationWarehouseAddress.FaxNumber + " " : "");
+                            myDataProvider.FreightLocationAddressWithPhone = myDataProvider.FreightLocationAddress;
                         }
                     }
                 }
