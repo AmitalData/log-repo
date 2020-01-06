@@ -69,26 +69,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     ngOnInit() { }
 
     SetWindowArgs(args: any) {
-
-
         this.Start(args);
-        //this.IsFromFullWarehouseEntryComponent = args.IsFromFullWarehouseEntryComponent;
-        //this.IsEditMode = args.IsEditMode;
-        //this.ShowPackageSummary = args.ShowPackageSummary;
-        //this.ShowAddPackageButton = args.ShowAddPackageButton;
-        //if (!this.IsEditMode) {
-        //    this.ShowAddPackageButton = true;
-        //}
-
-        //this.myPackageTypeService.getAllFromCache().subscribe((resp: any) => {
-        //    if (!resp.HasError) {
-        //        this.AllPackageTypes = resp.Result;
-        //    }
-
-
-        //});
-
-
     }
 
     ShipmentPM: any;
@@ -113,22 +94,21 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.VolumeLabel = "Volume (" + SessionLocator.TenantPM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + SessionLocator.TenantPM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.DimensionsUnitCode + ")";
-        this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.warehouseReleasePM.GrossWeightUnitCode);
-        this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.warehouseReleasePM.DimensionsUnitCode);
-        this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.warehouseReleasePM.ChargeableWeightUnitCode);
         this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
-        this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
+        if (this.warehouseReleasePM) {
+            this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.warehouseReleasePM.GrossWeightUnitCode);
+            this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.warehouseReleasePM.DimensionsUnitCode);
+            this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.warehouseReleasePM.ChargeableWeightUnitCode);
+     
+            this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
+        }
+
+
     }
 
     Start(args) {
 
-        if (args.IsFromFullWarehouseReleaseComponent) {
-            this.warehouseReleasePM = args.warehouseReleasePM;
-        }
-        else {
-            this.warehouseReleasePM = args.WarehouseEntryPM;
-        }
-
+        this.warehouseReleasePM = args.WarehouseReleasePM;
         this.ViewModelTrigger = args.ViewModelTrigger;
         this.IsEditMode = args.IsEditMode;
         this.IsFromFullWarehouseReleaseComponent = args.IsFromFullWarehouseReleaseComponent;
@@ -157,9 +137,9 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         if (!this.IsPackageOpen) {
             this.IsPackageOpen = true;
             this.IsChoosePackageOpen = true;
-            if (this.CustomerId != this.warehouseReleasePM.CustomerId || this.WarehouseId != this.warehouseReleasePM.WarehouseId) {
+            if (this.CustomerId != this.warehouseReleasePM.CustomerId || this.WarehouseId != this.warehouseReleasePM.WarehouseId || this.ShipmentId !=this.warehouseReleasePM.ShipmentId) {
 
-                var shipmentId = this.IsFromFullWarehouseReleaseComponent ? this.warehouseReleasePM.ShipmentId : null;
+                var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId:"";
                 this.AllWarehouseEntryPackagesLists = [];
                 this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
@@ -217,12 +197,14 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     FromPortId: string;
     ToPortId: string;
     ConnectedTo: string;
-
+    ShipmentId: string;
 
     OpenChoosePackage(packageType: string) {
 
         this.WarehouseId = this.warehouseReleasePM.WarehouseId;
         this.CustomerId = this.warehouseReleasePM.CustomerId;
+        this.ShipmentId = this.warehouseReleasePM.ShipmentId;
+
         this.IsPackageOpen = false;
         var windowArgs: any = {};
         windowArgs.WarehouseReleasePM = this.warehouseReleasePM;
@@ -230,7 +212,6 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         windowArgs.WarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists;
         windowArgs.ViewModelTrigger = this;
         windowArgs.PackageType = packageType;
-
         var logWindow = new LogitudeWindow();
         if (this.IsFromFullWarehouseReleaseComponent) {
             windowArgs.IsFromFullWarehouseReleaseComponent = this.IsFromFullWarehouseReleaseComponent;
