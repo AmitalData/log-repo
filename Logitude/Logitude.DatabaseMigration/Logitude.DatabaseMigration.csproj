@@ -1714,12 +1714,11 @@
     <Compile Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.Designer.cs">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.cs" />
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\Configuration.cs" />
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>

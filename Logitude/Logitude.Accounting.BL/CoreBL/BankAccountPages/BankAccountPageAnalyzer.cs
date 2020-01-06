@@ -341,13 +341,17 @@ s             b                   a
             //    ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  dbBankaccountPM.LastPageCloseBalance {dbBankaccountPM.LastPageCloseBalance} != OpenBalance  {newPageOfBankAccount.MyBankAccountM.OpenBalance}");
             //    return;
             //}
-
+            string ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("BankAccount");
+            var qsExternalPageAdditionalData = new ExternalPageAdditionalDataQueryService(tenant);
+            var externalPageAdditionalData =qsExternalPageAdditionalData.GetSingle(ObjectTableId1, dbBankaccountPM.Id, false, false);
             ReconcileExternalPagePM prevReconcileExternalPagePM = null;
-            if (dbBankaccountPM.LastPageNumber != null)
+
+            
+            if (!String.IsNullOrWhiteSpace(externalPageAdditionalData.LastPageNumber))//if (dbBankaccountPM.LastPageNumber != null)
             {
                 _ReconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
                 prevReconcileExternalPagePM =
-                _ReconcileExternalPageQueryService.GetPageByNumber(int.Parse(dbBankaccountPM.LastPageNumber), dbBankaccountPM.Id,"BankAccount", tenant);
+                _ReconcileExternalPageQueryService.GetPageByNumber(int.Parse(externalPageAdditionalData.LastPageNumber), dbBankaccountPM.Id, "BankAccount", tenant);
             }
 
 
