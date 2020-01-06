@@ -144,17 +144,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
            
             this.iQueryable_JoinShipmentPackages = (from shipment in shipmentRepository.context.Shipments
                                                     join shipmentPackage in shipmentRepository.context.ShipmentPackages
-                                                    on shipment.Id equals shipmentPackage.ShipmentId into JoinedData
-                                                    join sm in shipmentRepository.context.ShipmentMasterDatas
-                                                    on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
-                                                    from jd in JoinedData.DefaultIfEmpty()
-                                                    from m in shipmentJoin.DefaultIfEmpty()
+                                                    on shipment.Id equals shipmentPackage.ShipmentId 
+                                                    join shipmentMaster in shipmentRepository.context.ShipmentMasterDatas
+                                                    on new { Id = shipment.MasterShipmentDataId }
+                                                    equals new { Id = shipmentMaster.Id}
                                                     where shipment.Tenant == tenant && shipment.TransportModeId == "A" 
                                                     select new ShipmentJoinPackageList()
                                                     {
-                                                        Id = shipment.Id + (!string.IsNullOrEmpty(jd.Id) ? jd.Id : ""),
+                                                        Id = shipment.Id + (!string.IsNullOrEmpty(shipment.Id) ? shipment.Id : ""),
                                                         ShipmentId = shipment.Id,
-                                                        PackageId = jd.Id,
+                                                        PackageId = shipmentPackage.Id,
                                                         ShipmentNumber = shipment.ShipmentNumber,
                                                         CreateDateTime = shipment.CreateDateTime,
                                                         ShipperName = shipment.ShipperCard != null ? shipment.ShipperCard.EnglishName : null,
@@ -171,22 +170,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                         DescriptionofGoods = shipment.DescriptionOfGoods,
                                                         House = shipment.House,
                                                         ConsigneeName = shipment.ConsigneeName,
-                                                        ShipmentPackageReference1 = jd.Reference1,
-                                                        ShipmentPackageReference2 = jd.Reference2,
-                                                        ShipmentPackageReference3 = jd.Reference3,
-                                                        ShipmentPackageReference4 = jd.Reference4,
-                                                        MainCarriageETD = m.MainCarriageETD,
-                                                        ATD = m.MainCarriageATD,
-                                                        PackagesGrossWeight = jd.Weight,
-                                                        PackagesVolumetricWeight = jd.VolumetricWeight,
-                                                        PackagesQuantity = jd.Quantity,
+                                                        ShipmentPackageReference1 = shipmentPackage.Reference1,
+                                                        ShipmentPackageReference2 = shipmentPackage.Reference2,
+                                                        ShipmentPackageReference3 = shipmentPackage.Reference3,
+                                                        ShipmentPackageReference4 = shipmentPackage.Reference4,
+                                                        MainCarriageETD = shipmentMaster.MainCarriageETD,
+                                                        ATD = shipmentMaster.MainCarriageATD,
+                                                        PackagesGrossWeight = shipmentPackage.Weight,
+                                                        PackagesVolumetricWeight = shipmentPackage.VolumetricWeight,
+                                                        PackagesQuantity = shipmentPackage.Quantity,
                                                         ShipperAddressId = shipment.ShipperAddressId,
                                                         ConsigneeAddressId = shipment.ConsigneeAddressId,
                                                         Volume = shipment.Volume,
-                                                        PackageVolume = jd.Volume,
-                                                        Reference1 = jd.Reference1,
-                                                        MasterNumber =  !string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "",
-                                                        MainCarriageCarrierPrefix = m.MainCarriageCarrierPrefix + m.MainCarriageCarrierNumber,
+                                                        PackageVolume = shipmentPackage.Volume,
+                                                        Reference1 = shipmentPackage.Reference1,
+                                                        MasterNumber =  !string.IsNullOrEmpty(shipmentMaster.AirlinePrefix) && !string.IsNullOrEmpty(shipmentMaster.Master) ? shipmentMaster.AirlinePrefix + "-" + shipmentMaster.Master : "",
+                                                        MainCarriageCarrierPrefix = shipmentMaster.MainCarriageCarrierPrefix + shipmentMaster.MainCarriageCarrierNumber,
                                                     });
            
 
