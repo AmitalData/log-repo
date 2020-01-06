@@ -94,6 +94,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CalculatedLocalName { get; set; }
         public string CalculatedEnglishName { get; set; }
         public string CreatedByPartner { get; set; }
+        public decimal OpenShipments { get; set; }
 
     }
 }
