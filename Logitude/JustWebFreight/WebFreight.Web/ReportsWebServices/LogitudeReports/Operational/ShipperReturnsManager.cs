@@ -140,6 +140,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
         private void BuildSourceData()
         {
+
+           
             this.iQueryable_JoinShipmentPackages = (from shipment in shipmentRepository.context.Shipments
                                                     join shipmentPackage in shipmentRepository.context.ShipmentPackages
                                                     on shipment.Id equals shipmentPackage.ShipmentId into JoinedData
@@ -147,7 +149,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                     on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
                                                     from jd in JoinedData.DefaultIfEmpty()
                                                     from m in shipmentJoin.DefaultIfEmpty()
-                                                    where shipment.Tenant == tenant && shipment.TransportModeId == "A"
+                                                    where shipment.Tenant == tenant && shipment.TransportModeId == "A" 
                                                     select new ShipmentJoinPackageList()
                                                     {
                                                         Id = shipment.Id + (!string.IsNullOrEmpty(jd.Id) ? jd.Id : ""),
@@ -187,6 +189,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                         MainCarriageCarrierPrefix = m.MainCarriageCarrierPrefix + m.MainCarriageCarrierNumber,
                                                     });
            
+
             if (this.iQueryable_JoinShipmentPackages != null)
             {
                 this.iQueryable_JoinShipmentPackages = this.iQueryable_JoinShipmentPackages.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ATD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) || System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
