@@ -15,8 +15,6 @@ import { TariffSettingPM } from '../../../TariffModule/EntityPMs/TariffSettingPM
 import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
 import { PackageTypeList } from '../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../Common/Services/StandardLists/PackageTypeListService';
-import { MeasurementListService } from '../../../Common/Services/StandardLists/MeasurementListService';
-import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
 
 
 @Component({
@@ -682,7 +680,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                 }
             }
         
-            if (firstIndex == 1) {
+            if (firstIndex == 1 && this.EntityPM.TypeCode == "OFC") {
                 if (AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
                     tempErrors.push(ContainerTypeNamesProperties[firstIndex - 1] + " is required");
                     FirstLineEmpty = true;
