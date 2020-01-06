@@ -1858,10 +1858,33 @@
     <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.Designer.cs">
       <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs" />
+    <Compile Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.Designer.cs">
+      <DependentUpon>202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001011952246_CustomerOpenFileAmountMigration.cs" />
+    <Compile Include="Migrations\202001011952246_CustomerOpenFileAmountMigration.Designer.cs">
+      <DependentUpon>202001011952246_CustomerOpenFileAmountMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.cs" />
+    <Compile Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.Designer.cs">
+      <DependentUpon>202001020946537_CustomerOpenFileAmountTenantMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051238437_WesamAddObjectFieldCodeToRestrictionTable.cs" />
+    <Compile Include="Migrations\202001051238437_WesamAddObjectFieldCodeToRestrictionTable.Designer.cs">
+      <DependentUpon>202001051238437_WesamAddObjectFieldCodeToRestrictionTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs" />
+    <Compile Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.Designer.cs">
+      <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs" />
     <Compile Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.Designer.cs">
       <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -1898,6 +1921,26 @@
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.cs" />
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.cs" />
+    <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
+      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs" />
+    <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.Designer.cs">
+      <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs" />
+    <Compile Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.Designer.cs">
+      <DependentUpon>201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.Designer.cs">
+      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs" />
+    <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.Designer.cs">
+      <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs" />
     <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.Designer.cs">
@@ -3300,16 +3343,55 @@
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
+      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.resx">
+      <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.resx">
+      <DependentUpon>201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.resx">
+      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.resx">
+      <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+
     <EmbeddedResource Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.resx">
       <DependentUpon>201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs</DependentUpon>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.resx">
       <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.resx">
+      <DependentUpon>202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202001011952246_CustomerOpenFileAmountMigration.resx">
+      <DependentUpon>202001011952246_CustomerOpenFileAmountMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.resx">
+      <DependentUpon>202001020946537_CustomerOpenFileAmountTenantMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202001051238437_WesamAddObjectFieldCodeToRestrictionTable.resx">
+      <DependentUpon>202001051238437_WesamAddObjectFieldCodeToRestrictionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.resx">
+      <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
     <EmbeddedResource Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.resx">
       <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
     </EmbeddedResource>
+
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
