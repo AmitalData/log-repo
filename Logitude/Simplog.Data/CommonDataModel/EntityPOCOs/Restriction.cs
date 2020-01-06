@@ -13,8 +13,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ObjectFieldId { get; set; }
         public string Value { get; set; }
         public string ContactTenantId { get; set; }
+        public string ObjectFieldCode { get; set; }
 
-         [ForeignKey("ObjectTableId")]
+        [ForeignKey("ObjectTableId")]
         public ObjectTable ObjectTable { get; set; }
         [ForeignKey("ObjectFieldId")]
         public ObjectField ObjectField { get; set; }
