@@ -53,7 +53,7 @@
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
-  AllowedForComputingPartners="false"
+  AllowedForComputingPartners="true"
   Code1="&quot;0926&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
