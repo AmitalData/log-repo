@@ -17,7 +17,7 @@ namespace Logitude.LXMLFixer.Models
         private string LXMLMistakesData = "DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value\n";
         private string DXMLFilesThatNotFound = "";
         private string LXMLFixedMistakesData = "";
-        private string LXMLIgnoredMistakesData = "";
+        private string LXMLIgnoredMistakesData = "LXML File,DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
 
         public LXMLFilesFixer(int moduleNumber)
         {
@@ -189,8 +189,6 @@ namespace Logitude.LXMLFixer.Models
 
             if (lxmlFiles != null)
             {
-                string lxmlIgnoredMistakesData = "LXML File,DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
-
                 foreach (var lxmlFile in lxmlFiles)
                 {
                     string lxmlFileName = Path.GetFileName(lxmlFile);
@@ -254,7 +252,7 @@ namespace Logitude.LXMLFixer.Models
 
                             if (lxmlColumn == null)
                             {
-                                lxmlIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + "Not Found" + "," + "-" + "," + "-" + "," + "-" + "\n";
+                                LXMLIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + "Not Found" + "," + "-" + "," + "-" + "," + "-" + "\n";
                             }
                             else
                             {
@@ -262,7 +260,7 @@ namespace Logitude.LXMLFixer.Models
                                 {
                                     if(dxmlColumn.Type == "char" || dxmlColumn.Type == "varchar")
                                     {
-                                        lxmlIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + lxmlColumn.Name + "," + "Type" + "," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
+                                        LXMLIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + lxmlColumn.Name + "," + "Type" + "," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
                                     }
                                     else
                                     {
@@ -526,8 +524,6 @@ namespace Logitude.LXMLFixer.Models
                         }
                     }
                 }
-
-                LXMLIgnoredMistakesData += lxmlIgnoredMistakesData;
 
                 ExportFixedMistakesData();
                 ExportIgnoredMistakesData();
