@@ -1276,6 +1276,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\VendorCommissionController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\VehicleController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\VendorExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\CustomsAutonomyKeywordsController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\DocumentTypeCustomsDataController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AcceptanceStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AccumalationStateViewsController.Generated.cs" />
