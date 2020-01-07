@@ -274,6 +274,16 @@ export class CourierMasterPM {
     public set CalcSuspendedDeclarations(newValue: number) { if (this.calcSuspendedDeclarations != newValue) { this.calcSuspendedDeclarations = newValue; this.MarkAsDirty("CalcSuspendedDeclarations"); } }
        
 	 
+    private noOfCourierHawb: string;
+    public get NoOfCourierHawb() { return this.noOfCourierHawb; }
+    public set NoOfCourierHawb(newValue: string) { if (this.noOfCourierHawb != newValue) { this.noOfCourierHawb = newValue; this.MarkAsDirty("NoOfCourierHawb"); } }
+       
+	 
+    private isAutomaticManifestSent: boolean;
+    public get IsAutomaticManifestSent() { return this.isAutomaticManifestSent; }
+    public set IsAutomaticManifestSent(newValue: boolean) { if (this.isAutomaticManifestSent != newValue) { this.isAutomaticManifestSent = newValue; this.MarkAsDirty("IsAutomaticManifestSent"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

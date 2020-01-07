@@ -108,6 +108,10 @@ namespace Logitude.Customs.Data.EntityLists
        public int CalcPending900  { get; set; }
        [DataMember]
        public int CalcSuspendedDeclarations  { get; set; }
+       [DataMember]
+       public string NoOfCourierHawb  { get; set; }
+       [DataMember]
+       public bool IsAutomaticManifestSent  { get; set; }
    }
 
 }

@@ -100,6 +100,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual Card Card { get; set; }
         [Column("IsReadyForInvoice")]
 	    public bool IsReadyForInvoice { get; set; }
+        [Column("NoOfCourierHawb")]
+	    public string NoOfCourierHawb { get; set; }
+        [Column("IsAutomaticManifestSent")]
+	    public bool IsAutomaticManifestSent { get; set; }
     }
 }
 	 

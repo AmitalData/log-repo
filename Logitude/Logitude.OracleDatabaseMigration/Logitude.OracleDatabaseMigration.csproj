@@ -436,6 +436,10 @@
     <Compile Include="Migrations\202001051239465_dbCustomsAutonomyKeywords.Designer.cs">
       <DependentUpon>202001051239465_dbCustomsAutonomyKeywords.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.cs" />
+    <Compile Include="Migrations\202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.Designer.cs">
+      <DependentUpon>202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -749,6 +753,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001051239465_dbCustomsAutonomyKeywords.resx">
       <DependentUpon>202001051239465_dbCustomsAutonomyKeywords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.resx">
+      <DependentUpon>202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
