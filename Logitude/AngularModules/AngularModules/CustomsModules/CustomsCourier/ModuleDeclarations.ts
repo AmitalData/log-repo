@@ -15,6 +15,7 @@ import { GetStorageSiteCodeComponent } from './Components/CourierWorkSheet/GetSt
 import { AddEditPendingByKeywordComponent } from './Components/PendingByKeyword/AddEditPendingByKeywordComponent';
 import { DeclarationPendingsGeneralComponent } from './Components/CourierPendingReason/DeclarationPendingsGeneralComponent';
 import { CourierDeclarationWorkspaceComponent } from './Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent';
+import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyKeywordComponent';
 
 export const Components =
     [
@@ -35,6 +36,7 @@ export const Components =
         AddEditPendingByKeywordComponent,
         DeclarationPendingsGeneralComponent,
         CourierDeclarationWorkspaceComponent,
+        AutonomyKeywordComponent,
     ];
 
 export class ModuleDeclarations {
@@ -61,6 +63,7 @@ export class ModuleDeclarations {
             case "DeclarationPendingsGeneralComponent": { myResult = DeclarationPendingsGeneralComponent; break; }
             case "CourierDeclarationWorkspaceComponent": { myResult = CourierDeclarationWorkspaceComponent; break; }
                 
+            case "AutonomyKeywordComponent": { myResult = AutonomyKeywordComponent; break; }
         }
 
         return myResult;
