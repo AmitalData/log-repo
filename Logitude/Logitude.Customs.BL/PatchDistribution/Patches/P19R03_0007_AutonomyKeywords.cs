@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
   PRIMARY KEY (Id)
 )");
 
-        
+            this.AddUpSqlScript(@"ALTER TABLE CustomsAutonomyKeywords ADD CONSTRAINT uq_1AutonomyKeywords UNIQUE (tenant, keywordtypecode)");
 
 
 
