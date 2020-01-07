@@ -55,7 +55,7 @@ export class AutonomyKeywordComponent
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;
             SessionLocator.SelectedSession.StopBusyIndicator();
-            this.WarningMessage = "יש לבחור קוד מילות מפתחיש לבחור קוד מילות מפתח ולאחר להזין רשימת מילות מפתח מופרדות";
+            this.WarningMessage = "יש לבחור קוד מילות מפתח ולאחר להזין רשימת מילות מפתח מופרדות";
         });
     }
 
