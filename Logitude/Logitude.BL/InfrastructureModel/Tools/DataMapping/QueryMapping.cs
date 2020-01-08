@@ -19,6 +19,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.ObjectTableId = entityPM.ObjectTableId;
             entityPOCO.QueryGroupCode = entityPM.QueryGroupCode;
             entityPOCO.OriginalQueryId = entityPM.OriginalQueryId;
+            entityPOCO.OriginalQueryCode = entityPM.OriginalQueryCode;
+
             entityPOCO.SystemLevel = entityPM.SystemLevel;           
             entityPOCO.TenantLevel = entityPM.TenantLevel;
             entityPOCO.UserId = entityPM.UserId;

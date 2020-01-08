@@ -203,12 +203,12 @@
                             </div>
                             <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)"[QueryCode]="QueryCode" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Date'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)"[QueryCode]="QueryCode" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Integer'" style="display: inline-flex;">
@@ -301,12 +301,12 @@
                             </div>
                             <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Date'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Integer'" style="display: inline-flex;">

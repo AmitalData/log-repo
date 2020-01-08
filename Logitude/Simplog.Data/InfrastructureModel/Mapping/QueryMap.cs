@@ -25,6 +25,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Perspective).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.EditWizardComponentPath).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.NameTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.OriginalQueryCode).HasMaxLength(30).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Queries");
@@ -33,6 +34,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.UserId).HasColumnName("UserId");
             this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
+            this.Property(t => t.OriginalQueryCode).HasColumnName("OriginalQueryCode");
+
             this.Property(t => t.SystemLevel).HasColumnName("SystemLevel");
             this.Property(t => t.TenantLevel).HasColumnName("TenantLevel");
             this.Property(t => t.OriginalQueryId).HasColumnName("OriginalQueryId");

@@ -34,6 +34,7 @@ export class Export2ExcelControl {
     FileName: string;
     tenant: number;
     queryName: string;
+    queryCode: string;
     queryId: string;
     userid: string;
     SetWindowArgs(args: any) {
@@ -42,9 +43,11 @@ export class Export2ExcelControl {
         this.tenant = args.tenant;
         this.queryName = TextCodeTranslator.Translate(args.query.NameTextCodeCode);
         this.queryId = args.query.Id;
+        this.queryCode = args.query.Code;
+
         this.userid = args.userid;
         this.Filters = args.Filters;
-        myService.getExcelData(this.Filters, this.queryId, args.tenant, args.userid, args.currentObjectTable).subscribe(myResult => {
+        myService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe(myResult => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;
@@ -86,7 +89,7 @@ export class Export2ExcelControl {
         this.busyExportingVisibile = true;
         this.btnSaveToFileVisibile = false;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.getExcelData(this.Filters, this.queryId, this.tenant, this.userid, this.ObjectTableName).subscribe(myResult => {
+        myService.getExcelData(this.Filters, this.queryCode, this.tenant, this.userid, this.ObjectTableName).subscribe(myResult => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;

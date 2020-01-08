@@ -22,7 +22,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
     moduleId: module.id,
     selector: 'AdvSearchComponent',
     templateUrl: './AdvanceSearchComponent.html',
-    inputs: ['ObjectTableName', 'QueryChangeEvent', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'Filterchangeevent', 'rabaia'],
+    inputs: ['ObjectTableName', 'QueryChangeEvent', 'isWindowViewMode', 'isNewViewMode', 'QueryId','QueryCode', 'Filterchangeevent', 'rabaia'],
     providers: [Http],
 })
 

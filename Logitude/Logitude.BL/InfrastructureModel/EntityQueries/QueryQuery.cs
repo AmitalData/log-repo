@@ -48,6 +48,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  ObjectTableId = a.ObjectTableId,
                  ObjectTableName = a.ObjectTable.Name,
                  OriginalQueryId = a.OriginalQueryId,
+                 OriginalQueryCode = a.OriginalQueryCode,
+
                  SystemLevel = a.SystemLevel,
                  Tenant = a.Tenant,
                  TenantLevel = a.TenantLevel,
@@ -103,6 +105,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  ObjectTableId = a.ObjectTableId,
                  ObjectTableName = a.ObjectTable.Name,
                  OriginalQueryId = a.OriginalQueryId,
+                 OriginalQueryCode = a.OriginalQueryCode,
+
                  SystemLevel = a.SystemLevel,
                  Tenant = a.Tenant,
                  TenantLevel = a.TenantLevel,
@@ -162,6 +166,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ObjectTableId = a.ObjectTableId,
                                          ObjectTableName = a.ObjectTable.Name,
                                          OriginalQueryId = a.OriginalQueryId,
+                                         OriginalQueryCode = a.OriginalQueryCode,
+
                                          SystemLevel = a.SystemLevel,
                                          Tenant = a.Tenant,
                                          TenantLevel = a.TenantLevel,
@@ -223,6 +229,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        ObjectTableId = a.ObjectTableId,
                        ObjectTableName = a.ObjectTable.Name,
                        OriginalQueryId = a.OriginalQueryId,
+                       OriginalQueryCode = a.OriginalQueryCode,
+
                        SystemLevel = a.SystemLevel,
                        Tenant = a.Tenant,
                        TenantLevel = a.TenantLevel,
@@ -270,6 +278,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ObjectTableId = a.ObjectTableId,
                                          ObjectTableName = a.ObjectTable.Name,
                                          OriginalQueryId = a.OriginalQueryId,
+                                         OriginalQueryCode = a.OriginalQueryCode,
+
                                          SystemLevel = a.SystemLevel,
                                          Tenant = a.Tenant,
                                          TenantLevel = a.TenantLevel,
@@ -340,6 +350,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ObjectTableId = a.ObjectTableId,
                                          ObjectTableName = a.ObjectTable.Name,
                                          OriginalQueryId = a.OriginalQueryId,
+                                         OriginalQueryCode = a.OriginalQueryCode,
+
                                          SystemLevel = a.SystemLevel,
                                          Tenant = a.Tenant,
                                          TenantLevel = a.TenantLevel,
@@ -401,6 +413,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectTableId = a.ObjectTableId,
                                   ObjectTableName = a.ObjectTable.Name,
                                   OriginalQueryId = a.OriginalQueryId,
+                                  OriginalQueryCode = a.OriginalQueryCode,
+
                                   SystemLevel = a.SystemLevel,
                                   Tenant = a.Tenant,
                                   TenantLevel = a.TenantLevel,
@@ -468,6 +482,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          ObjectTableId = a.ObjectTableId,
                          ObjectTableName = a.ObjectTable.Name,
                          OriginalQueryId = a.OriginalQueryId,
+                         OriginalQueryCode = a.OriginalQueryCode,
+
                          SystemLevel = a.SystemLevel,
                          Tenant = a.Tenant,
                          TenantLevel = a.TenantLevel,
@@ -514,6 +530,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              ObjectTableId = a.ObjectTableId,
                              ObjectTableName = a.ObjectTable.Name,
                              OriginalQueryId = a.OriginalQueryId,
+                             OriginalQueryCode = a.OriginalQueryCode,
+
                              SystemLevel = a.SystemLevel,
                              Tenant = a.Tenant,
                              TenantLevel = a.TenantLevel,
@@ -579,6 +597,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ObjectTableId = a.ObjectTableId,
                                          ObjectTableName = a.ObjectTable.Name,
                                          OriginalQueryId = a.OriginalQueryId,
+                                         OriginalQueryCode = a.OriginalQueryCode,
+
                                          SystemLevel = a.SystemLevel,
                                          Tenant = a.Tenant,
                                          TenantLevel = a.TenantLevel,

@@ -1862,6 +1862,14 @@
     <Compile Include="Migrations\202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.Designer.cs">
       <DependentUpon>202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.cs" />
+    <Compile Include="Migrations\202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.Designer.cs">
+      <DependentUpon>202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.cs" />
+    <Compile Include="Migrations\202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.Designer.cs">
+      <DependentUpon>202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -3308,6 +3316,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.resx">
       <DependentUpon>202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.resx">
+      <DependentUpon>202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.resx">
+      <DependentUpon>202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

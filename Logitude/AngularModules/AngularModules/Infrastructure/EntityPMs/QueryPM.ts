@@ -42,7 +42,11 @@ export class QueryPM {
     private originalQueryId: string;
     public get OriginalQueryId() { return this.originalQueryId; }
     public set OriginalQueryId(newValue: string) { this.originalQueryId = newValue; }
-       	 
+
+    private originalQueryCode: string;
+    public get OriginalQueryCode() { return this.originalQueryCode; }
+    public set OriginalQueryCode(newValue: string) { this.originalQueryCode = newValue; }
+
     private querySection: string;
     public get QuerySection() { return this.querySection; }
     public set QuerySection(newValue: string) { this.querySection = newValue; }
