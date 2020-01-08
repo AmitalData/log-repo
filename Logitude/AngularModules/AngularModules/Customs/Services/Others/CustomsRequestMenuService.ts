@@ -133,10 +133,10 @@ export class CustomsRequestMenuService {
             400, 410, "8228", null, null, null, true
         ));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(""
-            , "PhysicalCheckComponent",
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("בדיקה פיזית"
+            , "PhysicalCheck",
             './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',
-            850, 410, "190",null, new RequestSheetState(false, false, false)
+            1100, 450, "190",null, new RequestSheetState(false, false, false)
         ));
         
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
@@ -294,7 +294,7 @@ export class CustomsRequestMenuService {
         myLogId = myLogId || item.DemoLogId;
         var isComponentLoaded: boolean = false;
         if (AppTool.IsNullOrEmpty(myLogId)) {
-
+             
             if (menuArg) {
                 isComponentLoaded = true;
                 logitudeWindow.ComponentLoaded.subscribe((compo) => {
@@ -312,7 +312,7 @@ export class CustomsRequestMenuService {
                             this.WindowClosed.emit(anyString);
                         });
                     }
-
+                     
                 });
             }
             if (!isComponentLoaded) {

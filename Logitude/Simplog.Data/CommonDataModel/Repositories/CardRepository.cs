@@ -373,7 +373,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return null;
         }
 
-        public  Card GetSingleCardByIdAndTenant(string id, int tenant, bool getFromCache)
+        public Card GetSingleCardByIdAndTenant(string id, int tenant, bool getFromCache)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -411,7 +411,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 {
                    
                     entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent")
-                              where record.Id == id && record.Tenant == tenant
+                              where record.Code == id && record.Tenant == tenant
                               select record).FirstOrDefault();
                 }
                 return entity;

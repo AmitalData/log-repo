@@ -23,7 +23,7 @@ import { ClientList } from '../../../Customs/EntityLists/ClientList';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 
 
-@Component({
+@Component({ 
     selector: 'CreditLimitQueryComponent',
     moduleId: module.id,
     templateUrl: './CreditLimitQueryComponent.html',

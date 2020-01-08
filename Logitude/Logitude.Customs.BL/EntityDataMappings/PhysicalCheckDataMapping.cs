@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,6 +11,11 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -176,7 +180,78 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPM.SearchFields = result.ToLower();
             poco.SearchFields = entityPM.SearchFields;
         }
-   }
+
+        public static void CustomXmlToPM(List<CommunicationLogStepList> communicationLogStepList, PhysicalCheckPM entityPM)
+        {
+
+            string documentData = communicationLogStepList[0].DocumentData;
+            dynamic data = JObject.Parse(documentData);
+            string cargoIdentifierType = data.CheckEntity.cargoIdentifier.cargoIdentifierType;
+            if (cargoIdentifierType != null)
+            {
+                CargoIdentifireTypeQueryService cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPM.Tenant);
+                CargoIdentifireTypePM cargoIdentifireType = cargoIdentifireTypeQueryService.GetSingle(cargoIdentifierType, false, true);
+                entityPM.CargoIdentifierTypeName = cargoIdentifireType.LocalName;
+            }
+            string checkSiteNumber = data.NoticeToClient.checkSiteNumber;
+            if (checkSiteNumber != null)
+            {
+                SiteLookupQueryService siteLookupQueryService = new SiteLookupQueryService(entityPM.Tenant);
+                SiteLookupPM siteLookup = siteLookupQueryService.GetSingle(checkSiteNumber, false, true);
+                entityPM.CheckSiteName = siteLookup != null ? siteLookup.LocalName : null;
+            }
+            string OperationCode = data.NoticeToClient.operationCode;
+            if (OperationCode != null)
+            {
+                PhysicalCheckOperationQueryService physicalCheckOperationQueryService = new PhysicalCheckOperationQueryService(entityPM.Tenant);
+                PhysicalCheckOperationPM physicalCheckOperation = physicalCheckOperationQueryService.GetSingle(OperationCode, false, true);
+                entityPM.OperationName = physicalCheckOperation.LocalName;
+            }
+            string QueueTypeCode = data.NoticeToClient.CheckType;
+            if (QueueTypeCode != null)
+            {
+                CheckQueueTypeQueryService checkQueueTypeQueryService = new CheckQueueTypeQueryService(entityPM.Tenant);
+                CheckQueueTypePM checkQueueType = checkQueueTypeQueryService.GetSingle(QueueTypeCode, false, true);
+                entityPM.QueueTypeCode = checkQueueType.Code;
+                entityPM.QueueTypeName = checkQueueType.LocalName;
+            }
+            string storageSiteNumber = data.NoticeToClient.storageSiteNumber;
+            if (storageSiteNumber != null)
+            {
+                SiteLookupQueryService siteLookupQueryService = new SiteLookupQueryService(entityPM.Tenant);
+                SiteLookupPM siteLookup = siteLookupQueryService.GetSingle(storageSiteNumber, false, true);
+                entityPM.StorageSiteName = siteLookup.LocalName;
+            }
+            string importerNumber = data.NoticeToClient.importerNumber;
+            string declarationNumber = data.NoticeToClient.declarationID;
+
+            if (importerNumber != null)
+            {
+               PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(entityPM.Tenant);
+               entityPM.CustomerName = physicalCheckQueryService.GetCustomerNameByChecKId(declarationNumber, entityPM.Tenant);
+            }
+            
+            string statusMessage = data.NoticeToClient.statusMessage;
+            if (statusMessage != null)
+            {
+                PhysicalCheckStatusMessageQueryService physicalCheckStatusMessageQueryService = new PhysicalCheckStatusMessageQueryService(entityPM.Tenant);
+                PhysicalCheckStatusMessagePM physicalCheckStatusMessage = physicalCheckStatusMessageQueryService.GetSingle(statusMessage, false, true);
+                entityPM.StatusMessageName = physicalCheckStatusMessage.LocalName;
+            }
+            entityPM.CargoIdentifierKey1 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey1;
+            entityPM.CargoIdentifierKey2 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey2;
+            entityPM.ContainerNubmer = data.CheckEntity.containerNumer;
+            entityPM.CheckId = data.NoticeToClient.checkId;
+            entityPM.OpenDate = data.NoticeToClient.openDate;
+            entityPM.DeclarationId = declarationNumber;
+
+
+
+
+
+
+        }
+    }
 
 
 }

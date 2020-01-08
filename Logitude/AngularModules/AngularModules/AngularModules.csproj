@@ -700,6 +700,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
+    <TypeScriptCompile Include="Common\Services\ExtendedPMs\PhysicalCheckExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />

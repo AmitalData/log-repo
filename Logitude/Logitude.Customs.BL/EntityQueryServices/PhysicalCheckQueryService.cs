@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -53,6 +54,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return physicalCheckList;
         }
+
+
+        public string GetCustomerNameByChecKId(string declarationNumber , int tenant)
+        {
+            var declaration = context.Declarations.FirstOrDefault(x => x.DeclarationNumber == declarationNumber);
+            if (declaration != null)
+            {
+                var card = context.Cards.FirstOrDefault(x => x.Id == declaration.CustomerId);
+                if(card!=null)
+                return card.LocalName;
+            }
+
+            return "";
+        }
+
         //Yuval Chalup 17.11.2014 TASK-9089 --->
     }
 }

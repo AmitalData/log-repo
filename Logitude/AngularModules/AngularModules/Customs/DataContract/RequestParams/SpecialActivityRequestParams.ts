@@ -25,7 +25,7 @@ export class GeneralDetails {
     public ClientFullName: string;
     public ContainerNumber: string;
     public ImporterName: string;
-    public ImporterNumber: string;
+    public ImporterNumber: string; 
     public ImporterNumberSpecified: boolean;
     public IsContainer: boolean;
     public IsContainerSpecified: boolean;
