@@ -2,15 +2,21 @@
 <div>
     <custom-message-wrapper [IsShowCustomResponseContent]="false">
         <div class="class-request-content">
+
+         
+
             <table style="width: 600px; height: 60px;">
                 <tr class="FormFieldRow" style="height: 30px">
                     <td>
                         <table style="width: 700px; padding-top: 10px;">
                             <tr class="FormFieldRow" style="height: 30px">
+                                <td colspan="4" style="width: 300px; font-size: 13px; color: green;">
+                                    {{'Customs.PhysicalCheck.O.CargoIdentifier'| TextCodeTranslationPipe}}
+                                </td>
                                 <td>
                                     <LogLabel [ObjectFieldName]="'CargoIdentifierTypeName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td class="FormFieldRow" >
+                                <td class="FormFieldRow">
                                     <LogTextBox [ObjectFieldName]="'CargoIdentifierTypeName'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true"
                                                 [Text]="CargoIdentifierTypeName"></LogTextBox>
@@ -47,7 +53,7 @@
                                 </td>
                                 <td class="FormFieldRow" style="width: 150px; padding-right: 36px;">
                                     <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                [HideColumns]="true" 
+                                                [HideColumns]="true"
                                                 [Text]="CustomFileNo"></LogTextBox>
                                 </td>
 

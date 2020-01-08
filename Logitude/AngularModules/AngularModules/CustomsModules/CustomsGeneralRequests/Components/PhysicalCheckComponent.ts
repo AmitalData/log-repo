@@ -9,6 +9,7 @@ import { CommunicationLogStepListService } from "../../../Common/Services/Extend
 import { PhysicalCheckMenuButtonsHandler } from "../../../Customs/Components/MenuButtons/PhysicalCheckMenuButtonsHandler";
 import { PhysicalCheckWebService } from "../../../Customs/Services/WebServices/PhysicalCheckWebService";
 import { PhysicalCheckExtendedPMService } from "../../../Common/Services/ExtendedPMs/PhysicalCheckExtendedPMService";
+import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 
 
  
@@ -23,25 +24,30 @@ export class PhysicalCheckComponent
     implements AfterViewInit, IRequestsSheetMassagingComponent {
     public DataContext: PhysicalCheckComponent = this;
     public EntityPM: PhysicalCheckPM;
-    public ObjectTableName: string = "Customs.Declaration";
+    public ObjectTableName: string = "Customs.PhysicalCheck";
  
     public id: string;
 
     _PhysicalCheckPMService: PhysicalCheckExtendedPMService = new PhysicalCheckExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession; 
-    constructor() {
+    constructor(private _entityResourceService: EntityResourceService) {
         super();
     }
 
-   // ngOnInit() {
-      //  this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe(response => {
-   //         
+    ngOnInit() {
+ 
+    }
+
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
     ngAfterViewInit() {
-        this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
-        this.subscribeWrapperComponent()
+      //  this._entityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => {
+            this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
+            this.subscribeWrapperComponent()
+      //  });
+
+ 
     }
   
     OnMassageDisplayMethod() {
