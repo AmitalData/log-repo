@@ -47,12 +47,29 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             List<ObjectField> currentTenantObjectFields = new List<ObjectField>();
             List<ObjectField> zeroTenantObjectFields = new List<ObjectField>();
 
+            bool isWRCacheALLOWED = false;
+
+            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+            if (iAppSettings != null)
+            {
+                if (iAppSettings["WRCacheALLOWED"] != null)
+                {
+                    string iValueText = iAppSettings["WRCacheALLOWED"] + "";
+                    if (!string.IsNullOrEmpty(iValueText))
+                    {
+                        if (iValueText.ToLower() == "true")
+                        {
+                            isWRCacheALLOWED = true;
+                        }
+                    }
+                }
+            }
 
             #region Current Tenant Fields
 
             if (tenant != 0)
             {
-                if (HttpContext.Current != null)
+                if (HttpContext.Current != null || isWRCacheALLOWED)
                 {
                     if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                     {
@@ -97,7 +114,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             #region Tenant Zero Fields
 
-            if (HttpContext.Current != null)
+            if (HttpContext.Current != null || isWRCacheALLOWED)
             {
                 if (CacheManager.CacheWrapper.Get(zerolistName) == null)
                 {
@@ -178,12 +195,29 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             List<ObjectField> currentTenantObjectFields = new List<ObjectField>();
             List<ObjectField> zeroTenantObjectFields = new List<ObjectField>();
 
+            bool isWRCacheALLOWED = false;
+
+            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+            if (iAppSettings != null)
+            {
+                if (iAppSettings["WRCacheALLOWED"] != null)
+                {
+                    string iValueText = iAppSettings["WRCacheALLOWED"] + "";
+                    if (!string.IsNullOrEmpty(iValueText))
+                    {
+                        if (iValueText.ToLower() == "true")
+                        {
+                            isWRCacheALLOWED = true;
+                        }
+                    }
+                }
+            }
 
             #region Current Tenant Fields
 
             if (tenant != 0)
             {
-                if (HttpContext.Current != null)
+                if (HttpContext.Current != null || isWRCacheALLOWED)
                 {
                     if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                     {
@@ -227,7 +261,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             #region Tenant Zero Fields
 
-            if (HttpContext.Current != null)
+            if (HttpContext.Current != null || isWRCacheALLOWED)
             {
                 if (CacheManager.CacheWrapper.Get(zerolistName) == null)
                 {
