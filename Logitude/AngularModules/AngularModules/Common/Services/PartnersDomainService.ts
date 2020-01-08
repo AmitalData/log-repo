@@ -1796,6 +1796,7 @@ export class AirlineMessagingRuleList {
     AirlineId: string;
     MessageTypeCode: string;
     RuleFieldId: string;
+    RuleFieldCode: string;
     IsMandatoryForSending: boolean;
     MaxSize: number;
     InActive: boolean;
