@@ -965,7 +965,7 @@ namespace Logitude.LXMLFixer.Models
 
                 doc.Save(xmlWriter);
                 xmlWriter.Close();
-                xmlWriter.Dispose();
+                fileStream.Close();
             }
         }
 
