@@ -74,3 +74,5 @@ TenantManagmentPrivateLabels/TenantManagmentPrivateLabels
 WebhookKeys/WebhookKeys
 ARPaymentCheques/ARPaymentCheque
 ClientDrivingLicenses/ClientDrivingLicense
+InterestReportStatuses/InterestReportStatuse
+UserLastSettings/UserLastSettings
