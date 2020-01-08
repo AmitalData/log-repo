@@ -70,14 +70,18 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.IsFromFullWarehouseReleaseComponent = args.IsFromFullWarehouseReleaseComponent;
         this.warehouseReleasePM = args.WarehouseReleasePM;
         this.ViewModelTrigger = args.ViewModelTrigger;
+ 
+        
 
-        this.transportModeId = this.ViewModelTrigger.TransportModeId;
-        this.DirectionId = this.ViewModelTrigger.DirectionId;
+        this.transportModeId = this.ViewModelTrigger.TransportModeId ? this.ViewModelTrigger.TransportModeId : "All";
+        this.DirectionId = this.ViewModelTrigger.DirectionId ? this.ViewModelTrigger.DirectionId : "All";
+
+
+
         this.CustomerId = this.ViewModelTrigger.CustomerId;
         this.FromPortId = this.ViewModelTrigger.FromPortId;
         this.ToPortId = this.ViewModelTrigger.ToPortId;
-
-
+  
         this.PackageType = args.PackageType;
 
         this.AllWarehouseEntryPackagesLists = args.WarehouseEntryPackagesLists;
@@ -354,7 +358,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
 
 
     LoadWarehouseEntryPackageListsByCustomerId() {
-        var shipmentId = this.IsFromFullWarehouseReleaseComponent ? this.warehouseReleasePM.ShipmentId : null;
+        var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId : "";
         this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
             var pmResponse: any = res;
             if (!pmResponse.HasError) {
