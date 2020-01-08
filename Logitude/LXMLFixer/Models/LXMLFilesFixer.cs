@@ -6,6 +6,7 @@ using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Logitude.LXMLFixer.Models
@@ -276,7 +277,7 @@ namespace Logitude.LXMLFixer.Models
                                             ElementName = "field",
                                             AttributeName = "FieldsDataType",
                                             AttributeValue = GetStringValue(GetLXMLDataType(dxmlColumn.Type)),
-                                            OldAttributeValue = lxmlColumn.Type,
+                                            OldAttributeValue = GetStringValue(lxmlColumn.Type),
                                             AttributeFilter = new LXMLAttributeFilter
                                             {
                                                 Name = "FieldName",
@@ -524,11 +525,14 @@ namespace Logitude.LXMLFixer.Models
 
                                     attributes.Add(attribute);
 
+                                    string foreignEntity = GetForeignEntityFromDBTable(dxmlRelations.First().ReferencedTable);
+                                    string navigationPropertyName = GetNavigationPropertyNameFromDBTable(dxmlTableDefinition.Name, foreignEntity);
+
                                     LXMLAttribute attribute2 = new LXMLAttribute
                                     {
                                         ElementName = "field",
                                         AttributeName = "ForeignEntity",
-                                        AttributeValue = GetForeignEntityFromDBTable(dxmlRelations.First().ReferencedTable),
+                                        AttributeValue = foreignEntity,
                                         OldAttributeValue = "NULL",
                                         AttributeFilter = new LXMLAttributeFilter
                                         {
@@ -543,7 +547,7 @@ namespace Logitude.LXMLFixer.Models
                                     {
                                         ElementName = "field",
                                         AttributeName = "NavigationPropertyName",
-                                        AttributeValue = SingularizeDBTable(dxmlRelations.First().ReferencedTable) + Array.IndexOf(dxmlTableDefinition.Relations.Where(r => r.ReferencedTable == dxmlRelations.First().ReferencedTable).Select(r => r.ForeignKeyColumn).ToArray(), dxmlRelations.First().ForeignKeyColumn),
+                                        AttributeValue = navigationPropertyName,
                                         OldAttributeValue = "NULL",
                                         AttributeFilter = new LXMLAttributeFilter
                                         {
@@ -897,7 +901,7 @@ namespace Logitude.LXMLFixer.Models
             if(lxmlFileFixer.Attributes.Count() > 0)
             {
                 XDocument doc = XDocument.Load(lxmlFileFixer.FilePath);
-
+                
                 string fixedMistakesData = "LXML File: " + Path.GetFileName(lxmlFileFixer.FilePath) + "\n";
                 fixedMistakesData += "Element,Attribute,Old Value,New Value\n";
 
@@ -941,7 +945,13 @@ namespace Logitude.LXMLFixer.Models
                     LXMLFixedMistakesData += fixedMistakesData + "\n\n";
                 }
 
-                doc.Save(lxmlFileFixer.FilePath);
+                FileStream fileStream = new FileStream(lxmlFileFixer.FilePath, FileMode.Truncate, FileAccess.Write);
+                XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+                XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+                doc.Save(xmlWriter);
+                xmlWriter.Close();
+                xmlWriter.Dispose();
             }
         }
 
@@ -1089,7 +1099,7 @@ namespace Logitude.LXMLFixer.Models
             return null;
         }
 
-        private static string GetForeignEntityPOCOFilePath(string foreignEntity)
+        private static string GetEntityPOCOFilePath(string entityName)
         {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
@@ -1116,14 +1126,14 @@ namespace Logitude.LXMLFixer.Models
 
             foreach (var modulePath in modulesPaths)
             {
-                string path = logitudePath + modulePath + foreignEntity + ".cs";
+                string path = logitudePath + modulePath + entityName + ".cs";
                 if (File.Exists(path))
                 {
                     return path;
                 }
             }
 
-            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", foreignEntity + ".cs", SearchOption.AllDirectories);
+            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", entityName + ".cs", SearchOption.AllDirectories);
 
             if (lxmlFilesUnderRoot.Length > 0)
             {
@@ -1178,7 +1188,7 @@ namespace Logitude.LXMLFixer.Models
                 return null;
             }
 
-            string entityPOCOFilePath = GetForeignEntityPOCOFilePath(entityName);
+            string entityPOCOFilePath = GetEntityPOCOFilePath(entityName);
 
             if(entityPOCOFilePath == null)
             {
@@ -1187,15 +1197,43 @@ namespace Logitude.LXMLFixer.Models
 
             List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).ToList();
 
-            string pocoClassName = pocoFileLines.Where(l => l.ToLower().Contains("public class")).First().ToLower().Split(new string[] { "class " }, StringSplitOptions.None)[1].Trim();
+            string foreignEntity = pocoFileLines.Where(l => l.Contains("public class")).First().Split(new string[] { "class " }, StringSplitOptions.None)[1].Trim();
 
-            return pocoClassName;
+            return foreignEntity;
         }
 
-        private string SingularizeDBTable(string tableName)
+        private string GetNavigationPropertyNameFromDBTable(string tableName, string foreignEntity)
         {
-            PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
-            return pluralizationService.Singularize(tableName);
+            string entityName;
+
+            if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
+            {
+                string excludedTable = ExcludedTables.Where(t => t.Split('/')[0] == tableName).FirstOrDefault();
+                entityName = String.IsNullOrEmpty(excludedTable) ? null : excludedTable.Split('/')[1];
+            }
+            else
+            {
+                PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
+                entityName = pluralizationService.Singularize(tableName);
+            }
+
+            if (String.IsNullOrEmpty(entityName))
+            {
+                return null;
+            }
+
+            string entityPOCOFilePath = GetEntityPOCOFilePath(entityName);
+
+            if (entityPOCOFilePath == null)
+            {
+                return null;
+            }
+
+            List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).ToList();
+
+            string navigationPropertyName = pocoFileLines.Where(l => l.Contains("public virtual " + foreignEntity)).First().Split(new string[] { "public virtual " + foreignEntity }, StringSplitOptions.None)[1].Split('{')[0].Trim();
+
+            return navigationPropertyName;
         }
     }
 }
