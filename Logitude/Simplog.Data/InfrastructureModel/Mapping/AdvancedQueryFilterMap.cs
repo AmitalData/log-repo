@@ -22,6 +22,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
+            this.Property(t => t.QueryCode)
+                .IsRequired()
+                .HasMaxLength(30)
+                .IsUnicode(false);
+
             this.Property(t => t.ObjectFieldId)
                 .IsRequired()
                 .HasMaxLength(15)
@@ -54,6 +59,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.QueryId).HasColumnName("QueryId");
+            this.Property(t => t.QueryCode).HasColumnName("QueryCode");
             this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
             this.Property(t => t.IsPredefined).HasColumnName("IsPredefined");
             this.Property(t => t.PredefinedValue).HasColumnName("PredefinedValue");

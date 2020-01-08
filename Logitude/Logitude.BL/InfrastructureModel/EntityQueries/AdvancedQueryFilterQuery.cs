@@ -45,7 +45,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     Operator = a.Operator,
                                                                     PredefinedValue = a.PredefinedValue,
                                                                     PredefinedValue2 = a.PredefinedValue2,
-                                                                    QueryCode = a.Query.Code,
+                                                                    QueryCode = a.QueryCode,
                                                                     QueryId = a.QueryId,
                                                                     QueryObjectTableName = a.Query.ObjectTable.Name,
                                                                     QueryUserId = a.Query.UserId,
