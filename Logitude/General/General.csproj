@@ -219,6 +219,7 @@
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] delete payment date text codes.sql" />
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] add tariff payables disconnect event to all tenants.sql" />
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] update tariff line currency from tariff level.sql" />
+    <Content Include="2019.R5\01 - 2020\Day 5 [Khalid] Fix Tenants Languages Codes.sql" />
     <Content Include="2019.R5\11 - 2019\Day 20 [Abed] insert new communication log status time out.sql" />
     <Content Include="2019.R5\12 - 2019\Day 12 [Mutaz] Delete Bank Number Object Fields.sql" />
     <Content Include="2019.R5\12 - 2019\Day 04 [Khalid] Add new Codes for Help Center.sql" />
