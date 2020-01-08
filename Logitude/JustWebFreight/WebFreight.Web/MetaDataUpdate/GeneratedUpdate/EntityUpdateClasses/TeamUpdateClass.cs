@@ -935,7 +935,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TeamTeamHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Team.HeaderScreen", Name = "TeamHeaderScreen", ObjectTableId = TeamObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TeamTeamHeaderScreenScreen0.Id, ObjectFieldCode = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TeamTeamHeaderScreenScreen0.Id,ScreenCode = TeamTeamHeaderScreenScreen0.Code, ObjectFieldCode = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TeamObjectTable.HeaderScreenId = TeamTeamHeaderScreenScreen0.Id;
 	   		  

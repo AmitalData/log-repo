@@ -345,7 +345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TicketTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketType.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TicketTypeTicketTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketTypeHeaderScreenScreen0.Id, ObjectFieldCode = TicketTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTypeTicketTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketTypeHeaderScreenScreen0.Id,ScreenCode = TicketTypeHeaderScreenScreen0.Code, ObjectFieldCode = TicketTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TicketTypeObjectTable.HeaderScreenId = TicketTypeHeaderScreenScreen0.Id;
 	   		  
@@ -353,9 +353,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TicketTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TicketTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TicketTypeTicketTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketTypeGeneralTabScreenScreen1.Id, ObjectFieldCode = TicketTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTypeTicketTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketTypeGeneralTabScreenScreen1.Id,ScreenCode = TicketTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = TicketTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTypeTicketTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TicketTypeGeneralTabScreenScreen1.Id, ObjectFieldCode = TicketTypeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTypeTicketTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TicketTypeGeneralTabScreenScreen1.Id,ScreenCode = TicketTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = TicketTypeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
