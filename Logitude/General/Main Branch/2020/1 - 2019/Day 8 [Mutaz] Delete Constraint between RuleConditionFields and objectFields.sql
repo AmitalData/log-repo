@@ -1,0 +1,2 @@
+ALTER TABLE AdvancedQueryFilters
+DROP CONSTRAINT  FK_QueryAdvancedQueryFilter

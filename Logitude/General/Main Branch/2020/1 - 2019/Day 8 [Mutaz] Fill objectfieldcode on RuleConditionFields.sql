@@ -1,0 +1,1 @@
+ update AdvancedQueryFilters set QueryCode = (select Queries.Code from Queries where Id = AdvancedQueryFilters.QueryId)
