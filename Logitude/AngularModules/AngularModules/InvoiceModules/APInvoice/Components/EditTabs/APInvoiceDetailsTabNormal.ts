@@ -504,7 +504,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
                             invoiceLine.VatTypeId = payable.VatTypeId;
 
-                            this.myChargesTypeListService.getSingleFromCache(invoiceLine.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
+                            this.myChargesTypeListService.getSingle(invoiceLine.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                                 if (!myResponse.HasError) {
                                     var list: ChargesTypeList = myResponse.Result;
                                     if (list != null) {
