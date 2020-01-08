@@ -1854,6 +1854,7 @@
     <Compile Include="Migrations\201912301451035_WesamAddTextCodeCodeToTranslationsTable.Designer.cs">
       <DependentUpon>201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.cs" />
     <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.Designer.cs">
       <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
@@ -1884,6 +1885,12 @@
     <Compile Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.Designer.cs">
       <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs" />
+    <Compile Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.Designer.cs">
+      <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
+    </Compile>
+
 
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
@@ -3344,6 +3351,7 @@
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
 
+
     <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -3389,6 +3397,11 @@
     <EmbeddedResource Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.resx">
       <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.resx">
+      <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
 
   <ItemGroup>
