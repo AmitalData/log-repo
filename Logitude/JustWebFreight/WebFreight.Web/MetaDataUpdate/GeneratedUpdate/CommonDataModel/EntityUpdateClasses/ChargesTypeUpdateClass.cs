@@ -3365,6 +3365,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField ChargesTypeChargesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = ChargesTypeHeaderScreenScreen0.Id,ScreenCode = ChargesTypeHeaderScreenScreen0.Code, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ChargesTypeObjectTable.HeaderScreenId = ChargesTypeHeaderScreenScreen0.Id;
+		    ChargesTypeObjectTable.HeaderScreenCode = ChargesTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

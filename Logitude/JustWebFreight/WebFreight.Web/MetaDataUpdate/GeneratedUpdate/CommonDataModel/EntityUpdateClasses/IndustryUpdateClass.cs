@@ -412,6 +412,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    IndustryObjectTable.HeaderScreenId = IndustryHeaderScreenScreen0.Id;
+		    IndustryObjectTable.HeaderScreenCode = IndustryHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

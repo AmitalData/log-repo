@@ -927,12 +927,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature ComputingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.Q.AllQuery", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.AllComputingPartners", NameTextCodeDefaultText = "All Computing Partners", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
-	      
+	        FeaturesRepository.SubmitChanges();
 
-			  Query AllComputingPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ComputingPartnerTextCode_0.Id, NameTextCodeCode = ComputingPartnerTextCode_0.Code, Code = "All Computing Partners",  QueryGroupCode = "CMPR", IndexOrder = 0, Tenant = 0, ObjectTableId = ComputingPartnerObjectTable.Id, QuerySection = "ComputingPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ComputingPartnerFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn AllComputingPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id, IndexOrder = 0, ObjectFieldId = ComputingPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ComputingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ComputingPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ComputingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+            Query AllComputingPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ComputingPartnerTextCode_0.Id, NameTextCodeCode = ComputingPartnerTextCode_0.Code, Code = "All Computing Partners", QueryGroupCode = "CMPR", IndexOrder = 0, Tenant = 0, ObjectTableId = ComputingPartnerObjectTable.Id, QuerySection = "ComputingPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ComputingPartnerFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+
+            QueryColumn AllComputingPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id, IndexOrder = 0, ObjectFieldId = ComputingPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ComputingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ComputingPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ComputingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn AllComputingPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id, IndexOrder = 1, ObjectFieldId = ComputingPartnerObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ComputingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ComputingPartnerObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ComputingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -951,6 +951,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen ComputingPartnerComputingPartnerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ComputingPartner.HeaderScreen", Name = "ComputingPartnerHeaderScreen", ObjectTableId = ComputingPartnerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    ComputingPartnerObjectTable.HeaderScreenId = ComputingPartnerComputingPartnerHeaderScreenScreen0.Id;
+		    ComputingPartnerObjectTable.HeaderScreenCode = ComputingPartnerComputingPartnerHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

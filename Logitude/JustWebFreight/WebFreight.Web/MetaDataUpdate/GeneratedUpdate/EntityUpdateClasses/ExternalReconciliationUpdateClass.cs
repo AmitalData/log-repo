@@ -888,6 +888,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField ExternalReconciliationExternalReconciliationExternalReconciliationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = ExternalReconciliationObjectFields.Where(d => d.FieldName == "IsCancelled").FirstOrDefault().Id, ScreenId = ExternalReconciliationExternalReconciliationHeaderScreenScreen0.Id,ScreenCode = ExternalReconciliationExternalReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = ExternalReconciliationObjectFields.Where(d => d.FieldName == "IsCancelled").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ExternalReconciliationObjectTable.HeaderScreenId = ExternalReconciliationExternalReconciliationHeaderScreenScreen0.Id;
+		    ExternalReconciliationObjectTable.HeaderScreenCode = ExternalReconciliationExternalReconciliationHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

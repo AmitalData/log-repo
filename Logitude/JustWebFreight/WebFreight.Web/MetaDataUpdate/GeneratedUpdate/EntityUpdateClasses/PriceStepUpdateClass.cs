@@ -796,6 +796,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField PriceStepPriceStepsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PriceStepObjectTable.HeaderScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id;
+		    PriceStepObjectTable.HeaderScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

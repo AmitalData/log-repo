@@ -580,6 +580,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField StageStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = StageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = StageHeaderScreenScreen0.Id,ScreenCode = StageHeaderScreenScreen0.Code, ObjectFieldCode = StageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    StageObjectTable.HeaderScreenId = StageHeaderScreenScreen0.Id;
+		    StageObjectTable.HeaderScreenCode = StageHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

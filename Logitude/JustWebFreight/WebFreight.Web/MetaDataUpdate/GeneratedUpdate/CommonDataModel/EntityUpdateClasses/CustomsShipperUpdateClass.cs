@@ -699,6 +699,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber").FirstOrDefault().Id, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id,ScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code, ObjectFieldCode = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomsShipperObjectTable.HeaderScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id;
+		    CustomsShipperObjectTable.HeaderScreenCode = CustomsShipperCustomsShipperHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

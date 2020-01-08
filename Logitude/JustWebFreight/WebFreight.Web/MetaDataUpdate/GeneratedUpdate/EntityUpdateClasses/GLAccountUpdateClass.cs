@@ -7574,6 +7574,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField GLAccountGLAccountHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "InternalNumber").FirstOrDefault().Id, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = GLAccountObjectFields.Where(d => d.FieldName == "InternalNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    GLAccountObjectTable.HeaderScreenId = GLAccountHeaderScreenScreen0.Id;
+		    GLAccountObjectTable.HeaderScreenCode = GLAccountHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

@@ -1890,6 +1890,10 @@
     <Compile Include="Migrations\202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.Designer.cs">
       <DependentUpon>202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.cs" />
+    <Compile Include="Migrations\202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.Designer.cs">
+      <DependentUpon>202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -3392,6 +3396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.resx">
       <DependentUpon>202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.resx">
+      <DependentUpon>202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

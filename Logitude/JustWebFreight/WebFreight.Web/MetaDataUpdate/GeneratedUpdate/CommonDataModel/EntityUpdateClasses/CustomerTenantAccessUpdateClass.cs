@@ -1459,6 +1459,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField CustomerTenantAccessCustomerTenantAccessHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = CustomerTenantAccessObjectFields.Where(d => d.FieldName == "StockTypeCode").FirstOrDefault().Id, ScreenId = CustomerTenantAccessHeaderScreenScreen0.Id,ScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code, ObjectFieldCode = CustomerTenantAccessObjectFields.Where(d => d.FieldName == "StockTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomerTenantAccessObjectTable.HeaderScreenId = CustomerTenantAccessHeaderScreenScreen0.Id;
+		    CustomerTenantAccessObjectTable.HeaderScreenCode = CustomerTenantAccessHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

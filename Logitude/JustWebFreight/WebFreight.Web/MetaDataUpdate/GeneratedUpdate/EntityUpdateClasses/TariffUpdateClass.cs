@@ -4201,6 +4201,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField TariffTariffHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id,ScreenCode = TariffTariffHeaderScreenScreen0.Code, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TariffObjectTable.HeaderScreenId = TariffTariffHeaderScreenScreen0.Id;
+		    TariffObjectTable.HeaderScreenCode = TariffTariffHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
@@ -4219,6 +4221,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField TariffTariffSurchagesHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id,ScreenCode = TariffTariffSurchagesHeaderScreenScreen1.Code, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TariffObjectTable.HeaderScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id;
+		    TariffObjectTable.HeaderScreenCode = TariffTariffSurchagesHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

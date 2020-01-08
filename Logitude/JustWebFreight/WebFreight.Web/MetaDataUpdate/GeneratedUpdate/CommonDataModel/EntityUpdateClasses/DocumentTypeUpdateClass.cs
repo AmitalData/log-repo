@@ -2160,6 +2160,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField DocumentTypeDocumentTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = DocumentTypeHeaderScreenScreen1.Id,ScreenCode = DocumentTypeHeaderScreenScreen1.Code, ObjectFieldCode = DocumentTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    DocumentTypeObjectTable.HeaderScreenId = DocumentTypeHeaderScreenScreen1.Id;
+		    DocumentTypeObjectTable.HeaderScreenCode = DocumentTypeHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

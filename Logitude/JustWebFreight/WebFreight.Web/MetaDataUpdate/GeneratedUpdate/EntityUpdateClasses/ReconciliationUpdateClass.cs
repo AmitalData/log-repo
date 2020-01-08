@@ -940,6 +940,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ReconciliationObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = ReconciliationObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ReconciliationObjectTable.HeaderScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id;
+		    ReconciliationObjectTable.HeaderScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

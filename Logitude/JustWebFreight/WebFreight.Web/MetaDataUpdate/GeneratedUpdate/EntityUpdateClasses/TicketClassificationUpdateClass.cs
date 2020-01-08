@@ -644,6 +644,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField TicketClassificationTicketClassificationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketClassificationObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketClassificationHeaderScreenScreen0.Id,ScreenCode = TicketClassificationHeaderScreenScreen0.Code, ObjectFieldCode = TicketClassificationObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TicketClassificationObjectTable.HeaderScreenId = TicketClassificationHeaderScreenScreen0.Id;
+		    TicketClassificationObjectTable.HeaderScreenCode = TicketClassificationHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

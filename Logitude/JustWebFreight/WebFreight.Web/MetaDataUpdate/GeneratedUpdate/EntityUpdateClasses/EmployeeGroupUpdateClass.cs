@@ -846,6 +846,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField EmployeeGroupEmployeeGroupEmployeeGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id,ScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    EmployeeGroupObjectTable.HeaderScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id;
+		    EmployeeGroupObjectTable.HeaderScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

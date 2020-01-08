@@ -835,6 +835,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField AutomaticReconcileMethodAutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Id,ScreenCode = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Code, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AutomaticReconcileMethodObjectTable.HeaderScreenId = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Id;
+		    AutomaticReconcileMethodObjectTable.HeaderScreenCode = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

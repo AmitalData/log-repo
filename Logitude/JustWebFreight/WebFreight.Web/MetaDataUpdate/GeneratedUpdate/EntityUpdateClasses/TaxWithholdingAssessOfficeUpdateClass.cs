@@ -437,6 +437,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TaxWithholdingAssessOfficeObjectTable.HeaderScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id;
+		    TaxWithholdingAssessOfficeObjectTable.HeaderScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

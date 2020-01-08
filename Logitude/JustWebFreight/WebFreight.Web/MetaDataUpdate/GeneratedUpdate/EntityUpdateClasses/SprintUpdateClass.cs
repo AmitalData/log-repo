@@ -611,6 +611,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField SprintSprintHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintSprintHeaderScreenScreen1.Id,ScreenCode = SprintSprintHeaderScreenScreen1.Code, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    SprintObjectTable.HeaderScreenId = SprintSprintHeaderScreenScreen1.Id;
+		    SprintObjectTable.HeaderScreenCode = SprintSprintHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

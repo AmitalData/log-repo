@@ -1336,6 +1336,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField PaymentTermPaymentTermHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PaymentTermObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = PaymentTermHeaderScreenScreen1.Id,ScreenCode = PaymentTermHeaderScreenScreen1.Code, ObjectFieldCode = PaymentTermObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PaymentTermObjectTable.HeaderScreenId = PaymentTermHeaderScreenScreen1.Id;
+		    PaymentTermObjectTable.HeaderScreenCode = PaymentTermHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

@@ -503,6 +503,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id,ScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    OpportunityClosingReasonObjectTable.HeaderScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id;
+		    OpportunityClosingReasonObjectTable.HeaderScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

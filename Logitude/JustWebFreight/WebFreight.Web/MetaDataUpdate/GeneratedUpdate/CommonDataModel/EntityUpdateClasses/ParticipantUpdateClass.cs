@@ -2362,6 +2362,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField ParticipantParticipantHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "TTY").FirstOrDefault().Id, ScreenId = ParticipantHeaderScreenScreen0.Id,ScreenCode = ParticipantHeaderScreenScreen0.Code, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "TTY").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ParticipantObjectTable.HeaderScreenId = ParticipantHeaderScreenScreen0.Id;
+		    ParticipantObjectTable.HeaderScreenCode = ParticipantHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

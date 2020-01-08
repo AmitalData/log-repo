@@ -1066,6 +1066,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField BatchTaskExecutionBatchTaskExecutionHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id,ScreenCode = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Code, ObjectFieldCode = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BatchTaskExecutionObjectTable.HeaderScreenId = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Id;
+		    BatchTaskExecutionObjectTable.HeaderScreenCode = BatchTaskExecutionBatchTaskExecutionHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

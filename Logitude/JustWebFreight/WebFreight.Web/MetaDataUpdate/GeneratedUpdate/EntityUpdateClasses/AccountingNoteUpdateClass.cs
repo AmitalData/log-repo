@@ -655,6 +655,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField AccountingNoteAccountingNoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = AccountingNoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id,ScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code, ObjectFieldCode = AccountingNoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingNoteObjectTable.HeaderScreenId = AccountingNoteAccountingNoteHeaderScreenScreen0.Id;
+		    AccountingNoteObjectTable.HeaderScreenCode = AccountingNoteAccountingNoteHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

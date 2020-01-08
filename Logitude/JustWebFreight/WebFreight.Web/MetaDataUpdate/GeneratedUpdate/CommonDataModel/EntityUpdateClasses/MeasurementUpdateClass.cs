@@ -665,6 +665,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField MeasurementMeasurementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = MeasurementHeaderScreenScreen0.Id,ScreenCode = MeasurementHeaderScreenScreen0.Code, ObjectFieldCode = MeasurementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    MeasurementObjectTable.HeaderScreenId = MeasurementHeaderScreenScreen0.Id;
+		    MeasurementObjectTable.HeaderScreenCode = MeasurementHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

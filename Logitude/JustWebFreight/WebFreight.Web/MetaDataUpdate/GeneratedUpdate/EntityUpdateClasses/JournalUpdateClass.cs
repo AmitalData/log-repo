@@ -2769,6 +2769,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField JournalHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem").FirstOrDefault().Id, ScreenId = JournalHeaderScreenScreen1.Id,ScreenCode = JournalHeaderScreenScreen1.Code, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    JournalObjectTable.HeaderScreenId = JournalHeaderScreenScreen1.Id;
+		    JournalObjectTable.HeaderScreenCode = JournalHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

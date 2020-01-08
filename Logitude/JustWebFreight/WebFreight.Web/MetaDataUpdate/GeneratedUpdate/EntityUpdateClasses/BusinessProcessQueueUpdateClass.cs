@@ -919,6 +919,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField BusinessProcessQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessProcessQueueHeaderScreenScreen1.Id,ScreenCode = BusinessProcessQueueHeaderScreenScreen1.Code, ObjectFieldCode = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BusinessProcessQueueObjectTable.HeaderScreenId = BusinessProcessQueueHeaderScreenScreen1.Id;
+		    BusinessProcessQueueObjectTable.HeaderScreenCode = BusinessProcessQueueHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

@@ -403,6 +403,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField RegionRegionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionHeaderScreenScreen0.Id,ScreenCode = RegionHeaderScreenScreen0.Code, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    RegionObjectTable.HeaderScreenId = RegionHeaderScreenScreen0.Id;
+		    RegionObjectTable.HeaderScreenCode = RegionHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

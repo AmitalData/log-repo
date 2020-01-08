@@ -923,6 +923,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField IncotermIncotermHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    IncotermObjectTable.HeaderScreenId = IncotermHeaderScreenScreen1.Id;
+		    IncotermObjectTable.HeaderScreenCode = IncotermHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

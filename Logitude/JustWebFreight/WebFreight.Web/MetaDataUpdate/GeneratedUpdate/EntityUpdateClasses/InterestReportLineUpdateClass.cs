@@ -267,6 +267,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         Screen InterestReportLineInterestReportLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReportLine.HeaderScreen", Name = "InterestReportLineHeaderScreen", ObjectTableId = InterestReportLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    InterestReportLineObjectTable.HeaderScreenId = InterestReportLineInterestReportLineHeaderScreenScreen0.Id;
+		    InterestReportLineObjectTable.HeaderScreenCode = InterestReportLineInterestReportLineHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

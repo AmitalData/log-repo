@@ -1375,6 +1375,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "PageNo").FirstOrDefault().Id, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id,ScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code, ObjectFieldCode = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "PageNo").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ReconcileExternalPageObjectTable.HeaderScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id;
+		    ReconcileExternalPageObjectTable.HeaderScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

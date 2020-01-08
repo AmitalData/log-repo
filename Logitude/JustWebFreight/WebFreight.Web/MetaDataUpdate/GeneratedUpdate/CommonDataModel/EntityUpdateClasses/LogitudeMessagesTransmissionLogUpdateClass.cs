@@ -1903,6 +1903,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "SentDate").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "SentDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    LogitudeMessagesTransmissionLogObjectTable.HeaderScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id;
+		    LogitudeMessagesTransmissionLogObjectTable.HeaderScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

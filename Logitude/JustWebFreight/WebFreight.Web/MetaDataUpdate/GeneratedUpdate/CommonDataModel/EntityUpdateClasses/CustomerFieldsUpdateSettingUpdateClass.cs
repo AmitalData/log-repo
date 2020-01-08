@@ -401,21 +401,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault();
 		   List<ObjectField> CustomerFieldsUpdateSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerFieldsUpdateSetting").ToList();
-		       
-	      
 
-	         Screen CustomerFieldsUpdateSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerFieldsUpdateSetting.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+
+            Screen CustomerFieldsUpdateSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerFieldsUpdateSetting.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
 
             ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "ObjectFieldName").FirstOrDefault().Id, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id, ScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code, ObjectFieldCode = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "ObjectFieldName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
             ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "UpdateDirection").FirstOrDefault().Id, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id, ScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code, ObjectFieldCode = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "UpdateDirection").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
             CustomerFieldsUpdateSettingObjectTable.HeaderScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id;
-	   		  
+            CustomerFieldsUpdateSettingObjectTable.HeaderScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code;
 
-	    }
 
-	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+        }
+
+        public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
 	    {                
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault();  

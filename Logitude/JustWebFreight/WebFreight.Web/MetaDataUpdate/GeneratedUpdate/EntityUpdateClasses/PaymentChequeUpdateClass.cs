@@ -2989,6 +2989,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "JournalId").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "JournalId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PaymentChequeObjectTable.HeaderScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id;
+		    PaymentChequeObjectTable.HeaderScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

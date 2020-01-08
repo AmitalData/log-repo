@@ -1768,6 +1768,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField PortPortHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = PortObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = PortHeaderScreenScreen1.Id,ScreenCode = PortHeaderScreenScreen1.Code, ObjectFieldCode = PortObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PortObjectTable.HeaderScreenId = PortHeaderScreenScreen1.Id;
+		    PortObjectTable.HeaderScreenCode = PortHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

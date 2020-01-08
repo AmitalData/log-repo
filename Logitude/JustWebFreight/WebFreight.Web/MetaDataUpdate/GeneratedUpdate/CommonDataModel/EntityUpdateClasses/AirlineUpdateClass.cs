@@ -5344,6 +5344,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField AirlineAirlineHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = AirlineHeaderScreenScreen1.Id,ScreenCode = AirlineHeaderScreenScreen1.Code, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AirlineObjectTable.HeaderScreenId = AirlineHeaderScreenScreen1.Id;
+		    AirlineObjectTable.HeaderScreenCode = AirlineHeaderScreenScreen1.Code;
+
 	   		  
 	      
 

@@ -2379,6 +2379,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField ContactContactHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "IsUser").FirstOrDefault().Id, ScreenId = ContactHeaderScreenScreen0.Id,ScreenCode = ContactHeaderScreenScreen0.Code, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "IsUser").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ContactObjectTable.HeaderScreenId = ContactHeaderScreenScreen0.Id;
+		    ContactObjectTable.HeaderScreenCode = ContactHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

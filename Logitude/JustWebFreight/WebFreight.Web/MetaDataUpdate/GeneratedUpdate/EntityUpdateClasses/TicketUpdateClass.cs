@@ -7516,14 +7516,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
+	    {
 
-		   ObjectTable TicketObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TicketObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Ticket").ToList();
-		       
-	      
 
-	         Screen TicketHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Ticket.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+            ObjectTable TicketObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault();
+            List<ObjectField> TicketObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Ticket").ToList();
+
+
+
+            Screen TicketHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Ticket.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
 
             ScreenField TicketTicketHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id, ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
@@ -7546,11 +7547,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField TicketTicketHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id, ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
             TicketObjectTable.HeaderScreenId = TicketHeaderScreenScreen0.Id;
-	   		  
+            TicketObjectTable.HeaderScreenCode = TicketHeaderScreenScreen0.Code;
 
-	    }
 
-	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+
+        }
+
+        public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
 	    {                
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable TicketObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault();  

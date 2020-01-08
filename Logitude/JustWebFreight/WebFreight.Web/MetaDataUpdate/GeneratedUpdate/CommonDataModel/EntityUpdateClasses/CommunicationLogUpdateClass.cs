@@ -2360,6 +2360,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CommunicationLogObjectTable.HeaderScreenId = CommunicationLogHeaderScreenScreen0.Id;
+		    CommunicationLogObjectTable.HeaderScreenCode = CommunicationLogHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

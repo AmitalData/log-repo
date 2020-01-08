@@ -1735,6 +1735,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField TMProjectTMProjectTMProjectHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TMProjectObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().Id, ScreenId = TMProjectTMProjectHeaderScreenScreen0.Id,ScreenCode = TMProjectTMProjectHeaderScreenScreen0.Code, ObjectFieldCode = TMProjectObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TMProjectObjectTable.HeaderScreenId = TMProjectTMProjectHeaderScreenScreen0.Id;
+		    TMProjectObjectTable.HeaderScreenCode = TMProjectTMProjectHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

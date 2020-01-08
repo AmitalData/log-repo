@@ -416,6 +416,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField Category4Category4HeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = Category4HeaderScreenScreen0.Id,ScreenCode = Category4HeaderScreenScreen0.Code, ObjectFieldCode = Category4ObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    Category4ObjectTable.HeaderScreenId = Category4HeaderScreenScreen0.Id;
+		    Category4ObjectTable.HeaderScreenCode = Category4HeaderScreenScreen0.Code;
+
 	   		  
 	      
 

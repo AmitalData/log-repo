@@ -4691,6 +4691,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField OpportunityOpportunityHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = OpportunityObjectFields.Where(d => d.FieldName == "ContactPhone").FirstOrDefault().Id, ScreenId = OpportunityHeaderScreenScreen0.Id,ScreenCode = OpportunityHeaderScreenScreen0.Code, ObjectFieldCode = OpportunityObjectFields.Where(d => d.FieldName == "ContactPhone").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    OpportunityObjectTable.HeaderScreenId = OpportunityHeaderScreenScreen0.Id;
+		    OpportunityObjectTable.HeaderScreenCode = OpportunityHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

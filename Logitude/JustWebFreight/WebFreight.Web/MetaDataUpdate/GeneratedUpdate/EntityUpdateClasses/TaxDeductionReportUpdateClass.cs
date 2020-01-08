@@ -1036,6 +1036,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id,ScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code, ObjectFieldCode = TaxDeductionReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TaxDeductionReportObjectTable.HeaderScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id;
+		    TaxDeductionReportObjectTable.HeaderScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

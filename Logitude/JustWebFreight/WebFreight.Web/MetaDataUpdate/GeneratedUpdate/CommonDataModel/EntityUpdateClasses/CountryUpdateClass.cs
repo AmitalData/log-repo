@@ -1161,6 +1161,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField CountryCountryHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CountryObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = CountryHeaderScreenScreen1.Id,ScreenCode = CountryHeaderScreenScreen1.Code, ObjectFieldCode = CountryObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CountryObjectTable.HeaderScreenId = CountryHeaderScreenScreen1.Id;
+		    CountryObjectTable.HeaderScreenCode = CountryHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

@@ -407,6 +407,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomerSizeObjectTable.HeaderScreenId = CustomerSizeHeaderScreenScreen0.Id;
+		    CustomerSizeObjectTable.HeaderScreenCode = CustomerSizeHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

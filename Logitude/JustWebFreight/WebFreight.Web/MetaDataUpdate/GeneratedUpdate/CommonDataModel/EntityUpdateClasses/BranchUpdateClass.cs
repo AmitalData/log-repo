@@ -1196,6 +1196,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField BranchBranchHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchHeaderScreenScreen1.Id,ScreenCode = BranchHeaderScreenScreen1.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BranchObjectTable.HeaderScreenId = BranchHeaderScreenScreen1.Id;
+		    BranchObjectTable.HeaderScreenCode = BranchHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

@@ -1669,6 +1669,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField CashBookCashBookHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeName").FirstOrDefault().Id, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CashBookObjectTable.HeaderScreenId = CashBookHeaderScreenScreen0.Id;
+		    CashBookObjectTable.HeaderScreenCode = CashBookHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

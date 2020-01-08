@@ -1258,6 +1258,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField RevaluationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    RevaluationObjectTable.HeaderScreenId = RevaluationHeaderScreenScreen1.Id;
+		    RevaluationObjectTable.HeaderScreenCode = RevaluationHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

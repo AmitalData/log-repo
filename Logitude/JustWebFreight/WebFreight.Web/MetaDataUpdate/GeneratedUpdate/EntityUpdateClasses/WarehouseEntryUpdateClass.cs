@@ -4904,6 +4904,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "LastStatusUpdateDate").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseEntryObjectFields.Where(d => d.FieldName == "LastStatusUpdateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    WarehouseEntryObjectTable.HeaderScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id;
+		    WarehouseEntryObjectTable.HeaderScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

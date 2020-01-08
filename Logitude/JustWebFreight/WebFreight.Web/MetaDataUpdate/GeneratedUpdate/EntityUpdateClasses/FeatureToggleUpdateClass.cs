@@ -769,6 +769,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField FeatureToggleFeatureToggleHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = FeatureToggleObjectFields.Where(d => d.FieldName == "ToggleName").FirstOrDefault().Id, ScreenId = FeatureToggleFeatureToggleHeaderScreenScreen0.Id,ScreenCode = FeatureToggleFeatureToggleHeaderScreenScreen0.Code, ObjectFieldCode = FeatureToggleObjectFields.Where(d => d.FieldName == "ToggleName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    FeatureToggleObjectTable.HeaderScreenId = FeatureToggleFeatureToggleHeaderScreenScreen0.Id;
+		    FeatureToggleObjectTable.HeaderScreenCode = FeatureToggleFeatureToggleHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

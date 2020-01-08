@@ -1368,6 +1368,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsSharedWithForwarder").FirstOrDefault().Id, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsSharedWithForwarder").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    DocumentsFilingObjectTable.HeaderScreenId = DocumentsFilingHeaderScreenScreen0.Id;
+		    DocumentsFilingObjectTable.HeaderScreenCode = DocumentsFilingHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

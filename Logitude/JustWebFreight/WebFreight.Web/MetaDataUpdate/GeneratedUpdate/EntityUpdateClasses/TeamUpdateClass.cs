@@ -938,6 +938,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TeamTeamHeaderScreenScreen0.Id,ScreenCode = TeamTeamHeaderScreenScreen0.Code, ObjectFieldCode = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TeamObjectTable.HeaderScreenId = TeamTeamHeaderScreenScreen0.Id;
+		    TeamObjectTable.HeaderScreenCode = TeamTeamHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

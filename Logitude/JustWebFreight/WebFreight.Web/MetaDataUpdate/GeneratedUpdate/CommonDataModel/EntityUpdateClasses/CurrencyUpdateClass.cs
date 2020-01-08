@@ -884,6 +884,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField CurrencyCurrencyHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CurrencyObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = CurrencyHeaderScreenScreen1.Id,ScreenCode = CurrencyHeaderScreenScreen1.Code, ObjectFieldCode = CurrencyObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CurrencyObjectTable.HeaderScreenId = CurrencyHeaderScreenScreen1.Id;
+		    CurrencyObjectTable.HeaderScreenCode = CurrencyHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

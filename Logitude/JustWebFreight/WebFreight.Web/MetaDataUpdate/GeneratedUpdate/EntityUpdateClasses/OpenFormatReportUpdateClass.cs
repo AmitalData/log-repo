@@ -1088,6 +1088,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    OpenFormatReportObjectTable.HeaderScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id;
+		    OpenFormatReportObjectTable.HeaderScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

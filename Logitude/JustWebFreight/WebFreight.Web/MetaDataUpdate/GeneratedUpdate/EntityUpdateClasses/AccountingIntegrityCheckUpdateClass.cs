@@ -844,6 +844,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "ShouldFix").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id,ScreenCode = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Code, ObjectFieldCode = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "ShouldFix").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingIntegrityCheckObjectTable.HeaderScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id;
+		    AccountingIntegrityCheckObjectTable.HeaderScreenCode = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

@@ -2448,6 +2448,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingPartnerObjectTable.HeaderScreenId = AccountingPartnerHeaderScreenScreen0.Id;
+		    AccountingPartnerObjectTable.HeaderScreenCode = AccountingPartnerHeaderScreenScreen0.Code;
+
 	   		  
 	      
 

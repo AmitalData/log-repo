@@ -1483,6 +1483,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id,ScreenCode = AccountingSystemHeaderScreenScreen0.Code, ObjectFieldCode = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingSystemObjectTable.HeaderScreenId = AccountingSystemHeaderScreenScreen0.Id;
+		    AccountingSystemObjectTable.HeaderScreenCode = AccountingSystemHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

@@ -2064,6 +2064,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField BankDepositHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "BankAccountNumber").FirstOrDefault().Id, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "BankAccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BankDepositObjectTable.HeaderScreenId = BankDepositHeaderScreenScreen1.Id;
+		    BankDepositObjectTable.HeaderScreenCode = BankDepositHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

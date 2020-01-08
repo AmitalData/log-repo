@@ -607,11 +607,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {
+            ObjectTable AirlineMessagingRuleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AirlineMessagingRule" && d.Tenant == 0).FirstOrDefault();
+            List<ObjectField> AirlineMessagingRuleObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AirlineMessagingRule").ToList();
 
-	    }
 
-	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+
+            Screen AirlineMessagingRuleAirlineMessagingRuleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AirlineMessagingRule.HeaderScreen", Name = "AirlineMessagingRuleHeaderScreen", ObjectTableId = AirlineMessagingRuleObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+
+            AirlineMessagingRuleObjectTable.HeaderScreenId = AirlineMessagingRuleAirlineMessagingRuleHeaderScreenScreen0.Id;
+            AirlineMessagingRuleObjectTable.HeaderScreenCode = AirlineMessagingRuleAirlineMessagingRuleHeaderScreenScreen0.Code;
+
+        }
+
+        public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
 	    {      
 	    } 
 	
