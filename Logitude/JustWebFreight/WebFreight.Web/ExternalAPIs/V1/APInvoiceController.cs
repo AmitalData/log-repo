@@ -102,9 +102,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             isFullAccounting = myTenant.AccountingActivated;
                             if (isFullAccounting == true)
-                            {
                                 apinvoice.IsGeneralInvoice = true;
-                            }
                         }
 
                         string computingPartnerCode = "";
