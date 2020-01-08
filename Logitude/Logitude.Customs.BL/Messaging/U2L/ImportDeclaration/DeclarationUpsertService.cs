@@ -302,15 +302,39 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 }
                 if (this._MyDeclarationPM.CustomerId != DBcustomer) // moran 12.7.15 - Task 14510 - insert into 'if'
                 {
-                    if (_AmitalCustomsFile.ImporterId.Length > 9)
+                    if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ImporterId))
                     {
-                        this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId.Substring(0, 9)); //Yuval Chalup 04.02.2016 TASK-20059
-                        this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Substring(0, 9); // moran 7.9.14 - Task 7860 + Yuval Chalup 04.02.2016 TASK-20059 (Add .Substring(0, 9))
-                    }
-                    else
-                    {
-                        this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId);
-                        this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId; // moran 7.9.14 - Task 7860
+                        if (_AmitalCustomsFile.ImporterId.Substring(0, 1) == "P")
+                        {
+                            this._MyDeclarationPM.ImporterPassportNumber = _AmitalCustomsFile.ImporterId.Substring(1);
+                            this._MyDeclarationPM.ImporterTypeCode = "P";
+                            if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
+                            {
+                                string countryCode = "";
+                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2)
+                                {
+                                    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.CasualImporterCountry);
+                                }
+                                else
+                                {
+                                    countryCode = _AmitalCustomsFile.CasualImporterCountry;
+                                }
+                                if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.ImporterPassCountryCode = countryCode;
+                            }
+                        }
+                        else
+                        {
+                            if (_AmitalCustomsFile.ImporterId.Length > 9)
+                            {
+                                this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId.Substring(0, 9)); //Yuval Chalup 04.02.2016 TASK-20059
+                                this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Substring(0, 9); // moran 7.9.14 - Task 7860 + Yuval Chalup 04.02.2016 TASK-20059 (Add .Substring(0, 9))
+                            }
+                            else
+                            {
+                                this._MyDeclarationPM.ImporterId = TranslateClient(_AmitalCustomsFile.ImporterId);
+                                this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId; // moran 7.9.14 - Task 7860
+                            }
+                        }
                     }
                 }
                 this._MyDeclarationPM.TransportModeId = _AmitalCustomsFile.TransportModeId;

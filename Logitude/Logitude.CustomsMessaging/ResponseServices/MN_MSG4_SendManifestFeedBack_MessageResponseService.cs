@@ -373,6 +373,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, true, false);
                     if (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "V" && declarationCourierStatusPM.CourierPaymentStatusCode != "P" && declarationCourierStatusPM.CourierPaymentStatusCode != "O")
                     {
+                        LogMessagingUtil.Instance.AppendLine($" if (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == V && declarationCourierStatusPM.CourierPaymentStatusCode != P && declarationCourierStatusPM.CourierPaymentStatusCode != O)");
                         if (_MyDeclarationPM.TaxationDateTime < DateTime.Now.Date)
                         {
                             _MyDeclarationPM.TaxationDateTime = DateTime.Now.Date;//לפני השליחה יש לעדכן את תאריך חישוב המיסים לתאריך נוכחי על מנת להמנע מטיוטה שגויה

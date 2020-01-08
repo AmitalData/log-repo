@@ -48,7 +48,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageSiteCode, 
 	         TruckerId, 
 	         IntegratorCode, 
-	         IsReadyForInvoice,
+	         IsReadyForInvoice, 
+	         NoOfCourierHawb, 
+	         IsAutomaticManifestSent,
 	      }
 
 
@@ -104,7 +106,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CalcMissingImporterId, 
 	         CalcPendingCustoms, 
 	         CalcPending900, 
-	         CalcSuspendedDeclarations,
+	         CalcSuspendedDeclarations, 
+	         NoOfCourierHawb, 
+	         IsAutomaticManifestSent,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -241,6 +245,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadyForInvoice))
             {
 				entityPOCO.IsReadyForInvoice = entityPM.IsReadyForInvoice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoOfCourierHawb))
+            {
+				entityPOCO.NoOfCourierHawb = entityPM.NoOfCourierHawb;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAutomaticManifestSent))
+            {
+				entityPOCO.IsAutomaticManifestSent = entityPM.IsAutomaticManifestSent;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -384,6 +398,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsReadyForInvoice = entityPOCO.IsReadyForInvoice;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NoOfCourierHawb))
+            {
+					entityPM.NoOfCourierHawb = entityPOCO.NoOfCourierHawb;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAutomaticManifestSent))
+            {
+					entityPM.IsAutomaticManifestSent = entityPOCO.IsAutomaticManifestSent;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -518,6 +542,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadyForInvoice))
             {
                 oldEntityPM.IsReadyForInvoice = entityPM.IsReadyForInvoice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoOfCourierHawb))
+            {
+                oldEntityPM.NoOfCourierHawb = entityPM.NoOfCourierHawb;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAutomaticManifestSent))
+            {
+                oldEntityPM.IsAutomaticManifestSent = entityPM.IsAutomaticManifestSent;
             }
 			
 		}

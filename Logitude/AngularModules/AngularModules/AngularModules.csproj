@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SSDTUnitTestPath Condition="'$(SSDTUnitTestPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB</SSDTUnitTestPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SSDTPath Condition="'$(SSDTPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130</SSDTPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,7 +13,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <OutputPath>bin</OutputPath>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
@@ -201,6 +207,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntReasonExpComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\NewEntity\NewClaimComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetStorageSiteCodeComponent.html" />
@@ -792,6 +799,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsCollateral\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleCustomsControls.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddEditCourierPendingReasonComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.ts" />
@@ -958,6 +966,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAutonomyKeywordExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\CacheCourierPendingReasonService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
@@ -987,6 +996,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAutonomyKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsCountryPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
@@ -7833,6 +7843,24 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup Condition="$(VisualStudioVersion) == '16.0'">
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTPath)\Microsoft.Data.Tools.Schema.Sql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql.UnitTesting, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
