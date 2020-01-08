@@ -1094,6 +1094,11 @@ export class DeclarationPM {
     public set CourierPaymentStatusCode(newValue: string) { if (this.courierPaymentStatusCode != newValue) { this.courierPaymentStatusCode = newValue; this.MarkAsDirty("CourierPaymentStatusCode"); } }
        
 	 
+    private isPendingNotNull: boolean;
+    public get IsPendingNotNull() { return this.isPendingNotNull; }
+    public set IsPendingNotNull(newValue: boolean) { if (this.isPendingNotNull != newValue) { this.isPendingNotNull = newValue; this.MarkAsDirty("IsPendingNotNull"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

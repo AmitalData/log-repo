@@ -157,6 +157,7 @@ export class DeclarationList {
 	AmendmentOriginalDeclartation: string;
 	AmendmentCorrectedByUserName: string;
 	AmendmentStatusName: string;
+	IsPendingNotNull: boolean;
 	
 }
  
