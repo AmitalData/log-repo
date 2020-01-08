@@ -526,7 +526,7 @@ namespace Logitude.LXMLFixer.Models
                                     attributes.Add(attribute);
 
                                     string foreignEntity = GetForeignEntityFromDBTable(dxmlRelations.First().ReferencedTable);
-                                    string navigationPropertyName = GetNavigationPropertyNameFromDBTable(dxmlTableDefinition.Name, foreignEntity);
+                                    string navigationPropertyName = GetNavigationPropertyNameFromDBTable(dxmlTableDefinition.Name, foreignEntity, lxmlColumn.Name);
 
                                     if(foreignEntity != null)
                                     {
@@ -1211,12 +1211,12 @@ namespace Logitude.LXMLFixer.Models
 
             List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).ToList();
 
-            string foreignEntity = pocoFileLines.Where(l => l.Contains("public class")).First().Split(new string[] { "class " }, StringSplitOptions.None)[1].Trim();
-
+            string foreignEntity = pocoFileLines.Where(l => l.Replace(" ", string.Empty).Contains("publicclass")).First().Replace(" ", string.Empty).Split(new string[] { "publicclass" }, StringSplitOptions.None)[1].Trim();
+            
             return foreignEntity;
         }
 
-        private string GetNavigationPropertyNameFromDBTable(string tableName, string foreignEntity)
+        private string GetNavigationPropertyNameFromDBTable(string tableName, string foreignEntity, string columnName)
         {
             if(foreignEntity == null)
             {
@@ -1250,16 +1250,16 @@ namespace Logitude.LXMLFixer.Models
 
             List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).ToList();
 
-            string navigationProperty = pocoFileLines.Where(l => l.Contains("public virtual " + foreignEntity) || l.Contains("public " + foreignEntity)).FirstOrDefault();
+            List<string> navigationProperties = pocoFileLines.Where(l => l.Replace(" ", string.Empty).Contains("publicvirtual" + foreignEntity) || l.Contains("public" + foreignEntity)).ToList();
 
-            if(navigationProperty == null)
+            navigationProperties = navigationProperties.Select(p => p.Replace(" ", string.Empty).Contains("publicvirtual") ? p.Replace(" ", string.Empty).Split(new string[] { "publicvirtual" + foreignEntity }, StringSplitOptions.None)[1].Split('{')[0].Trim() : p.Replace(" ", string.Empty).Split(new string[] { "public" + foreignEntity }, StringSplitOptions.None)[1].Split('{')[0].Trim()).ToList();
+
+            string navigationPropertyName = navigationProperties.Where(p => columnName.ToLower().Contains(p.ToLower())).FirstOrDefault();
+            
+            if (navigationPropertyName == null)
             {
                 return null;
             }
-
-            string splitAt = navigationProperty.Contains("virtual") ? ("public virtual " + foreignEntity) : ("public " + foreignEntity);
-
-            string navigationPropertyName = navigationProperty.Split(new string[] { splitAt }, StringSplitOptions.None)[1].Split('{')[0].Trim();
 
             return navigationPropertyName;
         }

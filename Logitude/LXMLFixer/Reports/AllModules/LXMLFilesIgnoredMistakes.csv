@@ -1,0 +1,5 @@
+DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value
+AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,UpdatedByUserId,UpdatedByUserId,Type,varchar,datetime
+AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,ShipmentLevelCode,NULL,Name,ShipmentLevelCode,Null
+AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
+AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,DirectionId,DirectionId,Type,char,varchar
