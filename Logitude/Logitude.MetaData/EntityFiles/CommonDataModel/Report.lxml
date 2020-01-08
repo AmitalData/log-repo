@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿
+<?xml version="1.0" encoding="utf-8"?>
 <entity
   Id="&quot;7767a9e1-8576-443a-9c09-fd52fc766c6e&quot;"
   ObjectTableName="&quot;Report&quot;"
@@ -1464,6 +1465,7 @@
     FeatureTextCodeCode="&quot;ReportObjectTable.Features.AllReports&quot;"
     FeatureDefaultText="&quot;All Reports&quot;"
     IsSpellChecked="false">
+
     <QueryColumns>
       <QueryColumn
         QueryCode="&quot;All Reports&quot;"
@@ -1504,6 +1506,7 @@
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
+
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;Report&quot;"
@@ -2165,6 +2168,15 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Report.Features.WORKDAYSPERGATEGORY&quot;"
       FeatureDefaultText="&quot;Work Days Per Category&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHRR&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Report.Features.SHRR&quot;"
+      FeatureDefaultText="&quot;Shipper Returns Report&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
