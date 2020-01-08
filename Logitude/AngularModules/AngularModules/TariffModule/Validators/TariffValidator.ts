@@ -7,14 +7,18 @@ import { Validator } from '../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
 import { PackageTypeListService } from '../../Common/Services/StandardLists/PackageTypeListService';
 import { PackageTypeList } from '../../Common/EntityLists/PackageTypeList';
+import { MeasurementListService } from '../../Common/Services/StandardLists/MeasurementListService';
+import { MeasurementList } from '../../Common/EntityLists/MeasurementList';
 
 export class TariffValidator {
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     private chargesTypePMService: ChargesTypeListService;
     private packageTypeListService: PackageTypeListService;
+    private measurementPMService: MeasurementListService;
     private Errors: string[] = [];
     private entityPM: TariffPM;
+    public HasAContainerTypeUOM: boolean = false;
 
     public Validate = (entityPM: TariffPM): any[] => {
         this.Errors = [];
@@ -23,14 +27,24 @@ export class TariffValidator {
         if (entityPM != null) {
             Validator.TryValidateObject(this.entityPM, "Tariff", this.Errors);
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS") {
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC") {
                 this.chargesTypePMService = new ChargesTypeListService();
                 this.FillChargesIDsAndUOMS();
                 this.ValidateSurcharge();
             }
-
             else if (entityPM.TypeCode == "OFC") {
                 this.packageTypeListService = new PackageTypeListService();
+                this.FillContainersIDs();
+                this.ValidateContainers();
+                this.HasAContainerTypeUOM = true;
+            }
+            else if (entityPM.TypeCode == "OFS") {
+                this.chargesTypePMService = new ChargesTypeListService();
+                this.packageTypeListService = new PackageTypeListService();
+                this.measurementPMService = new MeasurementListService();
+                this.HasAContainerTypeUOM = false;
+                this.FillChargesIDsAndUOMS();
+                this.ValidateSurcharge();
                 this.FillContainersIDs();
                 this.ValidateContainers();
             }
@@ -64,6 +78,7 @@ export class TariffValidator {
         var emptyLines: boolean = false;
         var FirstLineEmpty: boolean = false;
         var tempErrors: Array<string> = [];
+        this.HasAContainerTypeUOM = false;
 
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
@@ -130,6 +145,18 @@ export class TariffValidator {
                     }
                 }
             }
+            if (this.entityPM.TypeCode == "OFS" && this.entityPM[UOMProps[index - 1]] != null) {
+                this.measurementPMService.getSingleFromCache(this.entityPM[UOMProps[index - 1]]).subscribe(res => {
+                    if (!res.HasError) {
+                        var UOMEntity: MeasurementList = res.Result;
+                        if (res) {
+                            if (UOMEntity.Code == "BCNT") {
+                                this.HasAContainerTypeUOM = true;
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         if (!emptyLines) {
@@ -167,12 +194,13 @@ export class TariffValidator {
                 }
             }
 
-            if (index == 1 && this.entityPM.TypeCode == "OFC") {
+            if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
-                    tempErrors.push(IdPropsName[index - 1] + " is required");
+                    if (this.HasAContainerTypeUOM) {
+                        tempErrors.push(IdPropsName[index - 1] + " is required");
+                    }
                     FirstLineEmpty = true;
                 }
-                
             }
 
             else {
