@@ -37,7 +37,7 @@ namespace Logitude.Update
 
                 AllocConsole();
                 Console.WriteLine(System.Environment.CommandLine);
-                return;
+                throw new Exception("JenkinsCustomUpdate throw ");
                 Form1.LoadLogitudeSettings();
                 Console.WriteLine("UpdateDataForTenant");
                 WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.UpdateDataForTenant(0, "customs");
