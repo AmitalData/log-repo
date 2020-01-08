@@ -403,5 +403,28 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return courierMasterPMList;
         }
+
+
+        public List<CourierMaster> GetAllCourierMastersToSendAutoManifest(int tenant)
+        {
+            List<CourierMaster> courierMasterPMList = new List<CourierMaster>();
+             List<CourierMaster> pocoList = repository.GetAllOpenCourierMasters(tenant);
+            DeclarationRepository declarationRep = new DeclarationRepository(tenant);
+
+            foreach (var item in pocoList)
+            {
+                if (item.IsAutomaticManifestSent ==false &&  item.NoOfCourierHawb == declarationRep.GetCourierConnectedDeclaratins(item.Id, tenant).Count().ToString())
+                {
+                    courierMasterPMList.Add(item);
+                }
+            }
+
+
+            return courierMasterPMList;
+
+
+        }
+
+
     }
 }
