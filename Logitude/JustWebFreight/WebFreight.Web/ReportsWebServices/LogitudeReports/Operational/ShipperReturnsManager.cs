@@ -186,9 +186,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                         Reference1 = shipmentPackage.Reference1,
                                                         MasterNumber =  !string.IsNullOrEmpty(shipmentMaster.AirlinePrefix) && !string.IsNullOrEmpty(shipmentMaster.Master) ? shipmentMaster.AirlinePrefix + "-" + shipmentMaster.Master : "",
                                                         MainCarriageCarrierPrefix = shipmentMaster.MainCarriageCarrierPrefix + shipmentMaster.MainCarriageCarrierNumber,
+                                                        MainCarriageFromPortId = shipmentMaster.MainCarriageFromPortId,
+                                                        MainCarriageFinalDestinationPortId = shipmentMaster.MainCarriageFinalDestinationPortId,
                                                     });
            
-
             if (this.iQueryable_JoinShipmentPackages != null)
             {
                 this.iQueryable_JoinShipmentPackages = this.iQueryable_JoinShipmentPackages.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ATD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) || System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
