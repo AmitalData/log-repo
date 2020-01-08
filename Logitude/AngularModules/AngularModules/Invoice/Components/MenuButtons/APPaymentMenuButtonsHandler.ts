@@ -31,11 +31,11 @@ export class APPaymentMenuButtonsHandler {
     private isPrintRequested: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
-    private isFullAccountingGranted: boolean;
+    // private isFullAccountingGranted: boolean;
     private isOerationInProgrees: boolean = false;
 
     constructor(){
-        this.isFullAccountingGranted = this.GetFullAccountingFeature();
+        // this.isFullAccountingGranted = this.GetFullAccountingFeature();
     }
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -348,10 +348,7 @@ export class APPaymentMenuButtonsHandler {
         if (isValid) {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
 
-            if(this.isFullAccountingGranted)
-                this.GetFullAccountingSettingsAndApprove();
-            else
-                this.ContinueSaving(null);
+            this.GetFullAccountingSettingsAndApprove();
         }
 
         else {
@@ -413,8 +410,14 @@ export class APPaymentMenuButtonsHandler {
                 var res = myResponse.Result;
                 var fullAccountingSetting: FullAccountingSettingPM = res;
 
-                this.Approve(fullAccountingSetting);
+                if(fullAccountingSetting)
+                    this.Approve(fullAccountingSetting);
+                else
+                    this.ContinueSaving(null);
 
+
+            }else{
+                this.ContinueSaving(null);
             }
 
         });
