@@ -260,7 +260,7 @@ namespace Logitude.LXMLFixer.Models
 
                             if (lxmlColumn == null)
                             {
-                                LXMLIgnoredMistakesData += dxmlFileName + "," + lxmlFileName + "," + "Column" + "," + dxmlColumn.Name + "," + "NULL" + "," + "Name" + "," + dxmlColumn.Name + "," + "Null" + "\n";
+                                LXMLIgnoredMistakesData += dxmlFileName + "," + lxmlFileName + "," + "Column" + "," + dxmlColumn.Name + "," + "NULL" + "," + "Name" + "," + dxmlColumn.Name + "," + "NULL" + "\n";
                             }
                             else
                             {
