@@ -994,9 +994,24 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
 
                                 _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
-                                    .subscribe(myResult => {
-                                        if (!myResult.Result || myResult.Result.length == 0) {
-
+                                    .subscribe(myDocFilingResult => {
+                                        value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
+                                        value.MetaDataTypeCode = metaData.MetaDataTypeCode;
+                                        value.Tenant = SessionLocator.Tenant;
+                                        value.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
+                                        value.ChangeSetOp = "Insert";
+                                        if (docTypeRes.Result) {
+                                            if (docTypeRes.Result.AutoSetOriginalDocumentTrue) {
+                                                if (value.MetaDataTypeCode == "87") {
+                                                    value.MetaDataValue = "True";
+                                                }
+                                            }
+                                        }
+                                        if (!myDocFilingResult.Result || myDocFilingResult.Result.length == 1) {
+                                            if (AppTool.IsNullOrEmpty(value.MetaDataValue) && !AppTool.IsNullOrEmpty(myDocFilingResult.Result.MetaDataValue))
+                                                {
+                                                value.MetaDataValue = myDocFilingResult.Result.MetaDataValue;
+                                            }
                                         }
                                         else {
 
@@ -1004,18 +1019,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                                     });
 
 
-                                value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
-                                value.MetaDataTypeCode = metaData.MetaDataTypeCode;
-                                value.Tenant = SessionLocator.Tenant;
-                                value.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
-                                value.ChangeSetOp = "Insert";
-                                if (docTypeRes.Result) {
-                                    if (docTypeRes.Result.AutoSetOriginalDocumentTrue) {
-                                        if (value.MetaDataTypeCode == "87") {
-                                            value.MetaDataValue = "True";
-                                        }
-                                    }
-                                }
+                                
                                 this.customDocumentMetaDataValueList.push(value);
                             }
                         });

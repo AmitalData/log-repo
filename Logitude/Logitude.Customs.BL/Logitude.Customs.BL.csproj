@@ -874,6 +874,7 @@
     <Compile Include="EntityQueryServices\ClientDrivingLicenseQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentPackageQueryService.cs" />
+    <Compile Include="EntityQueryServices\CustomsAutonomyKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentStatusQueryService.Generated.cs" />
@@ -1291,6 +1292,7 @@
     <Compile Include="EntityUpdateServices\ConsignmentPackDangerUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CourierPendingReasonUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsAirlineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CustomsAutonomyKeywordUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsPartnerFtpUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DecCargoSplitCargoIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.Amital.cs" />
@@ -1832,6 +1834,8 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0003_QueueMessagesShrink.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0004_DeleteQMessWhenDone.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0005_SInvoiceitemsEntryTk2.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0006_QueueMessagesShrinkTk2.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0007_AutonomyKeywords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />

@@ -1170,6 +1170,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string noOfCourierHawb ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NoOfCourierHawb  
+	   {
+	    
+	     get
+		{
+		   return noOfCourierHawb;
+		 }
+		 set
+		 {
+		   if(noOfCourierHawb != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NoOfCourierHawb",OldValue=noOfCourierHawb,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   noOfCourierHawb=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAutomaticManifestSent ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAutomaticManifestSent  
+	   {
+	    
+	     get
+		{
+		   return isAutomaticManifestSent;
+		 }
+		 set
+		 {
+		   if(isAutomaticManifestSent != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAutomaticManifestSent",OldValue=isAutomaticManifestSent,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAutomaticManifestSent=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

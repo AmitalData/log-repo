@@ -436,6 +436,18 @@
     <Compile Include="Migrations\202001051239465_dbCustomsAutonomyKeywords.Designer.cs">
       <DependentUpon>202001051239465_dbCustomsAutonomyKeywords.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.cs" />
+    <Compile Include="Migrations\202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.Designer.cs">
+      <DependentUpon>202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001080937532_TarrifSetting.cs" />
+    <Compile Include="Migrations\202001080937532_TarrifSetting.Designer.cs">
+      <DependentUpon>202001080937532_TarrifSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001081021093_AddDWHSettingP.cs" />
+    <Compile Include="Migrations\202001081021093_AddDWHSettingP.Designer.cs">
+      <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -470,6 +482,10 @@
     <ProjectReference Include="..\Logitude.Social.Data\Logitude.Social.Data.csproj">
       <Project>{a00ae10e-2560-4e06-99fa-859ea7488ec3}</Project>
       <Name>Logitude.Social.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
+      <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
+      <Name>Logitude.TariffModule.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.TimeManagement.Data\Logitude.TimeManagement.Data.csproj">
       <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>
@@ -749,6 +765,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001051239465_dbCustomsAutonomyKeywords.resx">
       <DependentUpon>202001051239465_dbCustomsAutonomyKeywords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.resx">
+      <DependentUpon>202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001080937532_TarrifSetting.resx">
+      <DependentUpon>202001080937532_TarrifSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081021093_AddDWHSettingP.resx">
+      <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

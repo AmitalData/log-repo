@@ -38,6 +38,8 @@ using Logitude.WarehouseLib.Data.EntityMapping;
 using Logitude.TimeManagement.Data.EntityMapping;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityMapping;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.EntityMapping;
 
 namespace Logitude.OracleDatabaseMigration.LogitudeModel
 {
@@ -387,6 +389,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<DWHSetting> DWHSettings { get; set; }
         public IDbSet<Warehouse> Warehouses
         {
             get;
@@ -442,6 +445,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<TariffSetting> TariffSettings
+        {
+            get; set;
+
+        }
+
         public IDbSet<TarrifCharge> TarrifCharges
         {
             get;
@@ -4164,6 +4173,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TMProjectMap());
             #endregion
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
+            modelBuilder.Configurations.Add(new DWHSettingMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
             modelBuilder.Configurations.Add(new CustomerFieldsUpdateSettingMap());
@@ -4487,6 +4497,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TarrifHeaderMap());
             modelBuilder.Configurations.Add(new TarrifStepMap());
             modelBuilder.Configurations.Add(new TarrifTypeMap());
+            modelBuilder.Configurations.Add(new TariffSettingMap());
             modelBuilder.Configurations.Add(new TemplateFormatMap());
             modelBuilder.Configurations.Add(new TenantMap());
             modelBuilder.Configurations.Add(new TenantSettingMap());
