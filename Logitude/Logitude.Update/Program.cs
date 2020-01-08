@@ -49,7 +49,8 @@ namespace Logitude.Update
             {
 
                 Console.WriteLine(e.ToString());
-                throw e;
+                //throw e;
+                Environment.Exit(-1);
             }
 
         }
