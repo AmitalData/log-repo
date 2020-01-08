@@ -39,6 +39,7 @@ namespace Logitude.Update
                 //AllocConsole();
                 Console.WriteLine(System.Environment.CommandLine);
                 ///throw new Exception("JenkinsCustomUpdate throw ");
+                Console.WriteLine("Form1.LoadLogitudeSettings()" + DateTime.Now.ToString() );
                 Form1.LoadLogitudeSettings();
                 Console.WriteLine("UpdateDataForTenant(customs):" + DateTime.Now.ToString() );
                 WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.UpdateDataForTenant(0, "customs");
