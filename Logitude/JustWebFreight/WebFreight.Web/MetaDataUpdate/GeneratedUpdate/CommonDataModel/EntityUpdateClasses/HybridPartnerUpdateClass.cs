@@ -470,7 +470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup HybridPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CTHP", Name = "HybridPartners" }, queryGroupRepository);
-						QueryGroup HybridPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cdfd", Name = " Query Group" }, queryGroupRepository);
+						QueryGroup HybridPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9700", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable HybridPartnerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault();
@@ -483,13 +483,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query HybridPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HybridPartnerTextCode_0.Id, Code = "HybridPartners",  QueryGroupCode = "CTHP", IndexOrder = 0, Tenant = 0, ObjectTableId = HybridPartnerObjectTable.Id, QuerySection = "HybridPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HybridPartnerFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query HybridPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HybridPartnerTextCode_0.Id, NameTextCodeCode = HybridPartnerTextCode_0.Code, Code = "HybridPartners",  QueryGroupCode = "CTHP", IndexOrder = 0, Tenant = 0, ObjectTableId = HybridPartnerObjectTable.Id, QuerySection = "HybridPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HybridPartnerFeature_0.Id,FeatureUniqeCode= HybridPartnerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn HybridPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 0, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 0, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn HybridPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 1, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 1, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn HybridPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 2, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "PartnerTenant" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 2, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "PartnerTenant" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HybridPartnerObjectFields.Where(d => d.FieldName == "PartnerTenant" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -524,9 +524,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "HPGT",HtmlComponentName = "HybridPartnerTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/HybridPartnerTabComponent", FeatureId = HybridPartnerGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.HybridPartner.HybridPartnerTabControl", ObjectTableId = HybridPartnerObjectTable.Id, TabNameTextCodeId = HybridPartnerGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "HPGT",HtmlComponentName = "HybridPartnerTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/HybridPartnerTabComponent", FeatureId = HybridPartnerGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.HybridPartner.HybridPartnerTabControl", ObjectTableId = HybridPartnerObjectTable.Id, TabNameTextCodeId = HybridPartnerGeneralTextCode_TH0.Id, TabNameTextCodeCode = HybridPartnerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "HPPE",HtmlComponentName = "PermissionsHybridPartnerTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/PermissionsHybridPartnerTabComponent", FeatureId = HybridPartnerPermissionsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.HybridPartner.PermissionsHybridPartnerTabControl", ObjectTableId = HybridPartnerObjectTable.Id, TabNameTextCodeId = HybridPartnerPermissionsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "HPPE",HtmlComponentName = "PermissionsHybridPartnerTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/PermissionsHybridPartnerTabComponent", FeatureId = HybridPartnerPermissionsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.HybridPartner.PermissionsHybridPartnerTabControl", ObjectTableId = HybridPartnerObjectTable.Id, TabNameTextCodeId = HybridPartnerPermissionsTextCode_TH1.Id, TabNameTextCodeCode = HybridPartnerPermissionsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

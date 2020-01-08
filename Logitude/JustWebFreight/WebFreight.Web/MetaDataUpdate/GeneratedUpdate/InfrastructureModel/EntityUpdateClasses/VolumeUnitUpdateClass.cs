@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Volume Unit",
-			      				    Code =  "417d",
+			      				    Code =  "c365",
 			      				    Name =  "VolumeUnit",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",

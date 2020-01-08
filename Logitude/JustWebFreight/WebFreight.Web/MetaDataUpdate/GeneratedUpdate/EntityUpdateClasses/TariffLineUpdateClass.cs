@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
 			      				    DefaultText =  "Tariff Lines",
-			      				    Code =  "2fa9",
+			      				    Code =  "4dc4",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TariffModule",

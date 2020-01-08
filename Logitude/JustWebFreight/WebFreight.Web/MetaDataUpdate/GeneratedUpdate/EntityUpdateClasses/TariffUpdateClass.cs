@@ -3708,6 +3708,291 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastActivityTypeName",
+					  						OldFieldName =  "LastActivityTypeName",
+					  						ObjectTableName =  "Tariff",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastActivityTypeName",
+					  						ListPropertyPath =  "LastActivityTypeName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastActivityTypeName",
+					  						DefaultText =  "Last Activity Type Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastActivityByUserName",
+					  						OldFieldName =  "LastActivityByUserName",
+					  						ObjectTableName =  "Tariff",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastActivityByUserName",
+					  						ListPropertyPath =  "LastActivityByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastActivityByUserName",
+					  						DefaultText =  "Last Activity By User Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastActivityDate",
+					  						OldFieldName =  "LastActivityDate",
+					  						ObjectTableName =  "Tariff",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastActivityDate",
+					  						ListPropertyPath =  "LastActivityDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastActivityDate",
+					  						DefaultText =  "Last Activity Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TransportModeCode",
+					  						OldFieldName =  "TransportModeCode",
+					  						ObjectTableName =  "Tariff",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  3,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  3,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TransportModeCode",
+					  						ListPropertyPath =  "TransportModeCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TransportModeCode",
+					  						DefaultText =  "Transport Mode",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TransportModeName",
+					  						OldFieldName =  "TransportModeName",
+					  						ObjectTableName =  "Tariff",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TransportModeName",
+					  						ListPropertyPath =  "TransportModeName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TransportModeName",
+					  						DefaultText =  "Transport Mode",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -3722,171 +4007,171 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable TariffObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Tariff" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> TariffObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Tariff").ToList();   
 
-			   TextCode TariffTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.AirFreightCostTariffs", DefaultText = @"Air Freight Costs",LocalDefaultText = "Air Freight Costs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TariffTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.AirFreightCostTariffs", DefaultText = @"Air",LocalDefaultText = "Air", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TariffFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.AirFreightCostTariffs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.AirFreightCostTariffs", NameTextCodeDefaultText = "Air Freight Cost Tariffs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode TariffTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.AirSurchargesCostTariffs", DefaultText = @"Air Surcharges Costs",LocalDefaultText = "Air Surcharges Costs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TariffTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.AirSurchargesCostTariffs", DefaultText = @"Air",LocalDefaultText = "Air", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TariffFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.AirSurchargesCostTariffs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.AirSurchargesCostTariffs", NameTextCodeDefaultText = "Air Surcharges Cost Tariffs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode TariffTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.Ocean.LCL.Surcharges.Cost", DefaultText = @"Ocean LCL Surcharges Costs",LocalDefaultText = "Ocean LCL Surcharges Costs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TariffTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.Ocean.LCL.Surcharges.Cost", DefaultText = @"Ocean LCL",LocalDefaultText = "Ocean LCL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TariffFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.Ocean.LCL.Surcharges.Cost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.Ocean.LCL.Surcharges.Cost", NameTextCodeDefaultText = "Ocean.LCL.Surcharges.Cost", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode TariffTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.OceanLCLFreightCost", DefaultText = @"Ocean LCL Freight Costs",LocalDefaultText = "Ocean LCL Freight Costs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TariffTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.OceanLCLFreightCost", DefaultText = @"Ocean LCL",LocalDefaultText = "Ocean LCL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TariffFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.OceanLCLFreightCost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.OceanLCLFreightCost", NameTextCodeDefaultText = "Ocean LCL Freight Cost", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode TariffTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.OceanFCLFreightCost", DefaultText = @"Ocean FCL Freight Cost",LocalDefaultText = "Ocean FCL Freight Cost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TariffTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.OceanFCLFreightCost", DefaultText = @"Ocean FCL",LocalDefaultText = "Ocean FCL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TariffFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.OceanFCLFreightCost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.OceanFCLFreightCost", NameTextCodeDefaultText = "Ocean FCL Freight Cost", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode TariffTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.OceanFCLSurchargesCost", DefaultText = @"Ocean FCL Surcharges Cost",LocalDefaultText = "Ocean FCL Surcharges Cost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TariffTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.OceanFCLSurchargesCost", DefaultText = @"Ocean FCL",LocalDefaultText = "Ocean FCL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TariffFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.OceanFCLSurchargesCost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.OceanFCLSurchargesCost", NameTextCodeDefaultText = "Ocean FCL Surcharges Cost", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AirFreightCostTariffsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_0.Id, Code = "Air Freight Cost Tariffs",  QueryGroupCode = "d341", IndexOrder = 0, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AirFreightCostTariffsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_0.Id, NameTextCodeCode = TariffTextCode_0.Code, Code = "Air Freight Cost Tariffs",  QueryGroupCode = "d341", IndexOrder = 0, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_0.Id,FeatureUniqeCode= TariffFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AirFreightCostTariffsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 8, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 8, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirFreightCostTariffsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 9, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirFreightCostTariffsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 9, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AirFreightCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "AFC",PredefinedValue2 = null, QueryId = AirFreightCostTariffsQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AirFreightCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "AFC",PredefinedValue2 = null, QueryId = AirFreightCostTariffsQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AirSurchargesCostTariffsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_1.Id, Code = "Air Surcharges Cost Tariffs",  QueryGroupCode = "d341", IndexOrder = 1, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AirSurchargesCostTariffsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_1.Id, NameTextCodeCode = TariffTextCode_1.Code, Code = "Air Surcharges Cost Tariffs",  QueryGroupCode = "d341", IndexOrder = 1, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_1.Id,FeatureUniqeCode= TariffFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AirSurchargesCostTariffsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirSurchargesCostTariffsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirSurchargesCostTariffsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirSurchargesCostTariffsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirSurchargesCostTariffsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirSurchargesCostTariffsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirSurchargesCostTariffsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AirSurchargesCostTariffsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AirSurchargesCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "ASC",PredefinedValue2 = null, QueryId = AirSurchargesCostTariffsQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AirSurchargesCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "ASC",PredefinedValue2 = null, QueryId = AirSurchargesCostTariffsQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query Ocean_LCL_Surcharges_CostQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_2.Id, Code = "Ocean.LCL.Surcharges.Cost",  QueryGroupCode = "d341", IndexOrder = 2, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query Ocean_LCL_Surcharges_CostQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_2.Id, NameTextCodeCode = TariffTextCode_2.Code, Code = "Ocean.LCL.Surcharges.Cost",  QueryGroupCode = "d341", IndexOrder = 2, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_2.Id,FeatureUniqeCode= TariffFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter Ocean_LCL_Surcharges_CostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "OSC",PredefinedValue2 = null, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Ocean_LCL_Surcharges_CostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "OSC",PredefinedValue2 = null, QueryId = Ocean_LCL_Surcharges_CostQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query OceanLCLFreightCostQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_3.Id, Code = "Ocean LCL Freight Cost",  QueryGroupCode = "d341", IndexOrder = 3, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_3.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OceanLCLFreightCostQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_3.Id, NameTextCodeCode = TariffTextCode_3.Code, Code = "Ocean LCL Freight Cost",  QueryGroupCode = "d341", IndexOrder = 3, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_3.Id,FeatureUniqeCode= TariffFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OceanLCLFreightCostQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanLCLFreightCostQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanLCLFreightCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanLCLFreightCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanLCLFreightCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanLCLFreightCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanLCLFreightCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanLCLFreightCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanLCLFreightCostQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanLCLFreightCostQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanLCLFreightCostQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanLCLFreightCostQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanLCLFreightCostQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanLCLFreightCostQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanLCLFreightCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanLCLFreightCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OceanLCLFreightCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "OLC",PredefinedValue2 = null, QueryId = OceanLCLFreightCostQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OceanLCLFreightCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "OLC",PredefinedValue2 = null, QueryId = OceanLCLFreightCostQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query OceanFCLFreightCostQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_4.Id, Code = "Ocean FCL Freight Cost",  QueryGroupCode = "d341", IndexOrder = 4, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_4.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OceanFCLFreightCostQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_4.Id, NameTextCodeCode = TariffTextCode_4.Code, Code = "Ocean FCL Freight Cost",  QueryGroupCode = "d341", IndexOrder = 4, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_4.Id,FeatureUniqeCode= TariffFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OceanFCLFreightCostQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLFreightCostQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLFreightCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLFreightCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLFreightCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLFreightCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLFreightCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLFreightCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLFreightCostQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLFreightCostQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLFreightCostQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLFreightCostQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLFreightCostQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLFreightCostQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLFreightCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLFreightCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OceanFCLFreightCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "OFC",PredefinedValue2 = null, QueryId = OceanFCLFreightCostQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OceanFCLFreightCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "OFC",PredefinedValue2 = null, QueryId = OceanFCLFreightCostQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query OceanFCLSurchargesCostQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_5.Id, Code = "Ocean FCL Surcharges Cost",  QueryGroupCode = "d341", IndexOrder = 5, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_5.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OceanFCLSurchargesCostQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_5.Id, NameTextCodeCode = TariffTextCode_5.Code, Code = "Ocean FCL Surcharges Cost",  QueryGroupCode = "d341", IndexOrder = 5, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_5.Id,FeatureUniqeCode= TariffFeature_5.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OceanFCLSurchargesCostQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLSurchargesCostQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLSurchargesCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLSurchargesCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLSurchargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLSurchargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLSurchargesCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLSurchargesCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLSurchargesCostQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLSurchargesCostQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLSurchargesCostQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLSurchargesCostQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLSurchargesCostQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLSurchargesCostQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OceanFCLSurchargesCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanFCLSurchargesCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OceanFCLSurchargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "OFS",PredefinedValue2 = null, QueryId = OceanFCLSurchargesCostQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OceanFCLSurchargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "OFS",PredefinedValue2 = null, QueryId = OceanFCLSurchargesCostQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -3901,19 +4186,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TariffTariffHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Tariff.HeaderScreen", Name = "TariffHeaderScreen", ObjectTableId = TariffObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TariffTariffHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerId").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerId").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "SellerId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CurrencyId").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CurrencyId").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ContractNumber").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ContractNumber").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "ContractNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().Id, ScreenId = TariffTariffHeaderScreenScreen0.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TariffObjectTable.HeaderScreenId = TariffTariffHeaderScreenScreen0.Id;
 	   		  
@@ -3921,17 +4206,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TariffTariffSurchagesHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Tariff.SurchagesHeaderScreen", Name = "TariffSurchagesHeaderScreen", ObjectTableId = TariffObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TariffTariffSurchagesHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffSurchagesHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffSurchagesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffSurchagesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffSurchagesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerId").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffSurchagesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerId").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "SellerId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffSurchagesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffSurchagesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "UpdateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffSurchagesHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ContractNumber").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffSurchagesHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ContractNumber").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "ContractNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffTariffSurchagesHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffTariffSurchagesHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().Id, ScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id, ObjectFieldCode = TariffObjectFields.Where(d => d.FieldName == "TariffNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TariffObjectTable.HeaderScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id;
 	   		  
@@ -3958,11 +4243,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TARD",HtmlComponentName = "",HtmlComponentUrl = "./TariffModule/Components/EditTabs/Tariff/TariffDetailsTabComponent", FeatureId = TariffDetailsFeature_TH0.Id, ControlPath = "./TariffModule/Components/EditTabs/Tariff/TariffDetailsTabComponent", ObjectTableId = TariffObjectTable.Id, TabNameTextCodeId = TariffDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TARD",HtmlComponentName = "",HtmlComponentUrl = "./TariffModule/Components/EditTabs/Tariff/TariffDetailsTabComponent", FeatureId = TariffDetailsFeature_TH0.Id, ControlPath = "./TariffModule/Components/EditTabs/Tariff/TariffDetailsTabComponent", ObjectTableId = TariffObjectTable.Id, TabNameTextCodeId = TariffDetailsTextCode_TH0.Id, TabNameTextCodeCode = TariffDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TFGT",HtmlComponentName = "",HtmlComponentUrl = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent", FeatureId = TariffGeneralFeature_TH1.Id, ControlPath = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent", ObjectTableId = TariffObjectTable.Id, TabNameTextCodeId = TariffGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TFGT",HtmlComponentName = "",HtmlComponentUrl = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent", FeatureId = TariffGeneralFeature_TH1.Id, ControlPath = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent", ObjectTableId = TariffObjectTable.Id, TabNameTextCodeId = TariffGeneralTextCode_TH1.Id, TabNameTextCodeCode = TariffGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVTM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TariffEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TariffObjectTable.Id, TabNameTextCodeId = TariffEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVTM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TariffEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TariffObjectTable.Id, TabNameTextCodeId = TariffEventsTextCode_TH2.Id, TabNameTextCodeCode = TariffEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

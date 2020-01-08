@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Weight Unit",
-			      				    Code =  "fd10",
+			      				    Code =  "fb46",
 			      				    Name =  "WeightUnit",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",

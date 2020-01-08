@@ -39,7 +39,7 @@
   ParentTableName="Tariff"
   NewWizardControlName="&quot;&quot;"
   DefaultText="&quot;Tariff Version&quot;"
-  Code="&quot;9393&quot;"
+  Code="&quot;7bbf&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;TariffModule&quot;"

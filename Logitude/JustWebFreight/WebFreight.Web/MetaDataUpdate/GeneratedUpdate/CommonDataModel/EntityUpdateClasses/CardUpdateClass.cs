@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card",
-			      				    Code =  "e35f",
+			      				    Code =  "8ffb",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
