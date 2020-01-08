@@ -32,6 +32,7 @@ using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
@@ -1346,7 +1347,15 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
-
+                case "SHRR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipperReturnsDataProvider));
+                        ShipperReturnsDataProvider reportDataProvider = (ShipperReturnsDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "ShipperReturns", Name = "ShipperReturnsDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
 
                 case "ATRE":
                     {
@@ -1518,7 +1527,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = logitudeReportsWebService.LoadShipmentsStocksData(filters, reportFliter.tenant);
                         break;
                     }
-
+                case "SHRR":
+                    {
+                        ShipperReturnsManager myDataManager = new ShipperReturnsManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                 case "UPTR":
                     {
                         dataProvider = logitudeReportsWebService.LoadUsersByTenantData(filters, reportFliter.tenant);

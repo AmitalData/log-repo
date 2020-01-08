@@ -84,6 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature UnicargoExportReportFeature = tenantFeatures.Where(d => d.Code == "UNER" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
             Feature shipmentsEventsListReportFeature = tenantFeatures.Where(d => d.Code == "SHEL" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature shipperReruensReportFeature = tenantFeatures.Where(d => d.Code == "SHRR" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
 
             AddReports.AddReport(new ReportDetails() { Code = "CASS", Description = "CASS Report", Name = "CASS Report", FilterControlName = "CASSReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = cassReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CASSReportFilterComponent" }, reportRepository, tenantReports);
@@ -99,6 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "VEHI", Description = "Vehicles Shipping", Name = "Vehicles Shipping", FilterControlName = "VehiclesFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = VehiclesReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Operational/VehiclesFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "UNER", Description = "Unicargo Export Report", Name = "Unicargo Export Report", FilterControlName = "UnicargoExportReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = UnicargoExportReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/Operational/UnicargoExportReportFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "SHEL", Description = "Shipments Events List", Name = "Shipments Events List", FilterControlName = "ShipmentsEventsListFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = shipmentsEventsListReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/Operational/ShipmentsEventsListFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SHRR", Description = "Shipper Returns Report", Name = "Shipper Returns Report", FilterControlName = "ShipperReturnsFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = shipperReruensReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Operational/ShipperReturnsReportFilterComponent" }, reportRepository, tenantReports);
 
         }
         private void LoadReports_Accounting(ReportGroup accountingGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
