@@ -59,6 +59,13 @@ export class FieldsHelper {
         });
     }
 
+    ItemsPresentforCSS(CSS: string) {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.presenceOf(element(by.css(CSS))), 100000000).then(a => function () {
+
+        });
+    }
+
     WaitEditComponentBusyIndicator() {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.invisibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000000).then(a => { });
@@ -127,6 +134,7 @@ export class FieldsHelper {
     }
     WaitByCssAndClick_FromTagInsideListWithCheck(className: string, index: number, Id: string = null, input: string = null) {
         var EC = protractor.ExpectedConditions;
+        this.ItemsPresentforCSS(className);
         browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
             var item = element.all(by.css(className)).get(index);
             if (item == null) {
@@ -135,6 +143,7 @@ export class FieldsHelper {
             else {
                 try {
                     item.click();
+              
                 }
                 catch (Exception) {
                     console.log(Exception);
