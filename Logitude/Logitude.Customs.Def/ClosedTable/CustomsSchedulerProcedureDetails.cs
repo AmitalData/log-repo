@@ -19,6 +19,15 @@ namespace Logitude.Customs.Def.ClosedTable
                 SearchFields = "CustomsCloseCourierMasterTask,CustomsCloseCourierMasterTask",
                 Description = "Close Courier Master",
             });
+
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "CustomsSendManifestTask",
+                Name = "CustomsSendManifestTask",
+                SearchFields = "CustomsSendManifestTask,CustomsSendManifestTask",
+                Description = "Send Manifest",
+
+            });
             return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)
