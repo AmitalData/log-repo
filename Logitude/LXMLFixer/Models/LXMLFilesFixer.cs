@@ -528,35 +528,49 @@ namespace Logitude.LXMLFixer.Models
                                     string foreignEntity = GetForeignEntityFromDBTable(dxmlRelations.First().ReferencedTable);
                                     string navigationPropertyName = GetNavigationPropertyNameFromDBTable(dxmlTableDefinition.Name, foreignEntity);
 
-                                    LXMLAttribute attribute2 = new LXMLAttribute
+                                    if(foreignEntity != null)
                                     {
-                                        ElementName = "field",
-                                        AttributeName = "ForeignEntity",
-                                        AttributeValue = foreignEntity,
-                                        OldAttributeValue = "NULL",
-                                        AttributeFilter = new LXMLAttributeFilter
+                                        LXMLAttribute attribute2 = new LXMLAttribute
                                         {
-                                            Name = "FieldName",
-                                            Value = GetStringValue(lxmlColumn.Name)
-                                        }
-                                    };
+                                            ElementName = "field",
+                                            AttributeName = "ForeignEntity",
+                                            AttributeValue = foreignEntity,
+                                            OldAttributeValue = "NULL",
+                                            AttributeFilter = new LXMLAttributeFilter
+                                            {
+                                                Name = "FieldName",
+                                                Value = GetStringValue(lxmlColumn.Name)
+                                            }
+                                        };
 
-                                    attributes.Add(attribute2);
-                                    
-                                    LXMLAttribute attribute3 = new LXMLAttribute
+                                        attributes.Add(attribute2);
+                                    }
+                                    else
                                     {
-                                        ElementName = "field",
-                                        AttributeName = "NavigationPropertyName",
-                                        AttributeValue = navigationPropertyName,
-                                        OldAttributeValue = "NULL",
-                                        AttributeFilter = new LXMLAttributeFilter
-                                        {
-                                            Name = "FieldName",
-                                            Value = GetStringValue(lxmlColumn.Name)
-                                        }
-                                    };
+                                        LXMLIgnoredMistakesData += dxmlFileName + "," + lxmlFileName + "," + "Column" + "," + dxmlColumn.Name + "," + lxmlColumn.Name + "," + "Foreign Entity" + "," + "From Table " + dxmlRelations.First().ReferencedTable + "," + "NULL" + "\n";
+                                    }
 
-                                    attributes.Add(attribute3);
+                                    if(navigationPropertyName != null)
+                                    {
+                                        LXMLAttribute attribute3 = new LXMLAttribute
+                                        {
+                                            ElementName = "field",
+                                            AttributeName = "NavigationPropertyName",
+                                            AttributeValue = navigationPropertyName,
+                                            OldAttributeValue = "NULL",
+                                            AttributeFilter = new LXMLAttributeFilter
+                                            {
+                                                Name = "FieldName",
+                                                Value = GetStringValue(lxmlColumn.Name)
+                                            }
+                                        };
+
+                                        attributes.Add(attribute3);
+                                    }
+                                    else
+                                    {
+                                        LXMLIgnoredMistakesData += dxmlFileName + "," + lxmlFileName + "," + "Column" + "," + dxmlColumn.Name + "," + lxmlColumn.Name + "," + "Navigation Property Name" + "," + "From Table " + dxmlTableDefinition.Name + "," + "NULL" + "\n";
+                                    }
                                 }
 
                                 if (!dxmlRelations.Any() && lxmlColumn.Constraints.ForeignKey)
@@ -1204,6 +1218,11 @@ namespace Logitude.LXMLFixer.Models
 
         private string GetNavigationPropertyNameFromDBTable(string tableName, string foreignEntity)
         {
+            if(foreignEntity == null)
+            {
+                return null;
+            }
+
             string entityName;
 
             if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
@@ -1231,7 +1250,16 @@ namespace Logitude.LXMLFixer.Models
 
             List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).ToList();
 
-            string navigationPropertyName = pocoFileLines.Where(l => l.Contains("public virtual " + foreignEntity)).First().Split(new string[] { "public virtual " + foreignEntity }, StringSplitOptions.None)[1].Split('{')[0].Trim();
+            string navigationProperty = pocoFileLines.Where(l => l.Contains("public virtual " + foreignEntity) || l.Contains("public " + foreignEntity)).FirstOrDefault();
+
+            if(navigationProperty == null)
+            {
+                return null;
+            }
+
+            string splitAt = navigationProperty.Contains("virtual") ? ("public virtual " + foreignEntity) : ("public " + foreignEntity);
+
+            string navigationPropertyName = navigationProperty.Split(new string[] { splitAt }, StringSplitOptions.None)[1].Split('{')[0].Trim();
 
             return navigationPropertyName;
         }
