@@ -15,9 +15,9 @@ namespace Logitude.LXMLFixer.Models
         private string ModuleName;
 
         private string LXMLMistakesData = "DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value\n";
+        private string LXMLIgnoredMistakesData = "DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value\n";
         private string DXMLFilesThatNotFound = "";
         private string LXMLFixedMistakesData = "";
-        private string LXMLIgnoredMistakesData = "LXML File,DXML Column,LXML Column,Attribute,DXML Value,LXML Value\n";
 
         public LXMLFilesFixer(int moduleNumber)
         {
@@ -192,10 +192,10 @@ namespace Logitude.LXMLFixer.Models
                 foreach (var lxmlFile in lxmlFiles)
                 {
                     string lxmlFileName = Path.GetFileName(lxmlFile);
+                    string entityName = lxmlFileName.Split('.')[0];
+                    string dxmlFileName = entityName + ".dxml";
 
                     Console.WriteLine("Fix Mistakes For " + lxmlFileName + " ...");
-
-                    string entityName = lxmlFileName.Split('.')[0];
 
                     TableDefinition lxmlTableDefinition = GetTableDefinitionForLXMLFile(lxmlFile);
                     TableDefinition dxmlTableDefinition = GetTableDefinitionForDXMLFile(entityName);
@@ -252,7 +252,7 @@ namespace Logitude.LXMLFixer.Models
 
                             if (lxmlColumn == null)
                             {
-                                LXMLIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + "Not Found" + "," + "-" + "," + "-" + "," + "-" + "\n";
+                                LXMLIgnoredMistakesData += dxmlFileName + "," + lxmlFileName + "," + "Column" + "," + dxmlColumn.Name + "," + "NULL" + "," + "Name" + "," + dxmlColumn.Name + "," + "Null" + "\n";
                             }
                             else
                             {
@@ -260,7 +260,7 @@ namespace Logitude.LXMLFixer.Models
                                 {
                                     if(dxmlColumn.Type == "char" || dxmlColumn.Type == "varchar")
                                     {
-                                        LXMLIgnoredMistakesData += lxmlFileName + "," + dxmlColumn.Name + "," + lxmlColumn.Name + "," + "Type" + "," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
+                                        LXMLIgnoredMistakesData += dxmlFileName + "," + lxmlFileName + "," + "Column" + "," + dxmlColumn.Name + "," + lxmlColumn.Name + "," + "Type" + "," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
                                     }
                                     else
                                     {
@@ -496,6 +496,69 @@ namespace Logitude.LXMLFixer.Models
                                             attributes.Add(attribute);
                                         }
                                     }
+                                }
+
+                                if (dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any() && !lxmlColumn.Constraints.ForeignKey)
+                                {
+                                    LXMLAttribute attribute = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "IsForeignKey",
+                                        AttributeValue = "true",
+                                        OldAttributeValue = "false",
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(lxmlColumn.Name)
+                                        }
+                                    };
+
+                                    attributes.Add(attribute);
+                                }
+
+                                if (!dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any() && lxmlColumn.Constraints.ForeignKey)
+                                {
+                                    LXMLAttribute attribute = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "IsForeignKey",
+                                        AttributeValue = "false",
+                                        OldAttributeValue = "true",
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(lxmlColumn.Name)
+                                        }
+                                    };
+
+                                    attributes.Add(attribute);
+                                }
+                            }
+                        }
+
+                        foreach (var dxmlRelation in dxmlTableDefinition.Relations)
+                        {
+                            RelationDefinition lxmlRelation = lxmlTableDefinition.Relations.Where(r => r.ForeignKeyColumn == dxmlRelation.ForeignKeyColumn).FirstOrDefault();
+
+                            if (lxmlRelation == null)
+                            {
+                                
+                            }
+                            else
+                            {
+                                if (dxmlRelation.ReferencedTable != lxmlRelation.ReferencedTable)
+                                {
+                                    
+                                }
+
+                                if (dxmlRelation.ReferencedTableSchema != lxmlRelation.ReferencedTableSchema)
+                                {
+                                    
+                                }
+
+                                if (dxmlRelation.ReferencedColumn != lxmlRelation.ReferencedColumn)
+                                {
+                                    
                                 }
                             }
                         }
@@ -798,45 +861,42 @@ namespace Logitude.LXMLFixer.Models
 
                 foreach (var attr in lxmlFileFixer.Attributes)
                 {
-                    if (!String.IsNullOrEmpty(attr.AttributeValue))
+                    XElement element;
+
+                    if (attr.AttributeFilter == null)
                     {
-                        XElement element;
-
-                        if (attr.AttributeFilter == null)
-                        {
-                            element = doc.Descendants(attr.ElementName).Single();
-                        }
-                        else
-                        {
-                            element = doc.Descendants(attr.ElementName).Where(x => x.Attribute(attr.AttributeFilter.Name).Value == attr.AttributeFilter.Value).Single();
-                        }
-
-                        if(attr.AttributeValue == null)
-                        {
-                            XAttribute elementAttribute = element.Attribute(attr.AttributeName);
-                            if(elementAttribute != null && !String.IsNullOrEmpty(elementAttribute.Value))
-                            {
-                                elementAttribute.Remove();
-                            }
-                        }
-                        else
-                        {
-                            element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
-                        }
-
-                        string elementText = attr.ElementName;
-                        if (attr.AttributeFilter != null)
-                        {
-                            elementText += "[" + attr.AttributeFilter.Name + "='" + attr.AttributeFilter.Value + "']";
-                        }
-
-                        fixedMistakesData += elementText + "," + attr.AttributeName + "," + (!String.IsNullOrEmpty(attr.OldAttributeValue) ? attr.OldAttributeValue : "NULL") + "," + (!String.IsNullOrEmpty(attr.AttributeValue) ? attr.AttributeValue : "NULL") + "\n";
+                        element = doc.Descendants(attr.ElementName).Single();
                     }
+                    else
+                    {
+                        element = doc.Descendants(attr.ElementName).Where(x => x.Attribute(attr.AttributeFilter.Name).Value == attr.AttributeFilter.Value).Single();
+                    }
+
+                    if (attr.AttributeValue == null)
+                    {
+                        XAttribute elementAttribute = element.Attribute(attr.AttributeName);
+                        if (elementAttribute != null && !String.IsNullOrEmpty(elementAttribute.Value))
+                        {
+                            elementAttribute.Remove();
+                        }
+                    }
+                    else
+                    {
+                        element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
+                    }
+
+                    string elementText = attr.ElementName;
+                    if (attr.AttributeFilter != null)
+                    {
+                        elementText += "[" + attr.AttributeFilter.Name + "='" + attr.AttributeFilter.Value + "']";
+                    }
+
+                    fixedMistakesData += elementText + "," + attr.AttributeName + "," + (!String.IsNullOrEmpty(attr.OldAttributeValue) ? attr.OldAttributeValue : "NULL") + "," + (!String.IsNullOrEmpty(attr.AttributeValue) ? attr.AttributeValue : "NULL") + "\n";
                 }
 
                 if(lxmlFileFixer.Attributes.Where(a => !String.IsNullOrEmpty(a.AttributeValue)).Any())
                 {
-                    LXMLFixedMistakesData += fixedMistakesData + "\n";
+                    LXMLFixedMistakesData += fixedMistakesData + "\n\n";
                 }
 
                 doc.Save(lxmlFileFixer.FilePath);
