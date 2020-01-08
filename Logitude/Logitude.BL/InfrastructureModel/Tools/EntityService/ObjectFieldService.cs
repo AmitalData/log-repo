@@ -103,6 +103,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 {
                     allowedCount = 40;
                 }
+                else if (ObjectTable.Name == "Quote") allowedCount = 20;
 
                 if (count < allowedCount)
                 {

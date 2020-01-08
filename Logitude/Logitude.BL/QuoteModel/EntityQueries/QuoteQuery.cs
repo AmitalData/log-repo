@@ -263,6 +263,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                CustomerId = f.CustomerId,
                                                IsDangerous = f.IsDangerous,
                                                QuoteHTMLDocumentId = f.QuoteHTMLDocumentId,
+                                               Field11 = f.Field11,
+                                               Field12 = f.Field12,
+                                               Field13 = f.Field13,
+                                               Field14 = f.Field14,
+                                               Field15 = f.Field15,
+                                               Field16 = f.Field16,
+                                               Field17 = f.Field17,
+                                               Field18 = f.Field18,
+                                               Field19 = f.Field19,
+                                               Field20 = f.Field20,
                                            };
             return result;
         }
@@ -470,6 +480,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         QuotationSections = f.QuotationSections,
                         NumberOfFollowUps = f.NumberOfFollowUps,
                         QuoteHTMLDocumentId = f.QuoteHTMLDocumentId,
+                        Field11 = f.Field11,
+                        Field12 = f.Field12,
+                        Field13 = f.Field13,
+                        Field14 = f.Field14,
+                        Field15 = f.Field15,
+                        Field16 = f.Field16,
+                        Field17 = f.Field17,
+                        Field18 = f.Field18,
+                        Field19 = f.Field19,
+                        Field20 = f.Field20,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -1297,6 +1317,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 ChargeableWeightEdited = entityPOCO.ChargeableWeightEdited,
                 QuoteHTMLDocumentId = entityPOCO.QuoteHTMLDocumentId,
                 QuoteVersion = entityPOCO.LastVersionNumber > 0 ? entityPOCO.QuoteNumber + "-" + entityPOCO.LastVersionNumber:"",
+                Field11 = new CustomFieldClass("Field11", "Quote", entityPOCO.Field11),
+                Field12 = new CustomFieldClass("Field12", "Quote", entityPOCO.Field12),
+                Field13 = new CustomFieldClass("Field13", "Quote", entityPOCO.Field13),
+                Field14 = new CustomFieldClass("Field14", "Quote", entityPOCO.Field14),
+                Field15 = new CustomFieldClass("Field15", "Quote", entityPOCO.Field15),
+                Field16 = new CustomFieldClass("Field16", "Quote", entityPOCO.Field16),
+                Field17 = new CustomFieldClass("Field17", "Quote", entityPOCO.Field17),
+                Field18 = new CustomFieldClass("Field18", "Quote", entityPOCO.Field18),
+                Field19 = new CustomFieldClass("Field19", "Quote", entityPOCO.Field19),
+                Field20 = new CustomFieldClass("Field20", "Quote", entityPOCO.Field20),
             };
 
             int tenant = entityPOCO.Tenant;
