@@ -35,7 +35,7 @@ namespace Logitude.Update
             try
             {
 
-                AllocConsole();
+                //AllocConsole();
                 Console.WriteLine(System.Environment.CommandLine);
                 throw new Exception("JenkinsCustomUpdate throw ");
                 Form1.LoadLogitudeSettings();
