@@ -109,9 +109,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
     FixMeButtonFlicked() {
-        var currentDate = this.InvoiceDate;
-        this.InvoiceDate = null;
-        this.InvoiceDate = currentDate;
+        this.UpdateData();
         this.ShowFixMe();
     }
 
