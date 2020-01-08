@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Design.PluralizationServices;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -18,6 +20,9 @@ namespace Logitude.LXMLFixer.Models
         private string LXMLIgnoredMistakesData = "DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value\n";
         private string DXMLFilesThatNotFound = "";
         private string LXMLFixedMistakesData = "";
+
+        private List<string> ExcludedTables;
+        private List<string> ExcludedTablesNames;
 
         public LXMLFilesFixer(int moduleNumber)
         {
@@ -185,6 +190,8 @@ namespace Logitude.LXMLFixer.Models
 
         public void FixLXMLFilesMistakes()
         {
+            BuildExcludedTablesList();
+
             string[] lxmlFiles = GetLXMLFiles(true);
 
             if (lxmlFiles != null)
@@ -498,7 +505,9 @@ namespace Logitude.LXMLFixer.Models
                                     }
                                 }
 
-                                if (dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any() && !lxmlColumn.Constraints.ForeignKey)
+                                var dxmlRelations = dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(",")));
+                                
+                                if (dxmlRelations.Any() && !lxmlColumn.Constraints.ForeignKey)
                                 {
                                     LXMLAttribute attribute = new LXMLAttribute
                                     {
@@ -514,9 +523,39 @@ namespace Logitude.LXMLFixer.Models
                                     };
 
                                     attributes.Add(attribute);
+
+                                    LXMLAttribute attribute2 = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "ForeignEntity",
+                                        AttributeValue = GetForeignEntityFromDBTable(dxmlRelations.First().ReferencedTable),
+                                        OldAttributeValue = "NULL",
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(lxmlColumn.Name)
+                                        }
+                                    };
+
+                                    attributes.Add(attribute2);
+                                    
+                                    LXMLAttribute attribute3 = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "NavigationPropertyName",
+                                        AttributeValue = SingularizeDBTable(dxmlRelations.First().ReferencedTable) + Array.IndexOf(dxmlTableDefinition.Relations.Where(r => r.ReferencedTable == dxmlRelations.First().ReferencedTable).Select(r => r.ForeignKeyColumn).ToArray(), dxmlRelations.First().ForeignKeyColumn),
+                                        OldAttributeValue = "NULL",
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(lxmlColumn.Name)
+                                        }
+                                    };
+
+                                    attributes.Add(attribute3);
                                 }
 
-                                if (!dxmlTableDefinition.Relations.Where(r => (r.ForeignKeyColumn == dxmlColumn.Name && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',').Contains(dxmlColumn.Name) && r.ForeignKeyColumn.Contains(","))).Any() && lxmlColumn.Constraints.ForeignKey)
+                                if (!dxmlRelations.Any() && lxmlColumn.Constraints.ForeignKey)
                                 {
                                     LXMLAttribute attribute = new LXMLAttribute
                                     {
@@ -532,33 +571,36 @@ namespace Logitude.LXMLFixer.Models
                                     };
 
                                     attributes.Add(attribute);
-                                }
-                            }
-                        }
 
-                        foreach (var dxmlRelation in dxmlTableDefinition.Relations)
-                        {
-                            RelationDefinition lxmlRelation = lxmlTableDefinition.Relations.Where(r => r.ForeignKeyColumn == dxmlRelation.ForeignKeyColumn).FirstOrDefault();
+                                    LXMLAttribute attribute2 = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "ForeignEntity",
+                                        AttributeValue = null,
+                                        OldAttributeValue = "Not Determined",
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(lxmlColumn.Name)
+                                        }
+                                    };
 
-                            if (lxmlRelation == null)
-                            {
-                                
-                            }
-                            else
-                            {
-                                if (dxmlRelation.ReferencedTable != lxmlRelation.ReferencedTable)
-                                {
-                                    
-                                }
+                                    attributes.Add(attribute2);
 
-                                if (dxmlRelation.ReferencedTableSchema != lxmlRelation.ReferencedTableSchema)
-                                {
-                                    
-                                }
+                                    LXMLAttribute attribute3 = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "NavigationPropertyName",
+                                        AttributeValue = null,
+                                        OldAttributeValue = "Not Determined",
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(lxmlColumn.Name)
+                                        }
+                                    };
 
-                                if (dxmlRelation.ReferencedColumn != lxmlRelation.ReferencedColumn)
-                                {
-                                    
+                                    attributes.Add(attribute3);
                                 }
                             }
                         }
@@ -1045,6 +1087,115 @@ namespace Logitude.LXMLFixer.Models
             }
 
             return null;
+        }
+
+        private static string GetForeignEntityPOCOFilePath(string foreignEntity)
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
+
+            string[] modulesPaths = new string[]
+            {
+                @"\Logitude\Logitude.Accounting.Data\EntityPOCOs\",
+                @"\Logitude\Logitude.BookingLib.Data\EntityPOCOs\",
+                @"\Logitude\Logitude.CRM.Data\EntityPOCOs\",
+                @"\Logitude\Logitude.Customs.Data\EntityPOCOs\",
+                @"\Logitude\Logitude.Social.Data\EntityPOCOs\",
+                @"\Logitude\Logitude.TariffModule.Data\EntityPOCOs\",
+                @"\Logitude\Logitude.TimeManagement.Data\EntityPOCOs\",
+                @"\Logitude\Logitude.WarehouseLib.Data\EntityPOCOs\",
+                @"\Logitude\Logitude.Infrastructure.Data\EntityPOCOs\",
+                @"\Logitude\Simplog.Global.Data\GlobalModel\EntityPOCOs\",
+                @"\Logitude\Simplog.Data\CommonDataModel\EntityPOCOs\",
+                @"\Logitude\Simplog.Data\InfrastructureModel\EntityPOCOs\",
+                @"\Logitude\Simplog.Data\InvoiceModel\EntityPOCOs\",
+                @"\Logitude\Simplog.Data\QuoteModel\EntityPOCOs\",
+                @"\Logitude\Simplog.Data\ShipmentsModel\EntityPOCOs\",
+                @"\Logitude\Logitude.SystemLogs\POCOs\"
+            };
+
+            foreach (var modulePath in modulesPaths)
+            {
+                string path = logitudePath + modulePath + foreignEntity + ".cs";
+                if (File.Exists(path))
+                {
+                    return path;
+                }
+            }
+
+            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", foreignEntity + ".cs", SearchOption.AllDirectories);
+
+            if (lxmlFilesUnderRoot.Length > 0)
+            {
+                return lxmlFilesUnderRoot[0];
+            }
+
+            return null;
+        }
+
+        private void BuildExcludedTablesList()
+        {
+            try
+            {
+                string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                string filePath = Path.Combine(projectDirectory, @"ExcludedTablesMap.txt");
+                List<string> excludedTablesList = File.ReadLines(filePath).ToList();
+                if (excludedTablesList.Count() > 0)
+                {
+                    ExcludedTables = excludedTablesList;
+                    ExcludedTablesNames = excludedTablesList.Select(t => t.Split('/')[0]).ToList();
+                }
+                else
+                {
+                    ExcludedTables = new List<string>();
+                    ExcludedTablesNames = new List<string>();
+                }
+            }
+            catch (Exception)
+            {
+                ExcludedTables = null;
+                ExcludedTablesNames = null;
+            }
+        }
+
+        private string GetForeignEntityFromDBTable(string tableName)
+        {
+            string entityName;
+
+            if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
+            {
+                string excludedTable = ExcludedTables.Where(t => t.Split('/')[0] == tableName).FirstOrDefault();
+                entityName = String.IsNullOrEmpty(excludedTable) ? null : excludedTable.Split('/')[1];
+            }
+            else
+            {
+                PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
+                entityName = pluralizationService.Singularize(tableName);
+            }
+
+            if (String.IsNullOrEmpty(entityName))
+            {
+                return null;
+            }
+
+            string entityPOCOFilePath = GetForeignEntityPOCOFilePath(entityName);
+
+            if(entityPOCOFilePath == null)
+            {
+                return null;
+            }
+
+            List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).ToList();
+
+            string pocoClassName = pocoFileLines.Where(l => l.ToLower().Contains("public class")).First().ToLower().Split(new string[] { "class " }, StringSplitOptions.None)[1].Trim();
+
+            return pocoClassName;
+        }
+
+        private string SingularizeDBTable(string tableName)
+        {
+            PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
+            return pluralizationService.Singularize(tableName);
         }
     }
 }

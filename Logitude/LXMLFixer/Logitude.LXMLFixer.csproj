@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -102,6 +103,8 @@
     <None Include="Reports\Warehouse\LXMLFilesIgnoredMistakes.csv" />
     <None Include="Reports\Warehouse\LXMLFilesMistakes.csv" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ExcludedTablesMap.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
