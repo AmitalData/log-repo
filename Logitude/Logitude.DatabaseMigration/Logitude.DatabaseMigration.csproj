@@ -1882,7 +1882,6 @@
     <Compile Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.Designer.cs">
       <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs" />
     <Compile Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.Designer.cs">
       <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
@@ -1892,13 +1891,10 @@
       <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
     </Compile>
-
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -3395,18 +3391,15 @@
     <EmbeddedResource Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.resx">
       <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.resx">
       <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.resx">
       <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.resx">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
     </EmbeddedResource>
-
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
