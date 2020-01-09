@@ -113,7 +113,9 @@ export class ReportsGrpupClass {
 
                     if (SessionLocator.Tenant == 2095 || SessionLocator.Tenant == 2052 || SessionLocator.TenantManagementJS.PackageCode == "DVMT") {
                         if (item.Code == "SHRR") {
-                            this.ItemsSource.push(item);
+                            if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                this.ItemsSource.push(item);
+                            }
                         }
                     }
 
