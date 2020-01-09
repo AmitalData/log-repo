@@ -553,7 +553,7 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
     }
 
     ChooseEntity() {
-        if (this.IsTicketEditEnabled) {
+        if (this.IsTicketEditEnabled && this.EntityType != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 800;
             logWindow.Height = 570;

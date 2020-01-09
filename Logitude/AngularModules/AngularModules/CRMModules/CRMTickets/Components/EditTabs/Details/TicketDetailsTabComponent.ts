@@ -639,7 +639,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         }
     }
     ChooseEntity() {
-        if (this.IsTicketEditEnabled) {
+        if (this.IsTicketEditEnabled && this.EntityType != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 800;
             logWindow.Height = 570;
