@@ -161,6 +161,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.CustomsDeclarationNumber = entityPM.CustomsDeclarationNumber;
             entityPoco.CustomConnectToShipment = entityPM.CustomConnectToShipment;
 
+            MapConcurrencyFields(entityPM, entityPoco, entityMasterData, myPackagesList.Count, isNewEntity);
+
             MapMasterData(entityPM, entityPoco, entityMasterData, isNewEntity);
             MapRoutings(entityPM, entityPoco, isNewEntity);
             MapPartners(entityPM, entityPoco, isNewEntity);
@@ -421,7 +423,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.AdditionalChargesId = entityPM.AdditionalChargesId;
             entityPoco.FreightPayerId = entityPM.FreightPayerId;
             entityPoco.FreightPayerAddressId = entityPM.FreightPayerAddressId;
-            entityPoco.HasContainerException = entityPM.HasContainerException;
             entityPoco.From = entityPM.From;
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
@@ -445,18 +446,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 BuildRoutingField(entityPM, entityPoco, entityMasterData, objectContext);
             }
 
-            entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
-            entityPM.ConcurrencyGUID = entityPoco.ConcurrencyGUID;
-            
+           
             entityPM.PackagesDeleted = false;            
 
             ValidateMAWBStackField(entityPoco, entityMasterData);
-
-            if(myPackagesList.Count == 0)
-            {
-                entityPoco.HasContainerException = false;
-                entityPoco.INTTRALastStatusDate = null;
-            }
         }
 
         private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)
@@ -475,7 +468,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 }
             }
         }
-
         private static void MapXSDMessagesFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, bool isNewEntity)
         {
             // The Send Services uses the direct poco and update it
@@ -496,49 +488,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.DeclarationNumber = entityPM.DeclarationNumber;
             entityPoco.DeclarationDate = entityPM.DeclarationDate;
             entityPoco.CustomsClearanceDate = entityPM.CustomsClearanceDate;
-
-            // FNA:FMA:FSA
-            entityPoco.CarrierLastStatusCode = entityPM.CarrierLastStatusCode;
-            entityPoco.CarrierLastStatusDate = entityPM.CarrierLastStatusDate;
-
-            // FSR:FSA
-            entityPoco.IsFSRSent = entityPM.IsFSRSent;
-            entityPoco.LastFSRStatusRequestDate = entityPM.LastFSRStatusRequestDate;
-
-            entityPoco.FNAReason = entityPM.FNAReason;
-            entityPoco.FHLStatusCode = entityPM.FHLStatusCode;
-            entityPoco.FHLStatusDate = entityPM.FHLStatusDate;
-            entityPoco.CargonautFHLStatusCode = entityPM.CargonautFHLStatusCode;
-            entityPoco.CargonautFHLStatusDate = entityPM.CargonautFHLStatusDate;
-
-
-            if (entityPM.ShipmentLevelCode != "H")
-            {
-                if (entityMasterData != null)
-                {
-                    entityMasterData.FWBStatusCode = entityPM.FWBStatusCode;
-                    entityMasterData.FWBStatusDate = entityPM.FWBStatusDate;
-                    entityMasterData.CargonautFWBStatusCode = entityPM.CargonautFWBStatusCode;
-                    entityMasterData.CargonautFWBStatusDate = entityPM.CargonautFWBStatusDate;
-                }
-            }
-            //}
-
-            entityPoco.INTTRASIStatusCode = entityPM.INTTRASIStatusCode;
-            entityPoco.INTTRASIStatusDate = entityPM.INTTRASIStatusDate;
-            entityPoco.INTTRASIError = entityPM.INTTRASIError;
-            entityPoco.INTTRAContractNumber = entityPM.INTTRAContractNumber;
-            entityPoco.INTTRAInstructions = entityPM.INTTRAInstructions;
-            entityPoco.INTTRAComments = entityPM.INTTRAComments;
-            entityPoco.INTTRADocumentQTY = entityPM.INTTRADocumentQTY;
-            entityPoco.SIHasAttachList = entityPM.SIHasAttachList;
-            entityPoco.INTTRAIsFreighted = entityPM.INTTRAIsFreighted;
-            entityPoco.INTTRADocumentTypeCode = entityPM.INTTRADocumentTypeCode;
-            entityPoco.INTTRALastStatusDate = entityPM.INTTRALastStatusDate;
-            entityPoco.INTTRABookingTransStatusCode = entityPM.INTTRABookingTransStatusCode;
-            entityPoco.INTTRABookingStatusCode = entityPM.INTTRABookingStatusCode;
-            entityPoco.INTTRALastBookingResponse = entityPM.INTTRALastBookingResponse;
-            entityPoco.INTTRABookingError = entityPM.INTTRABookingError;
         }
         private static void BuildRoutingField(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, IShipmentsContext objectContext)
         {
@@ -1540,94 +1489,39 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.MainCarriageIsFromStack = entityPM.MainCarriageIsFromStack;
                     entityMasterData.Master = entityPM.Master;
                     entityMasterData.MAWBOBLDate = entityPM.MAWBOBLDate;
-                    entityMasterData.BookingConfirmationNumber = entityPM.BookingConfirmationNumber;
                     entityMasterData.BookingConfirmationNotes = entityPM.BookingConfirmationNotes;
-                    entityMasterData.BookingConfirmedBy = entityPM.BookingConfirmedBy;
-                    entityMasterData.MainCarriageFromPortId = entityPM.MainCarriageFromPortId;
-                    entityMasterData.MainCarriageToPortId = entityPM.MainCarriageToPortId;
                     entityMasterData.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
-                    entityMasterData.MainCarriageETD = entityPM.MainCarriageETD;
-                    entityMasterData.MainCarriageETA = entityPM.MainCarriageETA;
                     entityMasterData.ManifestReason = entityPM.ManifestReason;
                     entityMasterData.ManifestStatusCode = entityPM.ManifestStatusCode;
                     entityMasterData.AirlinePrefix = entityPM.AirlinePrefix;
-                    entityMasterData.MainCarriageCarrierNumber = entityPM.MainCarriageCarrierNumber;
                     entityMasterData.ProrateReceivables = entityPM.ProrateReceivables;
                     entityMasterData.CutoffDate = entityPM.CutoffDate;
 
-                    if (entityMasterData.MainCarriageSTD == null)
-                    {
-                        entityMasterData.MainCarriageSTD = entityPM.MainCarriageETD;
-                    }
-
-                    if (entityMasterData.MainCarriageSTA == null)
-                    {
-                        entityMasterData.MainCarriageSTA = entityPM.MainCarriageETA;
-                    }
 
                     entityMasterData.MainCarriageVesselId = entityPM.MainCarriageVesselId;
                     entityMasterData.MainCarriageIsFromStack = entityPM.MainCarriageIsFromStack;
-                    entityMasterData.MainCarriageATD = entityPM.MainCarriageATD;
                     entityMasterData.MainCarriageATA = entityPM.MainCarriageATA;
                     entityMasterData.Transshipment1FromPortId = entityPM.Transshipment1FromPortId;
-                    entityMasterData.Transshipment1ToPortId = entityPM.Transshipment1ToPortId;
                     entityMasterData.Transshipment1CarrierId = entityPM.Transshipment1CarrierId;
                     entityMasterData.Transshipment1CarrierNumber = entityPM.Transshipment1CarrierNumber;
                     entityMasterData.Transshipment1AdditionalMAWBOBLBL = entityPM.Transshipment1AdditionalMAWBOBLBL;
                     entityMasterData.Transshipment1VesselId = entityPM.Transshipment1VesselId;
-                    entityMasterData.Transshipment1ATA = entityPM.Transshipment1ATA;
-                    entityMasterData.Transshipment1ATD = entityPM.Transshipment1ATD;
-                    entityMasterData.Transshipment1ETA = entityPM.Transshipment1ETA;
-                    entityMasterData.Transshipment1ETD = entityPM.Transshipment1ETD;
 
-                    if (entityMasterData.Transshipment1STD == null)
-                    {
-                        entityMasterData.Transshipment1STD = entityPM.Transshipment1ETD;
-                    }
-                    if (entityMasterData.Transshipment1STA == null)
-                    {
-                        entityMasterData.Transshipment1STA = entityPM.Transshipment1ETA;
-                    }
+
 
                     entityMasterData.Transshipment2FromPortId = entityPM.Transshipment2FromPortId;
-                    entityMasterData.Transshipment2ToPortId = entityPM.Transshipment2ToPortId;
                     entityMasterData.Transshipment2CarrierId = entityPM.Transshipment2CarrierId;
                     entityMasterData.Transshipment2CarrierNumber = entityPM.Transshipment2CarrierNumber;
                     entityMasterData.Transshipment2AdditionalMAWBOBLBL = entityPM.Transshipment2AdditionalMAWBOBLBL;
                     entityMasterData.Transshipment2VesselId = entityPM.Transshipment2VesselId;
-                    entityMasterData.Transshipment2ATA = entityPM.Transshipment2ATA;
-                    entityMasterData.Transshipment2ATD = entityPM.Transshipment2ATD;
-                    entityMasterData.Transshipment2ETA = entityPM.Transshipment2ETA;
-                    entityMasterData.Transshipment2ETD = entityPM.Transshipment2ETD;
 
-                    if (entityMasterData.Transshipment2STD == null)
-                    {
-                        entityMasterData.Transshipment2STD = entityPM.Transshipment2ETD;
-                    }
-                    if (entityMasterData.Transshipment2STA == null)
-                    {
-                        entityMasterData.Transshipment2STA = entityPM.Transshipment2ETA;
-                    }
 
                     entityMasterData.Transshipment3FromPortId = entityPM.Transshipment3FromPortId;
-                    entityMasterData.Transshipment3ToPortId = entityPM.Transshipment3ToPortId;
                     entityMasterData.Transshipment3CarrierId = entityPM.Transshipment3CarrierId;
                     entityMasterData.Transshipment3CarrierNumber = entityPM.Transshipment3CarrierNumber;
                     entityMasterData.Transshipment3AdditionalMAWBOBLBL = entityPM.Transshipment3AdditionalMAWBOBLBL;
                     entityMasterData.Transshipment3VesselId = entityPM.Transshipment3VesselId;
-                    entityMasterData.Transshipment3ATA = entityPM.Transshipment3ATA;
-                    entityMasterData.Transshipment3ATD = entityPM.Transshipment3ATD;
-                    entityMasterData.Transshipment3ETA = entityPM.Transshipment3ETA;
-                    entityMasterData.Transshipment3ETD = entityPM.Transshipment3ETD;
 
-                    if (entityMasterData.Transshipment3STD == null)
-                    {
-                        entityMasterData.Transshipment3STD = entityPM.Transshipment3ETD;
-                    }
-                    if (entityMasterData.Transshipment3STA == null)
-                    {
-                        entityMasterData.Transshipment3STA = entityPM.Transshipment3ETA;
-                    }
 
                     if (entityPM.TransportModeId == "I")
                     {
@@ -1644,30 +1538,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         entityMasterData.TruckNumber = entityPM.TruckNumber;
                     }
 
-                    string myFinalDestinationPortId = null;
-
-                    if (entityMasterData.Transshipment3ToPortId != null)
-                    {
-                        myFinalDestinationPortId = entityMasterData.Transshipment3ToPortId;
-                    }
-
-                    else if (entityMasterData.Transshipment2ToPortId != null)
-                    {
-                        myFinalDestinationPortId = entityMasterData.Transshipment2ToPortId;
-                    }
-
-                    else if (entityMasterData.Transshipment1ToPortId != null)
-                    {
-                        myFinalDestinationPortId = entityMasterData.Transshipment1ToPortId;
-                    }
-
-                    else
-                    {
-                        myFinalDestinationPortId = entityMasterData.MainCarriageToPortId;
-                    }
-
-
-                    entityMasterData.MainCarriageFinalDestinationPortId = myFinalDestinationPortId;
                     entityMasterData.MainCarriageCarrierPrefix = entityPM.MainCarriageCarrierPrefix;
                     entityMasterData.Transshipment1CarrierPrefix = entityPM.Transshipment1CarrierPrefix;
                     entityMasterData.Transshipment2CarrierPrefix = entityPM.Transshipment2CarrierPrefix;
@@ -1769,20 +1639,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.PreCarriageCarrierId = entityPM.PreCarriageCarrierId;
             entityPoco.PreCarriageCarrierNumber = entityPM.PreCarriageCarrierNumber;
             entityPoco.PreCarriageVesselId = entityPM.PreCarriageVesselId;
-            entityPoco.PreCarriageATA = entityPM.PreCarriageATA;
-            entityPoco.PreCarriageATD = entityPM.PreCarriageATD;
-            entityPoco.PreCarriageETA = entityPM.PreCarriageETA;
-            entityPoco.PreCarriageETD = entityPM.PreCarriageETD;
+
             entityPoco.PreCarriageTransportModeId = entityPM.PreCarriageTransportModeId;
             entityPoco.OnCarriageFromPortId = entityPM.OnCarriageFromPortId;
             entityPoco.OnCarriageToPortId = entityPM.OnCarriageToPortId;
             entityPoco.OnCarriageCarrierId = entityPM.OnCarriageCarrierId;
             entityPoco.OnCarriageCarrierNumber = entityPM.OnCarriageCarrierNumber;
             entityPoco.OnCarriageVesselId = entityPM.OnCarriageVesselId;
-            entityPoco.OnCarriageATA = entityPM.OnCarriageATA;
-            entityPoco.OnCarriageATD = entityPM.OnCarriageATD;
-            entityPoco.OnCarriageETA = entityPM.OnCarriageETA;
-            entityPoco.OnCarriageETD = entityPM.OnCarriageETD;
+
             entityPoco.OnCarriageTransportModeId = entityPM.OnCarriageTransportModeId;
         }
         private static void MapPartners(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity)
@@ -1966,22 +1830,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPoco.Ratio = entityPM.Ratio;
             entityPoco.DimFactor = entityPM.DimFactor;
-            entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
             entityPoco.NumberOfContainers = entityPM.NumberOfContainers;
             entityPoco.DimensionsUnitCode = entityPM.DimensionsUnitCode;
             entityPoco.VolumeUnitCode = entityPM.VolumeUnitCode;
-            entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
             entityPoco.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
             entityPoco.GrossWeightEdited = entityPM.GrossWeightEdited;
             entityPoco.ChargeableWeightEdited = entityPM.ChargeableWeightEdited;
             entityPoco.Volume = entityPM.Volume;
-            entityPoco.GrossWeight = entityPM.GrossWeight;
             entityPoco.VolumetricWeight = entityPM.VolumetricWeight;
-            entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
             entityPoco.VolumeInCBM = GetVolumeInCBM(entityPM.VolumeUnitCode, entityPM.Volume);
-            entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
-            entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
-            entityPoco.ChargeableWeightInKG = GetWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
+
 
             entityPoco.CustomsDeclarationNumber = entityPM.CustomsDeclarationNumber;
             entityPoco.ShipperName = entityPM.ShipperName;
