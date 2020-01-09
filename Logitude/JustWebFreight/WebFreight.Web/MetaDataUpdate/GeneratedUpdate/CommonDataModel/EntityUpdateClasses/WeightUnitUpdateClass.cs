@@ -347,6 +347,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen WeightUnitWeightUnitHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WeightUnit.HeaderScreen", Name = "WeightUnitHeaderScreen", ObjectTableId = WeightUnitObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    WeightUnitObjectTable.HeaderScreenId = WeightUnitWeightUnitHeaderScreenScreen0.Id;
+		    WeightUnitObjectTable.HeaderScreenCode = WeightUnitWeightUnitHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

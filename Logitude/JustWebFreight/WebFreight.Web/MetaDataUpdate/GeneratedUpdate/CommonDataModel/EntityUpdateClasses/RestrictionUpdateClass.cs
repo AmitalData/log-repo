@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Restriction",
-			      				    Code =  "e685",
+			      				    Code =  "e6c6",
 			      				    Name =  "Restriction",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -125,6 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Restriction,Restrictions,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -187,6 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ObjectTableId",
@@ -249,6 +251,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ObjectFieldId",
@@ -319,6 +322,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
+
+		   ObjectTable RestrictionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Restriction" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> RestrictionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Restriction").ToList();
+		       
+	      
+
+	         Screen RestrictionRestrictionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Restriction.HeaderScreen", Name = "RestrictionHeaderScreen", ObjectTableId = RestrictionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    RestrictionObjectTable.HeaderScreenId = RestrictionRestrictionHeaderScreenScreen0.Id;
+		    RestrictionObjectTable.HeaderScreenCode = RestrictionRestrictionHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

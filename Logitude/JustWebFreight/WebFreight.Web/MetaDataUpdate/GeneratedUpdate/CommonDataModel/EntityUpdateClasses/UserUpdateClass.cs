@@ -2762,9 +2762,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen UserHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "User.HeaderScreen", Name = "Header Screen", ObjectTableId = UserObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField UserUserHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().Id, ScreenId = UserHeaderScreenScreen0.Id, ObjectFieldCode = UserObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField UserUserHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().Id, ScreenId = UserHeaderScreenScreen0.Id,ScreenCode = UserHeaderScreenScreen0.Code, ObjectFieldCode = UserObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    UserObjectTable.HeaderScreenId = UserHeaderScreenScreen0.Id;
+		    UserObjectTable.HeaderScreenCode = UserHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

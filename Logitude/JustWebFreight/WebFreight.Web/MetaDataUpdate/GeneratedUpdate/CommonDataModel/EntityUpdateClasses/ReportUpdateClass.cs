@@ -194,7 +194,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -259,7 +258,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FilterControlName",
@@ -324,7 +322,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Description",
@@ -390,7 +387,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -453,7 +449,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -518,7 +513,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -580,7 +574,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FilterHtmlComponentUrl",
@@ -629,25 +622,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Report.HeaderScreen", Name = "Header Screen", ObjectTableId = ReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ReportReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ReportHeaderScreenScreen0.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ReportHeaderScreenScreen0.Id,ScreenCode = ReportHeaderScreenScreen0.Code, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().Id, ScreenId = ReportHeaderScreenScreen0.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().Id, ScreenId = ReportHeaderScreenScreen0.Id,ScreenCode = ReportHeaderScreenScreen0.Code, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ReportObjectTable.HeaderScreenId = ReportHeaderScreenScreen0.Id;
+		    ReportObjectTable.HeaderScreenCode = ReportHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen ReportGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Report.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ReportObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ReportReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

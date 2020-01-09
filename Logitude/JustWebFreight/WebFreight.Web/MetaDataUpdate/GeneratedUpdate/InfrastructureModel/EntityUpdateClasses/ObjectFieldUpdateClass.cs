@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Field",
-			      				    Code =  "e805",
+			      				    Code =  "e1dd",
 			      				    Name =  "ObjectField",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -695,6 +695,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "FieldCode",
+					  						OldFieldName =  "FieldCode",
 					  						ObjectTableName =  "ObjectField",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -714,6 +715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FieldCode",
 					  						ListPropertyPath =  "FieldCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -762,6 +764,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen ObjectFieldObjectFieldHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ObjectField.HeaderScreen", Name = "ObjectFieldHeaderScreen", ObjectTableId = ObjectFieldObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    ObjectFieldObjectTable.HeaderScreenId = ObjectFieldObjectFieldHeaderScreenScreen0.Id;
+		    ObjectFieldObjectTable.HeaderScreenCode = ObjectFieldObjectFieldHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

@@ -3706,7 +3706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query ArrivedNotDeliveredQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_0.Id, NameTextCodeCode = ContainerFollowUpTextCode_0.Code, Code = "ArrivedNotDelivered",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
-			   QueryGroupCode = "CNFL", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CNFL", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_0.Id,FeatureUniqeCode= ContainerFollowUpFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ArrivedNotDeliveredQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id, IndexOrder = 0, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -3736,7 +3736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query DeliveredNotReturnedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_1.Id, NameTextCodeCode = ContainerFollowUpTextCode_1.Code, Code = "DeliveredNotReturned",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
-			   QueryGroupCode = "CNFL", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CNFL", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_1.Id,FeatureUniqeCode= ContainerFollowUpFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DeliveredNotReturnedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id, IndexOrder = 0, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -3766,7 +3766,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query InTransitQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_2.Id, NameTextCodeCode = ContainerFollowUpTextCode_2.Code, Code = "InTransit",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
-			   QueryGroupCode = "CNFL", IndexOrder = 2, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CNFL", IndexOrder = 2, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_2.Id,FeatureUniqeCode= ContainerFollowUpFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InTransitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id, IndexOrder = 0, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -3806,6 +3806,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	         Screen ContainerFollowUpContainerFollowUpHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContainerFollowUp.HeaderScreen", Name = "ContainerFollowUpHeaderScreen", ObjectTableId = ContainerFollowUpObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    ContainerFollowUpObjectTable.HeaderScreenId = ContainerFollowUpContainerFollowUpHeaderScreenScreen0.Id;
+		    ContainerFollowUpObjectTable.HeaderScreenCode = ContainerFollowUpContainerFollowUpHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
