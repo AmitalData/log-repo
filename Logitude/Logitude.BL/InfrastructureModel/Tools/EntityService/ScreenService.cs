@@ -69,7 +69,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             {
                 if (mod == null)
                 {
-                    mod = new ScreenModification() { Tenant = theEntityPm.UserTenant, ScreenId = theEntityPm.Id, Id = IdCounter.GetNumber("ScreenModification", theEntityPm.Tenant), };
+                    mod = new ScreenModification() { Tenant = theEntityPm.UserTenant, ScreenCode = theEntityPm.Code, Id = IdCounter.GetNumber("ScreenModification", theEntityPm.Tenant), };
                     this.ObjectContext.ScreenModifications.Add(mod);
                 }
             }

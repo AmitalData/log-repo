@@ -2071,13 +2071,13 @@ namespace WebFreight.Web.InfrastructureModel
             List<ScreenPM> currentScreens = screensQuery.GetScreenPMsByTenant(theTenant).ToList();
             foreach (ObjectTable objectTable in tenantZeroObjectTables)
             {
-                if (objectTable.HeaderScreenId != null)
+                if (objectTable.HeaderScreenCode != null)
                 {
-                    ScreenPM zeroScreen = tenantZeroScreens.Where(d => d.Id == objectTable.HeaderScreenId).FirstOrDefault();
+                    ScreenPM zeroScreen = tenantZeroScreens.Where(d => d.Id == objectTable.HeaderScreenCode).FirstOrDefault();
                     ScreenPM currentScreen = currentScreens.Where(d => d.Code == zeroScreen.Code).FirstOrDefault();
 
                     ObjectTable currentObject = currentTenantObjectTables.Where(d => d.Name == objectTable.Name).FirstOrDefault();
-                    currentObject.HeaderScreenId = currentScreen.Id;
+                    currentObject.HeaderScreenCode = currentScreen.Id;
                     objectTabelRepository.Update(currentObject);
                 }
             }
@@ -2104,6 +2104,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Id = IdCounter.GetNumber("ScreenField", theTenant).ToString(),
                     ObjectFieldId = currentObjectField.Id,
                     ScreenId = currentScreen.Id,
+                    ScreenCode = currentScreen.Code,
                     Tenant = theTenant,
                     Row = field.Row,
                     Column = field.Column,
