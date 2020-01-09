@@ -30,10 +30,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return requiredFieldsPms;
         }
 
-        public CustomsRequiredFieldPM GetCustomRequiredFieldsByObjectFieldId(string ObjectFieldId, int Tenant)
+        public CustomsRequiredFieldPM GetCustomRequiredFieldsByObjectFieldCode(string ObjectFieldCode, int Tenant)
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
-            CustomsRequiredField requiredFields = rep.GetCustomRequiredFieldsByObjectFieldId(ObjectFieldId, Tenant);
+            CustomsRequiredField requiredFields = rep.GetCustomRequiredFieldsByObjectFieldCode(ObjectFieldCode, Tenant);
             CustomsRequiredFieldPM requiredFieldsPms = new CustomsRequiredFieldPM();
            
             CustomsRequiredFieldPM requiredFieldpm = new CustomsRequiredFieldPM();

@@ -83,7 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
 
                     CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(customContext);
-                    CustomsRequiredField requiredField = rep.GetCustomRequiredFieldsByObjectFieldId(item.ObjectfieldId, tenant);
+                    CustomsRequiredField requiredField = rep.GetCustomRequiredFieldsByObjectFieldCode(item.ObjectfieldCode, tenant);
 
                     //CustomsRequiredFieldQueryService query = new CustomsRequiredFieldQueryService(customContext);
                     //CustomsRequiredFieldPM reqField = query.GetCustomRequiredFieldsByObjectFieldId(item.ObjectfieldId);
@@ -96,6 +96,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             CustomsRequiredFieldPM field = new CustomsRequiredFieldPM()
                             {
                                 ObjectfieldId = item.ObjectfieldId,
+                                ObjectfieldCode = item.ObjectfieldCode,
                                 ObjectTableId = item.ObjectTableId,
                                 Tenant = tenant,
                                 ObjectFieldName = item.ObjectFieldName,
@@ -109,7 +110,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         if (item.Active == false)
                         {
                             CustomsRequiredFieldQueryService query = new CustomsRequiredFieldQueryService(customContext);
-                            CustomsRequiredFieldPM reqField = query.GetCustomRequiredFieldsByObjectFieldId(item.ObjectfieldId, tenant);
+                            CustomsRequiredFieldPM reqField = query.GetCustomRequiredFieldsByObjectFieldCode(item.ObjectfieldCode, tenant);
                             // delete requierd field from DB
                             CustomsRequiredFieldUpdateService service = new CustomsRequiredFieldUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                             reqField.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
@@ -132,6 +133,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     public class RequierdFieldObject
     {
         public string ObjectfieldId { get; set; }
+        public string ObjectfieldCode { get; set; }
         public string ObjectTableId { get; set; }
         public string ObjectFieldName { get; set; }
         public bool Active { get; set; }

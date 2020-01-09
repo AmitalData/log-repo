@@ -932,6 +932,7 @@ namespace WebFreight.Web.InfrastructureModel
                 {
                     Id = IdCounter.GetNumber("CustomsRequiredField", tenant).ToString(),
                     ObjectfieldId = field.ObjectfieldId,
+                    ObjectfieldCode = field.ObjectfieldCode,
                     ObjectTableId = field.ObjectTableId,
                     Tenant = tenant,
                 };

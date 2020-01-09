@@ -727,7 +727,7 @@ export class ConsigmentTabContentComponent
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Consignment', true);
             });
         });
