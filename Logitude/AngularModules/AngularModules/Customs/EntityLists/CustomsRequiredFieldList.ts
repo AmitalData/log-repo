@@ -13,6 +13,7 @@ export class CustomsRequiredFieldList {
 	ObjectTableId: string;
 	ObjectfieldId: string;
 	ObjectFieldName: string;
+	ObjectfieldCode: string;
 	
 }
  
