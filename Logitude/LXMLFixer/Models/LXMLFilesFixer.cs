@@ -1157,6 +1157,50 @@ namespace Logitude.LXMLFixer.Models
             return null;
         }
 
+        private static string GetEntityMappingFilePath(string entityName)
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
+
+            string[] modulesPaths = new string[]
+            {
+                @"\Logitude\Logitude.Accounting.Data\EntityMapping\",
+                @"\Logitude\Logitude.BookingLib.Data\EntityMapping\",
+                @"\Logitude\Logitude.CRM.Data\EntityMapping\",
+                @"\Logitude\Logitude.Customs.Data\EntityMapping\",
+                @"\Logitude\Logitude.Social.Data\EntityMapping\",
+                @"\Logitude\Logitude.TariffModule.Data\EntityMapping\",
+                @"\Logitude\Logitude.TimeManagement.Data\EntityMapping\",
+                @"\Logitude\Logitude.WarehouseLib.Data\EntityMapping\",
+                @"\Logitude\Logitude.Infrastructure.Data\EntityMapping\",
+                @"\Logitude\Simplog.Global.Data\GlobalModel\Mapping\",
+                @"\Logitude\Simplog.Data\CommonDataModel\Mapping\",
+                @"\Logitude\Simplog.Data\InfrastructureModel\Mapping\",
+                @"\Logitude\Simplog.Data\InvoiceModel\Mapping\",
+                @"\Logitude\Simplog.Data\QuoteModel\Mapping\",
+                @"\Logitude\Simplog.Data\ShipmentsModel\Mapping\",
+                @"\Logitude\Logitude.SystemLogs\Mapping\"
+            };
+
+            foreach (var modulePath in modulesPaths)
+            {
+                string path = logitudePath + modulePath + entityName + "Map.cs";
+                if (File.Exists(path))
+                {
+                    return path;
+                }
+            }
+
+            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", entityName + "Map.cs", SearchOption.AllDirectories);
+
+            if (lxmlFilesUnderRoot.Length > 0)
+            {
+                return lxmlFilesUnderRoot[0];
+            }
+
+            return null;
+        }
+
         private void BuildExcludedTablesList()
         {
             try
@@ -1184,84 +1228,193 @@ namespace Logitude.LXMLFixer.Models
 
         private string GetForeignEntityFromDBTable(string tableName)
         {
-            string entityName;
+            try
+            {
+                string entityName;
 
-            if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
-            {
-                string excludedTable = ExcludedTables.Where(t => t.Split('/')[0] == tableName).FirstOrDefault();
-                entityName = String.IsNullOrEmpty(excludedTable) ? null : excludedTable.Split('/')[1];
-            }
-            else
-            {
-                PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
-                entityName = pluralizationService.Singularize(tableName);
-            }
+                if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
+                {
+                    string excludedTable = ExcludedTables.Where(t => t.Split('/')[0] == tableName).FirstOrDefault();
+                    entityName = String.IsNullOrEmpty(excludedTable) ? null : excludedTable.Split('/')[1];
+                }
+                else
+                {
+                    PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
+                    entityName = pluralizationService.Singularize(tableName);
+                }
 
-            if (String.IsNullOrEmpty(entityName))
+                if (String.IsNullOrEmpty(entityName))
+                {
+                    return null;
+                }
+
+                string entityPOCOFilePath = GetEntityPOCOFilePath(entityName);
+
+                if (entityPOCOFilePath == null)
+                {
+                    return null;
+                }
+
+                List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).Select(l => l.Replace(" ", string.Empty)).ToList();
+
+                string foreignEntity = pocoFileLines.Where(l => l.Contains("publicclass")).First().Split(new string[] { "publicclass" }, StringSplitOptions.None)[1].Trim();
+
+                return (foreignEntity.Contains(":") ? foreignEntity.Split(':')[0] : foreignEntity);
+            }
+            catch(Exception e)
             {
+                string error = e.ToString();
                 return null;
             }
-
-            string entityPOCOFilePath = GetEntityPOCOFilePath(entityName);
-
-            if(entityPOCOFilePath == null)
-            {
-                return null;
-            }
-
-            List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).ToList();
-
-            string foreignEntity = pocoFileLines.Where(l => l.Replace(" ", string.Empty).Contains("publicclass")).First().Replace(" ", string.Empty).Split(new string[] { "publicclass" }, StringSplitOptions.None)[1].Trim();
-            
-            return foreignEntity;
         }
 
         private string GetNavigationPropertyNameFromDBTable(string tableName, string foreignEntity, string columnName)
         {
-            if(foreignEntity == null)
+            try
             {
+                if (foreignEntity == null)
+                {
+                    return null;
+                }
+
+                string entityName;
+
+                if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
+                {
+                    string excludedTable = ExcludedTables.Where(t => t.Split('/')[0] == tableName).FirstOrDefault();
+                    entityName = String.IsNullOrEmpty(excludedTable) ? null : excludedTable.Split('/')[1];
+                }
+                else
+                {
+                    PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
+                    entityName = pluralizationService.Singularize(tableName);
+                }
+
+                if (String.IsNullOrEmpty(entityName))
+                {
+                    return null;
+                }
+
+                string entityPOCOFilePath = GetEntityPOCOFilePath(entityName);
+
+                if (entityPOCOFilePath == null)
+                {
+                    return null;
+                }
+
+                //List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).Select(l => l.Replace(" ", string.Empty)).ToList();
+
+                //List<string> navigationProperties = pocoFileLines.Where(l => l.Contains("publicvirtual" + foreignEntity) || l.Contains("public" + foreignEntity)).ToList();
+
+                //navigationProperties = navigationProperties.Select(p => p.Contains("publicvirtual") ? p.Split(new string[] { "publicvirtual" + foreignEntity }, StringSplitOptions.None)[1].Split('{')[0].Trim() : p.Split(new string[] { "public" + foreignEntity }, StringSplitOptions.None)[1].Split('{')[0].Trim()).ToList();
+
+                //string navigationPropertyName = navigationProperties.Where(p => columnName.ToLower().Contains(p.ToLower())).FirstOrDefault();
+
+                List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).Select(l => l.Trim()).Where(l => !String.IsNullOrEmpty(l)).Select(l => l.Replace(" ", string.Empty)).ToList();
+
+                string foreignKeyDataAnnotation = pocoFileLines.Where(l => l.Contains("[ForeignKey(\"" + columnName + "\"")).FirstOrDefault();
+
+                if (foreignKeyDataAnnotation != null)
+                {
+                    int indexOfForeignKeyDataAnnotation = Array.IndexOf(pocoFileLines.ToArray(), foreignKeyDataAnnotation);
+
+                    string columnProperty = pocoFileLines.ToArray().ElementAt(indexOfForeignKeyDataAnnotation + 1);
+
+                    string splitAt = columnProperty.Contains("publicvirtual") ? ("publicvirtual" + foreignEntity) : ("public" + foreignEntity);
+
+                    string navigationPropertyName = columnProperty.Split(new string[] { splitAt }, StringSplitOptions.None)[1].Split('{')[0].Trim();
+
+                    return navigationPropertyName;
+                }
+
+
+                string columnDataAnnotation = pocoFileLines.Where(l => l.Contains("[Column(\"" + columnName + "\"")).FirstOrDefault();
+
+                if (columnDataAnnotation != null)
+                {
+                    int indexOfColumnDataAnnotation = Array.IndexOf(pocoFileLines.ToArray(), columnDataAnnotation);
+
+                    string columnForeignKeyDataAnnotation = pocoFileLines.ToArray().ElementAt(indexOfColumnDataAnnotation - 1);
+
+                    if (columnForeignKeyDataAnnotation.Contains("[ForeignKey("))
+                    {
+                        string navigationPropertyName = columnForeignKeyDataAnnotation.Split(new string[] { "[ForeignKey(" }, StringSplitOptions.None)[1].Split('{')[0].Split(new string[] { ")]" }, StringSplitOptions.None)[0].Replace("\"", string.Empty).Trim();
+
+                        return navigationPropertyName;
+                    }
+                }
+
+                bool isPrimaryKey = false;
+
+                string property = pocoFileLines.Where(l => l.Contains(columnName + "{get;set;}")).FirstOrDefault();
+
+                if(property != null)
+                {
+                    int indexOfproperty = Array.IndexOf(pocoFileLines.ToArray(), property);
+
+                    string propertyDataAnnotation = pocoFileLines.ToArray().ElementAt(indexOfproperty - 1);
+
+                    if (propertyDataAnnotation.Contains("[Key]"))
+                    {
+                        isPrimaryKey = true;
+                    }
+
+                    if (propertyDataAnnotation.Contains("[Key,ForeignKey("))
+                    {
+                        string navigationPropertyName = propertyDataAnnotation.Split(new string[] { "ForeignKey(" }, StringSplitOptions.None)[1].Split('{')[0].Split(new string[] { ")]" }, StringSplitOptions.None)[0].Replace("\"", string.Empty).Trim();
+
+                        if(navigationPropertyName != columnName)
+                        {
+                            return navigationPropertyName;
+                        }
+                    }
+                }
+
+
+                string entityMappingFilePath = GetEntityMappingFilePath(entityName);
+
+                if (entityMappingFilePath == null)
+                {
+                    return null;
+                }
+
+                List<string> mappingFileLines = File.ReadAllText(entityMappingFilePath).Replace(" ", string.Empty).Split(';').Select(l => l.Trim()).Select(l => l.Replace("\n", string.Empty).Replace("\r", string.Empty)).ToList();
+
+                List<string> linesContainsColumnName = mappingFileLines.Where(l => l.Contains("." + columnName)).ToList();
+
+                string foreignKeyColumnMap = linesContainsColumnName.Where(l => l.Contains(".HasForeignKey")).FirstOrDefault();
+
+                if (foreignKeyColumnMap == null)
+                {
+                    if (isPrimaryKey)
+                    {
+                        string keyMap = mappingFileLines.Where(l => l.Contains("this.HasRequired(t=>t." + foreignEntity + ").WithOptional(t=>t." + entityName + ")")).FirstOrDefault();
+
+                        if(keyMap != null)
+                        {
+                            return foreignEntity;
+                        }
+
+                        string keyMap2 = mappingFileLines.Where(l => l.Contains("this.HasRequired(t=>t." + foreignEntity + ")")).FirstOrDefault();
+
+                        if (keyMap != null)
+                        {
+                            return foreignEntity;
+                        }
+                    }
+
+                    return null;
+                }
+
+                string navigationPropertyNameFromMap = foreignKeyColumnMap.Split(new string[] { ".HasForeignKey" }, StringSplitOptions.None)[0].Split(new string[] { "=>" }, StringSplitOptions.None)[1].Split(new string[] { ")." }, StringSplitOptions.None)[0].Split('.')[1];
+
+                return navigationPropertyNameFromMap;
+            }
+            catch(Exception e)
+            {
+                string error = e.ToString();
                 return null;
             }
-
-            string entityName;
-
-            if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
-            {
-                string excludedTable = ExcludedTables.Where(t => t.Split('/')[0] == tableName).FirstOrDefault();
-                entityName = String.IsNullOrEmpty(excludedTable) ? null : excludedTable.Split('/')[1];
-            }
-            else
-            {
-                PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
-                entityName = pluralizationService.Singularize(tableName);
-            }
-
-            if (String.IsNullOrEmpty(entityName))
-            {
-                return null;
-            }
-
-            string entityPOCOFilePath = GetEntityPOCOFilePath(entityName);
-
-            if (entityPOCOFilePath == null)
-            {
-                return null;
-            }
-
-            List<string> pocoFileLines = File.ReadAllLines(entityPOCOFilePath).ToList();
-
-            List<string> navigationProperties = pocoFileLines.Where(l => l.Replace(" ", string.Empty).Contains("publicvirtual" + foreignEntity) || l.Contains("public" + foreignEntity)).ToList();
-
-            navigationProperties = navigationProperties.Select(p => p.Replace(" ", string.Empty).Contains("publicvirtual") ? p.Replace(" ", string.Empty).Split(new string[] { "publicvirtual" + foreignEntity }, StringSplitOptions.None)[1].Split('{')[0].Trim() : p.Replace(" ", string.Empty).Split(new string[] { "public" + foreignEntity }, StringSplitOptions.None)[1].Split('{')[0].Trim()).ToList();
-
-            string navigationPropertyName = navigationProperties.Where(p => columnName.ToLower().Contains(p.ToLower())).FirstOrDefault();
-            
-            if (navigationPropertyName == null)
-            {
-                return null;
-            }
-
-            return navigationPropertyName;
         }
     }
 }

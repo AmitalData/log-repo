@@ -1,97 +1,109 @@
-LXML File,DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Airline.lxml,Prefix,Prefix,Type,char,varchar
-AirlineArea.lxml,Name,Name,Type,varchar,nvarchar
-AirlineAreasPort.lxml,Name,Name,Type,varchar,nvarchar
-Card.lxml,PartnerTypeId,PartnerTypeId,Type,char,varchar
-Contact.lxml,SharedLogisticsContactLastLogin_CardId,Not Found,-,-,-
-Contact.lxml,SharedLogisticsContactLastLogin_ContactId,Not Found,-,-,-
-Contact.lxml,SharedLogisticsContactLastLogin_PartnerTypeId,Not Found,-,-,-
-Contact.lxml,SharedLogisticsContactLastLogin_Via,Not Found,-,-,-
-Country.lxml,Code,Code,Type,char,varchar
-CustomerTenantAccessCardsBatch.lxml,FromDatetime,Not Found,-,-,-
-CustomerTenantAccessCardsBatch.lxml,ToDatetime,Not Found,-,-,-
-CustomsShipper.lxml,SearchFields,SearchFields,Type,varchar,nvarchar
-DocumentFilingBackupBatch.lxml,FromDatetime,Not Found,-,-,-
-DocumentFilingBackupBatch.lxml,ToDatetime,Not Found,-,-,-
-DocumentTypeTemplate.lxml,CountryCode,CountryCode,Type,char,varchar
-LeadSource.lxml,Name,Name,Type,varchar,nvarchar
-PartnerType.lxml,Id,Id,Type,char,varchar
-Port.lxml,Code,Code,Type,char,varchar
-ProductType.lxml,Name,Name,Type,varchar,nvarchar
-Tenant.lxml,DefaultSLAId,DefaultSLAId,Type,varchar,bit
-BatchServicesDefinition.lxml,QueueDefinitionCode,Not Found,-,-,-
-BluesnapTransaction.lxml,Tenant,Not Found,-,-,-
-TenantManagement.lxml,BluesnapContractQTY,Not Found,-,-,-
-TenantManagement.lxml,BluesnapCRMContractQTY,Not Found,-,-,-
-TenantManagement.lxml,BluesnapEAWBContractQTY,Not Found,-,-,-
-TenantManagement.lxml,BluesnapEAWBSContractQTY,Not Found,-,-,-
-TenantManagement.lxml,BluesnapInttraStockContractQTY,Not Found,-,-,-
-TenantManagement.lxml,BluesnapOneTimeContractQTY,Not Found,-,-,-
-APILogs.lxml,Subject,Subject,Type,varchar,nvarchar
-CounterDefinition.lxml,Suffix,Not Found,-,-,-
-Direction.lxml,Id,Id,Type,char,varchar
-DWCategories.lxml,Index,Not Found,-,-,-
-DWObjectField.lxml,IsCustom,Not Found,-,-,-
-DWObjectField.lxml,LOVAdditionalColumns,Not Found,-,-,-
-DWObjectTable.lxml,DefaultFilterBy,Not Found,-,-,-
-MoveType.lxml,TransportModeId,TransportModeId,Type,char,varchar
-ObjectField.lxml,EnableFullscreenTextBox,Not Found,-,-,-
-ObjectField.lxml,FieldName,FieldName,Type,varchar,nvarchar
-SchedulerProcedure.lxml,Code,Code,Type,varchar,nvarchar
-SchedulerProcedure.lxml,Description,Description,Type,varchar,nvarchar
-SchedulerProcedure.lxml,Name,Name,Type,varchar,nvarchar
-SchedulerProcedure.lxml,SearchFields,SearchFields,Type,varchar,nvarchar
-TaskSchedulerHistory.lxml,LogDocumentId,Not Found,-,-,-
-TasksScheduler.lxml,LastRunEndTimeUTC,Not Found,-,-,-
-TasksScheduler.lxml,Retries,Not Found,-,-,-
-TransportMode.lxml,Id,Id,Type,char,varchar
-ARInvoice.lxml,DateForVATInterest,Not Found,-,-,-
-ARInvoiceLine.lxml,PrepaidCollectId,Not Found,-,-,-
-BankAccountLite.lxml,EnglishName,EnglishName,Type,varchar,nvarchar
-CreditCardType.lxml,BankAccountId,BankAccountId,Type,varchar,nvarchar
-Quote.lxml,DirectionId,DirectionId,Type,char,varchar
-Quote.lxml,QuoteHTMLDocumentId,Not Found,-,-,-
-Quote.lxml,TransportModeId,TransportModeId,Type,char,varchar
-QuoteRating.lxml,Name,Name,Type,varchar,nvarchar
-InsideShipmentPackage.lxml,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
-InsideShipmentPackage.lxml,Color,Color,Type,varchar,nvarchar
-InsideShipmentPackage.lxml,Make,Make,Type,varchar,nvarchar
-InsideShipmentPackage.lxml,Model,Model,Type,varchar,nvarchar
-InsideShipmentPackage.lxml,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
-InsideShipmentPackage.lxml,Year,Year,Type,varchar,nvarchar
-MessagingStock.lxml,StockType,Not Found,-,-,-
-Shipment.lxml,ComputedShipmentNumber,Not Found,-,-,-
-Shipment.lxml,DirectionId,DirectionId,Type,char,varchar
-Shipment.lxml,INTTRASIError,INTTRASIError,Type,varchar,nvarchar
-Shipment.lxml,MasterShipmentDataId,Not Found,-,-,-
-Shipment.lxml,OnCarriageTransportModeId,OnCarriageTransportModeId,Type,char,varchar
-Shipment.lxml,OperationalClosedByUserId,Not Found,-,-,-
-Shipment.lxml,PreCarriageTransportModeId,PreCarriageTransportModeId,Type,char,varchar
-Shipment.lxml,TransportModeId,TransportModeId,Type,char,varchar
-ShipmentComputedFields.lxml,Commodity,Not Found,-,-,-
-ShipmentComputedFields.lxml,DocumentsSearchFields,Not Found,-,-,-
-ShipmentComputedFields.lxml,ImporterDepositionRequestDetails,Not Found,-,-,-
-ShipmentComputedFields.lxml,IsDepositionRequired,Not Found,-,-,-
-ShipmentComputedFields.lxml,IsDigitalSignRequired,Not Found,-,-,-
-ShipmentComputedFields.lxml,IsMissingDocuments,Not Found,-,-,-
-ShipmentComputedFields.lxml,IsRequestedDocuments,Not Found,-,-,-
-ShipmentComputedFields.lxml,LastDocumentDateTime,Not Found,-,-,-
-ShipmentComputedFields.lxml,MissingDocumentsCount,Not Found,-,-,-
-ShipmentComputedFields.lxml,MissingDocumentsNames,Not Found,-,-,-
-ShipmentComputedFields.lxml,NumberOfHouses,Not Found,-,-,-
-ShipmentComputedFields.lxml,RequestedDocumentsCount,Not Found,-,-,-
-ShipmentPackage.lxml,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
-ShipmentPackage.lxml,Color,Color,Type,varchar,nvarchar
-ShipmentPackage.lxml,Make,Make,Type,varchar,nvarchar
-ShipmentPackage.lxml,Model,Model,Type,varchar,nvarchar
-ShipmentPackage.lxml,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
-ShipmentPackage.lxml,RoutingIds,Not Found,-,-,-
-ShipmentPackage.lxml,Year,Year,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.lxml,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.lxml,Color,Color,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.lxml,Make,Make,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.lxml,Model,Model,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.lxml,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
-ShipmentPickUpDeliveryPackage.lxml,Year,Year,Type,varchar,nvarchar
-ShipmentReceivable.lxml,ShipmentReceivableLineStatusCode,ShipmentReceivableLineStatusCode,Type,char,varchar
-ShipmentType.lxml,TransportModeId,TransportModeId,Type,char,varchar
+DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value
+AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,UpdatedByUserId,UpdatedByUserId,Type,varchar,datetime
+AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,ShipmentLevelCode,NULL,Name,ShipmentLevelCode,NULL
+AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
+AgentSharedManifest.dxml,AgentSharedManifest.lxml,Column,DirectionId,DirectionId,Type,char,varchar
+Airline.dxml,Airline.lxml,Column,Prefix,Prefix,Type,char,varchar
+Card.dxml,Card.lxml,Column,PartnerTypeId,PartnerTypeId,Type,char,varchar
+CarrierArea.dxml,CarrierArea.lxml,Column,Name,Name,Type,varchar,nvarchar
+CarrierArea.dxml,CarrierArea.lxml,Column,TransportModeCode,TransportModeCode,Type,char,varchar
+CarrierAreasPort.dxml,CarrierAreasPort.lxml,Column,Name,Name,Type,varchar,nvarchar
+Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_ContactId,NULL,Name,SharedLogisticsContactLastLogin_ContactId,NULL
+Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_CardId,NULL,Name,SharedLogisticsContactLastLogin_CardId,NULL
+Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_PartnerTypeId,NULL,Name,SharedLogisticsContactLastLogin_PartnerTypeId,NULL
+Contact.dxml,Contact.lxml,Column,SharedLogisticsContactLastLogin_Via,NULL,Name,SharedLogisticsContactLastLogin_Via,NULL
+Country.dxml,Country.lxml,Column,Code,Code,Type,char,varchar
+CustomerTenantAccessCardsBatch.dxml,CustomerTenantAccessCardsBatch.lxml,Column,FromDatetime,NULL,Name,FromDatetime,NULL
+CustomerTenantAccessCardsBatch.dxml,CustomerTenantAccessCardsBatch.lxml,Column,ToDatetime,NULL,Name,ToDatetime,NULL
+CustomerTenantAccessRequest.dxml,CustomerTenantAccessRequest.lxml,Column,Id,Id,Type,varchar,
+CustomsShipper.dxml,CustomsShipper.lxml,Column,SearchFields,SearchFields,Type,varchar,nvarchar
+DocumentFilingBackupBatch.dxml,DocumentFilingBackupBatch.lxml,Column,FromDatetime,NULL,Name,FromDatetime,NULL
+DocumentFilingBackupBatch.dxml,DocumentFilingBackupBatch.lxml,Column,ToDatetime,NULL,Name,ToDatetime,NULL
+DocumentType.dxml,DocumentType.lxml,Column,CountryCode,CountryCode,Type,char,varchar
+DocumentTypeTemplate.dxml,DocumentTypeTemplate.lxml,Column,CountryCode,CountryCode,Type,char,varchar
+LeadSource.dxml,LeadSource.lxml,Column,Name,Name,Type,varchar,nvarchar
+PartnerType.dxml,PartnerType.lxml,Column,Id,Id,Type,char,varchar
+Port.dxml,Port.lxml,Column,Code,Code,Type,char,varchar
+ProductType.dxml,ProductType.lxml,Column,Name,Name,Type,varchar,nvarchar
+Tenant.dxml,Tenant.lxml,Column,DefaultSLAId,DefaultSLAId,Type,varchar,bit
+BatchServicesDefinition.dxml,BatchServicesDefinition.lxml,Column,QueueDefinitionCode,NULL,Name,QueueDefinitionCode,NULL
+BluesnapTransaction.dxml,BluesnapTransaction.lxml,Column,Tenant,NULL,Name,Tenant,NULL
+TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapContractQTY,NULL,Name,BluesnapContractQTY,NULL
+TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapCRMContractQTY,NULL,Name,BluesnapCRMContractQTY,NULL
+TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapEAWBContractQTY,NULL,Name,BluesnapEAWBContractQTY,NULL
+TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapEAWBSContractQTY,NULL,Name,BluesnapEAWBSContractQTY,NULL
+TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapOneTimeContractQTY,NULL,Name,BluesnapOneTimeContractQTY,NULL
+TenantManagement.dxml,TenantManagement.lxml,Column,BluesnapInttraStockContractQTY,NULL,Name,BluesnapInttraStockContractQTY,NULL
+APILogs.dxml,APILogs.lxml,Column,Subject,Subject,Type,varchar,nvarchar
+CounterDefinition.dxml,CounterDefinition.lxml,Column,Suffix,NULL,Name,Suffix,NULL
+Direction.dxml,Direction.lxml,Column,Id,Id,Type,char,varchar
+DWCategories.dxml,DWCategories.lxml,Column,Index,NULL,Name,Index,NULL
+DWObjectField.dxml,DWObjectField.lxml,Column,LOVAdditionalColumns,NULL,Name,LOVAdditionalColumns,NULL
+DWObjectField.dxml,DWObjectField.lxml,Column,IsCustom,NULL,Name,IsCustom,NULL
+DWObjectTable.dxml,DWObjectTable.lxml,Column,DefaultFilterBy,NULL,Name,DefaultFilterBy,NULL
+MoveType.dxml,MoveType.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
+ObjectField.dxml,ObjectField.lxml,Column,FieldName,FieldName,Type,varchar,nvarchar
+ObjectField.dxml,ObjectField.lxml,Column,FullNameTextCodeCode,NULL,Name,FullNameTextCodeCode,NULL
+ObjectField.dxml,ObjectField.lxml,Column,HelpTextCodeCode,NULL,Name,HelpTextCodeCode,NULL
+ObjectField.dxml,ObjectField.lxml,Column,ListTextCodeCode,NULL,Name,ListTextCodeCode,NULL
+ObjectField.dxml,ObjectField.lxml,Column,ShortNameTextCodeCode,NULL,Name,ShortNameTextCodeCode,NULL
+ObjectField.dxml,ObjectField.lxml,Column,EnableFullscreenTextBox,NULL,Name,EnableFullscreenTextBox,NULL
+ObjectTable.dxml,ObjectTable.lxml,Column,DescriptionTextCodeCode,NULL,Name,DescriptionTextCodeCode,NULL
+ObjectTable.dxml,ObjectTable.lxml,Column,NewButtonTextCodeCode,NULL,Name,NewButtonTextCodeCode,NULL
+SchedulerProcedure.dxml,SchedulerProcedure.lxml,Column,Code,Code,Type,varchar,nvarchar
+SchedulerProcedure.dxml,SchedulerProcedure.lxml,Column,Name,Name,Type,varchar,nvarchar
+SchedulerProcedure.dxml,SchedulerProcedure.lxml,Column,SearchFields,SearchFields,Type,varchar,nvarchar
+SchedulerProcedure.dxml,SchedulerProcedure.lxml,Column,Description,Description,Type,varchar,nvarchar
+TaskSchedulerHistory.dxml,TaskSchedulerHistory.lxml,Column,LogDocumentId,NULL,Name,LogDocumentId,NULL
+TasksScheduler.dxml,TasksScheduler.lxml,Column,LastRunEndTimeUTC,NULL,Name,LastRunEndTimeUTC,NULL
+TasksScheduler.dxml,TasksScheduler.lxml,Column,Retries,NULL,Name,Retries,NULL
+TransportMode.dxml,TransportMode.lxml,Column,Id,Id,Type,char,varchar
+ARInvoice.dxml,ARInvoice.lxml,Column,DateForInterest,NULL,Name,DateForInterest,NULL
+ARInvoiceLine.dxml,ARInvoiceLine.lxml,Column,PrepaidCollectId,NULL,Name,PrepaidCollectId,NULL
+BankAccountLite.dxml,BankAccountLite.lxml,Column,EnglishName,EnglishName,Type,varchar,nvarchar
+CreditCardType.dxml,CreditCardType.lxml,Column,BankAccountId,BankAccountId,Type,varchar,nvarchar
+Quote.dxml,Quote.lxml,Column,DirectionId,DirectionId,Type,char,varchar
+Quote.dxml,Quote.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
+Quote.dxml,Quote.lxml,Column,QuoteHTMLDocumentId,NULL,Name,QuoteHTMLDocumentId,NULL
+QuoteRating.dxml,QuoteRating.lxml,Column,Name,Name,Type,varchar,nvarchar
+InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Make,Make,Type,varchar,nvarchar
+InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Model,Model,Type,varchar,nvarchar
+InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Year,Year,Type,varchar,nvarchar
+InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,Color,Color,Type,varchar,nvarchar
+InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
+InsideShipmentPackage.dxml,InsideShipmentPackage.lxml,Column,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
+MessagingStock.dxml,MessagingStock.lxml,Column,StockType,NULL,Name,StockType,NULL
+Shipment.dxml,Shipment.lxml,Column,DirectionId,DirectionId,Type,char,varchar
+Shipment.dxml,Shipment.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
+Shipment.dxml,Shipment.lxml,Column,OperationalClosedByUserId,NULL,Name,OperationalClosedByUserId,NULL
+Shipment.dxml,Shipment.lxml,Column,MasterShipmentDataId,NULL,Name,MasterShipmentDataId,NULL
+Shipment.dxml,Shipment.lxml,Column,PreCarriageTransportModeId,PreCarriageTransportModeId,Type,char,varchar
+Shipment.dxml,Shipment.lxml,Column,OnCarriageTransportModeId,OnCarriageTransportModeId,Type,char,varchar
+Shipment.dxml,Shipment.lxml,Column,ComputedShipmentNumber,NULL,Name,ComputedShipmentNumber,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsMissingDocuments,NULL,Name,IsMissingDocuments,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,DocumentsSearchFields,NULL,Name,DocumentsSearchFields,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,LastDocumentDateTime,NULL,Name,LastDocumentDateTime,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,MissingDocumentsCount,NULL,Name,MissingDocumentsCount,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,MissingDocumentsNames,NULL,Name,MissingDocumentsNames,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsRequestedDocuments,NULL,Name,IsRequestedDocuments,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,RequestedDocumentsCount,NULL,Name,RequestedDocumentsCount,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,NumberOfHouses,NULL,Name,NumberOfHouses,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsDigitalSignRequired,NULL,Name,IsDigitalSignRequired,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,IsDepositionRequired,NULL,Name,IsDepositionRequired,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,ImporterDepositionRequestDetails,NULL,Name,ImporterDepositionRequestDetails,NULL
+ShipmentComputedFields.dxml,ShipmentComputedFields.lxml,Column,Commodity,NULL,Name,Commodity,NULL
+ShipmentPackage.dxml,ShipmentPackage.lxml,Column,RoutingIds,NULL,Name,RoutingIds,NULL
+ShipmentPackage.dxml,ShipmentPackage.lxml,Column,Make,Make,Type,varchar,nvarchar
+ShipmentPackage.dxml,ShipmentPackage.lxml,Column,Model,Model,Type,varchar,nvarchar
+ShipmentPackage.dxml,ShipmentPackage.lxml,Column,Year,Year,Type,varchar,nvarchar
+ShipmentPackage.dxml,ShipmentPackage.lxml,Column,Color,Color,Type,varchar,nvarchar
+ShipmentPackage.dxml,ShipmentPackage.lxml,Column,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
+ShipmentPackage.dxml,ShipmentPackage.lxml,Column,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
+ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,Make,Make,Type,varchar,nvarchar
+ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,Model,Model,Type,varchar,nvarchar
+ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,Year,Year,Type,varchar,nvarchar
+ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,Color,Color,Type,varchar,nvarchar
+ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,ChassisNumber,ChassisNumber,Type,varchar,nvarchar
+ShipmentPickUpDeliveryPackage.dxml,ShipmentPickUpDeliveryPackage.lxml,Column,RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
+ShipmentReceivable.dxml,ShipmentReceivable.lxml,Column,ShipmentReceivableLineStatusCode,ShipmentReceivableLineStatusCode,Type,char,varchar
+ShipmentType.dxml,ShipmentType.lxml,Column,TransportModeId,TransportModeId,Type,char,varchar
