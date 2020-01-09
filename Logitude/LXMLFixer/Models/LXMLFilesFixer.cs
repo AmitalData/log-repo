@@ -277,7 +277,7 @@ namespace Logitude.LXMLFixer.Models
                                             ElementName = "field",
                                             AttributeName = "FieldsDataType",
                                             AttributeValue = GetStringValue(GetLXMLDataType(dxmlColumn.Type)),
-                                            OldAttributeValue = GetStringValue(lxmlColumn.Type),
+                                            OldAttributeValue = GetStringValue(GetLXMLDataType(lxmlColumn.Type)),
                                             AttributeFilter = new LXMLAttributeFilter
                                             {
                                                 Name = "FieldName",
@@ -668,12 +668,12 @@ namespace Logitude.LXMLFixer.Models
                 
                 if (exceptCustomsModule)
                 {
-                    lxmlFiles = lxmlFiles.Where(x => !x.ToLower().Contains("logitude.customs.metadata")).ToArray();
+                    lxmlFiles = lxmlFiles.Where(l => !l.ToLower().Contains("logitude.customs.metadata")).ToArray();
                 }
 
                 if (lxmlFiles.Length > 0)
                 {
-                    return lxmlFiles;
+                    return lxmlFiles.Where(l => !l.ToLower().Contains("logitudefrontend")).ToArray();
                 }
                 else
                 {
@@ -965,6 +965,7 @@ namespace Logitude.LXMLFixer.Models
 
                 doc.Save(xmlWriter);
                 xmlWriter.Close();
+                xmlWriter.Dispose();
                 fileStream.Close();
             }
         }
