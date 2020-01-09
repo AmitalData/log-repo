@@ -20,6 +20,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string LocalDescription { get; set; }
         public string ExternalVATCard { get; set; }
         public string ExternalTAXItemId { get; set; }
+        public string PayablesExternalId { get; set; }
+        public string ReceivablesExternalId { get; set; }
         public bool IsMultiPercentage { get; set; }
         public double? RecognizedPercentage { get; set; }
     }

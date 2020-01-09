@@ -1692,7 +1692,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         VatTypePercentage = item.VatPercentage,
                                         QuoteCurrencyAmount = item.SaleTotalAmount,
                                         LocalCurrencyAmount = item.SaleTotalAmountLocal,
-                                        ExternalVATCard = lineVatType.ExternalVATCard,
+                                        ExternalVATCard = lineVatType.ReceivablesExternalId,
                                         ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                                     };
 
@@ -1715,7 +1715,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                                         if (vatType != null)
                                         {
-                                            newItem.ExternalVATCard = vatType.ExternalVATCard;
+                                            newItem.ExternalVATCard = vatType.ReceivablesExternalId;
                                             newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                                         }
 
