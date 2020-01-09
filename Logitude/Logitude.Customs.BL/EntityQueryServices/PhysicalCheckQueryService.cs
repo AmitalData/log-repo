@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -55,20 +56,26 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return physicalCheckList;
         }
 
+        //Yuval Chalup 17.11.2014 TASK-9089 --->
 
-        public string GetCustomerNameByChecKId(string declarationNumber , int tenant)
+        public Card GetCustomerNameByChecKId(string declarationNumber, int tenant)
         {
+            Card card = new Card();
             var declaration = context.Declarations.FirstOrDefault(x => x.DeclarationNumber == declarationNumber);
             if (declaration != null)
             {
-                var card = context.Cards.FirstOrDefault(x => x.Id == declaration.CustomerId);
-                if(card!=null)
-                return card.LocalName;
+                card = context.Cards.FirstOrDefault(x => x.Id == declaration.CustomerId);
+                if (card != null)
+                    return card;
             }
 
-            return "";
+            return card;
+        }
+        public string GetCheckTypByCode(string code)
+        {
+            return context.CheckTypeLookups.FirstOrDefault(x => x.Code == code).LocalName;
         }
 
-        //Yuval Chalup 17.11.2014 TASK-9089 --->
+
     }
 }

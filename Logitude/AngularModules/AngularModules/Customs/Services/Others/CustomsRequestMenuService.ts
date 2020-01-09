@@ -33,7 +33,7 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CourierBOLQuery"), "CourierBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/CourierBOLQueryComponent', 750, 500, "9022"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeCertificateFilterQuery"), "GuaranteeCertificateQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeCertificateComponent', 850, 670, "8306"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.FaultQuery"), "FaultQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/FaultQueryComponent', 750, 680, "8332"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 690, "8328"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 690, "8328")); 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasterBOLQuery"), "MasterBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/MasterBOLQueryComponent', 600, 590, "9020"));
 
         let my8347 =new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347")
@@ -131,6 +131,7 @@ export class CustomsRequestMenuService {
             , "RequiredDocument",
             './CustomsModules/CustomsGeneralRequests/Components/RequiredDocumentComponent',
             400, 410, "8228", null, null, null, true
+           
         ));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("בדיקה פיזית"
@@ -138,7 +139,6 @@ export class CustomsRequestMenuService {
             './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',
             1100, 450, "190",null, new RequestSheetState(false, false, false)
         ));
-        
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסר התרה לתיק", "ReleaseGoods", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ReleaseGoodsComponent', 1010, 610, "2470", null, null, null, true));
@@ -358,7 +358,6 @@ export class CustomsRequestMenuService {
     }
 
     ShowAsRequestSheet(logitudeWindow, item: CustomsMenuItem, reqJson, resJson, menuArg, logId: string) {
-        debugger;
         var myRequestSheetState = item.requestSheetState || new RequestSheetState(true, true, false);
 
         logitudeWindow.ComponentLoaded.subscribe((compo) => {

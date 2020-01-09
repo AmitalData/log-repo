@@ -186,64 +186,86 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             string documentData = communicationLogStepList[0].DocumentData;
             dynamic data = JObject.Parse(documentData);
-            string cargoIdentifierType = data.CheckEntity.cargoIdentifier.cargoIdentifierType;
-            if (cargoIdentifierType != null)
+            PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(entityPM.Tenant);
+            if (data.CheckEntity.cargoIdentifier.cargoIdentifierType != null)
             {
                 CargoIdentifireTypeQueryService cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPM.Tenant);
-                CargoIdentifireTypePM cargoIdentifireType = cargoIdentifireTypeQueryService.GetSingle(cargoIdentifierType, false, true);
+                CargoIdentifireTypePM cargoIdentifireType = cargoIdentifireTypeQueryService.GetSingle(Convert.ToString(data.CheckEntity.cargoIdentifier.cargoIdentifierType) , false, true);
                 entityPM.CargoIdentifierTypeName = cargoIdentifireType.LocalName;
             }
-            string checkSiteNumber = data.NoticeToClient.checkSiteNumber;
-            if (checkSiteNumber != null)
+            if (data.NoticeToClient.checkSiteNumber != null)
             {
                 SiteLookupQueryService siteLookupQueryService = new SiteLookupQueryService(entityPM.Tenant);
-                SiteLookupPM siteLookup = siteLookupQueryService.GetSingle(checkSiteNumber, false, true);
+                SiteLookupPM siteLookup = siteLookupQueryService.GetSingle(Convert.ToString(data.NoticeToClient.checkSiteNumber), false, true);
                 entityPM.CheckSiteName = siteLookup != null ? siteLookup.LocalName : null;
+                
             }
+          
             string OperationCode = data.NoticeToClient.operationCode;
-            if (OperationCode != null)
+            if (data.NoticeToClient.operationCode != null)
             {
                 PhysicalCheckOperationQueryService physicalCheckOperationQueryService = new PhysicalCheckOperationQueryService(entityPM.Tenant);
-                PhysicalCheckOperationPM physicalCheckOperation = physicalCheckOperationQueryService.GetSingle(OperationCode, false, true);
+                PhysicalCheckOperationPM physicalCheckOperation = physicalCheckOperationQueryService.GetSingle(Convert.ToString(data.NoticeToClient.operationCode), false, true);
                 entityPM.OperationName = physicalCheckOperation.LocalName;
             }
-            string QueueTypeCode = data.NoticeToClient.CheckType;
-            if (QueueTypeCode != null)
+            if (data.NoticeToClient.CheckType != null)
+            {
+                entityPM.CheckTypeName = physicalCheckQueryService.GetCheckTypByCode(Convert.ToString(data.NoticeToClient.CheckType));
+            }
+            if (data.NoticeToClient.QueueType != null)
             {
                 CheckQueueTypeQueryService checkQueueTypeQueryService = new CheckQueueTypeQueryService(entityPM.Tenant);
-                CheckQueueTypePM checkQueueType = checkQueueTypeQueryService.GetSingle(QueueTypeCode, false, true);
+                CheckQueueTypePM checkQueueType = checkQueueTypeQueryService.GetSingle(Convert.ToString(data.NoticeToClient.QueueType), false, true);
                 entityPM.QueueTypeCode = checkQueueType.Code;
                 entityPM.QueueTypeName = checkQueueType.LocalName;
             }
-            string storageSiteNumber = data.NoticeToClient.storageSiteNumber;
-            if (storageSiteNumber != null)
+            if (data.NoticeToClient.storageSiteNumber != null)
             {
                 SiteLookupQueryService siteLookupQueryService = new SiteLookupQueryService(entityPM.Tenant);
-                SiteLookupPM siteLookup = siteLookupQueryService.GetSingle(storageSiteNumber, false, true);
+                SiteLookupPM siteLookup = siteLookupQueryService.GetSingle(Convert.ToString(data.NoticeToClient.storageSiteNumber), false, true);
                 entityPM.StorageSiteName = siteLookup.LocalName;
             }
-            string importerNumber = data.NoticeToClient.importerNumber;
-            string declarationNumber = data.NoticeToClient.declarationID;
-
-            if (importerNumber != null)
+            if (data.NoticeToClient.declarationID != null)
             {
-               PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(entityPM.Tenant);
-               entityPM.CustomerName = physicalCheckQueryService.GetCustomerNameByChecKId(declarationNumber, entityPM.Tenant);
+               Card card = physicalCheckQueryService.GetCustomerNameByChecKId(Convert.ToString(data.NoticeToClient.declarationID), entityPM.Tenant);
+                entityPM.CustomerName = card.LocalName;
+                entityPM.DeclarationId = data.NoticeToClient.declarationID;
             }
-            
-            string statusMessage = data.NoticeToClient.statusMessage;
-            if (statusMessage != null)
+            if (data.NoticeToClient.statusMessage != null)
             {
                 PhysicalCheckStatusMessageQueryService physicalCheckStatusMessageQueryService = new PhysicalCheckStatusMessageQueryService(entityPM.Tenant);
-                PhysicalCheckStatusMessagePM physicalCheckStatusMessage = physicalCheckStatusMessageQueryService.GetSingle(statusMessage, false, true);
+                PhysicalCheckStatusMessagePM physicalCheckStatusMessage = physicalCheckStatusMessageQueryService.GetSingle(Convert.ToString(data.NoticeToClient.statusMessage), false, true);
                 entityPM.StatusMessageName = physicalCheckStatusMessage.LocalName;
             }
-            entityPM.CargoIdentifierKey1 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey1;
-            entityPM.CargoIdentifierKey2 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey2;
-            entityPM.ContainerNubmer = data.CheckEntity.containerNumer;
-            entityPM.CheckId = data.NoticeToClient.checkId;
-            entityPM.OpenDate = data.NoticeToClient.openDate;
-            entityPM.DeclarationId = declarationNumber;
+            if (data.NoticeToClient.checkId != null)
+            {
+                entityPM.CheckId = data.NoticeToClient.checkId;
+            }
+            if (data.NoticeToClient.limitDate != null)
+            {
+              DateTime test = Convert.ToDateTime(data.NoticeToClient.limitDate);
+              //  test.ToString();
+               // entityPM.LimitDate =;
+            }
+            if (data.CheckEntity.cargoIdentifier.cargoIdentifierKey1 != null)
+            {
+                entityPM.CargoIdentifierKey1 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey1;
+            }
+            if (data.CheckEntity.cargoIdentifier.cargoIdentifierKey2 != null)
+            {
+                entityPM.CargoIdentifierKey2 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey2;
+            }
+            if (data.CheckEntity.containerNumer != null)
+            {
+                entityPM.ContainerNubmer = data.CheckEntity.containerNumer;
+            }
+            if (data.NoticeToClient.openDate != null)
+            {
+                DateTime test = Convert.ToDateTime(data.NoticeToClient.openDate);
+
+                entityPM.OpenDate = data.NoticeToClient.openDate;
+            }
+            
 
 
 
