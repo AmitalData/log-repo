@@ -151,7 +151,7 @@ export class AddEditFCLChargeComponent {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.CostMeasurementCode)) {
             if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
                 if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
-                    errors.push("Cost Currency should be same as Freight Charge Cost Currency when Cost Measurement is Percent of Freight");
+                    errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
                 }
             }
         }
@@ -159,7 +159,7 @@ export class AddEditFCLChargeComponent {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.SaleMeasurementCode)) {
             if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
                 if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
-                    errors.push("Sale Currency should be same as Freight Charge Sale Currency when Sale Measurement is Percent of Freight");
+                    errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
                 }
             }
         }
