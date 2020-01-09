@@ -300,6 +300,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      MainCarriageCarrierNumber = master.MainCarriageCarrierNumber,
                      MainCarriageETD = master.MainCarriageETD,
                      MainCarriageATD = master.MainCarriageATD,
+                     MainCarriageDateFilter = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
 
                      //Package
                      PackageId = package.Id,
@@ -322,9 +323,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             {
                 shipmentPackageList = (from d in shipmentPackageList
                                        where
-                             (d.MainCarriageETD != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate))
-                             ||
-                             (d.MainCarriageATD != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate))
+                                       (d.MainCarriageDateFilter != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageDateFilter) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate))                                       
                                        select d);
             }
 
@@ -332,9 +331,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             {
                 shipmentPackageList = (from d in shipmentPackageList
                                        where
-                             (d.MainCarriageETD != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) <= System.Data.Entity.DbFunctions.TruncateTime(toDate))
-                             ||
-                             (d.MainCarriageATD != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) <= System.Data.Entity.DbFunctions.TruncateTime(toDate))
+                                       (d.MainCarriageDateFilter != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageDateFilter) <= System.Data.Entity.DbFunctions.TruncateTime(toDate))
                                        select d);
             }
 
