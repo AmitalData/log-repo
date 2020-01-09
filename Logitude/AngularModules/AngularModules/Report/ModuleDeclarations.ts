@@ -28,6 +28,7 @@ import {InventoryReportFilterConmponent} from './Components/FilterReportComponen
 import {OpenShipmentsByCustomerFilterComponent} from './Components/FilterReportComponent/OpenShipmentsByCustomerFilterComponent';
 import { UnicargoExportReportFilterComponent } from './Components/FiltersComponent/Operational/UnicargoExportReportFilterComponent';
 import { ShipmentsEventsListFilterComponent } from './Components/FiltersComponent/Operational/ShipmentsEventsListFilterComponent';
+import { ShipperReturnsReportFilterComponent } from './Components/FiltersComponent/Operational/ShipperReturnsReportFilterComponent';
 import { FlightBookingsManifestFilterComponent } from './Components/FiltersComponent/Operational/FlightBookingsManifestFilterComponent';
 
 // Accounting
@@ -144,6 +145,7 @@ export const Components =
         UnicargoExportReportFilterComponent,
         ShipmentsEventsListFilterComponent,
         AutomationTestReportFilterComponent,
+        ShipperReturnsReportFilterComponent,
         FlightBookingsManifestFilterComponent,
     ];
 
@@ -215,7 +217,8 @@ export class ModuleDeclarations {
             case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }
             case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }   
             case "ShipmentsEventsListFilterComponent": { myResult = ShipmentsEventsListFilterComponent; break; }   
-            case "AutomationTestReportFilterComponent": { myResult = AutomationTestReportFilterComponent; break; }  
+            case "AutomationTestReportFilterComponent": { myResult = AutomationTestReportFilterComponent; break; }
+            case "ShipperReturnsReportFilterComponent": { myResult = ShipperReturnsReportFilterComponent; break; }
             case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; } 
         }
 

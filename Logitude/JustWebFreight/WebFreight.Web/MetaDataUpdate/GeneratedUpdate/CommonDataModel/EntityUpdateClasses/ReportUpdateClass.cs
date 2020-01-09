@@ -194,6 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -258,6 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FilterControlName",
@@ -322,6 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Description",
@@ -387,6 +390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -449,6 +453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -513,6 +518,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -574,6 +580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FilterHtmlComponentUrl",
@@ -602,13 +609,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportTextCode_0.Id, Code = "All Reports",  QueryGroupCode = "RPRT", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportObjectTable.Id, QuerySection = "Report", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ReportFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportTextCode_0.Id, NameTextCodeCode = ReportTextCode_0.Code, Code = "All Reports",  QueryGroupCode = "RPRT", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportObjectTable.Id, QuerySection = "Report", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ReportFeature_0.Id,FeatureUniqeCode= ReportFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportsQuery.Id, IndexOrder = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportsQuery.Id, IndexOrder = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReportsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportsQuery.Id, IndexOrder = 1, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReportsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportsQuery.Id, IndexOrder = 1, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReportsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportsQuery.Id, IndexOrder = 2, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReportsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportsQuery.Id, IndexOrder = 2, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "FilterControlName" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -622,9 +629,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Report.HeaderScreen", Name = "Header Screen", ObjectTableId = ReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ReportReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ReportHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ReportHeaderScreenScreen0.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().Id, ScreenId = ReportHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().Id, ScreenId = ReportHeaderScreenScreen0.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ReportObjectTable.HeaderScreenId = ReportHeaderScreenScreen0.Id;
 	   		  
@@ -632,15 +639,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen ReportGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Report.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ReportObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ReportReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "FilterControlName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReportReportGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReportReportGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = ReportGeneralTabScreenScreen1.Id, ObjectFieldCode = ReportObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -665,11 +672,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportGeneralTextCode_TH0.Id, TabNameTextCodeCode = ReportGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPTP",HtmlComponentName = "ReportTemplateComponent",HtmlComponentUrl = "./Report/Components/ReportTemplateComponent", FeatureId = ReportReportTemplateFeature_TH1.Id, ControlPath = "Logitude.Reports.ReportTemplateControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportReportTemplateTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPTP",HtmlComponentName = "ReportTemplateComponent",HtmlComponentUrl = "./Report/Components/ReportTemplateComponent", FeatureId = ReportReportTemplateFeature_TH1.Id, ControlPath = "Logitude.Reports.ReportTemplateControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportReportTemplateTextCode_TH1.Id, TabNameTextCodeCode = ReportReportTemplateTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportEventsTextCode_TH2.Id, TabNameTextCodeCode = ReportEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -800,6 +807,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_WORKDAYSPERGATEGORY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WORKDAYSPERGATEGORY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.WORKDAYSPERGATEGORY", NameTextCodeDefaultText = @"Work Days Per Category" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+		   Feature ReportFeature_SHRR = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHRR", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.SHRR", NameTextCodeDefaultText = @"Shipper Returns Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ReportFeature_FlightBookingManifest = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FlightBookingManifest", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.FlightBookingManifest", NameTextCodeDefaultText = @"Flight Bookings Manifest" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
