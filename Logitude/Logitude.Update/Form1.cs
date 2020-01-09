@@ -1872,7 +1872,7 @@ User/Pass",
         }
 
         bool buildCustomsZipFiles = false;
-        private int _SeedTenant=0;
+        private int _SeedTenant = 0;
 
         private void UpdateZipFiles()
         {
@@ -3727,7 +3727,7 @@ User/Pass",
                 SqlDataReader reader = cmd.ExecuteReader();
                 sqlConnection1.Close();
 
-                MessageBox.Show(string.Format("Tenant {0}: {1}",tenant, dir));
+                MessageBox.Show(string.Format("Tenant {0}: {1}", tenant, dir));
             }
             catch (Exception ex)
             {
@@ -3739,7 +3739,7 @@ User/Pass",
         private void ltrBtn_Click(object sender, EventArgs e)
         {
             ChangeTenantLayoutDirection("ltr");
-            
+
         }
 
         private void button42_Click_FixingDouplicated(object sender, EventArgs e)
@@ -3816,7 +3816,7 @@ User/Pass",
         {
             IInvoiceContext context = InvoiceContext.GetContext(1);
             APInvoiceQuery service = new APInvoiceQuery(1);
-                APInvoicePM invoice = service.GetSinglePM("1-18", 1);
+            APInvoicePM invoice = service.GetSinglePM("1-18", 1);
             byte[] serialized = LogitudeXmlSerializer.SerializeObject(invoice);
             using (MemoryStream ms = new MemoryStream(serialized))
             {
