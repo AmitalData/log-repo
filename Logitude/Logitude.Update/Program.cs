@@ -40,7 +40,7 @@ namespace Logitude.Update
                 //var sw = Stopwatch.StartNew();
                 //AllocConsole();
                 Console.WriteLine("JenkinsCustomUpdate()" + DateTime.Now.ToString());
-                throw new Exception("Test Exception");
+                ///throw new Exception("Test Exception");
                 Console.WriteLine(System.Environment.CommandLine);
                 ///throw new Exception("JenkinsCustomUpdate throw ");
                 Console.WriteLine("Form1.LoadLogitudeSettings()" + DateTime.Now.ToString());
