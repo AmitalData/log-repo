@@ -277,8 +277,11 @@ namespace WarehouseData.Helper
             string fileDirectory = Path.Combine(path, "WarehouseScript\\" + forderName, scriptName + ".sql");
             FileInfo file = new FileInfo(fileDirectory);
             string cmd = file.OpenText().ReadToEnd();
+            if (table.HasFactTable && table.TableName == "Shipment")
+            {
 
-            if (forderName == "BuildWarehouse" && table != null)
+            }
+                if (forderName == "BuildWarehouse" && table != null)
             {
                 cmd = (CreateDimensionsFactTable(connectionString, table) + cmd);
                 cmd += (" " + TransferTempDataToNewDimensionsFactTable(connectionString, table));
@@ -1265,7 +1268,7 @@ namespace WarehouseData.Helper
                 }
 
                 cmd += "; CREATE NONCLUSTERED INDEX[dw_Shipments_AllColumnsIndexes]ON[dbo].[dw_Shipments]([AutomaticLastUpdateDate])INCLUDE([Id],[Tenant],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[DepartmentId],[ShipmentTypeId],[ShipperId],[ConsigneeId],[TransportModeId],[DirectionId],[AgentId],[IsOperationalClosed],[ChargeableWeightInKG],[GrossWeightInKG],[VolumeInCBM],[NumberOfContainers],[NumberOfPackages],[StatusId],[IsAccountingClosed],[AccountedReceivablesInLocalCurrency],[ProfitInLocalCurrency],[CustomerId],[ProfitCurrencyId],[ProfitInProfitCurrency],[AccountedReceivablesInProfitCurrency],[MasterShipmentDataId],[FromPortId],[ToPortId],[ShipmentLevelCode],[AccountedPayablesInLocalCurrency],[AccountedPayablesInProfitCurrency],[FinalArrivalDate],[AccountManagerUserId],[StatusLocation],[CustomsClearanceDate],[ForwarderPartnerId] ,[CustomAgentExportId],[CustomAgentImportId],[ValueOfGoodsCurrencyId],[WarehouseLegWarehouseId] " +
-                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreCarriageETD],[MoveTypeId], " + customFieldindex + "[SpecialServicesTypeId],[ConsolidatorId],[Notify1Id],[Notify2Id],[ColoaderId],[ShipperNotExporterId],[ReleasingAgentId])";
+                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreCarriageETD],[MoveTypeId], " + customFieldindex + "[SpecialServicesTypeId],[ConsolidatorId],[Notify1Id],[Notify2Id],[ColoaderId],[ShipperNotExporterId],[ReleasingAgentId] , [ConsigneeNotImporterId] , [IssuingCarrierAgentId] , [OnCarriageTransportModeId] , [FirstARInvoiceApprovalDate])";
             }
             ExecuteSql(cmd, connectionString);
         }
@@ -1310,8 +1313,11 @@ namespace WarehouseData.Helper
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ColoaderId DEFAULT '-1' FOR ColoaderId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperNotExporterId DEFAULT '-1' FOR ShipperNotExporterId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ReleasingAgentId DEFAULT '-1' FOR ReleasingAgentId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeNotImporterId DEFAULT '-1' FOR ConsigneeNotImporterId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "IssuingCarrierAgentId DEFAULT '-1' FOR IssuingCarrierAgentId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageTransportModeId DEFAULT '1' FOR OnCarriageTransportModeId;"
                         ;
-                        
+                     
                     break;
                 case "Cards":
 
