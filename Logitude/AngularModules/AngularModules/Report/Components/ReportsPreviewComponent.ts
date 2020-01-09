@@ -258,7 +258,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     GenerateReportViewWorkerRole(filter: ReportFliter) {
-
+        this.StartBusyIndicator("Generating...");
         this.IsRunReportSucceeded = false;
         this.IsRunReportFailed = false;
         this.ReportFliter = this.FillReportFilter(filter);
@@ -433,13 +433,14 @@ export class ReportsPreviewComponent implements AfterViewInit {
                             this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
                             this.IsUsedReportsRunUsingWR = false;
                             this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
-                            this.StopBusyIndicator();
+                          
                         }
 
                         if (!pmResponse.HasError) {
                             var result: ReportBuildResult = pmResponse.Result;
                             if (result) {
                                 if (result.HasError) {
+                                    this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
                                     messageWindow.Show(result.ExceptionMessage);
                                 }
@@ -452,6 +453,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
                         }
                         else {
+                            this.StopBusyIndicator();
                             if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                                 var messageWindow = new MessageWindow();
                                 messageWindow.Show(pmResponse.ErrorsArray[0]);
