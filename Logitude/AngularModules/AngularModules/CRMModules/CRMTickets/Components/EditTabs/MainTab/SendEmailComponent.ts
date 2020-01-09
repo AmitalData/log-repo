@@ -518,20 +518,22 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
 
     DuplicateEmailValidation(ccEmails, internalUsersEmails, errors) {
-        if (ccEmails != null && internalUsersEmails != null) {
-            var duplicate_emails = ccEmails.filter(x => internalUsersEmails.includes(x));
-            if (duplicate_emails != null && duplicate_emails.length > 0) {
-                var duplicateEmailsError = "";
-                duplicate_emails.forEach(item => {
-                    duplicateEmailsError += item + ", ";
-                });
+        if (!this.IsInternal) {
+            if (ccEmails != null && internalUsersEmails != null) {
+                var duplicate_emails = ccEmails.filter(x => internalUsersEmails.includes(x));
+                if (duplicate_emails != null && duplicate_emails.length > 0) {
+                    var duplicateEmailsError = "";
+                    duplicate_emails.forEach(item => {
+                        duplicateEmailsError += item + ", ";
+                    });
 
-                errors.push(duplicateEmailsError.replace(/, \s*$/, "") + " emails are duplicate.");
+                    errors.push(duplicateEmailsError.replace(/, \s*$/, "") + " emails are duplicate.");
+                }
             }
-        }
 
-        if ((ccEmails != null && ccEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1) || (internalUsersEmails != null && internalUsersEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1)) {
-            errors.push(this.ContactEmail + " contact email is duplicate.");
+            if ((ccEmails != null && ccEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1) || (internalUsersEmails != null && internalUsersEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1)) {
+                errors.push(this.ContactEmail + " contact email is duplicate.");
+            }
         }
     }
 
