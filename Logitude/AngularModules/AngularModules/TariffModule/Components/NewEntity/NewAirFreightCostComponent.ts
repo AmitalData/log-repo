@@ -15,7 +15,8 @@ import { TariffSettingPM } from '../../../TariffModule/EntityPMs/TariffSettingPM
 import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
 import { PackageTypeList } from '../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../Common/Services/StandardLists/PackageTypeListService';
-
+import { MeasurementListService } from '../../../Common/Services/StandardLists/MeasurementListService';
+import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
 
 @Component({
     selector: 'NewAirFreightCostComponent',
@@ -35,6 +36,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private chargesTypePMService: ChargesTypeListService;
     private packageTypePMService: PackageTypeListService;
+    private measurementPMService: MeasurementListService;
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     private ContainerTypesProperties: string[] = [];
@@ -43,6 +45,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     public PriceStepsText: string;
     public TariffCurrencyTextCode: string;
     public SellerDependancy: string = "AL";
+    public HasAContainerTypeUOM: boolean = false;
 
     constructor() {
         super();
@@ -66,6 +69,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         }
         else if (this.EntityPM.TypeCode == "OFC") {
             this.VisibleFCLFreightArea = true;
+            this.HasAContainerTypeUOM = true;
         }
         else {
             this.VisibileSurchargesArea = false; 
@@ -73,6 +77,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         }
         if (this.EntityPM.TypeCode == "OFS") {
             this.VisibleContainerTypeAreaInOFS = true;
+            this.HasAContainerTypeUOM = false;
+            this.measurementPMService = new MeasurementListService();
         }
         this.BuildQueryFilters();
         this.SetUIProperties();
@@ -542,7 +548,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     }
                 }
                 else {
-                    if (index == 1) {
+                    if (index == 1 && this.HasAContainerTypeUOM) {
                         this.UIProperties.SetRequired(this.ContainerTypesProperties[index - 1], this.ObjectTableName, false);
                     }
                 }
@@ -577,7 +583,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         var emptyLines: boolean = false;
         var FirstLineEmpty: boolean = false;
         var tempErrors: Array<string> = [];
-
+        this.HasAContainerTypeUOM = false;
+        
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
             UOMProps.push("Surcharge" + index + "UOM");
@@ -644,6 +651,20 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     }
                 }
             }
+            if (this.EntityPM.TypeCode == "OFS" && this[UOMProps[index - 1]] != null) {
+                this.measurementPMService.getSingleFromCache(this[UOMProps[index - 1]]).subscribe(res => {
+                    if (!res.HasError) {
+                        var UOMEntity: MeasurementList = res.Result;
+                        if (res) {
+                            if (UOMEntity.Code == "BCNT") {
+                                this.HasAContainerTypeUOM = true;
+                            } else {
+                                this.HasAContainerTypeUOM = false;
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         if (!emptyLines) {
@@ -679,10 +700,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     }); 
                 }
             }
-        
-            if (firstIndex == 1 && this.EntityPM.TypeCode == "OFC") {
+            if (firstIndex == 1) {
                 if (AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
-                    tempErrors.push(ContainerTypeNamesProperties[firstIndex - 1] + " is required");
+                    if (this.HasAContainerTypeUOM) {
+                        tempErrors.push(ContainerTypeNamesProperties[firstIndex - 1] + " is required");
+                    }
                     FirstLineEmpty = true;
                 }
             } else {
@@ -696,7 +718,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     if (!AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
                         if (FirstLineEmpty) {
                             emptyLines = true;
-                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 1 and line 2");
+                            this.ValidationErrorsList.push("Empty Container Lines aren't allowed between line 1 and line 2");
                             EmptyIndex = 1;
                         }
                     }
