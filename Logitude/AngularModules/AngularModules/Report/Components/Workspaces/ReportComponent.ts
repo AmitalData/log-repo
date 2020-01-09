@@ -101,11 +101,6 @@ export class ReportComponent {
                                             this.reportList.push(item);
                                         }
                                     }
-                                    else {
-                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
-                                            this.reportList.push(item);
-                                        }
-                                    }
                                 }
                                 else {
                                     if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
