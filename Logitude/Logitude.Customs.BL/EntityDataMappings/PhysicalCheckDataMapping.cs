@@ -200,8 +200,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.CheckSiteName = siteLookup != null ? siteLookup.LocalName : null;
                 
             }
-          
-            string OperationCode = data.NoticeToClient.operationCode;
             if (data.NoticeToClient.operationCode != null)
             {
                 PhysicalCheckOperationQueryService physicalCheckOperationQueryService = new PhysicalCheckOperationQueryService(entityPM.Tenant);
@@ -243,9 +241,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             if (data.NoticeToClient.limitDate != null)
             {
-              DateTime test = Convert.ToDateTime(data.NoticeToClient.limitDate);
-              //  test.ToString();
-               // entityPM.LimitDate =;
+                entityPM.LimitDate = data.NoticeToClient.limitDate;
             }
             if (data.CheckEntity.cargoIdentifier.cargoIdentifierKey1 != null)
             {
@@ -261,8 +257,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             if (data.NoticeToClient.openDate != null)
             {
-                DateTime test = Convert.ToDateTime(data.NoticeToClient.openDate);
-
                 entityPM.OpenDate = data.NoticeToClient.openDate;
             }
             
