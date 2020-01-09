@@ -498,7 +498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCustomsAirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsAirlineTextCode_0.Id, Code = "AllCustomsAirlines",  QueryGroupCode = "6e9e", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsAirlineObjectTable.Id, QuerySection = "Customs.CustomsAirline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsAirlineFeature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query AllCustomsAirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsAirlineTextCode_0.Id, Code = "AllCustomsAirlines",  QueryGroupCode = "6e9e", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsAirlineObjectTable.Id, QuerySection = "Customs.CustomsAirline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsAirlineFeature_0.Id,FeatureUniqeCode= CustomsAirlineFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCustomsAirlinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAirlinesQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsAirlineObjectFields.Where(d => d.FieldName == "AirlineCode" && d.ObjectTableId == CustomsAirlineObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 

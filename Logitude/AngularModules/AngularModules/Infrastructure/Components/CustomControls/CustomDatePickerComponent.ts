@@ -113,7 +113,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         this.LastYear += " - ";
         this.LastYear += AppTool.PadLeft(lastYearDateParts2.Day + "", 2, "0") + '-' + AppTool.PadLeft(lastYearDateParts2.Month + "", 2, "0") + '-' + lastYearDateParts2.Year;
 
-        var predefinedFilter = window.PreDefinedFilters.filter(d => d.ObjectFieldId == this.ObjectField.Id && d.QueryId == this.QueryId)[0];
+        var predefinedFilter = window.PreDefinedFilters.filter(d => d.ObjectFieldCode == this.ObjectField.FieldCode && d.QueryId == this.QueryId)[0];
         if (predefinedFilter != null && (this.ObjectField.DataTypeCode == "DateTime" || this.ObjectField.DataTypeCode == "Date")) {
             this.SelectedItem = predefinedFilter.PredefinedValue;
             if (this.SelectedItem == "NoDate") {

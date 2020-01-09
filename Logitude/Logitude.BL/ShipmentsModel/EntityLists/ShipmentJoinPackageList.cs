@@ -18,7 +18,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomerName { get; set; }
         public string MainCarriageFromPortName { get; set; } //POL
         public string MainCarriageFinalDestinationPortName { get; set; } //POD
+        public string MainCarriageFinalDestinationPortId{ get; set; } //POD
         public string ShipperName { get; set; }
+        public string ShipperId { get; set; }
         public string MainCarriageCarrierName { get; set; }
         public string ContainerNumber { get; set; } //all the containers numbers + types
         public string ShipmentTypeId { get; set; }
@@ -110,6 +112,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageToPortId { get; set; }
         public string MainCarriageToPortName { get; set; }
         public double? PackagesGrossWeight { get; set; }
+        public double? PackagesVolumetricWeight { get; set; }
+        public int? PackagesQuantity { get; set; }
+        
         public bool? ContainerFollowUp { get; set; }
         public bool? SplitOnCarriage { get; set; }
         public DateTime? PackageOnCarriageATD { get; set; }
@@ -146,5 +151,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageCarrierId { get; set; }
 
         public int? NumberOfContainers { get; set; }
+        public string Reference1 { get; set; }
     }
 }

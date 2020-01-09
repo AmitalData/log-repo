@@ -11,6 +11,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { BIReportExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/BIReportExtendedListService';
 import { BIReportList } from '../../../../Infrastructure/EntityLists/BIReportList';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -129,27 +130,35 @@ export class NewBIReport extends BaseComponent {
 
     columns: any;
     BuildColumns() {
+        var dateWidth = '130px';
+        if (this.IsTenantZero) {
+            dateWidth = '200px';
+        }
         this.columns = [];
         this.columns.push({
             FieldName: "Name",
             DataTypeCode: 'String',
             IsCustomTemplate: true,
-            Display: 'Name',
+            Display: TextCodeTranslator.Translate("BIReport.F.Name"),
             Styles: { width: '150px' },
         });
         this.columns.push({
             FieldName: "CreateDate",
             DataTypeCode: 'DateTime',
             IsCustomTemplate: true,
-            Display: 'Create Date',
-            Styles: { width: '200px' },
+            Display: TextCodeTranslator.Translate("BIReport.F.CreateDate"),
+            Styles: { width: dateWidth },
+            HtmlListComponentName: 'BIReportListTemplate',
+            HtmlListComponentUrl: './InfrastructureModules/InfrastructureBIReport/Components/ListTemplates/BIReportListTemplate',
         });
         this.columns.push({
             FieldName: "UpdateDate",
             DataTypeCode: 'DateTime',
             IsCustomTemplate: true,
-            Display: 'Update Date',
-            Styles: { width: '200px' },
+            Display: TextCodeTranslator.Translate("BIReport.F.UpdateDate"),
+            Styles: { width: dateWidth },
+            HtmlListComponentName: 'BIReportListTemplate',
+            HtmlListComponentUrl: './InfrastructureModules/InfrastructureBIReport/Components/ListTemplates/BIReportListTemplate',
         });
     }
 

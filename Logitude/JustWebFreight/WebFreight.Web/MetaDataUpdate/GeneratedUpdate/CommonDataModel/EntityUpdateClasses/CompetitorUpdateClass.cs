@@ -1132,7 +1132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCompetitorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CompetitorTextCode_0.Id, NameTextCodeCode = CompetitorTextCode_0.Code, Code = "All Competitors",  QueryGroupCode = "CMPT", IndexOrder = 0, Tenant = 0, ObjectTableId = CompetitorObjectTable.Id, QuerySection = "Competitor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CompetitorFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCompetitorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CompetitorTextCode_0.Id, NameTextCodeCode = CompetitorTextCode_0.Code, Code = "All Competitors",  QueryGroupCode = "CMPT", IndexOrder = 0, Tenant = 0, ObjectTableId = CompetitorObjectTable.Id, QuerySection = "Competitor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CompetitorFeature_0.Id,FeatureUniqeCode= CompetitorFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCompetitorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCompetitorsQuery.Id, IndexOrder = 0, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

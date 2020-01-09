@@ -374,7 +374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ClaimExplanationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimExplanationCodeTextCode_0.Id, Code = "ClaimExplanation",  QueryGroupCode = "f29d", IndexOrder = 0, Tenant = 0, ObjectTableId = ClaimExplanationCodeObjectTable.Id, QuerySection = "Customs.ClaimExplanationCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ClaimExplanationCodeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ClaimExplanationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimExplanationCodeTextCode_0.Id, Code = "ClaimExplanation",  QueryGroupCode = "f29d", IndexOrder = 0, Tenant = 0, ObjectTableId = ClaimExplanationCodeObjectTable.Id, QuerySection = "Customs.ClaimExplanationCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ClaimExplanationCodeFeature_0.Id,FeatureUniqeCode= ClaimExplanationCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ClaimExplanationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimExplanationQuery.Id, IndexOrder = 0, ObjectFieldId = ClaimExplanationCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ClaimExplanationCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

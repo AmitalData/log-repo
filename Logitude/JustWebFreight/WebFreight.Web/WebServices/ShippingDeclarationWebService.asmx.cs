@@ -468,6 +468,8 @@ namespace WebFreight.Web.WebServices
                             if (warehouseAddress != null)
                             {
                                 myDataProvider.FreightLocationAddress += Environment.NewLine + DataProviders.General.GetAddress(warehouseAddress);
+                                myDataProvider.FreightLocationAddressWithPhone = myDataProvider.FreightLocationAddress + Environment.NewLine + (warehouseAddress.PhoneNumber != null ? "Tel: " + warehouseAddress.PhoneNumber + " " : "");
+
                             }
                         }
                     }
@@ -492,6 +494,7 @@ namespace WebFreight.Web.WebServices
                         if (freightLocationWarehouseAddress.PhoneNumber != null || freightLocationWarehouseAddress.FaxNumber != null)
                         {
                             myDataProvider.FreightLocationAddress = myDataProvider.FreightLocationAddress + Environment.NewLine + (freightLocationWarehouseAddress.PhoneNumber != null ? "Tel: " + freightLocationWarehouseAddress.PhoneNumber + " " : "") + (freightLocationWarehouseAddress.FaxNumber != null ? "Fax: " + freightLocationWarehouseAddress.FaxNumber + " " : "");
+                            myDataProvider.FreightLocationAddressWithPhone = myDataProvider.FreightLocationAddress;
                         }
                     }
                 }

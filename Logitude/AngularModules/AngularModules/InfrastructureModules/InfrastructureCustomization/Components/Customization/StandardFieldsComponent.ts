@@ -180,7 +180,7 @@ export class TabItem {
 export class StandardFieldItem {
     private ObjectField: ObjectFieldPM;
     public ObjectFieldId: string;
-
+    public ObjectFieldCode: string;
     public fullLabelObject: FieldsTranslations = new FieldsTranslations();
     public shortLabelObject: FieldsTranslations = new FieldsTranslations();
     public listLabelObject: FieldsTranslations = new FieldsTranslations();
@@ -189,6 +189,7 @@ export class StandardFieldItem {
     constructor(field: ObjectFieldPM, public loadedFields: ObjectFieldPM[], public fieldsTranslations: FieldsTranslations[]) {
         this.ObjectField = field;
         this.ObjectFieldId = field.Id;
+        this.ObjectFieldCode = field.FieldCode;
 
         this.fullLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.FullNameTextCodeCode)[0];
         this.shortLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.ShortNameTextCodeCode)[0];

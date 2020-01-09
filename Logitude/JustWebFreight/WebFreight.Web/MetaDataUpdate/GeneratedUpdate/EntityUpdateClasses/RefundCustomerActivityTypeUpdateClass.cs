@@ -473,7 +473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query RefundCustomerActivityTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RefundCustomerActivityTypeTextCode_0.Id, Code = "RefundCustomerActivityType",  QueryGroupCode = "0387", IndexOrder = 0, Tenant = 0, ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, QuerySection = "Customs.RefundCustomerActivityType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RefundCustomerActivityTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query RefundCustomerActivityTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RefundCustomerActivityTypeTextCode_0.Id, Code = "RefundCustomerActivityType",  QueryGroupCode = "0387", IndexOrder = 0, Tenant = 0, ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, QuerySection = "Customs.RefundCustomerActivityType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RefundCustomerActivityTypeFeature_0.Id,FeatureUniqeCode= RefundCustomerActivityTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn RefundCustomerActivityTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RefundCustomerActivityTypeQuery.Id, IndexOrder = 0, ObjectFieldId = RefundCustomerActivityTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == RefundCustomerActivityTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

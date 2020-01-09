@@ -15,5 +15,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string UserControlName { get; set; }
         public string ObjectTableId { get; set; }
         public string FeatureId { get; set; }
+        public string FeatureUniqeCode { get; set; }
+
     }
 }

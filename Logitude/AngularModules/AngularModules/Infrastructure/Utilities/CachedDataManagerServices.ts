@@ -23,7 +23,8 @@ import {TicketStageListService} from '../../CRM/Services/StandardLists/TicketSta
 import {TicketTypeListService} from '../../CRM/Services/StandardLists/TicketTypeListService';
 import {AccountingSettingListService} from '../../Common/Services/StandardLists/AccountingSettingListService';
 import {AdditionalServiceListService} from '../../Common/Services/StandardLists/AdditionalServiceListService';
-import {AirlineListService} from '../../Common/Services/StandardLists/AirlineListService';
+import { AirlineListService } from '../../Common/Services/StandardLists/AirlineListService';
+import { AirlineMessagingRuleListService } from '../../Common/Services/StandardLists/AirlineMessagingRuleListService';
 import {BranchListService} from '../../Common/Services/StandardLists/BranchListService';
 import {CarrierListService} from '../../Common/Services/StandardLists/CarrierListService';
 import {ChargesTypeListService} from '../../Common/Services/StandardLists/ChargesTypeListService';
@@ -137,6 +138,7 @@ export class CachedDataManagerServices {
             case "AccountingSettingListService": { myResult = new AccountingSettingListService(); break; }
             case "AdditionalServiceListService": { myResult = new AdditionalServiceListService(); break; }
             case "AirlineListService": { myResult = new AirlineListService(); break; }
+            case "AirlineMessagingRuleListService": { myResult = new AirlineMessagingRuleListService(); break; }
             case "BranchListService": { myResult = new BranchListService(); break; }
             case "CarrierListService": { myResult = new CarrierListService(); break; }
             case "ChargesTypeListService": { myResult = new ChargesTypeListService(); break; }

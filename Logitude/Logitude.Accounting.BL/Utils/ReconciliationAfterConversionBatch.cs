@@ -23,6 +23,7 @@ namespace Logitude.Accounting.BL.Utils
         private List<string> _WrongAction;
         private List<string> _WrongSum;
         private List<string> _WrongSumToMatch;
+        private string _current = "";
 
         public ReconciliationAfterConversionBatch()
         {
@@ -83,30 +84,31 @@ namespace Logitude.Accounting.BL.Utils
                     }
                 }
                 reconciableGroupList.Sort((x, y) => x._Ref.CompareTo(y._Ref));
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-                {
                     reconciableGroupList.ForEach(recoGroup =>
                     {
                         string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
                         if (!String.IsNullOrWhiteSpace(gLAccountId))
                         {
-                            ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
-                            _counter++;
-                            if (_counter%100 == 0)
+                            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
                             {
+                                _current = recoGroup._Ref.ToString();
+                                ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
+                                _counter++;
+                                //      if (_counter%100 == 0)
+                                //      {
                                 scope.Complete();
+                                //      }
                             }
-                            
+
                             madeList.Add(recoGroup._Ref);
                         }
                     });
-                    scope.Complete();
-                }
+               //     scope.Complete();
                 _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
             }
             catch (Exception e)
             {
-                throw new Exception("ReconciliationAfterConversionBatch failure ", e);
+                throw new Exception($"ReconciliationAfterConversionBatch failure on Ref. {_current} {e.Message} Inner Exception: {e.InnerException.Message}", e);
             }
         }
 
@@ -166,6 +168,11 @@ namespace Logitude.Accounting.BL.Utils
             if (journalLineRecoList.Count == 0)
             {
                 _NoLines.Add(groupKey);
+                rv = false;
+            }
+            else if (journalLineRecoList.Count == 1)
+            {
+                _WrongSumToMatch.Add(groupKey);
                 rv = false;
             }
             else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))

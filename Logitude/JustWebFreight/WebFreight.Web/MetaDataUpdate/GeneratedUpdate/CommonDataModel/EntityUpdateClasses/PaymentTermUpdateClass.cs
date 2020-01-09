@@ -1285,7 +1285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PaymenttermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentTermTextCode_0.Id, NameTextCodeCode = PaymentTermTextCode_0.Code, Code = "Payment terms",  QueryGroupCode = "PMTR", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentTermObjectTable.Id, QuerySection = "PaymentTerm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentTermFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PaymenttermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentTermTextCode_0.Id, NameTextCodeCode = PaymentTermTextCode_0.Code, Code = "Payment terms",  QueryGroupCode = "PMTR", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentTermObjectTable.Id, QuerySection = "PaymentTerm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentTermFeature_0.Id,FeatureUniqeCode= PaymentTermFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn PaymenttermsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id, IndexOrder = 0, ObjectFieldId = PaymentTermObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PaymentTermObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentTermObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PaymentTermObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -364,6 +364,29 @@ export class GeneralDomainService {
         });
     }
 
+    GetSingleObjectFieldByFieldCodeFromZeroTenant(fieldCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleObjectFieldByFieldCodeFromZeroTenant?' + 'fieldCode=' + fieldCode, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+                var entity: ObjectFieldPM;
+                if (pm) {
+                    entity = this.MapJsonToObjectFieldPM(pm);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     GetSingleObjectFieldByFieldNameAndTableId(fieldName: string, tableId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);

@@ -375,7 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ImporterDeclarationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ImporterDeclarationTypeTextCode_0.Id, Code = "ImporterDeclarationType",  QueryGroupCode = "4486", IndexOrder = 0, Tenant = 0, ObjectTableId = ImporterDeclarationTypeObjectTable.Id, QuerySection = "Customs.ImporterDeclarationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ImporterDeclarationTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ImporterDeclarationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ImporterDeclarationTypeTextCode_0.Id, Code = "ImporterDeclarationType",  QueryGroupCode = "4486", IndexOrder = 0, Tenant = 0, ObjectTableId = ImporterDeclarationTypeObjectTable.Id, QuerySection = "Customs.ImporterDeclarationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ImporterDeclarationTypeFeature_0.Id,FeatureUniqeCode= ImporterDeclarationTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ImporterDeclarationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterDeclarationTypeQuery.Id, IndexOrder = 0, ObjectFieldId = ImporterDeclarationTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ImporterDeclarationTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 10 }, queryColumnsRepository, tenantQueryColumns);
 
