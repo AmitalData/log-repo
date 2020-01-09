@@ -7,9 +7,8 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Queries", "OriginalQueryCode", c => c.String(nullable: true, maxLength: 30, unicode: false));
+            AddColumn("dbo.Queries", "OriginalQueryCode", c => c.String( maxLength: 30, unicode: false));
             Sql(@"update Queries set OriginalQueryCode =  Queries.Code");
-            AddColumn("dbo.Queries", "OriginalQueryCode", c => c.String(nullable: false, maxLength: 30, unicode: false));
             Sql("ALTER TABLE Queries DROP CONSTRAINT  FK_QueryQuery");
         }
         
