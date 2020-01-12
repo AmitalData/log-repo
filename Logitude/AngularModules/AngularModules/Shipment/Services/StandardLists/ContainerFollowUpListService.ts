@@ -30,13 +30,13 @@ export class ContainerFollowUpListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerfollowupviews';  
     }
 
-    getSingle() {
+    getSingle(id: string) {
 	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'id='+id, { headers: authHeader }).map(response => {
 
                 var list = response.json();
                     
@@ -51,7 +51,7 @@ export class ContainerFollowUpListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetSingleList", ); 
+                //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetSingleList", ); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);

@@ -30,14 +30,14 @@ export class ContainerFollowUpPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerfollowups';      
     }
 
- get() {
+ get(id: string ) {
          
          
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
 		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+, {
+                return this._http.get(this._apiUrl+'/getsingle?'+ 'id=' + id,{
                     headers: authHeader
                 }).map(response => {
                     var pm = response.json();
@@ -55,7 +55,7 @@ export class ContainerFollowUpPMService {
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetSinglePM", );
+                //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetSinglePM", );
 				 
                 return serviceResponse;
 
