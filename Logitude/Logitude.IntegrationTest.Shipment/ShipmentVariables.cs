@@ -40,7 +40,23 @@ namespace Logitude.IntegrationTest.Shipment
         public static string PaymentTermCashId { get; set; }
         public static string VATTypeZeroId { get; set; }
         public static string QuoteStageQTDRId { get; set; }
+        public static string VendorId { get; set; }
+        public static string AgentId { get; set; }
+        public static string CustomerId { get; set; }
+        public static string PotentialCustomerId { get; set; }
+        public static string CustomAgentId { get; set; }
+        public static string ShippingAgentId { get; set; }
+        public static string WarehouseId { get; set; }
+        public static string TruckerId { get; set; }
+        //public static string WarehouseId { get; set; }
+        //public static string WarehouseId { get; set; }
+        //public static string WarehouseId { get; set; }
 
-        
+
+
+
+
+
+
     }
 }

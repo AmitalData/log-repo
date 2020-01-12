@@ -5,13 +5,10 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
-using Simplog.Server.Infrastructure.DataContracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using WebFreight.Web.Helpers.APIHelpers;
 
 namespace Logitude.IntegrationTest.Shipment
 {
@@ -53,6 +50,11 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentVariables.PaymentTermCashId = await GetPaymentTermId("Cash");
             ShipmentVariables.VATTypeZeroId = await GetVATTypeId("ZERO");
             ShipmentVariables.QuoteStageQTDRId = await GetQuoteStageId("QuTDR");
+            ShipmentVariables.VendorId = await GetVendorId("Maheera vendor");
+            ShipmentVariables.AgentId = await GetAgentId("Razan Agent");
+            ShipmentVariables.CustomerId = await GetCustomerId("Razan Customer");
+            ShipmentVariables.CustomAgentId = await GetCustomsAgentId("Razan custom agent");
+
 
 
         }
@@ -499,30 +501,203 @@ namespace Logitude.IntegrationTest.Shipment
             QuoteStageList currentTenantQuoteStageList = RestClientService.ParseResponse<QuoteStageList>(response);
             return currentTenantQuoteStageList != null ? currentTenantQuoteStageList.Id : null;
         }
-        //public static async Task<string> GetVendorId(string vendorName)
-        //{
-        //    HttpResponseMessage response = await RestClientService.GetAsync("vendorviews" + QueryFiltersPreparation.GetUrlParameters(vendorName));
-        //    VendorPM currenctVendorPM = RestClientService.ParseResponse<VendorPM>(response);
-        //    if (currenctVendorPM == null)
-        //    {
-        //        currenctVendorPM = await CreateVendor(vendorName);
-        //    }
-        //    return currenctVendorPM.Id;
-        //}
-        //public static async Task<VendorPM> CreateVendor(string vendorName)
-        //{
-        //    //VendorPM vendorPM = CreateVendorPM(vendorName);
-            //HttpResponseMessage response = await RestClientService.PostAsync(vendorPM, "PartnersDomain");
-            //vendorPM = RestClientService.ParseResponse<VendorPM>(response);
-            //return vendorPM;
-        //}
-        //public static VendorPM CreateVendorPM(string vendorName)
-        //{
-        //    VendorPM vendorPM = new VendorPM();
-        //    vendorPM.Tenant = IntegrationTestLoginParameters.Tenant;
-        //    vendorPM.EnglishName = "TestVendor" + vesselCode;
-        //    vendorPM.IMOCode = "IMOCode " + vesselCode;
-        //    return vendorPM;
-        //}
+        public static async Task<string> GetVendorId(string vendorName)
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("vendorviews" + QueryFiltersPreparation.GetUrlParameters(vendorName));
+            VendorPM currenctVendorPM = RestClientService.ParseResponse<VendorPM>(response);
+            if (currenctVendorPM == null)
+            {
+                PartnerServicePM partnerServicePM = new PartnerServicePM();
+                partnerServicePM = await CreatePartner("VD", vendorName);
+                currenctVendorPM = partnerServicePM.Vendor;
+            }
+            return currenctVendorPM.Id;
+        }
+        public static VendorPM CreateVendorPM(string vendorName)
+        {
+            VendorPM vendorPM = new VendorPM();
+            vendorPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            vendorPM.EnglishName = vendorName;
+            vendorPM.CityName = "AKD";
+            vendorPM.PartnerTypeId = "VD";
+            vendorPM.CountryId = ShipmentVariables.CountryUSId;
+            return vendorPM;
+        }
+        public static async Task<string> GetAgentId(string agentName)
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("agentviews" + QueryFiltersPreparation.GetUrlParameters(agentName));
+            AgentPM currenctAgentPM = RestClientService.ParseResponse<AgentPM>(response);
+            if (currenctAgentPM == null)
+            {
+                PartnerServicePM partnerServicePM = new PartnerServicePM();
+                partnerServicePM = await CreatePartner("AG", agentName);
+                currenctAgentPM = partnerServicePM.Agent;
+            }
+            return currenctAgentPM.Id;
+        }
+        public static AgentPM CreateAgentPM(string agentName)
+        {
+            AgentPM agentPM = new AgentPM();
+            agentPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            agentPM.EnglishName = agentName;
+            agentPM.CityName = "AKD";
+            agentPM.PartnerTypeId = "AG";
+            agentPM.CountryId = ShipmentVariables.CountryUSId;
+            return agentPM;
+        }
+        public static async Task<string> GetCustomerId(string customerName)
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("customerviews" + QueryFiltersPreparation.GetUrlParameters(customerName));
+            CustomerPM currenctCustomerPM = RestClientService.ParseResponse<CustomerPM>(response);
+            if (currenctCustomerPM == null)
+            {
+                PartnerServicePM partnerServicePM = new PartnerServicePM();
+                partnerServicePM = await CreatePartner("AG", customerName);
+                currenctCustomerPM = partnerServicePM.Customer;
+            }
+            return currenctCustomerPM.Id;
+        }
+        public static CustomerPM CreateCustomerPM(string customerName)
+        {
+            CustomerPM customerPM = new CustomerPM();
+            customerPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            customerPM.EnglishName = customerName;
+            customerPM.CityName = "AKD";
+            customerPM.PartnerTypeId = "CS";
+            customerPM.CountryId = ShipmentVariables.CountryUSId;
+            return customerPM;
+        }
+        public static async Task<string> GetCustomsAgentId(string cutomsAgentName)
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("customagentviews" + QueryFiltersPreparation.GetUrlParameters(cutomsAgentName));
+            CustomAgentPM currenctCustomAgentPM = RestClientService.ParseResponse<CustomAgentPM>(response);
+            if (currenctCustomAgentPM == null)
+            {
+                PartnerServicePM partnerServicePM = new PartnerServicePM();
+                partnerServicePM = await CreatePartner("CG",cutomsAgentName);
+                currenctCustomAgentPM = partnerServicePM.CustomAgent;
+            }
+            return currenctCustomAgentPM.Id;
+        }
+        public static CustomAgentPM CreateCustomAgentPM(string cutomsAgentName)
+        {
+            CustomAgentPM customAgentPM = new CustomAgentPM();
+            customAgentPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            customAgentPM.EnglishName = cutomsAgentName;
+            customAgentPM.CityName = "AKD";
+            customAgentPM.PartnerTypeId = "CG";
+            customAgentPM.CountryId = ShipmentVariables.CountryUSId;
+            return customAgentPM;
+        }
+        public static async Task<string> GetShippingAgentId(string shippingAgentName)
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("customagentviews" + QueryFiltersPreparation.GetUrlParameters(shippingAgentName));
+            ShippingAgentPM currenctShippingAgentPM = RestClientService.ParseResponse<ShippingAgentPM>(response);
+            if (currenctShippingAgentPM == null)
+            {
+                PartnerServicePM partnerServicePM = new PartnerServicePM();
+                partnerServicePM = await CreatePartner("SG", shippingAgentName);
+                currenctShippingAgentPM = partnerServicePM.ShippingAgent;
+            }
+            return currenctShippingAgentPM.Id;
+        }
+        public static ShippingAgentPM CreateShippingAgentPM(string shippingAgentName)
+        {
+            ShippingAgentPM customAgentPM = new ShippingAgentPM();
+            customAgentPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            customAgentPM.EnglishName = shippingAgentName;
+            customAgentPM.CityName = "AKD";
+            customAgentPM.PartnerTypeId = "SG";
+            customAgentPM.CountryId = ShipmentVariables.CountryUSId;
+            return customAgentPM;
+        }
+        public static async Task<PartnerServicePM> CreatePartner(string partnerTypeId, string partnerName)
+        {
+            PartnerServicePM partnerServicePM = CreatePartnerServicePM(partnerTypeId, partnerName);
+            HttpResponseMessage response = await RestClientService.PostAsync(partnerServicePM, "PartnersDomain");
+            partnerServicePM = RestClientService.ParseResponse<PartnerServicePM>(response);
+            return partnerServicePM;
+        }
+        public static PartnerServicePM CreatePartnerServicePM(string partnerTypeId, string partnerName)
+        {
+            PartnerServicePM partnerServicePM = new PartnerServicePM();
+            partnerServicePM.PartnerTypeId = partnerTypeId;
+            switch (partnerTypeId)
+            {
+                case "AG":
+                    {
+                        AgentPM agentPM = CreateAgentPM(partnerName);
+                        partnerServicePM.Tenant = agentPM.Tenant;
+                        partnerServicePM.Agent = agentPM;
+                        break;
+                    }
+
+                case "CS":
+                case "PO":
+                    {
+                        CustomerPM customerPM = CreateCustomerPM(partnerName);
+                        partnerServicePM.Tenant = customerPM.Tenant;
+                        partnerServicePM.Customer = customerPM;
+                        break;
+                    }
+
+                case "CG":
+                    {
+                        CustomAgentPM customAgentPM = CreateCustomAgentPM(partnerName);
+                        partnerServicePM.Tenant = customAgentPM.Tenant;
+                        partnerServicePM.CustomAgent = customAgentPM;
+                        break;
+                    }
+
+                case "SG":
+                    {
+                        ShippingAgentPM shippingAgentPM = CreateShippingAgentPM(partnerName);
+                        partnerServicePM.Tenant = shippingAgentPM.Tenant;
+                        partnerServicePM.ShippingAgent = shippingAgentPM;
+                        break;
+                    }
+
+                case "VD":
+                    {
+                        VendorPM vendorPM = CreateVendorPM(partnerName);
+                        partnerServicePM.Tenant = vendorPM.Tenant;
+                        partnerServicePM.Vendor = vendorPM;
+                        break;
+                    }
+
+                case "WH":
+                    {
+                        break;
+                    }
+
+                case "AL":
+                    {
+                        break;
+                    }
+
+                case "SL":
+                    {
+                        break;
+                    }
+
+                case "TR":
+                    {
+                        break;
+                    }
+
+
+                case "CO":
+                    {
+                        break;
+                    }
+                case "AC"://Accounting Partner
+                    {
+                        break;
+                    }
+            }
+            return partnerServicePM;
+        }
+
+    
     }
 }
