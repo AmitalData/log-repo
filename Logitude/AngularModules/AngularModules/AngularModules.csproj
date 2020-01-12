@@ -6867,6 +6867,9 @@
     <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCasesStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorCloudCollection.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Islam\RunTestCasesProd.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Islam\RunTestCasesProdStaging.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Mohammad\TeamMohammadCases.bat" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
