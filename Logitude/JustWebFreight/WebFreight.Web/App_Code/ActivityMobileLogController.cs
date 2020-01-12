@@ -15,7 +15,7 @@ namespace WebFreight.Web.App_Code
             if (cardId == "null")
             {
                 cardId = null; 
-            } 
+            }  
 
             if (module == "Help Center")
             {
