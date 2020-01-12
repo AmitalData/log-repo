@@ -183,13 +183,22 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',
 
          });
-
         this.columns.push({
-            FieldName: "SaveAsOriginal",
+            FieldName: "Edit",
             DataTypeCode: 'String',
             Display: '',
             IsCustomTemplate: true,
             Styles: { width: '35px' },
+            //IsCheckBox: true,
+            HtmlListComponentName: 'DeclarationAmendmentListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',
+        });
+        this.columns.push({
+            FieldName: "ChangeAmendment",
+            DataTypeCode: 'String',
+            Display: '',
+            IsCustomTemplate: true,
+            Styles: { width: '135px' },
             //IsCheckBox: true,
             HtmlListComponentName: 'DeclarationAmendmentListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',

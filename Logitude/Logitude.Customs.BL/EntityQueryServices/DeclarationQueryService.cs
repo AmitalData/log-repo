@@ -1605,7 +1605,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmendmentRequestNumber = item.AmendmentRequestNumber,
                     DeclarationVersionId = item.VersionId,
                     AmendmentStatus=item.AmendmentStatus,
-
+                    AmendmentOriginalDeclartation =item.AmendmentOriginalDeclartation,
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
                 if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
