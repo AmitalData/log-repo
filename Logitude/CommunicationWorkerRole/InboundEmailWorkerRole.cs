@@ -350,10 +350,10 @@ namespace CommunicationWorkerRole
             string stageName = "";
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
             ObjectTable objectTable = objectTableRepository.GetObjectTableByName("Ticket", 0, true);
+            TicketRepository ticketRep = new TicketRepository(tenant);
+            Ticket = ticketRep.GetSingle(Id, tenant);
             if (objectTable.Id == objectTableId)
             {
-                TicketRepository ticketRep = new TicketRepository(tenant);
-                Ticket = ticketRep.GetSingle(Id, tenant);
                 TicketStageRepository stageRep = new TicketStageRepository(tenant);
                 TicketStage ticketStage = stageRep.GetSingle(Ticket.StageId, Ticket.Tenant);
                 stageName = ticketStage.Name;
