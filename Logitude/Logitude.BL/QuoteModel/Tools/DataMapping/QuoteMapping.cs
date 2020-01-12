@@ -185,6 +185,17 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.GrossWeightEdited = entityPM.GrossWeightEdited;
             entityPoco.ChargeableWeightEdited = entityPM.ChargeableWeightEdited;
             entityPoco.QuoteHTMLDocumentId = entityPM.QuoteHTMLDocumentId;
+            entityPoco.Field11 = entityPM.Field11 != null ? entityPM.Field11.Value : null;
+            entityPoco.Field12 = entityPM.Field12 != null ? entityPM.Field12.Value : null;
+            entityPoco.Field13 = entityPM.Field13 != null ? entityPM.Field13.Value : null;
+            entityPoco.Field14 = entityPM.Field14 != null ? entityPM.Field14.Value : null;
+            entityPoco.Field15 = entityPM.Field15 != null ? entityPM.Field15.Value : null;
+            entityPoco.Field16 = entityPM.Field16 != null ? entityPM.Field16.Value : null;
+            entityPoco.Field17 = entityPM.Field17 != null ? entityPM.Field17.Value : null;
+            entityPoco.Field18 = entityPM.Field18 != null ? entityPM.Field18.Value : null;
+            entityPoco.Field19 = entityPM.Field19 != null ? entityPM.Field19.Value : null;
+            entityPoco.Field20 = entityPM.Field20 != null ? entityPM.Field20.Value : null;
+
             BuildSearchField(entityPM, entityPoco);
 
             entityPM.ConvertToLCL = false;

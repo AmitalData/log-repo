@@ -1891,6 +1891,10 @@
       <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
+    <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
+      <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -3422,6 +3426,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001060932521_AddingFeatureUniqeCodeToReports_rabaia.resx">
       <DependentUpon>202001060932521_AddingFeatureUniqeCodeToReports_rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.resx">
+      <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

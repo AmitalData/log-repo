@@ -16496,9 +16496,9 @@
     IsPackagable="true"
     QueryGroupName="&quot;Customers&quot;"
     TextCodeCode="&quot;ShippersAndConsignees.Q.ShippersAndConsignees&quot;"
-    FeatureCode="&quot;BYLASTSHIPMETN&quot;"
-    FeatureTextCodeCode="&quot;Customer.Features.ByLastShipment&quot;"
-    FeatureDefaultText="&quot;By Last Shipment&quot;"
+    FeatureCode="&quot;SHIPPERSANDCONSIGNEES&quot;"
+    FeatureTextCodeCode="&quot;Customer.Features.ShippersAndConsignees&quot;"
+    FeatureDefaultText="&quot;Shippers And Consignees&quot;"
     IsSpellChecked="false"
     Perspective="&quot;ShippersAndConsignees&quot;">
     <QueryColumns>
@@ -17948,10 +17948,10 @@
       DefaultText="&quot;Create Tenant&quot;"
       MenuButtonType="&quot;button&quot;"
       IndexOrder="12"
-      FeatureCode="&quot;READYACTIVATION&quot;"
+      FeatureCode="&quot;CREATETENANT&quot;"
       IsPackagable="true"
       TextCodeCode="&quot;Customer.B.CreateTenant&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.ReadyForActivation&quot;"
+      FeatureTextCodeCode="&quot;Customer.Features.CreateTenant&quot;"
       FeatureDefaultText="&quot;Ready For Activation&quot;" />
     <MenuButton
       EventCode="&quot;Actions&quot;"

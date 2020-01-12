@@ -129,7 +129,16 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NotifyAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.NotifyContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteHTMLDocumentId).HasMaxLength(15).IsUnicode(false);
-
+            this.Property(t => t.Field11).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field12).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field13).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field14).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field15).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field16).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field17).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field18).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field19).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field20).HasMaxLength(250).IsUnicode(true);
 
 
             // Table & Column Mappings
@@ -295,7 +304,16 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.GrossWeightEdited).HasColumnName("GrossWeightEdited");
             this.Property(t => t.ChargeableWeightEdited).HasColumnName("ChargeableWeightEdited");
             this.Property(t => t.QuoteHTMLDocumentId).HasColumnName("QuoteHTMLDocumentId");
-            
+            this.Property(t => t.Field11).HasColumnName("Field11");
+            this.Property(t => t.Field12).HasColumnName("Field12");
+            this.Property(t => t.Field13).HasColumnName("Field13");
+            this.Property(t => t.Field14).HasColumnName("Field14");
+            this.Property(t => t.Field15).HasColumnName("Field15");
+            this.Property(t => t.Field16).HasColumnName("Field16");
+            this.Property(t => t.Field17).HasColumnName("Field17");
+            this.Property(t => t.Field18).HasColumnName("Field18");
+            this.Property(t => t.Field19).HasColumnName("Field19");
+            this.Property(t => t.Field20).HasColumnName("Field20");
 
 
             // Relationships
