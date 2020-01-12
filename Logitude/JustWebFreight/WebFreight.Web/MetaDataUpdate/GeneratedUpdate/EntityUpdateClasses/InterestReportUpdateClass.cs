@@ -1436,7 +1436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IRGN",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent", FeatureId = InterestReportGeneralFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent", ObjectTableId = InterestReportObjectTable.Id, TabNameTextCodeId = InterestReportGeneralTextCode_TH0.Id, TabNameTextCodeCode = InterestReportGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IRGN",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent", FeatureId = InterestReportGeneralFeature_TH0.Id,FeatureUniqeCode = InterestReportGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent", ObjectTableId = InterestReportObjectTable.Id, TabNameTextCodeId = InterestReportGeneralTextCode_TH0.Id, TabNameTextCodeCode = InterestReportGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

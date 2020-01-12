@@ -2105,7 +2105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDT",HtmlComponentName = "TaxReportDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", FeatureId = TaxReportDetailsFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", ObjectTableId = TaxReportObjectTable.Id, TabNameTextCodeId = TaxReportDetailsTextCode_TH0.Id, TabNameTextCodeCode = TaxReportDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDT",HtmlComponentName = "TaxReportDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", FeatureId = TaxReportDetailsFeature_TH0.Id,FeatureUniqeCode = TaxReportDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", ObjectTableId = TaxReportObjectTable.Id, TabNameTextCodeId = TaxReportDetailsTextCode_TH0.Id, TabNameTextCodeCode = TaxReportDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2229,6 +2229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TaxReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2246,6 +2247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הורדה",
+						FeatureUniqeCode=  TaxReportFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton TaxReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2263,6 +2265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxReportFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+						FeatureUniqeCode=  TaxReportFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

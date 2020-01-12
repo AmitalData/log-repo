@@ -7109,9 +7109,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TNGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TenantObjectTable.Id, TabNameTextCodeId = TenantGeneralTextCode_TH0.Id, TabNameTextCodeCode = TenantGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TNGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantGeneralFeature_TH0.Id,FeatureUniqeCode = TenantGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TenantObjectTable.Id, TabNameTextCodeId = TenantGeneralTextCode_TH0.Id, TabNameTextCodeCode = TenantGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.EventsControl", ObjectTableId = TenantObjectTable.Id, TabNameTextCodeId = TenantEventsTextCode_TH1.Id, TabNameTextCodeCode = TenantEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantEventsFeature_TH1.Id,FeatureUniqeCode = TenantEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.EventsControl", ObjectTableId = TenantObjectTable.Id, TabNameTextCodeId = TenantEventsTextCode_TH1.Id, TabNameTextCodeCode = TenantEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

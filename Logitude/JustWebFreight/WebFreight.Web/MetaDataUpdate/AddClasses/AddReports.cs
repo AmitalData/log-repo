@@ -60,6 +60,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 Report.SearchFields = ReportDetails.Code + "," + ReportDetails.Name + "," + ReportDetails.FilterControlName + "," + ReportDetails.Description;
                 Report.FeatureId = ReportDetails.FeatureId;
                 Report.FilterHtmlComponentUrl = ReportDetails.FilterHtmlComponentUrl;
+                Report.FeatureUniqeCode = ReportDetails.FeatureUniqeCode;
                 ReportRepository.Update(Report);
             }
 
@@ -77,6 +78,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Id = IdCounter.GetNumber("Report", ReportDetails.Tenant).ToString(),
                     FeatureId = ReportDetails.FeatureId,
                     FilterHtmlComponentUrl = ReportDetails.FilterHtmlComponentUrl,
+                    FeatureUniqeCode = ReportDetails.FeatureUniqeCode,
+
                 };
 
                 ReportRepository.Add(newReport);

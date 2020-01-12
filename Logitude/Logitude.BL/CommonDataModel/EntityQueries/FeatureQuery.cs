@@ -155,7 +155,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                         foreach (RoleFeature item in allRoleFeatures.Where(d => d.RoleId == myRole.ParentRoleId))
                         {
-                            FeaturePM myFeature = (from a in allFeatures where a.Id == item.FeatureId select a).FirstOrDefault();
+                            FeaturePM myFeature = (from a in allFeatures where a.FeatureUniqeCode == item.FeatureUniqeCode select a).FirstOrDefault();
 
                             if (myFeature != null)
                             {
@@ -166,7 +166,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                         foreach (RoleFeature item in allRoleFeatures.Where(d => d.RoleId == myRole.Id))
                         {
-                            FeaturePM myFeature = (from a in allFeatures where a.Id == item.FeatureId select a).FirstOrDefault();
+                            FeaturePM myFeature = (from a in allFeatures where a.FeatureUniqeCode == item.FeatureUniqeCode select a).FirstOrDefault();
 
                             if (myFeature != null)
                             {
@@ -186,7 +186,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     foreach (RoleFeature item in allRoleFeatures)
                     {
-                        FeaturePM myFeature = (from a in allFeatures where a.Id == item.FeatureId select a).FirstOrDefault();
+                        FeaturePM myFeature = (from a in allFeatures where a.FeatureUniqeCode == item.FeatureUniqeCode select a).FirstOrDefault();
 
                         if (myFeature != null)
                         {

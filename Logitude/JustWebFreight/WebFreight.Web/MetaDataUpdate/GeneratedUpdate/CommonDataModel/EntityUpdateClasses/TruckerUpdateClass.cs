@@ -2685,19 +2685,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerGeneralTextCode_TH0.Id, TabNameTextCodeCode = TruckerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerGeneralFeature_TH0.Id,FeatureUniqeCode = TruckerGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerGeneralTextCode_TH0.Id, TabNameTextCodeCode = TruckerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerBillingFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerBillingTextCode_TH1.Id, TabNameTextCodeCode = TruckerBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerBillingFeature_TH1.Id,FeatureUniqeCode = TruckerBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerBillingTextCode_TH1.Id, TabNameTextCodeCode = TruckerBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.TruckerAccountingTabControl", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerAccountingTextCode_TH2.Id, TabNameTextCodeCode = TruckerAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id,FeatureUniqeCode = GeneralAccountingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.TruckerAccountingTabControl", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerAccountingTextCode_TH2.Id, TabNameTextCodeCode = TruckerAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerAddressesFeature_TH3.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerAddressesTextCode_TH3.Id, TabNameTextCodeCode = TruckerAddressesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerAddressesFeature_TH3.Id,FeatureUniqeCode = TruckerAddressesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerAddressesTextCode_TH3.Id, TabNameTextCodeCode = TruckerAddressesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerContactsFeature_TH4.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerContactsTextCode_TH4.Id, TabNameTextCodeCode = TruckerContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerContactsFeature_TH4.Id,FeatureUniqeCode = TruckerContactsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerContactsTextCode_TH4.Id, TabNameTextCodeCode = TruckerContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Trucker/TruckerDocsInTabComponent", FeatureId = TruckerDocsInFeature_TH5.Id, ControlPath = "", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerDocsInTextCode_TH5.Id, TabNameTextCodeCode = TruckerDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Trucker/TruckerDocsInTabComponent", FeatureId = TruckerDocsInFeature_TH5.Id,FeatureUniqeCode = TruckerDocsInFeature_TH5.FeatureUniqeCode, ControlPath = "", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerDocsInTextCode_TH5.Id, TabNameTextCodeCode = TruckerDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TREV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerEventsTextCode_TH6.Id, TabNameTextCodeCode = TruckerEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TREV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TruckerEventsFeature_TH6.Id,FeatureUniqeCode = TruckerEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TruckerObjectTable.Id, TabNameTextCodeId = TruckerEventsTextCode_TH6.Id, TabNameTextCodeCode = TruckerEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2804,6 +2804,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "More",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TruckerMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2821,6 +2822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  TruckerFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "נתק כרטיס",
+						FeatureUniqeCode=  TruckerFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
