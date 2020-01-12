@@ -183,12 +183,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             itemPM.Id = IdCounter.GetNumber("SharedUserQuery", tenant).ToString();
             itemPM.QueryId = this.entityPM.Id;
+            itemPM.QueryCode = this.entityPM.Code;
+
             itemPM.Tenant = tenant;           
 
             SharedUserQuery itemPoco = new SharedUserQuery()
             {
                 Id = itemPM.Id,
                 QueryId = itemPM.QueryId,
+                QueryCode = itemPM.QueryCode,
                 Tenant = tenant
             };
 

@@ -206,8 +206,8 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                 this.SetDisplayText();
                 var filters = new ApiQueryFilters();
                 
-                if (window.PreDefinedFilters.filter(d => d.QueryId == clickedItem.Id) != null) {
-                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == clickedItem.Id);
+                if (window.PreDefinedFilters.filter(d => d.QueryCode == clickedItem.Code) != null) {
+                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == clickedItem.Code);
                     predefinedFilters.forEach((filter, key) => {
                         var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                         var value1 = filter.PredefinedValue;
@@ -277,7 +277,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                     filters.SortDirection = clickedItem.DefaultSortDirection;
                 }
                 
-                this.itemSelectedEvent.emit({ QueryId: clickedItem.Id, Filters: filters, Title: TextCodeTranslator.Translate(clickedItem.NameTextCodeCode) });
+                this.itemSelectedEvent.emit({ QueryCode: clickedItem.Code, Filters: filters, Title: TextCodeTranslator.Translate(clickedItem.NameTextCodeCode) });
             }
         }
 
@@ -307,6 +307,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         this.ignoreMouseDown = false;
 
         var windowArgs: any = {};
+        windowArgs.queryCode = this.SelectedItem.Code;
         windowArgs.queryId = this.SelectedItem.Id;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = true;
@@ -442,6 +443,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         this.ignoreMouseDown = false;
         var windowArgs: any = {};
         windowArgs.queryId = Item.Id;
+        windowArgs.queryCode = Item.Code;
         windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = false;

@@ -40,10 +40,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return result;
         }
 
-        public IQueryable<SharedUserQueryPM> GetSharedUserQueriesForQuery(string queryId, int tenant)
+        public IQueryable<SharedUserQueryPM> GetSharedUserQueriesForQuery(string queryCode, int tenant)
         {
             IQueryable<SharedUserQueryPM> result = (from d in repository.context.SharedUserQueries
-                                                         where d.QueryId == queryId && d.Tenant == tenant
+                                                         where d.QueryCode == queryCode && d.Tenant == tenant
                                                          select new SharedUserQueryPM()
                                                          {
                                                              Id = d.Id,

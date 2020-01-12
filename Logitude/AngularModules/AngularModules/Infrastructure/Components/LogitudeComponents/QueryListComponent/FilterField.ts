@@ -16,6 +16,7 @@ export class FilterField extends BaseComponent {
     filters: ApiQueryFilters;
     iswidnowMode: boolean = false;
     QueryId: string;
+    QueryCode: string;
     public ControlId: string = null;
     SessionIdx: number = 0;
     public IsCustomFilter: boolean = false;
@@ -27,11 +28,11 @@ export class FilterField extends BaseComponent {
     public DateFiltersEnabled: boolean = false;
     public PickFiltersEnabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(objectField: any, queryId: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
+    constructor(objectField: any, queryCode: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
         this.SessionIdx = this.CurrentSession.SessionIndex;
         this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
-        this.QueryId = queryId;
+        this.QueryCode = queryCode;
         this.Filterchangeevent = filterchangeevent;
         this.ParentClass = parentClass;
         this.AdvancedQueryFilterPMs = AdvancedQFPMs;
@@ -42,7 +43,7 @@ export class FilterField extends BaseComponent {
         this.FieldName = this.ObjectField.FieldName;
         this.IsCustomFilter = this.ObjectField.IsCustomFilter;
         
-        if (queryId != null && queryId != undefined && queryId != "") {
+        if (queryCode != null && queryCode != undefined && queryCode != "") {
             var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == objectField.FieldCode)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
@@ -98,7 +99,7 @@ export class FilterField extends BaseComponent {
             }
         }
 
-        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+        var currentQuery = window.Queries.filter(d => d.Code == this.QueryCode)[0];
         if (currentQuery != null) {
             if (!AppTool.IsNullOrEmpty(currentQuery.SharedByUserId) && currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
                 if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
@@ -475,7 +476,7 @@ export class FilterFieldsClass {
         this.FilterFields = [];
     }
 
-    AddFiltersList(objectsList: any, queryId: string, AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]) {
+    AddFiltersList(objectsList: any, queryCode: string, AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]) {
         //ObservableCollection
         if (this.ParentClass == null) {
             var ss = "";
@@ -483,7 +484,7 @@ export class FilterFieldsClass {
         var newList = [];
         //.sort((a, b) => { return (a.FieldName === b.FieldName) ? 0 : a ? -1 : 1 })
         objectsList.sort((a, b) => { return (a.FieldName === b.FieldName) ? 0 : (a.FieldName < b.FieldName) ? -1 : 1 }).forEach((item, key) => {
-            newList.push(new FilterField(item, queryId, this.IsWindowMode, AdvancedQueryFilterPMs, this.ParentClass, this.event));
+            newList.push(new FilterField(item, queryCode, this.IsWindowMode, AdvancedQueryFilterPMs, this.ParentClass, this.event));
         });
 
         this.FilterFields = newList.sort((a, b) => { return (TextCodeTranslator.Translate(a.ObjectField.FullNameTextCodeCode).toLowerCase() === TextCodeTranslator.Translate(b.ObjectField.FullNameTextCodeCode).toLowerCase()) ? 0 : (TextCodeTranslator.Translate(a.ObjectField.FullNameTextCodeCode).toLowerCase() < TextCodeTranslator.Translate(b.ObjectField.FullNameTextCodeCode).toLowerCase()) ? -1 : 1 });

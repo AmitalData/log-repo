@@ -33,11 +33,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = queryRepository;
         }
 
-        public QueryPM GetSingleQueryPM(string id, int tenant)
+        public QueryPM GetSingleQueryPM(string Code, int tenant)
         {
             QueryPM result =
             (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode").Include("SharedByUser")
-             where a.Id == id && (a.Tenant == tenant || a.Tenant == 0)
+             where a.Code == Code && (a.Tenant == tenant || a.Tenant == 0)
              select new QueryPM()
              {
                  Code = a.Code,
@@ -90,11 +90,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return result;
         }
 
-        public QueryPM GetSingleQueryPM(string id)
+        public QueryPM GetSingleQueryPM(string Code)
         {
             QueryPM result =
             (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
-             where a.Id == id
+             where a.Code == Code
              select new QueryPM()
              {
                  Code = a.Code,
@@ -317,7 +317,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 if (item.SharedWithSpecificUsers)
                 {
-                    if (sharedUserQueries.Where(d => d.QueryId == item.Id && d.UserId == userid).Any())
+                    if (sharedUserQueries.Where(d => d.QueryCode == item.Id && d.UserId == userid).Any())
                     {
                         myResult.Add(item);
                     }

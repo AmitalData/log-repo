@@ -370,7 +370,7 @@
         <tr [class.Show]="IsAdvancedSearchOpened == true" [class.Hide]="IsAdvancedSearchOpened == false" style="height:210px;">
             <td>
                 <div style="background:#FFFADC; border:1px solid #BABABA; border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px); height:205px;">
-                    <AdvSearchComponent [ObjectTableName]="ObjectTableName" [QueryChangeEvent]="onQueryChangeEvent" [QueryId]="SelectedQueryId" [Filterchangeevent]="Filterchangeevent"></AdvSearchComponent>
+                    <AdvSearchComponent [ObjectTableName]="ObjectTableName" [QueryChangeEvent]="onQueryChangeEvent" [QueryCode]="SelectedQueryCode" [Filterchangeevent]="Filterchangeevent"></AdvSearchComponent>
                 </div>
                 <div style="height:5px; width:100%;"></div>
             </td>
@@ -385,7 +385,7 @@
                                    [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                    [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                    [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
-                                   [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" (rowSelectedEvent)="onRowSelected($event)"
+                                   [rowCount]="rowCount" [searchFields]="searchFields" [queryCode]="SelectedQueryCode" (rowSelectedEvent)="onRowSelected($event)"
                                    (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)">
                     </logitude-grid>
                     <!--</div>-->

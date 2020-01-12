@@ -31,6 +31,7 @@ export class AdvanceSearchComponent implements OnInit {
     public ObjectTableId: string;
     public ObjectTableName: string;
     public QueryId: string;
+    public QueryCode: string;
     public ObjectFields: any;
     allFilterFieldsClass: FilterFieldsClass;
     filterFields: FilterFieldsClass;
@@ -134,9 +135,9 @@ export class AdvanceSearchComponent implements OnInit {
         //min-height: 163px
         this.Height = {};
         this.QueryChangeEvent.subscribe((res) => {
-            if (this.QueryId != res.QueryId) {
+            if (this.QueryCode != res.QueryCode) {
                 this.SearchText = null;
-                this.OnQueryFilterChanged(res.QueryId);
+                this.OnQueryFilterChanged(res.QueryCode);
             }
         });
 
@@ -186,7 +187,7 @@ export class AdvanceSearchComponent implements OnInit {
         //evt.Subscribe(OnFilterParametersChanged);
 
         //if (newGrid == null) {
-        this.QueryFilterChangedAction(this.QueryId);
+        this.QueryFilterChangedAction(this.QueryCode);
         //}
         //if (!loaded) {
         //    loaded = true;
@@ -203,7 +204,7 @@ export class AdvanceSearchComponent implements OnInit {
     timeFrameFields: FilterField[];
     noFiltersField: FilterField;
     objectField: ObjectFieldPM;
-    QueryFilterChangedAction(QueryID: string) {
+    QueryFilterChangedAction(QueryCode: string) {
 
         this.allFilterFields = [];
         this.constantFilterFieldsList = [];
@@ -217,7 +218,7 @@ export class AdvanceSearchComponent implements OnInit {
             this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
         }
 
-        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryID).subscribe(myResult => {
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe(myResult => {
             if (myResult == null) {
                 this.AdvancedQueryFilterPMs = [];
             }
@@ -228,7 +229,7 @@ export class AdvanceSearchComponent implements OnInit {
 
             this.timeFilterFieldsClass = new FilterFieldsClass(this.isNewViewMode, this, this.pubSubService);
             this.FieldsValues = new FieldsValues();
-            this.currentQuery = window.Queries.filter(q => q.Id == QueryID)[0];
+            this.currentQuery = window.Queries.filter(q => q.Id == QueryCode)[0];
 
             if (!this.currentQuery) {
                 var iMessageWindow = new MessageWindow();
@@ -288,7 +289,7 @@ export class AdvanceSearchComponent implements OnInit {
                 this.noFiltersField = new FilterField(OFPM, this.currentQuery.Id, this.isWindowViewMode, myResult);
                 this.timeFrameFields.push(this.noFiltersField);
 
-                this.advancedQueryFiltersList = myResult.filter(q => q.QueryId == QueryID);
+                this.advancedQueryFiltersList = myResult.filter(q => q.QueryId == QueryCode);
                 this.fillqueryfilters();
             }
         });
@@ -345,7 +346,7 @@ export class AdvanceSearchComponent implements OnInit {
         }
         if (this.SelectedObjectFields.filter(a => a.FieldName == field.FieldName).length == 0) {
             if (field.DataTypeCode != "Constant") {
-                this.SelectedObjectFields.push(new FilterField(field, this.QueryId, false, filters, this, this.pubSubService));
+                this.SelectedObjectFields.push(new FilterField(field, this.QueryCode, false, filters, this, this.pubSubService));
             }
         }
         if (this.SelectedObjectFields.length % 2 == 0) {
@@ -380,9 +381,9 @@ export class AdvanceSearchComponent implements OnInit {
     }
 
 
-    OnQueryFilterChanged(QueryID: string) {
-        this.QueryId = QueryID;
-        this.QueryFilterChangedAction(this.QueryId);
+    OnQueryFilterChanged(QueryCode: string) {
+        this.QueryCode = QueryCode;
+        this.QueryFilterChangedAction(this.QueryCode);
         if (this.IsOpened) {
             this.SaveChangesAndRecreate();
         }
@@ -448,8 +449,8 @@ export class AdvanceSearchComponent implements OnInit {
 
         if (this.isWindowViewMode) { // || isLocalSave
             //this.SelectedObjectFields.forEach((field, key) => {
-            if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryId == this.QueryId)[0] != null) {
-                var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryId == this.QueryId)[0]
+            if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryCode == this.QueryCode)[0] != null) {
+                var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryCode == this.QueryCode)[0]
                 //if (this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldId) != null) {
 
                 //    if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
@@ -510,7 +511,7 @@ export class AdvanceSearchComponent implements OnInit {
             //});
         }
         //this.SelectedObjectFields.forEach((field, key) => {
-        if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryId == this.QueryId)[0] == null) {
+        if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryCode == this.QueryCode)[0] == null) {
             var value = this.FieldsValues.GetFieldValue(field.ObjectField.Id);
             var predefinedValue = null;
             var isPredifined = false;
@@ -533,7 +534,7 @@ export class AdvanceSearchComponent implements OnInit {
             advanceFilter.DisplayInList = field.ObjectField.DisplayInList;
             advanceFilter.IsCustomFilter = field.ObjectField.IsCustomFilter;
             advanceFilter.ObjectFieldName = field.ObjectField.FieldName;
-            advanceFilter.QueryCode = this.currentQuery.Code;
+            advanceFilter.QueryCode = this.QueryCode;
             advanceFilter.QueryObjectTableName = this.currentQuery.ObjectTableName;
             advanceFilter.QueryUserId = this.currentQuery.UserId;
             advanceFilter.ObjectFieldOperator = field.ObjectField.Operator;
@@ -622,7 +623,7 @@ export class AdvanceSearchComponent implements OnInit {
     public DeteteFilter(field: FilterField) {
         //if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] != null) {
         //var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
-        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.FieldCode, field.QueryId, SessionInfo.LoggedUserId).subscribe(filter => {
+        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.FieldCode, field.QueryCode, SessionInfo.LoggedUserId).subscribe(filter => {
             if (filter) {
                 var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
                 myService.setServiceArgs(this.serviceArgs);
@@ -670,7 +671,7 @@ export class AdvanceSearchComponent implements OnInit {
 
     public EditViewClicked() {
         var windowArgs: any = {};
-        windowArgs.queryId = this.currentQuery.Id;
+        windowArgs.queryCode = this.currentQuery.Code;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = false;
         windowArgs.QueryName = TextCodeTranslator.Translate(this.currentQuery.NameTextCodeCode);

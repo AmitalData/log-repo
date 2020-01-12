@@ -32,7 +32,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public List<SharedUserQuery> GetAllByQueryCode(string queryCode)
         {
-            return context.SharedUserQueries.Where(d => d.QueryId == queryCode).ToList();
+            return context.SharedUserQueries.Where(d => d.QueryCode == queryCode).ToList();
         }
 
         public void Add(SharedUserQuery entity)

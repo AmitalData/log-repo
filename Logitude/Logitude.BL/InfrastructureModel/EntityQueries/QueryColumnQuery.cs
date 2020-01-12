@@ -63,7 +63,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             foreach (QueryColumnPM column in querycolumns)
             {
                 QueryColumnPM existedColumn = (from a in selectedQueryColumns
-                                               where a.QueryId == column.QueryId && a.ObjectFieldCode == column.ObjectFieldCode && a.UserId == userid
+                                               where a.QueryCode == column.QueryCode && a.ObjectFieldCode == column.ObjectFieldCode && a.UserId == userid
                                                select a).FirstOrDefault();
 
                 if (existedColumn != null)
@@ -235,7 +235,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return queries;
         }
 
-        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryIdAndUser(int tenant, string userId, string queryCode)
+        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCodeAndUser(int tenant, string userId, string queryCode)
         {
             IQueryable<QueryColumnPM> queries = null;
             Query myQuery = repository.context.Queries.Where(d => d.Code == queryCode).FirstOrDefault();
@@ -301,7 +301,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return queries;
         }
 
-        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryIdAndUserAngular(int tenant, string userId, string queryCode)
+        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCodeAndUserAngular(int tenant, string userId, string queryCode)
         {
             IQueryable<QueryColumnPM> queries = null;
             Query myQuery = repository.context.Queries.Where(d => d.Code == queryCode).FirstOrDefault();
@@ -381,13 +381,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return Cols.AsQueryable();
         }
 
-        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryId(int tenant, string queryId)
+        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCode(int tenant, string queryCode)
         {
             IQueryable<QueryColumnPM> queries = null;
             //if (!string.IsNullOrEmpty(userId))
             //{
             queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                      where a.Tenant == tenant && a.QueryId == queryId
+                      where a.Tenant == tenant && a.QueryCode == queryCode
                       select new QueryColumnPM()
                       {
                           ColumnWidth = a.ColumnWidth,
@@ -416,13 +416,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return queries;
         }
         
-        public IQueryable<QueryColumnPM> GetZeroQueryColumnsByQueryId(int tenant, string queryId)
+        public IQueryable<QueryColumnPM> GetZeroQueryColumnsByQueryCode(int tenant, string queryCode)
         {
             IQueryable<QueryColumnPM> queries = null;
             //if (!string.IsNullOrEmpty(userId))
             //{
             queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                      where a.Tenant == tenant && a.QueryId == queryId && a.UserId == null
+                      where a.Tenant == tenant && a.QueryCode == queryCode && a.UserId == null
                       select new QueryColumnPM()
                       {
                           ColumnWidth = a.ColumnWidth,

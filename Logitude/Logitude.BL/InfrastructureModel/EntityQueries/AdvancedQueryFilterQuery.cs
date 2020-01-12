@@ -186,10 +186,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public IQueryable<AdvancedQueryFilterPM> GetAdvancedQueryFiltersByQueryId(int tenant, string queryId)
+        public IQueryable<AdvancedQueryFilterPM> GetAdvancedQueryFiltersByQueryCode(int tenant, string queryCode)
         {
             IQueryable<AdvancedQueryFilterPM> advancedFilters = from a in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("Query").Include("Query.ObjectTable")
-                                                                where a.Tenant == tenant && a.QueryId == queryId
+                                                                where a.Tenant == tenant && a.QueryCode == queryCode
                                                                 select new AdvancedQueryFilterPM()
                                                                 {
                                                                     DisplayInList = a.ObjectField.DisplayInList,
