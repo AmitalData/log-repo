@@ -34,6 +34,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  Tenant = a.Tenant,
                  UserId = a.UserId,                 
                  QueryId = a.QueryId,
+                 QueryCode = a.QueryCode
              }).FirstOrDefault();
             
             return result;
@@ -49,6 +50,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              Tenant = d.Tenant,
                                                              UserId = d.UserId,
                                                              QueryId = d.QueryId,
+                                                             QueryCode = d.QueryCode
                                                          });
 
             return result;
@@ -64,6 +66,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         Tenant = d.Tenant,
                                                         UserId = d.UserId,
                                                         QueryId = d.QueryId,
+                                                        QueryCode = d.QueryCode
                                                     });
 
             return result;

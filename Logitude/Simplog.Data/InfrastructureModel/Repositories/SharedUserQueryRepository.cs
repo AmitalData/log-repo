@@ -30,9 +30,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public List<SharedUserQuery> GetAllByQueryId(string queryId)
+        public List<SharedUserQuery> GetAllByQueryCode(string queryCode)
         {
-            return context.SharedUserQueries.Where(d => d.QueryId == queryId).ToList();
+            return context.SharedUserQueries.Where(d => d.QueryId == queryCode).ToList();
         }
 
         public void Add(SharedUserQuery entity)

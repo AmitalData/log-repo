@@ -109,7 +109,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
             }
         }
 
-        public HttpResponseMessage Delete(string id, string userId)
+        public HttpResponseMessage Delete(string Code, string userId)
         {
             try
             {
@@ -124,8 +124,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 QueryColumnRepository queryColumnRepository = new QueryColumnRepository(objectContext);
                 AdvancedQueryFilterRepository advancedQueryFilterRepository = new AdvancedQueryFilterRepository(objectContext);
 
-                Query myQuery = queryRepository.GetSingleQuery(id);
-                List<SharedUserQuery> sharedUserQueries = sharedUserQueryRepository.GetAllByQueryId(id);
+                Query myQuery = queryRepository.GetSingleQuery(Code);
+                List<SharedUserQuery> sharedUserQueries = sharedUserQueryRepository.GetAllByQueryCode(Code);
                 List<QueryColumn> queryColumns = null;
                 List<AdvancedQueryFilter> advancedQueryFilters = null;
 
@@ -133,14 +133,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 {
                     if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
                     {
-                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryIdAndUser(tenant, myQuery.SharedByUserId, id);
-                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndUserAndQuery(tenant, myQuery.SharedByUserId, id);
+                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryCodeAndUser(tenant, myQuery.SharedByUserId, Code);
+                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndUserAndQuery(tenant, myQuery.SharedByUserId, Code);
                     }
 
                     else
                     {
-                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryId(tenant, id);
-                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndAndQuery(tenant, id);
+                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryCode(tenant, Code);
+                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndAndQuery(tenant, Code);
                     }
 
                     foreach (QueryColumn column in queryColumns)

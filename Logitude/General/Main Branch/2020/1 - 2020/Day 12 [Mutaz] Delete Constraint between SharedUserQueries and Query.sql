@@ -1,0 +1,1 @@
+ALTER TABLE SharedUserQueries DROP CONSTRAINT  [FK_dbo.SharedUserQueries_dbo.Queries_QueryId]
