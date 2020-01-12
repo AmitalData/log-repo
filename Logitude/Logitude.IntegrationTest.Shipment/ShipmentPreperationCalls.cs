@@ -16,7 +16,7 @@ namespace Logitude.IntegrationTest.Shipment
     {
         public static async Task PrepareVariables()
         {
-            ShipmentVariables.CurrencyEURId = await GetCurrencyId("GBP");
+            ShipmentVariables.CurrencyEURId = await GetCurrencyId("EUR");
             ShipmentVariables.IncotermLDEId = await GetIncotermId("LDE");
             ShipmentVariables.MeasurmentGRWTId = await GetMeasurmentId("GRWT");
             var chargeGroup = new ChargesGroupList();
@@ -50,10 +50,13 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentVariables.PaymentTermCashId = await GetPaymentTermId("Cash");
             ShipmentVariables.VATTypeZeroId = await GetVATTypeId("ZERO");
             ShipmentVariables.QuoteStageQTDRId = await GetQuoteStageId("QuTDR");
-            ShipmentVariables.VendorId = await GetVendorId("Maheera vendor");
-            ShipmentVariables.AgentId = await GetAgentId("Razan Agent");
-            ShipmentVariables.CustomerId = await GetCustomerId("Razan Customer");
-            ShipmentVariables.CustomAgentId = await GetCustomsAgentId("Razan custom agent");
+            ShipmentVariables.VendorId = await GetVendorId("Vendor 1");
+            ShipmentVariables.AgentId = await GetAgentId("Agent 1");
+            ShipmentVariables.CustomerId = await GetCustomerId("Customer 1");
+            ShipmentVariables.CustomAgentId = await GetCustomsAgentId("custom agent 1");
+            ShipmentVariables.ShippingAgentId = await GetShippingAgentId("shipping agent 1");
+            ShipmentVariables.WarehouseId = await GetWarehouseId("Warehouse 1","WR1");
+
 
 
 
@@ -552,7 +555,7 @@ namespace Logitude.IntegrationTest.Shipment
             if (currenctCustomerPM == null)
             {
                 PartnerServicePM partnerServicePM = new PartnerServicePM();
-                partnerServicePM = await CreatePartner("AG", customerName);
+                partnerServicePM = await CreatePartner("CS", customerName);
                 currenctCustomerPM = partnerServicePM.Customer;
             }
             return currenctCustomerPM.Id;
@@ -611,14 +614,37 @@ namespace Logitude.IntegrationTest.Shipment
             customAgentPM.CountryId = ShipmentVariables.CountryUSId;
             return customAgentPM;
         }
-        public static async Task<PartnerServicePM> CreatePartner(string partnerTypeId, string partnerName)
+        public static async Task<string> GetWarehouseId(string warehouseName,string warehouseCode)
         {
-            PartnerServicePM partnerServicePM = CreatePartnerServicePM(partnerTypeId, partnerName);
+            HttpResponseMessage response = await RestClientService.GetAsync("warehouseviews" + QueryFiltersPreparation.GetUrlParameters(warehouseName));
+            WarehousePM currenctWarehousePM = RestClientService.ParseResponse<WarehousePM >(response);
+            if (currenctWarehousePM == null)
+            {
+                PartnerServicePM partnerServicePM = new PartnerServicePM();
+                partnerServicePM = await CreatePartner("WH", warehouseName, warehouseCode);
+                currenctWarehousePM = partnerServicePM.Warehouse;
+            }
+            return currenctWarehousePM.Id;
+        }
+        public static WarehousePM CreateWarehousePM(string warehouseName, string warehouseCode)
+        {
+            WarehousePM warehousePM = new WarehousePM();
+            warehousePM.Tenant = IntegrationTestLoginParameters.Tenant;
+            warehousePM.Code = warehouseCode;
+            warehousePM.EnglishName = warehouseName;
+            warehousePM.CityName = "AKD";
+            warehousePM.PartnerTypeId = "WH";
+            warehousePM.CountryId = ShipmentVariables.CountryUSId;
+            return warehousePM;
+        }
+        public static async Task<PartnerServicePM> CreatePartner(string partnerTypeId, string partnerName, string partnerCode = null)
+        {
+            PartnerServicePM partnerServicePM = CreatePartnerServicePM(partnerTypeId, partnerName, partnerCode);
             HttpResponseMessage response = await RestClientService.PostAsync(partnerServicePM, "PartnersDomain");
             partnerServicePM = RestClientService.ParseResponse<PartnerServicePM>(response);
             return partnerServicePM;
         }
-        public static PartnerServicePM CreatePartnerServicePM(string partnerTypeId, string partnerName)
+        public static PartnerServicePM CreatePartnerServicePM(string partnerTypeId, string partnerName, string partnerCode=null)
         {
             PartnerServicePM partnerServicePM = new PartnerServicePM();
             partnerServicePM.PartnerTypeId = partnerTypeId;
@@ -667,6 +693,9 @@ namespace Logitude.IntegrationTest.Shipment
 
                 case "WH":
                     {
+                        WarehousePM warehousePM = CreateWarehousePM(partnerName, partnerCode);
+                        partnerServicePM.Tenant = warehousePM.Tenant;
+                        partnerServicePM.Warehouse = warehousePM;
                         break;
                     }
 
