@@ -97,7 +97,24 @@ namespace Logitude.Accounting.BL.CoreBL
             var newLTranListOfAccountID = _NewLedgerTransactionsWithCounters.Where(r => r.AccountId == currentAccountId).ToList();
             decimal totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
             //if (totNew + totReconciliationAmount != 0)
-            if (Math.Abs(totalNewLedgerOpenAmount) < Math.Abs( totalAmountFromJournalReconciliation))
+            bool inMaynTheARPaymentCreateDebitCreditAgainstKUPA = true;
+            if (Math.Abs(totalNewLedgerOpenAmount) < Math.Abs(totalAmountFromJournalReconciliation)) {
+                
+                if (inMaynTheARPaymentCreateDebitCreditAgainstKUPA &&
+                currrentAccountJournalReconcileList.Count() == 1 &&
+                _NewLedgerTransactionsWithCounters.Count == 2 &&
+                _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId
+                )
+                {
+                    Debug.WriteLine("במעיין ARPayment  שורה לחיוב ה הקופה ושורה לזיכוי הקופה");
+                    Debug.WriteLine("צריך להשתמש בשורה לזכות !!");
+                    newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit != 0).ToList();
+                    totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
+
+
+                }
+            }
+            if (Math.Abs(totalNewLedgerOpenAmount) < Math.Abs(totalAmountFromJournalReconciliation))
             {
                 throw new Exception($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (totNew != totReconciliationAmount) = ({totalNewLedgerOpenAmount} >= -1* {totalAmountFromJournalReconciliation})");
             }
