@@ -17,34 +17,34 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {ContainerFollowUpPM} from '../../EntityPMs/ContainerFollowUpPM';
+import {AWBAdditionalHandlingInfoPM} from '../../EntityPMs/AWBAdditionalHandlingInfoPM';
 
 
 @Injectable()
 
-export class ContainerFollowUpPMService {
+export class AWBAdditionalHandlingInfoPMService {
  private _http: Http;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerfollowups';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/awbadditionalhandlinginfos';      
     }
 
- get() {
+ get(id: string) {
          
          
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
 		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+, {
+                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
                     headers: authHeader
                 }).map(response => {
                     var pm = response.json();
 
                    
 					
-                    var entity: ContainerFollowUpPM;
+                    var entity: AWBAdditionalHandlingInfoPM;
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
@@ -55,7 +55,7 @@ export class ContainerFollowUpPMService {
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetSinglePM", );
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBAdditionalHandlingInfo", "GetSinglePM", 'id=' + id);
 				 
                 return serviceResponse;
 
@@ -63,7 +63,7 @@ export class ContainerFollowUpPMService {
             });                    
     }
 
-	 insert(entityPM: ContainerFollowUpPM) {
+	 insert(entityPM: AWBAdditionalHandlingInfoPM) {
  
         var callTime = new Date();        
         return Observable.defer(() => {
@@ -76,13 +76,13 @@ export class ContainerFollowUpPMService {
                  
                 validator = new ClassLevelValidator();
                  
-                var errorsArray = validator.Validate("ContainerFollowUp", entityPM);
+                var errorsArray = validator.Validate("AWBAdditionalHandlingInfo", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: ContainerFollowUpPM;
+                    var mappedEntity: AWBAdditionalHandlingInfoPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
@@ -91,14 +91,14 @@ export class ContainerFollowUpPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  ContainerFollowUpPM;
+                               var mappedResult:  AWBAdditionalHandlingInfoPM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							}
 							
 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBAdditionalHandlingInfo", "SaveChanges", "");                    
 												 
                             
                             return serviceResponse;
@@ -118,7 +118,7 @@ export class ContainerFollowUpPMService {
             );
     }
 
-    update(entityPM: ContainerFollowUpPM) {
+    update(entityPM: AWBAdditionalHandlingInfoPM) {
 
             var callTime = new Date();         
             return Observable.defer(() => {
@@ -131,13 +131,13 @@ export class ContainerFollowUpPMService {
                  
                 validator = new ClassLevelValidator();
                
-                var errorsArray = validator.Validate("ContainerFollowUp", entityPM);
+                var errorsArray = validator.Validate("AWBAdditionalHandlingInfo", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: ContainerFollowUpPM;
+                    var mappedEntity: AWBAdditionalHandlingInfoPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
@@ -147,13 +147,13 @@ export class ContainerFollowUpPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  ContainerFollowUpPM;
+                               var mappedResult:  AWBAdditionalHandlingInfoPM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							 }
 							 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBAdditionalHandlingInfo", "SaveChanges", "");                    
 					                           
                             return serviceResponse;
 
@@ -175,12 +175,12 @@ export class ContainerFollowUpPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ContainerFollowUpPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AWBAdditionalHandlingInfoPM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new ContainerFollowUpPM();
+            entityPM = new AWBAdditionalHandlingInfoPM();
         }
 
 		var customFields: Array<string> = [];
@@ -244,8 +244,9 @@ export class ContainerFollowUpPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: ContainerFollowUpPM;
-			entityPM = new ContainerFollowUpPM();
+		    var entityPM: AWBAdditionalHandlingInfoPM;
+			entityPM = new AWBAdditionalHandlingInfoPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

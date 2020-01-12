@@ -10358,11 +10358,11 @@
         DefaultText="&quot;Close without Notifying&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="3"
-        FeatureCode="&quot;Reactivate&quot;"
+        FeatureCode="&quot;ClosewithoutNotifying&quot;"
         IsPackagable="false"
         TextCodeCode="&quot;Ticekt.B.ClosewithoutNotifying&quot;"
-        FeatureTextCodeCode="&quot;Ticket.Features.Reactivate&quot;"
-        FeatureDefaultText="&quot;Reactivate&quot;" />
+        FeatureTextCodeCode="&quot;Ticket.Features.ClosewithoutNotifying&quot;"
+        FeatureDefaultText="&quot;Close without Notifying&quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

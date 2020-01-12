@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;4ced&quot;"
+  Code="&quot;c1bb&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -67,7 +67,6 @@
     NumberOfRows="1">
     <ScreenFields />
   </Screen>
-
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -99,7 +98,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-
     <TextCode
       Code="&quot;General&quot;"
       DefaultText="&quot;General&quot;"
@@ -4458,7 +4456,6 @@
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
-
     <Feature
       Code="&quot;DASHBOARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -6205,7 +6202,23 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature Code="&quot;SupportMailBoxMenu&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;General.Features.SupportMailBoxMenu&quot;" FeatureDefaultText="&quot;Support Mail Box&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
-
+    <Feature
+      Code="&quot;SupportMailBoxMenu&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SupportMailBoxMenu&quot;"
+      FeatureDefaultText="&quot;Support Mail Box&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ACCOUNTINGTRANSFER&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;General.Features.ACCOUNTINGTRANSFER&quot;"
+      FeatureDefaultText="&quot;Accounting Transfer&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
