@@ -928,6 +928,12 @@ namespace Logitude.Server.Tools.Helpers
                     }
                 }
 
+                else if (automationCondition.ObjectFieldType == "Decimal" || automationCondition.ObjectFieldType == "Integer" || automationCondition.ObjectFieldType == "Double")
+                {
+                    automationConditionvalue = FieldValueResolver.GetFieldStringValue(new ObjectField() { DataTypeCode = automationCondition.ObjectFieldType }, automationCondition.Value);
+                }
+
+            
                 else if (!string.IsNullOrEmpty(automationCondition.Value) && automationCondition.Value.Contains("@StatusName:"))
                 {
                     automationConditionvalue = automationCondition.Value.Split('@')[0];
