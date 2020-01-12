@@ -994,6 +994,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myCFIDATA_DATA.MAWB = courierMasterPM.MAWB;
                     myCFIDATA_DATA.HAWB = courierMasterPM.HAWB;
                 }
+                myCFIDATA_DATA.VALUE_IN_USD = "103";
                 myCFIDATA_DATAList.Add(myCFIDATA_DATA);
                 _CFIDATA.CFIDATA_DATA = myCFIDATA_DATAList.ToArray();
             }

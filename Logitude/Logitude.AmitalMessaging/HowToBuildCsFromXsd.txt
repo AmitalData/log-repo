@@ -13,3 +13,7 @@ xsd.exe C:\LogitudeWorld\Amital\Logitude.AmitalMessaging\Customs\CustomFile\CFIP
 xsd.exe C:\LW\log-repo\Logitude\Logitude.AmitalMessaging\Customs\CustomFile\ReleaseFile\LOGIBONDREL.xsd /c
 xsd.exe C:\LW\log-repo\Logitude\Logitude.AmitalMessaging\Customs\CustomFile\Sivug\LOGISIVUG.xsd /c
 xsd.exe C:\LW\log-repo\Logitude\Logitude.AmitalMessaging\Customs\CustomFile\LOGICUSTFILE.xsd /c
+
+
+
+xsd.exe C:\LOG\Logitude\Logitude.AmitalMessaging\Customs\CustomFile\CFIData.xsd /c
