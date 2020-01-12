@@ -136,5 +136,6 @@ export class ARInvoiceList {
 		BillToCity: string;
 		BillToCountry: string;
 		CreatedByPartner: string;
+		SATXML: string;
 	
 }

@@ -55,6 +55,7 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   SearchFields="&quot;APILogs,APILogs,,Id,&quot;">
   <field
     Id="&quot;760d712a-8bfd-4e3f-a57e-305c7e68456d&quot;"
@@ -121,6 +122,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -193,6 +195,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -265,6 +268,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -337,6 +341,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -409,6 +414,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -481,6 +487,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -555,6 +562,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;CreateDate&quot;"
@@ -628,6 +636,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;CreateDateUTC&quot;"
@@ -703,6 +712,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;LastUpdateDate&quot;"
@@ -776,6 +786,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;LastUpdateDateUTC&quot;"
@@ -849,6 +860,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Id&quot;"
@@ -925,6 +937,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;Direction&quot;"
@@ -1000,6 +1013,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Status&quot;"
@@ -1075,6 +1089,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;NumberOfRetries&quot;"
@@ -1150,6 +1165,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ExpirationDate&quot;"
@@ -1225,6 +1241,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Subject&quot;"
@@ -1300,6 +1317,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;EntityId&quot;"
@@ -1373,6 +1391,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ObjectTableId&quot;"
@@ -1448,6 +1467,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;PartnerName&quot;"
@@ -1523,6 +1543,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Refrence&quot;"
@@ -1596,6 +1617,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SearchFields&quot;"
@@ -1671,6 +1693,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;LastExceptionMessage&quot;"
@@ -1744,6 +1767,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CorrelationId&quot;"
@@ -1819,6 +1843,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;StatusName&quot;"
@@ -1894,6 +1919,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ObjectTableName&quot;"
@@ -1967,6 +1993,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2039,6 +2066,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2111,6 +2139,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2183,6 +2212,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2255,6 +2285,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2402,11 +2433,11 @@
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;APILogs&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="2"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;APILogs.HeaderScreen&quot;">
+    Code="&quot;APILogs.HeaderScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="2">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -2433,50 +2464,45 @@
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;APILogs&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="8"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;APILogs.GeneralTabScreen&quot;">
+    Code="&quot;APILogs.GeneralTabScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="7">
     <ScreenFields>
       <ScreenField
         Column="0"
         Row="0"
-        ObjectFieldName="&quot;Id&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="1"
         ObjectFieldName="&quot;Direction&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="2"
+        Row="1"
         ObjectFieldName="&quot;StatusName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="3"
+        Row="2"
         ObjectFieldName="&quot;NumberOfRetries&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="4"
+        Row="3"
         ObjectFieldName="&quot;ExpirationDate&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="5"
+        Row="4"
         ObjectFieldName="&quot;Subject&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="6"
+        Row="5"
         ObjectFieldName="&quot;ObjectTableName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="7"
+        Row="6"
         ObjectFieldName="&quot;PartnerName&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
@@ -2596,12 +2622,14 @@
       DefaultText="&quot;More&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
       IndexOrder="100"
+      IsPackagable="false"
       TextCodeCode="&quot;ApiLogs.B.Actions&quot;">
       <MenuItem
         EventCode="&quot;ReturnToQueue&quot;"
         DefaultText="&quot;Return To Queue&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="2"
+        IsPackagable="false"
         TextCodeCode="&quot;ApiLogs.B.ReturnToQueue&quot;" />
     </MenuButton>
   </MenuButtons>

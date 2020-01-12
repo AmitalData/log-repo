@@ -469,7 +469,9 @@
     <None Include="EntityFiles\InfrastructureModel\EventType.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\InfrastructureModel\General.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\General.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\IATACode.lxml">
       <SubType>Designer</SubType>
     </None>
