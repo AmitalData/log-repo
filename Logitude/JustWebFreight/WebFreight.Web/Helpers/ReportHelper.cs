@@ -1367,7 +1367,14 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
-
+                case "FLBM":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(FlightBookingsManifestDataProvider));
+                        FlightBookingsManifestDataProvider reportDataProvider = (FlightBookingsManifestDataProvider)serializer.Deserialize(memorystream);                        
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "FlightBookingsManifest", Name = "FlightBookingsManifestDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
             }
             return urlImage;
         }
@@ -1880,13 +1887,18 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "FLBM":
+                    {
+                        FlightBookingsManifestManager myDataManager = new FlightBookingsManifestManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+
                     #endregion
             }
             return dataProvider;
         }
-
-    
-
+        
         private bool IsHaveReport(string reportCode)
         {
             if (string.IsNullOrEmpty(reportCode))

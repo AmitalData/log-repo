@@ -43,6 +43,8 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public bool Inactive { get; set; }
         [Column("IsDefault")]
 	    public bool IsDefault { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

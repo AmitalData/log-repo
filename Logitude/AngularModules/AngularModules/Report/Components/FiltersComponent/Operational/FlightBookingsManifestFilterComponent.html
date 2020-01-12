@@ -1,0 +1,121 @@
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:30px;">
+                    <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px;">Flight Date</td>
+                                <td style="width:40px;">From:</td>
+                                <td style="width:150px;">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:25px;">To:</td>
+                                <td style="width:150px;">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:35px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:90px;">Flight Number:</td>
+                                <td style="width:150px;">
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'FlightNumber'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <!--run button-->
+                                <td style="width:20px;">
+                                    <div></div>
+                                </td>
+                                <td style="width:80px;">
+                                    <button class="GreenButton" (click)="RunReport()">Run Report</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 1px; padding-right: 5px;">Origin:</td>
+                                <td style="width: 190px;">
+                                    <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                            [NoObjectField]="true"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="'A'"
+                                            [DisplayMemberPath]="'EnglishName'">
+                                    </LogLov>
+                                </td>
+
+                                <!-- Destination -->
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 1px; padding-right: 5px;">Destination:</td>
+                                <td style="width: 190px;">
+                                    <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                                            [NoObjectField]="true"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="'A'"
+                                            [DisplayMemberPath]="'EnglishName'">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 1px; padding-right: 5px;">Clearing Agent:</td>
+                                <td style="width: 180px;">
+                                    <LogLov [ObjectFieldName]="'ClearingAgentId'"
+                                            [NoObjectField]="true"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DependencyFilter1Value]="'CG'">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -19,6 +19,7 @@ export class SLAHeaderList {
 	CreatedByUserName: string;
 	UpdatedByUserName: string;
 	Inactive: boolean;
+	SearchFields: string;
 	
 }
  

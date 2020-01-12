@@ -339,15 +339,32 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     private CheckLocalVisibility(): boolean {
         var visible: boolean = false;
 
-        if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
-            if (this.EntityPM.ShipmentLevelCode != "C") {
-                if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                    if (!AppTool.IsNullOrEmpty(ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode)) {
+        if (this.EntityPM.ShipmentLevelCode != "C") {
+            if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+                if (!AppTool.IsNullOrEmpty(ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode)) {
+                    if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC") {
                         visible = true;
+                    }
+
+                    else {
+                        if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
+                            visible = true;
+                        }
                     }
                 }
             }
         }
+
+
+        //if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
+        //    if (this.EntityPM.ShipmentLevelCode != "C") {
+        //        if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+        //            if (!AppTool.IsNullOrEmpty(ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode)) {
+        //                visible = true;
+        //            }
+        //        }
+        //    }
+        //}
 
         return visible;
     }

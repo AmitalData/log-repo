@@ -2245,6 +2245,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.TotalContainers = myTotalContainers;
             }
 
+            if(shipmentPM.ShipmentConsoleShipments != null)
+            {
+                this.ComputeHousesNumbersField(shipmentPM);
+            }
+
             shipmentPM.TEU = shipment.TEU;
             shipmentPM.SecurityKey = shipment.SecurityKey;
             shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
@@ -2316,6 +2321,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
             return returnShipment;
+        }
+
+        private void ComputeHousesNumbersField(ShipmentPM shipmentPM)
+        {
+            var myHousesNumbers = ""; 
+            foreach (ConsoleShipmentPM console in shipmentPM.ShipmentConsoleShipments)
+            {
+                if (string.IsNullOrEmpty(myHousesNumbers))
+                {
+                    myHousesNumbers = console.ShipmentNumber;
+                }
+                else
+                {
+                    myHousesNumbers += ", " + console.ShipmentNumber;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(myHousesNumbers) && myHousesNumbers.Length > 1000)
+            {
+                myHousesNumbers = myHousesNumbers.Substring(0, 1000);
+            }
+
+            shipmentPM.HousesNumbers = myHousesNumbers;
         }
 
         private void MapChampConcurrencyFields(ShipmentPM shipmentPM)

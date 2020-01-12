@@ -5636,7 +5636,7 @@
         FeatureCode="&quot;ANONYMIZE&quot;"
         IsPackagable="false"
         TextCodeCode="&quot;Contact.B.Anonymize&quot;"
-        FeatureTextCodeCode="&quot;User.Features.Anonymize&quot;"
+        FeatureTextCodeCode="&quot;Contact.Features.Anonymize&quot;"
         FeatureDefaultText="&quot;Anonymize&quot;" />
     </MenuButton>
   </MenuButtons>

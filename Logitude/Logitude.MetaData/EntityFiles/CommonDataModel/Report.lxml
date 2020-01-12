@@ -1,5 +1,4 @@
-﻿
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <entity
   Id="&quot;7767a9e1-8576-443a-9c09-fd52fc766c6e&quot;"
   ObjectTableName="&quot;Report&quot;"
@@ -2177,6 +2176,15 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Report.Features.SHRR&quot;"
       FeatureDefaultText="&quot;Shipper Returns Report&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;FlightBookingManifest&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Report.Features.FlightBookingManifest&quot;"
+      FeatureDefaultText="&quot;Flight Bookings Manifest&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
