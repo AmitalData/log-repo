@@ -1,7 +1,9 @@
 ﻿
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.RequestServices;
@@ -9,6 +11,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -91,6 +94,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //string CourierMasterId, string master, string courierDeclarationStatusCode, List<string> DeclarationsList = null)
             SendALLCorrectRequestParams requestParamsData)
         {
+            var courierMasterQueryService = new CourierMasterQueryService(tenant);
+            ICustomContext MyContext = CustomContext.GetContext(tenant);
+            CourierMasterUpdateService service = new CourierMasterUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+
+            var master =  courierMasterQueryService.GetSingle(requestParamsData.CourierMasterId, false, false);
+            master.IsAutomaticManifestSent = true;
+            master.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            service.Update(master,true);
+
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);

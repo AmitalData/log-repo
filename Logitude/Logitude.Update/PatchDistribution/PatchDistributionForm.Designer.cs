@@ -112,7 +112,7 @@
             this.buttonUpdateDB.Name = "buttonUpdateDB";
             this.buttonUpdateDB.Size = new System.Drawing.Size(75, 62);
             this.buttonUpdateDB.TabIndex = 8;
-            this.buttonUpdateDB.Text = "Update\r\nDataDBase";
+            this.buttonUpdateDB.Text = "Update\r\nDataBase";
             this.buttonUpdateDB.UseVisualStyleBackColor = true;
             this.buttonUpdateDB.Click += new System.EventHandler(this.buttonUpdateDB_Click);
             // 

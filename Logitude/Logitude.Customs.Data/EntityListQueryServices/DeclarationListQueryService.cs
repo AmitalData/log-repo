@@ -199,7 +199,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     //CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
-                    
+                    IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Count() > 0 ? true : false) : false,
                 }
                 );
 
@@ -257,6 +257,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                //CourierPendingReasonList= "",
                                MAWB = "",
                                IsCourierMissingClassification = true,
+                               IsPendingNotNull = true,
                            });
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
                 q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
@@ -409,7 +410,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      TotalInvoiceAmountInUSD = myJoin != null ? myJoin.TotalInvoiceAmountInUSD : null,
                                                      IsPending902 = myJoin != null ? myJoin.IsPending902 : false,
                                                      IsPending900 = myJoin != null ? myJoin.IsPending900 : false,
-                                                     
+                                                     IsPendingNotNull = myJoin != null ? myJoin.IsPendingNotNull : false,
                                                      //CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
                                                      /*CourierPendingReasonList = mypr != null ? mypr.CourierPendingReasonName : null,*/
 
@@ -512,6 +513,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         //public string CourierPendingReasonList { get; set; }
         public string MAWB { get; set; }
         public bool IsCourierMissingClassification { get; set; }
+        public bool IsPendingNotNull { get; set; }
     }
 }
 	

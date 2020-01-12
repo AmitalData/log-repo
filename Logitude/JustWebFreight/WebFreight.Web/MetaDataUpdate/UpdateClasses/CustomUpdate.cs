@@ -8438,7 +8438,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn pending7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pending.Id, IndexOrder = 7, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AcceptanceStatusName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn pending8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pending.Id, IndexOrder = 8, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CourierPendingReasonList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, QueryColumnsRepository, tenantQueryColumns);
             
-            AdvancedQueryFilter pendingPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "IsNotNull", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CourierPendingReasonList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "", QueryId = pending.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            AdvancedQueryFilter pendingPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "IsPendingNotNull", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CourierPendingReasonList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "", QueryId = pending.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             
             #endregion
             /*
@@ -13990,7 +13990,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RequestedDocument", DefaultText = "Requested Document", LocalDefaultText = "מסמך נדרש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.SendAmendmentDeclaration", DefaultText = "Send Amendment Declaration", LocalDefaultText = "שלח ת.הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeAmendment", DefaultText = "Change Amendment", LocalDefaultText = "החלפת בקשה לתיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details", LocalDefaultText = "פרטי יבואן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details", LocalDefaultText = "פרטי יבואן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
