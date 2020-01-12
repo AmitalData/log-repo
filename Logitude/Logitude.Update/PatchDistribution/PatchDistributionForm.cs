@@ -113,7 +113,10 @@ namespace Logitude.Update.PatchDistribution
                     var patchDistributionList = _PatchDistributionManager.GetPatchDistribution_MinorNotClosed(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
                     if (patchDistributionList.Count == 0)
                     {
-                        MessageBox.Show("Nothing TODO- OK_DB And Assembly R Equal  MajorVersion+MinorVersion ");
+                        MessageBox.Show(
+                            //"Nothing TODO- OK_DB And Assembly R Equal  MajorVersion+MinorVersion "
+                            "אין צורך בעידכונים- יש תאימות בן גרסת סכמת מאגר הנתונים לגרסת התוכנה"
+                            );
                         return;
                     }
                     Debug.WriteLine("Menu >> Start >  Doit !!!");

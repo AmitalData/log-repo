@@ -129,7 +129,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         string decIdOrg;
 
-        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter , out string error)
+        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter , string idOrg, out string error)
         {
             error = "";
             try
@@ -139,7 +139,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
              DeclarationRepository declarationRepository = new DeclarationRepository(context);
 
             var declarationOrg = declarationRepository.GetSingleDeclarationByNumber(GetValueIDType(declaration.ID), tenant);
-            decIdOrg = declarationOrg.Id;
+                if(declarationOrg== null)
+                {
+                      declarationOrg = declarationRepository.GetSingleDeclarationById(idOrg, tenant);
+
+                }
+                decIdOrg = declarationOrg.Id;
             isFromImporter = FromImporter;
 
 

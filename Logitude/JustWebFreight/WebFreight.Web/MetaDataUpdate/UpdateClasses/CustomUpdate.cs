@@ -13902,7 +13902,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ConnectedEntity", DefaultText = "Connected Entity", LocalDefaultText = "ישויות קשורות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.DeclarationId", DefaultText = "Declaration ID", LocalDefaultText = "מספר הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CustomFileNo", DefaultText = "Custom File No.", LocalDefaultText = "תיק עמילות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.EndDate", DefaultText = "End Date", LocalDefaultText = "מועד סיום הבדיקה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GeneralDetails", DefaultText = "General Details", LocalDefaultText = "נתוני בדיקה פיזית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
 
             ObjectContext.SaveChanges();
@@ -13986,7 +13987,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RequestedDocument", DefaultText = "Requested Document", LocalDefaultText = "מסמך נדרש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.SendAmendmentDeclaration", DefaultText = "Send Amendment Declaration", LocalDefaultText = "שלח ת.הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeAmendment", DefaultText = "Change Amendment", LocalDefaultText = "החלפת בקשה לתיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details", LocalDefaultText = "פרטי יבואן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details", LocalDefaultText = "פרטי יבואן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -35,12 +37,20 @@ namespace Logitude.Update
         {
             try
             {
-                var sw = Stopwatch.StartNew();
+                //var sw = Stopwatch.StartNew();
                 //AllocConsole();
+                Console.WriteLine("JenkinsCustomUpdate()" + DateTime.Now.ToString());
+                ///throw new Exception("Test Exception");
                 Console.WriteLine(System.Environment.CommandLine);
                 ///throw new Exception("JenkinsCustomUpdate throw ");
+                Console.WriteLine("Form1.LoadLogitudeSettings()" + DateTime.Now.ToString());
                 Form1.LoadLogitudeSettings();
-                Console.WriteLine("UpdateDataForTenant(customs):" + DateTime.Now.ToString() );
+                if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                {
+                    Console.WriteLine(ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString);
+                }
+
+                Console.WriteLine("UpdateDataForTenant(customs):" + DateTime.Now.ToString());
                 WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.UpdateDataForTenant(0, "customs");
                 Console.WriteLine("BuildObjectTablesZipFilesData:" + DateTime.Now.ToString());
                 WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData(false, true);
