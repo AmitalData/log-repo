@@ -5,7 +5,7 @@ SET TotalErrors
 cd /
 cd windows
 c:
-cd C:\Program Files (x86)\Jenkins\workspace\LogitudeTestDevOps\Logitude\AngularModules\AngularModules
+cd C:\Program Files (x86)\Jenkins\workspace\2019.R3.DevOps\Logitude\AngularModules\AngularModules
 
 
 
