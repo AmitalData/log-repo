@@ -30,6 +30,9 @@ namespace MeatadataGeneratorTool
         public static ObjectTableControl CurrentControl { get; set; }
         public static MainWindowControl MainControl { get; set; }
 
+        public static List<string> LXMLFilesPaths { get; set; }
+        public static List<string> DXMLFilesPaths { get; set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             if (e.Args != null && e.Args.Length > 0)
@@ -112,6 +115,12 @@ namespace MeatadataGeneratorTool
                 LoadFileWindow loadFileWindow = new LoadFileWindow();
                 loadFileWindow.Show();
             }
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string logitudePath = projectDirectory.Split(new string[] { @"\Logitude" }, StringSplitOptions.None)[0];
+            LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
+            DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
+
             base.OnStartup(e);
         }
 

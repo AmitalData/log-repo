@@ -2310,52 +2310,81 @@ namespace MeatadataGeneratorTool
                     ReferencedColumn = referencedColumn
                 };
             }
+            else
+            {
+                string foreignEntityDXMLFilePath = GetForeignEntityDXMLFilePath(foreignEntity);
+
+                if(foreignEntityDXMLFilePath != null)
+                {
+                    XDocument xmlDocument = XDocument.Load(foreignEntityDXMLFilePath);
+
+                    string referencedTable = xmlDocument.Root.Attribute("Name") == null ? null : xmlDocument.Root.Attribute("Name").Value;
+                    string referencedTableSchema = xmlDocument.Root.Attribute("Schema") == null ? null : xmlDocument.Root.Attribute("Schema").Value;
+
+                    string[] primaryKeyFields = xmlDocument.Descendants("Column").Where(x => x.Elements("Constraints").First().Attribute("PrimaryKey") != null && x.Elements("Constraints").First().Attribute("PrimaryKey").Value == "true").Select(x => x.Attribute("Name").Value).ToArray();
+                    string referencedColumn = primaryKeyFields.Length > 0 ? string.Join(",", primaryKeyFields) : null;
+                    
+                    return new ForeignEntityData
+                    {
+                        ReferencedTable = referencedTable,
+                        ReferencedTableSchema = referencedTableSchema,
+                        ReferencedColumn = referencedColumn
+                    };
+                }
+            }
 
             return null;
         }
 
         private static string GetForeignEntityLXMLFilePath(string foreignEntity)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string logitudePath = projectDirectory.Split(new string[] { @"\Logitude" }, StringSplitOptions.None)[0];
-            
-            string[] modulesPaths = new string[]
-            {
-                @"\Logitude\Logitude.Accounting.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.BookingLib.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.CRM.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.Customs.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.Social.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.TariffModule.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.TimeManagement.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.WarehouseLib.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.Infrastructure.MetaData\EntityFiles\",
-                @"\Logitude\Logitude.MetaData\EntityFiles\CommonDataModel\",
-                @"\Logitude\Logitude.MetaData\EntityFiles\GlobalModel\",
-                @"\Logitude\Logitude.MetaData\EntityFiles\InfrastructureModel\",
-                @"\Logitude\Logitude.MetaData\EntityFiles\InvoiceModel\",
-                @"\Logitude\Logitude.MetaData\EntityFiles\QuoteModel\",
-                @"\Logitude\Logitude.MetaData\EntityFiles\ShipmentsModel\",
-                @"\Logitude\Logitude.MetaData\EntityFiles\SystemLogsModel\"
-            };
+            //string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            //string logitudePath = projectDirectory.Split(new string[] { @"\Logitude" }, StringSplitOptions.None)[0];
 
-            foreach(var modulePath in modulesPaths)
-            {
-                string path = logitudePath + modulePath + foreignEntity + ".lxml";
-                if (File.Exists(path))
-                {
-                    return path;
-                }
-            }
+            //string[] modulesPaths = new string[]
+            //{
+            //    @"\Logitude\Logitude.Accounting.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.BookingLib.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.CRM.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.Customs.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.Social.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.TariffModule.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.TimeManagement.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.WarehouseLib.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.Infrastructure.MetaData\EntityFiles\",
+            //    @"\Logitude\Logitude.MetaData\EntityFiles\CommonDataModel\",
+            //    @"\Logitude\Logitude.MetaData\EntityFiles\GlobalModel\",
+            //    @"\Logitude\Logitude.MetaData\EntityFiles\InfrastructureModel\",
+            //    @"\Logitude\Logitude.MetaData\EntityFiles\InvoiceModel\",
+            //    @"\Logitude\Logitude.MetaData\EntityFiles\QuoteModel\",
+            //    @"\Logitude\Logitude.MetaData\EntityFiles\ShipmentsModel\",
+            //    @"\Logitude\Logitude.MetaData\EntityFiles\SystemLogsModel\"
+            //};
 
-            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", foreignEntity + ".lxml", SearchOption.AllDirectories);
+            //foreach(var modulePath in modulesPaths)
+            //{
+            //    string path = logitudePath + modulePath + foreignEntity + ".lxml";
+            //    if (File.Exists(path))
+            //    {
+            //        return path;
+            //    }
+            //}
 
-            if (lxmlFilesUnderRoot.Length > 0)
-            {
-                return lxmlFilesUnderRoot[0];
-            }
+            //string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", foreignEntity + ".lxml", SearchOption.AllDirectories);
 
-            return null;
+            //if (lxmlFilesUnderRoot.Length > 0)
+            //{
+            //    return lxmlFilesUnderRoot[0];
+            //}
+
+            //return null;
+
+            return App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == (foreignEntity.ToLower() + ".lxml")).FirstOrDefault();
+        }
+
+        private static string GetForeignEntityDXMLFilePath(string foreignEntity)
+        {
+            return App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == (foreignEntity.ToLower() + ".dxml")).FirstOrDefault();
         }
 
         private class ForeignEntityData

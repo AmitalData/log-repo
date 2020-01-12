@@ -22,6 +22,7 @@ using MeatadataGeneratorTool.DataContractsModule;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
 using System.Diagnostics;
+using System.IO;
 
 namespace MeatadataGeneratorTool
 {
@@ -2668,7 +2669,7 @@ namespace MeatadataGeneratorTool
                 }
                 if (DataContractsObsList != null)
                 {
-                    ErrorMessages = "";
+                    //ErrorMessages = "";
                     foreach (var item in DataContractsObsList)
                     {
                         if (item.DCFieldsObsList != null && item.DCFieldsObsList.Where(a => a.IsKey == true).Count() == 0)
@@ -2699,7 +2700,7 @@ namespace MeatadataGeneratorTool
                     stopWatch2.Stop();
                     string generateDXMLTime = stopWatch2.ElapsedMilliseconds.ToString();
 
-                    MessageBox.Show("Generate LXML Time(ms): " + generateLXMLTime + "\nGenerate DXML Time(ms): " + generateDXMLTime);
+                    //MessageBox.Show("Generate LXML Time(ms): " + generateLXMLTime + "\nGenerate DXML Time(ms): " + generateDXMLTime);
 
                     // App.CurrentControl.Close();
                     Environment.Exit(0);
@@ -2871,6 +2872,14 @@ namespace MeatadataGeneratorTool
                 if (string.IsNullOrEmpty(item.Operator))
                 {
                     str.AppendLine("Operator is Required");
+                }
+            }
+
+            if (item.IsForeignKey && !string.IsNullOrEmpty(item.ForeignEntity))
+            {
+                if (!App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == item.ForeignEntity.ToLower() + ".lxml").Any() && !App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == item.ForeignEntity.ToLower() + ".dxml").Any())
+                {
+                    str.AppendLine("Cannot Find Foreign Entity " + item.ForeignEntity);
                 }
             }
 
