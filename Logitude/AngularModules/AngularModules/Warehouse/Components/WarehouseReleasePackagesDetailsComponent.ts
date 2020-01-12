@@ -77,17 +77,26 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
         this.TransportModeId = this.warehouseReleasePM.TransportModeId;
         this.DirectionId = this.warehouseReleasePM.DirectionId;
-        if (this.ShipmentPM) {
-            this.FromPortId = this.ShipmentPM ? this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId : "";
-            this.ToPortId = this.ShipmentPM.ShipmentLevelCode == "H" ? this.ShipmentPM.MainCarriageFinalDestinationPortId : this.ShipmentPM.FinalDistenationPortId;
-            if (!this.ToPortId) {
-                this.ToPortId = this.ShipmentPM.ToPortId;
-            }
-        }
+        this.SetPortData();
         this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
     }
 
+    SetPortData() {
+
+        var shipment = this.ViewModelTrigger ? this.ViewModelTrigger.ShipmentPM : this.ShipmentPM;
+
+        if (shipment) {
+            this.FromPortId = shipment ? shipment.MainCarriageFromPortId ? shipment.MainCarriageFromPortId : shipment.FromPortId : "";
+            this.ToPortId = shipment.ShipmentLevelCode == "H" ? shipment.MainCarriageFinalDestinationPortId : shipment.FinalDistenationPortId;
+            if (!this.ToPortId) {
+                this.ToPortId = shipment.ToPortId;
+            }
+        } else {
+            this.ToPortId = null;
+            this.FromPortId = null;
+        }
+    }
 
     SetLabel() {
 
@@ -204,6 +213,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.WarehouseId = this.warehouseReleasePM.WarehouseId;
         this.CustomerId = this.warehouseReleasePM.CustomerId;
         this.ShipmentId = this.warehouseReleasePM.ShipmentId;
+     
 
         this.IsPackageOpen = false;
         var windowArgs: any = {};

@@ -141,6 +141,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         if (this.warehouseReleasePM) {
 
             if (this.ShipmentPM) {
+                this.UIProperties.SetEnabled("ShipmentId", "WarehouseRelease", false);
+
                 if (this.ShipmentPM.ShipmentLevelCode == "D") this.warehouseReleasePM.CustomerId = this.ShipmentPM.CustomerId;
                 this.warehouseReleasePM.ShipmentId = this.ShipmentPM.Id;
                 this.warehouseReleasePM.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
@@ -220,14 +222,17 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
         }
     }
-    Shipment: any;
+
     ShipmentValueChange(shipment: any) {
         this.warehouseReleasePM.ShipmentNumber = null;
-        if (shipment) {
-            this.warehouseReleasePM.ShipmentNumber = shipment.ShipmentNumber;
+        if (this.ShipmentPM) {
+            this.warehouseReleasePM.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
         }
 
-        this.Shipment = shipment;
+        this.ShipmentPM = shipment;
+        if (this.warehouseReleasePackagesDetailsComponent) {
+            this.warehouseReleasePackagesDetailsComponent.SetPortData();
+        }
     }
 
 
@@ -418,16 +423,16 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-
+    warehouseReleasePackagesDetailsComponent: any;
     LoadChildComponent() {
        
         let warehouseEntryPackagesDetailsComponenttLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "WRPD")[0];
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                 .then(cmpRef => {
-                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.Shipment ? this.Shipment : this.ShipmentPM };
+                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM };
                     cmpRef.instance.SetWindowArgs(windowArgs);
-
+                    this.warehouseReleasePackagesDetailsComponent = cmpRef.instance;
                 });
 
         }
