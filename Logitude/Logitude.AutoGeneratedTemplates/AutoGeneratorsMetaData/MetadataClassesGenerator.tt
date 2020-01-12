@@ -926,11 +926,12 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 			FeatureCode = FeatureCodeAtt.Value.ToString();
 
 	    string featureClassName = "null";
+		string featureCodeClassName = "null";
         
         if (MenuButtonType.Trim('"') != "dropdownbutton")
         {
                         featureClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id";
-                        
+                        featureCodeClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".FeatureUniqeCode";
 
         }
         else
@@ -952,6 +953,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						FeatureId = <#=featureClassName #>,
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
+						FeatureUniqeCode = <#=featureCodeClassName #>,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 <#+
 	   var MenuItems = MButtonAtt.Elements("MenuItem");
@@ -987,9 +989,12 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 			ItemTextCodeCode = ItemTextCodeAtt.Value.ToString().Trim('"');
 
 			string itemfeatureClassName = "";
+		    string itemfeatureCodeClassName = "";
+
                 var isActive = "true";
 			if(MenuButtonType.Trim('"') != "separator")
                 {itemfeatureClassName = "FeatureId=  " + AddedMenuButtonsFeatures[EventCode.Trim('"') +ItemFeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id,";
+				itemfeatureCodeClassName = "FeatureUniqeCode=  " + AddedMenuButtonsFeatures[EventCode.Trim('"') +ItemFeatureCode.Trim('"')+ TblName.Trim('"')] + ".FeatureUniqeCode,";
                 }
                 else
                 {
@@ -1013,6 +1018,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						<#= itemfeatureClassName #>
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
+						<#=itemfeatureCodeClassName#>
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   <#+
              i++; 
@@ -1220,7 +1226,7 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName,int i
 	  
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, TabNameTextCodeCode = <#= textCodeInstanceName #>.Code, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id,FeatureUniqeCode = <#= featureInstanceName #>.FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, TabNameTextCodeCode = <#= textCodeInstanceName #>.Code, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 

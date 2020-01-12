@@ -7476,23 +7476,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIMN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/MainTab/TicketMainTabComponent", FeatureId = TicketMainFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketMainTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketMainTextCode_TH0.Id, TabNameTextCodeCode = TicketMainTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIMN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/MainTab/TicketMainTabComponent", FeatureId = TicketMainFeature_TH0.Id,FeatureUniqeCode = TicketMainFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketMainTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketMainTextCode_TH0.Id, TabNameTextCodeCode = TicketMainTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIOV",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/Overview/TicketOverviewTabComponent", FeatureId = TicketOverviewFeature_TH1.Id, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketOverviewTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketOverviewTextCode_TH1.Id, TabNameTextCodeCode = TicketOverviewTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIOV",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/Overview/TicketOverviewTabComponent", FeatureId = TicketOverviewFeature_TH1.Id,FeatureUniqeCode = TicketOverviewFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketOverviewTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketOverviewTextCode_TH1.Id, TabNameTextCodeCode = TicketOverviewTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIGE",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/Details/TicketDetailsTabComponent", FeatureId = TicketDetailsFeature_TH2.Id, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketGeneralTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketDetailsTextCode_TH2.Id, TabNameTextCodeCode = TicketDetailsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIGE",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/Details/TicketDetailsTabComponent", FeatureId = TicketDetailsFeature_TH2.Id,FeatureUniqeCode = TicketDetailsFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketGeneralTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketDetailsTextCode_TH2.Id, TabNameTextCodeCode = TicketDetailsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIDO",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/DocsOut/TicketDocsOutTabComponent", FeatureId = TicketDocsOutFeature_TH3.Id, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketDocsOutTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketDocsOutTextCode_TH3.Id, TabNameTextCodeCode = TicketDocsOutTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIDO",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/DocsOut/TicketDocsOutTabComponent", FeatureId = TicketDocsOutFeature_TH3.Id,FeatureUniqeCode = TicketDocsOutFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketDocsOutTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketDocsOutTextCode_TH3.Id, TabNameTextCodeCode = TicketDocsOutTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIDI",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/DocsIn/TicketDocsInTabComponent", FeatureId = TicketDocsInFeature_TH4.Id, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketDocsInTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketDocsInTextCode_TH4.Id, TabNameTextCodeCode = TicketDocsInTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIDI",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/DocsIn/TicketDocsInTabComponent", FeatureId = TicketDocsInFeature_TH4.Id,FeatureUniqeCode = TicketDocsInFeature_TH4.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketDocsInTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketDocsInTextCode_TH4.Id, TabNameTextCodeCode = TicketDocsInTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TITE",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/Escalation/TicketEscalationTabComponent", FeatureId = TicketTicketEscalationsFeature_TH5.Id, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketEscalationTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketTicketEscalationsTextCode_TH5.Id, TabNameTextCodeCode = TicketTicketEscalationsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TITE",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/Escalation/TicketEscalationTabComponent", FeatureId = TicketTicketEscalationsFeature_TH5.Id,FeatureUniqeCode = TicketTicketEscalationsFeature_TH5.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketEscalationTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketTicketEscalationsTextCode_TH5.Id, TabNameTextCodeCode = TicketTicketEscalationsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIAU",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/Audit/TicketAuditTabComponent", FeatureId = TicketAuditFeature_TH6.Id, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketAutomationTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketAuditTextCode_TH6.Id, TabNameTextCodeCode = TicketAuditTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIAU",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/Audit/TicketAuditTabComponent", FeatureId = TicketAuditFeature_TH6.Id,FeatureUniqeCode = TicketAuditFeature_TH6.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.Ticket.TicketAutomationTabControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketAuditTextCode_TH6.Id, TabNameTextCodeCode = TicketAuditTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TICM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketCommunicationFeature_TH7.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketCommunicationTextCode_TH7.Id, TabNameTextCodeCode = TicketCommunicationTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TICM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketCommunicationFeature_TH7.Id,FeatureUniqeCode = TicketCommunicationFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketCommunicationTextCode_TH7.Id, TabNameTextCodeCode = TicketCommunicationTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketEventsFeature_TH8.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketEventsTextCode_TH8.Id, TabNameTextCodeCode = TicketEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TIEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketEventsFeature_TH8.Id,FeatureUniqeCode = TicketEventsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TicketObjectTable.Id, TabNameTextCodeId = TicketEventsTextCode_TH8.Id, TabNameTextCodeCode = TicketEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -7819,6 +7819,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TicketMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -7836,6 +7837,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TicketFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  TicketFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton TicketMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -7853,6 +7855,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TicketFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  TicketFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton TicketMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -7870,6 +7873,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TicketFeature_MB02.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  TicketFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton TicketMenuButton03 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -7887,6 +7891,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TicketFeature_MB03.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  TicketFeature_MB03.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

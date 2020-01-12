@@ -27,7 +27,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public string LabelTextCodeCode { get; set; }
 
-        [ForeignKey("FeatureId")]
+        //[ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
         [ForeignKey("MenuButtonGroupId")]
         public virtual MenuButtonGroup MenuButtonGroup { get; set; }

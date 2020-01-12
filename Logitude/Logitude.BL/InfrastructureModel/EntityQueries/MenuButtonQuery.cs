@@ -50,6 +50,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        ControlPath=a.ControlPath,
                        HtmlComponentPath =a.HtmlComponentPath,
                        Width =a.Width,
+                       FeatureUniqeCode = a.FeatureUniqeCode,
                    };
         }
 
@@ -76,6 +77,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        ControlPath = a.ControlPath,
                        Width = a.Width,
                        HtmlComponentPath = a.HtmlComponentPath,
+                       FeatureUniqeCode = a.FeatureUniqeCode,
                    };
         }
     }

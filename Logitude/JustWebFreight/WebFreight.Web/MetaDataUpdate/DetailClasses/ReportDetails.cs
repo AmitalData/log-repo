@@ -18,5 +18,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string ReportGroupId { get; set; }
         public string FeatureId { get; set; }
         public string FilterHtmlComponentUrl { get; set; }
+        public string FeatureUniqeCode { get; set; }
+
     }
 }

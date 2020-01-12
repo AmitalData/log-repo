@@ -26,6 +26,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string FilterHtmlComponentUrl { get; set; }
         public string DefaultTemplateId { get; set; }
         public string DefaultMessageTemplateId { get; set; }
+        public string FeatureUniqeCode { get; set; }
+
 
 
         [ForeignKey("DefaultMessageTemplateId")]
@@ -39,7 +41,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("ReportGroupId")]
         public virtual ReportGroup ReportGroup { get; set; }
 
-        [ForeignKey("FeatureId")]
+        //[ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
 
         [ForeignKey("ReportDocumentId")]
