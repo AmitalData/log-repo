@@ -29,14 +29,14 @@
 
                         <td style="left:0px;float:left">
                             <!--[disabled] ="!CanOpenNewAmendment"-->
-                            <button [disabled] ="!CanOpenNewAmendment" style="width:100px" class="Button" (click)="OpenNewAmendment()">    {{'Customs.Declaration.O.OpenDeclarationAmendment'| TextCodeTranslationPipe}}</button>
+                            <button [disabled]="!CanOpenNewAmendment" style="width:100px" class="Button" (click)="OpenNewAmendment()">    {{'Customs.Declaration.O.OpenDeclarationAmendment'| TextCodeTranslationPipe}}</button>
 
 
                         </td>
                     </tr>
 
 
-
+                    <!--(rowSelectedEvent)= "OnRowSelected($event)"-->
                     <tr class="FormFieldRow" style="height:1px">
                         <td colspan="5" style="width: 100% ; height : 100%">
                             <div class="CellContent" style="bottom: 5px;padding:5px">
@@ -46,12 +46,11 @@
                                                [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                                [columns]="columns"
                                                [QueryChangeEvent]="onQueryChangeEvent"
-                                               [IsCustomTemplate]="true"
-                                               (rowSelectedEvent)= "OnRowSelected($event)">
->
+                                               [IsCustomTemplate]="true">
+                                    >
                                 </logitude-grid>
                                 <div>
-                                 </div>
+                                </div>
                             </div>
                         </td>
 
