@@ -58,22 +58,37 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         //Yuval Chalup 17.11.2014 TASK-9089 --->
 
-        public Card GetCustomerNameByChecKId(string declarationNumber, int tenant)
+        public Card GetCustomerNameByDeclartionNo(string declartionNumber, int tenant)
         {
             Card card = new Card();
-            var declaration = context.Declarations.FirstOrDefault(x => x.DeclarationNumber == declarationNumber);
+            var declaration = context.Declarations.FirstOrDefault(x => x.DeclarationNumber == declartionNumber);
             if (declaration != null)
             {
                 card = context.Cards.FirstOrDefault(x => x.Id == declaration.CustomerId);
                 if (card != null)
                     return card;
             }
-
             return card;
         }
         public string GetCheckTypByCode(string code)
         {
-            return context.CheckTypeLookups.FirstOrDefault(x => x.Code == code).LocalName;
+            var type= context.CheckTypeLookups.FirstOrDefault(x => x.Code == code);
+            if (type != null)
+            {
+                return type.LocalName;
+            }
+            return "";
+        }
+        public string GetCustomFileNoByCheckId(string Id,int tenant)
+        {
+            DeclarationQueryService declarationQuery = new DeclarationQueryService(tenant);
+            var declaration = context.Declarations.FirstOrDefault(x => x.DeclarationNumber == Id);
+            if (declaration != null)
+            {
+                return declaration.CustomFileNo;
+            }
+            return "";
+            
         }
 
 
