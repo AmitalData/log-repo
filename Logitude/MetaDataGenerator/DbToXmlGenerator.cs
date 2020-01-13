@@ -606,10 +606,10 @@ namespace MetaDataGenerator
             System.Type tableListClass = System.Type.GetType(qListName);
 
 
-            if (tableClass == null && tableName != "General" && tableName != "Master")// && tablePMClass == null)
-            {
-                return false;
-            }
+            //if (tableClass == null && tableName != "General" && tableName != "Master")// && tablePMClass == null)
+            //{
+            //    return false;
+            //}
 
             PropertyInfo[] pocoProperties = { };
             PropertyInfo[] pmClassProperties = { };
@@ -915,7 +915,9 @@ namespace MetaDataGenerator
                 }
             }
             else
-                throw new Exception("Couldn't find the POCO class for " + table.Name);
+            {
+                //throw new Exception("Couldn't find the POCO class for " + table.Name); 
+            }
 
             return entityPropertiesInfo;
         }
