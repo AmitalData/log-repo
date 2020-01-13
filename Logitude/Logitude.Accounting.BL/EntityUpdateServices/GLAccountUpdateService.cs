@@ -612,7 +612,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             List<CardList> cardLists = GetCardsByGLAccountId(gLAccount.Id, gLAccount.Tenant);
           
             List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card> cards = new List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card>();
-            foreach (CardList card in cardLists.Where(d=> d.PartnerTypeId == gLAccount.PartnerTypeId ))
+            if (gLAccount.PartnerTypeId != null)
+            {
+                cardLists = cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId).ToList();
+            }
+            foreach (CardList card in cardLists)
             {
                 Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card connectedCard = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card();
                 connectedCard.Code = card.Code;
