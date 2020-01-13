@@ -134,7 +134,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentCorrectedByUserId, 
 	         AmendmentRejectionReason, 
 	         IsAmendment, 
-	         AmendmentOriginalDeclartation,
+	         AmendmentOriginalDeclartation, 
+	         AmendmentDontDisplayInList,
 	      }
 
 
@@ -317,7 +318,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentCorrectedByUserName, 
 	         AmendmentStatusName, 
 	         CourierManifestStatusCode, 
-	         CourierPaymentStatusCode,
+	         CourierPaymentStatusCode, 
+	         IsPendingNotNull, 
+	         AmendmentDontDisplayInList,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -884,6 +887,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentOriginalDeclartation))
             {
 				entityPOCO.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
+            {
+				entityPOCO.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1457,6 +1465,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AmendmentOriginalDeclartation = entityPOCO.AmendmentOriginalDeclartation;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentDontDisplayInList))
+            {
+					entityPM.AmendmentDontDisplayInList = entityPOCO.AmendmentDontDisplayInList;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2021,6 +2034,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentOriginalDeclartation))
             {
                 oldEntityPM.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
+            {
+                oldEntityPM.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
             }
 			
 		}

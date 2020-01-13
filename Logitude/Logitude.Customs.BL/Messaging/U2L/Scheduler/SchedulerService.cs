@@ -270,13 +270,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             var logContext = CustomContext.GetContext(ResolvedTenant());
             var customsBookQueryService = new CustomsBookQueryService(logContext);
             CustomsBookPM dbCustomsBookPM = customsBookQueryService.GetCustomsBookData();
-            DateTime fromDate = DateTime.Now.AddDays(-30);
+            DateTime fromDate = DateTime.Now.AddDays(-7);
+            DateTime toDate= DateTime.Now;
             if (dbCustomsBookPM != null)
             {
-                fromDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now.AddDays(-30) : (DateTime)dbCustomsBookPM.LastUpdateDate;
+                fromDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now.AddDays(-7) : (DateTime)dbCustomsBookPM.LastUpdateDate;
+                toDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now : fromDate.AddDays(7);  
+
             }
-            DateTime toDate = fromDate.AddDays(29);
-            string fromDateString = fromDate.ToString("yyyyMMdd");
+             string fromDateString = fromDate.ToString("yyyyMMdd");
             string toDateString = toDate.ToString("yyyyMMdd");
 
             CustomsBookInRequestParams requestParams = new CustomsBookInRequestParams()

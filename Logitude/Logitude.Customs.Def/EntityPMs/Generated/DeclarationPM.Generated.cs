@@ -4330,6 +4330,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isPendingNotNull ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPendingNotNull  
+	   {
+	    
+	     get
+		{
+		   return isPendingNotNull;
+		 }
+		 set
+		 {
+		   if(isPendingNotNull != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPendingNotNull",OldValue=isPendingNotNull,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPendingNotNull=value;
+		   }
+			
+		 }
+	   }
+	  private bool amendmentDontDisplayInList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AmendmentDontDisplayInList  
+	   {
+	    
+	     get
+		{
+		   return amendmentDontDisplayInList;
+		 }
+		 set
+		 {
+		   if(amendmentDontDisplayInList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentDontDisplayInList",OldValue=amendmentDontDisplayInList,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   amendmentDontDisplayInList=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

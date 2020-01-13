@@ -92,6 +92,7 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -134,6 +135,7 @@
   <ItemGroup>
     <Compile Include="AmitalContextUtil.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
+    <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AcceptanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActionCodeDetails.Generated.cs" />

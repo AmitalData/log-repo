@@ -89,46 +89,7 @@ namespace Logitude.Update
 
             try
             {
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                LogitudeSettings.DatabaseManagementSystem = dbms;
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                LogitudeSettings.Id = setting.Id;
-                LogitudeSettings.ChampEnv = setting.ChampEnv;
-                LogitudeSettings.ChampURL = setting.ChampURL;
-                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
-                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
-                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
-                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
-                LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
-                LogitudeSettings.DeploymentStage = setting.DeploymentStage;
-                LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
-                LogitudeSettings.LogitudeURL = setting.LogitudeURL;
-                LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
-                LogitudeSettings.UsingAzure = setting.UsingAzure;
-                LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
-                LogitudeSettings.StorageAccountName = setting.StorageAccountName;
-                LogitudeSettings.StorageType = setting.StorageType;
-                LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
-                LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
-                LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
-                LogitudeSettings.WorkEnvironment = setting.WorkEnvironment; // maybe we need to init more fields ?
-                LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
-
-                //if (LogitudeSettings.IsCostomsDeploy) 
-                LogitudeSettings.ABMProductId = setting.ABMProductId;
-                LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-                //if (LogitudeSettings.IsCostomsDeploy)
-                {
-                    //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
-                    LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
-                }
-                string storageServiceMode = "fs";
-                string queueServiceMode = "azure";
-                Logitude.Server.Tools.ContainerAccessor.InitContainer();
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil,null, null);
-
-                CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
+                LoadLogitudeSettings();
             }
             catch (Exception eee)
             {
@@ -137,6 +98,49 @@ namespace Logitude.Update
             }
         }
 
+        public static void LoadLogitudeSettings()
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            LogitudeSettings.DatabaseManagementSystem = dbms;
+            SettingRepository settingRepository = new SettingRepository();
+            Setting setting = settingRepository.GetSingleSetting("1");
+            LogitudeSettings.Id = setting.Id;
+            LogitudeSettings.ChampEnv = setting.ChampEnv;
+            LogitudeSettings.ChampURL = setting.ChampURL;
+            LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+            LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+            LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+            LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
+            LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
+            LogitudeSettings.DeploymentStage = setting.DeploymentStage;
+            LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
+            LogitudeSettings.LogitudeURL = setting.LogitudeURL;
+            LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
+            LogitudeSettings.UsingAzure = setting.UsingAzure;
+            LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
+            LogitudeSettings.StorageAccountName = setting.StorageAccountName;
+            LogitudeSettings.StorageType = setting.StorageType;
+            LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+            LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
+            LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
+            LogitudeSettings.WorkEnvironment = setting.WorkEnvironment; // maybe we need to init more fields ?
+            LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
+
+            //if (LogitudeSettings.IsCostomsDeploy) 
+            LogitudeSettings.ABMProductId = setting.ABMProductId;
+            LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+            //if (LogitudeSettings.IsCostomsDeploy)
+            {
+                //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
+                LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
+            }
+            string storageServiceMode = "fs";
+            string queueServiceMode = "azure";
+            Logitude.Server.Tools.ContainerAccessor.InitContainer();
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null);
+
+            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
+        }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
@@ -1868,7 +1872,7 @@ User/Pass",
         }
 
         bool buildCustomsZipFiles = false;
-        private int _SeedTenant=0;
+        private int _SeedTenant = 0;
 
         private void UpdateZipFiles()
         {
@@ -3723,7 +3727,7 @@ User/Pass",
                 SqlDataReader reader = cmd.ExecuteReader();
                 sqlConnection1.Close();
 
-                MessageBox.Show(string.Format("Tenant {0}: {1}",tenant, dir));
+                MessageBox.Show(string.Format("Tenant {0}: {1}", tenant, dir));
             }
             catch (Exception ex)
             {
@@ -3735,7 +3739,7 @@ User/Pass",
         private void ltrBtn_Click(object sender, EventArgs e)
         {
             ChangeTenantLayoutDirection("ltr");
-            
+
         }
 
         private void button42_Click_FixingDouplicated(object sender, EventArgs e)
@@ -3812,7 +3816,7 @@ User/Pass",
         {
             IInvoiceContext context = InvoiceContext.GetContext(1);
             APInvoiceQuery service = new APInvoiceQuery(1);
-                APInvoicePM invoice = service.GetSinglePM("1-18", 1);
+            APInvoicePM invoice = service.GetSinglePM("1-18", 1);
             byte[] serialized = LogitudeXmlSerializer.SerializeObject(invoice);
             using (MemoryStream ms = new MemoryStream(serialized))
             {

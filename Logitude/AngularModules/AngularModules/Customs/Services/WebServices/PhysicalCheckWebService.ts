@@ -21,7 +21,6 @@ export class PhysicalCheckWebService {
 
     GetPhysicalCheckByDeclarationIdLists(declarationId: string, tenant: number) {
         return Observable.defer(() => {
-
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');

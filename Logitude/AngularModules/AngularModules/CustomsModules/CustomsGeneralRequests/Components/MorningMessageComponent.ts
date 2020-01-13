@@ -27,7 +27,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
     
     templateUrl: './MorningMessageComponent.html',
 })
-
+     
 
 export class MorningMessageComponent
     extends BaseRequestsSheetMassaging

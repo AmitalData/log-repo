@@ -48,8 +48,7 @@ export class BaseRequestsSheetMassaging
         //alert("BaseRequestsSheetMassaging:ngOnInit")
         //this.CallOnMassageDisplayMethod();
         ///alert(this.MyCustomMessageWrapperComponent);
-
-
+     
 
     }
 
@@ -92,7 +91,6 @@ export class BaseRequestsSheetMassaging
 
     public MassageDisplay(RequestParamsXml: string, ResponseDataXml: string): void {
 
-        
 
         this._RequestParamsXml = RequestParamsXml;
         this._ResponseDataXml = ResponseDataXml;
