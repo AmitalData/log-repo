@@ -6,6 +6,8 @@ using Oracle.DataAccess.Client;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Security;
+using System.Text.RegularExpressions;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -34,8 +36,8 @@ namespace Logitude.DBMigrations.Models
                     if (dxmlFiles != null)
                     {
                         ValidateDXMLFiles(dxmlFiles);
-
-                        GeneratedScript generatedScript = GenerateScriptFromDXMLFiles(dxmlFiles);
+                        
+                        GeneratedScript generatedScript = GenerateScriptsFromDXMLFiles(dxmlFiles);
 
                         SaveScript(generatedScript);
 
@@ -97,17 +99,21 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private GeneratedScript GenerateScriptFromDXMLFiles(string[] dxmlFiles)
+        private GeneratedScript GenerateScriptsFromDXMLFiles(string[] dxmlFiles)
         {
             GeneratedScript generatedScript = new GeneratedScript();
             RelationsScript relationsScript = new RelationsScript();
 
             var stopwatch = Stopwatch.StartNew();
 
-            List<DXMLTable> dxmlTables = GetDXMLTables(dxmlFiles);
+            DXMLDefinitions dxmlDefinitions = GetDXMLDefinitions(dxmlFiles);
+
+            List<DXMLTable> dxmlTables = dxmlDefinitions.DXMLTables;
+            List<DXMLView> dxmlViews = dxmlDefinitions.DXMLViews;
+            List<DXMLProcedure> dxmlProcedures = dxmlDefinitions.DXMLProcedures;
 
             DXMLTables = dxmlTables.Select(d => d.TableDefinition).ToList();
-            
+
             foreach (var dxmlTable in dxmlTables)
             {
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
@@ -129,6 +135,32 @@ namespace Logitude.DBMigrations.Models
             }
 
             generatedScript = AppendRelationsScriptToGeneratedScript(generatedScript, relationsScript);
+
+            foreach (var dxmlView in dxmlViews)
+            {
+                Console.WriteLine("Generating Script For " + dxmlView.DXMLFileName + " ...");
+
+                string viewScript = "-- DataView Script From " + dxmlView.DXMLFileName + "\n";
+                viewScript += GetScriptFromViewDefinition(dxmlView.ViewDefinition);
+
+                if (!String.IsNullOrEmpty(viewScript))
+                {
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlView.ViewDefinition.DBType, viewScript);
+                }
+            }
+
+            foreach (var dxmlProcedure in dxmlProcedures)
+            {
+                Console.WriteLine("Generating Script For " + dxmlProcedure.DXMLFileName + " ...");
+
+                string procedureScript = "-- Procedure Script From " + dxmlProcedure.DXMLFileName + "\n";
+                procedureScript += GetScriptFromProcedureDefinition(dxmlProcedure.ProcedureDefinition);
+
+                if (!String.IsNullOrEmpty(procedureScript))
+                {
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, procedureScript);
+                }
+            }
 
             AppendToPerformanceData("Generate Scripts From DXML Files", stopwatch);
 
@@ -265,23 +297,23 @@ namespace Logitude.DBMigrations.Models
             return connectionString;
         }
 
-        private GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string tableScript)
+        private GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string script)
         {
             if (dbType == "Global")
             {
-                generatedScript.GlobalScript += tableScript;
+                generatedScript.GlobalScript += script;
                 generatedScript.GlobalScript += "\n";
                 return generatedScript;
             }
             else if (dbType == "Main")
             {
-                generatedScript.MainScript += tableScript;
+                generatedScript.MainScript += script;
                 generatedScript.MainScript += "\n";
                 return generatedScript;
             }
             else if (dbType == "SystemLogs")
             {
-                generatedScript.SystemLogsScript += tableScript;
+                generatedScript.SystemLogsScript += script;
                 generatedScript.SystemLogsScript += "\n";
                 return generatedScript;
             }
@@ -349,19 +381,41 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
+                    //string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
+                    //commands = commands.Take(commands.Count() - 1).ToArray();
+
+                    //foreach (var command in commands)
+                    //{
+                    //    OracleCommand oracleCommand = new OracleCommand();
+                    //    oracleCommand.Connection = oracleConnection;
+                    //    oracleCommand.CommandText = (command.EndsWith(" END") ? command + ";" : command);
+                    //    oracleConnection.Open();
+                    //    oracleCommand.ExecuteNonQuery();
+                    //    oracleConnection.Close();
+                    //}
+                    //return null;
+
+                    oracleConnection.Open();
+
                     string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
                     commands = commands.Take(commands.Count() - 1).ToArray();
 
-                    foreach (var command in commands)
+                    using (OracleCommand oracleCommand = new OracleCommand())
                     {
-                        OracleCommand oracleCommand = new OracleCommand();
                         oracleCommand.Connection = oracleConnection;
-                        oracleCommand.CommandText = (command.EndsWith(" END") ? command + ";" : command);
-                        oracleConnection.Open();
-                        oracleCommand.ExecuteNonQuery();
-                        oracleConnection.Close();
+
+                        foreach (var command in commands)
+                        {
+                            oracleCommand.CommandText = (command.EndsWith(" END") ? command + ";" : command);
+                            oracleCommand.ExecuteNonQuery();
+                        }
                     }
+
+                    oracleConnection.Close();
+
                     return null;
+
+
                 }
                 catch (Exception exception)
                 {
@@ -375,17 +429,24 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
+                    sqlConnection.Open();
+
                     string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
                     commands = commands.Take(commands.Count() - 1).ToArray();
 
-                    foreach (var command in commands)
+                    using (SqlCommand sqlCommand = new SqlCommand())
                     {
-                        SqlCommand sqlCommand = sqlConnection.CreateCommand();
-                        sqlCommand.CommandText = command;
-                        sqlConnection.Open();
-                        sqlCommand.ExecuteNonQuery();
-                        sqlConnection.Close();
+                        sqlCommand.Connection = sqlConnection;
+
+                        foreach (var command in commands)
+                        {
+                            sqlCommand.CommandText = command;
+                            sqlCommand.ExecuteNonQuery();
+                        }
                     }
+
+                    sqlConnection.Close();
+
                     return null;
                 }
                 catch (Exception exception)
@@ -396,25 +457,55 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private List<DXMLTable> GetDXMLTables(string[] dxmlFiles)
+        private DXMLDefinitions GetDXMLDefinitions(string[] dxmlFiles)
         {
             List<DXMLTable> dxmlTables = new List<DXMLTable>();
+            List<DXMLView> dxmlViews = new List<DXMLView>();
+            List<DXMLProcedure> dxmlProcedures = new List<DXMLProcedure>();
 
             foreach (var dxmlFile in dxmlFiles)
             {
                 string xmlString = File.ReadAllText(dxmlFile);
-                TableDefinition dxmlTableDefinition = xmlString.ParseXML<TableDefinition>();
 
-                DXMLTable dxmlTable = new DXMLTable
+                if (xmlString.EndsWith("</Table>"))
                 {
-                    DXMLFileName = Path.GetFileName(dxmlFile),
-                    TableDefinition = dxmlTableDefinition
-                };
-
-                dxmlTables.Add(dxmlTable);
+                    DXMLTable dxmlTable = CreateDXMLTable(xmlString, dxmlFile);
+                    if(dxmlTable == null)
+                    {
+                        ExitTool("Cannot Create Table Definition For " + Path.GetFileName(dxmlFile));
+                    }
+                    dxmlTables.Add(dxmlTable);
+                }
+                else if (xmlString.EndsWith("</View>"))
+                {
+                    DXMLView dxmlView = CreateDXMLView(xmlString, dxmlFile);
+                    if(dxmlView == null)
+                    {
+                        ExitTool("Cannot Create View Definition For " + Path.GetFileName(dxmlFile));
+                    }
+                    dxmlViews.Add(dxmlView);
+                }
+                else if (xmlString.EndsWith("</Procedure>"))
+                {
+                    DXMLProcedure dxmlProcedure = CreateDXMLProcedure(xmlString, dxmlFile);
+                    if(dxmlProcedure == null)
+                    {
+                        ExitTool("Cannot Create Procedure Definition For " + Path.GetFileName(dxmlFile));
+                    }
+                    dxmlProcedures.Add(dxmlProcedure);
+                }
+                else
+                {
+                    ExitTool("Cannot Create Class Definition For " + Path.GetFileName(dxmlFile));
+                }
             }
 
-            return dxmlTables;
+            return new DXMLDefinitions
+            {
+                DXMLTables = dxmlTables,
+                DXMLViews = dxmlViews,
+                DXMLProcedures = dxmlProcedures
+            };
         }
 
         private bool IsGeneratedScriptsEmpty(GeneratedScript generatedScript)
@@ -426,6 +517,168 @@ namespace Logitude.DBMigrations.Models
         {
             stopwatch.Stop();
             PerformanceData += description + "," + stopwatch.ElapsedMilliseconds + "\n";
+        }
+
+        private string GetScriptFromViewDefinition(ViewDefinition viewDefinition)
+        {
+            if (DatabaseType.ToLower() == "oracle")
+            {
+                return UnescapeScript(viewDefinition.OracleScript) + "\n\n";
+            }
+            else
+            {
+                string viewScript = "EXEC('IF (OBJECT_ID(''" + viewDefinition.Name + "'', ''V'') IS NOT NULL) BEGIN DROP VIEW " + viewDefinition.Name + " END" + "');\n";
+
+                if(Regex.Matches(viewDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").Count > 0)
+                {
+                    foreach (var script in Regex.Split(viewDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").ToList())
+                    {
+                        viewScript += "EXEC('" + UnescapeScript(script.Trim()).Replace("'", "''") + "');" + "\n";
+                    }
+
+                    viewScript += "\n";
+                }
+                else
+                {
+                    viewScript += "EXEC('" + UnescapeScript(viewDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
+                }
+                
+                return viewScript;
+            }
+        }
+
+        private string GetScriptFromProcedureDefinition(ProcedureDefinition procedureDefinition)
+        {
+            if (DatabaseType.ToLower() == "oracle")
+            {
+                string procedureScript = UnescapeScript(procedureDefinition.OracleScript) + "\n\n";
+                return procedureScript;
+            }
+            else
+            {
+                string procedureScript = "EXEC('IF (OBJECT_ID(''" + procedureDefinition.Name + "'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE " + procedureDefinition.Name + " END" + "');\n";
+
+                if (Regex.Matches(procedureDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").Count > 0)
+                {
+                    foreach (var script in Regex.Split(procedureDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").ToList())
+                    {
+                        procedureScript += "EXEC('" + UnescapeScript(script.Trim()).Replace("'", "''") + "');" + "\n";
+                    }
+
+                    procedureScript += "\n";
+                }
+                else
+                {
+                    procedureScript += "EXEC('" + UnescapeScript(procedureDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
+                }
+
+                return procedureScript;
+            }
+        }
+
+        private DXMLTable CreateDXMLTable(string xmlString, string dxmlFile)
+        {
+            try
+            {
+                TableDefinition dxmlTableDefinition = xmlString.ParseXML<TableDefinition>();
+
+                DXMLTable dxmlTable = new DXMLTable
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    TableDefinition = dxmlTableDefinition
+                };
+
+                return dxmlTable;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private DXMLView CreateDXMLView(string xmlString, string dxmlFile)
+        {
+            try
+            {
+                string sqlScriptFromXmlString = xmlString.Split(new string[] { "<SqlScript>" }, StringSplitOptions.None)[1].Split(new string[] { "</SqlScript>" }, StringSplitOptions.None)[0];
+                string escapedSqlScript = SecurityElement.Escape(GetScriptFromCDataSection(sqlScriptFromXmlString)).Trim();
+
+                string oracleScriptFromXmlString = xmlString.Split(new string[] { "<OracleScript>" }, StringSplitOptions.None)[1].Split(new string[] { "</OracleScript>" }, StringSplitOptions.None)[0];
+                string escapedOracleScript = SecurityElement.Escape(GetScriptFromCDataSection(oracleScriptFromXmlString)).Trim();
+
+                xmlString = xmlString.Split(new string[] { "<SqlScript>" }, StringSplitOptions.None)[0] + "<SqlScript>" + escapedSqlScript + "</SqlScript>" + "<OracleScript>" + escapedOracleScript + "</OracleScript>" + "</View>";
+
+                ViewDefinition dxmlViewDefinition = xmlString.ParseXML<ViewDefinition>();
+
+                DXMLView dxmlView = new DXMLView
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    ViewDefinition = dxmlViewDefinition
+                };
+
+                return dxmlView;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private DXMLProcedure CreateDXMLProcedure(string xmlString, string dxmlFile)
+        {
+            try
+            {
+                string sqlScriptFromXmlString = xmlString.Split(new string[] { "<SqlScript>" }, StringSplitOptions.None)[1].Split(new string[] { "</SqlScript>" }, StringSplitOptions.None)[0];
+                string escapedSqlScript = SecurityElement.Escape(GetScriptFromCDataSection(sqlScriptFromXmlString)).Trim();
+
+                string oracleScriptFromXmlString = xmlString.Split(new string[] { "<OracleScript>" }, StringSplitOptions.None)[1].Split(new string[] { "</OracleScript>" }, StringSplitOptions.None)[0];
+                string escapedOracleScript = SecurityElement.Escape(GetScriptFromCDataSection(oracleScriptFromXmlString)).Trim();
+
+                xmlString = xmlString.Split(new string[] { "<SqlScript>" }, StringSplitOptions.None)[0] + "<SqlScript>" + escapedSqlScript + "</SqlScript>" + "<OracleScript>" + escapedOracleScript + "</OracleScript>" + "</Procedure>";
+
+                ProcedureDefinition dxmlProcedureDefinition = xmlString.ParseXML<ProcedureDefinition>();
+
+                DXMLProcedure dxmlProcedure = new DXMLProcedure
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    ProcedureDefinition = dxmlProcedureDefinition
+                };
+
+                return dxmlProcedure;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private string UnescapeScript(string escapedScript)
+        {
+            string unescapedScript = escapedScript;
+            unescapedScript = unescapedScript.Replace("&apos;", "'");
+            unescapedScript = unescapedScript.Replace("&quot;", "\"");
+            unescapedScript = unescapedScript.Replace("&gt;", ">");
+            unescapedScript = unescapedScript.Replace("&lt;", "<");
+            unescapedScript = unescapedScript.Replace("&amp;", "&");
+            return unescapedScript;
+        }
+
+        private string GetScriptFromCDataSection(string script)
+        {
+            script = string.Join("\n", script.Split('\n').Select(l => l.Trim()).ToArray());
+
+            if (script.Contains("<![CDATA["))
+            {
+                return script.Split(new string[] { "<![CDATA[" }, StringSplitOptions.None)[1].Split(new string[] { "]]>" }, StringSplitOptions.None)[0];
+            }
+
+            return script;
+        }
+
+        private void ExitTool(string message)
+        {
+            Console.WriteLine(message);
+            Environment.Exit(0);
         }
     }
 }
