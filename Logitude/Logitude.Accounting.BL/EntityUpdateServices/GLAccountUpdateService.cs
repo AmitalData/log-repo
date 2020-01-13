@@ -587,7 +587,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             FillForeignFields(entityPM);
             FillSearchFields(entityPM);
-            SendHybridTask(entityPM);
+          
 
         }
         private TenantPM GetTenantPM(int tenantId)
@@ -661,7 +661,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             List<CardList> cardLists = GetCardsByGLAccountId(gLAccount.Id, gLAccount.Tenant);
 
             List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card> cards = new List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card>();
-            foreach (CardList card in cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId))
+
+        
+
+            if (gLAccount.PartnerTypeId != null)
+            {
+                cardLists = cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId).ToList();
+            }
+            foreach (CardList card in cardLists)
+
             {
                 Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card connectedCard = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card();
                 connectedCard.Code = card.Code;
@@ -1558,6 +1566,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.AfterUpdating(entityPM, entityParentPM);
             // Update Card GLAccountId [Maheera]
             UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
+            SendHybridTask(entityPM);
         }
         public bool FullAccountingProvider { get; set; }
         protected override void Validate(GLAccountPM entityPM)
