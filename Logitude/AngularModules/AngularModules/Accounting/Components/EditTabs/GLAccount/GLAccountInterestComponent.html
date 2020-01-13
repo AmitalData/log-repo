@@ -10,9 +10,9 @@
 </style>
 <div  class="TabHolder">
     <table>
-        <tr *ngIf="IsNew && ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td colspan="4">
-                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
             </td>
         </tr>
         <tr class="TabTitleRow">
