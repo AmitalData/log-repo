@@ -53,7 +53,7 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
     }
 
     ngOnInit() {
-        this.EntityPM = this.entityArgs.EntityPM;
+         this.EntityPM = this.entityArgs.EntityPM;
     }
     
 

@@ -9,13 +9,13 @@ using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
-    public class CardRepository:IRepository<Card>
+    public class CardRepository : IRepository<Card>
     {
         ICommonDataContext commonDataContext;
 
         public CardRepository()
         {
-            commonDataContext=new CommonDataContext();
+            commonDataContext = new CommonDataContext();
         }
 
         public CardRepository(int tenant)
@@ -69,8 +69,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 foreach (Card item in cityResult)
                 {
                     Address addr = addressRepository.GetMainAddressByCardId(item.Id, item.Tenant);
-                     Country addressCountry = countryRepository.GetSingleCountry(addr.CountryId, tenant);
-                     if (addressCountry.EnglishName != null)
+                    Country addressCountry = countryRepository.GetSingleCountry(addr.CountryId, tenant);
+                    if (addressCountry.EnglishName != null)
                     {
                         if (addressCountry.EnglishName.ToUpper().StartsWith(country.ToUpper()))
                         {
@@ -108,14 +108,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return myResult;
         }
-  
+
         public Card GetSingleCard(string id, int tenant)
         {
             Card entity = Queryable.FirstOrDefault<Card>((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
-                           where  a.Id == id
-                           select a));
+                                                          where a.Id == id
+                                                          select a));
 
-                return entity;
+            return entity;
         }
 
         public Card GetSingleCardWithoutInclude(string id, int tenant)
@@ -132,24 +132,24 @@ namespace Simplog.Data.CommonDataModel.Repositories
             string accountingCard = (from a in context.Cards
                                      where a.Id == id
                                      && a.Tenant == tenant
-                                     select a.ReceivablesAccountingCard).FirstOrDefault();                                                          
+                                     select a.ReceivablesAccountingCard).FirstOrDefault();
 
             return accountingCard;
         }
 
-        public Card GetCardByGLAccountId(string id, int tenant,bool fromCache=false )
+        public Card GetCardByGLAccountId(string id, int tenant, bool fromCache = false)
         {
 
             string key = $"GetCardByGLAccountId({id},{tenant})";
             var cardFromCache = CacheManager.GetOrInsertNewObject<Card>(key, () =>
-              {
-                  Card card = (from a in context.Cards
-                               where a.Tenant == tenant
-                               && a.GLAccountId == id
-                               select a).FirstOrDefault();
-                  return card;
-              }, fromCache);
-            
+            {
+                Card card = (from a in context.Cards
+                             where a.Tenant == tenant
+                             && a.GLAccountId == id
+                             select a).FirstOrDefault();
+                return card;
+            }, fromCache);
+
 
             return cardFromCache;
         }
@@ -161,14 +161,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
             List<Card> cards = (from a in context.Cards
-                             where a.Tenant == tenant
-                             && glaccountIds.Contains(a.GLAccountId)
-                             select a).ToList();
-                return cards;
-           
+                                where a.Tenant == tenant
+                                && glaccountIds.Contains(a.GLAccountId)
+                                select a).ToList();
+            return cards;
 
 
-           
+
+
         }
 
         public List<string> GetGLAccountIdssByCardIds(List<string> Ids, int tenant)
@@ -177,9 +177,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
             List<string> cards = (from a in context.Cards
-                                where a.Tenant == tenant
-                                && Ids.Contains(a.Id)
-                                select a.GLAccountId).ToList();
+                                  where a.Tenant == tenant
+                                  && Ids.Contains(a.Id)
+                                  select a.GLAccountId).ToList();
             return cards;
 
 
@@ -275,7 +275,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     entity = (from d in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus")
                               where
                               d.Tenant == tenant
-                              && d.Code == code 
+                              && d.Code == code
                               && d.PartnerTypeId == partnerTypeId
                               select d).FirstOrDefault();
                 }
@@ -373,7 +373,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return null;
         }
 
-        public  Card GetSingleCardByIdAndTenant(string id, int tenant, bool getFromCache)
+        public Card GetSingleCardByIdAndTenant(string id, int tenant, bool getFromCache)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -385,7 +385,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                         
+
                             entity = (from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
                                       where a.Tenant == tenant && a.Id == id
                                       select a).FirstOrDefault();
@@ -409,7 +409,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 }
                 else
                 {
-                   
+
                     entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent")
                               where record.Id == id && record.Tenant == tenant
                               select record).FirstOrDefault();
@@ -462,10 +462,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public string GetActiveCardIdByCode(string code, int tenant)
         {
-        
+
             string entityId = (from a in context.Cards
-                        where a.Tenant == tenant && a.Code == code && !a.InActive
-                        select a.Id).FirstOrDefault();
+                               where a.Tenant == tenant && a.Code == code && !a.InActive
+                               select a.Id).FirstOrDefault();
 
             return entityId;
         }
@@ -487,7 +487,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return myResult;
         }
-      
+
         public void Add(Card entity)
         {
             context.Cards.Add(entity);
@@ -553,10 +553,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Dictionary<string, string> GetCustomerNamesById(List<string> customerIds)
         {
-         //   Dictionary<string, string> result = new Dictionary<string, string>();
+            //   Dictionary<string, string> result = new Dictionary<string, string>();
             Dictionary<string, string> customers = (from a in context.Cards
                                                     where customerIds.Contains(a.Id)
-                                                 select a).ToDictionary(d => d.Id, f => f.LocalName!=null? f.LocalName:f.EnglishName);
+                                                    select a).ToDictionary(d => d.Id, f => f.LocalName != null ? f.LocalName : f.EnglishName);
 
 
 
@@ -576,10 +576,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                           && a.Tenant == tenant
                                           select a);
             return cardLists;
-        }  
-        public List<Card> GetAllCardsByContactId(string contactId,int tenant)
+        }
+        public List<Card> GetAllCardsByContactId(string contactId, int tenant)
         {
-            return context.Cards.Where(a=>a.PrimaryContactId == contactId && a.Tenant==tenant).ToList();
+            return context.Cards.Where(a => a.PrimaryContactId == contactId && a.Tenant == tenant).ToList();
         }
 
         public IQueryable<Card> GetWarehouseCards(int tenant)
@@ -592,9 +592,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public string GetEnglishNameCardById(string id, int tenant)
         {
-            string englishName =((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
-                                                          where a.Id == id
-                                                          select a.EnglishName)).FirstOrDefault();
+            string englishName = ((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
+                                   where a.Id == id
+                                   select a.EnglishName)).FirstOrDefault();
 
             return englishName;
         }

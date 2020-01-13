@@ -61,7 +61,7 @@ export class WarehouseBlockBalanceComponent
     }
 
     OnMassageDisplayMethod() {
-        if (this.RequestParams == null) {
+        if (this.RequestParams == null) { 
             this.RequestParams = new WarehouseBlockBalanceRequestParams();
             this.SetIsByDeclarationNumber(true);
             this.UIProperties.SetRequired("DeclarationNumber", this.ObjectTableName, true);
@@ -167,7 +167,7 @@ export class WarehouseBlockBalanceComponent
     }
 
     get StorageSiteNumber() { return this.RequestParams ? this.RequestParams.StorageSiteNumber : null; }
-    set StorageSiteNumber(value: string) {
+    set StorageSiteNumber(value: string) {  
         if (this.RequestParams.StorageSiteNumber != value) {
             this.RequestParams.StorageSiteNumber = value;
         }
