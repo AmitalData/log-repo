@@ -30,20 +30,39 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).OrderByDescending(d => d.CreateDate).Take(10).ToList();
         }
 
-        public int GetBadjCount(string userId, int tenant)
+        public IQueryable<Notification> GetQBadjCount(string userId, int tenant)
         {
             return (from a in context.Notifications
                     where a.Tenant == tenant && a.AssigneToId == userId && a.BadjCount
+                    //יש להוסיף לחיתוך הדיפולטיבי גם: לא סגורות (IsClosedByAssignee=False), וכן לבנות אינדקס על אחראי+IsClosedByAssignee+BadjCount.
+                    //CREATE INDEX IX_NOTIFICATIONS_BC_ICBA_ATI ON NOTIFICATIONS (BADJCOUNT ASC, ASSIGNETOID ASC, ISCLOSEDBYASSIGNEE ASC) 
+                    where !a.IsClosedByAssignee
+                    select a);
 
-                    select a).Count();
+
+        }
+
+        public int GetBadjCount(string userId, int tenant)
+        {
+            return
+            //return (from a in context.Notifications
+            //        where a.Tenant == tenant && a.AssigneToId == userId && a.BadjCount
+            //        //יש להוסיף לחיתוך הדיפולטיבי גם: לא סגורות (IsClosedByAssignee=False), וכן לבנות אינדקס על אחראי+IsClosedByAssignee+BadjCount.
+            //        where !a.IsClosedByAssignee
+            //        select a)
+            GetQBadjCount(userId, tenant)
+                    .Count();
         }
 
         public List<Notification> GetNotificationsWithBadjCount(string userId, int tenant)
         {
-            return (from a in context.Notifications
-                    where a.Tenant == tenant && a.AssigneToId == userId && a.BadjCount
+            return
+                    //(from a in context.Notifications
+                    //    where a.Tenant == tenant && a.AssigneToId == userId && a.BadjCount
 
-                    select a).ToList();
+                    //    select a)
+                    GetQBadjCount(userId, tenant)
+                    .ToList();
 
         }
 

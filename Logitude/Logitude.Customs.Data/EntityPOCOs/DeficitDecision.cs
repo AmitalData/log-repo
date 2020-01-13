@@ -1,0 +1,68 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DeficitDecision
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Deficit")]
+        [Column("DeficitId" ,Order = 1)]
+	    public string DeficitId { get; set; }
+	      
+        public virtual Deficit Deficit { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("RequestDate")]
+	    public DateTime? RequestDate { get; set; }
+     [Key]
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId" ,Order = 2)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("RequestID")]
+	    public string RequestID { get; set; }
+        [ForeignKey("RequestType")]
+        [Column("RequestTypeCode")]
+	    public string RequestTypeCode { get; set; }
+	      
+        public virtual RequestType RequestType { get; set; }
+        [ForeignKey("ApprovedProfession")]
+        [Column("ApprovedProfessionCode")]
+	    public string ApprovedProfessionCode { get; set; }
+	      
+        public virtual ApprovedProfession ApprovedProfession { get; set; }
+        [ForeignKey("DecisionType")]
+        [Column("DecisionCode")]
+	    public string DecisionCode { get; set; }
+	      
+        public virtual DecisionType DecisionType { get; set; }
+        [Column("DecisionNoteForLetter")]
+	    public string DecisionNoteForLetter { get; set; }
+        [Column("TotalComponentAmount")]
+	    public decimal? TotalComponentAmount { get; set; }
+        [Column("TotalEstimatedAmount")]
+	    public decimal? TotalEstimatedAmount { get; set; }
+        [Column("TotalFinancialPenaltyAmount")]
+	    public decimal? TotalFinancialPenaltyAmount { get; set; }
+        [Column("TotalInterestAmount")]
+	    public decimal? TotalInterestAmount { get; set; }
+        [Column("TotalLinkingAmount")]
+	    public decimal? TotalLinkingAmount { get; set; }
+    }
+}
+	 

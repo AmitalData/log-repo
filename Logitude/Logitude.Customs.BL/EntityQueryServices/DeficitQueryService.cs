@@ -8,11 +8,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class DeficitQueryService : EntityQueryService<Deficit, DeficitKeys, DeficitPM, object, DeficitKeys>
     {
+        public override void GetComposition(EntityKeyFields entityKeys, DeficitPM entityPM)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            DeficitKeys deficitKeys = entityKeys as DeficitKeys;
+            DeficitDecisionQueryService deficitDecisionQueryService = new DeficitDecisionQueryService(context);
+            entityPM.DeficitDecisions = deficitDecisionQueryService.GetMulti(deficitKeys, true);
+        }
+
         public string GetIdByDebtNotificationNumber(string debtNotificationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(debtNotificationNumber)) return "";
@@ -42,11 +52,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         ValidityDateTo = deficit.ValidityDateTo,
                         PaymentOrderNumber = deficit.PaymentOrderNumber,
                         TapagId = deficit.TapagId,
-                    
-
                     };
-                }
-             
+                    DeficitDecisionQueryService deficitDecisionQueryService = new DeficitDecisionQueryService(tenant);
+                    if (deficitPM != null)
+                    {
+                        deficitPM.DeficitDecisions = deficitDecisionQueryService.GetMulti(new DeficitKeys() { Id = deficitPM.Id }, false);
+                    }
+                }             
             }
             return deficitPM;
         }

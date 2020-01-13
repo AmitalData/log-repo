@@ -166,11 +166,12 @@
                                                         <LogLabel [ObjectFieldName]="'InterfaceName1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomsPartnerFtp.F.InterfaceName'"></LogLabel>
                                                     </td>
                                                     <td style="width: 130px;">
-                                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
+                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControlInterfaceName
                                                                 (change)="InterfaceNameChanged(selectControlInterfaceName)">
                                                             <option *ngFor="let c of _InterfaceNameItems" [value]="c.Key" [selected]="c.Key==InterfaceName">{{c.Value}}</option>
-                                                        </select>
+                                                        </select>-->
+                                                        <ComboBox [ItemsSource]="_InterfaceNameItems" [Binding]="'Value'" [SelectedItem]="SelectedItemInterfaceName"  (SelectedItemChanged)="InterfaceNameChanged($event.Key)"></ComboBox>
 
                                                     </td>
 
@@ -192,11 +193,13 @@
                                                         <LogLabel [ObjectFieldName]="'PartnerCode1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"  [TextCode]="'Customs.CustomsPartnerFtp.F.PartnerCode'"></LogLabel>
                                                     </td>
                                                     <td style="width: 130px;">
-                                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
+                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControlPartnerCode
                                                                 (change)="PartnerCodeChanged(selectControlPartnerCode)">
                                                             <option *ngFor="let c of _PartnerCodeItems" [value]="c.Key" [selected]="c.Key==PartnerCode">{{c.Value}}</option>
-                                                        </select>
+                                                        </select>-->
+
+                                                        <ComboBox [ItemsSource]="_PartnerCodeItems" [SelectedItem]="SelectedItemPartnerCode"  [Binding]="'Value'" (SelectedItemChanged)="PartnerCodeChanged($event.Key)"></ComboBox>
                                                     </td>
 
                                                     <td style="width: 3px;"><div></div></td>
@@ -207,11 +210,12 @@
                                                         <LogLabel [ObjectFieldName]="'TypeCode1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"  [TextCode]="'Customs.CustomsPartnerFtp.F.TypeCode'"></LogLabel>
                                                     </td>
                                                     <td style="width: 130px;">
-                                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
+                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControl
                                                                 (change)="TypeCodeChanged(selectControl)">
                                                             <option *ngFor="let c of _TypeCodeItems" [value]="c.Key" [selected]="c.Key==TypeCode">{{c.Value}}</option>
-                                                        </select>
+                                                        </select>-->
+                                                        <ComboBox [ItemsSource]="_TypeCodeItems" [Binding]="'Value'"  [SelectedItem]="SelectedItemTypeCode" (SelectedItemChanged)="TypeCodeChanged($event.Key)"></ComboBox>
                                                     </td>
 
 

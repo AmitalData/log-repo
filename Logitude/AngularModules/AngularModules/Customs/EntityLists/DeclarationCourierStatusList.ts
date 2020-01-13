@@ -47,12 +47,30 @@ export class DeclarationCourierStatusList {
 	PendingRemarks: string;
 	CourierSuspentionReasonName: string;
 	AcceptanceStatusCode: string;
-	MamanStatusCode: string;
-	MamanErrorXml: string;
 	CourierSuspentionCode: string;
 	CourierSuspentionName: string;
 	SpecialActionStatus: string;
 	SpecialActionsErrorXml: string;
+	CourierPendingReasonErrorPlace: string;
+	FastIndividualProcessCode: string;
+	ManualProcessCode: string;
+	TerminalSuspentionNumber: string;
+	LastMileStatusCode: string;
+	LastMileStatusDate: Date;
+	LastMileStatusRemarks: string;
+	StorageSiteStatusCode: string;
+	StorageSiteErrorText: string;
+	StorageSiteStatusName: string;
+	CourierPendingReasonList: string;
+	AirlineId: string;
+	MAWB: string;
+	MasterGrossMassMeasure: number;
+	MasterPackageQuantity: number;
+	MasterCreateDateTime: Date;
+	MasterGatewayPortCode: string;
+	MasterEstimatedArrivalDate: Date;
+	MasterStorageSiteCode: string;
+	MasterHAWB: string;
 	
 }
  

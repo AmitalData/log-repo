@@ -50,23 +50,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.9.872.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -113,8 +112,10 @@
     <Compile Include="AmitalModel\EntityKeys\CCUCARSCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVDOCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVFILEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIMSVFLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVPAGEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIMSVREMKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIPACKKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVTYPEKeys.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="AmitalModel\EntityKeys\CTBUNLOADKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ITBPCKTYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\YCULTASKKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\YTBTABLEKeys.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ATBPTIL.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUACCSUP.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCAR.cs" />
@@ -181,7 +183,9 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIGOODDESC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVDOC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVFILE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVFLINE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVPAGE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVREM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIPACK.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROV.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROVTYPE.cs" />
@@ -228,9 +232,11 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBREQCERT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTRTRAN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPCKTY.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.VRELEASE2ENTRY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULPROCESS.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULTASK.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YTBCUSTTB.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YTBTABLE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\Class1.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCARSC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVLINE.cs" />
@@ -258,8 +264,10 @@
     <Compile Include="AmitalModel\Repsitories\CCUCARSCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVDOCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVFILERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIMSVFLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVPAGERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIMSVREMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIPACKRepository.cs.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVTYPERepository.cs" />
@@ -304,7 +312,9 @@
     <Compile Include="AmitalModel\Repsitories\GTBREQCERTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTRTRANRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPCKTYRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\VRELEASE2ENTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\YCULTASKRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\YTBTABLERepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -312,6 +322,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643F92C9-7CF1-4429-B79E-1E354B758ABF}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
       <Name>Simplog.Global.Data</Name>

@@ -38,7 +38,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DF_NG_8251_Web02_DeclarationStatus_Response customResponse,
             DeclarationStatusRequestParams requestParams)
         {
+            
+            
+            
+
+
             this.MyResponseData = new DeclarationStatusResponseData();
+            if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
+            {
+                TesterSendOption(requestParams);
+                return;
+
+            }
             string declarationStatusCodeName = "";
             string declarationStatusCode = "";
             string warningMess = "";
@@ -121,7 +132,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
                                 var declarationPaymentsPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
-                                if (declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue)
+                                if (declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && declarationPaymentsPM.PaymentDate < DateTime.Now)
                                 {
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTimeSpecified == true)
                                     {
@@ -199,12 +210,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (declarationPM.IsCourierDeclaration)
                             {
                                 //declarationPM.CourierSuspentionReasonCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                                declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 31/12/18
+                                //declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 31/12/18//Task 49319
                                 switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
                                 {
                                     case "3":
                                         declarationPM.CourierCustomStatusCode = "1";
                                         courierStatusUpdated = true;
+
+                                        LogMessagingUtil.Instance.AppendLine("Pre Clearance");
+                                        var myEventContextTagModelPRS = new EventContextTagModel()
+                                        {
+                                            CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance,
+                                        };                                       
+                                        myEventContextTagModelPRS.EventCode = "PRS";
+                                        declarationPM.CurrentContextTag = myEventContextTagModelPRS;
+                                        RaiseStatus(declarationPM, "", myEventContextTagModelPRS.EventCode);
                                         break;
                                     case "25":
                                     case "30":
@@ -215,7 +235,78 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     case "35":
                                         declarationPM.CourierCustomStatusCode = "2";
                                         courierStatusUpdated = true;
+                                        declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 4/3/2019 Task 49319
+
+                                        var myEventContextTagModel = new EventContextTagModel()
+                                        {
+                                            CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance,
+                                        };
+                                        switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
+                                        {
+                                            case "25":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCI");
+                                                myEventContextTagModel.EventCode = "VCI";
+                                                break;
+                                            case "30":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCS");
+                                                myEventContextTagModel.EventCode = "VCS";
+                                                break;
+                                            case "31":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCD");
+                                                myEventContextTagModel.EventCode = "VCD";
+                                                break;
+                                            case "32":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCE");
+                                                myEventContextTagModel.EventCode = "VCE";
+                                                break;
+                                            case "33":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCA");
+                                                myEventContextTagModel.EventCode = "VCA";
+                                                break;
+                                            case "34":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCG");
+                                                myEventContextTagModel.EventCode = "VCG";
+                                                break;
+                                            case "35":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCT");
+                                                myEventContextTagModel.EventCode = "VCT";
+                                                break;
+                                        }
+                                        declarationPM.CurrentContextTag = myEventContextTagModel;
+                                        RaiseStatus(declarationPM, "", myEventContextTagModel.EventCode);
                                         break;
+                                    case "13":
+                                        if (declarationPM.PaymentDate.HasValue)
+                                        {
+                                            declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                                            declarationPM.PaymentDate = null;
+                                            declarationPM.PaymentOrderNumber = null;
+                                            declarationPM.PaymentStatusCode = null;
+                                            declarationPM.CourierCustomStatusCode = null;
+                                            declarationPM.CourierSuspentionCode = null;
+                                            declarationPM.CourierSuspentionReasonCode = null;
+
+                                            //Delete 
+                                            var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+                                            var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+                                            if (declarationPaymentPM != null)
+                                            {
+                                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
+                                                if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                                                {
+                                                    foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                                                    {
+                                                        item.ChangeSetOp = ChangeSetOperation.Delete;
+                                                    }
+                                                }
+                                                DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+                                                declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                                            }
+                                            courierStatusUpdated = true;
+                                        }
+                                        break;
+
+
                                 }
                             }
 
@@ -435,6 +526,49 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private static void TesterSendOption(DeclarationStatusRequestParams requestParams)
+        {
+            string testerSendOption = requestParams.TesterSendOption??"";
+            testerSendOption = testerSendOption.ToUpper();
+            var context = CustomContext.GetContext(requestParams.Tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+
+
+            LogMessagingUtil.Instance.AppendLine(testerSendOption);
+            switch (testerSendOption)
+            {
+                case "NOTHING"://this._SendOptionList.push(new KeyValuePair
+                    {
+                        return;
+                    }
+                    break;
+                case "READ"://this._SendOptionList.push(new KeyValuePair("Read".toUpperCase(), "Read"));
+                    {
+
+                        var declarationId = declarationQueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService.GetIdByDeclarationNumber");
+                        return;
+                    }
+                    break;
+                case "UPDATE"://this._SendOptionList.push(new KeyValuePair("Update".toUpperCase(), "Update"));
+                    {
+                        var declarationId = declarationQueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService.GetIdByDeclarationNumber");
+                        var pm=declarationQueryService.GetSingle(declarationId, false, false);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService..GetSingle(declarationId, false, false);");
+                        pm.ChangeSetOp = ChangeSetOperation.Update;
+                        pm.UpdateDateTime = DateTime.UtcNow;
+                        declarationUpdateService.Update(pm, true);
+                        LogMessagingUtil.Instance.AppendLine("declarationUpdateService.Update(pm, true);");
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
 
         public static void RaiseStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string statusId)
         {

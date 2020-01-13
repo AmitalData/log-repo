@@ -12,7 +12,6 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-//import { ClaimRelatedEntReasonExpLineComponent } from './ClaimRelatedEntityReasonsTabComponent';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
@@ -26,7 +25,6 @@ export class ClaimRelatedEntityCustomAnswerTabComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.ClaimsRelatedEntity";
 
     public ClaimRelatedEntityCustomAnswerlist: ObservableCollection;
-    //FooterMethods: any;
 
     public CurrentEditComponentId: string;
     private isControlEnabled: boolean = true;

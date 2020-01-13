@@ -163,5 +163,13 @@ export class CollateralCustomsDocumentsController implements ICustomsDocumentsCo
     
     public SelectionCompleted: EventEmitter<any> = new EventEmitter();
     public GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any> = new EventEmitter();
+
+    SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any) {
+
+    }
+
+    FillConnectedDocumentPointer(customsDocumentPointerPM: CustomsDocumentPointerPM) {
+
+    }
 }
 

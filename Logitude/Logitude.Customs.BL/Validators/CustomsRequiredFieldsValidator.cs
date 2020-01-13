@@ -15,11 +15,13 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.Customs.BL.Validators
 {
     public class CustomsRequiredFieldsValidator
     {
+
         public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForDeclaration(string declarationId, int tenant, DeclarationPM declarationPM = null)
         {
             DeclarationPM declaration = null;
@@ -952,11 +954,8 @@ namespace Logitude.Customs.BL.Validators
             List<SupplierInvoicePM> invoicePMs = invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);//mohammad fix wi 20751
 
             CourierDeclarationPM courierDeclaration = courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationId, tenant);
-            CourierMasterPM courierMaster = null;
-            if (courierDeclaration !=null)
-            {
-                courierMaster = courierMasterQueryService.GetSingle(courierDeclaration.CourierMasterId, false, false);
-            }
+            //CourierMasterPM courierMaster = null;
+            
             ClientAddressRepository clientAddressRep = new ClientAddressRepository(context);
 
             CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(context);
@@ -1049,82 +1048,17 @@ namespace Logitude.Customs.BL.Validators
             #endregion
 
             #region CourierMaster entity
-            if (courierMaster != null)
-            {
-                ObjectTable courierMasterTable = objectTabelRepository.GetObjectTableByName("Customs.CourierMaster", 0, fromCache);
-                List<PropertyInfo> courierMasterproperties = GetPropertiesForEntity("CourierMasterPM");
-
-
-                foreach (PropertyInfo info in courierMasterproperties)
-                {
-                    if (info.Name == "OriginPortCode")
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-                        }
-                    }
-                    if (info.Name == "MAWB")
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-
-                        }
-                    }
-
-
-                    if (info.Name == "CourierMaster")
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-
-                        }
-                    }
-
-                    if (info.Name == "MAWBTypeCode")
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-
-                        }
-                    }
-
-                    if (info.Name == "MAWBTypeCode")
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-
-                        }
-                    }
-
-                    if (info.Name == "AirlineId")
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-
-                        }
-                    }
-                    if (info.Name == "WeightValueCode")//task 46459
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-
-                        }
-                    }
-                }
-            }
+            //if (courierDeclaration != null)
+            //{
+            //    CustomsRequiredFieldErrors courierMasterRequiredErrors = GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierDeclaration.CourierMasterId, tenant);
+            //    if(courierMasterRequiredErrors != null)
+            //    {
+            //        foreach(var item in courierMasterRequiredErrors.RequiredFields)
+            //        {
+            //            requiredErrors.RequiredFields.Add(item);
+            //        }
+            //    }
+            //}
 
             #endregion
 
@@ -1208,13 +1142,13 @@ namespace Logitude.Customs.BL.Validators
 
                     }
 
-                    //if (info.Name == "IncotermCode")
-                    //{
-                    //    if (info.GetValue(supplierInvoice) == null)
-                    //    {
-                    //        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = supplierInvoice.InvoiceNumber, FieldName = info.Name, TableName = "Customs.SupplierInvoice" });
-                    //    }
-                    //}
+                    if (info.Name == "IncotermCode")
+                    {
+                        if (info.GetValue(supplierInvoice) == null)
+                        {
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = supplierInvoice.InvoiceNumber, FieldName = info.Name, TableName = "Customs.SupplierInvoice" });
+                        }
+                    }
 
                 }
                 
@@ -1236,7 +1170,7 @@ namespace Logitude.Customs.BL.Validators
                 foreach (PropertyInfo info in ConsignmentProperties)
                 {
                     //if(info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID"|| info.Name == "ManifestNumber" || info.Name== "UnloadDate" || info.Name== "CargoDescription" || info.Name == "DeliveryPlaceName")
-                    if (info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID" || info.Name == "ManifestNumber" || info.Name == "UnloadDate" || info.Name == "CargoDescription")//task 46459
+                    if (info.Name == "StorageSiteCode"  || info.Name == "ThirdCargoID" || info.Name == "ManifestNumber" || info.Name == "CargoDescription")//task 46459 // task 47157
                     {
                         if (info.GetValue(Consignment) == null)
                         {
@@ -1282,19 +1216,102 @@ namespace Logitude.Customs.BL.Validators
             #endregion
 
          
+            return requiredErrors;
+        }
+
+        public static CustomsRequiredFieldErrors GetCourierMasterRequiredFieldErrorsForCourierDeclaration(string courierMasterId, int tenant)
+        {
+            CustomsRequiredFieldErrors requiredErrors = new CustomsRequiredFieldErrors() { RequiredFields = new List<CustomsRequiredFieldsErrorItem>(), };
+            ICustomContext context = CustomContext.GetContext(tenant);
+            CustomsRequiredFieldQueryService customsRequiredFieldQueryService = new CustomsRequiredFieldQueryService(context);
+            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(0);
+
+            CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(context);
+            CourierMasterPM courierMaster = courierMasterQueryService.GetSingle(courierMasterId, false, false);
+            if (courierMaster == null)
+            {
+                return null;
+            }
+
+            #region CourierMaster entity
+            if (courierMaster != null)
+            {
+                ObjectTable courierMasterTable = objectTabelRepository.GetObjectTableByName("Customs.CourierMaster", 0, false);
+                List<PropertyInfo> courierMasterproperties = GetPropertiesForEntity("CourierMasterPM");
 
 
+                foreach (PropertyInfo info in courierMasterproperties)
+                {
+                    if (info.Name == "OriginPortCode")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+                        }
+                    }
+                    if (info.Name == "MAWB")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
+
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+
+                        }
+                    }
 
 
+                    if (info.Name == "CourierMaster")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
 
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
 
+                        }
+                    }
 
+                    if (info.Name == "MAWBTypeCode")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
 
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+
+                        }
+                    }
+
+                    if (info.Name == "AirlineId")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+                        }
+                    }
+
+                    if (info.Name == "WeightValueCode")//task 46459
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+                        }
+                    }
+
+                    if (info.Name == "GatewayPortCode")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+                        }
+                    }
+                }
+            }
+
+            #endregion
 
             return requiredErrors;
         }
 
-        public static CustomsRequiredFieldErrors GetRequiredFieldsForCourierMaster(string courierMasterId, int tenant)
+        public static CustomsRequiredFieldErrors GetRequiredFieldsForCourierMaster(string courierMasterId, int tenant, bool isIncludeRequiredFieldsForManifest = false)
         {
             CustomsRequiredFieldErrors requiredErrors = new CustomsRequiredFieldErrors() { RequiredFields = new List<CustomsRequiredFieldsErrorItem>(), };
             ICustomContext context = CustomContext.GetContext(tenant);
@@ -1318,6 +1335,18 @@ namespace Logitude.Customs.BL.Validators
                     if (info.GetValue(courierMasterPM) == null)
                     {
                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+                    }
+                }
+            }
+
+            if (isIncludeRequiredFieldsForManifest)
+            {
+                CustomsRequiredFieldErrors courierMasterRequiredErrors = GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterPM.Id, tenant);
+                if (courierMasterRequiredErrors != null)
+                {
+                    foreach (var item in courierMasterRequiredErrors.RequiredFields)
+                    {
+                        requiredErrors.RequiredFields.Add(item);
                     }
                 }
             }

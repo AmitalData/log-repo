@@ -68,8 +68,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 IsComprehensiveCheck = a.IsComprehensiveCheck,
                                                                 CheckTypeCode = a.CheckTypeCode,
                                                                 CheckTypeName = a.CheckTypeLookup != null? a.CheckTypeLookup.LocalName : null,
-
-
+                                                                VehicleChassisNumber = a.VehicleChassisNumber,
+                                                                CustomerId = a.CustomerId,
 
                                                             });
         

@@ -433,8 +433,8 @@
             // productionToolStripMenuItem
             // 
             this.productionToolStripMenuItem.Name = "productionToolStripMenuItem";
-            this.productionToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
-            this.productionToolStripMenuItem.Text = "Production";
+            this.productionToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.productionToolStripMenuItem.Text = "PatchDistribution";
             this.productionToolStripMenuItem.Click += new System.EventHandler(this.productionToolStripMenuItem_Click);
             // 
             // customsBookToolStripMenuItem
@@ -474,7 +474,7 @@
             this.expPackagesToolStripMenuItem,
             this.expRolesToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // expPackagesToolStripMenuItem
@@ -497,7 +497,7 @@
             this.impPackagesToolStripMenuItem,
             this.impRolesToolStripMenuItem});
             this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
-            this.importToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.importToolStripMenuItem1.Text = "Import";
             // 
             // impPackagesToolStripMenuItem

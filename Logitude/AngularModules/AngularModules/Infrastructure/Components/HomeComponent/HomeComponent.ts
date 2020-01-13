@@ -114,7 +114,7 @@ export class HomeComponent implements OnDestroy{
 
         if (ObjectsLocator.GlobalSetting) {
           // if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
-          if (!ObjectsLocator.LoggedUserPM.DontShowLocal) {
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs" || !ObjectsLocator.LoggedUserPM.DontShowLocal) {
                 this.SystemFontFamily = 'Arial'; //'OpenSans-Regular';
                 isNewSignupTenant = false;
             }
@@ -130,6 +130,7 @@ export class HomeComponent implements OnDestroy{
     public EnvironmentSRC: string = null;
     public EnvironmentName: string = null;
     public Company: string;
+    public ProductInfo: string;
     public LoggedUser: string;
     public IsBellVisible: boolean = false;
     public IsCustomizationVisible: boolean = false;
@@ -147,6 +148,11 @@ export class HomeComponent implements OnDestroy{
         this.EnvironmentSRC = Environment.GetEnvironmentIcon();
         this.EnvironmentName = Environment.GetEnvironmentName();
         this.Company = SessionLocator.TenantPM.Company;
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting) && !AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductInfo)) {
+            this.ProductInfo = ObjectsLocator.GlobalSetting.ProductInfo;
+        } else {
+            this.ProductInfo = "";
+        }
         this.LoggedUser = SessionLocator.LoggedUserPM.EnglishName;
 
         if (SessionLocator.Tenant == 261) {

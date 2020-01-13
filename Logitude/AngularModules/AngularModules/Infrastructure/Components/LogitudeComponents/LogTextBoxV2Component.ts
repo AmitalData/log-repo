@@ -15,8 +15,27 @@ import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';
 import {FormGroup} from '@angular/forms';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
-import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { timer } from 'rxjs/observable/timer';
+import { timeInterval, pluck, take } from 'rxjs/operators';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
+
+interface BeforeOnDestroy {
+    ngxBeforeOnDestroy();
+}
+
+type NgxInstance = BeforeOnDestroy & Object;
+type Descriptor = TypedPropertyDescriptor<Function>;
+type Key = string | symbol;
+
+export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) {
+    return {
+        value: async function (...args: any[]) {
+            await target.ngxBeforeOnDestroy();
+            return descriptor.value.apply(target, args);
+        }
+    }
+}
 
 @Component({
     moduleId: module.id,
@@ -28,7 +47,7 @@ declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
+export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewInit, OnDestroy {
     public AllowPercentage: boolean;
     public IsAccumulative: boolean;
     public ShowHelp: boolean = false;
@@ -126,6 +145,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     LayoutDirection: string = 'ltr';
     IdentityKey: string;
+    IsAltF10:boolean=false;
     @Output() OriginalText = new EventEmitter();
 
     @Input() DebounceTime: number;
@@ -283,9 +303,10 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (this.FocusOnMe) {// it means it is inside a grid.
             this.CopyValueSubs= this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.InputId) {
-                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
-                    this.CurrentSession.CopiedCell = null;
+                    //SessionLocator.SelectedSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = SessionLocator.SelectedSession.CopiedCell;
+                    this.IsAltF10=true;
+                    SessionLocator.SelectedSession.CopiedCell = null;
                 }
             });
 
@@ -418,7 +439,26 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-    ngOnDestroy() {
+    public ngxBeforeOnDestroy() {
+        //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
+        return new Promise((resolve) => {
+            setTimeout(() => this.WaitFunction(resolve), 100);
+        });
+    }
+
+    private WaitFunction(resolve) {
+
+        const sourcef = timer(100)
+            .pipe(take(1))
+            .subscribe(() => {
+                resolve();
+            });
+
+    }
+
+   // @BeforeOnDestroy
+    async ngOnDestroy() {
+        await this.ngxBeforeOnDestroy();
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
         if (this._debounceTimeSub) {
@@ -456,6 +496,10 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onBlur() {
+        this.Detach = true;
+        this.show = false;
+        this.keydown = false;
+
         this.timerToken = setTimeout(() => {
             this.ShowErrorPopup = false;
             if (this.uiProperty.ValidValue) {
@@ -463,28 +507,40 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
             this.TextValueChanges(this.TextValue);
         }, 300);
+        if(this.IsAltF10){
         this.timerToken = setTimeout(() => {
            this.TextValueChanges(this.TextValue);
+        //    this.GetValueFormatted(this.TextValue);
+        //    this.LostFocus.emit(this.TextValue);
         }, 30);
-        this.Detach = true;
-        //this.DetectChanges();
-        this.show = false;
-        //if(!this.FocusOnMe){
-            
-        //}
-        // this.TextValue = this.DataContext[this.ObjectFieldName];
-        this.keydown = false;
         this.GetValueFormatted(this.TextValue);
         this.LostFocus.emit(this.TextValue);
+    }
+    else{
+        this.TextValueChanges(this.TextValue);
+        this.GetValueFormatted(this.TextValue);
+        this.LostFocus.emit(this.TextValue);
+    }
+
+
+        
+
+        // this.DetectChanges();
+
+        // if(!this.FocusOnMe){
+
+        // }
+        // this.TextValue = this.DataContext[this.ObjectFieldName];
+
     }
 
     OnKeyUp(event) {
         var SHIFT = 16;
         var CTRL = 17;
         var key = event.keyCode;
-        //if (key == SHIFT) {
-        //    this.CurrentSession.isShiftClicked = false;
-        //    this.CurrentSession.isTabWithShiftClicked = false;
+        // if (key == SHIFT) {
+        //    SessionLocator.SelectedSession.isShiftClicked = false;
+        //    SessionLocator.SelectedSession.isTabWithShiftClicked = false;
         //    console.log("isTabWithShiftClicked = false;")
         //}
         if (key == SHIFT) {
@@ -583,7 +639,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
         if (key == SHIFT) {
             this.keydown = false;
-            this.isShiftKeyDown = true;// this is used to check some keys 
+            this.isShiftKeyDown = true;// this is used to check some keys
         }
         if (key == CTRL) {
             this.isCtrlKeyDown = true;

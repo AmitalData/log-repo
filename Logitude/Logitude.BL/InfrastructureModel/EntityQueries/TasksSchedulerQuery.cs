@@ -9,6 +9,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Data.Entity;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -234,15 +235,42 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         private double GetTaskAvarageDuration(string taskId)
         {
-            var Latest10HistoriesQuery = (from a in repository.context.TaskSchedulerHistories
-                                          where a.TaskId == taskId
-                                          select new TaskSchedulerHistoryPM()
-                                          {
-                                              StartDateTime = a.StartDateTime,
-                                              EndDateTime = a.EndDateTime,
-                                              Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
-                                          }).Where(x => x.StartDateTime != null && x.EndDateTime != null).Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
-            //var Latest10Histories = Latest10HistoriesQuery.ToList();
+            double? Latest10HistoriesQuery = null;
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                var q = (from a in repository.context.TaskSchedulerHistories
+                         where a.TaskId == taskId
+                         where a.StartDateTime != null
+                         where a.EndDateTime != null
+                         orderby a.EndDateTimeUTC descending
+
+                         select new //TaskSchedulerHistoryPM()
+                         {
+                             StartDateTime = a.StartDateTime.Value,
+                             EndDateTime = a.EndDateTime.Value,
+
+                         }).Take(10)
+                         ;
+                var l10 = q.ToList();
+                if (l10.Count() > 0)
+                {
+                    Latest10HistoriesQuery = l10.Average(r => r.EndDateTime.Subtract(r.StartDateTime).TotalSeconds);
+                }
+            }
+            else
+            {
+                Latest10HistoriesQuery = (from a in repository.context.TaskSchedulerHistories
+                 where a.TaskId == taskId
+                 select new TaskSchedulerHistoryPM()
+                 {
+                     StartDateTime = a.StartDateTime,
+                     EndDateTime = a.EndDateTime,
+                     Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
+                 }).Where(x => x.StartDateTime != null && x.EndDateTime != null).Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
+                                                                                                          //var Latest10Histories = Latest10HistoriesQuery.ToList();
+            }
+
+
             double? Duration = 0.0;
             if (Latest10HistoriesQuery != null)
             {

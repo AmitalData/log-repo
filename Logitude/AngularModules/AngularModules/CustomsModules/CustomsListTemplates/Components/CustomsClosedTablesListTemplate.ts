@@ -113,8 +113,7 @@ export class CustomsClosedTablesListTemplate {
         
     }
     ShowDetails() {
-
-        if (!this._CustomsClosedTable.Existed) {
+         if (!this._CustomsClosedTable.Existed) {
             this.ShowDetailsNotExistTable();
             return;
         }
@@ -151,6 +150,7 @@ export class CustomsClosedTablesListTemplate {
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
+                    case "Customs.CustomsCountry":
                     //case "Customs.InternationalSite":
                         listArgs.SuppressOnRowSelected = false;
                         break;

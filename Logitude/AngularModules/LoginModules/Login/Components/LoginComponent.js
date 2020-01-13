@@ -203,37 +203,10 @@ var LoginComponent = /** @class */ (function () {
                 this.loginService.CurrentTenant = userData.CurrentTenant;
                 this.loginService.LoggedUserId = SessionInfo_1.SessionInfo.LoggedUserId;
                 this.loginService.LoggedUserEmail = SessionInfo_1.SessionInfo.LoggedUserEmail;
-                //this.loginService.GetLoggedUser().subscribe(myResult => {
-                //    this.loginService.GetTenantManagement().subscribe(myResult2 => {
-                //        SessionInfo.LoggedUserPM = myResult;
-                //        InfraSettings.TenantManagementPM = myResult2;
-                //        if (SessionInfo.LoggedUserPM.ExpirationDate != null && DateTool.GetDateParts(SessionInfo.LoggedUserPM.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-                //            this.Blocking.emit("user");
-                //        }
-                //        else {
-                //            this.CheckTenantBlocking(userData);
-                //        }
-                //    });
-                //});
             }
         }
         window.sessionStorage.setItem("userdata", "");
     };
-    //OneUsePasswordMethod() {
-    //    this.loginService.GetOneUsePassword().subscribe(userData => {
-    //        if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
-    //            var message = "Can't use this key (" + SessionLocator.ExternalParams.OneTimePasswordId + ") again because you used it before ";
-    //            if (userData && userData.ExceptionMessage) message = userData.ExceptionMessage;
-    //            alert(message);
-    //            document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
-    //            SessionLocator.ExternalParams.OneTimePasswordId = null;
-    //        }
-    //        else {
-    //            this.StartLoading(userData);
-    //        }
-    //        this.HidePendingLoading = true;
-    //    });
-    //}
     LoginComponent.prototype.onEmailBlur = function (email) {
         if (email != this.Email) {
             this.IsShowAreaCaptcha = false;

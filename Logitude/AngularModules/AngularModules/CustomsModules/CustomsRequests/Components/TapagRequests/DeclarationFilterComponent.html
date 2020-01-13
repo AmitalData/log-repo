@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .Label1 {
         width: 100px;
     }
@@ -36,9 +36,10 @@
                     <td style="width:10px"></td>
 
                     <td style="width: 200px; padding-right: 36px;">
-                        <!-- DeclarationRestoreComponent  Request.CustomFileNo-->
                         <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                    [HideColumns]="true" (LostFocus)="CustomFileNoTextChanged($event)" [Text]="CustomFileNo"></LogTextBox>
+                                    [HideColumns]="true"
+                                    (LostFocus)="CustomFileNoTextChanged($event)"
+                                    [Text]="CustomFileNo"></LogTextBox>
                     </td>
 
                     <td>
@@ -52,10 +53,9 @@
                     </td>
                     <td style="width:10px"></td>
                     <td style="width: 200px; padding-right: 36px;">
-                        <!-- DeclarationRestoreComponent  Request.DeclarationNumber-->
                         <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                    [HideColumns]="true" [Text]="DeclarationNumber" (LostFocus)="DeclarationNumberTextChanged($event)"></LogTextBox>
-
+                                    [HideColumns]="true" [Text]="DeclarationNumber"
+                                    (LostFocus)="DeclarationNumberTextChanged($event)"></LogTextBox>
                     </td>
                     <td>
                         <div></div>
@@ -70,7 +70,7 @@
 
         <!-- DeclarationFilterComponent  Response  -->
         <div class="class-response-content">
-            <div style="height:380px;">
+            <div style="height:320px;">
                 <table>
                     <!--General Details-->
 
@@ -89,21 +89,22 @@
                                     <tr>
                                         <td class="Label1">
                                             <LogLabel [TextCode]="'Customs.DeclarationFilter.F.GeneralDetailsExternalID'"
-                                                      [ObjectFieldName]="'GeneralDetailsExternalID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                      [ObjectFieldName]="'ExternalID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td class="TextB1">
-                                            <LogTextBox [Text]="GeneralDetailsExternalID"
-                                                        [ObjectFieldName]="'GeneralDetailsExternalID'"
+                                            <LogTextBox [Text]="ExternalID"
+                                                        [ObjectFieldName]="'ExternalID'"
                                                         [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                                         [HideColumns]="true"></LogTextBox>
                                         </td>
+
                                         <td class="Label1 lbl2">
                                             <LogLabel [TextCode]="'Customs.DeclarationFilter.F.GeneralDetailsName'"
-                                                      [ObjectFieldName]="'GeneralDetailsName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                      [ObjectFieldName]="'ExternalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td class="TextB2">
-                                            <LogTextBox [Text]="GeneralDetailsName"
-                                                        [ObjectFieldName]="'GeneralDetailsName'"
+                                            <LogTextBox [Text]="ExternalName"
+                                                        [ObjectFieldName]="'ExternalName'"
                                                         [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                                         [HideColumns]="true"></LogTextBox>
                                         </td>
@@ -115,21 +116,22 @@
                                     <tr>
                                         <td class="Label1">
                                             <LogLabel [TextCode]="'Customs.DeclarationFilter.F.GeneralDetailsCustomOfficeName'"
-                                                      [ObjectFieldName]="'GeneralDetailsCustomOfficeName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                      [ObjectFieldName]="'CustomOfficeName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td class="TextB1">
-                                            <LogTextBox [Text]="GeneralDetailsCustomOfficeName"
-                                                        [ObjectFieldName]="'GeneralDetailsCustomOfficeName'"
+                                            <LogTextBox [Text]="CustomOfficeName"
+                                                        [ObjectFieldName]="'CustomOfficeName'"
                                                         [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                                         [HideColumns]="true"></LogTextBox>
                                         </td>
+
                                         <td class="Label1 lbl2">
                                             <LogLabel [TextCode]="'Customs.DeclarationFilter.F.GeneralDetailsStatusName'"
-                                                      [ObjectFieldName]="'GeneralDetailsStatusName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                      [ObjectFieldName]="'StatusName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td class="TextB2">
-                                            <LogTextBox [Text]="GeneralDetailsStatusName"
-                                                        [ObjectFieldName]="'GeneralDetailsStatusName'"
+                                            <LogTextBox [Text]="StatusName"
+                                                        [ObjectFieldName]="'StatusName'"
                                                         [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                                         [HideColumns]="true"></LogTextBox>
                                         </td>
@@ -154,27 +156,27 @@
                                 <!-- SealDetailsList -->
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ClaimObservableCollection">
 
-                                    <!-- file number \ Numeral -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
-                                                [header]="'Customs.DeclarationFilter.F.Numeral' | TextCodeTranslationPipe"
-                                                [binding]="'GuaranteeNumeral'">
+                                    <!-- displayFileNumber -->
+                                    <log-column [width]="'110'" [Alignment]="'right'"
+                                                [header]="'Customs.DeclarationFilter.F.ClaimDisplayFileNumber' | TextCodeTranslationPipe"
+                                                [binding]="'fileNumber'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.GuaranteeNumeral}}</span>
+                                                    <span>{{item.fileNumber}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
-                                    <!-- displayFileNumber -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
-                                                [header]="'Customs.DeclarationFilter.F.ClaimDisplayFileNumber' | TextCodeTranslationPipe"
-                                                [binding]="'ClaimDisplayFileNumber'">
+                                    <!-- file number \ Numeral -->
+                                    <log-column [width]="'90'" [Alignment]="'right'"
+                                                [header]="'Customs.DeclarationFilter.F.Numeral' | TextCodeTranslationPipe"
+                                                [binding]="'Numeral'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.ClaimDisplayFileNumber}}</span>
+                                                    <span>{{item.Numeral}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
@@ -183,90 +185,83 @@
                                     <!-- agentName -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimAgentName' | TextCodeTranslationPipe"
-                                                [binding]="'ClaimAgentName'">
+                                                [binding]="'agentName'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.ClaimAgentName}}</span>
+                                                    <span>{{item.agentName}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- createDate -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
+                                    <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimCreateDate' | TextCodeTranslationPipe"
-                                                [binding]="'ClaimCreateDate'">
+                                                [binding]="'createDate'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <!--StringFormat='{}{0:dd/MM/yyyy}-->
-                                                    <span>{{item.ClaimCreateDate}}</span>
+                                                    <span>{{item.createDate}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- claimAmount -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
+                                    <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimClaimAmount' | TextCodeTranslationPipe"
-                                                [binding]="'ClaimClaimAmount'">
+                                                [binding]="'claimAmount'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
 
-                                                    <span>{{item.ClaimClaimAmount}}</span>
+                                                    <span>{{item.claimAmount}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
 
                                     <!-- totalRefundAmount -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimTotalRefundAmount' | TextCodeTranslationPipe"
-                                                [binding]="'ClaimTotalRefundAmount'">
+                                                [binding]="'totalRefundAmount'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
 
-                                                    <span>{{item.ClaimTotalRefundAmount}}</span>
+                                                    <span>{{item.totalRefundAmount}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
 
                                     <!-- closeDate -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
+                                    <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimCloseDate' | TextCodeTranslationPipe"
-                                                [binding]="'ClaimCloseDate'">
+                                                [binding]="'closeDate'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <!--Text="{Binding ,StringFormat='{}{0:dd/MM/yyyy}'}"-->
-                                                    <span>{{item.ClaimCloseDate}}</span>
+                                                    <span>{{item.closeDate}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
 
                                     <!-- statusName -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimStatusName' | TextCodeTranslationPipe"
-                                                [binding]="'ClaimStatusName'">
+                                                [binding]="'statusName'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-
-                                                    <span>{{item.ClaimStatusName}}</span>
+                                                    <span>{{item.statusName}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
-
                                 </logitude-edit-grid>
 
                             </div>
@@ -287,115 +282,109 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                     [ItemSource]="DeficitObservableCollection">
 
-                                    <!-- file number \ Numeral -->
-
-                                    <log-column [width]="'100'" [Alignment]="'right'"
-                                                [header]="'Customs.DeclarationFilter.F.Numeral' | TextCodeTranslationPipe"
-                                                [binding]="'DeficitNumeral'">
+                                    <!-- displayFileNumber -->
+                                    <log-column [width]="'110'" [Alignment]="'right'"
+                                                [header]="'Customs.DeclarationFilter.F.DeficitDisplayFileNumber' | TextCodeTranslationPipe"
+                                                [binding]="'fileNumber'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.DeficitNumeral}}</span>
+                                                    <span>{{item.fileNumber}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
-
-                                    <!-- displayFileNumber -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
-                                                [header]="'Customs.DeclarationFilter.F.DeficitDisplayFileNumber' | TextCodeTranslationPipe"
-                                                [binding]="'DeficitNumeral'">
+                                    <!-- file number \ Numeral -->
+                                    <log-column [width]="'90'" [Alignment]="'right'"
+                                                [header]="'Customs.DeclarationFilter.F.Numeral' | TextCodeTranslationPipe"
+                                                [binding]="'Numeral'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.DeficitDisplayFileNumber}}</span>
+                                                    <span>{{item.Numeral}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- agentName -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
+                                    <log-column [width]="'110'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitAgentName' | TextCodeTranslationPipe"
-                                                [binding]="'DeficitAgentName'">
+                                                [binding]="'agentName'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.DeficitAgentName}}</span>
+                                                    <span>{{item.agentName}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- productionDate -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
+                                    <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitProductionDate' | TextCodeTranslationPipe"
-                                                [binding]="'DeficitProductionDate'">
+                                                [binding]="'productionDate'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.DeficitProductionDate}}</span>
+                                                    <span>{{item.productionDate}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
 
                                     <!-- estimatedBalance -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitEstimatedBalance' | TextCodeTranslationPipe"
-                                                [binding]="'DeficitEstimatedBalance'">
+                                                [binding]="'estimatedBalance'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.DeficitEstimatedBalance}}</span>
+                                                    <span>{{item.estimatedBalance}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
 
                                     <!-- totalRefundAmount -->
-
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitTotalRefundAmount' | TextCodeTranslationPipe"
-                                                [binding]="'DeficitTotalRefundAmount'">
+                                                [binding]="'totalRefundAmount'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.DeficitTotalRefundAmount}}</span>
+                                                    <span>{{item.totalRefundAmount}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-                                    <!-- closeDate -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
-                                                [header]="'Customs.DeclarationFilter.F.DeficitCloseDate' | TextCodeTranslationPipe"
-                                                [binding]="'DeficitCloseDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div style="width:100%;height:100%;">
-                                                <div class="RightCenter">
-                                                    <span>{{item.DeficitCloseDate}}</span>
-                                                </div>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-                                    <!-- statusName -->
 
+                                    <!-- closeDate -->
+                                    <log-column [width]="'90'" [Alignment]="'right'"
+                                                [header]="'Customs.DeclarationFilter.F.DeficitCloseDate' | TextCodeTranslationPipe"
+                                                [binding]="'closeDate'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width:100%;height:100%;">
+                                                <div class="RightCenter">
+                                                    <span>{{item.closeDate}}</span>
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- statusName -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitStatusName' | TextCodeTranslationPipe"
-                                                [binding]="'DeficitStatusName'">
+                                                [binding]="'statusName'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
-                                                    <span>{{item.DeficitStatusName}}</span>
+                                                    <span>{{item.statusName}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
-
                                 </logitude-edit-grid>
 
                             </div>

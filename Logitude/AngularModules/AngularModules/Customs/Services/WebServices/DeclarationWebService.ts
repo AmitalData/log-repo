@@ -535,6 +535,33 @@ export class DeclarationWebService {
         );
     }
 
+
+    GetNewAmendmentDeclaration(genericRequestParams: GenericRequestParams) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(genericRequestParams);
+            return this._http.post(
+                this._apiUrl + '/PostNewAmendmentDeclaration/',
+                JSON.stringify(genericRequestParams),
+                { headers: authHeader }).map((res) => {
+                   
+                    serviceResponse.Result = this.MapJsonToEntityPM(res.json(), true);
+               
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
+
+    }
     PostSendManifest(genericRequestParams: GenericRequestParams) {
         return Observable.defer(() => {
 
@@ -792,6 +819,29 @@ export class DeclarationWebService {
         }
 
         );
+    }
+
+    CheckFreightAmountsByIncotermWithDefault(declarationId: string) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetCheckFreightAmountsByIncotermWithDefault/?declarationId=" + declarationId, {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                //serviceResponse = response;
+                serviceResponse.Result = response.json();
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+
+        });
     }
 
     DeclarationClosureMethod(declarationId: string, tenant: number) {

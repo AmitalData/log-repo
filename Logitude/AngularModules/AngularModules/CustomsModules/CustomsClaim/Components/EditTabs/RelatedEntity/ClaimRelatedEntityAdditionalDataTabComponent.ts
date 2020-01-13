@@ -39,36 +39,36 @@ export class ClaimRelatedEntityAdditionalDataTabComponent extends BaseComponent 
     public ClaimsRelatedEntsExpDeclarsList: ObservableCollection;
 
     public CurrentEditComponentId: string;
-    private isControlEnabled: boolean = true;
-    private CurrentSession = SessionLocator.SelectedSession;
+    private isControlEnabled: boolean = false;
+
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.ClaimsRelatedEntsExpDeclarsList = new ObservableCollection([]);
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
     }
 
     private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         this.BuildExportDeclarationlist();
                     }
                 })
             );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                         //if (tabCode == "CLMG") {
                         //    this.RefreshEntity();
                         //    this.BuildExportDeclarationlist();
@@ -96,7 +96,7 @@ export class ClaimRelatedEntityAdditionalDataTabComponent extends BaseComponent 
     }
 
     RefreshEntity() {
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     selectedTab: LogTab;

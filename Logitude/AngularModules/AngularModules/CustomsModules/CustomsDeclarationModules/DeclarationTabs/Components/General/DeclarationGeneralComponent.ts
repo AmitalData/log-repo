@@ -7,10 +7,11 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-
+import { LuhnAlgorithm } from '../../../../../Customs/Utilities/LuhnAlgorithm';
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
 import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import {ClientList} from '../../../../../Customs/EntityLists/ClientList';
@@ -26,7 +27,7 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
 import {CustomsRequiredFieldListService} from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-
+import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
@@ -54,7 +55,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public RefreshDatePicker: boolean;
     ConsigmentTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -239,7 +240,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit('cancel');
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit('cancel');
     }
 
     OkButtonClicked() {
@@ -250,7 +251,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                     this.XMLErrors = [];
                     this.XMLErrors = response.ErrorsArray;
                 } else {
-                    this.CurrentSession.CloseCurrentWindow();
+                    SessionLocator.SelectedSession.CloseCurrentWindow();
                 }
             });
         }
@@ -312,21 +313,21 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
     private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         this.BuildConsignments();
                     }
                 })
             );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess && SessionLocator.SelectedSession.CurrentEditComponent) {
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         this.RefreshDatePicker = false;
                         if (this.timerToken) {
                             clearTimeout(this.timerToken);
@@ -341,15 +342,15 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 })
             );
 
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
-                            this.CurrentSession.StartBusyIndicatorLoading();
+                            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                             //this.RefreshEntity();
                             this.checkImportersVisibility();
                             this.DisplayOnlyCheck();
-                            this.CurrentSession.StopBusyIndicator();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
 
 
                         }
@@ -414,13 +415,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.EntityPM.ImporterTypeName = "IL";
 
             this.EntityPM.MainImporterEntitlemntTypeCode = null;
-            this.EntityPM.ImporterAddress = null;
+            //this.EntityPM.ImporterAddress = null;
             this.EntityPM.ImporterPassportNumber = null;
            // this.EntityPM.ImporterName = null;
             this.EntityPM.ImporterPassCountryCode = null;
             if (!this.EntityPM.IsCourierDeclaration) {
                 this.EntityPM.ImporterName = "";//
-
+                this.EntityPM.ImporterAddress = null;
                 this.EntityPM.CasualImporterAddress1 = "";
                 this.EntityPM.CasualImporterAddress2 = "";
                 this.EntityPM.CasualImporterCity = "";
@@ -433,7 +434,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
         }
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) {
+        
+        
+        if (this.EntityPM.IsCourierDeclaration) {//Task 57181: מספר יבואן - תצוגת מסך
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) { //Task 45507: (בלדרות) שינויים בלוגיקה של שדה מספר יבואן 
+                this.CalculatedImporterName = this.EntityPM.ImporterName;
+            }
+        } else {
             this.CalculatedImporterName = this.EntityPM.ImporterName;
         }
         
@@ -579,35 +586,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     PreviusEntitleImporterCountryName: string;
     PreviusCalculatedClient: string;
 
-    ImporterLostFocus(type: any, item: any, importerSearchBox: any) {
-
-        if (this.isImporterClicked != true) {
-            switch (type) {
-                case 'Importer': {
-                    this.EntityPM.ImporterId = "";
-                    //this.CalculatedImporterName = "";
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
-                        this.CalculatedImporterName = this.EntityPM.ImporterName;
-                    }
-                    break;
-                }
-                case 'Transfer': {
-                    this.EntityPM.TransferImporterId = "";
-                    this.CalculatedTransferImporterName = "";
-                    break;
-                }
-                case 'Entitle': {
-                    this.EntityPM.EntitleImporterId = "";
-                    this.CalculatedEntitleImporterName = "";
-                    this.CalculatedClient = null;
-
-                    this.EntitleImporterCountryCode = null;
-                    this.EntitleImporterCountryName = null;
-                    break;
-                }
-            }
-        }
-        this.isImporterClicked = false;
+    ImporterLostFocusChange(type: any, item: any, importerSearchBox: any) {
 
         if (type == 'Importer' && !AppTool.IsNullOrEmpty(this.EntityPM.CustomerVatNo) && !AppTool.IsNullOrEmpty(item) && this.EntityPM.CustomerVatNo != item) {
 
@@ -641,6 +620,139 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                     this.EntitleImporterCode = item;
                     break;
                 }
+            }
+        }
+    }
+
+    ImporterLostFocus(type: any, item: any, importerSearchBox: any) {
+
+        if (this.isImporterClicked != true) {
+            switch (type) {
+                case 'Importer': {
+                    this.EntityPM.ImporterId = "";
+                    //this.CalculatedImporterName = "";
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
+                        this.CalculatedImporterName = this.EntityPM.ImporterName;
+                    }
+                    break;
+                }
+                case 'Transfer': {
+                    this.EntityPM.TransferImporterId = "";
+                    this.CalculatedTransferImporterName = "";
+                    break;
+                }
+                case 'Entitle': {
+                    this.EntityPM.EntitleImporterId = "";
+                    this.CalculatedEntitleImporterName = "";
+                    this.CalculatedClient = null;
+
+                    this.EntitleImporterCountryCode = null;
+                    this.EntitleImporterCountryName = null;
+                    break;
+                }
+            }
+        }
+        this.isImporterClicked = false;
+
+        var valid: boolean = true;
+        var errorMessage : string = "";
+        if (type == "Importer" && !AppTool.IsNullOrEmpty(item)) {
+            this.ImporterCode = item;
+            if (item.length < 9) {
+                valid = false;
+                errorMessage = "מספר יבואן קצר מידיי";
+                //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
+            }
+            else if (item.length > 9) {
+                valid = false;
+                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode");
+                //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
+            }
+            else {
+                var digit: string = item.toString().substring(8);
+                var checkDigit: number = LuhnAlgorithm.CalculateLuhnAlgorithm(item.substring(0, 8));
+
+                if (digit != checkDigit.toString()) {
+                    valid = false;
+                    errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString();
+                    //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
+                }
+            }
+        }
+
+        if (!valid) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
+            messageWindow.Width = 250;
+            messageWindow.Height = 150;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show(errorMessage);
+            return;
+        }
+        else {
+            if (this.EntityPM.IsCourierDeclaration) {
+                this.ImporterLostFocus4CourierDeclaration(type, item, importerSearchBox);
+            }
+            else {
+                this.ImporterLostFocusChange(type, item, importerSearchBox);
+            }
+        }
+    }
+
+    private _UnifreightCustomerDefualt: string = null;
+    ImporterLostFocus4CourierDeclaration(type: any, item: any, importerSearchBox: any) {
+
+        if (this._UnifreightCustomerDefualt == null) {
+            var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+            customsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON", this.EntityPM.Tenant)
+                .subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (!AppTool.IsNullOrEmpty(DefaultValue)) {
+                            this._UnifreightCustomerDefualt = DefaultValue;
+                        }
+                        if (this._UnifreightCustomerDefualt == this.EntityPM.CustomerCode) {
+                            switch (type) {
+                                case 'Importer': {
+                                    this.ImporterCode = item;
+                                    break;
+                                }
+                                case 'Transfer': {
+                                    this.TransferImporterCode = item;
+                                    break;
+                                }
+                                case 'Entitle': {
+                                    this.EntitleImporterCode = item;
+                                    break;
+                                }
+                            }
+                        }
+                        else {
+                            this.ImporterLostFocusChange(type, item, importerSearchBox);
+                        }
+                    }
+                });
+        }
+        else {
+            if (this._UnifreightCustomerDefualt == this.EntityPM.CustomerCode) {
+                switch (type) {
+                    case 'Importer': {
+                        this.ImporterCode = item;
+                        break;
+                    }
+                    case 'Transfer': {
+                        this.TransferImporterCode = item;
+                        break;
+                    }
+                    case 'Entitle': {
+                        this.EntitleImporterCode = item;
+                        break;
+                    }
+                }
+            }
+            else {
+                this.ImporterLostFocusChange(type, item, importerSearchBox);
             }
         }
     }
@@ -706,24 +818,23 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     Type: string = null;
     EditImporter() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
 
-            this.CurrentSession.StopBusyIndicator();
-            var windowArgs: any = {};
-            windowArgs.EntityPM = this.EntityPM;
-            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
-
-            var logWindow = new LogitudeWindow();
-            windowArgs.Type = "Importer";
-            this.Type = "Importer";
-            logWindow.Width = 550;
+        var logWindow = new LogitudeWindow();
+        windowArgs.Type = "Importer";
+        this.Type = "Importer";
+        logWindow.Width = 550;
         logWindow.Height = this.EntityPM.IsCourierDeclaration ? 550 : 350;
-        
-            logWindow.Title = windowTitle;
-            logWindow.ShowCloseButton = true;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
     }
 
@@ -733,9 +844,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             return;
         }
 
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
-        this.CurrentSession.StopBusyIndicator();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
 
         var importerCode: string;
         var passportNumber: string;
@@ -836,50 +947,49 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
 
     EditTransferImporter() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
 
-            this.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
 
-            var windowArgs: any = {};
-            windowArgs.EntityPM = this.EntityPM;
-            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
-
-            var logWindow = new LogitudeWindow();
-            windowArgs.Type = "Transfer";
-            this.Type = "Transfer";
-            logWindow.Width = 550;
-            logWindow.Height = 350;
-            logWindow.Title = windowTitle;
-            logWindow.ShowCloseButton = true;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        var logWindow = new LogitudeWindow();
+        windowArgs.Type = "Transfer";
+        this.Type = "Transfer";
+        logWindow.Width = 550;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
-
 
     }
 
     EditEntitleImporter() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
 
-            this.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
 
-            var windowArgs: any = {};
-            windowArgs.EntityPM = this.EntityPM;
-            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
-
-            var logWindow = new LogitudeWindow();
-            windowArgs.Type = "Entitle";
-            this.Type = "Entitle";
-            logWindow.Width = 550;
-            logWindow.Height = 350;
-            logWindow.Title = windowTitle;
-            logWindow.ShowCloseButton = true;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        var logWindow = new LogitudeWindow();
+        windowArgs.Type = "Entitle";
+        this.Type = "Entitle";
+        logWindow.Width = 550;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
 
 
@@ -1026,8 +1136,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     //#endregion
 
     RefreshEntity() {
-        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
     }
     ChangeTransportMode() {
         if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode)) {
@@ -1047,9 +1157,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     DisplayOnlyCheck() {
         this.DrawMe = true;
-        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;

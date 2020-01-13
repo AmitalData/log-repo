@@ -216,7 +216,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'IsPersonalSignOn',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
 
         });
 
@@ -229,7 +229,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'IsCompanySignOn',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
 
         });
         this.columns.push({
@@ -253,7 +253,7 @@ export class SignStationsComponent
             SortByName: 'LastSignAt'
             ,
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
         });
 
         this.columns.push({
@@ -265,7 +265,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'Status',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
 
 
         });
@@ -282,7 +282,7 @@ export class SignStationsComponent
         //    Styles: { width: '100px' },
         //    IsCustomTemplate: true,
         //    HtmlListComponentName: 'SignStationListTemplate',
-        //    HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
+        //    HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
         //});
 
 

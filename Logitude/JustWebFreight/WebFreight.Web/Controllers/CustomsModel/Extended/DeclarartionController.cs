@@ -43,6 +43,16 @@ using Unifreight.Data.AmitalModel;
 using WebFreight.Web.WebServices;
 using System.Net.Http.Headers;
 using System.Xml.Linq;
+using Logitude.CustomsMessaging.Helpers;
+using Logitude.Server.Tools.Models;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Common.RequestParams;
+
+
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.RequestServices;
+using System.Xml;
+
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -142,6 +152,38 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+
+        public HttpResponseMessage GetDeclarationPendingListPMByDeclarationId(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                DeclarationRepository declarationRep = new DeclarationRepository(customContext);
+                 if (string.IsNullOrWhiteSpace(declarationId))
+                {
+                    //return null;
+                    return Request.CreateResponse(HttpStatusCode.OK, declarationId);
+                }
+
+                DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
+                List<DeclarationPendingPM> myDeclarationPendingPM = declarationQuery.GetDeclarationPendingListPMByDeclarationId(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myDeclarationPendingPM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCurrenciesCodesForDeclaration(string declarationId, int tenant)
         {
             try
@@ -215,13 +257,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+
+
         public HttpResponseMessage PutCopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
         {
-
-
-
-
-
 
             try
             {
@@ -407,5 +446,160 @@ new XElement("FileStreamError",
 
 
         }
-    }
+
+
+
+
+
+        public HttpResponseMessage GetLast2755ResponseDataAsFileStream(string customFileNo, int tenant)//AMI-66312 - שליחת מסר תשובה של מסר הגשה במקום של טיוטה אחרונה
+        {
+            //http://192.116.221.103:572/NextProd572/api/Declarartion/GetLast2755ResponseDataAsFileStream?customFileNo=51340159&tenant=1
+            string responseDataDocumentId = "NaN";
+            string declarationVersionId = "NaN";
+            string Status = "Error";
+            HttpResponseMessage httpResponse = null;
+            try
+            {
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+                DeclarationRepository declarationRep = new DeclarationRepository(customContext);
+                var decPoco = declarationRep.GetByCustomFileNo(customFileNo, tenant);
+
+                // first check if Declaration exist 
+                if (decPoco == null)
+                {
+                    throw new BusinessErrorException("Declaration !exist ");
+                }
+
+                declarationVersionId = decPoco.VersionId;
+                if (String.IsNullOrWhiteSpace(declarationVersionId))
+                {
+                    throw new BusinessErrorException("declarationVersionId !exist ");
+                }
+                var crsAnalyzeStatus = "30";
+                string interfaceTypeCode = "2755";
+                var crsRepo = new CustomsRequestsSheetRepository(customContext);
+                var crsPoco = crsRepo.GetLastCRSByCustomfileStatusInterfaceFirstOrDefault(decPoco.CustomFileNo, crsAnalyzeStatus, interfaceTypeCode, tenant);
+                if (crsPoco == null)
+                {
+                    throw new BusinessErrorException(/*"CustomsRequestsSheet !exist "*/ $"Message '{interfaceTypeCode}' didn't send yet  to customs!!!.");
+                }
+
+                var stepRepo = new CommunicationLogStepRepository(tenant);
+                int stepReceivedCustomResponseCorrelation = 20;
+                var stepPoco = stepRepo.CommunicationLogStep(crsPoco.RequestComminicationId, stepReceivedCustomResponseCorrelation, tenant);
+                responseDataDocumentId = stepPoco.DocumentId;
+                if (String.IsNullOrWhiteSpace(responseDataDocumentId))
+                {
+                    throw new BusinessErrorException("ResponseDataDocumentId !exist ");
+                }
+
+
+                string blobId = tenant + "_" + responseDataDocumentId;
+                httpResponse = Uploader.GetFileStream(blobId);
+                Status = "OK";
+            }
+            catch (BusinessErrorException businessErrorException)
+            {
+                XElement myXml =
+new XElement("FileStreamError",
+    new XElement("Error", businessErrorException.Message
+        ));
+                httpResponse = GetResponse(responseDataDocumentId, myXml);
+            }
+            catch (Exception ee)
+            {
+
+                XElement myXml =
+new XElement("FileStreamError",
+    new XElement("Error", ee.ToString()
+
+        )
+    );
+                httpResponse = GetResponse(responseDataDocumentId, myXml);
+            }
+            finally
+            {
+                var fileName = httpResponse.Content.Headers.ContentDisposition.FileName;
+                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                var Extension = Path.GetExtension(fileName);
+                var newFileName = $"DocumentId={responseDataDocumentId};DeclarationVersionId={declarationVersionId};Status={Status}" + Extension;
+                httpResponse.Content.Headers.ContentDisposition.FileName = newFileName;
+
+            }
+            return httpResponse;
+
+
+        }
+
+        private static HttpResponseMessage GetResponse(string responseDataDocumentId, XElement myXml)
+        {
+            HttpResponseMessage httpResponse;
+            var data = System.Text.UTF8Encoding.UTF8.GetBytes(myXml.ToString());
+
+            httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
+
+            httpResponse.Content = new StreamContent(new MemoryStream(data));
+            httpResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            httpResponse.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            httpResponse.Content.Headers.ContentDisposition.FileName = responseDataDocumentId + ".xml";
+            return httpResponse;
+        }
+
+        public HttpResponseMessage PostSendCollateral8212(SendCollateralsRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCB8212_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData.Collaterals);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+        public HttpResponseMessage GetDeclarationAmendmentsById(string id)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            string loggedUserEmail = authToken.Email;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            DeclarationList declaration = new DeclarationList();
+            ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+            try {
+                DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
+
+                var declarations=  declarationQuery.GetDeclarationAmendmentsById(tenant , id);
+
+                ServiceResponse response = new ServiceResponse();
+                response.Count = declarations.Count();
+
+                response.Result = declarations;
+                return Request.CreateResponse(HttpStatusCode.OK, response); 
+        }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
 }
+
+    }
+    }

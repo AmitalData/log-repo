@@ -77,7 +77,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     throw new Exception("While canceling its must Set CommLogStepCanCancellAction !!!");
                 }
-                CommLogStepCanCancelledAction(entityPOCO, entityPM, null);
+                else
+                {
+                    CommLogStepCanCancelledAction(entityPOCO, entityPM, null);
+                }
+                
                 Request2715(entityPOCO);
                 RequestCourier(entityPOCO);
 
@@ -93,7 +97,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     var customContext = MainContext as ICustomContext;
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPOCO.EntityId1, false, false);
+                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPOCO.EntityId1, true, false);
                     if (currentDeclarationCourierStatusPM != null)
                     {
                         string prevVal = null;

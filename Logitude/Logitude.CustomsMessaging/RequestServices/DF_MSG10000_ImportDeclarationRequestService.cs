@@ -44,6 +44,7 @@ using Simplog.Data.CommonDataModel;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -53,7 +54,15 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationPM _DeclarationPM;
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
+        public override void OnRequestFail(GenericRequestParams requestParams)
+        {
+            if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
+            {
+                CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);
+            }
 
+            base.OnRequestFail(requestParams);
+        }
         public override void ManipulateRequestParams(GenericRequestParams requestParams)
         {
             if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
@@ -198,7 +207,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 
                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(this._context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(this._context);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_DeclarationPM.Id, false, false);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_DeclarationPM.Id, true, false);
                 if (currentDeclarationCourierStatusPM == null)
                 {
                     currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
@@ -2261,7 +2270,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //Yuval Chalup 15.11.2016 TASK-24438 --->
 
             var declarationImporter = new DeclarationImporter();
-            declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
+            declarationImporter.ID  = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
 
             string importerAddress=null;
             string importerName = null;

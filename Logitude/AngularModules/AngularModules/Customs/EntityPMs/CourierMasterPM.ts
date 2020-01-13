@@ -204,6 +204,76 @@ export class CourierMasterPM {
     public set WeightValueName(newValue: string) { if (this.weightValueName != newValue) { this.weightValueName = newValue; this.MarkAsDirty("WeightValueName"); } }
        
 	 
+    private storageSiteCode: string;
+    public get StorageSiteCode() { return this.storageSiteCode; }
+    public set StorageSiteCode(newValue: string) { if (this.storageSiteCode != newValue) { this.storageSiteCode = newValue; this.MarkAsDirty("StorageSiteCode"); } }
+       
+	 
+    private storageSiteName: string;
+    public get StorageSiteName() { return this.storageSiteName; }
+    public set StorageSiteName(newValue: string) { if (this.storageSiteName != newValue) { this.storageSiteName = newValue; this.MarkAsDirty("StorageSiteName"); } }
+       
+	 
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+       
+	 
+    private integratorCode: string;
+    public get IntegratorCode() { return this.integratorCode; }
+    public set IntegratorCode(newValue: string) { if (this.integratorCode != newValue) { this.integratorCode = newValue; this.MarkAsDirty("IntegratorCode"); } }
+       
+	 
+    private integratorName: string;
+    public get IntegratorName() { return this.integratorName; }
+    public set IntegratorName(newValue: string) { if (this.integratorName != newValue) { this.integratorName = newValue; this.MarkAsDirty("IntegratorName"); } }
+       
+	 
+    private integratorNumber: string;
+    public get IntegratorNumber() { return this.integratorNumber; }
+    public set IntegratorNumber(newValue: string) { if (this.integratorNumber != newValue) { this.integratorNumber = newValue; this.MarkAsDirty("IntegratorNumber"); } }
+       
+	 
+    private isReadyForInvoice: boolean;
+    public get IsReadyForInvoice() { return this.isReadyForInvoice; }
+    public set IsReadyForInvoice(newValue: boolean) { if (this.isReadyForInvoice != newValue) { this.isReadyForInvoice = newValue; this.MarkAsDirty("IsReadyForInvoice"); } }
+       
+	 
+    private isAllDecClosedForFollowUp: boolean;
+    public get IsAllDecClosedForFollowUp() { return this.isAllDecClosedForFollowUp; }
+    public set IsAllDecClosedForFollowUp(newValue: boolean) { if (this.isAllDecClosedForFollowUp != newValue) { this.isAllDecClosedForFollowUp = newValue; this.MarkAsDirty("IsAllDecClosedForFollowUp"); } }
+       
+	 
+    private calcClosedForFollowUp: number;
+    public get CalcClosedForFollowUp() { return this.calcClosedForFollowUp; }
+    public set CalcClosedForFollowUp(newValue: number) { if (this.calcClosedForFollowUp != newValue) { this.calcClosedForFollowUp = newValue; this.MarkAsDirty("CalcClosedForFollowUp"); } }
+       
+	 
+    private calcMissingClassification: number;
+    public get CalcMissingClassification() { return this.calcMissingClassification; }
+    public set CalcMissingClassification(newValue: number) { if (this.calcMissingClassification != newValue) { this.calcMissingClassification = newValue; this.MarkAsDirty("CalcMissingClassification"); } }
+       
+	 
+    private calcMissingImporterId: number;
+    public get CalcMissingImporterId() { return this.calcMissingImporterId; }
+    public set CalcMissingImporterId(newValue: number) { if (this.calcMissingImporterId != newValue) { this.calcMissingImporterId = newValue; this.MarkAsDirty("CalcMissingImporterId"); } }
+       
+	 
+    private calcPendingCustoms: number;
+    public get CalcPendingCustoms() { return this.calcPendingCustoms; }
+    public set CalcPendingCustoms(newValue: number) { if (this.calcPendingCustoms != newValue) { this.calcPendingCustoms = newValue; this.MarkAsDirty("CalcPendingCustoms"); } }
+       
+	 
+    private calcPending900: number;
+    public get CalcPending900() { return this.calcPending900; }
+    public set CalcPending900(newValue: number) { if (this.calcPending900 != newValue) { this.calcPending900 = newValue; this.MarkAsDirty("CalcPending900"); } }
+       
+	 
+    private calcSuspendedDeclarations: number;
+    public get CalcSuspendedDeclarations() { return this.calcSuspendedDeclarations; }
+    public set CalcSuspendedDeclarations(newValue: number) { if (this.calcSuspendedDeclarations != newValue) { this.calcSuspendedDeclarations = newValue; this.MarkAsDirty("CalcSuspendedDeclarations"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

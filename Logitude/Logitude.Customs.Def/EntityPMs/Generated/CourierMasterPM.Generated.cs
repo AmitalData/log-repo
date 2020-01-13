@@ -848,6 +848,328 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string storageSiteCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteCode  
+	   {
+	    
+	     get
+		{
+		   return storageSiteCode;
+		 }
+		 set
+		 {
+		   if(storageSiteCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteCode",OldValue=storageSiteCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteCode=value;
+		   }
+			
+		 }
+	   }
+	  private string storageSiteName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteName  
+	   {
+	    
+	     get
+		{
+		   return storageSiteName;
+		 }
+		 set
+		 {
+		   if(storageSiteName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteName",OldValue=storageSiteName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteName=value;
+		   }
+			
+		 }
+	   }
+	  private string truckerId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerId  
+	   {
+	    
+	     get
+		{
+		   return truckerId;
+		 }
+		 set
+		 {
+		   if(truckerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerId",OldValue=truckerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerId=value;
+		   }
+			
+		 }
+	   }
+	  private string integratorCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IntegratorCode  
+	   {
+	    
+	     get
+		{
+		   return integratorCode;
+		 }
+		 set
+		 {
+		   if(integratorCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IntegratorCode",OldValue=integratorCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   integratorCode=value;
+		   }
+			
+		 }
+	   }
+	  private string integratorName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IntegratorName  
+	   {
+	    
+	     get
+		{
+		   return integratorName;
+		 }
+		 set
+		 {
+		   if(integratorName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IntegratorName",OldValue=integratorName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   integratorName=value;
+		   }
+			
+		 }
+	   }
+	  private string integratorNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IntegratorNumber  
+	   {
+	    
+	     get
+		{
+		   return integratorNumber;
+		 }
+		 set
+		 {
+		   if(integratorNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IntegratorNumber",OldValue=integratorNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   integratorNumber=value;
+		   }
+			
+		 }
+	   }
+	  private bool isReadyForInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsReadyForInvoice  
+	   {
+	    
+	     get
+		{
+		   return isReadyForInvoice;
+		 }
+		 set
+		 {
+		   if(isReadyForInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsReadyForInvoice",OldValue=isReadyForInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isReadyForInvoice=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAllDecClosedForFollowUp ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAllDecClosedForFollowUp  
+	   {
+	    
+	     get
+		{
+		   return isAllDecClosedForFollowUp;
+		 }
+		 set
+		 {
+		   if(isAllDecClosedForFollowUp != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAllDecClosedForFollowUp",OldValue=isAllDecClosedForFollowUp,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAllDecClosedForFollowUp=value;
+		   }
+			
+		 }
+	   }
+	  private int calcClosedForFollowUp ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcClosedForFollowUp  
+	   {
+	    
+	     get
+		{
+		   return calcClosedForFollowUp;
+		 }
+		 set
+		 {
+		   if(calcClosedForFollowUp != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcClosedForFollowUp",OldValue=calcClosedForFollowUp,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcClosedForFollowUp=value;
+		   }
+			
+		 }
+	   }
+	  private int calcMissingClassification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcMissingClassification  
+	   {
+	    
+	     get
+		{
+		   return calcMissingClassification;
+		 }
+		 set
+		 {
+		   if(calcMissingClassification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcMissingClassification",OldValue=calcMissingClassification,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcMissingClassification=value;
+		   }
+			
+		 }
+	   }
+	  private int calcMissingImporterId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcMissingImporterId  
+	   {
+	    
+	     get
+		{
+		   return calcMissingImporterId;
+		 }
+		 set
+		 {
+		   if(calcMissingImporterId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcMissingImporterId",OldValue=calcMissingImporterId,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcMissingImporterId=value;
+		   }
+			
+		 }
+	   }
+	  private int calcPendingCustoms ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcPendingCustoms  
+	   {
+	    
+	     get
+		{
+		   return calcPendingCustoms;
+		 }
+		 set
+		 {
+		   if(calcPendingCustoms != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcPendingCustoms",OldValue=calcPendingCustoms,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcPendingCustoms=value;
+		   }
+			
+		 }
+	   }
+	  private int calcPending900 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcPending900  
+	   {
+	    
+	     get
+		{
+		   return calcPending900;
+		 }
+		 set
+		 {
+		   if(calcPending900 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcPending900",OldValue=calcPending900,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcPending900=value;
+		   }
+			
+		 }
+	   }
+	  private int calcSuspendedDeclarations ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcSuspendedDeclarations  
+	   {
+	    
+	     get
+		{
+		   return calcSuspendedDeclarations;
+		 }
+		 set
+		 {
+		   if(calcSuspendedDeclarations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcSuspendedDeclarations",OldValue=calcSuspendedDeclarations,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcSuspendedDeclarations=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

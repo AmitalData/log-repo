@@ -23,12 +23,23 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityPMs;
+using Logitude.Customs.BL.BL;
+using Devart.Data.Oracle;
+using Logitude.Customs.BL.Validators;
+using System.Data.SqlClient;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using System.Data.Common;
+using Simplog.Data.InfrastructureModel;
+using Logitude.Customs.BL.EntityDataMappings;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
    public partial class CourierMasterUpdateService
     {
         private Boolean toSendTask = false;
+        private Boolean toSetDeclarationChanged = false;
         private AmitalContext _AmitalContext;
 
         protected override void OnCreating(CourierMasterPM entityPM, EntityPM entityParentPM)
@@ -37,27 +48,51 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             entityPM.Id = IdCounter.GetNumber("Customs.CourierMaster", entityPM.Tenant);
             entityPM.CreateDateTime = DateTime.Now;
+            entityPM.IsOpen = true;
+            entityPM.IsCancelled = false;
         }
 
         protected override void OnUpdating(CourierMasterPM entityPM, CourierMaster entityPOCO)
         {
             ValidateEntity(entityPM);
+            if (entityPOCO!=null && entityPM.IsReadyForInvoice && !entityPOCO.IsReadyForInvoice)
+            {
+                BuildGGGQ_FLIGHT_CREDIT_LETTER(entityPM);
+            }
+
+
             Contact loggedContact = GetLoggedContact(entityPM.Tenant);
             ICustomContext context = MainContext as CustomContext;
             entityPM.UpdateDateTime = DateTime.Now;
             entityPM.UpdatedByUserId = loggedContact.Id;
             CourierDeclarationQueryService courierDeclarationQuery = new CourierDeclarationQueryService(entityPM.Tenant);
             CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+                DeclarationRepository declarationRepository1 = new DeclarationRepository(context);
+
             if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0 )
             {
-
-                //entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(1, entityPM.ConnectedDeclarations.Length - 1);
-                entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(0, entityPM.ConnectedDeclarations.Length - 1);
-                string[] items = entityPM.ConnectedDeclarations.Split(',');
                 CourierDeclarationQueryService service = new CourierDeclarationQueryService(entityPM.Tenant);
                 int? maxSequenceNunmeric = 0;
                  maxSequenceNunmeric = service.GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
                 if (maxSequenceNunmeric == null) maxSequenceNunmeric = 0;
+
+                if (entityPM.ConnectedDeclarations == "ALL") {
+                    
+                    var decsC = declarationRepository1.GetNotConnectedDeclarations(entityPM.Tenant);
+                    foreach (var dec in decsC)
+                    {
+                        ++maxSequenceNunmeric;
+                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
+                        courierDeclarationUpdateService.Update(courierDeclaration, false);
+
+                    }
+                }
+                else
+                {   
+                 //entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(1, entityPM.ConnectedDeclarations.Length - 1);
+                entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(0, entityPM.ConnectedDeclarations.Length - 1);
+                string[] items = entityPM.ConnectedDeclarations.Split(',');
                 foreach (string item in items)
                 {
                     ++maxSequenceNunmeric;
@@ -65,23 +100,39 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     courierDeclarationUpdateService.Update(courierDeclaration, false);
 
                 }
+ }
             }
 
             if (entityPM.NotConnectedDeclarations != null && entityPM.NotConnectedDeclarations.Length > 0)
             {
                 //entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(1, entityPM.NotConnectedDeclarations.Length - 1);
-                entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(0, entityPM.NotConnectedDeclarations.Length - 1);
-                string[] NotConnecteditems = entityPM.NotConnectedDeclarations.Split(',');
 
-                if (NotConnecteditems != null && NotConnecteditems.Length > 0)
+                
+                    if (entityPM.NotConnectedDeclarations == "ALL")
+                    {
+                        var decsCN = declarationRepository1.GetCourierConnectedDeclaratins(entityPOCO.Id , entityPM.Tenant);
+                        foreach (var item in decsCN)
+                        {
+                            CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
+                            CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
+                            courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPOCO.Id, false, true);
+                            courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
+                            courierDeclarationUpdateService.Update(courierDeclaration, true);
+                        }
+                    }
+                    else
+                    {                 entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(0, entityPM.NotConnectedDeclarations.Length - 1);
+                string[] NotConnecteditems = entityPM.NotConnectedDeclarations.Split(',');
+if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                 {
-                    foreach (string item in NotConnecteditems)
+                        foreach (string item in NotConnecteditems)
                     {
                         CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
                         CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
                         courierDeclaration = courierDeclarationDelQuery.GetSingle(item, entityPOCO.Id, false, true);
                         courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                         courierDeclarationUpdateService.Update(courierDeclaration, true);
+                    }
                     }
                 }
             }
@@ -105,10 +156,47 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 //            }
 
+                string declarations="";
+                 var declarationRepository = new DeclarationRepository(context);
+
+                var decs=   declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
+
+                if (decs.Count()>0 )
+                {
+                     declarations=  string.Join("','", decs.Select(x=>x.Id));
+                    declarations = "'" + declarations  +"'"  ;
+                 }
+
+
+            if (entityPM.IsCancelled==true)
+            {
+   
+                    entityPM.IsOpen = false;
+                    this.toSendTask = true;
+                if (!string.IsNullOrWhiteSpace(declarations))
+                {
+                    CancelledDeclarations(declarations, entityPM.Tenant);
+               }
+ 
+            }
+
+            else
+            {
+ 
+                entityPM.IsOpen = true;
+                this.toSendTask = true;
+                if (!string.IsNullOrWhiteSpace(declarations))
+                {
+                    OpenDeclarations(declarations, entityPM.Tenant);
+                }
+
+            }
+
             entityPM.ConnectedDeclarations = null;
             entityPM.NotConnectedDeclarations = null;
 
-            if(entityPM.EstimatedArrivalDateOnly != null && entityPM.EstimatedArrivalDateOnly.HasValue)
+
+            if (entityPM.EstimatedArrivalDateOnly != null && entityPM.EstimatedArrivalDateOnly.HasValue)
             {
                 DateTime date = (DateTime)entityPM.EstimatedArrivalDateOnly;
                 if(entityPM.EstimatedArrivalTimeOnly != null && entityPM.EstimatedArrivalTimeOnly.HasValue)
@@ -140,34 +228,98 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 CourierMasterPM dbOccCourierMasterPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
 
-                if(entityPM.OriginPortCode != dbOccCourierMasterPM.OriginPortCode ||
-                    entityPM.MAWB != dbOccCourierMasterPM.MAWB ||
-                    entityPM.MAWBTypeCode != dbOccCourierMasterPM.MAWBTypeCode ||
-                    entityPM.AirlineId != dbOccCourierMasterPM.AirlineId ||
-                    entityPM.WeightValueCode != dbOccCourierMasterPM.WeightValueCode)
+                if ((entityPM.GatewayPortCode != null && entityPM.GatewayPortCode != dbOccCourierMasterPM.GatewayPortCode) ||
+                    (entityPM.OriginPortCode != null && entityPM.OriginPortCode != dbOccCourierMasterPM.OriginPortCode) ||
+                    (entityPM.MAWB != null && entityPM.MAWB != dbOccCourierMasterPM.MAWB) ||
+                    (entityPM.MAWBTypeCode != null && entityPM.MAWBTypeCode != dbOccCourierMasterPM.MAWBTypeCode) ||
+                    (entityPM.AirlineId != null && entityPM.AirlineId != dbOccCourierMasterPM.AirlineId) ||
+                    (entityPM.WeightValueCode != null && entityPM.WeightValueCode != dbOccCourierMasterPM.WeightValueCode))
                 {
-                    CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
-                    List <string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
-                    if (declarations != null)
-                    {
-                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        foreach (var declarationId in declarations)
-                        {
-                            declarationQueryService.LoadSupplierInvoicesWithItems = false;
-                            var myDBEntity = declarationQueryService.GetSingle(declarationId, false, false);
-                            DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDBEntity);
-                            declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
-                        }
-                    }
+                    toSetDeclarationChanged = true;
                 }
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private void BuildGGGQ_FLIGHT_CREDIT_LETTER(CourierMasterPM entityPM)
+        {
+
+
+
+            var sw = Stopwatch.StartNew();
+            TransactionScope scope = null;
+            var statusDateTime = DateTime.Now;
+
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
+            try
+            {
+                using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
+                {
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    
+                    var requestData = "";
+
+                    string unifreightUser = null;
+
+                    if (String.IsNullOrWhiteSpace(unifreightUser))
+                    {
+                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(entityPM.Tenant);
+                    }
+
+                    
+
+                    var myGGGQPM = new GGGQPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ORIGINQUE = "LGT", //LugitudeRequest
+                        STATUS = "1",
+                        EXPTASKTIME = 5,
+                        EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
+                        TRY = 5,
+                        PRIORITY = 8,
+                        
+                        ENTNAME = "CFIFILEM",
+                        PRIMARYNUM = "-1",
+                        FORMID = "A1468",
+                        GSTRING1= "A1468",
+                        GSTRING2 = "NONE",
+                        GSTRING3 = entityPM.Id,
+
+                        DEBUG = "F",
+                        DONEOPERATION = "A",
+                        QUEUEMANAGEMENT=true,
+
+
+                        //GSTRING1 = myYCULTASKPM.TASKID,
+                    };
+                    myGGGQUpdateService.Update(myGGGQPM, true);
+
+                    if (scope != null)
+                    {
+                        scope.Complete();
+                    }
+                }
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
+
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
+
+
         }
 
         private CourierMasterPM GetDBEntity(string dirtyCourierMasterId, int tenant)
@@ -242,6 +394,138 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return contact;
         }
 
+
+
+        private void OpenDeclarations(string declarations, int Tenant)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(Tenant);
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 0  , ISCANCELLED =0 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 0  , ISCANCELLED =0 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+
+        private void CancelledDeclarations(string declarations, int Tenant)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(Tenant);
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 1  , ISCANCELLED =1 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 1  , ISCANCELLED =1 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+        private void SetDeclarationChanged(string declarations , string courierManifestStatusCode, int Tenant)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(Tenant);
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONCOURIERSTATUSES set " +
+                        "COURIERMANIFESTSTATUSCODE= '" + courierManifestStatusCode + "' ";
+                    cmd = cmd + " where DECLARATIONID IN " + "(" + declarations + ")" ;
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONCOURIERSTATUSES set " +
+                        "COURIERMANIFESTSTATUSCODE= '" + courierManifestStatusCode + "' ";
+                    cmd = cmd + " where DECLARATIONID IN " + "(" + declarations + ")";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+        private static string GetConnection(int tenant)
+        {
+            GlobalDB currentDb;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                scope.Complete();
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+            return context.Database.Connection.ConnectionString;
+        }
+
         protected override void AfterUpdating(CourierMasterPM entityPM, EntityPM entityParentPM)
         {
             if (this.toSendTask == true)
@@ -253,7 +537,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(entityPM.Tenant);
                 CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(entityPM.AirlineId, false, true);
-                    if (customsAirline != null)
+                if (customsAirline != null)
                 {
                     entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
                     entityPM.AirlineName = customsAirline.LocalName;
@@ -269,8 +553,59 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.GatewayPortName = internationalSitePM.LocalName;
                 }
             }
+
+            if (toSetDeclarationChanged == true)
+            {
+                string setCourierManifestStatusCode = "R";
+                string setDeclarationsList = "";
+
+                CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(entityPM.Id, entityPM.Tenant);
+                if (errorsForCourierDeclaration == null || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields == null) ||
+                    (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count == 0))
+                {
+                    string CourierMasterId = EntityPM.Id;
+                    //string toCourierManifestStatusCode = "R";
+                    string updateCourierManifestStatusCodeToR =
+                        $"Update DECLARATIONCOURIERSTATUSES set CourierManifestStatusCode ='{setCourierManifestStatusCode}' where DECLARATIONID  in (select DECLARATIONID   from CourierDeclarations  where CourierMasterId ='{CourierMasterId}' and tenant ={EntityPM.Tenant} ) and CourierManifestStatusCode !='M' and CourierManifestStatusCode !='R' ";
+                    int commandTimeout = 30;
+                    CustomContext.CommandExecuteNonQuery(EntityPM.Tenant, updateCourierManifestStatusCodeToR, commandTimeout);
+
+                    //setDeclarationsList = OldNotInUse(entityPM, setCourierManifestStatusCode, setDeclarationsList);
+                }
+            }
         }
 
+        private string OldNotInUse(CourierMasterPM entityPM, string setCourierManifestStatusCode, string setDeclarationsList)
+        {
+            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
+            List<string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
+            if (declarations != null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
+                foreach (var declarationId in declarations)
+                {
+                    DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, true, false);
+                    if (myDeclarationCourierStatusPM.CourierManifestStatusCode != "M" && myDeclarationCourierStatusPM.CourierManifestStatusCode != "R")
+                    {
+                        if (setDeclarationsList == "")
+                        {
+                            setDeclarationsList = string.Concat("'", declarationId, "'");
+                        }
+                        else
+                        {
+                            setDeclarationsList = string.Concat(setDeclarationsList, ",", "'", declarationId, "'");
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(setDeclarationsList))
+                {
+                    this.SetDeclarationChanged(setDeclarationsList, setCourierManifestStatusCode, entityPM.Tenant);
+                }
+            }
+
+            return setDeclarationsList;
+        }
 
         private void OpenUnifreighTask(CourierMasterPM dirtyCourierMasterPM, string taskType, string status, bool raiseStatus, string xmlStatus)
         {

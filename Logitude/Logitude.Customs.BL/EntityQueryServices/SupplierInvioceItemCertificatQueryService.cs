@@ -151,7 +151,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 invoiceNumber = invoicenumberFilter.FieldValue.ToString();
             }
-            IQueryable<CertificateConnectedItems> query2 = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, skippedItems, queryOperations.PageSize, false);
+            string ClassificationCode = null;
+            QueryFilterItem ClassificationCodeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ClassificationCode").FirstOrDefault();
+            if (ClassificationCodeFilter != null)
+            {
+                ClassificationCode = ClassificationCodeFilter.FieldValue.ToString();
+            }
+            IQueryable<CertificateConnectedItems> query2 = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode, skippedItems, queryOperations.PageSize, false);
 
 
 
@@ -232,7 +238,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<CertificateConnectedItems> GetCertificateConnectedItemsList(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant)
         {
-            List<CertificateConnectedItems> conntectedItems = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, null, 0, 0, true).ToList();
+            List<CertificateConnectedItems> conntectedItems = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, null, null, 0, 0, true).ToList();
             return conntectedItems;
         }
 
@@ -248,7 +254,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 invoiceNumber = invoicenumberFilter.FieldValue.ToString();
             }
-            int count = repository.GetCertificateConnectedItemsCount(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant,invoiceNumber);
+            string ClassificationCode = null;
+            QueryFilterItem ClassificationCodeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ClassificationCode").FirstOrDefault();
+            if (ClassificationCodeFilter != null)
+            {
+                ClassificationCode = ClassificationCodeFilter.FieldValue.ToString();
+            }
+            int count = repository.GetCertificateConnectedItemsCount(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode);
             
             return count;
         }

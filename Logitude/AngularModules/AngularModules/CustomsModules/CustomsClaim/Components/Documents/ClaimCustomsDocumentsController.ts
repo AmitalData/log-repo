@@ -1,24 +1,24 @@
 declare var window;
-import {CustomsDocumentPM} from "../../../../Customs/EntityPMs/CustomsDocumentPM";
-import {CustomsDocumentsTicketPM} from "../../../../Customs/EntityPMs/CustomsDocumentsTicketPM";
-import {CustomsDocumentPointerPM} from "../../../../Customs/EntityPMs/CustomsDocumentPointerPM";
-import {ClaimPM} from "../../../../Customs/EntityPMs/ClaimPM";
-import {DocumentsFilingPM} from "../../../../Common/EntityPMs/DocumentsFilingPM";
-import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from "../../../../Customs/Utilities/DeclarationDisplayOnlyChecks";
+import { CustomsDocumentPM } from "../../../../Customs/EntityPMs/CustomsDocumentPM";
+import { CustomsDocumentsTicketPM } from "../../../../Customs/EntityPMs/CustomsDocumentsTicketPM";
+import { CustomsDocumentPointerPM } from "../../../../Customs/EntityPMs/CustomsDocumentPointerPM";
+import { ClaimPM } from "../../../../Customs/EntityPMs/ClaimPM";
+import { DocumentsFilingPM } from "../../../../Common/EntityPMs/DocumentsFilingPM";
+import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from "../../../../Customs/Utilities/DeclarationDisplayOnlyChecks";
 import { ICustomsDocumentsController } from "../../../CustomsDocuments/Components/ICustomsDocumentsController";
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsDocumentTicketViewModel } from '../../../CustomsDocuments/Components/CustomsDocumentTicketViewModel';
 import { RelatedEntityParams } from '../../../CustomsDocuments/Components/CustomsDocumentsComponent';
-import {Observable}     from 'rxjs/Rx';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, ArrayTool, DateTool} from '../../../../Infrastructure/Tools';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Http, Headers} from '@angular/http';
-import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
-import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { Observable } from 'rxjs/Rx';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Http, Headers } from '@angular/http';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ConnectedToItem } from '../../../CustomsDocuments/Components/ConnectedToItem';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {EventEmitter} from '@angular/core';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { EventEmitter } from '@angular/core';
 ``
 export class ClaimCustomsDocumentsController implements ICustomsDocumentsController {
     private originalCustomsDocumentTicketViewModel: CustomsDocumentTicketViewModel[];
@@ -111,16 +111,20 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
     FillConnectedToItems() {
         var connectedItems: ConnectedToItem[] = [];
 
-        var connectedItem1 = new ConnectedToItem();
-        connectedItem1.Id = 0;
-        connectedItem1.Name = TextCodeTranslator.Translate("Customs.Claim");
+        //var connectedItem1 = new ConnectedToItem();
+        //connectedItem1.Id = 0;
+        //connectedItem1.Name = TextCodeTranslator.Translate("Customs.Claim");
 
         var connectedItem2 = new ConnectedToItem();
         connectedItem2.Id = 1;
         connectedItem2.Name = TextCodeTranslator.Translate("Customs.ClaimsRelatedEntity");
-
-        connectedItems.push(connectedItem1);
         connectedItems.push(connectedItem2);
+
+        var connectedItem3 = new ConnectedToItem();
+        connectedItem3.Id = 2;
+        connectedItem3.Name = TextCodeTranslator.Translate("Customs.Claim.TH.CancelOrObjection");
+        connectedItems.push(connectedItem3);
+
         return connectedItems;
     }
 
@@ -148,6 +152,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
     }
 
     ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean) {
+        //if customParam: true-ClaimsRelatedEntity false=ClaimRelatedEntityCancelOrObjection
         var windowArgs: any = {};
         windowArgs.ClaimPM = entityPM;
         windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
@@ -160,7 +165,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.SelectionClaimRelatedEntitiesCompleted(comp, customsDocumentsTicket);
+                    this.SelectionClaimRelatedEntitiesCompleted(comp, customsDocumentsTicket, customParam);
                 }
             });
         });
@@ -168,59 +173,37 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
         logWindow.Show('./CustomsModules/CustomsClaim/Components/Documents/PointersFromClaimRelatedEntitiesSelectionComponent');
     }
 
-    SelectionClaimRelatedEntitiesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM) {
+    SelectionClaimRelatedEntitiesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM, customParam: boolean) {
         if (args.SelectedClaimRelatedEntities != null) {
             customsDocumentsTicket.ConnectedCREsSequences = args.ConnectedClaimRelatedEntities;
-            var pointers: CustomsDocumentPointerPM[] = [];
-            customsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
-                pointers.push(pointer);
-            });
-            pointers.forEach((pointer) => {
-                if (pointer.Child1EntityId != null) {
-                    var exists = args.SelectedClaimRelatedEntities.Collection.filter(d => d.EntityCounterKey + "" == pointer.Child1EntityId)[0];
-                    if (!exists) {
-                        var editedPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Id == pointer.Id)[0];
-                        if (editedPointer != null) {
-                            if (customsDocumentsTicket.CustomsDocumentPointers.length > 1) {
-                                customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
-                            }
-                            else {
-                                editedPointer.Child1EntityCode = null;
-                                editedPointer.Child1EntityId = null;
-                            }
-                        }
-                    }
-                }
-                
-            });
+            //var pointers: CustomsDocumentPointerPM[] = [];
+            //customsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
+            //    pointers.push(pointer);
+            //});
 
-            args.SelectedClaimRelatedEntities.Collection.forEach((CRE) => {
-               
-                var exists = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Child1EntityId == CRE.EntityCounterKey + "")[0];
-                    if (!exists) {
-                        var declarationPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.ParentEntityId == CRE.ClaimId && d.Child1EntityId == null)[0];
-                        if (declarationPointer == null) {
-                            var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+            var child1EntityCode: string = "ClaimsRelatedEntity";
+            if (!customParam) { //true-ClaimsRelatedEntity //false=ClaimRelatedEntityCancelOrObjection
+                child1EntityCode = "ClaimRelatedEntityCancelOrObjection";
+            }
 
-                            newPointer.Tenant = SessionLocator.Tenant;
-                            newPointer.ParentEntityId = this.claimPM.Id;
-                            newPointer.ParentEntityCode = "Claim";
-                            newPointer.Child1EntityCode = "ClaimsRelatedEntity";
-                            newPointer.Child2EntityCode = null;
-                            newPointer.Child3EntityCode = null;
-                            newPointer.Child1EntityId = CRE.EntityCounterKey + "";
-                            newPointer.Child2EntityId = null;
-                            newPointer.Child3EntityId = null;
-                            customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
-
-                        }
-                        else {
-                            declarationPointer.Child1EntityId = CRE.EntityCounterKey + "";
-                            declarationPointer.Child1EntityCode = "ClaimsRelatedEntity";
-                        }
-                    }
-               
-            });
+            if (customsDocumentsTicket.CustomsDocumentPointers != null && customsDocumentsTicket.CustomsDocumentPointers[0] != null) {
+                //Update pointer details
+                customsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityCode = child1EntityCode;
+                customsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityId = args.ConnectedClaimRelatedEntities + "";
+            }
+            else { // Create new pointer
+                var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+                newPointer.Tenant = SessionLocator.Tenant;
+                newPointer.ParentEntityId = this.claimPM.Id;
+                newPointer.ParentEntityCode = "Claim";
+                newPointer.Child1EntityCode = child1EntityCode;
+                newPointer.Child2EntityCode = null;
+                newPointer.Child3EntityCode = null;
+                newPointer.Child1EntityId = args.ConnectedClaimRelatedEntities + "";
+                newPointer.Child2EntityId = null;
+                newPointer.Child3EntityId = null;
+                customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+            }
         }
 
         this.SelectionCompleted.emit(args);
@@ -233,21 +216,72 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
     public GetCustomsInterfaceSettingsDocumentTypes(entityPM: any) {
         // in this method i expect you to return a list of customs documents type codes e.g: 270,IL70 ......etc to open tickets for the declaration.
         // you have the entityPM :DeclarationPM to take CargoTypeCode , ProcessTypeCode , TransportTypeCode from declaration as the design says.
-      var serviceResponse: ServiceResponse = new ServiceResponse();
+        var serviceResponse: ServiceResponse = new ServiceResponse();
 
-      //this array should be replaced by your result.
-      var documentTypes: string[] = [];
+        //this array should be replaced by your result.
+        var documentTypes: string[] = [];
 
 
-      serviceResponse.Result = this.generatedCustomsDocumentTicketViewModel;
+        serviceResponse.Result = this.generatedCustomsDocumentTicketViewModel;
 
-      this.GetCustomsInterfaceSettingsDocumentTypesCompleted.emit(serviceResponse);;
+        this.GetCustomsInterfaceSettingsDocumentTypesCompleted.emit(serviceResponse);;
     }
 
-  public GetRefreshFrom() {
-    return "e";
-  }
+    public GetRefreshFrom() {
+        return "e";
+    }
     public SelectionCompleted: EventEmitter<any> = new EventEmitter();
     public GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any> = new EventEmitter();
+
+    public SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any) {
+        if (this.claimPM.ClaimsRelatedEntities == null || this.claimPM.ClaimsRelatedEntities.length == 0) {
+            return;
+        }
+
+        var connectedClaimRelatedEntities: string = this.claimPM.ClaimsRelatedEntities[0].EntityCounterKey.toString();
+        customsDocumentsTicket.ConnectedCREsSequences = connectedClaimRelatedEntities;
+
+        var exists = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Child1EntityId == connectedClaimRelatedEntities + "")[0];
+        if (!exists) {
+            var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+            newPointer.Tenant = SessionLocator.Tenant;
+            newPointer.ParentEntityId = this.claimPM.Id;
+            newPointer.ParentEntityCode = "Claim";
+            newPointer.Child1EntityCode = "ClaimsRelatedEntity";
+            newPointer.Child2EntityCode = null;
+            newPointer.Child3EntityCode = null;
+            newPointer.Child1EntityId = connectedClaimRelatedEntities + "";
+            newPointer.Child2EntityId = null;
+            newPointer.Child3EntityId = null;
+            customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+        }
+    }
+
+    public FillConnectedDocumentPointer(customsDocumentPointerPM: CustomsDocumentPointerPM) {
+        if (this.claimPM.ClaimsRelatedEntities == null || this.claimPM.ClaimsRelatedEntities.length == 0 || customsDocumentPointerPM == null) {
+            return null;
+        }
+
+        var selectedIndex: number = 0;
+        var displayConnectedEntityNumber: string;
+
+        switch (customsDocumentPointerPM.Child1EntityCode) {
+            case "ClaimsRelatedEntity":
+                selectedIndex = 1;
+                break;
+            case "ClaimRelatedEntityCancelOrObjection":
+                selectedIndex = 2;
+                break;
+        }
+
+        displayConnectedEntityNumber = customsDocumentPointerPM.Child1EntityId;
+
+        let connectedDocumentPointer = {
+            "SelectedIndex": selectedIndex,
+            "DisplayConnectedEntityNumber": displayConnectedEntityNumber,
+        };
+
+        return connectedDocumentPointer;
+    }
 }
 

@@ -37,6 +37,11 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.Messaging;
+using System.Xml.Serialization;
+using System.Xml;
+using System.IO;
+using Logitude.CustomsMessaging.ResponseServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -359,6 +364,40 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)
+        {
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+ 
+                DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
+                var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
+                string error="";
+                DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService();
+
+                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , out error);
+
+                XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
+ 
+
+                if (declarationPM != null)
+                return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
         public HttpResponseMessage PostSendDeclaration(GenericRequestParams requestParamsData)
         {
             try
@@ -374,6 +413,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
 
         }
+
+ 
 
         public HttpResponseMessage PostSendManifest(MANIFESTRequestRequestParams requestParamsData)
         {
@@ -1171,6 +1212,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetCheckFreightAmountsByIncotermWithDefault(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext myContext = CustomContext.GetContext(tenant);
+                DeclarationQueryService queryService = new DeclarationQueryService(myContext);
+
+                string isNoIncotermCheck = GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant); 
+                if (isNoIncotermCheck == "Y")
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, false);
+                }
+
+                var result = queryService.CheckFreightAmountsByIncoterm(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDeclarationClosureMethod(string declarationId, int tenant)
         {
             try
@@ -1639,34 +1706,63 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
-
         //DeclarationMamanSpecialAction
         public HttpResponseMessage GetDeclarationMamanSpecialAction(string declarationId, int tenant, string actionCode, string mamanSpecialActionCode)
         {
             try
             {
                 ICustomContext myContext = CustomContext.GetContext(tenant);
-                CourierGWMessageECSpclMamanRequestService courierGWMessageECSpclMamanRequestService = new CourierGWMessageECSpclMamanRequestService();
-                MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
-                MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
-                if (actionCode == "C")
+                ICourierGWMessageECSpcRequestService courierGWMessageECSpclRequestService = null;
+
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(myContext);
+                DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
+                if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    mamanActionCode = MamanActionCodeUpdateOrCancel.Cancel;
-                }
-                switch(mamanSpecialActionCode)
-                {
-                    case "2":
-                        mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
-                        break;
-                    case "4":
-                        mamanSpecialCode = MamanSpecialCode.StickerPrinting;
-                        break;
-                    case "5":
-                        mamanSpecialCode = MamanSpecialCode.PrintDocuments;
-                        break;
+                    var amitalContext = AmitalContext.GetContext(tenant);
+                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+
+                    if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
+                    {
+                        courierGWMessageECSpclRequestService = new CourierGWMessageECSpclMamanRequestService();
+                    }
+                    else if (def.DEFDATA.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
+                    {
+                        courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILOVS.CourierOVSSpecialActionRequestService();
+                    }
                 }
 
-                string actionResultString = courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
+                string actionResultString = "";
+                if (courierGWMessageECSpclRequestService != null)
+                {
+                    MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
+                    MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                    if (actionCode == "C")
+                    {
+                        mamanActionCode = MamanActionCodeUpdateOrCancel.Cancel;
+                    }
+                    switch (mamanSpecialActionCode)
+                    {
+                        case "2":
+                            mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                            break;
+                        case "4":
+                            mamanSpecialCode = MamanSpecialCode.StickerPrinting;
+                            break;
+                        case "5":
+                            mamanSpecialCode = MamanSpecialCode.PrintDocuments;
+                            break;
+                        case "6":
+                            mamanSpecialCode = MamanSpecialCode.Sban;
+                            break;
+                    }
+
+                    actionResultString = courierGWMessageECSpclRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
+                }
+                else
+                {
+                    actionResultString = "לא קיימת הרשאה";
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, actionResultString);
 
             }

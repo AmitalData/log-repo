@@ -37,6 +37,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         private ICustomContext _context;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
+        private string mode;
+        public Boolean suppressNewTrans;
 
         private AmitalContext amitalContext;
 
@@ -116,10 +118,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             throw new NotImplementedException();
         }
 
-        private void Upsert()
+        private void Upsert(bool suppressNewTrans=false)
         {
             //CheckExist();
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
+            using (TransactionScope scope =
+                suppressNewTrans? TransactionFactory.GetTransaction():TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
             {
                 AppendLogLine("Upsert..");
 
@@ -338,11 +341,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (_AmitalCustomsFile.Mode == "CANCEL") // moran 25.12.13 - task 2431
                 {
                     this._MyDeclarationPM.IsCancelled = true;
+                    this._MyDeclarationPM.DeclarationNumber = null;
                 }
                 else if (_AmitalCustomsFile.Mode == "DELETE")
                 {
                     this._MyDeclarationPM.IsCancelled = true;
                     this._MyDeclarationPM.CustomFileNo = null;
+                    this._MyDeclarationPM.DeclarationNumber = null;
                 }
                 else if (_AmitalCustomsFile.Mode == "UNCANCEL")
                 {
@@ -371,7 +376,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "17")
                     {
-                        this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        
+                        if (mode != "UpdateNotEmpty")
+                        {
+                            this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        }
                         this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWBDATE;
 
                         if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.DealId) || !string.IsNullOrWhiteSpace(_AmitalCustomsFile.ManifestNumber))
@@ -429,15 +442,33 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     else if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "1")
                     {
                         this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
-                        this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
-                        this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        
+                        if (mode != "UpdateNotEmpty")
+                        {
+                            this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                            this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.MAWB)) this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        }
+                        
                     }
                     else
                     {
                         if (this._MyDeclarationPM.TransportModeId == "A")
                         {
-                            this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
-                            this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            if (mode != "UpdateNotEmpty")
+                            {
+                                this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                                this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            }
+                            else
+                            {
+                                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.MAWB)) this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            }
                         }
                         else
                         {
@@ -452,7 +483,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         loadingPortCode = TranslateloadPort(_AmitalCustomsFile.LoadingPortCode);
                     }
-                    this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    if (mode != "UpdateNotEmpty")
+                    {
+                        this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrWhiteSpace(loadingPortCode)) this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    }
 
                     //this._MyDeclarationPM.Consignments[0].OriginCountryCode = TranslateCountry(_AmitalCustomsFile.OriginCountryCode);
                     // moran 2.4.14 - add handle in case of empty value -->
@@ -473,7 +511,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     else
                     {
-                        this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
+                        if (mode != "UpdateNotEmpty") this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
                     }
                     // moran 2.4.14 - add handle in case of empty value <--
                     this._MyDeclarationPM.Consignments[0].CargoDescription = _AmitalCustomsFile.CargoDescription;
@@ -559,12 +597,29 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity = packageQuantity;
                     }
                     decimal GrossMassMeasure = 0;
+                    if(String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode))
+                    {
+                        this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
+                    }
                     if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
                     {
                         string isOverrideWeight = GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant());
                         if (isOverrideWeight == "Y" && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure > 0)
                         {
                             GrossMassMeasure = (decimal)this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure;
+                        }
+                        decimal weight = Math.Truncate(GrossMassMeasure);
+                        if(weight > 99999999)
+                        {
+                            GrossMassMeasure = GrossMassMeasure / 1000;
+                            this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "TNE";
+                        }
+                        else
+                        {
+                            if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode == "TNE")
+                            {
+                                this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
+                            }
                         }
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure = GrossMassMeasure;
                     }
@@ -1118,10 +1173,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 MyCommunicationsParams.Tenant = ResolvedTenant();
 
-
+                if(MoreParams == "CommDecService")
+                {
+                    mode = "UpdateNotEmpty";
+                }
 
                 MyGenericResponseObj.Stage = "Upsert";
-                Upsert();
+                Upsert(suppressNewTrans);
                 MyGenericResponseObj.Stage = "Done";
 
 

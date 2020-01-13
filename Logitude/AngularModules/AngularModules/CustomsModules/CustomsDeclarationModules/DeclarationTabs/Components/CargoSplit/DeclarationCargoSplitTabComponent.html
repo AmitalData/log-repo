@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .subTitle {
         color: #1b90cb;
@@ -25,6 +25,15 @@
                         <td class="TabTitleRow" style="width:150px">
                             {{'Customs.Declaration.TH.CargoSplit'| TextCodeTranslationPipe}}
                         </td>
+
+                        <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                            <div>
+                                <IconButton [IsSmall]="true"
+                                            [Name]="'Add'"
+                                            (click)="AddDeclarationCargoSplitCommand()"
+                                            style="float:left;"></IconButton>
+                            </div>
+                        </td>
                     </tr>
 
                     <tr>
@@ -35,7 +44,6 @@
                                                     [ItemSource]="DeclarationCargoSplitList">
 
                                     <!--(SelectedItemChanged)="EditButtonClicked($event)"-->
-
                                     <!-- RequestNumber -->
                                     <log-column [header]="'Customs.DeclarationCargoSplit.F.RequestNumber' | TextCodeTranslationPipe" [binding]="'RequestNumber'" [width]="'110'" [Alignment]="'right'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
@@ -104,6 +112,16 @@
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.CustomFileNo}}</span>
+                                            </div>
+
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- ResponseStatusName -->
+                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.ResponseStatusName' | TextCodeTranslationPipe" [binding]="'ResponseStatusName'" [width]="'120'" [Alignment]="'right'">
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.ResponseStatusName}}</span>
                                             </div>
 
                                         </log-cell-template>

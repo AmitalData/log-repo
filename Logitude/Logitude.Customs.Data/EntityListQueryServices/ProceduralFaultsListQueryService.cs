@@ -77,7 +77,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                                ProceduralFaultTypeName = a.ProceduralFaultTypeName,
                                                                                ProceduralFaultStatuseName = a.ProceduralFaultStatuseName,
                                                                                RansomViolationTypeName = a.RansomViolationTypeName,
-                                                                               
+                                                                               SignedByUserId = a.SignedByUserId,
+                                                                               SignedByUserName = a.SignedByUserName,
 
                                                                            };
 
@@ -253,6 +254,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                         CustomFileNo = d.CustomFileNo,
                                                         DeclarationNumber = d.DeclarationNumber,
                                                         CustomerName = d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName,
+                                                        SignedByUserId = a.SignedByUserId,
+                                                         SignedByUserName = a.User != null && a.User.Contact != null ? a.User.Contact.LocalName : null,
                                                      });
             return query;
 		}
@@ -293,7 +296,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          InspectionTypeName = a.FaultInspectionName,
                                                          ProceduralFaultName = a.ProceduralFaultTypeName,
                                                          ProceduralFaultStatusName = a.ProceduralFaultStatuseName,
-                                                         RansomViolationTypeName = a.RansomViolationTypeName
+                                                         RansomViolationTypeName = a.RansomViolationTypeName,
+                                                         SignedByUserId = a.SignedByUserId,
+                                                         SignedByUserName = a.SignedByUserName,
                                                      });
             return query;
         }

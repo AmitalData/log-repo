@@ -1,4 +1,4 @@
-﻿<!-- ExportDeclarationDataComponent view  -->
+<!-- ExportDeclarationDataComponent view  -->
 <div>
 
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
@@ -41,7 +41,7 @@
         <div class="class-response-content" style="width: 650px;height: 440px;">
             <div class="ScrollViewer">
                 <div class="ScrollContent">
-                    <table style="width: 650px;height: 440px;padding-top: 10px;">
+                    <table style="width: 660px;height: 420px;padding-top: 10px;">
 
                         <!--General Details-->
                         <tr style="width: 100%">
@@ -143,7 +143,7 @@
                                         </log-column>
 
                                         <!-- InvoiceAmount -->
-                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                        <log-column [width]="'150'" [Alignment]="'right'"
                                                     [header]="'Customs.ExportDeclarationDataQuery.F.InvoiceAmount' | TextCodeTranslationPipe"
                                                     [binding]="'InvoiceAmount'">
                                             <log-cell-template template="let item" #logcelltemplate>
@@ -225,7 +225,7 @@
                                         </log-column>
 
                                         <!-- ForeignCurrency -->
-                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                        <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.Declaration.O.Currency' | TextCodeTranslationPipe"
                                                     [binding]="'ForeignCurrency'">
                                             <log-cell-template template="let item" #logcelltemplate>

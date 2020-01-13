@@ -9,6 +9,11 @@ import {CourierMasterPM} from '../../EntityPMs/CourierMasterPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { SendPayReadyLowRequestParams } from '../../DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../DataContract/RequestParams/SendALLCorrectRequestParams';
+import { GatepassRequestMessageRequestParams } from '../../DataContract/RequestParams/GatepassRequestMessageRequestParams';
+import { SendALLStorageSiteRequestParams } from '../../DataContract/RequestParams/SendALLStorageSiteRequestParams';
+import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
+import { AppTool } from '../../../Infrastructure/Tools';
+
 
 @Injectable()
 
@@ -40,6 +45,10 @@ export class CourierMasterService {
 
 
     }
+
+    public connectedSelectAll: boolean;
+    public disconnectedSelectAll: boolean;
+    public isNotDirty: boolean;
 
     getPromiseByFilters(filters: ApiQueryFilters) {
 
@@ -193,6 +202,26 @@ export class CourierMasterService {
         });
     }
 
+    GetRequiredFieldsForCourierMasterIncludeManifest(courierMasterId: string) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetRequiredFieldsForCourierMasterIncludeManifest/?courierMasterId=" + courierMasterId, {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapJsonToDeclarationPM(json: any, mapParent: boolean = true, entity: DeclarationPM = null) {
 
 
@@ -326,7 +355,33 @@ export class CourierMasterService {
 
         });
     }
+    PostSendALLTerminal(requestParams: SendALLCorrectRequestParams) {
 
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendALLTerminal/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
+
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            ;
+
+        });
+    }
     PostSendALLCorrectDec(requestParams: SendALLCorrectRequestParams) {
 
         return Observable.defer(() => {
@@ -376,6 +431,55 @@ export class CourierMasterService {
                     serviceResponse.Result = messString;
 
 
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            ;
+
+        });
+    }
+
+    PostSendALLChangeStorageSiteCode(requestParams: SendALLStorageSiteRequestParams) {
+
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendALLChangeStorageSiteCode/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            ;
+
+        });
+    }
+
+    PostSendUnCorrectDocuments(requestParams: SendUnCorrectDocumentsRequestParams) {
+
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendUnCorrectDocuments/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
                     return serviceResponse;
                 }).catch(ServiceHelper.HandleServiceError);
             ;
@@ -437,12 +541,17 @@ export class CourierMasterService {
 
     }
 
-    GetSendALLDeclarationsStatusRequest(CourierMasterId) {
+    GetSendALLDeclarationsStatusRequest(CourierMasterId, testerSendOption: string = null) {
+        let sTesterSendOption = '';
+        if (!AppTool.IsNullOrEmpty(testerSendOption)){
+            sTesterSendOption =   testerSendOption
+        }
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId, {
+            return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId +
+                '&testerSendOption=' +  sTesterSendOption, {
                 headers: authHeader
             }).map(response => {
                 var messString = response.json();
@@ -518,4 +627,69 @@ export class CourierMasterService {
         return entity;
     }
 
+    PostGatepassRequestMessage(requestParams: GatepassRequestMessageRequestParams) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostGatepassRequestMessage/',
+                JSON.stringify(requestParams),
+                { headers: authHeader }).map((res) => {
+
+                    serviceResponse.Result = res.json();
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+
+        });
+    }
+
+    GetPending(CourierMasterId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId, {
+                headers: authHeader
+            }).map(response => {
+                var KeyValuePairList = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = KeyValuePairList;
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+
+    GetIfAllowToCancelCourierMaster(CourierMasterId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetIfAllowToCancelCourierMaster?' + 'CourierMasterId=' + CourierMasterId, {
+                headers: authHeader
+            }).map(response => {
+ 
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
+    }
 }

@@ -4,6 +4,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
+//using Simplog.Server.Infrastructure;
+
 namespace Simplog.Data.CommonDataModel
 {
     public interface ICommonDataContext : IContext

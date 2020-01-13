@@ -340,8 +340,8 @@ export class LogCellTemplateComponent implements OnDestroy {
         //this.focusTimerToken = setTimeout(() => {
         //  ElementProperities(_thisComponent);
         //}, 1);
-
-            ElementProperities(_thisComponent);
+          ElementProperities(_thisComponent);
+            
             if (_thisComponent.EventSub) {
                 _thisComponent.EventSub.unsubscribe();
                 _thisComponent.IsClickedOnce = false;
@@ -360,9 +360,10 @@ export class LogCellTemplateComponent implements OnDestroy {
 
     OnBlurEventImplementation(_thisComponent: LogCellTemplateComponent) {
         if (!SessionLocator.SustainFocusOnCell) {
-          this.focusTimerToken = setTimeout(() => {
-            ElementProperities(_thisComponent);
-          }, 1);
+        //   this.focusTimerToken = setTimeout(() => {
+            
+        //   }, 1);
+        ElementProperities(_thisComponent);
             if (_thisComponent.EventSub) {
                 _thisComponent.EventSub.unsubscribe();
                 _thisComponent.IsClickedOnce = false;

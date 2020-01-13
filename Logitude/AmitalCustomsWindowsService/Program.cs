@@ -1,5 +1,6 @@
 ﻿using AmitalCustomsWindowsService.Utils;
 using Logitude.Customs.BL.EntityQueryServiceExt;
+using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebFreight.Web.CustomModel;
@@ -39,6 +41,7 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
+            //ThreadPool.SetMinThreads(400, 400);
             ServiceBase[] ServicesToRun;
 
             // More than one user Service may run within the same process. To add
@@ -52,7 +55,6 @@ namespace AmitalCustomsWindowsService
             //var aa = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             //GatewayService.TestXmlDF_MSG10000_ImportDeclaration(@"D:\Source\2012\UnifreightIIG\UnifreightIIG.ServerTester\UnifreightIIG.ServerTester\IIGProxys\ImportDeclaration\SaveDF_MSG2750_2754_ImportDeclarationRequest-309925709-7788.xml");
-
             
 
             Debug.WriteLine("AmitalCustomsWindowsService !!!...");
@@ -94,7 +96,11 @@ namespace AmitalCustomsWindowsService
 
         private static ServiceBase GetMyService()
         {
-
+            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["LoadTestWService"]))
+            {
+                return new LoadTestWService();
+            }
+            
             return new AmitalCustomTolerantWindowsService();
 
             //<add key="TolerantWindowsService" value="1" />
@@ -128,6 +134,20 @@ namespace AmitalCustomsWindowsService
 
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null);
                 ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
+                InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
+                    (string courierMasterId, int tenant) =>
+                    {
+                        var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterId, tenant);
+                        if (courierMasterRequiredErrors != null)
+                        {
+                            return courierMasterRequiredErrors.RequiredFields.Count == 0;
+
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    };
                 Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe("StartStatic", false, "", DateTime.MaxValue);
 
                 CustomsRegistrations.Register();

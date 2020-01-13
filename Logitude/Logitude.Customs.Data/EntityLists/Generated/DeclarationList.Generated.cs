@@ -255,15 +255,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CasualImporterContact  { get; set; }
        [DataMember]
-       public string MamanStatusCode  { get; set; }
-       [DataMember]
-       public string MamanErrorXml  { get; set; }
-       [DataMember]
        public string ItemsProcessTypesList  { get; set; }
        [DataMember]
        public bool IsClose  { get; set; }
-       [DataMember]
-       public string MamanStatusName  { get; set; }
        [DataMember]
        public string AcceptanceStatusName  { get; set; }
        [DataMember]
@@ -272,6 +266,52 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionName  { get; set; }
        [DataMember]
        public string DepositionStatusCode  { get; set; }
+       [DataMember]
+       public bool IsClosedForFollowUp  { get; set; }
+       [DataMember]
+       public string FastIndividualProcessCode  { get; set; }
+       [DataMember]
+       public decimal? TotalInvoiceAmountInUSD  { get; set; }
+       [DataMember]
+       public bool IsPending902  { get; set; }
+       [DataMember]
+       public bool IsCourierMissingClassification  { get; set; }
+       [DataMember]
+       public string MAWB  { get; set; }
+       [DataMember]
+       public bool IsPending900  { get; set; }
+       [DataMember]
+       public string CourierPendingReasonList  { get; set; }
+       [DataMember]
+       public string CargoDescription  { get; set; }
+       [DataMember]
+       public bool IsPaymentProtested  { get; set; }
+       [DataMember]
+       public string FastIndividualProcessName  { get; set; }
+       [DataMember]
+       public string AmendmentRequestNumber  { get; set; }
+       [DataMember]
+       public string AmendmentStatus  { get; set; }
+       [DataMember]
+       public DateTime? AmendmentissueDate  { get; set; }
+       [DataMember]
+       public string AmendmentRemarks  { get; set; }
+       [DataMember]
+       public bool? AmendmentDeficitInitiated  { get; set; }
+       [DataMember]
+       public string AmendDeficitInitiatedReasTo  { get; set; }
+       [DataMember]
+       public string AmendmentCorrectedByUserId  { get; set; }
+       [DataMember]
+       public string AmendmentRejectionReason  { get; set; }
+       [DataMember]
+       public bool? IsAmendment  { get; set; }
+       [DataMember]
+       public string AmendmentOriginalDeclartation  { get; set; }
+       [DataMember]
+       public string AmendmentCorrectedByUserName  { get; set; }
+       [DataMember]
+       public string AmendmentStatusName  { get; set; }
    }
 
 }

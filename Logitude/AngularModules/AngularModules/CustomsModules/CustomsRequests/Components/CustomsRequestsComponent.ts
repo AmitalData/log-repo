@@ -37,12 +37,12 @@ export class CustomsRequestsComponent implements OnInit {
     //private CustomsRequestMenuItems: CustomsMenuItem[];
     private _CustomsRequestMenuService: CustomsRequestMenuService;
     public ItemsSource: CustomsMenuItem[];
-    private CurrentSession = SessionLocator.SelectedSession;
+    public IsFromWindow:boolean=false;
     constructor(private _entityResourceService: EntityResourceService) {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+         this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response2 => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((resp => {
                     this._CustomsRequestMenuService = new CustomsRequestMenuService();
@@ -79,7 +79,13 @@ export class CustomsRequestsComponent implements OnInit {
             switch (item.ScreenName) {
                 case 'Vendors':
                 case 'Clients': { // Query 
+                    if(this.IsFromWindow){
+
+                        this.OpenListComponentFromTheWindow(item.objectTableName);
+                    }
+                    else{
                     this.OpenListQueryByObjectTable(item.objectTableName); // Abdullah: fill objectTableName when u build the item
+                    }
                     break;
                 }
                 case 'SearchVendor': {
@@ -175,7 +181,7 @@ export class CustomsRequestsComponent implements OnInit {
         listArgs.BackButtonTitle = TextCodeTranslator.Translate("Customs.General.O.Customs"); // Customs Request--> General.MH.Customs | Customs-->Customs.General.O.Customs
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
@@ -208,13 +214,41 @@ export class CustomsRequestsComponent implements OnInit {
         listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Customs"); // Customs Request
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                 });
         });
     }
+    OpenListComponentFromTheWindow(objectTableName: string){
+        var listArgs = new ListComponentArgs();
+        var objectTablePM = window.ObjectTables.filter(d => d.Name == objectTableName)[0];
+        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTablePM.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        var SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
+        listArgs.QueryCode = SelectedQuery.Code;
+        listArgs.ObjectTableName = objectTablePM.Name;
 
+        listArgs.BackButtonTitle = TextCodeTranslator.Translate("Customs.General.O.Customs");
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.FinishedLoading());
+                });
+        });
+    }
+    SetWindowArgs(args: any) {
+        if (args != null) {
+            this.IsFromWindow=true;
+            console.log(this.IsFromWindow+"i am from the window");
+        }
+            
+    }
+
+    FinishedLoading(){
+        console.log("hola from the buttom of my heart");
+    }
    
 }

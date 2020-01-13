@@ -51,6 +51,12 @@
     <Reference Include="AmazedSaint.Elastic">
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.11.0.dll</HintPath>
@@ -97,13 +103,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
+    <None Include="EntityFiles\ContinuousRequestType.lxml" />
     <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
+    <None Include="EntityFiles\ApprovedProfession.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ConsignmentPackDanger.lxml" />
+    <None Include="EntityFiles\DBMigration.lxml" />
+    <None Include="EntityFiles\DBMigrationLine.lxml" />
+    <None Include="EntityFiles\DecDangersContacts.lxml" />
+    <None Include="EntityFiles\HazardousSubstance.lxml" />
+    <None Include="EntityFiles\RequestType.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\DecisionType.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\DeclarationMamanSpecialAction.lxml" />
+    <None Include="EntityFiles\DeclarationPending.lxml" />
+    <None Include="EntityFiles\DeficitDecision.lxml" />
+    <None Include="EntityFiles\GatepassRequest.lxml" />
+    <None Include="EntityFiles\GatepassReturnCode.lxml" />
     <None Include="EntityFiles\MamanSpecialAction.lxml" />
     <None Include="EntityFiles\MamanSpecialActionStatus.lxml" />
     <None Include="EntityFiles\MamanStatus.lxml" />
@@ -115,11 +138,13 @@
     <None Include="EntityFiles\DecCargoSplitCargoIdentifier.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsPackDet.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsItem.lxml" />
+    <None Include="EntityFiles\PendingByKeyword.lxml" />
     <None Include="EntityFiles\PendingErrorPlace.lxml" />
     <None Include="EntityFiles\RefundCustomerActivityType.lxml" />
     <None Include="EntityFiles\SeizureFactorType.lxml" />
     <None Include="EntityFiles\SeizureMethodType.lxml" />
     <None Include="EntityFiles\TPGFileType.lxml" />
+    <None Include="EntityFiles\TransferCargoMethodType.lxml" />
     <None Include="EntityFiles\TreatmentWay.lxml" />
     <None Include="EntityFiles\CargoSplitRequestStatus.lxml" />
     <None Include="EntityFiles\DecCargoSplitCon.lxml" />
@@ -415,6 +440,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\UnloadingSiteType.lxml" />
+    <None Include="EntityFiles\UpdateCode.lxml" />
     <None Include="EntityFiles\ValidCustomsItem.lxml" />
     <None Include="EntityFiles\Vehicle.lxml" />
     <None Include="EntityFiles\VehicleManufacturer.lxml" />
@@ -443,9 +469,17 @@
       <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
       <Name>WebFreight.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
+      <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
+      <Name>Logitude.Customs.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
       <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
       <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Def\Logitude.Customs.Def.csproj">
+      <Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
+      <Name>Logitude.Customs.Def</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>

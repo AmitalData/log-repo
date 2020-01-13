@@ -19,8 +19,8 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 })
 
 export class CustomMessageProgressComponent {
-    private CurrentSession = SessionLocator.SelectedSession;
-    private static StaticCurrentSession = SessionLocator.SelectedSession;
+    //private CurrentSession = SessionLocator.SelectedSession;
+    //private static StaticCurrentSession = SessionLocator.SelectedSession;
 
     public _Message: string;
     public static CurrCustomMessageProgressHelper: CustomMessageProgressHelper = null;
@@ -34,8 +34,8 @@ export class CustomMessageProgressComponent {
         let alreadyDone = false;
 
         return new Promise<any>((resolve, reject) => {
-
-            this.StaticCurrentSession.StartBusyIndicator("");
+            SessionLocator.SelectedSession
+            /*this.StaticCurrentSession*/.StartBusyIndicator("");
             var currCustomMessageProgressHelper = new CustomMessageProgressHelper();
             CustomMessageProgressComponent.CurrCustomMessageProgressHelper = currCustomMessageProgressHelper;
             currCustomMessageProgressHelper.StartProgress(PBId, 3, OnSuccessCloseWin);
@@ -46,7 +46,8 @@ export class CustomMessageProgressComponent {
                     alreadyDone = true;
 
                     try {
-                        this.StaticCurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession
+                        /*this.StaticCurrentSession*/.StopBusyIndicator();
                         var response = currCustomMessageProgressHelper.ResponseData;
                         resolve(response);
 
@@ -68,7 +69,8 @@ export class CustomMessageProgressComponent {
                                 return;
                             }
                         }
-                        this.StaticCurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession
+                        /*this.StaticCurrentSession*/.StopBusyIndicator();
 
                         if (myShowProgressBarParams) {
                             if (myShowProgressBarParams.OnSuccessAnalyzeCloseWinMethod) {
@@ -97,7 +99,8 @@ export class CustomMessageProgressComponent {
 
 
                     } finally {
-                        this.StaticCurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession
+                        /*this.StaticCurrentSession*/.StopBusyIndicator();
 
                         currCustomMessageProgressHelper.ngOnDestroy();
 
@@ -135,7 +138,8 @@ export class CustomMessageProgressComponent {
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession
+        /*this.CurrentSession*/.CloseCurrentWindow();
     }
 }
 

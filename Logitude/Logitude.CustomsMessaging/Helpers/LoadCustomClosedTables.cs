@@ -909,6 +909,44 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(refundCustomerActivityType, refundCustomerActivityTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(refundCustomerActivityType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData transferCargoMethodType = closedSystemTables.Where(d => d.id == "42").FirstOrDefault();
+            ObjectTable transferCargoMethodTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.TransferCargoMethodType", 0, false);
+            InsertClosedTableRecord(transferCargoMethodType, transferCargoMethodTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(transferCargoMethodType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData gatepassReturnCode = closedSystemTables.Where(d => d.id == "1589").FirstOrDefault();
+            ObjectTable gatepassReturnCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.GatepassReturnCode", 0, false);
+            InsertClosedTableRecord(gatepassReturnCode, gatepassReturnCodeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(gatepassReturnCode);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData updateCode = closedSystemTables.Where(d => d.id == "1564").FirstOrDefault();
+            ObjectTable updateCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.UpdateCode", 0, false);
+            InsertClosedTableRecord(updateCode, updateCodeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(updateCode);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData continuousRequestType = closedSystemTables.Where(d => d.id == "1156").FirstOrDefault();
+            ObjectTable continuousRequestTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ContinuousRequestType", 0, false);
+            InsertClosedTableRecord(continuousRequestType, continuousRequestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(continuousRequestType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData requestType = closedSystemTables.Where(d => d.id == "1653").FirstOrDefault();
+            ObjectTable requestTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestType", 0, false);
+            InsertClosedTableRecord(requestType, requestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(requestType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData approvedProfession = closedSystemTables.Where(d => d.id == "1644").FirstOrDefault();
+            ObjectTable approvedProfessionObjectTable = objectTableRepository.GetObjectTableByName("Customs.ApprovedProfession", 0, false);
+            InsertClosedTableRecord(approvedProfession, approvedProfessionObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(approvedProfession);
+
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData hazardousSubstance = closedSystemTables.Where(d => d.id == "1363").FirstOrDefault();
+            ObjectTable hazardousSubstanceObjectTable = objectTableRepository.GetObjectTableByName("Customs.HazardousSubstance", 0, false);
+            InsertClosedTableRecord(hazardousSubstance, hazardousSubstanceObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(hazardousSubstance);
+
+
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);

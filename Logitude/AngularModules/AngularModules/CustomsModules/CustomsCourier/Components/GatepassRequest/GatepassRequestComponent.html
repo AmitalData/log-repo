@@ -1,0 +1,183 @@
+<!-- ProceduralFaultsGeneralTabComponent -->
+<style>
+    .HeaderBorder {
+        border: 1px;
+        border-radius: 5px;
+        background-color: #eff2ef;
+        height: 40px;
+    }
+</style>
+
+
+<table *ngIf="Loaded">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr >
+        <td colspan="3" style="width: 600px; padding-top: 10px;">
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr style="height: 40px; width:600px">
+                                <td colspan="5">
+                                    <div class="HeaderBorder">
+                                        <table style="width: 600px;">
+                                            <tr style="width: 600px;">
+                                                <!-- MAWB -->
+                                                <td style="width: 100px;">
+                                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'MAWB'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext" [Text]="'ש.מ.ר'">
+                                                    </LogLabel>
+                                                </td>
+                                                <td style="width: 150px; ">
+                                                    <div>{{MAWB}} - {{AirlinePrefix}}</div>
+                                                </td>
+                                                <td style="width: 10px">
+                                                    <div style="width: 1px; height: 90%; margin:auto; background: #DADADA;"></div>
+                                                </td>
+
+                                                <!-- HAWB -->
+                                                <td style="width: 100px;">
+                                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'HAWB'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext" [Text]="'ש.מ.פ'">
+                                                    </LogLabel>
+                                                </td>
+                                                <td style="width: 150px;">
+                                                    <div>{{HAWB}}</div>
+                                                </td>
+                                                <td style="width: 10px">
+                                                    <div style="width: 1px; height: 90%; margin:auto; background: #DADADA;"></div>
+                                                </td>
+
+                                                <!-- GatepassNumber -->
+                                                <td style="width: 140px;">
+                                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'GatepassNumber'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext" [Text]="'מס גייטפס'">
+                                                    </LogLabel>
+                                                </td>
+                                                <td style="width: 150px;">
+                                                    <div>{{GatepassNumber}}</div>
+                                                </td>
+                                                <td style="width: 10px">
+                                                    <div style="width: 1px; height: 90%; margin:auto; background: #DADADA;"></div>
+                                                </td>
+
+                                                <!-- GatepassRequestStatus -->
+                                                <td style="width: 100px;">
+                                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'GatepassRequestStatus'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext" [Text]="'סטטוס'">
+                                                    </LogLabel>
+                                                </td>
+                                                <td style="width: 150px;">
+                                                    <div>{{GatepassRequestStatusName}}</div>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 30px; width:600px">
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 30px; width:600px">
+                                <td style="width:110px">
+                                    <LogLabel [NoObjectField]="true"
+                                              [ObjectFieldName]="'UpdateCode'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"
+                                              [Text]="'קוד פעולה'"></LogLabel>
+                                </td>
+                                <td style="width: 150px; ">
+                                    <!--<select (change)="ResetUpdateCodeListChangeSelected($event.target.value)"
+                                            style="width:150px; border:1px solid gray;border-radius:3px; float:right">
+                                        <option *ngFor="let item of UpdateCodeList" [value]="item.EnumId">{{item.Name}}</option>
+                                    </select>-->
+
+                                    <ComboBox [ItemsSource]="UpdateCodeList" [Binding]="'Name'" [SelectedItem]="MyUpdateCodeClass" (SelectedItemChanged)="this.MyUpdateCodeClass =$event"></ComboBox>
+
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 30px; width:600px">
+                                <td style="width:100px">
+                                    <LogLabel [ObjectFieldName]="'OriginSiteCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:150px">
+                                    <LogLov [ObjectFieldName]="'OriginSiteCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [HideColumns]="true"
+                                            [SelectedValue]="OriginSiteCode"
+                                            [LookUpTableName]="'Customs.SiteLookup'">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:100px">
+                                    <LogLabel [ObjectFieldName]="'DesignateSiteCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:150px">
+                                    <LogLov [ObjectFieldName]="'DesignateSiteCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [HideColumns]="true"
+                                            [SelectedValue]="DesignateSiteCode"
+                                            [LookUpTableName]="'Customs.SiteLookup'">
+                                    </LogLov>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 30px; width:600px">
+                                <td style="width:100px">
+                                    <LogLabel [ObjectFieldName]="'TransportationTypeCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:150px">
+                                    <LogLov [ObjectFieldName]="'TransportationTypeCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [HideColumns]="true"
+                                            [SelectedValue]="TransportationTypeCode"
+                                            [LookUpTableName]="'Customs.TransferCargoMethodType'">
+                                    </LogLov>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 30px; width:600px">
+        <td>
+            <div></div>
+        </td>
+        <td style="width: 57px;vertical-align: bottom;">
+            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+        </td>
+        <td style="width: 120px;vertical-align: bottom; padding-right: 10px;">
+            <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
+                                 (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+        </td>
+    </tr>
+
+</table>

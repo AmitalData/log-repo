@@ -18,7 +18,7 @@ export class CustomDocumentViewerService {
 
     }
 
-    GetDocumentPage(documentId: string, currPage: number, isConnectedToUni: boolean) {
+    GetDocumentPage(documentId: string, currPage: number, isConnectedToUni: boolean,angle: number=0) {
 
         return Observable.defer(() => {
 
@@ -31,7 +31,7 @@ export class CustomDocumentViewerService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetDocumentPage/?documentId=" + documentId + "&currPage=" + currPage + "&isConnectedToUni=" + isConnectedToUni, {
+            return this._http.get(this._apiUrl + "/GetDocumentPage/?documentId=" + documentId + "&currPage=" + currPage + "&isConnectedToUni=" + isConnectedToUni + '&angle=' +angle, {
                 headers: authHeader
             }).map(response => {
 

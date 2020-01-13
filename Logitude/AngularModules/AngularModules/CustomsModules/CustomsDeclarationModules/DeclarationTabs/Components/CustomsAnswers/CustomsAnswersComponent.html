@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .subTitle {
         color: #4b90cb;
@@ -310,6 +310,32 @@
 
                                 </log-column>
 
+                                <!-- DepositionStatusCode -->
+                                <log-column [header]="'Customs.Declaration.F.DepositionStatusCode' | TextCodeTranslationPipe"
+                                            [width]="'150'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/Tab_Logo_Original.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <div style="text-align: right;" class="TextTrimming" *ngIf="DepositionStatusCode == 'L' && IsDepositionStatusCodeButton">
+                                                <span style="font-size: 12px;color: #FF9933; font-weight:bold">{{DepositionStatusCodeText}}</span>
+                                            </div>
+
+                                        </div>
+                                    </log-cell-template>
+                                    
+                                </log-column>
                             </logitude-edit-grid>
                         </td>
                     </tr>
@@ -520,7 +546,7 @@
                                             [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
 
                                     <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming"  [title]="item.Description">
+                                        <div style="text-align: right;" class="TextTrimming" [title]="item.Description">
                                             <span>{{item.Description}}</span>
                                         </div>
                                     </log-cell-template>
@@ -570,6 +596,33 @@
                                     <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.ErrorType}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- DepositionStatusCode -->
+                                <log-column [header]="'Customs.Declaration.F.DepositionStatusCode' | TextCodeTranslationPipe"
+                                            [width]="'160'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/Tab_Logo_Original.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <div style="text-align: right;" class="TextTrimming" *ngIf="DepositionStatusCode == 'L' && IsDepositionStatusCodeButton">
+                                                <span style="font-size: 12px;color: #FF9933; font-weight:bold">{{DepositionStatusCodeText}}</span>
+                                            </div>
+
                                         </div>
                                     </log-cell-template>
 

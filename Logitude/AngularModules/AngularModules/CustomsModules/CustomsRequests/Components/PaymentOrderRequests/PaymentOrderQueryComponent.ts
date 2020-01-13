@@ -185,7 +185,7 @@ export class PaymentOrderQueryComponent
                 .subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.BankID = myResponse.Result.BankCode;
-                        this.BranchID = myResponse.Result.BranchCode + "," + myResponse.Result.BankCode;
+                        this.BranchID = Number(myResponse.Result.BranchCode).toString() + "," + myResponse.Result.BankCode;
                         this.BankAccount = myResponse.Result.AccountNumber;
                         this.UIProperties.SetEnabled("BankID", "Customs.Bank", false);
                         this.UIProperties.SetEnabled("BranchID", "Customs.CustomsBranch", false);

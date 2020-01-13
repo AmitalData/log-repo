@@ -267,6 +267,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     theValCell.Value = GetValue(rec, colMetadata.PropName);
                     break;
             }
+            //theValCell.IndentLevel = 1;
+            ExcelHAlign myHorizontalAlignment = ExcelHAlign.HAlignGeneral;
+            Enum.TryParse<ExcelHAlign>(colMetadata.ExcelHAlign.ToString(), out myHorizontalAlignment);
+            theValCell.HorizontalAlignment = myHorizontalAlignment;
 
         }
 
@@ -300,7 +304,7 @@ rgb(27, 144, 203)
         }
         protected string TranslateText(string code)
         {
-            return TextCodesTranslator.TranslateText(code, this.Tenant);
+            return TextCodesTranslator.TranslateText(code, this.Tenant,true);
         }
 
         protected void AddEditBoxBorder(IRange myRange)
@@ -606,9 +610,15 @@ rgb(27, 144, 203)
             myLastCol.Borders[ExcelBordersIndex.EdgeRight].ColorRGB = this.SectionBorder;
         }
 
-        protected IRange SetSubHeader(IRange lastRange, string Text)
+        protected IRange SetSubHeader(IRange lastRange, string Text,int? the1stColumn=null)
         {
-            var currHeader = _MainWorksheet[lastRange.LastRow + 2, lastRange.Column, lastRange.LastRow + 2, ReportWidth / 10 - 2];
+            int col = lastRange.Column;
+            if (the1stColumn.GetValueOrDefault()> 0)
+            {
+                col = the1stColumn.GetValueOrDefault();
+            }
+             
+            var currHeader = _MainWorksheet[lastRange.LastRow + 2, col, lastRange.LastRow + 2, ReportWidth / 10 - 2];
             currHeader.Merge();
             currHeader[currHeader.Row, currHeader.Column].Text = Text;// "תנועות אשראי";
             currHeader[currHeader.Row, currHeader.Column].VerticalAlignment = ExcelVAlign.VAlignCenter;
@@ -616,7 +626,7 @@ rgb(27, 144, 203)
 
             currHeader[currHeader.Row, currHeader.Column].CellStyle.Font.RGBColor = //this.ResultHeaderColor;
                 this.SectionBorder;
-            currHeader[currHeader.Row, currHeader.Column].IndentLevel = 3;
+            currHeader[currHeader.Row, currHeader.Column].IndentLevel = 0;
             return currHeader;
         }
     }
@@ -627,12 +637,22 @@ rgb(27, 144, 203)
         public string Header { get; internal set; }
         public int length { get; internal set; }
         public string PropName { get; internal set; }
+        public ExcelHAlignEnum ExcelHAlign { get; internal set; }
     }
     public enum GridColumnTypeEnum
     {
         Object = 0,
         Number,
-        Text
+        Text,
+        TrueFalse
+    }
+
+    public enum ExcelHAlignEnum
+    {
+        HAlignGeneral = 0,
+        HAlignLeft = 1,
+        HAlignCenter = 2,
+        HAlignRight = 3,
     }
 
     public class LabelEditBox : GridColumnMetaData

@@ -92,33 +92,36 @@
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 105px;" tabindex="2">
-                                        <LogTextBox [ObjectFieldName]="'CasualSupplierName'"
+                                        <LogTextBox style="direction: ltr;"
+                                                    [ObjectFieldName]="'CasualSupplierName'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"
                                                     [DataContext]="DataContext"
+                                                    
                                                     [Text]="CasualSupplierName"></LogTextBox>
 
                                     </td>
 
+                                    <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditCasualSupplier()"></IconButton></td>
 
                                     <td style="width: 10px;"><div></div></td>
 
 
                                     <!-- ImporterCode -->
                                     <!--<td style="width: 115px;">
-            <LogLabel [ObjectFieldName]="'ImporterCode'"
-                      [ObjectTableName]="ObjectTableName"
-                      [Text]="'שם לקוח'"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td style="width: 100px;">
-            <LogTextBox [ObjectFieldName]="'CalculatedImporterName'" [ObjectTableName]="ObjectTableName"
-                        [HideColumns]="true"
-                        [DataContext]="DataContext"
-                        [Text]="CalculatedImporterName"></LogTextBox>
+        <LogLabel [ObjectFieldName]="'ImporterCode'"
+                  [ObjectTableName]="ObjectTableName"
+                  [Text]="'שם לקוח'"
+                  [DataContext]="DataContext"></LogLabel>
+    </td>
+    <td style="width: 100px;">
+        <LogTextBox [ObjectFieldName]="'CalculatedImporterName'" [ObjectTableName]="ObjectTableName"
+                    [HideColumns]="true"
+                    [DataContext]="DataContext"
+                    [Text]="CalculatedImporterName"></LogTextBox>
 
 
-        </td>-->
+    </td>-->
 
                                     <td style="width: 115px;">
                                         <LogLabel [ObjectFieldName]="'ImporterCode'" [ObjectTableName]="ObjectTableName"
@@ -140,7 +143,7 @@
                                         <!--(TextChanged)="ImporterTextChanged('Importer', $event, ImporterSearchBox)"-->
                                     </td>
 
-                                    <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()" [IsEnabled]="!IsDisplayOnly"></IconButton></td>
+                                    <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()"></IconButton></td>
                                     <!--<td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsEnabled]="!IsDisplayOnly"></IconButton></td>-->
 
                                     <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
@@ -178,9 +181,11 @@
                                     <td style="width: 150px;">
                                         <LogLabel [ObjectFieldName]="'TotalInvoiceAmountInUSD'"
                                                   [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                  [Text]="'ערך סחורה בUsd'"
+                                                  [Text]="'ערך סחורה ב USD'"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
+
+
 
                                     <td style="width: 160px;">
                                         <LogTextBox [FocusOnMe]="'true'"
@@ -191,6 +196,7 @@
                                                     [HideColumns]="true"></LogTextBox>
 
                                     </td>
+                                    <td style="width: 25px;"></td>
 
                                     <td style="width: 10px;"><div></div></td>
 
@@ -254,6 +260,7 @@
                                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
                                     </td>
+                                    <td style="width: 25px;"></td>
                                     <td style="width: 10px;"><div></div></td>
 
                                     <!-- GrossMassMeasure -->

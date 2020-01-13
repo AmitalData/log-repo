@@ -34,7 +34,9 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 ///import { setTimeout } from 'timers';
 
-import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
+import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
+import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsDocumentsComponent.html',
@@ -82,8 +84,13 @@ export class CustomsDocumentsComponent
     IsRelatedDocsVisible: boolean = true;
     IsWindowMode: boolean = false;
     DontLoadTickets: boolean = false;
-  PreventEdit: boolean = false;
-  public SelectedDocumentId: string =null;
+    PreventEdit: boolean = false;
+    public SelectedDocumentId: string = null;
+
+    DocumentRequestCodeIcon: string = "";
+    IsDocumentRequestCodeButton: boolean = false;
+    IsDocumentRequestCodeSendDigital: boolean = false;
+    DocumentRequestCodeText: string = "";
     //*************************************//
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -122,6 +129,7 @@ export class CustomsDocumentsComponent
                         this.FilterSelectedValue = 'alltickets';
                         this._ImageLibraryService = new ImageLibraryService();
                         this.custDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
+                        this.GetDocumentRequestDefaults(this.EntityPM.CustomerCode);
                     });
                 });
             });
@@ -493,8 +501,7 @@ export class CustomsDocumentsComponent
     }
     else if (refreshFrom == "d") {
       this.RefreshButtonClicked(this.SelectedDocumentId);
-    }
-
+      }
   }
 
     EditCustomsDocumentsTicket(customsDocumentsTicket: CustomsDocumentTicketViewModel) {
@@ -703,8 +710,7 @@ export class CustomsDocumentsComponent
                 var myCustomsRequestsSheet = rsp.Result;
 
 
-
-                this.CurrentSession.StopBusyIndicator();
+                 this.CurrentSession.StopBusyIndicator();
                 if (myCustomsRequestsSheet) {
                     let customsRequestMenuService = new CustomsRequestMenuService();
                     customsRequestMenuService.ShowModalByIdAndIntreface(
@@ -721,6 +727,64 @@ export class CustomsDocumentsComponent
             });
 
 
+    }
+
+    DocumentRequestbuttonclicked() {
+
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (myUnifreightMessageM: UnifreightMessageM) => {
+                    if (
+                        myUnifreightMessageM.LogitudeViewModel == "CustomsDocumentsComponent" &&
+                        (myUnifreightMessageM.LogitudeEntity == "Customs.Declaration" || myUnifreightMessageM.LogitudeEntity == "Declaration") &&
+                        myUnifreightMessageM.LogitudeEntityNumber == this.EntityPM.Id) {
+                        sub.unsubscribe();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        this.UnifreightDocumentRequestCallbackAction(myUnifreightMessageM);
+                    }
+                });
+        SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
+
+        AmitalGatewayUtil.Instance
+            .ShowDocumentsSharing(
+                this.EntityPM.CustomFileNo,
+                this.EntityPM.Id,
+                "CustomsDocumentsComponent",
+                this.EntityPM.CustomerCode);
+    }   
+    
+    private UnifreightDocumentRequestCallbackAction(unifreightMessageM: UnifreightMessageM) { }
+
+    private GetDocumentRequestDefaults(CustomerCode: string) {
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
+            .subscribe(response => {
+                this.IsDocumentRequestCodeButton = false;
+                this.IsDocumentRequestCodeSendDigital = false;
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+
+
+                    myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+                        .subscribe(response => {
+                            this.IsDocumentRequestCodeButton = false;
+                            this.IsDocumentRequestCodeSendDigital = false;
+                            this.DocumentRequestCodeIcon = "LOGBOX";
+                            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                                this.IsDocumentRequestCodeButton = true;
+                            }
+                            myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+                                .subscribe(res => {
+                                    if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
+                                        this.IsDocumentRequestCodeButton = true;
+                                        this.IsDocumentRequestCodeSendDigital = true;
+                                    }
+                                    if (this.IsDocumentRequestCodeSendDigital) {
+                                        this.DocumentRequestCodeIcon = "DEFAULT";
+                                    }
+                                });
+                        });
+                }
+            });
     }
 
 }

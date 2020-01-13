@@ -128,15 +128,35 @@ export class DeclarationList {
 	CasualImporterEmail: string;
 	CasualImporterTel: string;
 	CasualImporterContact: string;
-	MamanStatusCode: string;
-	MamanErrorXml: string;
 	ItemsProcessTypesList: string;
 	IsClose: boolean;
-	MamanStatusName: string;
 	AcceptanceStatusName: string;
 	CourierSuspentionCode: string;
 	CourierSuspentionName: string;
 	DepositionStatusCode: string;
+	IsClosedForFollowUp: boolean;
+	FastIndividualProcessCode: string;
+	TotalInvoiceAmountInUSD: number;
+	IsPending902: boolean;
+	IsCourierMissingClassification: boolean;
+	MAWB: string;
+	IsPending900: boolean;
+	CourierPendingReasonList: string;
+	CargoDescription: string;
+	IsPaymentProtested: boolean;
+	FastIndividualProcessName: string;
+	AmendmentRequestNumber: string;
+	AmendmentStatus: string;
+	AmendmentissueDate: Date;
+	AmendmentRemarks: string;
+	AmendmentDeficitInitiated: boolean;
+	AmendDeficitInitiatedReasTo: string;
+	AmendmentCorrectedByUserId: string;
+	AmendmentRejectionReason: string;
+	IsAmendment: boolean;
+	AmendmentOriginalDeclartation: string;
+	AmendmentCorrectedByUserName: string;
+	AmendmentStatusName: string;
 	
 }
  

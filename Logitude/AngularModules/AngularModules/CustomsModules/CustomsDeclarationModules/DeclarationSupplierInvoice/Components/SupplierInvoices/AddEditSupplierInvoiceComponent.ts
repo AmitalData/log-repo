@@ -82,6 +82,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     IsInvoiceAnswer: boolean;
     AccumulatedFilter: string;
     IsSelectedRowTextBoxVisibile: boolean = false;
+    public tariffErrorItems: number = 0;
     //public ItemCode_LocalCache: ItemCodeComponent[];
     public GITITEMExtendedPMService: GITITEMExtendedPMService = new GITITEMExtendedPMService();
 
@@ -90,7 +91,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     public NewInvoices: SupplierInvoicePM[] = [];
    
     _SkipAutoInsurance: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
+    _IsNoIncotermCheck: string = "N";
+
     constructor//(private cd: ChangeDetectorRef) {
         () {
         super();
@@ -151,8 +153,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             if (this.EntityPM.IsAccumalated) {
                 this.AccumulatedFilter = "parent";
             }
-            this.CurrentSession.SubscriptionAdd(
-                this.CurrentSession.AccumulatedFilterChangedEvent.subscribe((res) => {
+            SessionLocator.SelectedSession.SubscriptionAdd(
+                SessionLocator.SelectedSession.AccumulatedFilterChangedEvent.subscribe((res) => {
                     // this.EntityPM = res.entityPM;
 
                     this.skipedItems = 0;
@@ -204,7 +206,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     }
                 })
             );
-                this.CurrentSession.SearchFilterChangedEvent.subscribe((res) => {
+                SessionLocator.SelectedSession.SearchFilterChangedEvent.subscribe((res) => {
                     if (res.count != null && res.count != 0) {
                         this.SearchItemsFound = true;
                         this.SearchItemsMessage = "נמצאו  " + res.count + " תוצאות שתואמות לחיפוש";
@@ -233,6 +235,17 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
 
+        var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        customsSettingExtendedListService.GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", this.EntityPM.Tenant)
+            .subscribe((response: ServiceResponse) => {
+                let obj = response.Result;
+                if (obj) {
+                    let DefaultValue = obj['DefaultValue'];
+                    if (!AppTool.IsNullOrEmpty(DefaultValue)) {
+                        this._IsNoIncotermCheck = DefaultValue;
+                    }
+                }
+            });
         
         customsSettingExtendedListService.GetSkipAutoInsurancePromise(this.declarationPM.CustomerCode, this.declarationPM.Tenant).subscribe(myResult => {
             var res: ServiceResponse = myResult;
@@ -502,10 +515,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     this.EntityPM.RejectChanges();
                     this.GENERAL.Dispose();
                     if (this.SaveAndNew) {
-                        this.CurrentSession.CloseCurrentWindow();
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
                     }
                     else {
-                        this.CurrentSession.CloseCurrentWindowEmit('cancel');
+                        SessionLocator.SelectedSession.CloseCurrentWindowEmit('cancel');
                     }
                 }
 
@@ -518,10 +531,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             //this.EntityPM.RejectChanges();
             this.GENERAL.Dispose();
             if (this.SaveAndNew) {
-                this.CurrentSession.CloseCurrentWindow();
+                SessionLocator.SelectedSession.CloseCurrentWindow();
             }
             else {
-                this.CurrentSession.CloseCurrentWindowEmit('cancel');
+                SessionLocator.SelectedSession.CloseCurrentWindowEmit('cancel');
             }
         }
 
@@ -620,21 +633,24 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                     if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        if (this._IsNoIncotermCheck == "Y") {
+                            this.ConfirmWindowYesButton();
+                        }
+                        else {
+                            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                            confirmWindow.Show(msg);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                        confirmWindow.Show(msg);
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                            if (confirmWindow.Yes) {
-                                this.ConfirmWindowYesButton();
-                            }
-                        });
-                        this.closeWindow = false;
-
+                                if (confirmWindow.Yes) {
+                                    this.ConfirmWindowYesButton();
+                                }
+                            });
+                            this.closeWindow = false;
+                        }
 
                     }
                     else {
@@ -644,7 +660,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                         //this._IsInitiateNewInstance = true;
                         //this.InitiateNewInstance();
-                        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                         this.SaveChangesSync();
                     }
 
@@ -653,29 +669,32 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                     if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
 
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        if (this._IsNoIncotermCheck == "Y") {
+                            this.ConfirmWindowYesButton();
+                        }
+                        else {
+                            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                            confirmWindow.Show(msg);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                        this.CurrentSession.StopBusyIndicator();
+                                if (confirmWindow.Yes) {
+                                    this.ConfirmWindowYesButton();
+                                }
+                            });
+                            this.closeWindow = false;
+                        }
 
-                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                        confirmWindow.Show(msg);
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                            if (confirmWindow.Yes) {
-                                this.ConfirmWindowYesButton();
-                            }
-                        });
-
-                        this.closeWindow = false;
                     }
                     else {
                         this.closeWindow = false;
                         //this.SaveChanges();
                         //this._IsInitiateNewInstance = true;
                         //this.InitiateNewInstance();
-                        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                         this.SaveChangesSync();
                     }
 
@@ -688,7 +707,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     //        this._IsInitiateNewInstance = true;
                     //        this.InitiateNewInstance();
                     //    });
-                    this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                    SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                     this.SaveChangesSync();
                 }
 
@@ -698,7 +717,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 //this.SaveChanges();
                 //this._IsInitiateNewInstance = true;
                 //this.InitiateNewInstance();
-                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                 this.SaveChangesSync();
             }
         }
@@ -713,7 +732,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             return;
         }
 
-        this.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
 
         //if (InvoiceModificationsObslist.Count > 0) {
         //    bool exist = (from a in InvoiceModificationsObslist
@@ -769,7 +788,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //                            }
             //                            else if (item.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode || item.Amount != (this.EntityPM.InvoiceAmount * this.EntityPM.VendorComissionPercentage)) {
-            //                                this.CurrentSession.StopBusyIndicator();
+            //                                SessionLocator.SelectedSession.StopBusyIndicator();
             //                                var confirm = new ConfirmWindow;
             //                                confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
 
@@ -814,7 +833,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //            else {
             //                this.ValidationErrorsList = myResult.ErrorsArray;
-            //                this.CurrentSession.StopBusyIndicator();
+            //                SessionLocator.SelectedSession.StopBusyIndicator();
 
             //            }
 
@@ -836,7 +855,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
         else {
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
 
         }
     }
@@ -846,21 +865,24 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F"))) {
                 if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    if (this._IsNoIncotermCheck == "Y") {
+                        this.ConfirmWindowYesButton();
+                    }
+                    else {
+                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                        if (confirmWindow.Yes) {
-                            this.ConfirmWindowYesButton();
-                        }
-                    });
-
-                    this.closeWindow = false;
+                            if (confirmWindow.Yes) {
+                                this.ConfirmWindowYesButton();
+                            }
+                        });
+                        this.closeWindow = false;
+                    }
                 }
                 else {
                     this.closeWindow = true;
@@ -872,23 +894,25 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             else if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR")) {
                 if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
 
-                    this.CurrentSession.StopBusyIndicator();
+                    if (this._IsNoIncotermCheck == "Y") {
+                        this.ConfirmWindowYesButton();
+                    }
+                    else {
+                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                        if (confirmWindow.Yes) {
-                            this.ConfirmWindowYesButton();
-                        }
-                    });
-
-                    this.closeWindow = false;
+                            if (confirmWindow.Yes) {
+                                this.ConfirmWindowYesButton();
+                            }
+                        });
+                        this.closeWindow = false;
+                    }
                 }
                 else {
                     if (!this.loadingNextItems) {
@@ -979,7 +1003,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 else {
                     this.ValidationErrorsList = res.ErrorsArray;
                 }
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 return false;
             });
 
@@ -1000,7 +1024,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 else {
                     this.ValidationErrorsList = res.ErrorsArray;
                 }
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 return false;
             });
 
@@ -1072,7 +1096,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                         resolve(true);
                         if (isChromeMode) {
                             if (this.closeWindow) {
-                                this.CurrentSession.CloseCurrentWindow();
+                                SessionLocator.SelectedSession.CloseCurrentWindow();
                             }
                             else if (this._IsInitiateNewInstance) {
                                 if (this.copyInvoiceWithItem && this.entity.FullItemsCount > 500) {
@@ -1103,7 +1127,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     else {
                         this.ValidationErrorsList = res.ErrorsArray;
                     }
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     resolve(false);
                 });
 
@@ -1114,12 +1138,12 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     var res: ServiceResponse = myResult;
                     if (!res.HasError) {
                          this.entity = res.Result;
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         console.log("..Saved Successfully ", this.entity);
                         resolve(true);
                         if (isChromeMode) {
                             if (this.closeWindow) {
-                                this.CurrentSession.CloseCurrentWindow();
+                                SessionLocator.SelectedSession.CloseCurrentWindow();
                             }
                             else if (this._IsInitiateNewInstance) {
                                 if (this.copyInvoiceWithItem && this.entity.FullItemsCount > 500) {
@@ -1149,7 +1173,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     }
                     else {
                         this.ValidationErrorsList = res.ErrorsArray;
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                     }
 
                     resolve(false);
@@ -1280,7 +1304,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     throw new Error('Next\prev =>Finish (Check Insurance only on save)');
                 }
                 this.LogMe("goToInsuranceInUNF");
-                this.CurrentSession.StartBusyIndicator("Check Insurance ...");
+                SessionLocator.SelectedSession.StartBusyIndicator("Check Insurance ...");
                 var toPromise = true;
                 return this.SendUnifaceRequestAndWaitPromise();
 
@@ -1315,14 +1339,14 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
 
                                 //resolveInsuranceCallback("ok")
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
                                 resolve(true);
 
 
                             }
                             else {
                                 this.ValidationErrorsList = res.ErrorsArray;
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
                                 console.warn("Error Saving UnifreightInsurance");
                                 resolve(false);
                             }
@@ -1360,7 +1384,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             .catch(finish => {
                 this.FinishPromiseDoWhatPlanned(true);
                 this.LogMe("catch(finish !!")
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this._IsInitiateNewInstance = this.closeWindow = false;
             });
 
@@ -1374,12 +1398,12 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
 
         this._FinishPromiseDoWhatPlannedDone = true;
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
 
         this.LogMe("FinishPromiseDoWhatPlanned");
         if (this.closeWindow) {
             this.GENERAL.Dispose();
-            this.CurrentSession.CloseCurrentWindow();
+            SessionLocator.SelectedSession.CloseCurrentWindow();
             this._IsInitiateNewInstance = this.closeWindow = false;
             //return Promise.reject(new Error('Finish CloseCurrentWindow'));
             if (inCatchBlock != true) {
@@ -1462,6 +1486,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
 
         // SupplierInvoiceItem
+        var emptyItems: string[] = [];
         for (let item of this.EntityPM.SupplierInvoiceItems) {
             Validator.TryValidateObject(item, "Customs.SupplierInvoiceItem", errors);
             //Validator.TryValidateObject(item, new ValidationContext(item, null, null), errors);
@@ -1470,8 +1495,28 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 itemModification.ChangeSetOp = "None";
             }
 
+            if (AppTool.IsNullOrEmpty(item.ItemDescription) && AppTool.IsNullOrEmpty(item.ClassificationCode) && AppTool.IsNullOrEmpty(item.ItemCode) && AppTool.IsNullOrEmpty(item.TradeAgreementCode) && AppTool.IsNullOrEmpty(item.InvoiceQuantity) && AppTool.IsNullOrEmpty(item.InvoiceQuantityType) && AppTool.IsNullOrEmpty(item.ItemPrice) && AppTool.IsNullOrEmpty(item.OriginCountryCode)) {
+                emptyItems.push(item.SequenceNumeric.toString());
+            }
         }
 
+        if (emptyItems != null && emptyItems.length > 0) {
+            if (emptyItems.length == 1) {
+                var emptyMessage: string = "שים לב שורה  ";
+                emptyMessage = emptyMessage.concat(emptyItems[0] + " ריקה");
+                errors.push(emptyMessage);
+            }
+            else {
+                var emptyMessage: string = "שים לב שורות  ";
+                for (let invoiceItem of emptyItems) {
+                    emptyMessage = emptyMessage.concat(invoiceItem + ",");
+                }
+                var newStr: string = emptyMessage.substring(0, emptyMessage.length - 1);
+                emptyMessage = newStr.concat(" ריקות");
+                errors.push(emptyMessage);
+            }
+        }
+        
         // IncotermCode
         //if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP")) {
 
@@ -1513,6 +1558,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             }
 
         }
+
+        //if (this.tariffErrorItems > 0) { errors.push("ישנן שורות עם קוד הסכם שגוי")}
 
         if (errors.length == 0) {
 
@@ -1586,10 +1633,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                             ) {
                                 if (sInsuranseIsNeeded.toString().toLowerCase() == "true" &&
                                     sInsuranseIsSucceeded === "false") {
-                                    /*this.CurrentSession.StopBusyIndicator(); */this._IsInitiateNewInstance = this.closeWindow = false;
+                                    /*SessionLocator.SelectedSession.StopBusyIndicator(); */this._IsInitiateNewInstance = this.closeWindow = false;
                                     this.closeWindow = true;
                                     ///setTimeout(() => {
-                                        this.CurrentSession.StopBusyIndicator();
+                                        SessionLocator.SelectedSession.StopBusyIndicator();
                                         var messageWindow = new MessageWindow();
                                         messageWindow.Width = 400;
                                         messageWindow.Height = 150;
@@ -1607,7 +1654,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
 
                             } else {
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
                                 resolveInsuranceCallback("nothing done ");
                             }
 
@@ -1702,9 +1749,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         this.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.NewInvoice");
 
         if (this.copyInvoiceWithItem) {
-           
-            
-                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, counterKey, 0, this.NumberOfLoadedItems, "child").subscribe(response => {
+            //    this.NumberOfLoadedItems = 500;
+            let take = 500;
+            this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, counterKey, 0, take/*this.NumberOfLoadedItems*/, "child").subscribe(response => {
                     if (!response.HasError) {
                         this.OldEntityPM = response.Result;
                         var supplierinvoiceitems: SupplierInvoiceItemPM[] = [];
@@ -1875,7 +1922,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
     CloseWindowAfterSaveIfNeeded() {
         if (this.closeWindow === true) {
-            this.CurrentSession.CloseCurrentWindow();
+            SessionLocator.SelectedSession.CloseCurrentWindow();
         }
     }
     LogMe(mess) {
@@ -1899,7 +1946,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         else {
             fullCount = this.EntityPM.FullItemsCount;
         }
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         var Z: number;
         if (this.FirstCurrentLine == null) {
             this.FirstCurrentLine = 1;
@@ -1952,7 +1999,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         else {
             fullCount = this.EntityPM.FullItemsCount;
         }
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         var Z = 0;
         if (this.FirstCurrentLine == null) {
             this.FirstCurrentLine = 1;
@@ -2071,7 +2118,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     SelectedTextBoxKeyUp(event) {
         if (event) {
 
-            //this.SelectInvoiceItemEvent = this.CurrentSession.SelectInvoiceItemEvent.emit({ filter: this.TextValue });
+            //this.SelectInvoiceItemEvent = SessionLocator.SelectedSession.SelectInvoiceItemEvent.emit({ filter: this.TextValue });
             this.GENERAL.SelectInvoiceItemMethod({ filter: this.TextValue });
         }
         if (!this.TextValue) {
@@ -2092,12 +2139,12 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
     ReloadSupplierInvoiceWithItems(skippedItems, takenItems) {
         this.loadingNextItems = false;
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, skippedItems, takenItems, this.AccumulatedFilter).subscribe(response => {
             this.EntityPM = response.Result;
             this.selectedTabCode = "GENERAL";
             this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, false, false);
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         });
     }
 
@@ -2119,7 +2166,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                         exists = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == typeCode);
                     }
                     if (exists.length > 1) {
-                        validationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType"));
+                        validationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
                     }
 
                 }
@@ -2160,10 +2207,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     CustomerCommissionsList: VendorCommissionPM[] = [];
 
     GetCustomerCommissions() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        SessionLocator.SelectedSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.vendorCommissionService.GetCommissionsForCustomer(this.declarationPM.CustomerId).subscribe(response => {
             console.log("[Reponse] GetCommissionsForCustomer: ", response);
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            SessionLocator.SelectedSession.CurrentWindow.StopBusyIndicator();
             var result = response.Result;
             if (result)
             {
@@ -2182,82 +2229,91 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //var commission: VendorCommissionPM = response.Result;
 
-            var commission: VendorCommissionList = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId)[0];
-            if (commission) {
-                if (commission.CommisionPercentage) {
+            var commissionList: VendorCommissionList[] = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId);
+            if (commissionList != null && commissionList.length > 0) {
+                var commissionMsgText: string = "";
+                for (let commission of commissionList) {
+                    if (commission) {
+                        if (commission.CommisionPercentage) {
 
-                    //init new mod values
-                    var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
-                    var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
+                            //init new mod values
+                            var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
+                            var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
 
-                    // if commission found:
-                    // 1- update Field VendorCommisionPercentage.SupplierInvoice
-                    this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
-                    console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
+                            // if commission found:
+                            // 1- update Field VendorCommisionPercentage.SupplierInvoice
+                            this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
+                            console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
 
-                    // 2- In case there’s mod record , update it
-                    var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == "I10")[0];
-                    if (modTypeI10) {
-                        // 3- In case there’s record with same type (I10) 
-                        //    and it's with different currency OR value ask user
-                        if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
-                            //somthing changed, amount or currency
-                            //ask user to change it
-                            var confirm = new ConfirmWindow;
-                            var msgTxt = TextCodeTranslator.Translate("Customs.Declaration.O.CommissionChangedFromTo");
-                            msgTxt = msgTxt.replace("#oldValue", modTypeI10.Amount.toFixed(2).toString() + " " + modTypeI10.CurrencyTypeCode);
-                            msgTxt = msgTxt.replace("#newValue", newAmount.toFixed(2).toString() + " " + newCurrency); // new values
-                            confirm.Show(msgTxt);
-
-                            confirm.WindowClosed.subscribe((event: any) => {
-                                if (confirm.Yes) {
-                                    //update record
-                                    modTypeI10.CurrencyTypeCode = newCurrency;
-                                    modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
-
-                                    modTypeI10.Amount = newAmount;
-
-                                    this.UpdateModificationsList();
-
-                                    confirm.Close();
+                            // 2- In case there’s mod record , update it
+                            var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == commission.ModificationsTypeCode)[0];
+                            if (modTypeI10) {
+                                // 3- In case there’s record with same type 
+                                //    and it's with different currency OR value ask user
+                                if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
+                                    //somthing changed, amount or currency
+                                    //ask user to change it
+                                    var msgTxt = TextCodeTranslator.Translate("Customs.Declaration.O.CommissionChangedFromTo");
+                                    msgTxt = msgTxt.replace("#typeCode", modTypeI10.TypeCode);
+                                    msgTxt = msgTxt.replace("#oldValue", modTypeI10.Amount.toFixed(2).toString() + " " + modTypeI10.CurrencyTypeCode);
+                                    msgTxt = msgTxt.replace("#newValue", newAmount.toFixed(2).toString() + " " + newCurrency); // new values
+                                    commissionMsgText = commissionMsgText.concat("\n" + msgTxt);
                                 }
                                 else {
-                                    //don't update
-                                    confirm.Close();
+                                    // same currency and amount
+                                    if (modTypeI10.Amount == newAmount && modTypeI10.CurrencyTypeCode == newCurrency) {
+                                        // no changes
+                                    }
                                 }
-                            });
 
+                            }
+                            else {
+                                //In case there’s no mod record I10, create a record in SupplierInvoiceModification 
+                                var newMod = new SupplierInvoiceModificationPM(this.EntityPM);
+                                newMod.Tenant = this.EntityPM.Tenant;
+                                newMod.DeclarationId = this.EntityPM.DeclarationId;
+                                newMod.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                                newMod.TypeCode = commission.ModificationsTypeCode;
+                                newMod.TypeName = commission.ModificationsTypeName;
+                                newMod.CurrencyTypeCode = newCurrency;
+                                newMod.CurrencyTypeName = this.EntityPM.InvoiceCurrencyTypeName;
+                                newMod.Amount = newAmount;
+
+                                this.EntityPM.SupplierInvoiceModifications.push(newMod);
+
+                                this.UpdateModificationsList();
+                            }
+
+
+                        }
+                    }
+                }
+
+
+                if (commissionMsgText != "") {
+                    //somthing changed, amount or currency
+                    //ask user to change it
+                    var confirm = new ConfirmWindow;
+                    var commissionFullMessage: string = "נתוני ההתאמות וההפחתות השתנו:";
+                    commissionMsgText = commissionMsgText.concat("\n" + "האם לאשר את עדכון הסכומים?");
+                    commissionFullMessage = commissionFullMessage.concat(commissionMsgText);
+                    confirm.Width = 350;
+                    confirm.Height = 200;
+                    confirm.Show(commissionFullMessage);
+                    confirm.WindowClosed.subscribe((event: any) => {
+                        if (confirm.Yes) {
+                            //update records
+                            this.UpdateModificationsByType(commissionList);
+                            confirm.Close();
                         }
                         else {
-                            // same currency and amount
-                            if (modTypeI10.Amount == newAmount && modTypeI10.CurrencyTypeCode == newCurrency) {
-                                // no changes
-                            }
+                            //don't update
+                            confirm.Close();
                         }
-
-                    }
-                    else {
-                        //In case there’s no mod record I10, create a record in SupplierInvoiceModification 
-                        var newMod = new SupplierInvoiceModificationPM(this.EntityPM);
-                        newMod.Tenant = this.EntityPM.Tenant;
-                        newMod.DeclarationId = this.EntityPM.DeclarationId;
-                        newMod.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-
-                        newMod.TypeCode = "I10";
-                        newMod.TypeName = this.typeNameForI10;
-
-                        newMod.CurrencyTypeCode = newCurrency;
-                        newMod.CurrencyTypeName = this.invoiceCurrencyName;
-
-                        newMod.Amount = newAmount;
-
-                        this.EntityPM.SupplierInvoiceModifications.push(newMod);
-
-                        this.UpdateModificationsList();
-                    }
-
-
+                    });
                 }
+
+
             } else {
                 //No commission for this vendor , delete existing commission ?
                 var msg = "לא קיימים נתוני עמלה לספק זה , האם למחוק נתוני עמלה קיימים ?";
@@ -2294,6 +2350,40 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
     }
 
+
+    UpdateModificationsByType(commissionList: VendorCommissionList[]) {
+        for (let commission of commissionList) {
+            if (commission) {
+                if (commission.CommisionPercentage) {
+
+                    //init new mod values
+                    var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
+                    var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
+
+                    // if commission found:
+                    // 1- update Field VendorCommisionPercentage.SupplierInvoice
+                    this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
+                    console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
+
+                    // 2- In case there’s mod record , update it
+                    var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == commission.ModificationsTypeCode)[0];
+                    if (modTypeI10) {
+                        // 3- In case there’s record with same type 
+                        //    and it's with different currency OR value ask user
+                        if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
+                            modTypeI10.CurrencyTypeCode = newCurrency;
+                            modTypeI10.CurrencyTypeName = this.EntityPM.InvoiceCurrencyTypeName;
+                            modTypeI10.Amount = newAmount;
+                            modTypeI10.TypeCode = commission.ModificationsTypeCode;
+                            modTypeI10.TypeName = commission.ModificationsTypeName;
+                        }
+                    }
+                }
+            }
+        }
+        this.UpdateModificationsList();
+    }
+
     UpdateModificationsList() {
         this.ReloadModificationEvent.emit("");
     }
@@ -2314,6 +2404,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         });
 
     }
+
     DropdownDisplayClose() {
         this._DropdownDisplay = 'none';
     }

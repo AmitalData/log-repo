@@ -1959,13 +1959,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentsFilingPM> GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, List<string> externalEntityReferences, int tenant)
         {
+
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
 
             List<DocumentsFilingPM> externalDocumentPMs;
 
             if (string.IsNullOrEmpty(childEntityId))
             {
-                externalDocumentPMs = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
+                (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+                
+                    externalDocumentPMs = (from a in repository.context.DocumentsFilings
+                                       //.Include("CreatedByUser.Contact")
+                                       .Include("Document").Include("DocumentType")
+                                       //.Include("Owner.Contact")
                                        where a.Tenant == tenant && ((a.EntityId == entityId && a.ObjectTableId == objectTableId) || (a.ExternalEntityName == "CFIFILEM" && a.ExternalEntityReference == referenceNumber))
                                        && a.DirectionCode == directionCode && a.IsDeleted == false
                                        select new DocumentsFilingPM()
@@ -1998,7 +2004,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
                                            IsAgentView = a.DocumentType != null ? a.DocumentType.IsAgentView : false,
                                            IsCustomerView = a.DocumentType != null ? a.DocumentType.IsCustomerView : false,
-                                           CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                                           //CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
@@ -2029,7 +2035,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LastVersion = a.LastVersion,
                                            CustomerTenantNumber = a.CustomerTenantNumber,
                                            IsRequested = a.IsRequested,
-                                           ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
+                                           //ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
                                            SignRequestByUserEmail = a.SignRequestByUserEmail,
                                            CancellSignRequest = a.CancellSignRequest,
                                            OrigionalDocumentId = a.OrigionalDocumentId,
@@ -2043,7 +2049,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             else
             {
-                externalDocumentPMs = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
+                externalDocumentPMs = (from a in repository.context.DocumentsFilings
+                                       //.Include("CreatedByUser.Contact")
+                                       //.Include("ReceivedByUser.Contact")
+                                       .Include("Document").Include("DocumentType")
+                                       //.Include("Owner.Contact")
                                        where a.Tenant == tenant && a.EntityId == entityId && a.ChildEntityId == childEntityId && (a.ObjectTableId == objectTableId || a.ExternalEntityReference == referenceNumber)
                                        select new DocumentsFilingPM()
                                        {
@@ -2075,7 +2085,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
                                            IsAgentView = a.DocumentType != null ? a.DocumentType.IsAgentView : false,
                                            IsCustomerView = a.DocumentType != null ? a.DocumentType.IsCustomerView : false,
-                                           CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                                           //CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
@@ -2106,7 +2116,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LastVersion = a.LastVersion,
                                            CustomerTenantNumber = a.CustomerTenantNumber,
                                            IsRequested = a.IsRequested,
-                                           ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
+                                           //ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
                                            SignRequestByUserEmail = a.SignRequestByUserEmail,
                                            CancellSignRequest = a.CancellSignRequest,
                                            OrigionalDocumentId = a.OrigionalDocumentId,
@@ -2122,7 +2132,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (externalEntityReferences != null)
             {
-                List<DocumentsFilingPM> docs = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
+                List<DocumentsFilingPM> docs = (from a in repository.context.DocumentsFilings
+                                                //.Include("CreatedByUser.Contact")
+                                                //.Include("ReceivedByUser.Contact")
+                                                .Include("Document").Include("DocumentType")
+                                                //.Include("Owner.Contact")
                                                 where a.Tenant == tenant && externalEntityReferences.Contains(a.ExternalEntityReference)
                                                 select new DocumentsFilingPM()
                                                 {
@@ -2154,7 +2168,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
                                                     IsAgentView = a.DocumentType != null ? a.DocumentType.IsAgentView : false,
                                                     IsCustomerView = a.DocumentType != null ? a.DocumentType.IsCustomerView : false,
-                                                    CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                                                    //CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
                                                     Received = a.Received,
                                                     ReceivedDate = a.ReceivedDate,
                                                     ReceivedByUserId = a.ReceivedByUserId,
@@ -2185,7 +2199,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     LastVersion = a.LastVersion,
                                                     CustomerTenantNumber = a.CustomerTenantNumber,
                                                     IsRequested = a.IsRequested,
-                                                    ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
+                                                    //ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
                                                     SignRequestByUserEmail = a.SignRequestByUserEmail,
                                                     CancellSignRequest = a.CancellSignRequest,
                                                     OrigionalDocumentId = a.OrigionalDocumentId,

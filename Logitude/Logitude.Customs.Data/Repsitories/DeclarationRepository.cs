@@ -12,6 +12,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -32,6 +33,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public Declaration GetSingleDeclarationByNumber(string number, int tenant)
         {
+
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+         (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             return (from a in context.Declarations
                     where a.DeclarationNumber == number && a.Tenant == tenant
                     select a).FirstOrDefault();
@@ -199,6 +204,8 @@ namespace Logitude.Customs.Data.Repsitories
         //<--- Yuval Chalup 19.11.2015 TASK-17450
         public IQueryable<Declaration> GetSingleDeclarationPMByNumber(string number, int tenant)
         {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             return (from a in context.Declarations
                     where a.DeclarationNumber == number && a.Tenant == tenant
                     select a);
@@ -207,7 +214,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
+         
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             return
                   (
                   from rec in context.Declarations
@@ -228,6 +238,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public string GetConcurrencyGUIDByCustomFileNo(string customFileNo, int tenant)
         {
+
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
             return
                   (
@@ -242,6 +253,8 @@ namespace Logitude.Customs.Data.Repsitories
         public string GetIdByExternalDeclarationNumber(string externalDeclarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(externalDeclarationNumber)) return "";
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             return
                   (
                   from rec in context.Declarations
@@ -254,6 +267,8 @@ namespace Logitude.Customs.Data.Repsitories
         public string GetIdByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             return
                   (
                   from rec in context.Declarations
@@ -378,6 +393,18 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant && a.TradeAgreementCode != null
                     select a).Count();
         }
+        public List<string> GetIdsThatIsChanged(int tenant,List<string> DecIds)
+        {
+
+            var declarations = (from a in context.Declarations
+                                where a.Tenant == tenant
+                                where DecIds.Contains(a.Id)
+                                where a.IsChanged
+                                select a.Id
+                                                    );
+
+            return declarations.ToList();
+        }
 
         public IQueryable<Declaration> GetCourierConnectedDeclaratins(string CourierMasterId, int tenant)
         {
@@ -392,7 +419,7 @@ namespace Logitude.Customs.Data.Repsitories
             return declarations;
         }
 
-        public IQueryable<Declaration> GetNotConnectedDeclaratins(int tenant)
+        public IQueryable<Declaration> GetNotConnectedDeclarations(int tenant)
         {
             bool joinIt = false;
 
@@ -468,6 +495,8 @@ namespace Logitude.Customs.Data.Repsitories
         public Declaration GetByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             return
                   (
                   from rec in context.Declarations
@@ -476,6 +505,48 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
+
+
+        public Declaration GetLastDeclarationByDeclarationId(string id, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(id)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant
+                  select rec
+                  ).OrderByDescending(x=>x.CreateDateTime)
+                  .FirstOrDefault();
+        }
+
+        public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
+        {
+            Declaration declaration = GetSingleDeclarationById( id  , tenant);
+           
+            if (declaration.IsAmendment== true)
+            {      Declaration declarationOrg = GetSingleDeclarationById(declaration.AmendmentOriginalDeclartation, tenant);
+
+                var myQ = (from a in context.Declarations
+                           where (a.AmendmentOriginalDeclartation == declarationOrg.Id || a.Id== declarationOrg.Id ) && a.Id != id
+                           select a);
+                return myQ.ToList();
+               }
+
+            else
+            {
+                    var myQ = (from a in context.Declarations
+                               where a.AmendmentOriginalDeclartation == id
+                               select a);
+                    return myQ.ToList();
+                }
+           
+
+
+          
+        }
+
 
     }
     //class TotM {

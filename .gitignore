@@ -406,4 +406,10 @@ __pycache__/
 /Logitude/Logitude.IntegrationTests/DownloadedFiles
 /Logitude/AngularModules/AngularModules/--protractor-html-reporter-2
 /Logitude/AngularModules/AngularModules/webpack.config-prod.js
+/Logitude/JustWebFreight/WebFreight.Web/JustAmitalCustomsWindowsServiceappSettings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustAmitalCustomsWindowsServiceConnectionStrings.config
+*.7z
+/Logitude/AngularModules/package.json
+/Logitude/AngularModules/AngularModules/CustomsModules/Workspaces
+/Logitude/AngularModules/AngularModules/CustomsModules/CustomsCourier/CustomsRequests
 /Logitude/Logitude.HybridTest/Properties/DataSources

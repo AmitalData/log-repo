@@ -1,7 +1,7 @@
 
 
 declare var window;
-import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool, FontTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -54,6 +54,7 @@ import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { QuantityTypeMessageService } from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 
+
 @Component({
     selector: 'SInvoiceClassificationTabContent',
     moduleId: module.id,
@@ -62,7 +63,7 @@ import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITI
 
 export class SInvoiceClassificationTabComponent
     extends BaseComponent
-    implements OnDestroy {
+    implements OnDestroy, AfterViewInit {
     public EntityPM: SupplierInvoicePM;
     public declarationPM: DeclarationPM;
 
@@ -86,7 +87,23 @@ export class SInvoiceClassificationTabComponent
     public declarationPMService: DeclarationPMService = new DeclarationPMService();
     ClasificationQtyTypes: { [code: string]: any; } = {};
     quantityTypeMessageService: QuantityTypeMessageService = new QuantityTypeMessageService();
-    private CurrentSession = SessionLocator.SelectedSession;
+    _viewContainerRefOfClassificationCode: LogCellTemplateComponent;
+
+
+    //@ViewChild('logcelltemplateOfClassificationCode', { read: ViewContainerRef })
+    //set(val: any) {
+    //    this._viewContainerRefOfClassificationCode = val as LogCellTemplateComponent;
+    //    this._viewContainerRefOfClassificationCode.IsEditMode = true;
+    //}
+    @ViewChild('logcelltemplateOfClassificationCode') myDiv: ElementRef;
+    //myDiv: ElementRef;
+    //@ViewChild('logcelltemplateOfClassificationCode')
+    //set(val: any) {
+    //    this.myDiv = val;
+    //    let logCell = (this.myDiv as any);
+    //    logCell.IsEditMode = true;
+    //}
+    public CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         //this.ConsimentPackages = new ObservableCollection([]);
@@ -97,13 +114,26 @@ export class SInvoiceClassificationTabComponent
     }
     private _SubDisplayModeChanged;
     private _SubConsignmentsChanged;
+    ngAfterViewInit() {
+        console.log('SInvoiceClassificationTabComponent:ngAfterViewInit():');
+        let token = setTimeout(() => {
+            console.log("viewContainerRefOfClassificationCode:", this.myDiv);
+            let LogCellTemplateComponent = this.myDiv as any;
+            if (LogCellTemplateComponent) {
+                LogCellTemplateComponent.IsEditMode = true;
+            }
+            
+            clearTimeout(token);
+        }, 700);
+    }
     ngOnDestroy() {
         console.log("SInvoiceClassificationTabComponent:ngOnDestroy");
         //if (this.Tab.ComponentReference && this.Tab.ComponentReference.ngOnDestroy) {
         //    this.Tab.ComponentReference.ngOnDestroy();
         //}
-
-        this.Tab.ComponentReference = null;
+        if (this.Tab) {
+            this.Tab.ComponentReference = null;
+        }
         this.Tab = null;
         if (this._SubDisplayModeChanged) {
             this._SubDisplayModeChanged.unsubscribe();
@@ -144,13 +174,15 @@ export class SInvoiceClassificationTabComponent
 
     public DisplayOnlyMessage: string = "";
     DisplayOnlyCheck() {
-        
-        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
-            this.SetScreenFieldsEditability();
-            DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
-            return;
+        if (this.CurrentSession.CurrentEditComponent.EditComponentController) {
+            this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+            if (this.IsDisplayOnly) {
+                this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+                this.SetScreenFieldsEditability();
+                DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
+                return;
+            }
+
         }
     
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
@@ -456,7 +488,7 @@ export class SInvoiceClassificationTabComponent
             var windowTitle = "Supplier Invoice";
 
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 995; // don't change this width!
+            logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
             logWindow.Height = 600;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) && !AppTool.IsNullOrEmpty(decPM/*this.EntityPM*/.DeclarationNumber)) {
@@ -777,6 +809,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
     OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
         var newValue = this.ClassificationCode;
         this.valid = true;
+        logCellTemplate.IsEditMode = false;
         this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
 
         if (AppTool.IsNullOrEmpty(newValue)) {

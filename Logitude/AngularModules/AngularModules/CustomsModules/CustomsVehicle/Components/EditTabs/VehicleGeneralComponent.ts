@@ -79,7 +79,7 @@ export class VehicleGeneralComponent extends BaseComponent {
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.RefreshEntity();
+                        //this.RefreshEntity();
                     }
                 })
             );

@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -7,6 +7,7 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { CLAIM_2340_ClaimRequestRequestParams } from '../../DataContract/RequestParams/CLAIM_2340_ClaimRequestRequestParams';
+import { ContinuousRequestOnClaimFileRequestParams } from '../../DataContract/RequestParams/ContinuousRequestOnClaimFileRequestParams';
 
 
 @Injectable()
@@ -77,6 +78,27 @@ export class ClaimWebService {
 
             return this._http.post(
                 this._apiUrl + '/PostSendClaimRequest/',
+                JSON.stringify(entity),
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    PostSendContinuousRequestOnClaim(entity: ContinuousRequestOnClaimFileRequestParams) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendContinuousRequestOnClaim/',
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
                     serviceResponse.Result = res.json();

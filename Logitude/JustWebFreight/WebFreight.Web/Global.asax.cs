@@ -42,6 +42,8 @@ using Logitude.Server.Tools.Counters;
 using WebFreight.Web.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Resolvers;
+using Logitude.Customs.BL.Validators;
+using System.Web.Hosting;
 using WebFreight.Web.Helpers.APIHelpers;
 
 namespace WebFreight.Web
@@ -302,14 +304,27 @@ namespace WebFreight.Web
 
         private static void LogitudeSettings_AmitalInit()//itzik:CleanCode when is possible -should convert 2 ContainerAccessor
         {
+            //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
             Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
 
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 /// itzik : can use/convert to    !!!ContainerAccessor !!!! // ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
-                var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
-                LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
+                /// 
 
+                bool useAppData = true;
+                if (useAppData)
+                {
+                    AppDataUtil.Init(HostingEnvironment.ApplicationPhysicalPath);
+                    var appDataUtil = new AppDataUtil();
+                    LogitudeSettings.ProductInfo = appDataUtil.GetProdInfo();
+
+                }
+                else
+                {
+                    var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
+                    LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
+                }
                 // this project no need but in FilingManager is must 
                 LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
@@ -345,6 +360,20 @@ namespace WebFreight.Web
                 () => (new HtmlEditorHelper()) as IHtmlEditorHelper
                 );
             ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
+            InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
+                (string courierMasterId, int tenant) =>
+                {
+                    var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterId, tenant);
+                    if (courierMasterRequiredErrors != null)
+                    {
+                        return courierMasterRequiredErrors.RequiredFields.Count == 0;
+
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                };
 
 
 

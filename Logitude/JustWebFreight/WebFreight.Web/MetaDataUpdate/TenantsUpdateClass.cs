@@ -147,61 +147,93 @@ namespace WebFreight.Web.MetaDataUpdate
                       
                       case "updatetenantzeronew":
                         {
-                            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                            updateClass.LoadObjectTablesToTenantZero(context);
-                            updateClass.UpgradeClosedTablesForTenantZero();
 
-							InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-							inframodelUpdateClass.LoadObjectsTenantZero(context);
+                            if (LogitudeSettings.WorkEnvironment == "customs")
+                            {
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.LoadObjectTablesToTenantZero(context);
+                                updateClass.UpgradeClosedTablesForTenantZero();
 
+                                CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+                                commonmodelUpdateClass.LoadObjectsTenantZero(context);
 
-							ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-                            shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+                                InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+                                inframodelUpdateClass.LoadObjectsTenantZero(context);
 
-                            QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
-                            quotemodelUpdateClass.LoadObjectsTenantZero(context);
+                                GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+                                globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
-                            InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
-                            invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+                                updateClass.LoadUpdateTenantZero(context, false);
+                                updateClass.LoadOtherFields(context);
 
-                            CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
-                            commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                                updateClass.LoadTranslationHeaders();
+                                updateClass.LoadMeasurements();
+                                updateClass.LoadCreditCardTypes();
+                                updateClass.LoadMoveTypes();
+                                updateClass.LoadRolesAndFeatures(0);
+                                updateClass.LoadObjectTableHelperControls();
+                                updateClass.LoadEntityStatus();
+                                updateClass.LoadEventTypes();
+                                updateClass.LoadRanks();
+                                updateClass.LoadMenustables();
+                                updateClass.LoadDefaultReports();
+                                updateClass.LoadHelpResources();
+                                updateClass.LoadEmailAlertSettings();
+                            }
+                            else
+                            {
 
-                          
-                            GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
-                            globalmodelUpdateClass.LoadObjectsTenantZero(context);
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.LoadObjectTablesToTenantZero(context);
+
+                                updateClass.UpgradeClosedTablesForTenantZero();
+
+                                ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+                                shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                                QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
+                                quotemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
+                                invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+                                commonmodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+                                inframodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+                                globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
 							InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
 							modelUpdateClass.LoadObjectsTenantZero(context);
 
-							updateClass.LoadUpdateTenantZero(context, false);
+                                updateClass.LoadUpdateTenantZero(context, false);
 
-                            //updateClass.LoadOtherFields(context);
-                            updateClass.LoadTranslationHeaders();
-                            updateClass.LoadMeasurements();
-                            updateClass.LoadCreditCardTypes();
-                            updateClass.LoadMoveTypes();
-							//updateClass.loadQueries();
-							//updateClass.loadScreens();
-							//updateClass.LoadObjectTableTabs();
-							context.SaveChanges();
-
-							updateClass.LoadRolesAndFeatures(0);
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadEntityStatus();
-                            updateClass.LoadEventTypes();
-                            updateClass.LoadRanks();
-                            updateClass.LoadMenustables();
-                            updateClass.LoadDefaultReports();
-                            updateClass.LoadHelpResources();
-                            updateClass.CreateMasterCounter(0);
-                            updateClass.LoadEmailAlertSettings();
-                            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
-                            {
-                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                                //updateClass.LoadOtherFields(context);
+                                updateClass.LoadTranslationHeaders();
+                                updateClass.LoadMeasurements();
+                                updateClass.LoadCreditCardTypes();
+                                updateClass.LoadMoveTypes();
+                                //updateClass.loadQueries();
+                                //updateClass.loadScreens();
+                                //updateClass.LoadObjectTableTabs();
+                                updateClass.LoadRolesAndFeatures(0);
+                                updateClass.LoadObjectTableHelperControls();
+                                updateClass.LoadEntityStatus();
+                                updateClass.LoadEventTypes();
+                                updateClass.LoadRanks();
+                                updateClass.LoadMenustables();
+                                updateClass.LoadDefaultReports();
+                                updateClass.LoadHelpResources();
+                                updateClass.CreateMasterCounter(0);
+                                updateClass.LoadEmailAlertSettings();
+                                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                                {
+                                    updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                                }
                             }
-                    
-
                             break;
                         }
                     case "updatetenantzero":
@@ -294,6 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.FillCustomsNotificationDefinitions();
 
                             updateClass.FillCustomsInterfaceSendOptions();
+                            updateClass.FillSchedulerProcedure();
                             updateClass.FillCustomsInterfaceManagements();
 
 
@@ -318,7 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             //updateClass.FillCourierPaymentStatus();
                             updateClass.FillMamanSpecialActionTable();
                             updateClass.FillMamanSpecialActionStatusTable();
-
+                            updateClass.FillCourierPendingReasonTable();
 
 
                             break;
@@ -459,6 +492,11 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             InfrastructureModelUpdateClass modelUpdateClass = new InfrastructureModelUpdateClass();
                             modelUpdateClass.LoadObjectsTenantZero(context);
+                            if (LogitudeSettings.IsCostomsDeploy)
+                            {
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.UpgradeClosedTablesForTenantZero();
+                            }
                             break;
                         }
 
@@ -842,51 +880,58 @@ namespace WebFreight.Web.MetaDataUpdate
                 Dictionary<string, byte[]> cachedCloseTableJosnByte = new Dictionary<string, byte[]>();
 
 
-                foreach (ObjectTable objectTable in ObjectTableList)
+            foreach (ObjectTable objectTable in ObjectTableList)
+            {
+
+                List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
+                if (fieldsList != null)
                 {
+                    var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(fieldsList);
+                    var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
+                    cachedObjectFieldsJosnByte.Add(objectTable.Name, buffer);
+                }
 
-                    List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
-                    if (fieldsList != null)
+                List<TextCodePM> textcodes = new List<TextCodePM>();//textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
+                                                                    //Contact.O.TableDescription Contact.F.SearchFields
+                                                                    //string descritionTextCode = objectTable.Name + ".O.TableDescription";
+                                                                    //string searchFieldsTextCode = objectTable.Name + ".F.SearchFields";
+                if (objectTable.Name == "General")
+                    textcodes = textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id || ((d.TextCodeTypeCode == "T" || d.Code.Contains(".O.TableDescription") || d.Code.Contains(".F.SearchFields") || d.Code == d.ObjectTableName + "Description") && d.ObjectTableId != objectTable.Id)).ToList();
+                else
+                    textcodes = textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
+
+
+                if (textcodes != null)
+                {
+                    var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(textcodes);
+                    var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
+                    cachedTextCodesJosnByte.Add(objectTable.Name, buffer);
+                }
+
+                if (objectTable.IsClosed && objectTable.CacheOnClient)
+                {
+                    var data = TableQueryReflector.GetTableListData(objectTable.Name);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
+                    if (data != null)
                     {
-                        var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(fieldsList);
-                        var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
-                        cachedObjectFieldsJosnByte.Add(objectTable.Name, buffer);
-                    }
-
-                    List<TextCodePM> textcodes = new List<TextCodePM>();//textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
-                    //Contact.O.TableDescription Contact.F.SearchFields
-                    //string descritionTextCode = objectTable.Name + ".O.TableDescription";
-                    //string searchFieldsTextCode = objectTable.Name + ".F.SearchFields";
-                    if (objectTable.Name == "General")
-                        textcodes = textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id || ((d.TextCodeTypeCode == "T" || d.Code.Contains(".O.TableDescription") || d.Code.Contains(".F.SearchFields") || d.Code == d.ObjectTableName + "Description") && d.ObjectTableId != objectTable.Id)).ToList();
-                    else
-                        textcodes = textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
-
-
-                    if (textcodes != null)
-                    {
-                        var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(textcodes);
-                        var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
-                        cachedTextCodesJosnByte.Add(objectTable.Name, buffer);
-                    }
-
-                    if (objectTable.IsClosed && objectTable.CacheOnClient)
-                    {
-                        var data = TableQueryReflector.GetTableListData(objectTable.Name);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
-                        if (data != null)
+                        try
                         {
                             var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(data);
                             var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
                             cachedCloseTableJosnByte.Add(objectTable.Name, buffer);
                         }
-                        else
+                        catch(Exception ex)
                         {
-                            //File.AppendAllText(@"C:\TestFolder\not_generated_closed.txt", objectTable.Name + Environment.NewLine);
-
+                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "BuildZipFiles", "ObjectTable name has a problem:"+ objectTable.Name, null);
                         }
                     }
+                    else
+                    {
+                        //File.AppendAllText(@"C:\TestFolder\not_generated_closed.txt", objectTable.Name + Environment.NewLine);
 
+                    }
                 }
+
+            }
 
 
                 foreach (ObjectTable objectTable in ObjectTableList)//Where(d => d.IsClosed == false && d.IsComposition == false)// 

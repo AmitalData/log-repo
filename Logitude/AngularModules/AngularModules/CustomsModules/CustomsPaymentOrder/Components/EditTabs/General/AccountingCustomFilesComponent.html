@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .CustomMultiLinesText {
         width: 270px;
         height: 300px;
@@ -33,7 +33,7 @@
                             <tr class="FormFieldRow" *ngFor="let customFileItem of AccountingCustomFilesList">
                                 <td>
                                     <div>
-                                        <span (click)="OnSelectedFile(customFileItem)">{{customFileItem}}</span>
+                                        <span style="cursor: pointer;" (click)="OnSelectedFile(customFileItem)">{{customFileItem}}</span>
                                         
                                     </div>
                                 </td>

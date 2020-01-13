@@ -65,9 +65,13 @@ import {CustomBankListService} from '../../Customs/Services/StandardLists/Custom
 import {CustomsHouseTypeListService} from '../../Customs/Services/StandardLists/CustomsHouseTypeListService'; 
 import {CustomsSettingListService} from '../../Customs/Services/StandardLists/CustomsSettingListService'; 
 import {CustomsHouseTypeAdditionalListService} from '../../Customs/Services/StandardLists/CustomsHouseTypeAdditionalListService'; 
-import {GovernmentProcedureTypeListService} from '../../Customs/Services/StandardLists/GovernmentProcedureTypeListService'; 
+import { GovernmentProcedureTypeListService } from '../../Customs/Services/StandardLists/GovernmentProcedureTypeListService';
+import { CourierPendingReasonListService } from '../../Customs/Services/StandardLists/CourierPendingReasonListService';
+import { InterfaceTenantDefinitionListService } from '../../Customs/Services/StandardLists/InterfaceTenantDefinitionListService';
+import { CustomsItemListService } from '../../Customs/Services/StandardLists/CustomsItemListService';
 
-// Business Process 
+
+// Business Process
 import {BusinessRoleListService} from '../Services/StandardLists/BusinessRoleListService'; 
 import {BusinessProcessQueueListService } from '../Services/StandardLists/BusinessProcessQueueListService'; 
 import {TeamListService} from '../Services/StandardLists/TeamListService'; 
@@ -171,11 +175,15 @@ export class CachedDataManagerServices {
             case "Customs.CustomsRequiredFieldListService": { myResult = new CustomsRequiredFieldListService(); break; }
             case "Customs.InterfaceManagementListService": { myResult = new InterfaceManagementListService(); break; }
             case "Customs.UIMessageAdditionalListService": { myResult = new UIMessageAdditionalListService(); break; }
+            case "Customs.InterfaceTenantDefinitionListService": { myResult = new InterfaceTenantDefinitionListService(); break; }
+            case "Customs.CustomsItemListService": { myResult = new CustomsItemListService(); break; }
+
             case "Customs.CustomBankListService": { myResult = new CustomBankListService(); break; }
             case "Customs.CustomsHouseTypeListService": { myResult = new CustomsHouseTypeListService(); break; }
             case "Customs.CustomsSettingListService": { myResult = new CustomsSettingListService(); break; }
             case "Customs.CustomsHouseTypeAdditionalListService": { myResult = new CustomsHouseTypeAdditionalListService(); break; }
             case "Customs.GovernmentProcedureTypeListService": { myResult = new GovernmentProcedureTypeListService(); break; }
+            case "Customs.CourierPendingReasonListService": { myResult = new CourierPendingReasonListService(); break; }
             case "JournalActionTypeListService": { myResult = new JournalActionTypeListService(); break; }
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }

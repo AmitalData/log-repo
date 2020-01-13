@@ -12,7 +12,6 @@ import { AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 //import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-//import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
     moduleId: module.id,
@@ -343,7 +342,7 @@ export class MaintenanceComponent {
                 item.Icon = "List"
                 item.Code = "WHKS";
                 item.ObjectTableName = "WebhookKeys";
-                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0]?window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id:null;
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             if (FeatureLocator.HasFeaturePermession("APILogs", "APILogs")) {
@@ -1044,7 +1043,16 @@ export class MaintenanceComponent {
                     LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
                     let allowed = false;
                     allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
-                    if (!SessionLocator.LoggedUserPM.IsCustomerCare && allowed) {
+                    let LoggedUserIsnotCustomerCare: boolean = true;
+                    if (SessionLocator.LoggedUserPM.IsCustomerCare ) {
+                        LoggedUserIsnotCustomerCare = false;
+                    }
+                    if (allowed) {
+                        LoggedUserIsnotCustomerCare = false;
+                    }
+
+                    //if (!SessionLocator.LoggedUserPM.IsCustomerCare && allowed) {
+                    if (LoggedUserIsnotCustomerCare) {
 
                         let messageWindow = new MessageWindow()
                         messageWindow.Show("Logged User Is not Customer Care ");
@@ -1256,14 +1264,10 @@ export class MaintenanceComponent {
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
 
-                            var servicelink = '../../../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+                            var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
                             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                 service.SendRecallMessageToServer();
                             });
-
-                            // this will cause the customs to build every time......mohammad
-                            //let _RecallClientsForCutoms: RecallClientsForCutoms = new RecallClientsForCutoms();
-                            //_RecallClientsForCutoms.SendRecallMessageToServer();
                         }
                     });
                     break;

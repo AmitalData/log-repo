@@ -1039,6 +1039,12 @@
 
         private string pREFERENCEDOCUMENTNUMBERField;
 
+        private string tAXEXEMPTCODEField;
+
+        private string pROCESSTYPEField;
+
+        private string statisticQuantityTypeField;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         private POINTERS[] pOINTERSField;
@@ -1224,6 +1230,45 @@
             set
             {
                 this.pREFERENCEDOCUMENTNUMBERField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string TAXEXEMPTCODE
+        {
+            get
+            {
+                return this.tAXEXEMPTCODEField;
+            }
+            set
+            {
+                this.tAXEXEMPTCODEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string PROCESSTYPE
+        {
+            get
+            {
+                return this.pROCESSTYPEField;
+            }
+            set
+            {
+                this.pROCESSTYPEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StatisticQuantityType
+        {
+            get
+            {
+                return this.statisticQuantityTypeField;
+            }
+            set
+            {
+                this.statisticQuantityTypeField = value;
             }
         }
 

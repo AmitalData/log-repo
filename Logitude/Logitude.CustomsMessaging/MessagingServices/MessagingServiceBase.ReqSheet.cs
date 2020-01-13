@@ -37,6 +37,7 @@ using Logitude.Server.Tools.Utils;
 using Logitude.Customs.Def.Messaging.Customs;
 using System.Linq;
 using System.Configuration;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -347,7 +348,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             TResponseData responseData = default(TResponseData);
             DCAServerUploadResponse dCAServerUploadResponse = null;
             DCAServerUploadStatus dCAServerUploadStatus = null;
-            LogMessagingUtil.Instance.Clear();
+            //LogMessagingUtil.Instance.Clear();
             Stopwatch totalStopwatch = null;
 
 
@@ -365,7 +366,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 var transitions = InitTransition();
 
-
+                
                 var CommandList = new List<CustomsRCmmand>()
                 {
                     new CustomsRCmmand(CustomsCommandEnum.CustomsCommandGetCustomRequestWR, (o) =>{ return CustomsCommandGetCustomRequest(out customsRequest);   }) ,
@@ -885,6 +886,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //ResponseData = new TResponseData() { HasException = true, Succeeded = false, UserMessage = "Look at Request Sheet for more details !" }  
 
             };
+            if (this.MainInterfaceCode == "8302")// due delay in UROUTER !!
+            {
+                stepRequest.TimeOutInMin = 5;
+            }
+
             if (this.MainInterfaceCode == "9000")
             {
                 stepRequest.TimeOutInMin = 5;
@@ -895,6 +901,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 stepRequest.TimeOutInMin = 5;
                 //transactionScopeOption = TransactionScopeOption.Suppress;
             }
+            if (this.MainInterfaceCode == "2715")
+            {
+                stepRequest.TimeOutInMin = 5;
+                //transactionScopeOption = TransactionScopeOption.Suppress;
+            }
+
             if (this.MainInterfaceCode == "US2L01")
             {
                 stepRequest.TimeOutInMin = 9;
@@ -909,8 +921,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             object ContextObjectTag = null;
             bool toContinueNextCommand = DoStep(stepRequest, () =>
             {
-
+                LogMessagingUtilWR.Instance.AppendLine("AnalyzeCore:b4");
                 var res = AnalyzeCore(requestParams, customsResponse, false);
+                LogMessagingUtilWR.Instance.AppendLine("AnalyzeCore:after");
                 bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
@@ -922,7 +935,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             },
             () =>
             {
+                LogMessagingUtilWR.Instance.AppendLine("GetResponseDataAfterAnalyze:b4");
                 var res = GetResponseDataAfterAnalyze(requestParams, customsResponse);
+                LogMessagingUtilWR.Instance.AppendLine("GetResponseDataAfterAnalyze:after");
                 ContextObjectTag = res.ContextObjectTag;
                 return res;
             },
@@ -1201,7 +1216,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return res
                 ;
             },
-            null,null);
+            null, () =>
+            {
+                LogMessagingUtil.Instance.AppendLine("CustomsCommandGetCustomRequest.OnUpdateFail()");
+                _RequestService.OnRequestFail(requestParams);
+            });
             customsRequest = ContextObjectTag as TCustomsRequest;
             ;
             return toContinueNextCommand;
@@ -1224,7 +1243,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var customsRequestLength = memstream.Length;
             LogMessagingUtil.Instance.AppendLine("customsRequestLength  = " + customsRequestLength.ToString());
 
-            if (customsRequestLength > HugeFileSize)
+            if (customsRequestLength > (HugeFileSize * 1.2))
             {
                 this._HugeFile = true;
             }
@@ -1249,6 +1268,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get
             {
+                return CustomsDocumentUpdateService.HugeFileSizeSendToDCA;
+                
                 var my9mb = 9000000;
                 return my9mb;
             }
@@ -1459,7 +1480,7 @@ Exception:" + ee.Message
 
         private void CreateNewDcaRequestDue9MBcustomsRequestLength()
         {
-            throw new NotImplementedException();
+            ///throw new NotImplementedException();
         }
 
 
@@ -1505,6 +1526,7 @@ Exception:" + ee.Message
         {
             string customsRequestsSheetPMId = "";
             CommStatusEnum stepStatusEnum = CommStatusEnum.W;
+            TRequestParams defaultRequestParamsFromCustomsResponse = null;
             try
             {
                 int tenantSave = tenant;
@@ -1533,7 +1555,7 @@ Exception:" + ee.Message
                 dcaReceivedService.ProccessIt();
                 _CorrelationId = dcaReceivedService.CorrelationId;
                 var customsResponse = dcaReceivedService.CustomsResponse ?? new TCustomsResponse();
-                TRequestParams defaultRequestParamsFromCustomsResponse = null;
+                
                 var CreateDefaultRequestParamsFromCustomsResponseFailed = true;
                 try
                 {
@@ -1803,10 +1825,21 @@ Exception:" + ee.Message
                 bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>()?? defaultRequestParamsFromCustomsResponse;
+                    if (requestParams != null)
                     {
-                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams,false);
+                        //throw new Exception("tryConcurrentKiller()--(requestParams==null)");
+
+                        var intrefaceTypeListDisplayOnly = CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList();
+                        if (intrefaceTypeListDisplayOnly == null)
+                        {
+                            throw new Exception("tryConcurrentKiller()--(intrefaceTypeListDisplayOnly==null)");
+                        }
+                        if (intrefaceTypeListDisplayOnly/*CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()*/.Contains(requestParams.InterfaceTypeCode))
+                        {
+
+                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams, false);
+                        }
                     }
                 }
                 if (stepStatusEnum == CommStatusEnum.F)

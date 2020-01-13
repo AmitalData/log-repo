@@ -7,6 +7,8 @@ import { InterfaceManagementComponent } from './Components/InterfaceManagementCo
 import { AddEditInterfaceManagementComponent } from './Components/AddEditInterfaceManagementComponent';
 import { LoadTestComponent } from './Components/LoadTestComponent';
 import { SignStationsComponent } from './Components/SignStationsComponent';
+import { CourierSendStatusComponent } from './Components/CourierSendStatusComponent';
+
 import { DocumentTypeCustomsDataComponent } from './Components/DocumentTypeCustomsDataComponent';
 import { GeneralLOVComponent } from './Components/GeneralLOVComponent';
 
@@ -27,6 +29,7 @@ export const Components =
         AddEditInterfaceManagementComponent,
         LoadTestComponent,
         SignStationsComponent,
+        CourierSendStatusComponent,
         DocumentTypeCustomsDataComponent,
         GeneralLOVComponent,
         CustomsDocumentsDefinitionComponent,
@@ -50,6 +53,7 @@ export class ModuleDeclarations {
             case "AddEditInterfaceManagementComponent": { myResult = AddEditInterfaceManagementComponent; break; }
             case "LoadTestComponent": { myResult = LoadTestComponent; break; }
             case "SignStationsComponent": { myResult = SignStationsComponent; break; }
+            case "CourierSendStatusComponent": { myResult = CourierSendStatusComponent; break; }
             case "DocumentTypeCustomsDataComponent": { myResult = DocumentTypeCustomsDataComponent; break; }
             case "GeneralLOVComponent": { myResult = GeneralLOVComponent; break; }
                 

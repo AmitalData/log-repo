@@ -323,6 +323,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = false;
                         }
                     }
+                    if (button.EventCode == "Declaration Customs Requests") {
+                        if (this.IsDisplayOnly) {
+                            button.IsDisabled = true;
+                        }
+                        else {
+                            button.IsDisabled = false;
+                        }
+                    }
 
                 }
                 this.IsDisplayOnlyCheckDone = true;
@@ -483,6 +491,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     case "Cancel Declaration Closure":
                         {
                             this.CancelDeclarationClosureMethod();
+                            break;
+                        }
+                    case "Declaration Customs Requests":
+                        {
+                            this.DeclarationCustomsRequestsMethod();
                             break;
                         }
                 }
@@ -1130,18 +1143,24 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
-        windowArgs.Mode = "FromDeclaration";
-        windowArgs.DeclarationId = this.EntityPM.Id;
-        windowArgs.CourierHawb = this.EntityPM.MAWBCourierMaster;
+        this.declarationCourierStatusPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                windowArgs.DeclarationCourierStatus = response.Result
+                windowArgs.Mode = "FromDeclaration";
+                windowArgs.DeclarationId = this.EntityPM.Id;
+                windowArgs.CourierHawb = this.EntityPM.MAWBCourierMaster;
 
-        logitudeWindow.Width = 450;
-        logitudeWindow.Height = 280;
-        logitudeWindow.IsShowCloseButton = false;
-        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CourierMaster.O.MarkPending");
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                logitudeWindow.Width = 470;
+                logitudeWindow.Height = 300;
+                logitudeWindow.IsShowCloseButton = true;
+                logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("Customs.CourierMaster.O.MarkPending");
+                logitudeWindow.WindowArgs = windowArgs;
+                //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsGeneralComponent');
+                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                    //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                });
+            }
         });
     }
 
@@ -1151,7 +1170,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         this.declarationCourierStatusPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             var declarationCourierStatusPM: DeclarationCourierStatusPM = response.Result;
-            if (declarationCourierStatusPM != null && (!AppTool.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(declarationCourierStatusPM.PendingRemarks))) {
+            if (declarationCourierStatusPM != null && (!AppTool.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonList))) {
                 var confirm = new ConfirmWindow();
                 confirm.Width = 350;
                 confirm.Height = 200;
@@ -1220,6 +1239,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     });
             }
         });
+    }
+
+    DeclarationCustomsRequestsMethod() {
+
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1500;
+        logWindow.Height = 1000;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = "בקשות מכס";
+        logWindow.Show('./CustomsModules/CustomsRequests/Components/CustomsRequestsComponent');
+        SessionLocator.SelectedSession.StopBusyIndicator();
     }
 }
 

@@ -120,12 +120,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterEmail, 
 	         CasualImporterTel, 
 	         CasualImporterContact, 
-	         MamanStatusCode, 
-	         MamanErrorXml, 
 	         ItemsProcessTypesList, 
 	         IsClose, 
 	         CourierSuspentionCode, 
-	         DepositionStatusCode,
+	         DepositionStatusCode, 
+	         IsPaymentProtested, 
+	         AmendmentRequestNumber, 
+	         AmendmentStatus, 
+	         AmendmentissueDate, 
+	         AmendmentRemarks, 
+	         AmendmentDeficitInitiated, 
+	         AmendDeficitInitiatedReasTo, 
+	         AmendmentCorrectedByUserId, 
+	         AmendmentRejectionReason, 
+	         IsAmendment, 
+	         AmendmentOriginalDeclartation,
 	      }
 
 
@@ -277,15 +286,36 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterEmail, 
 	         CasualImporterTel, 
 	         CasualImporterContact, 
-	         MamanStatusCode, 
-	         MamanErrorXml, 
 	         ItemsProcessTypesList, 
 	         IsClose, 
-	         MamanStatusName, 
 	         AcceptanceStatusName, 
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
-	         DepositionStatusCode,
+	         DepositionStatusCode, 
+	         CourierMasterId, 
+	         IsClosedForFollowUp, 
+	         FastIndividualProcessCode, 
+	         TotalInvoiceAmountInUSD, 
+	         IsPending902, 
+	         IsCourierMissingClassification, 
+	         MAWB, 
+	         IsPending900, 
+	         CourierPendingReasonList, 
+	         CargoDescription, 
+	         IsPaymentProtested, 
+	         FastIndividualProcessName, 
+	         AmendmentRequestNumber, 
+	         AmendmentStatus, 
+	         AmendmentissueDate, 
+	         AmendmentRemarks, 
+	         AmendmentDeficitInitiated, 
+	         AmendDeficitInitiatedReasTo, 
+	         AmendmentCorrectedByUserId, 
+	         AmendmentRejectionReason, 
+	         IsAmendment, 
+	         AmendmentOriginalDeclartation, 
+	         AmendmentCorrectedByUserName, 
+	         AmendmentStatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -779,16 +809,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CasualImporterContact = entityPM.CasualImporterContact;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanStatusCode))
-            {
-				entityPOCO.MamanStatusCode = entityPM.MamanStatusCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanErrorXml))
-            {
-				entityPOCO.MamanErrorXml = entityPM.MamanErrorXml;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemsProcessTypesList))
             {
 				entityPOCO.ItemsProcessTypesList = entityPM.ItemsProcessTypesList;
@@ -807,6 +827,61 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
             {
 				entityPOCO.DepositionStatusCode = entityPM.DepositionStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentProtested))
+            {
+				entityPOCO.IsPaymentProtested = entityPM.IsPaymentProtested;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRequestNumber))
+            {
+				entityPOCO.AmendmentRequestNumber = entityPM.AmendmentRequestNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentStatus))
+            {
+				entityPOCO.AmendmentStatus = entityPM.AmendmentStatus;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentissueDate))
+            {
+				entityPOCO.AmendmentissueDate = entityPM.AmendmentissueDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRemarks))
+            {
+				entityPOCO.AmendmentRemarks = entityPM.AmendmentRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDeficitInitiated))
+            {
+				entityPOCO.AmendmentDeficitInitiated = entityPM.AmendmentDeficitInitiated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendDeficitInitiatedReasTo))
+            {
+				entityPOCO.AmendDeficitInitiatedReasTo = entityPM.AmendDeficitInitiatedReasTo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentCorrectedByUserId))
+            {
+				entityPOCO.AmendmentCorrectedByUserId = entityPM.AmendmentCorrectedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRejectionReason))
+            {
+				entityPOCO.AmendmentRejectionReason = entityPM.AmendmentRejectionReason;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAmendment))
+            {
+				entityPOCO.IsAmendment = entityPM.IsAmendment;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentOriginalDeclartation))
+            {
+				entityPOCO.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1305,16 +1380,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CasualImporterContact = entityPOCO.CasualImporterContact;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanStatusCode))
-            {
-					entityPM.MamanStatusCode = entityPOCO.MamanStatusCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanErrorXml))
-            {
-					entityPM.MamanErrorXml = entityPOCO.MamanErrorXml;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemsProcessTypesList))
             {
 					entityPM.ItemsProcessTypesList = entityPOCO.ItemsProcessTypesList;
@@ -1333,6 +1398,61 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositionStatusCode))
             {
 					entityPM.DepositionStatusCode = entityPOCO.DepositionStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPaymentProtested))
+            {
+					entityPM.IsPaymentProtested = entityPOCO.IsPaymentProtested;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentRequestNumber))
+            {
+					entityPM.AmendmentRequestNumber = entityPOCO.AmendmentRequestNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentStatus))
+            {
+					entityPM.AmendmentStatus = entityPOCO.AmendmentStatus;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentissueDate))
+            {
+					entityPM.AmendmentissueDate = entityPOCO.AmendmentissueDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentRemarks))
+            {
+					entityPM.AmendmentRemarks = entityPOCO.AmendmentRemarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentDeficitInitiated))
+            {
+					entityPM.AmendmentDeficitInitiated = entityPOCO.AmendmentDeficitInitiated;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendDeficitInitiatedReasTo))
+            {
+					entityPM.AmendDeficitInitiatedReasTo = entityPOCO.AmendDeficitInitiatedReasTo;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentCorrectedByUserId))
+            {
+					entityPM.AmendmentCorrectedByUserId = entityPOCO.AmendmentCorrectedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentRejectionReason))
+            {
+					entityPM.AmendmentRejectionReason = entityPOCO.AmendmentRejectionReason;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAmendment))
+            {
+					entityPM.IsAmendment = entityPOCO.IsAmendment;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentOriginalDeclartation))
+            {
+					entityPM.AmendmentOriginalDeclartation = entityPOCO.AmendmentOriginalDeclartation;
             }
 
 		}
@@ -1826,16 +1946,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CasualImporterContact = entityPM.CasualImporterContact;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanStatusCode))
-            {
-                oldEntityPM.MamanStatusCode = entityPM.MamanStatusCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanErrorXml))
-            {
-                oldEntityPM.MamanErrorXml = entityPM.MamanErrorXml;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemsProcessTypesList))
             {
                 oldEntityPM.ItemsProcessTypesList = entityPM.ItemsProcessTypesList;
@@ -1854,6 +1964,61 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
             {
                 oldEntityPM.DepositionStatusCode = entityPM.DepositionStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentProtested))
+            {
+                oldEntityPM.IsPaymentProtested = entityPM.IsPaymentProtested;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRequestNumber))
+            {
+                oldEntityPM.AmendmentRequestNumber = entityPM.AmendmentRequestNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentStatus))
+            {
+                oldEntityPM.AmendmentStatus = entityPM.AmendmentStatus;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentissueDate))
+            {
+                oldEntityPM.AmendmentissueDate = entityPM.AmendmentissueDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRemarks))
+            {
+                oldEntityPM.AmendmentRemarks = entityPM.AmendmentRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDeficitInitiated))
+            {
+                oldEntityPM.AmendmentDeficitInitiated = entityPM.AmendmentDeficitInitiated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendDeficitInitiatedReasTo))
+            {
+                oldEntityPM.AmendDeficitInitiatedReasTo = entityPM.AmendDeficitInitiatedReasTo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentCorrectedByUserId))
+            {
+                oldEntityPM.AmendmentCorrectedByUserId = entityPM.AmendmentCorrectedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentRejectionReason))
+            {
+                oldEntityPM.AmendmentRejectionReason = entityPM.AmendmentRejectionReason;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAmendment))
+            {
+                oldEntityPM.IsAmendment = entityPM.IsAmendment;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentOriginalDeclartation))
+            {
+                oldEntityPM.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
             }
 			
 		}
@@ -1936,6 +2101,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CasualImporterContact)) //T4 find type == nText 
             {
                 entityPM.CasualImporterContact = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CasualImporterContact));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRemarks)) //T4 find type == nText 
+            {
+                entityPM.AmendmentRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendDeficitInitiatedReasTo)) //T4 find type == nText 
+            {
+                entityPM.AmendDeficitInitiatedReasTo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendDeficitInitiatedReasTo));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRejectionReason)) //T4 find type == nText 
+            {
+                entityPM.AmendmentRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRejectionReason));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

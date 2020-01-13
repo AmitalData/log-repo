@@ -2,6 +2,7 @@
 using Logitude.Customs.Def.ClosedTable;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -40,7 +41,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             this._InterfaceDetails = MyInterfaceDetails;
             
         }
-        public void Run(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
+        public void Run(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository, int tenant)
         {
 
 
@@ -68,7 +69,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 
 
-                _CommunicationLog = Communications.GetCommunicationLog(1, this._AnalyzeQueue.CommunicationLogId);
+                _CommunicationLog = Communications.GetCommunicationLog(tenant, this._AnalyzeQueue.CommunicationLogId);
                 if (_CommunicationLog == null)
                 {
                     throw new Exception("Cannnot GetCommunicationLog");
@@ -84,6 +85,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 LogMessagingUtil.Instance.Clear();
                 _AnalyzeResultModel = this.AnalyzeData(communicationsData);
                 ;
+                _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel(); 
+                LogMessagingUtil.Instance.AppendLine(ProxyUtil.JsonConvertSerialize(_AnalyzeResultModel));
                 UpdateAnlayzeQ();
             }
 
@@ -109,6 +112,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         private void UpdateAnlayzeQ()
         {
+            _AnalyzeQueue = _AnalyzeQueue ?? new AnalyzeQueue();
             if (_CommunicationLog != null)
             {
 
@@ -119,7 +123,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 myCommunicationLog.CommunicationStatusTypeCode = _AnalyzeResultModel.MyCommStatusEnum.ToString();
                 myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
                 myCommunicationLog.Logs = _AnalyzeResultModel.ErrorMessage ?? "" + Environment.NewLine + LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
-
+                myCommunicationLog.ExceptionMessage = _AnalyzeQueue.ErrorMessage;
                 myCommunicationLog.EntityReference = _AnalyzeResultModel.EntityReference;
                 if (!string.IsNullOrWhiteSpace(_AnalyzeResultModel.EntityID) &&
                     !string.IsNullOrWhiteSpace(_AnalyzeResultModel.ObjectTableID))

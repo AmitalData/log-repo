@@ -6,7 +6,7 @@ declare var dragger: any;
 export class LogitudeWindow {
     public Width: number = 750;
     public Height: number = 500;
-    //public Title: string = null;
+    public Title: string = null;
     public TitleIcon: string = null;
     public CustomTitleIcon: string = null;
     public WindowIndex: number = null;
@@ -51,6 +51,8 @@ export class LogitudeWindow {
 
     private ComponentRef: any = null;
     private InstanceComponent: LogitudeWindowTemplateComponent = null;
+    parentWindow:LogitudeWindow;
+
     public Show(myContent: any) {
         if (myContent != null) {
             var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
@@ -63,6 +65,7 @@ export class LogitudeWindow {
 
             if (this.CurrentSession.CurrentWindow) {
                 this.IsOverWindow = true;
+                this.parentWindow = SessionLocator.SelectedSession.CurrentWindow;
             }
 
             if (this.IsOverAll) {
@@ -125,6 +128,7 @@ export class LogitudeWindow {
 
                 if (this.CurrentSession.CurrentWindow != null) {
                     this.IsOverWindow = true;
+                    this.parentWindow = SessionLocator.SelectedSession.CurrentWindow;
 
                     if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
                         this.IsSameWindowSize = true;
@@ -195,18 +199,6 @@ export class LogitudeWindow {
             this.InstanceComponent.ShowCloseButton = isVisible;
         }
     }
-
-
-    private title: string = null;
-    get Title() { return this.title; }
-    set Title(newValue: string) {
-        this.title = newValue;
-        if (this.InstanceComponent) {
-            this.InstanceComponent.Title = newValue;
-        }
-    }
-
-
 }
 
 @Component({
@@ -244,8 +236,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public HelpText: string = null;
     public RTL: boolean = false;
     public BottomBorderForTitle: string = "none";
-    public IsHideWindowMargin: boolean = false;
-
+    public IsHideWindowMargin: any;/// jit problem after khalid revert code ?!?!?
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
 

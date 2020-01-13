@@ -56,7 +56,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
     public class AnalyzeQueueUtil
     {
 
-        public AnalyzeQueue SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, int tenant, InterfaceDetails defInterfaceDetail)
+        public AnalyzeQueue SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, int tenant, string Communicationsettings, InterfaceDetails defInterfaceDetail
+            ,AnalyzeResultModel analyzeResultModel=null)
         {
             AnalyzeQueue analyzeQueue = null;
             //var defInterfaceDetail = (new CustomsPartnerFtpDetails()).GetAllInterfaceDetails().First(r => r.Code == customsPartnerFtpPM.InterfaceName);
@@ -64,8 +65,15 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             {
 
                 //ProccessReceivedMessage();
-
+                fileName = fileName ?? "";
                 fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
+                bool maxAsFeatue = true;
+                if (maxAsFeatue)
+                {
+                    int maxFileName = 120;
+                    fileName = fileName.Substring(0, Math.Min(fileName.Length, maxFileName));
+
+                }
                 var analyzeQueueReposiory = new AnalyzeQueueRepository();
 
                 analyzeQueue = new AnalyzeQueue()
@@ -84,21 +92,59 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     FileSize = System.Text.Encoding.UTF8.GetBytes(" ").Length,
                     FileName = fileName,
 
-                    CommunicationLogId = BuildCommunicationLog(messageData, tenant, defInterfaceDetail)
+                    CommunicationLogId = BuildCommunicationLog(messageData, tenant, defInterfaceDetail, Communicationsettings,analyzeResultModel)
                 };
 
                 analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
                 analyzeQueueReposiory.Add(analyzeQueue);
                 analyzeQueueReposiory.SubmitChanges();
-
+                EnqueueAnalyzeQueue2MessageQueue(analyzeQueue.Id, defInterfaceDetail.Code, defInterfaceDetail.Partner, tenant);
                 scope.Complete();
             }
             return analyzeQueue;
         }
+        private void EnqueueAnalyzeQueue2MessageQueue(string analyzeQueueID, string InterfaceCode, string InterfacePartner, int tenant)
+        {
+            try
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), 0);
+                queueservice.Send(new Dictionary<string, string>() {
+                    { "AnalyzeQueueID", analyzeQueueID },
+                    { "InterfaceCode", InterfaceCode },
+                    { "InterfacePartner", InterfacePartner},
+                    { "Tenant", tenant.ToString() }
+                });
 
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send FTP CommunicationLog Queue", null, null);
+            }
+        }
+        public string GetCommSetting(int tenant ,string defInterfaceDetailCode,string loggedContactId ,CourierWEBAPICommSettings settings)
+        {
+            
+            if (string.IsNullOrWhiteSpace( loggedContactId ))
+            {
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
 
+                loggedContactId = loggedContact.Id;
+            }
+            settings = settings ?? new CourierWEBAPICommSettings()
+            {
+                MessageCode = defInterfaceDetailCode,
+                Tenant = tenant,
+                LoggedContactId = loggedContactId
+            };
+            var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+            return settingsData;
+        }
 
-        public string BuildCommunicationLog(byte[] bytearray, int tenant, InterfaceDetails defInterfaceDetail)///using  by SendWEBAPIMessage2MamanWRWR
+        public string BuildCommunicationLog(byte[] bytearray, int tenant, InterfaceDetails defInterfaceDetail,
+            string Communicationsettings,
+            AnalyzeResultModel analyzeResultModel=null)///using  by SendWEBAPIMessage2MamanWRWR
         {
 
 
@@ -111,7 +157,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
 
-
+            
 
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
@@ -121,14 +167,19 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 loggedContactId = loggedContact.Id;
             }
 
-            //.PostIt("", "F_unitedf", "Unit2019", data);
-            var settings = new Courier2MamanCommSettings()
+            if (String.IsNullOrWhiteSpace(Communicationsettings))
             {
-                MessageCode = defInterfaceDetail.Code,
-                Tenant = tenant,
-                LoggedContactId = loggedContactId
-            };
-            var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+                Communicationsettings = GetCommSetting(tenant, defInterfaceDetail.Code, loggedContactId, null);
+            }
+
+            //.PostIt("", "F_unitedf", "Unit2019", data);
+            //settings = settings ?? new Courier2MamanCommSettings()
+            //{
+            //    MessageCode = defInterfaceDetail.Code,
+            //    Tenant = tenant,
+            //    LoggedContactId = loggedContactId
+            //};
+            //var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
             Document document = new Document()
             {
@@ -150,9 +201,12 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = DateTime.UtcNow,
-                //To = ,
-                From = CustomsPartnerFtpDetails.PartnerCode_Mamam + "," + CustomsPartnerFtpDetails.InterfaceName_ECSTB,
-                InOut = "O",
+                To = def.Partner,
+                From =
+                //CustomsPartnerFtpDetails.PartnerCode_Mamam + "," + CustomsPartnerFtpDetails.InterfaceName_ECSTB,
+                def.Partner,//+","+ def.Code
+
+                InOut = def.TypeCode[0].ToString(), //"O",
                 //EntityId = declarationId,
                 //ObjectTableId = objectTableId,
                 Subject = defInterfaceDetail.Subject,
@@ -163,10 +217,23 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 DocumentId = document.Id,
                 CreateDateUTC = DateTime.UtcNow,
                 CreatedByUserId = loggedContactId,
-                LogSettings = settingsData,
+                LogSettings = /*settingsData*/Communicationsettings,
                 //QueueName = def.QueueName //SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
             };
 
+            analyzeResultModel = analyzeResultModel ?? new AnalyzeResultModel();
+            if (!string.IsNullOrWhiteSpace(analyzeResultModel.EntityID) &&
+                    !string.IsNullOrWhiteSpace(analyzeResultModel.ObjectTableID))
+            {
+
+                commLog.ObjectTableId = analyzeResultModel.ObjectTableID;
+                commLog.EntityId = analyzeResultModel.EntityID;
+                LogMessagingUtil.Instance.AppendLine($".ObjectTableId = {analyzeResultModel.ObjectTableID}");
+                LogMessagingUtil.Instance.AppendLine($".EntityId = {analyzeResultModel.EntityID}");
+                LogMessagingUtil.Instance.AppendLine($".EntityReference = {analyzeResultModel.EntityReference}");
+
+
+            }
             communicationLogRepository.Add(commLog);
             communicationLogRepository.SubmitChanges();
 

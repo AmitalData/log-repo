@@ -26,6 +26,7 @@ import { ApiQueryFilters, FilterItem } from '../../../../../../Infrastructure/Da
 import { CouriersVatPMService } from '../../../../../../Customs/Services/StandardPMs/CouriersVatPMService';
 import { CouriersVatExtendedPMService } from '../../../../../../Customs/Services/ExtendedPMs/CouriersVatExtendedPMService';
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
+import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -160,14 +161,14 @@ export class ConsigmentTabContentComponent
 
         //**
         //this.SetDateVisibilty(); // this make entity dirty on tab loaded, the following should solve it
-        if (this.CargoTypeCode == "17") {
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
-        }
-        else {
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
-        }
+        //if (this.CargoTypeCode == "17") {
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
+        //}
+        //else {
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
+        //}
         //**
 
 
@@ -186,16 +187,16 @@ export class ConsigmentTabContentComponent
     }
 
     SetDateVisibilty() {
-        if (this.CargoTypeCode == "17") {
-            this.ThirdCargoID = null;
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
-        }
-        else {
-            this.CargoDate = null;
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
-        }
+        //if (this.CargoTypeCode == "17") {
+        //    this.ThirdCargoID = null;
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
+        //}
+        //else {
+        //    this.CargoDate = null;
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
+        //}
     }
 
     SetScreenFieldsEditability() {
@@ -450,6 +451,33 @@ export class ConsigmentTabContentComponent
         this.ConsimentPackages.Insert(item);
         //this.CurrentSession.ResetRowIndex();
     }
+
+    OpenEditDangerWindow(item) {
+        if (!AppTool.IsNullOrEmpty(item)) {
+             var windowArgs: any = {};
+            windowArgs.ConsignmentPackagesDangerPM = item.EntityPM;
+            windowArgs.Declaration = this.declarationPM;
+             
+            windowArgs.Parent = item;
+            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+             if (item.EntityPM.LineNumber != item.EntityPM.entityParentPM.consignmentPackages[0].LineNumber) {
+                windowArgs.IsDisplayOnlyContact = true;
+            }
+            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackagesDanger");
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 900;
+            logWindow.Height = 300;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ConsigmentPackagesDanger/ConsigmentPackagesDangerComponent');
+
+
+        }
+    }
+
+ 
     RemovePackageButton(item) {
 
         if (!AppTool.IsNullOrEmpty(item)) {
@@ -491,7 +519,7 @@ export class ConsigmentTabContentComponent
 
     MasterBOLRequestMethod() {
         if (this.IsDisplayOnly) {
-            return; 
+            //return; 
         }
 
         let customsRequestMenuService = new CustomsRequestMenuService();
@@ -536,7 +564,7 @@ export class ConsigmentTabContentComponent
 
     CourierBOLRequestMethod() {
         if (this.IsDisplayOnly) {
-            return;
+            //return;
         }
 
         if (!AppTool.IsNullOrEmpty(this.SecondCargoID)) {
@@ -580,8 +608,8 @@ export class ConsigmentTabContentComponent
     }
 
     CargoQueryRequestMethod() {
-        if (this.IsDisplayOnly) {
-            return;
+        if (this.IsDisplayOnly && this.EntityPM.CargoTypeCode != "20") {
+            //return;
         }
 
         if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
@@ -762,6 +790,12 @@ export class ConsigmentPackageModel extends BaseComponent {
 
     public get GrossMassMeasure() { return this.EntityPM.GrossMassMeasure; }
     public set GrossMassMeasure(newValue: number) { this.EntityPM.GrossMassMeasure = newValue; }
+
+    public get GrossMassMeasureTypeCode() { return this.EntityPM.GrossMassMeasureTypeCode; }
+    public set GrossMassMeasureTypeCode(newValue: string) { this.EntityPM.GrossMassMeasureTypeCode = newValue; }
+
+    public get GrossMassMeasureTypeName() { return this.EntityPM.GrossMassMeasureTypeName; }
+    public set GrossMassMeasureTypeName(newValue: string) { this.EntityPM.GrossMassMeasureTypeName = newValue; }
 
     public get PackageQuantity() { return this.EntityPM.PackageQuantity; }
     public set PackageQuantity(newValue: number) { this.EntityPM.PackageQuantity = newValue; }

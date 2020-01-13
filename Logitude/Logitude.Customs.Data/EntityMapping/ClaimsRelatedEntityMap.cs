@@ -78,6 +78,12 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DepositingAmount).HasColumnName("DepositingAmount").HasPrecision(16, 2);
 
             this.Property(t => t.RefundAmount).HasColumnName("RefundAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.ContinuousRequestTypeCode).HasColumnName("ContinuousRequestTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.Explanation).HasColumnName("Explanation").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.Note).HasColumnName("Note").HasMaxLength(256).IsUnicode(true);
         }
     }
 }

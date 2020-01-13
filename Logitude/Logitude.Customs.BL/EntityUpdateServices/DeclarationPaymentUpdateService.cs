@@ -13,6 +13,7 @@ using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Customs.BL.Helpers;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -21,7 +22,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void UpdateComposition(DeclarationPaymentPM entityPM)
         {
             DeclarationPaymentMethodUpdateService declarationPaymentMethodUpdateService = new DeclarationPaymentMethodUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
-            declarationPaymentMethodUpdateService.UpdateMulti(entityPM.DeclarationPaymentMethods,entityPM.DeletedDeclarationPaymentMethods,entityPM,false);
+            declarationPaymentMethodUpdateService.UpdateMulti(entityPM.DeclarationPaymentMethods, entityPM.DeletedDeclarationPaymentMethods, entityPM, false);
 
             DeclarationPaymentProtestUpdateService declarationPaymentProtestUpdateService = new DeclarationPaymentProtestUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
             declarationPaymentProtestUpdateService.UpdateMulti(entityPM.DeclarationPaymentProtests, entityPM.DeletedDeclarationPaymentProtests, entityPM, false);
@@ -70,10 +71,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             bool isDeclarationPaymentMethodDelete = (from a in entityPM.DeletedDeclarationPaymentMethods
                                                      select a).Any();
-
-            if (isDeclarationPaymentMethodInsert || isDeclarationPaymentMethodDelete)
+            bool theCountOf_DeclarationPaymentProtest_Changed =
+                entityPM.DeletedDeclarationPaymentProtests.Any() ||
+                entityPM.DeclarationPaymentProtests.Any(r => r.ChangeSetOp == ChangeSetOperation.Delete) ||
+                entityPM.DeclarationPaymentProtests.Any(r => r.ChangeSetOp == ChangeSetOperation.Insert)
+                ;
+            bool theCountOf_DeclarationPaymentMethod_Changed = (isDeclarationPaymentMethodInsert || isDeclarationPaymentMethodDelete);
+            if (theCountOf_DeclarationPaymentMethod_Changed || theCountOf_DeclarationPaymentProtest_Changed)
             {
                 SubmitChanges();
+            }
+            if (theCountOf_DeclarationPaymentProtest_Changed)
+            {
+                bool fake_until_you_make_it = false;
+                if (fake_until_you_make_it)
+                {
+                    (new Declaration()).IsPaymentProtested = true;//HOW IS CHANGING IsPaymentProtested>LOOK DOWN
+                }
+                //55160	עדכון סימון הצהרה כהוגשה אגב מחאה
+                //please do not set the ischanged>DUE THAT IS SP 
+                var repoFast = new DeclarationPaymentProtestRepository(entityPM.Tenant);
+                bool anyDeclarationPaymentProtest = repoFast.AnyDeclarationPaymentProtest(entityPM.DeclarationId, entityPM.Tenant);
+                CustomsStoredProcedures.Declaration_SetIsPaymentProtested(entityPM.DeclarationId, entityPM.Tenant, anyDeclarationPaymentProtest);
+
+            }
+            //if (isDeclarationPaymentMethodInsert || isDeclarationPaymentMethodDelete)
+
+            if (theCountOf_DeclarationPaymentMethod_Changed)
+            {
+                ///SubmitChanges();//moveup 
                 ICustomContext context = MainContext as CustomContext;
                 DeclarationPaymentMethodRepository declarationPaymentMethodRepository = new DeclarationPaymentMethodRepository(context);
                 List<DeclarationPaymentMethod> declarationPaymentMethods = declarationPaymentMethodRepository.GetMulti(new DeclarationPaymentKeys() { DeclarationId = entityPM.DeclarationId });
@@ -102,6 +128,5 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         }
 
-        
     }
 }

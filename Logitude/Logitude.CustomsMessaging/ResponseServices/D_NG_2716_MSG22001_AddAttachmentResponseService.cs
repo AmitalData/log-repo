@@ -23,7 +23,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
-
+using Logitude.Server.Tools.Utils;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -61,6 +62,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             base.OnRequestFail(customResponse, requestParams);
         }
         public override void Update(D_NG_2716_MSG22001_AddAttachmentResponse customResponse, D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam requestParams)
+        {
+            bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:2715/UDLT"));
+            string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
+            bool SyncUpdateDeclarationCourier_DocumentStatusCode = true;//In ECOMMERCE(DSV) 2 docment per dec - force Sync UpdateDeclarationCourierStatus
+            if (SyncUpdateDeclarationCourier_DocumentStatusCode && !String.IsNullOrWhiteSpace(requestParams.DeclaretionId))
+            {
+                var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(requestParams.Tenant);
+                var connectedDeclarationPM = declarationQueryService.GetSingle(requestParams.DeclaretionId, false, false);
+                if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
+                {
+                    key = ProcessLockTableUtil.Instance.GetKey4UpdateDeclarationCourier_DocumentStatusCode(connectedDeclarationPM.Id, requestParams.Tenant);
+                }
+
+            }
+
+            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
+            {
+                RealUpdate(customResponse, requestParams);
+            }
+        }
+
+        
+
+        private void RealUpdate(D_NG_2716_MSG22001_AddAttachmentResponse customResponse, D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam requestParams)
         {
             this.MyResponseData = new AddAttachmentResponseData()
             {
@@ -139,7 +164,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                         foreach (var customsDocumentsTicket in customsDocumentsTicketPMList)
                         {
-                            if(!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
+                            if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
                             {
                                 customsDocumentsTicket.VerificationStatusTypeCode = "8";
                                 customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
@@ -147,7 +172,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-                    
+
                     //else
                     {
                         _MyCustomsDocumentPM.DocumentStatusCode = "1"; // Sent
@@ -189,10 +214,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LogMessagingUtil.Instance.AppendLine("LoadTestSendMessageToQueue  >>> LoadTest");
                 _MyCustomsDocumentPM.DocumentRemarks = "LoadTest";
             }
-            
+
             LogMessagingUtil.Instance.AppendLine("_MyCustomsDocumentPM.CustomsDocId == " + _MyCustomsDocumentPM.CustomsDocId);
             LogMessagingUtil.Instance.AppendLine("_MyCustomsDocumentPM.DocumentStatusCode == " + _MyCustomsDocumentPM.DocumentStatusCode);
-            EnshureIsPartOfDeclaration(context,requestParams.DeclaretionId);
+            EnshureIsPartOfDeclaration(context, requestParams.DeclaretionId);
             myCustomsDocumentUpdateService.Update(_MyCustomsDocumentPM, true);
             UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
             this.MyResponseData.ApplicationID = _MyCustomsDocumentPM.CustomsDocId;
@@ -230,7 +255,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     AppicationId = requestParams.DeclaretionId,
                     RequestVIA = SendRequestVIA.WebServiceBatch,
                     LoggingEnabled = true,
-                    InterfaceTypeCode= "2750",
+                    InterfaceTypeCode = "2750",
                     MainInterfaceCode = "2750",
                     LoggingEntityId = requestParams.DeclaretionId,
                     //LoggingEntityReference = this._DeclarationPM.DeclarationNumber;
@@ -265,14 +290,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-                
+
 
             }
-
-
-
         }
 
+        
         private void EnshureIsPartOfDeclaration(ICustomContext context, string declaretionId)
         {
             if (String.IsNullOrWhiteSpace(declaretionId)) return;
@@ -331,11 +354,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status = "V";
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(status))
+
+                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+
+                string CourierDeclarationstatus = null;
+                if (currentDeclarationCourierStatusPM != null)
                 {
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, false, false);
+                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+                    string prevVal = null;
+                    string currvVal = null;
+
+                    prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                    calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
+                    currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+
+                    if (prevVal != currvVal)
+                    {
+                        CourierDeclarationstatus = currvVal;
+                    }
+                    LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.CourierDeclarationStatusCode: " + currentDeclarationCourierStatusPM.CourierDeclarationStatusCode);
+                }
+
+                if (!string.IsNullOrWhiteSpace(status) || !string.IsNullOrWhiteSpace(CourierDeclarationstatus))
+                {
+
                     if (currentDeclarationCourierStatusPM == null)
                     {
                         currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
@@ -351,7 +395,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
-                    currentDeclarationCourierStatusPM.DocumentStatusCode = status;
+                    LogMessagingUtil.Instance.AppendLine($"D_NG_2716_MSG22001_AddAttachmentResponseService UpdateDeclarationCourierStatus currentDeclarationCourierStatusPM.DocumentStatusCode = {status}");
+                    if(!string.IsNullOrWhiteSpace(status))currentDeclarationCourierStatusPM.DocumentStatusCode = status;
+                    if(!string.IsNullOrWhiteSpace(CourierDeclarationstatus))currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = CourierDeclarationstatus;
                     declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 }
             }

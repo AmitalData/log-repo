@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -24,7 +24,7 @@ export class FieldTemplateComponent {
     }
 
     public Run(args: any) {
-        this.Entity = args['Entity'];
+         this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];
         this.ObjectTableName = args['ObjectTableName'];
         this.IsSpotLightTemplate = args['IsSpotLightTemplate'];
@@ -69,15 +69,35 @@ export class FieldTemplateComponent {
     }
 
     OpenCourierMaster() {
-        this.courierMasterService.getCourierMasterByDeclarationId(this.Entity.Id).subscribe((response: ServiceResponse) => {
-            if (response) {
-                if (!response.HasError) {
-                    this.EditEntity("Customs.CourierMaster", response.Result.Id, null, "COGN");
-                }
-            }
-         
+        //static entityResourceService: EntityResourceService = new EntityResourceService();
 
-        });
+        //entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+            //entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
+            this.courierMasterService.getCourierMasterByDeclarationId(this.Entity.Id).subscribe((response: ServiceResponse) => {
+                if (response) {
+                    if (!response.HasError) {
+                        //this.EditEntity("Customs.CourierMaster", response.Result.Id, null, "COGN");
+                        var windowArgs: any = {};
+                        windowArgs.CurrentEntity = response.Result;
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 1500;
+                        logWindow.Height = 1000;
+                        logWindow.WindowArgs = windowArgs;
+                        logWindow.ShowCloseButton = true;
+                        //logWindow.IsHideHeader = true;
+                        logWindow.IsFillScreen = true;
+                        //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+                        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                        logWindow.WindowClosed.subscribe(($event1: any) => {
+                            //this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
+                        });
+
+                    }
+                }
+                });
+            //});
+        //});
+
     }
 
 
@@ -94,7 +114,6 @@ export class FieldTemplateComponent {
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
         editWindow.WindowClosed.subscribe(res => {
-
 
 
         });

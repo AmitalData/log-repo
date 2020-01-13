@@ -13,6 +13,7 @@ import {DeclarationTaxPM} from './DeclarationTaxPM';
 import {DeclarationConstraintPM} from './DeclarationConstraintPM';
 import {DeclarationErrorViewPM} from './DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from './DeclarationConsAcceptancePM';
+import {DecDangersContactPM} from './DecDangersContactPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -899,16 +900,6 @@ export class DeclarationPM {
     public set CasualImporterContact(newValue: string) { if (this.casualImporterContact != newValue) { this.casualImporterContact = newValue; this.MarkAsDirty("CasualImporterContact"); } }
        
 	 
-    private mamanStatusCode: string;
-    public get MamanStatusCode() { return this.mamanStatusCode; }
-    public set MamanStatusCode(newValue: string) { if (this.mamanStatusCode != newValue) { this.mamanStatusCode = newValue; this.MarkAsDirty("MamanStatusCode"); } }
-       
-	 
-    private mamanErrorXml: string;
-    public get MamanErrorXml() { return this.mamanErrorXml; }
-    public set MamanErrorXml(newValue: string) { if (this.mamanErrorXml != newValue) { this.mamanErrorXml = newValue; this.MarkAsDirty("MamanErrorXml"); } }
-       
-	 
     private itemsProcessTypesList: string;
     public get ItemsProcessTypesList() { return this.itemsProcessTypesList; }
     public set ItemsProcessTypesList(newValue: string) { if (this.itemsProcessTypesList != newValue) { this.itemsProcessTypesList = newValue; this.MarkAsDirty("ItemsProcessTypesList"); } }
@@ -917,11 +908,6 @@ export class DeclarationPM {
     private isClose: boolean;
     public get IsClose() { return this.isClose; }
     public set IsClose(newValue: boolean) { if (this.isClose != newValue) { this.isClose = newValue; this.MarkAsDirty("IsClose"); } }
-       
-	 
-    private mamanStatusName: string;
-    public get MamanStatusName() { return this.mamanStatusName; }
-    public set MamanStatusName(newValue: string) { if (this.mamanStatusName != newValue) { this.mamanStatusName = newValue; this.MarkAsDirty("MamanStatusName"); } }
        
 	 
     private acceptanceStatusName: string;
@@ -942,6 +928,160 @@ export class DeclarationPM {
     private depositionStatusCode: string;
     public get DepositionStatusCode() { return this.depositionStatusCode; }
     public set DepositionStatusCode(newValue: string) { if (this.depositionStatusCode != newValue) { this.depositionStatusCode = newValue; this.MarkAsDirty("DepositionStatusCode"); } }
+       
+	 
+    private courierMasterId: string;
+    public get CourierMasterId() { return this.courierMasterId; }
+    public set CourierMasterId(newValue: string) { if (this.courierMasterId != newValue) { this.courierMasterId = newValue; this.MarkAsDirty("CourierMasterId"); } }
+       
+	 
+    private isClosedForFollowUp: boolean;
+    public get IsClosedForFollowUp() { return this.isClosedForFollowUp; }
+    public set IsClosedForFollowUp(newValue: boolean) { if (this.isClosedForFollowUp != newValue) { this.isClosedForFollowUp = newValue; this.MarkAsDirty("IsClosedForFollowUp"); } }
+       
+	 
+    private fastIndividualProcessCode: string;
+    public get FastIndividualProcessCode() { return this.fastIndividualProcessCode; }
+    public set FastIndividualProcessCode(newValue: string) { if (this.fastIndividualProcessCode != newValue) { this.fastIndividualProcessCode = newValue; this.MarkAsDirty("FastIndividualProcessCode"); } }
+       
+	 
+    private totalInvoiceAmountInUSD: number;
+    public get TotalInvoiceAmountInUSD() { return this.totalInvoiceAmountInUSD; }
+    public set TotalInvoiceAmountInUSD(newValue: number) { if (this.totalInvoiceAmountInUSD != newValue) { this.totalInvoiceAmountInUSD = newValue; this.MarkAsDirty("TotalInvoiceAmountInUSD"); } }
+       
+	 
+    private isPending902: boolean;
+    public get IsPending902() { return this.isPending902; }
+    public set IsPending902(newValue: boolean) { if (this.isPending902 != newValue) { this.isPending902 = newValue; this.MarkAsDirty("IsPending902"); } }
+       
+	 
+    private isCourierMissingClassification: boolean;
+    public get IsCourierMissingClassification() { return this.isCourierMissingClassification; }
+    public set IsCourierMissingClassification(newValue: boolean) { if (this.isCourierMissingClassification != newValue) { this.isCourierMissingClassification = newValue; this.MarkAsDirty("IsCourierMissingClassification"); } }
+       
+	 
+    private mAWB: string;
+    public get MAWB() { return this.mAWB; }
+    public set MAWB(newValue: string) { if (this.mAWB != newValue) { this.mAWB = newValue; this.MarkAsDirty("MAWB"); } }
+       
+	 
+    private isPending900: boolean;
+    public get IsPending900() { return this.isPending900; }
+    public set IsPending900(newValue: boolean) { if (this.isPending900 != newValue) { this.isPending900 = newValue; this.MarkAsDirty("IsPending900"); } }
+       
+	 
+    private courierPendingReasonList: string;
+    public get CourierPendingReasonList() { return this.courierPendingReasonList; }
+    public set CourierPendingReasonList(newValue: string) { if (this.courierPendingReasonList != newValue) { this.courierPendingReasonList = newValue; this.MarkAsDirty("CourierPendingReasonList"); } }
+       
+	 
+    private cargoDescription: string;
+    public get CargoDescription() { return this.cargoDescription; }
+    public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
+       
+	 
+    private isPaymentProtested: boolean;
+    public get IsPaymentProtested() { return this.isPaymentProtested; }
+    public set IsPaymentProtested(newValue: boolean) { if (this.isPaymentProtested != newValue) { this.isPaymentProtested = newValue; this.MarkAsDirty("IsPaymentProtested"); } }
+       
+	 
+    private fastIndividualProcessName: string;
+    public get FastIndividualProcessName() { return this.fastIndividualProcessName; }
+    public set FastIndividualProcessName(newValue: string) { if (this.fastIndividualProcessName != newValue) { this.fastIndividualProcessName = newValue; this.MarkAsDirty("FastIndividualProcessName"); } }
+       
+	 
+     
+	private decDangersContacts: DecDangersContactPM[];
+    get  DecDangersContacts() {
+        if (this.decDangersContacts == null) {
+            this.decDangersContacts = [];
+        }
+
+        return this.decDangersContacts;
+    }
+    set  DecDangersContacts(newValue: DecDangersContactPM[]) {
+        if (this.decDangersContacts != newValue) {
+            this.decDangersContacts = newValue;
+        }
+    }
+    public AddDecDangersContact(item: DecDangersContactPM) {
+        if (item != null) {
+            var index = this. DecDangersContacts.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DecDangersContacts.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDecDangersContact(item: DecDangersContactPM) {
+        if (item != null) {
+            var index = this. DecDangersContacts.indexOf(item);
+            if (index > -1) {
+                this. DecDangersContacts.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DecDangersContacts: Array<DecDangersContactPM>= [];
+     private amendmentRequestNumber: string;
+    public get AmendmentRequestNumber() { return this.amendmentRequestNumber; }
+    public set AmendmentRequestNumber(newValue: string) { if (this.amendmentRequestNumber != newValue) { this.amendmentRequestNumber = newValue; this.MarkAsDirty("AmendmentRequestNumber"); } }
+       
+	 
+    private amendmentStatus: string;
+    public get AmendmentStatus() { return this.amendmentStatus; }
+    public set AmendmentStatus(newValue: string) { if (this.amendmentStatus != newValue) { this.amendmentStatus = newValue; this.MarkAsDirty("AmendmentStatus"); } }
+       
+	 
+    private amendmentissueDate: Date;
+    public get AmendmentissueDate() { return this.amendmentissueDate; }
+    public set AmendmentissueDate(newValue: Date) { if (this.amendmentissueDate != newValue) { this.amendmentissueDate = newValue; this.MarkAsDirty("AmendmentissueDate"); } }
+       
+	 
+    private amendmentRemarks: string;
+    public get AmendmentRemarks() { return this.amendmentRemarks; }
+    public set AmendmentRemarks(newValue: string) { if (this.amendmentRemarks != newValue) { this.amendmentRemarks = newValue; this.MarkAsDirty("AmendmentRemarks"); } }
+       
+	 
+    private amendmentDeficitInitiated: boolean;
+    public get AmendmentDeficitInitiated() { return this.amendmentDeficitInitiated; }
+    public set AmendmentDeficitInitiated(newValue: boolean) { if (this.amendmentDeficitInitiated != newValue) { this.amendmentDeficitInitiated = newValue; this.MarkAsDirty("AmendmentDeficitInitiated"); } }
+       
+	 
+    private amendDeficitInitiatedReasTo: string;
+    public get AmendDeficitInitiatedReasTo() { return this.amendDeficitInitiatedReasTo; }
+    public set AmendDeficitInitiatedReasTo(newValue: string) { if (this.amendDeficitInitiatedReasTo != newValue) { this.amendDeficitInitiatedReasTo = newValue; this.MarkAsDirty("AmendDeficitInitiatedReasTo"); } }
+       
+	 
+    private amendmentCorrectedByUserId: string;
+    public get AmendmentCorrectedByUserId() { return this.amendmentCorrectedByUserId; }
+    public set AmendmentCorrectedByUserId(newValue: string) { if (this.amendmentCorrectedByUserId != newValue) { this.amendmentCorrectedByUserId = newValue; this.MarkAsDirty("AmendmentCorrectedByUserId"); } }
+       
+	 
+    private amendmentRejectionReason: string;
+    public get AmendmentRejectionReason() { return this.amendmentRejectionReason; }
+    public set AmendmentRejectionReason(newValue: string) { if (this.amendmentRejectionReason != newValue) { this.amendmentRejectionReason = newValue; this.MarkAsDirty("AmendmentRejectionReason"); } }
+       
+	 
+    private isAmendment: boolean;
+    public get IsAmendment() { return this.isAmendment; }
+    public set IsAmendment(newValue: boolean) { if (this.isAmendment != newValue) { this.isAmendment = newValue; this.MarkAsDirty("IsAmendment"); } }
+       
+	 
+    private amendmentOriginalDeclartation: string;
+    public get AmendmentOriginalDeclartation() { return this.amendmentOriginalDeclartation; }
+    public set AmendmentOriginalDeclartation(newValue: string) { if (this.amendmentOriginalDeclartation != newValue) { this.amendmentOriginalDeclartation = newValue; this.MarkAsDirty("AmendmentOriginalDeclartation"); } }
+       
+	 
+    private amendmentCorrectedByUserName: string;
+    public get AmendmentCorrectedByUserName() { return this.amendmentCorrectedByUserName; }
+    public set AmendmentCorrectedByUserName(newValue: string) { if (this.amendmentCorrectedByUserName != newValue) { this.amendmentCorrectedByUserName = newValue; this.MarkAsDirty("AmendmentCorrectedByUserName"); } }
+       
+	 
+    private amendmentStatusName: string;
+    public get AmendmentStatusName() { return this.amendmentStatusName; }
+    public set AmendmentStatusName(newValue: string) { if (this.amendmentStatusName != newValue) { this.amendmentStatusName = newValue; this.MarkAsDirty("AmendmentStatusName"); } }
        
 	 
 

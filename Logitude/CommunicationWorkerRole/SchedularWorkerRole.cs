@@ -158,15 +158,27 @@ namespace CommunicationWorkerRole
 
                 if (!General.IsUpdating())
                 {
-                    try
-                    {
-                        Tenant = 0;
-                        queueservice = new DbQueueService();
-                        queueservice.InitializeQueue("SchedularQueue", Tenant);
-                        var message = queueservice.Receive();
-                        LastActivity = DateTime.UtcNow;
-                        if (message != null && message.MessageValues != null)
-                        {
+                    ReceiveOnce();
+
+                }
+                else
+                {
+                    Thread.Sleep(60000);
+                }
+            }
+        }
+
+        public void ReceiveOnce()
+        {
+            try
+            {
+                Tenant = 0;
+                queueservice = new DbQueueService();
+                queueservice.InitializeQueue("SchedularQueue", Tenant);
+                var message = queueservice.Receive();
+                LastActivity = DateTime.UtcNow;
+                if (message != null && message.MessageValues != null)
+                {
 
                             try
                             {
@@ -231,25 +243,25 @@ namespace CommunicationWorkerRole
                                     }
 
 
-                                    //queueservice.Complete();
+                            //queueservice.Complete();
 
-                                    // Add New Queue for the executed WR
-                                }
-
-                                //queueservice.Complete();
-                                LogDoneItemInMemory();
-                            }
-                            catch (Exception ex)
-                            {
-
-                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
-                                queueservice.CompleteAsFailed();
-                            }
-
+                            // Add New Queue for the executed WR
                         }
+
+                        //queueservice.Complete();
+                        LogDoneItemInMemory();
                     }
                     catch (Exception ex)
                     {
+
+                        ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
+                        queueservice.CompleteAsFailed();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
 
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Schedular worker role start", null, null);
                         Thread.Sleep(10000);
@@ -408,6 +420,39 @@ namespace CommunicationWorkerRole
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Schedular Worker Role start", null, null);
             }
+        }
+    }
+
+
+
+    /// <summary>
+    /// Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('CustomsSchedularWR','CustomsSchedularWR');
+    //  Insert into BATCHSERVICESDEFINITIONMODS(CODE, INACTIVE, NUMBEROFTHREADS) values('CustomsSchedularWR',0,1);
+    /// </summary>
+    public class CustomsSchedularWR
+    : Logitude.Server.Tools.WorkerEntryPointDoneLog
+    {
+        SchedularWorkerRole _SchedularWorkerRole;
+        public CustomsSchedularWR()
+        {
+            _SchedularWorkerRole = new SchedularWorkerRole();
+        }
+        public override void StartMe()
+        {
+            
+        }
+
+        bool _Start = false;
+        public override void WorkOnce()
+        {
+            if (!_Start)
+            {
+                _SchedularWorkerRole.OnStart();
+                _Start = true;
+            }
+            _SchedularWorkerRole.ReceiveOnce();
+
+
         }
     }
 }

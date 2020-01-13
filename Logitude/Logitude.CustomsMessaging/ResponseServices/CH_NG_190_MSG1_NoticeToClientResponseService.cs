@@ -23,7 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
-using UnifreightIIG.Common.MessageLib.PhysicalCheck;
+using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -313,6 +313,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     physicalCheck.IsComprehensiveCheck = (bool)NoticeToClient.IsComprehensiveCheck;
                 }
+                physicalCheck.CheckTypeCode = NoticeToClient.CheckType.ToString();
+                physicalCheck.VehicleChassisNumber = NoticeToClient.VehicleChassisNumber;
 
                 //<--- Yuval Chalup 19.11.2015 TASK-17450 - CHANGE FROM:
                 //if (!string.IsNullOrWhiteSpace(NoticeToClient.declarationID))

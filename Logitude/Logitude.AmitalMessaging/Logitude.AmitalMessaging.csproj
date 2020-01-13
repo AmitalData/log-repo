@@ -56,6 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customs\CustomFile\CourierStatus\LOGICOURIERSTATUS.cs">
+      <DependentUpon>LOGICOURIERSTATUS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Customs\CustomFile\FileAdditionalData.cs" />
     <Compile Include="Customs\CustomFile\CargoQueryContext.cs" />
     <Compile Include="Customs\CustomFile\CellFile\LOGICELLFILE.cs">
@@ -157,6 +160,9 @@
     <None Include="Customs\CustomFile\CommDecFile\LOGICOMMDEC.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Customs\CustomFile\CourierStatus\LOGICOURIERSTATUS.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Customs\CustomFile\CustomCertificatesRequest.dtd" />
     <None Include="Customs\CustomFile\CustomCertificatesRequest.xsd">
       <SubType>Designer</SubType>
@@ -239,6 +245,9 @@
     </None>
     <None Include="Customs\CustomFile\CFIPACKS.dtd" />
     <None Include="Customs\CustomFile\ReleaseFile\LOGIBONDREL.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CourierStatus\LOGICOURIERSTATUS.dtd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Customs\MasterCourier\LOGIMASTERCOUR.dtd" />

@@ -34,7 +34,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 var customContext = CustomContext.GetContext(requestParams.Tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.AppicationId, false, false);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.AppicationId, true, false);
                 if (currentDeclarationCourierStatusPM != null)
                 {
                     string prevVal = null;
@@ -133,7 +133,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             else
             {
                 //Send interactive declaration Status request
-                SendDeclarationStatus();
+                if (!_MyDeclarationPM.IsCourierDeclaration)
+                {
+                    SendDeclarationStatus();
+                }
             }
             return this._MyDefaultResponseData;
         }

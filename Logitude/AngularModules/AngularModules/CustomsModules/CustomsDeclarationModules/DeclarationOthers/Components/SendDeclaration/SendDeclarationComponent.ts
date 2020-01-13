@@ -36,6 +36,7 @@ import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLoc
 import {CustomsDocumentPM} from '../../../../../Customs/EntityPMs/CustomsDocumentPM';
 import { AnalyzeUnifreightInsuranceService } from '../../../DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
+import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
     moduleId: module.id,
@@ -379,7 +380,7 @@ export class SendDeclarationService implements OnDestroy {
             , "SendDeclarationService", "OPEN"
         );
     }
-
+    public ObjectTableName: string = "Customs.Declaration";
     UpdateReloadAndConfirmB4TaxationDateTimeCheck(supplierInvoice: SupplierInvoicePM) {
         console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 1.update");
         //o	יש לבצע שמירה מחדש של ההצהרה (וחשבון ספק)
@@ -395,7 +396,8 @@ export class SendDeclarationService implements OnDestroy {
                 }
 
                 else {
-                    this.EntityPM = myResponse.Result;
+                    //itzik:result is supplierInvoice that set in typeof(EntityPM)== declaration
+                    //this.EntityPM = myResponse.Result;//reload fix this problem 
                     console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.1 update Success");
                     if (this.CurrentSession.CurrentEditComponent) {
                         //o	יש לבצע רענון לנתוני client
@@ -407,6 +409,23 @@ export class SendDeclarationService implements OnDestroy {
                             this.ConfirmB4TaxationDateTimeCheck();
                         });
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+                    } else {// courier worksheet  >>>send dec
+
+                        let entityPMService: EntityPMService = new EntityPMService();
+                        entityPMService.getSingle(this.ObjectTableName, this.EntityPM.Id).then((res: any) => {
+                            res.subscribe((myResponse: ServiceResponse) => {
+                                if (myResponse.HasError) {
+                                }
+                                else {
+                                    this.EntityPM = myResponse.Result;
+                                    console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.3 Continue to this.ConfirmB4TaxationDateTimeCheck();");
+                                    //o	לאחר מכן להמשיך בתהליך השליחה למכס
+                                    this.ConfirmB4TaxationDateTimeCheck();
+                                }
+                            });
+                        });
+
 
                     }
                 }
@@ -630,7 +649,8 @@ export class SendDeclarationService implements OnDestroy {
     CheckFreightByIncoterm() {
         //this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
 
-        this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+        //this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+        this.DeclarationService.CheckFreightAmountsByIncotermWithDefault(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             var isFreightAmount: boolean = myResponse.Result;
             if (!isFreightAmount) {
                 this.SendDeclaration();

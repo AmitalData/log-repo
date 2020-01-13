@@ -13,6 +13,8 @@ import { ClaimRefundDetailsTabComponent } from './Components/EditTabs/Refund/Cla
 import { SendClaimComponent } from './Components/SendClaim/SendClaimComponent';
 import { ClaimImporterDeclAP3LoisComponent } from './Components/EditTabs/ImporterDeclaration/ClaimImporterDeclAP3LoisComponent';
 import { ClaimRelatedEntityClaimDecisionTabComponent } from './Components/EditTabs/RelatedEntity/ClaimRelatedEntityClaimDecisionTabComponent';
+import { ClaimRelatedEntityCancelOrObjectionTabComponent } from './Components/EditTabs/RelatedEntity/ClaimRelatedEntityCancelOrObjectionTabComponent';
+import { PassportDetailsComponent } from './Components/EditTabs/General/PassportDetails/PassportDetailsComponent';
 
 export const Components =
     [
@@ -31,7 +33,8 @@ export const Components =
         SendClaimComponent,
         ClaimImporterDeclAP3LoisComponent,
         ClaimRelatedEntityClaimDecisionTabComponent,
-
+        ClaimRelatedEntityCancelOrObjectionTabComponent,
+        PassportDetailsComponent,
     ];
 
 export class ModuleDeclarations {
@@ -55,6 +58,8 @@ export class ModuleDeclarations {
             case "SendClaimComponent": { myResult = SendClaimComponent; break; }
             case "ClaimImporterDeclAP3LoisComponent": { myResult = ClaimImporterDeclAP3LoisComponent; break; }
             case "ClaimRelatedEntityClaimDecisionTabComponent": { myResult = ClaimRelatedEntityClaimDecisionTabComponent; break; }
+            case "ClaimRelatedEntityCancelOrObjectionTabComponent": { myResult = ClaimRelatedEntityCancelOrObjectionTabComponent; break; }
+            case "PassportDetailsComponent": { myResult = PassportDetailsComponent; break; }
         }
 
         return myResult;

@@ -31,6 +31,7 @@ export class CustomsSettingList {
 	AutoFillPaymentScreen: boolean;
 	AutoFillAccountType: boolean;
 	AutoUnitMeasurement: boolean;
+	CompanyType: string;
 	
 }
  

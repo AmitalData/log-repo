@@ -20,11 +20,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnCreating(CustomsCollateralsAnswerPM entityPM, CustomsCollateralPM entityParentPM)
         {
             entityPM.CustomsCollateralId = entityParentPM.Id;
-            entityParentPM.CustomsCollateralsAnswerLineNumber+=1;
+            entityParentPM.CustomsCollateralsAnswerLineNumber += 1;
             entityPM.LineNumber = entityParentPM.CustomsCollateralsAnswerLineNumber;
             entityPM.Tenant = entityParentPM.Tenant;
+            entityPM.AllocatedAmount = entityParentPM.CustomsCollateralsConditions.Sum(x => x.RequestedAmount);
         }
-        
+
         protected override void OnUpdating(CustomsCollateralsAnswerPM entityPM, Data.EntityPOCOs.CustomsCollateralsAnswer entityPOCO)
         {
             //entityPM.Tenant = entityPOCO.Tenant;
@@ -81,7 +82,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 case "8213N":
                     newNotificationPM.NotificationDefinitionCode = "8213N";
-  
+
                     CustomsCollateralQueryService customsCollateralQueryService = new CustomsCollateralQueryService(entityPM.Tenant);
                     CustomsCollateralPM customsCollateralPM = customsCollateralQueryService.GetSingle(entityPM.CustomsCollateralId, false, true);
                     if (customsCollateralPM != null)
@@ -128,7 +129,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 referentUserId = connectedDeclarationPM.ReferentUserId;
             }
             if (connectedDeclarationPM != null && !string.IsNullOrWhiteSpace(connectedDeclarationPM.CustomerId)) newNotificationPM.CustomerId = connectedDeclarationPM.CustomerId; // moran 20.6.16 - Task 20789
-            
+
             newNotificationPM.AssigneToId =
                 NotificationBase.
                 CalcAssigneToId(entityPM.Tenant, connectedDeclarationPM.CustomerId, referentUserId, notificationDefinitionCode, oldassigneId);

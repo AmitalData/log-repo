@@ -153,9 +153,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 
 			CreateAllClosedTables();
 		    this.ObjectContext.SaveChanges();
-
-			CreateAllFeatures();
-			CreateAdditionalTextCodes();
+            CreateAdditionalTextCodes();
+            this.ObjectContext.SaveChanges();
+            CreateAllFeatures();
+			
 		    this.ObjectContext.SaveChanges();
 		    this.CommonContext.SaveChanges();
 
@@ -661,36 +662,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 
 		public void CreateAllClosedTables()
         {
-   
-	   
-	   
-	   
-	   
-	   
-	   
-	   	   DWCategoriesUpdateClass.FillDWCategories();
-	
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   	   PrepaidCollectUpdateClass.FillPrepaidCollect();
-	
-	   
-	   	   SchedulerProcedureUpdateClass.FillSchedulerProcedure();
-	
-	   
-	   
-	   
-	   	   VolumeUnitUpdateClass.FillVolumeUnit();
-	
+
+
+
+
+
+            if (LogitudeSettings.WorkEnvironment != "customs")
+            {
+
+                DWCategoriesUpdateClass.FillDWCategories();
+
+
+
+
+
+
+
+
+
+
+
+
+                PrepaidCollectUpdateClass.FillPrepaidCollect();
+
+
+                SchedulerProcedureUpdateClass.FillSchedulerProcedure();
+
+
+
+                VolumeUnitUpdateClass.FillVolumeUnit();
+            }
+            //SchedulerProcedureUpdateClass.FillSchedulerProcedure();
+
         }
 
    	 

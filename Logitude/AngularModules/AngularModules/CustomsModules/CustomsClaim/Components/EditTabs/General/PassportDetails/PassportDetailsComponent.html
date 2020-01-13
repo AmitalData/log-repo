@@ -1,0 +1,111 @@
+<style>
+    .EditMe {
+        width: 250px;
+    }
+</style>
+<table style="margin:5px">
+
+    <!--PassportType-->
+    <tr style="height:32px" class="FormFieldRow">
+        <td style="width: 150px;">
+            <LogLabel [ObjectFieldName]="'PassportTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width: 160px;">
+            <LogLov [ObjectFieldName]="'PassportTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.PassportType'"
+                    [DisplayMemberPath]="'LocalName'"
+                    [SelectedValue]="PassportTypeCode"
+                    [HideColumns]="true">
+            </LogLov>
+        </td>
+
+        <td style="width:40px"><div></div></td>
+        <td><div></div></td>
+    </tr>
+    <!--PassportNumber-->
+    <tr style="height:32px" class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'PassportNumber'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <!--<LogTextBox [ObjectFieldName]="'PassportNumber'" [ObjectTableName]="ObjectTableName"
+                        [HideColumns]="true" [DataContext]="DataContext" [Text]="PassportNumber"></LogTextBox>-->
+            <SearchBox [ObjectTableName]="'Client'"
+                       [IsQuickSearch]="true"
+                       [DropDownWidth]="143"
+                       [DisplayMember]="'PassportNumber'"
+                       [DisplayText]="PassportNumber"
+                       [Watermark]="''"
+                       [UseTimer]="false"
+                       [IsImporterDetails]="true"
+                       [ItemHeight]="36"
+                       [HideIcons]="true"
+                       [HasFilters]="true"
+                       (LostFocus)="PassportNumberLostFocus($event)"
+                       (TextChanged)="PassportNumberTextChanged($event)"
+                       (ItemClicked)="PassportNumberClicked($event)"></SearchBox>
+        </td>
+        <td><div></div></td>
+        <td><div></div></td>
+    </tr>
+    <!--PassportCountryTypeCode-->
+    <tr style="height:32px" class="FormFieldRow">
+
+        <td>
+            <LogLabel [ObjectFieldName]="'PassportCountryTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogLov [ObjectFieldName]="'PassportCountryTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.CustomsCountry'"
+                    [HideColumns]="true"
+                    [SelectedValue]="PassportCountryTypeCode">
+            </LogLov>
+        </td>
+        <td><div></div></td>
+        <td><div></div></td>
+    </tr>
+
+    <tr><td><div></div></td></tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CleanDetailsButtonClicked()" >נקה נתונים</button>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,56 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DeficitDecisionMap : EntityTypeConfiguration<DeficitDecision>
+    {
+	    string dbms;
+        public DeficitDecisionMap()
+        { 
+			  this.ToTable("DeficitDecisions", "Customs");
+		
+		    this.HasKey(t => new { t.DeficitId, t.DeclarationId });
+	 
+            this.Property(t => t.DeficitId).HasColumnName("DeficitId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.RequestDate).HasColumnName("RequestDate");
+
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.RequestID).HasColumnName("RequestID").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.RequestTypeCode).HasColumnName("RequestTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ApprovedProfessionCode).HasColumnName("ApprovedProfessionCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.DecisionCode).HasColumnName("DecisionCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.DecisionNoteForLetter).HasColumnName("DecisionNoteForLetter").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.TotalComponentAmount).HasColumnName("TotalComponentAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.TotalEstimatedAmount).HasColumnName("TotalEstimatedAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.TotalFinancialPenaltyAmount).HasColumnName("TotalFinancialPenaltyAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.TotalInterestAmount).HasColumnName("TotalInterestAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.TotalLinkingAmount).HasColumnName("TotalLinkingAmount").HasPrecision(16, 2);
+        }
+    }
+}
+	 

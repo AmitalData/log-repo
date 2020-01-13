@@ -34,7 +34,8 @@ using Logitude.Server.Tools;
 
 namespace WebFreight.Web.Helpers
 {
-    public class ExportToExcelHelper
+    //public class ExportToExcelHelper
+    public partial class ExportToExcelHelper
     {
         public byte[] ExportQueryToExcel(byte[] xmlFilters, string queryId, int tenant, string userid, string typename)
         {

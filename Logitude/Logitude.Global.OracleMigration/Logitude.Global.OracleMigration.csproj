@@ -37,23 +37,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.9.872.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -79,6 +79,18 @@
     <Compile Include="Migrations\201901200943267_missingGlobalMigraions.Designer.cs">
       <DependentUpon>201901200943267_missingGlobalMigraions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902111347455_missingglobalmigrations.cs" />
+    <Compile Include="Migrations\201902111347455_missingglobalmigrations.Designer.cs">
+      <DependentUpon>201902111347455_missingglobalmigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111352099_missingmasterdb.cs" />
+    <Compile Include="Migrations\201902111352099_missingmasterdb.Designer.cs">
+      <DependentUpon>201902111352099_missingmasterdb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907311203567_missing20190731.cs" />
+    <Compile Include="Migrations\201907311203567_missing20190731.Designer.cs">
+      <DependentUpon>201907311203567_missing20190731.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -99,6 +111,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901200943267_missingGlobalMigraions.resx">
       <DependentUpon>201901200943267_missingGlobalMigraions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111347455_missingglobalmigrations.resx">
+      <DependentUpon>201902111347455_missingglobalmigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111352099_missingmasterdb.resx">
+      <DependentUpon>201902111352099_missingmasterdb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907311203567_missing20190731.resx">
+      <DependentUpon>201907311203567_missing20190731.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>

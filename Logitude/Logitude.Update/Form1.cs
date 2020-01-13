@@ -73,6 +73,8 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Customs.BL.PatchDistribution;
+using Logitude.Update.PatchDistribution;
 using System.Collections;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.StorageService;
@@ -220,12 +222,36 @@ namespace Logitude.Update
                 }
             }
         }
+        void GETGIT()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo("git.exe");
 
+            startInfo.UseShellExecute = false;
+            startInfo.WorkingDirectory = "dir Here";
+            startInfo.RedirectStandardInput = true;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.Arguments = "rev-parse --abbrev-ref HEAD";
+
+            Process process = new Process();
+            process.StartInfo = startInfo;
+            process.Start();
+
+            string branchname = process.StandardOutput.ReadLine();
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(() =>
             {
                 UpdateModule(0, "customs", UpdateCustomslbl);
+                Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
+                Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
+
+
+                var repo = new CustomsSettingRepository(_SeedTenant);
+                if (repo.AnyCourierTenant())
+                {
+                    MessageBox.Show("נמצא סביבת בלדרות פעילה - וודא שאין מסרים לחתימה - שאל את איתן ענת !!!");
+                }
                 Func<string> GetConnetionStringFunc = () =>
                 {
                     string input = Microsoft.VisualBasic.Interaction.InputBox(
@@ -1816,6 +1842,8 @@ User/Pass",
         }
 
         bool buildCustomsZipFiles = false;
+        private int _SeedTenant=0;
+
         private void UpdateZipFiles()
         {
             //timer 
@@ -1872,6 +1900,9 @@ User/Pass",
 
         private void productionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var frm = new PatchDistributionForm();
+            frm.ShowDialog();
+
 
         }
 

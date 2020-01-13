@@ -12,9 +12,7 @@ import { ClientPM } from '../../../../../Customs/EntityPMs/ClientPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
-import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
-import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
+import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
@@ -42,28 +40,32 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     public CurrentEditComponentId: string;
     private isControlEnabled: boolean = true;
+    private IsClientPassportEnabled: boolean = false;
 
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
     public ClientPMService: ClientPMService = new ClientPMService;
 
-
     IsLoaded: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.ClaimsRelatedEntitiesObslist = new ObservableCollection([]);
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     if (this.entityArgs.EntityPM != null) {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.BuildRelatedEntitiesList();
                         this.BuildAddressesList();
+                        if (AppTool.IsNullOrEmpty(this.ClientId) &&
+                            !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
+                            this.IsClientPassportEnabled = true;
+                            this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
+                        }
                     }
                     this.Listen();
                     this.IsLoaded = true;
@@ -74,28 +76,28 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         this.BuildRelatedEntitiesList();
                         //this.BuildAddressesList();
                     }
                 })
             );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "CLMG") {
                             //this.RefreshEntity();
                         }
@@ -106,7 +108,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
     RefreshEntity() {
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     BuildRelatedEntitiesList() {
@@ -152,6 +154,12 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ClientId)) {
             this.ClientPMService.get(this.EntityPM.ClientId)
+                .subscribe((myResponse: ServiceResponse) => {
+                    this.GetSingleClientOp_Completed(myResponse, false);
+                });
+        }
+        else if (!AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber)) {
+            this.ClientMessagesService.GetSingleClientPMByPassportNumberOrCountry(this.EntityPM.PassportNumber, this.EntityPM.PassportCountryTypeCode)
                 .subscribe((myResponse: ServiceResponse) => {
                     this.GetSingleClientOp_Completed(myResponse, false);
                 });
@@ -344,7 +352,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         this.CurrentSearchAddressMode = "";
 
         if ((item.AddressMode == "AddressCode" && AppTool.IsNullOrEmpty(item.ClientPM.Id)
-            || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id))) {
+            || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber))) {
 
             var text: string = "ראשית חובה לבחור לקוח";
             if (item.AddressMode == "AddressCode") {
@@ -417,12 +425,12 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     //#region Related Entities
     EditButtonClicked(item: ClaimsRelatedEntityLineComponent) {
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        this.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        SessionLocator.SelectedSession.StartBusyIndicator("");
 
         this.ClaimPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
             var claim = response.Result;
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             if (!AppTool.IsNullOrEmpty(claim)) {
                 if (!AppTool.IsNullOrEmpty(item)) {
                     this.EditClaimsRelatedEntityLine(item, false);
@@ -432,7 +440,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
     EditClaimsRelatedEntityLine(item: ClaimsRelatedEntityLineComponent, isNewEntity: boolean) {
-        this.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
 
         var windowArgs: any = {};
         windowArgs.EntityCounterKey = item.entityPM.EntityCounterKey;
@@ -460,13 +468,13 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         logWindow.WindowClosed.subscribe((event: any) => {
             if (event == 'ok') {
                 this.RefreshEntity();
-                //this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                //this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
             }
         });
 
         logWindow.IsHideHeader = true;
         logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/RelatedEntity/ClaimRelatedEntityTabComponent');
-        this.CurrentSession.StopBusyIndicator();
+        SessionLocator.SelectedSession.StopBusyIndicator();
         
     }
 
@@ -504,28 +512,94 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
 
+    CancelOrObjectionButtonClicked(item: ClaimsRelatedEntityLineComponent, isNewEntity: boolean) {
+        if (!this.IsControlEnabled) return;
+
+        if (AppTool.IsNullOrEmpty(item.entityPM.TapagNumber)) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 250;
+            messageWindow.Height = 150;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show("לא ניתן לבטל/ערר ישות תביעה שאינה המקושרת לתיק תפג");
+            return;
+        }
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+        var windowArgs: any = {};
+        windowArgs.ClaimsRelatedEntityPM = item.entityPM;
+        windowArgs.ClaimPM = this.EntityPM;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 500;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Claim.TH.CancelOrObjection");
+
+        logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/RelatedEntity/ClaimRelatedEntityCancelOrObjectionTabComponent');
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
     AddEntityCommand() {
 
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         if (errors.length > 0) {
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = errors;
             return;
         }
         var newClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(this.EntityPM);
         newClaimsRelatedEntityPM.ClaimId = this.EntityPM.Id;
         newClaimsRelatedEntityPM.Tenant = this.EntityPM.Tenant;
-        newClaimsRelatedEntityPM.EntityCounterKey = (ArrayTool.Max(this.EntityPM.ClaimsRelatedEntities, "EntityCounterKey") + 1);
+        //newClaimsRelatedEntityPM.EntityCounterKey = (ArrayTool.Max(this.EntityPM.ClaimsRelatedEntities, "EntityCounterKey") + 1);
         newClaimsRelatedEntityPM.IsSendClaimsRelatedEntity = true;
 
         let newClaimsRelatedEntityLineComponent = new ClaimsRelatedEntityLineComponent(newClaimsRelatedEntityPM, this.EntityPM, false);
         this.ClaimsRelatedEntitiesObslist.Insert(newClaimsRelatedEntityLineComponent);
         this.EntityPM.AddClaimsRelatedEntity(newClaimsRelatedEntityPM);
 
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        this.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        SessionLocator.SelectedSession.StartBusyIndicator("");
 
         this.EditClaimsRelatedEntityLine(newClaimsRelatedEntityLineComponent,true);
+    }
+
+    EditClient() {
+
+        if (!AppTool.IsNullOrEmpty(this.ClientId)) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        //windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 550;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/General/PassportDetails/PassportDetailsComponent');
+    }
+
+    SetFieldsDisabled(message: string) {
+        if (message == "ok") {
+            if (AppTool.IsNullOrEmpty(this.ClientId) &&
+                !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
+                this.IsClientPassportEnabled = true;
+                this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
+            }
+            else {
+                this.IsClientPassportEnabled = false;
+                this.UIProperties.SetEnabled("ClientId", "Customs.Claim", true);
+            }
+            this.RefreshEntity(); 
+        }
+
     }
 
     //#endregion

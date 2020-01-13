@@ -1,0 +1,114 @@
+<div>
+    <!-- ClaimRelatedEntityCancelOrObjection view  -->
+    <custom-message-wrapper>
+
+        <!-- ClaimRelatedEntityCancelOrObjection Request  -->
+        <div class="class-request-content">
+            <table style="width: 550px;padding-top: 10px;">
+                <tr *ngIf="ValidationErrors != null && ValidationErrors.length > 0" style="height:1px;">
+                    <td colspan="2">
+                        <ValidationSummary [ItemsSource]="ValidationErrors" [SingleLine]="false"></ValidationSummary>
+                    </td>
+                </tr>
+
+                <!--Cancel / Objection -->
+                <tr style="width: 550px; height: 100px">
+                    <td style="width: 550px; height: 100px">
+                        <div style="width: 550px; height: 100px;">
+                            <table style="width: 550px; height: 100px">
+                                <tr class="FormFieldRow">
+                                    <td style="width: 110px; ">
+                                        <LogLabel [ObjectFieldName]="'ContinuousRequestTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogLov [ObjectFieldName]="'ContinuousRequestTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="ContinuousRequestTypeCode"
+                                                [DisplayMemberPath]="'LocalName'"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.ContinuousRequestType'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 110px; vertical-align:top;">
+                                        <div style="margin-right:10px; vertical-align:top;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.Explanation' | TextCodeTranslationPipe }}:</div>
+                                    </td>
+                                    <td colspan="2" style="width: 250px; vertical-align: top;padding-top: 2px;">
+                                        <LogTextBox [ObjectFieldName]="'Explanation'" [ObjectTableName]="ObjectTableName" [Text]="Explanation"
+                                                    [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+            </table>
+        </div>
+
+
+        <div class="class-response-content">
+            <table style="width: 550px;height: 200px;padding-top: 10px;">
+                <!--Cancel / Objection Decision -->
+                <tr style="width: 550px; height: 20px;">
+                    <td class="TabTitleRow" style="width: 200px;height:20px;">
+                        {{'Customs.Claim.TH.CancelOrObjectionDecision'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+                <tr style="width: 550px; height: 100px">
+                    <td style="width: 550px; height: 100px">
+                        <div style="width: 550px; height: 100px;">
+                            <table style="width: 550px; height: 100px">
+                                <tr class="FormFieldRow">
+                                    <td style="width: 110px; ">
+                                        <LogLabel [ObjectFieldName]="'ContinuousMessagesTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.ClaimDecision'"></LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogLov [ObjectFieldName]="'ContinuousMessagesTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="ContinuousMessagesTypeCode"
+                                                [DisplayMemberPath]="'LocalName'"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.ContinuousMessagesTypeCode'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 110px; vertical-align:top;">
+                                        <div style="margin-right:10px; vertical-align:top;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.Note' | TextCodeTranslationPipe }}:</div>
+                                    </td>
+                                    <td colspan="3" style="width: 150px; vertical-align: top;padding-top: 2px;">
+                                        <LogTextBox [ObjectFieldName]="'Note'" [ObjectTableName]="ObjectTableName" [Text]="Note"
+                                                    [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+                <tr> <td> <div></div> </td></tr>
+            </table>
+
+        </div>
+
+    </custom-message-wrapper>
+</div>

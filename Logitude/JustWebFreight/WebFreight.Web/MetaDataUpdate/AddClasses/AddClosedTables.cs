@@ -3181,6 +3181,31 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+        public static void AddCourierPendingReason(CourierPendingReason courierPendingReasonDetails, CourierPendingReasonRepository courierPendingReasonRepository)
+        {
+            //Dictionary<string, CourierPendingReason> tenantCourierPendingReason = courierPendingReasonRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            //if (tenantCourierPendingReason.Keys.Contains(courierPendingReasonDetails.Code))
+            //{
+            //    CourierPendingReason courierPendingReason = courierPendingReasonRepository.GetSingle(courierPendingReasonDetails.Code, tenantCourierPendingReason.Keys.);
+            //    courierPendingReason.LocalName = courierPendingReasonDetails.LocalName;
+            //    courierPendingReason.EnglishName = courierPendingReasonDetails.EnglishName;
+            //    courierPendingReason.SearchFields = (courierPendingReasonDetails.Code + "," + courierPendingReasonDetails.LocalName).ToLower();
+            //    courierPendingReasonRepository.Update(courierPendingReason);
+            //}
+            //else
+            //{
+            //    CourierPendingReason newCourierPendingReason = new CourierPendingReason()
+            //    {
+            //        Code = courierPendingReasonDetails.Code,
+            //        LocalName = courierPendingReasonDetails.LocalName,
+            //        EnglishName = courierPendingReasonDetails.EnglishName,
+            //        SearchFields = (courierPendingReasonDetails.Code + "," + courierPendingReasonDetails.LocalName).ToLower()
+            //    };
+            //    courierPendingReasonRepository.Add(newCourierPendingReason);
+            //}
+        }
+
         public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
         {
             Dictionary<string, MamanSpecialAction> tenant = mamanSpecialActionRepository.GetAll().ToDictionary(d => d.Code, a => a);

@@ -3,9 +3,11 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 import {Validator} from '../../Infrastructure/Validators/Validator';
-
+import { LuhnAlgorithm } from '../../Customs/Utilities/LuhnAlgorithm';
 import {DeclarationPM}          from '../EntityPMs/DeclarationPM';
 import {SupplierInvoiceItemPM}  from '../EntityPMs/SupplierInvoiceItemPM';
+import { DecDangersContactPM } from '../EntityPMs/DecDangersContactPM';
+import { ConsignmentPackDangerPM } from '../EntityPMs/ConsignmentPackDangerPM';
 
 export class DeclarationValidator {
     private _DeclarationPM: DeclarationPM;
@@ -21,6 +23,15 @@ export class DeclarationValidator {
         this._DeclarationPM = declarationPM;
     }
 
+    public validatePackagesDanger(decDangersContactPM: DecDangersContactPM, consignmentPackDangerPM: ConsignmentPackDangerPM) {
+        var errors = [];
+
+        Validator.TryValidateObject(decDangersContactPM, "Customs.DecDangersContact", errors);
+        Validator.TryValidateObject(consignmentPackDangerPM, "Customs.ConsignmentPackDanger", errors);
+
+        return errors;
+
+    }
 
     public ValidateSupplierInvoiceItem(supplierInvoiceItemPM: SupplierInvoiceItemPM) {
         var errors = [];
@@ -427,7 +438,7 @@ export class DeclarationValidator {
     }
 
     //Check if it's a converted declaration (IsConvertedDeclaration=True)  // Mirit 02/12/15 Task 18508
-    public CheckIsCoverteedDeclaration() {
+    public CheckIsConvertedDeclaration() {
 
         if (this._DeclarationPM != null) {
             if (this._DeclarationPM.IsConvertedDeclaration == true) {
@@ -460,8 +471,8 @@ export class DeclarationValidator {
         this.ConstraintsInProgressCheck();
         this.FuturePaymentDoneCheck();
         //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
-        this.CheckIsCoverteedDeclaration(); // Mirit 02/12/15 Task 18508
-        this.CheckIsCloseDeclaration(); 
+        this.CheckIsConvertedDeclaration(); // Mirit 02/12/15 Task 18508
+        this.CheckIsCloseDeclaration();
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
 
@@ -487,12 +498,48 @@ export class DeclarationValidator {
         }
     }
 
+    //Check if ImporterCode Valid
+    public CheckIsImporterCodeValid() {
+
+        if (this._DeclarationPM != null && !AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterCode)) {
+
+            this._DeclarationPM.ImporterTypeCode
+            if (///this._DeclarationPM.ImporterCode[0] == "P" || this._DeclarationPM.ImporterCode[0] == "F") {
+                this._DeclarationPM.ImporterTypeCode == "2" /*"P"*/ ||
+                this._DeclarationPM.ImporterTypeCode == "3" /*"F"*/) {
+                if (!AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterPassportNumber)) {
+                    if (this._DeclarationPM.ImporterPassportNumber.length > 15) {
+                        this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
+                    }
+                }
+                return;
+            }
+
+
+            if (this._DeclarationPM.ImporterCode.length < 9) {
+                this.ValidationErrorMessageCodes.push("מספר יבואן קצר מידיי");
+            }
+            else if (this._DeclarationPM.ImporterCode.length > 9) {
+                this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
+            }
+            else {
+                var digit: string = this._DeclarationPM.ImporterCode.toString().substring(8);
+                var checkDigit: number = LuhnAlgorithm.CalculateLuhnAlgorithm(this._DeclarationPM.ImporterCode.substring(0, 8));
+
+                if (digit != checkDigit.toString()) {
+                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
+                }
+            }
+        
+        }
+    }
   
     public Validate(entityPM: DeclarationPM) {
    
         var result = [];
         this._DeclarationPM = entityPM;
         this.EmptyConsignmentPackageCheck();
+        this.CheckIsImporterCodeValid();
 
         return this.ValidationErrorMessageCodes;
     }

@@ -96,6 +96,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
             }
             catch (Exception e)
             {
+                //BAD !!!! m_service.Url ="http://10.10.10.117:8080/V591/SERVICES//gwsfinsrvexe"
+                //Good !! m_service.Url = "http://10.10.10.117:8080/V591/services/gwsfinsrvexe"
+
                 e.ChangeExceptionMessage("Send Request to UROUTER Failed,");
                 throw e;
             }

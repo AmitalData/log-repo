@@ -46,6 +46,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         void ShrinkCustomResponse(DF_NG_8303_Web04_DeclarationPrint_Response customResponse)
         {
             if (customResponse == null) return;
+            if (customResponse.DeclarationPrintAnswer == null) return;
             foreach (var item in customResponse.DeclarationPrintAnswer)
             {
                 if (item.DeclarationPrintDetails!=null)

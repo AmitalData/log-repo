@@ -54,6 +54,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור סטטוס הצהרות לבלדר " + customsResponse.CourierMasterId + " "
             };
+            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
+
+            {
+                genericRequestParams.RequestName += " ראשי - מפצל";
+                genericRequestParams.SplitterModeLetCreateMyType = false;
+
+            }
+            else
+            {
+                genericRequestParams.RequestName += " מפוצל";
+                genericRequestParams.SplitterModeLetCreateMyType = true;
+
+            }
             return genericRequestParams;
         }
 
@@ -63,7 +76,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId)
+        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
@@ -84,6 +97,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myDCAInUCB8250WithResponseContentHeader = new DCAInUCB8250WithResponseContentHeader()
             {
                 CourierMasterId = CourierMasterId,
+                TesterSendOption= testerSendOption,
                 LoggingUserId = LoggingUserId,
                 tenant = tenant,
                 MyMoreParams = "",
@@ -166,6 +180,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string MyMoreParams { get; set; }
+        public List<string> ServerSplitDeclarationsList { get; set; }
+        public string TesterSendOption { get;  set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

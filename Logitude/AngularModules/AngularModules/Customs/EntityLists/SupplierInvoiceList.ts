@@ -44,6 +44,8 @@ export class SupplierInvoiceList {
 	FullChildrenCount: number;
 	VendorComissionPercentage: number;
 	InvoiceAmountInUSD: number;
+	ChangeInSupplierInvoice: string;
+	InvoiceCurrencyTypeName: string;
 	
 }
  

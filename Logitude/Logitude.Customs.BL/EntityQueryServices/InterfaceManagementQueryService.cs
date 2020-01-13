@@ -93,7 +93,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                         SignatureTypeCode = management.SignatureTypeCode,
                                                          DefaultSendOptionName = management.InterfaceSendOption != null ? management.InterfaceSendOption.LocalName :null,
                                                          SearchFields = management.SearchFields,
-                                                         
+                                                         InterfaceType = management.InterfaceType,
                                                          Tenant = tenant
                                                      };
                     if (definition != null)

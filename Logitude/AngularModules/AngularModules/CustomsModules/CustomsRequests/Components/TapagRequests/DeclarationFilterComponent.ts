@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
+import { CustomMessageWrapperComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { TapagMessagesService } from '../../../../Customs/Services/WebServices/TapagMessagesService'; 
+import { TapagMessagesService } from '../../../../Customs/Services/WebServices/TapagMessagesService';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationList } from '../../../../Customs/EntityLists/DeclarationList';
 import { DeclarationFilterRequestParams } from '../../../../Customs/DataContract/RequestParams/DeclarationFilterRequestParams';
@@ -26,25 +26,21 @@ import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestP
 
 export class DeclarationFilterComponent
     extends BaseRequestsSheetMassaging
-    implements AfterViewInit, IRequestsSheetMassagingComponent { 
+    implements AfterViewInit, IRequestsSheetMassagingComponent {
 
     public DataContext: DeclarationFilterComponent = this;
     public ObjectTableName: string = "Customs.Declaration";
 
     _TapagMessagesService: TapagMessagesService = new TapagMessagesService();
+    _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
     public ClaimObservableCollection: ObservableCollection;
-    DeficitObservableCollection: ObservableCollection;
-    _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    public DeficitObservableCollection: ObservableCollection;
 
     _MyResponseObjectToShow: any = null;
     _UserMessagehidden: boolean = true;
     _LastFetchDeclarationList: DeclarationList;
-    GeneralDetailsExternalID: any; // html component requires this property. AOT
-    GeneralDetailsName: any; // html component requires this property. AOT
-    GeneralDetailsCustomOfficeName: any; // html component requires this property. AOT
-    GeneralDetailsStatusName: any; // html component requires this property. AOT
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
         this.ClaimObservableCollection = new ObservableCollection([]);
@@ -84,7 +80,7 @@ export class DeclarationFilterComponent
         if (this.ResponseData) {
             let myDeclarationFilterResponseData: DeclarationFilterResponseData = this.ResponseData;
             if (myDeclarationFilterResponseData.ClaimList) {
-                this.ClaimObservableCollection.InsertCollection(myDeclarationFilterResponseData.ClaimList); 
+                this.ClaimObservableCollection.InsertCollection(myDeclarationFilterResponseData.ClaimList);
             }
             if (myDeclarationFilterResponseData.DeficitList) {
                 this.DeficitObservableCollection.InsertCollection(myDeclarationFilterResponseData.ClaimList);
@@ -119,12 +115,12 @@ export class DeclarationFilterComponent
         this._LastFetchDeclarationList = null;
         this.ValidationErrorsList = [];
     }
+
     CustomFileNoTextChanged(searchtext) {
 
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             return;
         }
-
 
         if (this._LastFetchDeclarationList != null) {
             if (this.CustomFileNo == this._LastFetchDeclarationList.CustomFileNo) {
@@ -132,23 +128,20 @@ export class DeclarationFilterComponent
             }
         }
         this.DueChangeClearChildField(true);
-        this.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, true);
-
             });
 
     }
-
 
 
     DeclarationNumberTextChanged(DeclarationNumberText: string): void {
         if (AppTool.IsNullOrEmpty(this.DeclarationNumber)) {
             return;
         }
-
 
         if (this._LastFetchDeclarationList != null) {
             if (this.DeclarationNumber == this._LastFetchDeclarationList.DeclarationNumber) {
@@ -157,10 +150,10 @@ export class DeclarationFilterComponent
         }
         this.DueChangeClearChildField(false);
 
-        this.CurrentSession.StartBusyIndicator("")
+        SessionLocator.SelectedSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByNumber(this.DeclarationNumber, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 this.FetchDeclaration(myResponse, false);
 
@@ -176,8 +169,6 @@ export class DeclarationFilterComponent
             this.CustomFileNo = this._LastFetchDeclarationList.CustomFileNo;
             this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, true, "");
             this.UIProperties.SetValidity("DeclarationNumber", this.ObjectTableName, true, "");
-
-
 
         } else {
 
@@ -201,8 +192,6 @@ export class DeclarationFilterComponent
         this.ValidationErrorsList.push(msg);
         this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, false, msg);
     }
-
-
 
     get CustomFileNo() { return this.RequestParams ? this.RequestParams.CustomsFile : null; }
     set CustomFileNo(value: string) {
@@ -248,108 +237,48 @@ export class DeclarationFilterComponent
             }
         }
     }
-   
+
     //#region Response Properties
-    get DisplayFileNumber() { return this.ResponseData.DisplayFileNumber; }
-    set DisplayFileNumber(value: string) {
-        if (this.ResponseData.DisplayFileNumber != value) {
-            this.ResponseData.DisplayFileNumber = value;
+    get ExternalID() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.externalID: null; }
+    set ExternalID(value: string) {
+        if (this.ResponseData.externalID != value) {
+            this.ResponseData.externalID = value;
         }
     }
 
-    get CustomOfficeName() { return this.ResponseData.CustomOfficeName; }
+    get CustomOfficeName() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.customOfficeName : null; }
     set CustomOfficeName(value: string) {
-        if (this.ResponseData.CustomOfficeName != value) {
-            this.ResponseData.CustomOfficeName = value;
+        if (this.ResponseData.customOfficeName != value) {
+            this.ResponseData.customOfficeName = value;
         }
     }
 
-    get CreditLimit() { return this.ResponseData.CreditLimit; }
-    set CreditLimit(value: string) {
-        if (this.ResponseData.CreditLimit != value) {
-            this.ResponseData.CreditLimit = value;
+    get ExternalName() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.name : null; }
+    set ExternalName(value: string) {
+        if (this.ResponseData.name != value) {
+            this.ResponseData.name = value;
         }
     }
 
-    get StatusName() { return this.ResponseData.StatusName; }
+    get StatusName() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ?  this.ResponseData.GeneralDetailsData.statusName : null; }
     set StatusName(value: string) {
-        if (this.ResponseData.StatusName != value) {
-            this.ResponseData.StatusName = value;
-        }
-    }
-
-    get EntityTypeName() { return this.ResponseData.EntityTypeName; }
-    set EntityTypeName(value: string) {
-        if (this.ResponseData.EntityTypeName != value) {
-            this.ResponseData.EntityTypeName = value;
-        }
-    }
-
-    get CreditBalance() { return this.ResponseData.CreditBalance; }
-    set CreditBalance(value: string) {
-        if (this.ResponseData.CreditBalance != value) {
-            this.ResponseData.CreditBalance = value;
-        }
-    }
-
-    get GuaranteedName() { return this.ResponseData.GuaranteedName; }
-    set GuaranteedName(value: string) {
-        if (this.ResponseData.GuaranteedName != value) {
-            this.ResponseData.GuaranteedName = value;
-        }
-    }
-
-    get EntityNumber() { return this.ResponseData.EntityNumber; }
-    set EntityNumber(value: string) {
-        if (this.ResponseData.EntityNumber != value) {
-            this.ResponseData.EntityNumber = value;
-        }
-    }
-
-    get GuaranteeExecutedAmountAdjusted() { return this.ResponseData.GuaranteeExecutedAmountAdjusted; }
-    set GuaranteeExecutedAmountAdjusted(value: string) {
-        if (this.ResponseData.GuaranteeExecutedAmountAdjusted != value) {
-            this.ResponseData.GuaranteeExecutedAmountAdjusted = value;
-        }
-    }
-
-    get AgentName() { return this.ResponseData.AgentName; }
-    set AgentName(value: string) {
-        if (this.ResponseData.AgentName != value) {
-            this.ResponseData.AgentName = value;
-        }
-    }
-
-    get Validity() { return this.ResponseData.Validity; }
-    set Validity(value: string) {
-        if (this.ResponseData.Validity != value) {
-            this.ResponseData.Validity = value;
-        }
-    }
-
-    get GuaranteeAmount() { return this.ResponseData.GuaranteeAmount; }
-    set GuaranteeAmount(value: string) {
-        if (this.ResponseData.GuaranteeAmount != value) {
-            this.ResponseData.GuaranteeAmount = value;
+        if (this.ResponseData.statusName != value) {
+            this.ResponseData.statusName = value;
         }
     }
 
     //#endregion Properties
 
 
-    
-
-  
-
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
-        if (AppTool.IsNullOrEmpty(this.RequestParams.DeclarationId) || AppTool.IsNullOrEmpty(this.DeclarationNumber)) {
+        if (AppTool.IsNullOrEmpty(this.DeclarationNumber)) {
             var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationNumberIsMandatory");
             this.ValidationErrorsList.push(msg);
         }
@@ -357,9 +286,9 @@ export class DeclarationFilterComponent
             return;
         }
 
-        
+
         this.ClaimObservableCollection.Clear();
-        
+        this.DeficitObservableCollection.Clear();
 
         var currRequestParams = new DeclarationFilterRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -372,11 +301,10 @@ export class DeclarationFilterComponent
         currRequestParams.CustomsFile = this.RequestParams.CustomsFile;
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
-        
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
-            'שליחת שאילתא לנתוני תפ""ג עבור הצהרה', true)
+                'שליחת שאילתא לנתוני תפ""ג עבור הצהרה', true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();
@@ -392,5 +320,3 @@ export class DeclarationFilterComponent
 
     //#endregion Commands
 }
-
-

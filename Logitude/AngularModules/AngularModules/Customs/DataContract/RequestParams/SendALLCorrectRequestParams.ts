@@ -1,4 +1,4 @@
-﻿import {GenericRequestParams} from './GenericRequestParams';
+import {GenericRequestParams} from './GenericRequestParams';
 
 export class SendALLCorrectRequestParams extends GenericRequestParams {
 
@@ -11,5 +11,6 @@ export class SendALLCorrectRequestParams extends GenericRequestParams {
     public SelectedStatusValue: string;
     public SelectedAvailableValue: string;
     public SelectedTotalInvoiceValue: string;
-
+    public SelectedFastIndividualProcessValue: string;
+    public SelectedCustomStatusValue: string;
 }

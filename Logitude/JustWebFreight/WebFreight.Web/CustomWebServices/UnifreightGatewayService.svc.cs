@@ -174,6 +174,15 @@ namespace WebFreight.Web.CustomWebServices
             curr = "Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService";
             _AllIUnifreightGenericService.Add(curr);
             _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService>(curr);
+
+            curr = "Logitude.Customs.BL.Messaging.U2L.Courier.CourierPendingReasonService";
+            _AllIUnifreightGenericService.Add(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.Courier.CourierPendingReasonService>(curr);
+
+            curr = "Logitude.Customs.BL.Messaging.U2L.CourierStatus.CourierStatusService";
+            _AllIUnifreightGenericService.Add(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CourierStatus.CourierStatusService>(curr);
+
         }
 
         private static void AddSendDirectMessageService()
@@ -474,6 +483,10 @@ SUCCESS={4}"
                 if (e.InnerException != null)
                 {
                     unifreightGenericService.MyGenericResponseObj.InnerException = e.InnerException.ToString();
+                    if (e.InnerException.InnerException != null)
+                    {
+                        unifreightGenericService.MyGenericResponseObj.InnerException += e.InnerException.InnerException.ToString();
+                    }
                 }
 
             }

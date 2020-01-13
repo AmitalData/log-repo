@@ -123,10 +123,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.10\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.20\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.10\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.20\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -142,6 +142,7 @@
     <Compile Include="CustomsBook\CustomsItemDetailsHistoryImport.cs" />
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
+    <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
     <Compile Include="Dca\DCARenameIncomeFileService.cs" />
     <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
@@ -172,6 +173,7 @@
     <Compile Include="MessagingServices\CBC_NG_8361_MSG01_CustomsBookInMessagingService.cs" />
     <Compile Include="MessagingServices\CB_NG_8316_CustomItemLegalDemandsMessagingService.cs" />
     <Compile Include="MessagingServices\CLAIM_2340_ClaimRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\CLAIM_5005_ContinuousRequestOnClaimFileMessagingService.cs" />
     <Compile Include="MessagingServices\CL_3630_AddUpdateDeleteAddressContactMassagingService.cs" />
     <Compile Include="MessagingServices\CL_MSG100_AddClientMassagingService.cs" />
     <Compile Include="MessagingServices\CL_NG_8343_ClientSearchByIDParamMessagingService.cs" />
@@ -182,13 +184,19 @@
     <Compile Include="MessagingServices\DCAInST_60_SpecialActivityExecutionReportMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInST_NG_10_SpecialActivityResponseMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInUCB1170_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2715_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2750_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2755_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB8212_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB8250_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBCTML_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBStorageSite_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBUD2LT_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniCustomTableZip_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
     <Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
+    <Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
     <Compile Include="MessagingServices\MN_NG_9022_CourierBOLQueryMessagingService.cs" />
     <Compile Include="MessagingServices\ST_MSG05_StorageEntranceUnloadingMassagingService.cs" />
@@ -245,10 +253,12 @@
     <Compile Include="RequestServices\CBC_NG_8361_MSG01_CustomsBookInRequestService.cs" />
     <Compile Include="RequestServices\CB_NG_8316_CustomItemLegalDemandsRequestService.cs" />
     <Compile Include="RequestServices\CLAIM_2340_ClaimRequestRequestService.cs" />
+    <Compile Include="RequestServices\CLAIM_5005_ContinuousRequestOnClaimFileRequestService.cs" />
     <Compile Include="RequestServices\CL_3630_AddUpdateDeleteAddressContactRequestService.cs" />
     <Compile Include="RequestServices\CL_MSG100_AddClientRequestService.cs" />
     <Compile Include="RequestServices\CL_NG_8343_ClientSearchByIDRequestService.cs" />
     <Compile Include="RequestServices\DF_9070_ExportDeclarationDataRequestService.cs" />
+    <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
     <Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
     <Compile Include="RequestServices\MN_NG_9022_CourierBOLQueryRequestService.cs" />
     <Compile Include="RequestServices\ST_MSG05_StorageEntranceUnloadingRequestService.cs" />
@@ -279,6 +289,7 @@
     <Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_5013_ContinuousResponseOnClaimFileResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5114_AcceptanceOrRejectionClaimMessageResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5115_ContinuousMessageResponseService.cs" />
     <Compile Include="ResponseServices\CL_3630_AddUpdateDeleteAddressContactResponseService.cs" />
@@ -286,7 +297,10 @@
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
+    <Compile Include="ResponseServices\DE_NG_5108_DecisionMessageResponseService.cs" />
     <Compile Include="ResponseServices\DF_9071_ExportDeclarationDataResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\GP_1035_GatepassFeedbackMessageResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG8374_CargoSplitResponseService.cs" />
     <Compile Include="ResponseServices\MN_NG_9023_CourierBOLFeedBackResponseService.cs" />
     <Compile Include="ResponseServices\ST_MSG05_StorageEntranceUnloadingResponseService.cs" />
@@ -399,11 +413,16 @@
     <Compile Include="ResponseServices\TSH_NG_8290_Web06_CreditInfoResponseService.cs" />
     <Compile Include="ResponseServices\TSH_WEB8289_9060_RTGSInfoQueryResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend1170_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend2715_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
-    <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
+     <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBUD2LT_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomTableZip_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniDebug01_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniDecCollateralBatchSend8212_MsgResponseService.cs" />
     <Compile Include="ResponseServices\Unifreight_LOGISIVUGResponseService.cs" />
     <Compile Include="ResponseServices\VAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService.cs" />
     <Compile Include="ResponseServices\VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.cs" />
@@ -441,6 +460,7 @@
     <Compile Include="UnifreightGateway\UServerSetResponseService.cs" />
     <Compile Include="Dca\DcaDownloadTenantService.cs" />
     <Compile Include="Dca\DcaReceivedService.cs" />
+    <Compile Include="Utils\CRSUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

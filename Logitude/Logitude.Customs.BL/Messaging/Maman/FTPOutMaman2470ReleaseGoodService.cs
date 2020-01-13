@@ -43,7 +43,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string folder = "";
             string username = "";
             string password = "";
-            bool useSFTP = false;
+
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
             var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_Ftp2Maman2470, CustomsPartnerFtpDetails.PartnerCode_Mamam, CustomsPartnerFtpDetails.TypeCode_Out);
             string xmlSubject = (new CustomsPartnerFtpDetails()).GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_Ftp2Maman2470).Subject; ;
@@ -74,11 +74,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 folder = fTPDetail.Folder;
                 username = fTPDetail.UserName;
                 password = fTPDetail.Password;
-                useSFTP = fTPDetail.UseSFTP;
             }
 
 
-            var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = FileName, UseSFTP = useSFTP };
+            var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = Path.GetFileNameWithoutExtension(FileName) };
             var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
             Document document = new Document()
@@ -94,6 +93,15 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
+
+
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
+            string loggedContactId = "";
+            if (loggedContact != null)
+            {
+                loggedContactId = loggedContact.Id;
+            }
 
             CommunicationLog commLog = new CommunicationLog()
             {
@@ -112,7 +120,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DocumentId = document.Id,
                 CreateDateUTC = DateTime.UtcNow,
                 LogSettings = settingsData,
-                QueueName = "FTPCommunicationLogQueue" ///using  by FTPCommunicationWorkerRole
+                QueueName = "FTPCommunicationLogQueue" ,///using  by FTPCommunicationWorkerRole
+                CreatedByUserId= loggedContactId
             };
 
             communicationLogRepository.Add(commLog);

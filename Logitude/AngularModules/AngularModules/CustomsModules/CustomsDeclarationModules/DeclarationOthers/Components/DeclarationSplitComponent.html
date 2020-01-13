@@ -51,6 +51,15 @@
                 background: #f0f0f0;
             }
 
+            .img-hor {
+                    -moz-transform: scaleX(-1);
+                    -o-transform: scaleX(-1);
+                    -webkit-transform: scaleX(-1);
+                    transform: scaleX(-1);
+                    filter: FlipH;
+                    -ms-filter: "FlipH";
+            }
+
     .toolbar-menu {
         list-style: none;
     }
@@ -285,10 +294,10 @@
     }
 
     @keyframes sk-bouncedelay {
-      0%, 80%, 100% { 
+      0%, 80%, 100% {
         -webkit-transform: scale(0);
         transform: scale(0);
-      } 40% { 
+      } 40% {
         -webkit-transform: scale(1.0);
         transform: scale(1.0);
       }
@@ -328,7 +337,7 @@
                         <li class="seperator"></li>
 
                         <li><img src="./Images/Split/doc-viewer-rotate-right.png" alt="" (click)="RotateRightButton()" /></li>
-                        <li><img src="./Images/Split/doc-viewer-rotate-right.png" style="transform: rotate(180deg);" (click)="RotateLeftButton()" alt="" /></li>
+                        <li><img src="./Images/Split/doc-viewer-rotate-right.png" class="img-hor" (click)="RotateLeftButton()" alt="" /></li>
                         <li class="seperator"></li>
 
                         <li (click)="ZoomOutButton()"><img src="./Images/Split/doc-viewer-minus.png" alt="" /></li>
@@ -357,25 +366,31 @@
 
             <div *ngIf="IsNoDocumentSelected" class="NoDocumentSelected">בחר מסמך מרשימת המסמכים</div>
 
-            <!--In case the document has no TIF file display a message - “Document wasn't converted to TIF” (המסמך הנ”ל לא הומר ל TIF - יש לשנות את הגדרות הספריה בניהול המסמכים)-->
+            <!--In case the document has no TIF file display a message - “Document wasn't converted to TIF” (המסמך הנ”ל לא הומר ל TIF - יש לשנות את הגדרות הספריה בניהול המסמכים)  "ImgScaleValue + ' ' + ImgRotationValue"-->
             <div *ngIf="!IsNoDocumentSelected &&  this.base64Image==null " style="display: inline-block;color:#ff8025;white-space: pre-line;" class="NoDocumentSelected">
                 מסמך זה לא הומר ל TIF
                 אנא בדוק הגדרות הספריה בתיוק
             </div>
 
-            <!--<img *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null " style="width: 100%;" class="grabbable"
+            <div
+            [style.transform]="ImgScaleValue"
+            [style.transform-origin]="'top right'"
 
-                 (mousemove)="OnMouseMove($event)"
-                 (mousedown)="OnMouseDown($event)"
-                 (mouseup)="OnMouseUp($event)"
-                 [attr.src]="base64Image" alt=""
-                 [style.transform]="ImgScaleValue"
-                 [style.transform-origin]="ImgTransformOriginValue"
-                 draggable="false" />-->
+            >
+
+                <img *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null " style="width: 100%;" class="grabbable"
+
+                (mousemove)="OnMouseMove($event)"
+                (mousedown)="OnMouseDown($event)"
+                (mouseup)="OnMouseUp($event)"
+                [attr.src]="base64Image" alt=""
+
+                draggable="false" />
+            </div>
 
 
 
-            <div id="cont" 
+            <!-- <div id="cont"
                  style="width: 100%; transform-origin: right top;"
                  class="grabbable"
                  [style.transform]="ImgScaleValue"
@@ -384,7 +399,7 @@
                  (mouseup)="OnMouseUp($event)"
                  draggable="false">
                 <canvas id="canvas" style="width: 100% !important;" class="grabbable"></canvas>
-            </div>
+            </div> -->
 
 
         </div>

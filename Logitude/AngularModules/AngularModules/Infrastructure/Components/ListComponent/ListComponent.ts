@@ -617,11 +617,11 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         this.Filterchangeevent = new LogEvents.EventManager();
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
-        //this.CurrentSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
-        //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-        if (this.ObjectTableName.startsWith("Customs.")) {
-            this.IsNavigateButtonVisible = true;
-        }
+      //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
+      //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
+      if (this.ObjectTableName.startsWith("Customs.")) {
+          this.IsNavigateButtonVisible = false;
+      }
         this.Listen();
     }
 
@@ -1514,11 +1514,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":
-                        {
-                            selectedEntityId = $event.rowData.Code;
-                            break;
-                        }
-
+                    case "Customs.CustomsCountry":
+                    //case "Customs.InternationalSite":
+                        selectedEntityId = $event.rowData.Code;
+                        break;
                     default:
                         {
                             break;
@@ -2449,7 +2448,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     logWindow.ShowCloseButton = true;
                     break;
                 }
-
+                case "Customs.PendingByKeyword": {
+                    logWindow.Width = 430;
+                    logWindow.Height = 250;
+                    logWindow.ShowCloseButton = true;
+                    break;
+                }
                 case "Customs.Declaration":
                 case "Customs.PaymentOrder":
                 case "Customs.Claim":
@@ -3132,25 +3136,26 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 console.log(ids);
 
 
-                var selectedEntityId = ids[0];
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({
-                            EntityId: selectedEntityId,///$event.rowData.Id
-                            ObjectTableName: this.ObjectTableName,
-                            BackButtonLabel: label,
-                            NavigationIds: ids,
-                        });
-                        cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-                            this.isEditControlOpened = false;
-                            this.DestroyMe = false;
-                            // this.OnBackFromEdit(selectedEntityId, $event)
-                        });
-                        //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
-                        this.DestroyMe = true;
-                        //}
+        var selectedEntityId = ids[0];
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+          .then(cmpRef => {
+            var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run({
+              EntityId: selectedEntityId,///$event.rowData.Id
+              ObjectTableName: this.ObjectTableName,
+              BackButtonLabel: label,
+              NavigationIds: ids,
+              
+            });
+            cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+              this.isEditControlOpened = false;
+              this.DestroyMe = false;
+              // this.OnBackFromEdit(selectedEntityId, $event)
+            });
+            //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
+            this.DestroyMe = true;
+            //}
 
                     });
             });

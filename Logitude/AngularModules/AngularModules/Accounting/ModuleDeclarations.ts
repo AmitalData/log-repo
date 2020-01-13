@@ -1,4 +1,3 @@
-import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 import { GLAccountsPageComponent } from './Components/Workspaces/GLAccounts/GLAccountsPageComponent';
 import { AccountingNoteComponent } from './Components/Others/AccountingNoteComponent';
 import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';

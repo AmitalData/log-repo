@@ -70,6 +70,9 @@ export class CommunicationLogMessageBodyComponent extends BaseComponent implemen
 
             if (this.EntityPM.To == "FTP")
                 this.Logs = this.EntityPM.Logs;
+
+
+            this.Logs = this.EntityPM.Logs;//always 
         }
 
        

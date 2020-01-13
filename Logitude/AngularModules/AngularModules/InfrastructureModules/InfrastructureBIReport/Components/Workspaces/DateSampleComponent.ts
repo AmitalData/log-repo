@@ -34,11 +34,11 @@ export class DateSampleComponent implements OnInit {
                 this._DWQueryBuilderService.GetDateFilterSample(DateFilter).subscribe(myResult => {
                     if (!myResult.HasError) {
                         this.DateSample = myResult.Result;
-                        //SessionLocator.CurrentSession.StopBusyIndicator();
+                        //SessionLocator.SelectedSession.StopBusyIndicator();
                         //this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count });// more than 50000
                     }
                     else {
-                        //SessionLocator.CurrentSession.StopBusyIndicator();
+                        //SessionLocator.SelectedSession.StopBusyIndicator();
                     }
                 });
             });

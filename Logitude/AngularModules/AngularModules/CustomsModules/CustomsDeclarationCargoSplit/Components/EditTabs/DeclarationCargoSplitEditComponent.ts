@@ -40,6 +40,7 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
         this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
         this.BuildTabs();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+    
            // this._IsLoaded = true;
             /// alert("this._IsLoaded");
         });

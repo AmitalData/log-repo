@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -13,12 +14,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     {
         protected override void OnCreating(CourierPendingReasonPM entityPM, EntityPM entityParentPM)
         {
-            //entityPM.Tenant = entityParentPM.Tenant;
+            ValidateEntity(entityPM);
         }
 
         protected override void OnUpdating(CourierPendingReasonPM entityPM, CourierPendingReason entityPOCO)
         {
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        internal void ValidateEntity(CourierPendingReasonPM entityPM)
+        {
+            if (IsPendingCodeExisit(entityPM.Code, entityPM.Tenant))
+            {
+                throw new Exception("קיים Pending עם אותו הקוד"); // There is a pending with the same code
+            }
+        }
+
+        bool IsPendingCodeExisit(string code, int tenant)
+        {
+            CourierPendingReasonRepository repo = new CourierPendingReasonRepository(tenant);
+            var exist = repo.GetSingle(code, tenant);
+
+            return ((exist != null) ? true : false);
         }
     }
 }

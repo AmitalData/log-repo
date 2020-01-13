@@ -1890,11 +1890,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Custom Context
+
         public IDbSet<MamanStatus> MamanStatuses
         {
             get; set;
 
         }
+
 
         public IDbSet<AcceptanceStatus> AcceptanceStatuses
         {
@@ -2241,6 +2243,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         {
             get;
             set;
+
+        }
+
+        public IDbSet<CustomsAirline> CustomsAirlines
+        {
+            get; set;
 
         }
 
@@ -2936,6 +2944,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<VehicleSafeAccessoryInstlType> VehicleSafeAccessoryInstlTypes { get; set; }
         public IDbSet<SupplierInvoiceItemVehicle> SupplierInvoiceItemVehicles { get; set; }
         public IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; set; }
+        public IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; set; }
         public IDbSet<SignatureType> SignatureTypes { get; set; }
         public IDbSet<CheckEssenceLookup> CheckEssenceLookups { get; set; }
         public IDbSet<Authority> Authorities { get; set; }
@@ -2962,6 +2971,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CargoStatus> CargoStatuses { get; set; }
         public IDbSet<MAWBType> MAWBTypes { get; set; }
         public IDbSet<DeclarationConsAcceptance> DeclarationConsAcceptances { get; set; }
+        public IDbSet<CourierCustomStatus> CourierCustomStatuses { get; set; }
+        public IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; set; }
         public IDbSet<ManifestCargoStatus> ManifestCargoStatuses { get; set; }
         public IDbSet<CourierManifestStatus> CourierManifestStatuses { get; set; }
         public IDbSet<CourierDeclarationStatus> CourierDeclarationStatuses { get; set; }
@@ -2969,17 +2980,73 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ActionCode> ActionCodes { get; set; }
         public IDbSet<SplitOrMergeReason> SplitOrMergeReasons { get; set; }
         public IDbSet<CargoSplitRequestStatus> CargoSplitRequestStatuses { get; set; }
-        public IDbSet<DeclarationCargoSplit> DeclarationCargoSplits
-        {
-            get;
-            set;
-
-        }
+        public IDbSet<DeclarationCargoSplit> DeclarationCargoSplits { get; set; }
         public IDbSet<DecCargoSplitCon> DecCargoSplitCons { get; set; }
         public IDbSet<TreatmentWay> TreatmentWays { get; set; }
         public IDbSet<DecCargoSplitConsItem> DecCargoSplitConsItems { get; set; }
         public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; set; }
+        public IDbSet<TPGFileType> TPGFileTypes { get; set; }
         public IDbSet<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifiers { get; set; }
+
+        public IDbSet<PendingErrorPlace> PendingErrorPlaces { get; set; }
+        public IDbSet<MamanSpecialAction> MamanSpecialAction { get; set; }
+        public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatus { get; set; }
+        public IDbSet<DeclarationMamanSpecialAction> PendingDeclarationMamanSpecialActionErrorPlace { get; set; }
+
+        public IDbSet<DeclarationCourierStatus> DeclarationCourierStatuses
+        {
+            get;
+            set;
+        }
+        public IDbSet<CourierPendingReason> CourierPendingReasons
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomsDocumentsDefinition> CustomsDocumentsDefinition { get; set; }
+        public IDbSet<UIMessage> UIMessage { get; set; }
+        public IDbSet<UIMessageAdditional> UIMessageAdditional { get; set; }
+        public IDbSet<PointerLevel> PointerLevel { get; set; }
+        public IDbSet<ClientDrivingLicense> ClientDrivingLicense { get; set; }
+        public IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseType { get; set; }
+        public IDbSet<DecisionType> DecisionType { get; set; }
+        public IDbSet<SeizureMethodType> SeizureMethodType { get; set; }
+        public IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizure { get; set; }
+        public IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefund { get; set; }
+        public IDbSet<SeizureFactorType> SeizureFactorType { get; set; }
+        
+        public IDbSet<RefundCustomerActivityType> RefundCustomerActivityType { get; set; }
+        public IDbSet<TransferCargoMethodType> TransferCargoMethodType { get; set; }
+        public IDbSet<GatepassReturnCode> GatepassReturnCode { get; set; }
+        public IDbSet<UpdateCode> UpdateCode { get; set; }
+        public IDbSet<GatepassRequest> GatepassRequest { get; set; }
+        public IDbSet<PendingByKeyword> PendingByKeywords
+        {
+            get;
+            set;
+        }
+        public IDbSet<ContinuousRequestType> ContinuousRequestType { get; set; }
+        public IDbSet<RequestType> RequestType { get; set; }
+        public IDbSet<ApprovedProfession> ApprovedProfession { get; set; }
+        public IDbSet<DeficitDecision> DeficitDecision { get; set; }
+
+        public IDbSet<ConsignmentPackDanger> ConsignmentPackDangers
+        {
+            get; set;
+        }
+        public IDbSet<DeclarationPending> DeclarationPendings
+        {
+            get; set;
+        }
+
+        public IDbSet<HazardousSubstance> HazardousSubstances { get; set; }
+        public IDbSet<AmendmentStatus> AmendmentStatuses { get; set; }
+
+        public IDbSet<DecDangersContact> DecDangersContacts
+        {
+            get; set;
+        }
 
         #endregion
 
@@ -3386,8 +3453,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<BankPageEntryType> BankPageEntryTypes { get; set; }
         public IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas { get; set; }
 
-        public IDbSet<UIMessage> UIMessage { get; set; }
-        public IDbSet<UIMessageAdditional> UIMessageAdditional { get; set; }
         public IDbSet<AutomaticExternalRconcilMthod> AutomaticExternalRconcilMthods { get; set; }
         public IDbSet<RevaluationStatus> RevaluationStautses { get; set; }
         public IDbSet<TaxReportStatus> TaxReportStatuses { get; set; }
@@ -3822,6 +3887,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             #endregion
 
             #region customs
+            modelBuilder.Configurations.Add(new MamanSpecialActionMap());
+            modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
+            modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
+
+            modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
             modelBuilder.Configurations.Add(new MamanStatusMap());
             modelBuilder.Configurations.Add(new AcceptanceStatusMap());
 
@@ -4304,6 +4374,35 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
             modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
             modelBuilder.Configurations.Add(new AccountingPartnerMap());
+
+            modelBuilder.Configurations.Add(new DeclarationCourierStatusMap());
+            modelBuilder.Configurations.Add(new CourierPendingReasonMap());
+            modelBuilder.Configurations.Add(new CustomsDocumentsDefinitionMap());
+            modelBuilder.Configurations.Add(new UIMessageMap());
+            modelBuilder.Configurations.Add(new UIMessageAdditionalMap());
+            modelBuilder.Configurations.Add(new ClientDrivingLicenseMap());
+            modelBuilder.Configurations.Add(new ClientDrivingLicenseTypeMap());
+            
+            modelBuilder.Configurations.Add(new DecisionTypeMap());
+            modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesSeizureMap());
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesRefundMap());
+            modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
+           
+            modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
+            modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
+            modelBuilder.Configurations.Add(new GatepassReturnCodeMap());
+            modelBuilder.Configurations.Add(new UpdateCodeMap());
+            modelBuilder.Configurations.Add(new GatepassRequestMap());
+            modelBuilder.Configurations.Add(new PendingByKeywordMap());
+            modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
+            modelBuilder.Configurations.Add(new RequestTypeMap());
+            modelBuilder.Configurations.Add(new DeficitDecisionMap());
+            modelBuilder.Configurations.Add(new ConsignmentPackDangerMap());
+            modelBuilder.Configurations.Add(new DeclarationPendingMap());
+            modelBuilder.Configurations.Add(new HazardousSubstanceMap());
+            modelBuilder.Configurations.Add(new AmendmentStatusMap());
+            modelBuilder.Configurations.Add(new DecDangersContactMap());
 
             #endregion
 
@@ -4968,8 +5067,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             
             modelBuilder.Configurations.Add(new CourierMasterMap());
             modelBuilder.Configurations.Add(new CourierDeclarationMap());
-            modelBuilder.Configurations.Add(new UIMessageMap());
-            modelBuilder.Configurations.Add(new UIMessageAdditionalMap());
+          
             modelBuilder.Configurations.Add(new CustomsAirlineMap());
 
             modelBuilder.Configurations.Add(new QuoteSettingMap());

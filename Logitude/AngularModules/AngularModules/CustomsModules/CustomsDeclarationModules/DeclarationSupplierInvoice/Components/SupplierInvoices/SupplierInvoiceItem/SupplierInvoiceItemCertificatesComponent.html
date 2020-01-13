@@ -1,4 +1,4 @@
-﻿
+
 
 <table>
 
@@ -14,7 +14,8 @@
                       [DataContext]="DataContext"></LogLabel>
         </td>
         <td style="width:150px">
-            <LogTextBox [ObjectFieldName]="'CatalogNumber'" [ObjectTableName]="ObjectTableName"
+            <!--[ObjectTableName]="ObjectTableName"-->
+            <LogTextBox [ObjectFieldName]="'CatalogNumber'" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
         </td>
