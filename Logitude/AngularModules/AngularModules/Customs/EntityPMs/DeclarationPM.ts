@@ -1099,6 +1099,11 @@ export class DeclarationPM {
     public set IsPendingNotNull(newValue: boolean) { if (this.isPendingNotNull != newValue) { this.isPendingNotNull = newValue; this.MarkAsDirty("IsPendingNotNull"); } }
        
 	 
+    private amendmentDontDisplayInList: boolean;
+    public get AmendmentDontDisplayInList() { return this.amendmentDontDisplayInList; }
+    public set AmendmentDontDisplayInList(newValue: boolean) { if (this.amendmentDontDisplayInList != newValue) { this.amendmentDontDisplayInList = newValue; this.MarkAsDirty("AmendmentDontDisplayInList"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
