@@ -59,24 +59,24 @@ export class PhysicalCheckComponent
         if (this.MyCommunicationLogId != null) {
             this.getData(this.MyCommunicationLogId, this.MyCustomsMenuItem.MainInterfaceCode);
         }
-        this.UIProperties.SetEnabled("OpenDate", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("operationCode", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CheckId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("DeclarationNo", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CheckTypeName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("LimitDate", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("QueueTypeName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CargoTypeCode", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CheckSiteName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("StorageSiteName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CustomerName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("StatusMessageName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("OperationName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ContainerNubmer", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CargoIdentifierKey2", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CargoIdentifierKey1", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CargoIdentifierTypeName", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("OpenDate", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("operationCode", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CheckId", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("DeclarationNo", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CheckTypeName", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("LimitDate", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("QueueTypeName", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CargoTypeCode", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CheckSiteName", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("StorageSiteName", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CustomerName", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("StatusMessageName", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("OperationName", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("ContainerNubmer", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CargoIdentifierKey2", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CargoIdentifierKey1", this.ObjectTableName, false);
+        //this.UIProperties.SetEnabled("CargoIdentifierTypeName", this.ObjectTableName, false);
 
 
 
