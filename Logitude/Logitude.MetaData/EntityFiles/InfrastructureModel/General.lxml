@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;fbdc&quot;"
+  Code="&quot;723a&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -2047,12 +2047,6 @@
       Code="&quot;Accounting.General.O.OriginalAmount&quot;"
       DefaultText="&quot;Original Amount&quot;"
       LocalDefaultText="&quot;מקורף סכום מקורי&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.OpenAmount&quot;"
-      DefaultText="&quot;Open Amount&quot;"
-      LocalDefaultText="&quot;יתרת פתיחה לתקופה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
