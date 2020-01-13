@@ -884,7 +884,7 @@ img {
                                     </table> 
                                 </td>
 
-                                <td style="width:45px; height:45px; vertical-align:top;">
+                                <td *ngIf="FlagSRC" style="width:45px; height:45px; vertical-align:top;">
                                     <img src="${FlagSRC}" style="width:45px; height:45px; line-height:45px; margin:0; padding:0; margin-top: -7px;" />
                                 </td>
 

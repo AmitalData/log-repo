@@ -1993,11 +1993,34 @@ namespace WebFreight.Web
                 bool isReleasingAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsReleasingAgentShared;
                 bool isIssuingCarrierAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsIssuingCarrierAgentShared;
 
+                if (string.IsNullOrEmpty(shipment.ShipperId) && !string.IsNullOrEmpty(shipment.ShipperName) && shipment .ShipmentLevelCode == "A" && isShipperShared)
+                {
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.PartnerName = shipment.ShipperName;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "visible";
+                    item.PartnerType = "Shipper";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+                    item.Reference1 =  "";
+                    item.Reference2 ="";
+                    item.Name = "";
+                    item.Address1 = "";
+                    item.Address2 = "";
+                    item.Phone = "";
+                    item.Fax = "";
+                    item.CityZipCode = "";
+                    item.CountryName = "";
+                    item.FlagSRC = "";
+                    result.Add(item);
+                }
+
                 if (!string.IsNullOrEmpty(shipment.ShipperId) && isShipperShared)
                 {
                     #region Shipper
                     CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
-                    
+
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
                     item.Id = shipment.ShipperId;
                     item.ReferenceVisibility = "visible";
