@@ -6,9 +6,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class RegistryDateTypeList {
-   		Code: string;
-		Name: string;
-		SearchFields: string;
+export class CustomerAccountManagerByProductList {
+   		ProductTypeCode: string;
+		AccountManagerId: string;
+		CustomerId: string;
+		Tenant: number;
 	
 }

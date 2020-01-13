@@ -1464,7 +1464,6 @@
     FeatureTextCodeCode="&quot;ReportObjectTable.Features.AllReports&quot;"
     FeatureDefaultText="&quot;All Reports&quot;"
     IsSpellChecked="false">
-
     <QueryColumns>
       <QueryColumn
         QueryCode="&quot;All Reports&quot;"
@@ -1505,7 +1504,6 @@
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
-
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;Report&quot;"

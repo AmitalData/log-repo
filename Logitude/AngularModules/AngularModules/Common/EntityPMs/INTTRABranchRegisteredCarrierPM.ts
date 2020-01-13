@@ -15,7 +15,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class AgentSharedDocumentPM {
+export class INTTRABranchRegisteredCarrierPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -35,53 +35,28 @@ export class AgentSharedDocumentPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private agentReference: string;
-    public get AgentReference() { return this.agentReference; }
-    public set AgentReference(newValue: string) { if (this.agentReference != newValue) { this.agentReference = newValue; this.MarkAsDirty("AgentReference"); } }
-       
-	 
     private updateDate: Date;
     public get UpdateDate() { return this.updateDate; }
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
        
 	 
-    private createDate: Date;
-    public get CreateDate() { return this.createDate; }
-    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
+    private updatedByUserId: string;
+    public get UpdatedByUserId() { return this.updatedByUserId; }
+    public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
        
 	 
-    private documentXML: string;
-    public get DocumentXML() { return this.documentXML; }
-    public set DocumentXML(newValue: string) { if (this.documentXML != newValue) { this.documentXML = newValue; this.MarkAsDirty("DocumentXML"); } }
+    private shippingLineId: string;
+    public get ShippingLineId() { return this.shippingLineId; }
+    public set ShippingLineId(newValue: string) { if (this.shippingLineId != newValue) { this.shippingLineId = newValue; this.MarkAsDirty("ShippingLineId"); } }
        
 	 
-    private statusCode: string;
-    public get StatusCode() { return this.statusCode; }
-    public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
-       
-	 
-    private agentId: string;
-    public get AgentId() { return this.agentId; }
-    public set AgentId(newValue: string) { if (this.agentId != newValue) { this.agentId = newValue; this.MarkAsDirty("AgentId"); } }
-       
-	 
-    private shipmentLevelCode: string;
-    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
-    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
-       
-	 
-    private agentSharedManifestRef: string;
-    public get AgentSharedManifestRef() { return this.agentSharedManifestRef; }
-    public set AgentSharedManifestRef(newValue: string) { if (this.agentSharedManifestRef != newValue) { this.agentSharedManifestRef = newValue; this.MarkAsDirty("AgentSharedManifestRef"); } }
-       
-	 
-    private documentSL: any;
-    public get DocumentSL() { return this.documentSL; }
-    public set DocumentSL(newValue: any) { if (this.documentSL != newValue) { this.documentSL = newValue; this.MarkAsDirty("DocumentSL"); } }
+    private branchId: string;
+    public get BranchId() { return this.branchId; }
+    public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
        
 	 
 
-    public OldEntityPM: AgentSharedDocumentPM;
+    public OldEntityPM: INTTRABranchRegisteredCarrierPM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -89,11 +64,11 @@ export class AgentSharedDocumentPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AgentSharedDocument");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "INTTRABranchRegisteredCarrier");
            
         }
     }
-    private MyClone: AgentSharedDocumentPM;
+    private MyClone: INTTRABranchRegisteredCarrierPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
