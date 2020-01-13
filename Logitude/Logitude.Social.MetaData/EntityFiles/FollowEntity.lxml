@@ -65,7 +65,8 @@
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
-    IsComposition="false" />
+    IsComposition="false"
+    NoMetaDataField="true" />
   <field
     Id="&quot;39dae228-61d4-4f7a-bb46-ab2e5bd34761&quot;"
     FieldName="&quot;Tenant&quot;"

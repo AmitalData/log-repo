@@ -333,7 +333,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -1553,7 +1553,6 @@
     FeatureTextCodeCode="&quot;ReportObjectTable.Features.AllReports&quot;"
     FeatureDefaultText="&quot;All Reports&quot;"
     IsSpellChecked="false">
-
     <QueryColumns>
       <QueryColumn
         QueryCode="&quot;All Reports&quot;"
@@ -1594,7 +1593,6 @@
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
-
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;Report&quot;"
@@ -2270,13 +2268,13 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-    Code="&quot;FlightBookingManifest&quot;"
-    FeatureTypeCode="&quot;AREA&quot;"
-    FeatureTextCodeCode="&quot;Report.Features.FlightBookingManifest&quot;"
-    FeatureDefaultText="&quot;Flight Bookings Manifest&quot;"
-    IsPackagable="true"
-    IsOld="false"
-    IsCoreFeature="false"
-    IsBusinessUnitEnabled="false" />
+      Code="&quot;FlightBookingManifest&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Report.Features.FlightBookingManifest&quot;"
+      FeatureDefaultText="&quot;Flight Bookings Manifest&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

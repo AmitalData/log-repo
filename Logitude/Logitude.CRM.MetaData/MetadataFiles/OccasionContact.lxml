@@ -1,4 +1,5 @@
-﻿<entity
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
   Id="&quot;5cedba7f-ca16-4836-bbc9-ff5a7c2c4946&quot;"
   ObjectTableName="&quot;OccasionContact&quot;"
   IsNew="true"
@@ -111,7 +112,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="true"

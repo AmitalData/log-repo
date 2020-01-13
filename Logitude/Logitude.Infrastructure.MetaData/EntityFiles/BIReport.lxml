@@ -117,7 +117,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="true"
@@ -1439,7 +1439,7 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
-   <Screen
+  <Screen
     Name="&quot;BIReportHeaderScreen&quot;"
     ObjectTableName="&quot;BIReport&quot;"
     IsReadOnly="true"
