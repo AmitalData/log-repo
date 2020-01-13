@@ -151,6 +151,17 @@ export class GLAccountInterestComponent extends BaseComponent{
                     this.SetUIProperties();
 
                 }
+
+                if (this.entityArgs.EditComponent.ValidationErrorsList.length != 0) {
+                    if (this.GLAccountInterestPeriodsList.Collection.length > 0) {
+                        var errors = [];
+                        var lastRow = this.GLAccountInterestPeriodsList.Collection[this.GLAccountInterestPeriodsList.Collection.length - 1];
+                        var ObjectTableName: string = "GLAccountInterestPeriod";
+                        Validator.TryValidateObject(lastRow, ObjectTableName, errors);
+                        if (errors.length > 0)
+                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+                    }
+                }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
