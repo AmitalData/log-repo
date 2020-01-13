@@ -260,7 +260,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             };
         }
 
-        private QueryOperations BuildQueryOperations(byte[] xmlFilters)
+        private QueryOperations DeserializeQueryOperationFromXml(byte[] xmlFilters)
         {
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
