@@ -183,7 +183,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public static void CustomXmlToPM(List<CommunicationLogStepList> communicationLogStepList, PhysicalCheckPM entityPM)
         {
-
             string documentData = communicationLogStepList[0].DocumentData;
             dynamic data = JObject.Parse(documentData);
             PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(entityPM.Tenant);
@@ -191,7 +190,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 CargoIdentifireTypeQueryService cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPM.Tenant);
                 CargoIdentifireTypePM cargoIdentifireType = cargoIdentifireTypeQueryService.GetSingle(Convert.ToString(data.CheckEntity.cargoIdentifier.cargoIdentifierType) , false, true);
-                entityPM.CargoIdentifierTypeName = cargoIdentifireType.LocalName;
+                entityPM.CargoIdentifierTypeName = cargoIdentifireType.LocalName;     
             }
             if (data.NoticeToClient.checkSiteNumber != null)
             {
@@ -200,6 +199,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.CheckSiteName = siteLookup != null ? siteLookup.LocalName : null;
                 
             }
+            if (data.NoticeToClient.entityType != null)
+            {
+                CheckEntityTypeQueryService cargoIdentifireTypeQueryService = new CheckEntityTypeQueryService(entityPM.Tenant);
+                CheckEntityTypePM checkEntityType = cargoIdentifireTypeQueryService.GetSingle(Convert.ToString(data.NoticeToClient.entityType), false, true);
+                entityPM.CargoTypeCode = checkEntityType.LocalName;
+            }
+
             if (data.NoticeToClient.operationCode != null)
             {
                 PhysicalCheckOperationQueryService physicalCheckOperationQueryService = new PhysicalCheckOperationQueryService(entityPM.Tenant);
@@ -225,9 +231,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             if (data.NoticeToClient.declarationID != null)
             {
-               Card card = physicalCheckQueryService.GetCustomerNameByChecKId(Convert.ToString(data.NoticeToClient.declarationID), entityPM.Tenant);
+                Card card = physicalCheckQueryService.GetCustomerNameByDeclartionNo(Convert.ToString(data.NoticeToClient.declarationID), entityPM.Tenant);
                 entityPM.CustomerName = card.LocalName;
                 entityPM.DeclarationId = data.NoticeToClient.declarationID;
+                entityPM.CustomFileNo = physicalCheckQueryService.GetCustomFileNoByCheckId(entityPM.DeclarationId, entityPM.Tenant);
+
             }
             if (data.NoticeToClient.statusMessage != null)
             {
@@ -251,14 +259,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.CargoIdentifierKey2 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey2;
             }
-            if (data.CheckEntity.containerNumer != null)
+            if (data.CheckEntity.containerNumber != null)
             {
-                entityPM.ContainerNubmer = data.CheckEntity.containerNumer;
+                entityPM.ContainerNubmer = data.CheckEntity.containerNumber;
             }
             if (data.NoticeToClient.openDate != null)
             {
                 entityPM.OpenDate = data.NoticeToClient.openDate;
             }
+
             
 
 
