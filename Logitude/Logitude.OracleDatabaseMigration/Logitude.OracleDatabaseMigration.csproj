@@ -448,6 +448,10 @@
     <Compile Include="Migrations\202001081021093_AddDWHSettingP.Designer.cs">
       <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.cs" />
+    <Compile Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.Designer.cs">
+      <DependentUpon>202001131439222_AddAmendmentDontDisplayInList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -774,6 +778,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001081021093_AddDWHSettingP.resx">
       <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.resx">
+      <DependentUpon>202001131439222_AddAmendmentDontDisplayInList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
