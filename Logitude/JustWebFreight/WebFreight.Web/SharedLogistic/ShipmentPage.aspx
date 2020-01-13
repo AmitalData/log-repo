@@ -883,13 +883,14 @@ img {
                                         </tr>
                                     </table> 
                                 </td>
-
+     
                                 <td style="width:45px; height:45px; vertical-align:top;">
-                                    <img src="${FlagSRC}" style="width:45px; height:45px; line-height:45px; margin:0; padding:0; margin-top: -7px;" />
+                                 <div style="visibility: #= FlagSRCVisibility #;">
+                                    <img src="${FlagSRC}" style="width:45px; height:45px; line-height:45px; margin:0; padding:0; margin-top: -7px;visibility: inherit" />
+                                </div>
                                 </td>
 
                                 <td></td>
-
                             </tr>
                         </table>
                     </td>
