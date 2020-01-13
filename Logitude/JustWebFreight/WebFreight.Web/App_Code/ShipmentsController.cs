@@ -1997,8 +1997,8 @@ namespace WebFreight.Web
                 {
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
                     item.PartnerName = shipment.ShipperName;
-                    item.ReferenceVisibility = "visible";
-                    item.Reference2Visibility = "visible";
+                    item.ReferenceVisibility = "collapse";
+                    item.Reference2Visibility = "collapse";
                     item.PartnerType = "Shipper";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -2012,7 +2012,7 @@ namespace WebFreight.Web
                     item.Fax = "";
                     item.CityZipCode = "";
                     item.CountryName = "";
-                    item.FlagSRC = "";
+                    item.FlagSRCVisibility = "collapse";
                     result.Add(item);
                 }
 
