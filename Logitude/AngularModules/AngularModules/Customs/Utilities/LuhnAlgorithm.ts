@@ -1,4 +1,4 @@
-﻿
+
 
 export class LuhnAlgorithm {
 
@@ -36,13 +36,19 @@ export class LuhnAlgorithm {
             return null;
         }
 
+        debugger;
+        var year = Number( (new Date()).getUTCFullYear().toString().substr(2, 1));
+
+        if ( reshimonNumber.substr(0, 1) > (new Date()).getUTCFullYear().toString().substr(3, 1)) {
+            year = year - 1;
+        }
 
 
         let tmp: string =
             //DateTime.Now.ToString("yy").Substring(0, 1)
             //2017 return 1 
             //1984 return 8 
-            (new Date()).getUTCFullYear().toString().substr(2, 1)
+            year
             +
             reshimonNumber.substr(0, 1)
             +
