@@ -222,7 +222,6 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
-    <Content Include="CustomsModules\CustomsGeneralRequests\Components\EndPhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\PhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\DeclarationAmendmentListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.html" />
@@ -838,7 +837,6 @@
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\MasterBOLQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\MorningMessageComponent.ts" />
-    <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\EndPhysicalCheckComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\PhysicalCheckComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\RecallClientsForCutoms.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\RecallSuppliersFromFileComponent.ts" />

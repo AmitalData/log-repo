@@ -20,7 +20,7 @@ import { RecallClientsForCutoms } from './Components/RecallClientsForCutoms';
 import { MorningMessageComponent } from './Components/MorningMessageComponent';
 import { CopyDeclarationComponent } from './Components/CopyDeclarationComponent';
 import { PhysicalCheckComponent } from './Components/PhysicalCheckComponent';
-
+ 
 export const Components =
     [
         CourierBOLQueryComponent,
@@ -44,8 +44,8 @@ export const Components =
         RecallClientsForCutoms,
         MorningMessageComponent,
         CopyDeclarationComponent,
-        PhysicalCheckComponent
-    ];
+        PhysicalCheckComponent,
+     ];
 
 export class ModuleDeclarations {
     public static Get(name: string) {
