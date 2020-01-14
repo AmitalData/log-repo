@@ -30,7 +30,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         public AccountingAgingDataProvider LoadFromXML(byte[] xmlFilters)
         {
-            reportQueryOperations = BuildQueryOperations(xmlFilters);
+            reportQueryOperations = DeserializeQueryOperationFromXml(xmlFilters);
 
             AgingReportService agingReportService = new AgingReportService(BuildReportParameters());
             agingReportService.RunReport();

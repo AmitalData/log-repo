@@ -49,6 +49,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
+using WebFreight.Web.Helpers.AutomationModel;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -528,6 +529,13 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             ReportHelper reportHelper = new ReportHelper();
                             reportHelper.UpdateReportLocalNames();
+                            break;
+                        }
+                    case "updateautomationmetadata":
+                        {
+                            AutomationMetaDataUpdateService automationMetaDataUpdateService = new AutomationMetaDataUpdateService();
+                            automationMetaDataUpdateService.UpdateAutomationMetaData();
+                            
                             break;
                         }
 

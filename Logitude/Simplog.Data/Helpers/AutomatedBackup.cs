@@ -103,5 +103,11 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public string ObjectFieldId { get; set; }
+
+
+        [DataMember]
+        public string ObjectFieldCode { get; set; }
+
+        
     }
 }
