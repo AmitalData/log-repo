@@ -78,7 +78,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         //this.OkClicked(false);
         this.SelectedItem = Item;
         this.FillbanckStackFields();
-        this.myGeneralService.GetScreenModificationByScreenId(Item.ScreenPM.Id).subscribe(myResult => {
+        this.myGeneralService.GetScreenModificationByScreenCode(Item.ScreenPM.Code).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (myResponse.Result != null) {
                 this.GenerateScreen(myResponse.Result);
