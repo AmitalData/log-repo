@@ -30,7 +30,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         public AccountingAgingDataProvider LoadFromXML(byte[] xmlFilters)
         {
-            reportQueryOperations = BuildQueryOperations(xmlFilters);
+            reportQueryOperations = DeserializeQueryOperationFromXml(xmlFilters);
 
             AgingReportService agingReportService = new AgingReportService(BuildReportParameters());
             agingReportService.RunReport();
@@ -242,7 +242,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
             reportParameters.AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString();
-            reportParameters.Aging4AccountTypeCode = AgingReportParam.Aging4AccountTypeCodeEnum.Customer2;
+            reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
 
             SetReportCategoryParameters(reportParameters);
 
@@ -260,7 +260,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             };
         }
 
-        private QueryOperations BuildQueryOperations(byte[] xmlFilters)
+        private QueryOperations DeserializeQueryOperationFromXml(byte[] xmlFilters)
         {
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));

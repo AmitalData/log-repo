@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "c1bb",
+			      				    Code =  "723a",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -560,8 +560,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_PRICESTEPS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRICESTEPS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Menu.PriceSteps", NameTextCodeDefaultText = @"Prices Steps" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_SupportMailBoxMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SupportMailBoxMenu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SupportMailBoxMenu", NameTextCodeDefaultText = @"Support Mail Box" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature GeneralFeature_ACCOUNTINGTRANSFER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ACCOUNTINGTRANSFER", NameTextCodeDefaultText = @"Accounting Transfer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -1352,8 +1350,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralODueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.DueDate", DefaultText = "Due Date",LocalDefaultText = @"תאריך לתשלום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOOriginalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount",LocalDefaultText = @"מקורף סכום מקורי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode GeneralTextCode_AccountingGeneralOOpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenAmount", DefaultText = "Open Amount",LocalDefaultText = @"יתרת פתיחה לתקופה המוצגת", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOAmountToReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AmountToReconcile", DefaultText = "Amount to Reconcile",LocalDefaultText = @"סכום להתאמה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
