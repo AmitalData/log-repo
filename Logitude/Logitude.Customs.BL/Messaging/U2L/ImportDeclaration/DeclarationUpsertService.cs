@@ -304,10 +304,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ImporterId))
                     {
-                        if (_AmitalCustomsFile.ImporterId.Substring(0, 1) == "P")
+                        if (_AmitalCustomsFile.ImporterId.Substring(0, 2) == "P-")
                         {
-                            this._MyDeclarationPM.ImporterPassportNumber = _AmitalCustomsFile.ImporterId.Substring(1);
-                            this._MyDeclarationPM.ImporterTypeCode = "P";
+                            this._MyDeclarationPM.ImporterPassportNumber = _AmitalCustomsFile.ImporterId.Substring(2);
+                            this._MyDeclarationPM.ImporterTypeCode = "2";
+                            this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Substring(0, 11);
                             if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
                             {
                                 string countryCode = "";
