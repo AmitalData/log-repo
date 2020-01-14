@@ -314,6 +314,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string AmendmentStatusName  { get; set; }
        [DataMember]
        public bool IsPendingNotNull  { get; set; }
+       [DataMember]
+       public bool AmendmentDontDisplayInList  { get; set; }
    }
 
 }

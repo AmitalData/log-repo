@@ -4353,6 +4353,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool amendmentDontDisplayInList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AmendmentDontDisplayInList  
+	   {
+	    
+	     get
+		{
+		   return amendmentDontDisplayInList;
+		 }
+		 set
+		 {
+		   if(amendmentDontDisplayInList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentDontDisplayInList",OldValue=amendmentDontDisplayInList,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   amendmentDontDisplayInList=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
