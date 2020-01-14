@@ -10,12 +10,19 @@
 import {TarrifHeaderPM} from './TarrifHeaderPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
+import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
+import {Output, EventEmitter}  from '@angular/core';
+import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+
+
 export class TarrifFromToPM {
 
+      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
           this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties; 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
 
@@ -23,47 +30,47 @@ export class TarrifFromToPM {
     
     private id: string;
     public get Id() { return this.id; }
-    public set Id(newValue: string) { this.id = newValue; this.MarkAsDirty(); }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { this.tenant = newValue; this.MarkAsDirty(); }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
     private tarrifHeaderId: string;
     public get TarrifHeaderId() { return this.tarrifHeaderId; }
-    public set TarrifHeaderId(newValue: string) { this.tarrifHeaderId = newValue; this.MarkAsDirty(); }
+    public set TarrifHeaderId(newValue: string) { if (this.tarrifHeaderId != newValue) { this.tarrifHeaderId = newValue; this.MarkAsDirty("TarrifHeaderId"); } }
        
 	 
     private portId: string;
     public get PortId() { return this.portId; }
-    public set PortId(newValue: string) { this.portId = newValue; this.MarkAsDirty(); }
+    public set PortId(newValue: string) { if (this.portId != newValue) { this.portId = newValue; this.MarkAsDirty("PortId"); } }
        
 	 
     private countryId: string;
     public get CountryId() { return this.countryId; }
-    public set CountryId(newValue: string) { this.countryId = newValue; this.MarkAsDirty(); }
+    public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
        
 	 
     private tarrifFromToTypeCode: string;
     public get TarrifFromToTypeCode() { return this.tarrifFromToTypeCode; }
-    public set TarrifFromToTypeCode(newValue: string) { this.tarrifFromToTypeCode = newValue; this.MarkAsDirty(); }
+    public set TarrifFromToTypeCode(newValue: string) { if (this.tarrifFromToTypeCode != newValue) { this.tarrifFromToTypeCode = newValue; this.MarkAsDirty("TarrifFromToTypeCode"); } }
        
 	 
     private portCode: string;
     public get PortCode() { return this.portCode; }
-    public set PortCode(newValue: string) { this.portCode = newValue; this.MarkAsDirty(); }
+    public set PortCode(newValue: string) { if (this.portCode != newValue) { this.portCode = newValue; this.MarkAsDirty("PortCode"); } }
        
 	 
     private countryCode: string;
     public get CountryCode() { return this.countryCode; }
-    public set CountryCode(newValue: string) { this.countryCode = newValue; this.MarkAsDirty(); }
+    public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
        
 	 
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }
+    private changeOp: string;
+    public get ChangeOp() { return this.changeOp; }
+    public set ChangeOp(newValue: string) { if (this.changeOp != newValue) { this.changeOp = newValue; this.MarkAsDirty("ChangeOp"); } }
        
 	 
 
@@ -76,11 +83,16 @@ export class TarrifFromToPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    MarkAsDirty() {
+    MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
         }	
+        if (propertyName != null) {
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TarrifFromTo");
+           
+        }
     }
     private MyClone: TarrifFromToPM;
 
