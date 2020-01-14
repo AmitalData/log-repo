@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class DueTypeUpdateClass
@@ -120,6 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
+			      				    IsTabsHidden =  false,
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			                    
@@ -135,6 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "DueType",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "DueType.SearchFields",
 					  						Code =  "SearchFields",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
@@ -175,12 +181,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "DueType.F.SearchFields",
+					  						HelpTextCodeCode =  "DueType.SearchFieldsHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
+					  						DefaultText =  "Search..",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
+					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -191,6 +202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "DueType",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "DueType.Code",
 					  						Code =  "Code",
 					  						MaxLength =  2,
 					  						IsCustom =  false,
@@ -230,12 +242,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "DueType.F.Code",
+					  						HelpTextCodeCode =  "DueType.CodeHelpText",
+					  						ListTextCodeCode =  "DueType.CH.CodeListLable",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  @"Code",
+					  						ListLableDefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -247,6 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "DueType",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "DueType.Name",
 					  						Code =  "Name",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
@@ -286,12 +305,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "DueType.F.Name",
+					  						HelpTextCodeCode =  "DueType.NameHelpText",
+					  						ListTextCodeCode =  "DueType.CH.NameListLable",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -326,15 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable DueTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DueType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode DueTypeTextCode_DueType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DueType", DefaultText = "Due Type",LocalDefaultText = null, ObjectTableId = DueTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

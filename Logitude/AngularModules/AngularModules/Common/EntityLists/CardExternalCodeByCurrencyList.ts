@@ -6,9 +6,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class RegistryDateTypeList {
-   		Code: string;
-		Name: string;
-		SearchFields: string;
+export class CardExternalCodeByCurrencyList {
+   		Id: string;
+		Tenant: number;
+		CardId: string;
+		CurrencyId: string;
+		ExternalRecievableTableId: string;
+		ExternalPayableTableId: string;
+		CurrencyCode: string;
+		ExternalTableName: string;
+		ExternalTableCode: string;
 	
 }

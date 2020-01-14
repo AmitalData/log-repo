@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedFeature.FeatureTypeCode = featureDetails.FeatureTypeCode;
                 updatedFeature.Code = featureDetails.Code;
                 updatedFeature.Packagable = featureDetails.Packagable;
-                updatedFeature.IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled;
+                //updatedFeature.IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled;
                 updatedFeature.FeatureUniqeCode = featureDetails.FeatureUniqeCode;
 
                 TextCode updatedTextCode = null;
