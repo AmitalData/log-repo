@@ -23,7 +23,7 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
 
     public EntityPM: InterestReportPM;
     public ObjectTableName: string = "InterestReport";
-    public DataContext: InterestReportGeneralTabComponent = this;
+    public DataContext: NewInterestReportComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
     public TenantPM: TenantPM;
     public isRTL: boolean = false;

@@ -186,6 +186,8 @@ export class ScreenLayoutComponent extends BaseComponent {
     OkClicked(CloseWindow: boolean = true) {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
         var ScreenId = this.SelectedItem.ScreenPM.Id;
+        var ScreenCode = this.SelectedItem.ScreenPM.Code;
+
         //this.MyArgs.RemovedScreenFields = [];
         this.MyArgs.ScreenFields = [];
         var Columns = 0;
@@ -203,6 +205,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.MyArgs.Columns = Columns;
         this.MyArgs.Rows = Rows;//Math.ceil(Rows / Columns);
         this.MyArgs.ScreenId = ScreenId;//this.SelectedItem.ScreenPM.Id;
+        this.MyArgs.ScreenCode = ScreenCode;//this.SelectedItem.ScreenPM.Code;
 
         this.myGeneralService.updateScreenFields(this.MyArgs).subscribe(myResult => {
             this.authHeader = new Headers();
