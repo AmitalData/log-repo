@@ -527,7 +527,7 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                string viewScript = "EXEC('IF (OBJECT_ID(''" + viewDefinition.Name + "'', ''V'') IS NOT NULL) BEGIN DROP VIEW " + viewDefinition.Name + " END" + "');\n";
+                string viewScript = "EXEC('IF (OBJECT_ID(''" + "[" + viewDefinition.Schema + "].[" + viewDefinition.Name + "]" + "'', ''V'') IS NOT NULL) BEGIN DROP VIEW " + "[" + viewDefinition.Schema + "].[" + viewDefinition.Name + "]" + " END" + "');\n";
 
                 if(Regex.Matches(viewDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").Count > 0)
                 {
@@ -556,7 +556,7 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                string procedureScript = "EXEC('IF (OBJECT_ID(''" + procedureDefinition.Name + "'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE " + procedureDefinition.Name + " END" + "');\n";
+                string procedureScript = "EXEC('IF (OBJECT_ID(''" + "[" + procedureDefinition.Schema + "].[" + procedureDefinition.Name + "]" + "'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE " + "[" + procedureDefinition.Schema + "].[" + procedureDefinition.Name + "]" + " END" + "');\n";
 
                 if (Regex.Matches(procedureDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").Count > 0)
                 {
@@ -667,7 +667,7 @@ namespace Logitude.DBMigrations.Models
         {
             script = string.Join("\n", script.Split('\n').Select(l => l.Trim()).ToArray());
 
-            if (script.Contains("<![CDATA["))
+            if (script.Contains("<![CDATA[") && script.Contains("]]>"))
             {
                 return script.Split(new string[] { "<![CDATA[" }, StringSplitOptions.None)[1].Split(new string[] { "]]>" }, StringSplitOptions.None)[0];
             }

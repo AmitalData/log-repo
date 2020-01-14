@@ -1,4 +1,4 @@
-<View DBType="Main" Name="[dbo].[AgingReportInvoiceDataView]">
+<View DBType="Main" Name="AgingReportInvoiceDataView" Schema="dbo">
   <SqlScript>
     <![CDATA[
 SET ANSI_NULLS ON

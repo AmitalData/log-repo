@@ -17,6 +17,9 @@ namespace Logitude.DBMigrations.Models
         [XmlAttribute()]
         public string Name { get; set; }
 
+        [XmlAttribute()]
+        public string Schema { get; set; }
+
         [XmlElement]
         public string SqlScript { get; set; }
 
