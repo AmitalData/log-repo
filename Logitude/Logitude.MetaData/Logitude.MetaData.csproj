@@ -609,6 +609,7 @@
     <None Include="EntityFiles\QuoteModel\QuotePriceSteps.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteRating.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSaleCharge.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteSetting.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteStage.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplate.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTotalVAT.lxml">
