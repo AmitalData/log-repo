@@ -2805,6 +2805,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapTransactionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\HelpResourceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\LogitudeLeadUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentChannelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentCurrencyUpdateClass.cs" />

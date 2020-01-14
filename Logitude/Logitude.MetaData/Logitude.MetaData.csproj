@@ -191,6 +191,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\CustomerOpenFilesAmount.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerProductActualData.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerProductLocation.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerTenantAccessRequest.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierAreasPort.lxml">
@@ -251,6 +253,7 @@
     <None Include="EntityFiles\CommonDataModel\DocumentFilingBackupSetting.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\TarrifFromTo.lxml" />
     <None Include="EntityFiles\CommonDataModel\TemperatureUnit.lxml" />
     <None Include="EntityFiles\CommonDataModel\TenantAdditionalData.lxml" />
     <None Include="EntityFiles\CommonDataModel\User.lxml">
@@ -438,6 +441,7 @@
     <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\GlobalModel\HelpResource.lxml" />
     <None Include="EntityFiles\GlobalModel\LogitudeLead.lxml" />
     <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
       <SubType>Designer</SubType>
@@ -470,6 +474,7 @@
     <None Include="EntityFiles\InfrastructureModel\APILogs.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\InfrastructureModel\APILogsData.lxml" />
     <None Include="EntityFiles\InfrastructureModel\BusinessHour.lxml" />
     <None Include="EntityFiles\InfrastructureModel\BusinessHoursHoliday.lxml">
       <SubType>Designer</SubType>
@@ -480,11 +485,18 @@
     <None Include="EntityFiles\InfrastructureModel\DWCategories.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\EmailAlertSetting.lxml" />
     <None Include="EntityFiles\InfrastructureModel\EntityStatus.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\HybridPartner.lxml" />
     <None Include="EntityFiles\InfrastructureModel\EventType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InfrastructureModel\EventTypeCategory.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InfrastructureModel\FollowUp.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InfrastructureModel\General.lxml">
@@ -499,10 +511,16 @@
     </None>
     <None Include="EntityFiles\InfrastructureModel\ObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ObjectTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\QueueMessageMoreDetails.lxml" />
     <None Include="EntityFiles\InfrastructureModel\RatesTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\SchedulerProcedure.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\SharedLogisticsInvitationStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\TaskSchedulerHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TasksScheduler.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\TextCode.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\TraceEvent.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TransportMode.lxml" />
     <None Include="EntityFiles\InfrastructureModel\VolumeUnit.lxml">
       <SubType>Designer</SubType>
@@ -591,6 +609,7 @@
     <None Include="EntityFiles\Master\Master.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\QuoteModel\BorderType.lxml" />
     <None Include="EntityFiles\QuoteModel\MarkUpType.lxml" />
     <None Include="EntityFiles\InvoiceModel\AccountingPaymentMethod.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARPaymentStatus.lxml" />
@@ -612,6 +631,11 @@
     <None Include="EntityFiles\QuoteModel\QuoteSetting.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteStage.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplate.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplateSection.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplateSetting.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplateTableDesign.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplateTextCode.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplateTextDesign.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTotalVAT.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -643,6 +667,7 @@
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStockUsageHistory.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryPackageHarmonize.lxml" />
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryTransportMode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>
@@ -659,9 +684,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentLevel.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentOrderPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPackage.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentPackageHarmonize.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentPackageItem.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPayable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPayableStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDelivery.lxml" />
