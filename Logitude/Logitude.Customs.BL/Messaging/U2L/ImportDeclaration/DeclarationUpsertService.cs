@@ -308,7 +308,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         {
                             this._MyDeclarationPM.ImporterPassportNumber = _AmitalCustomsFile.ImporterId.Substring(2);
                             this._MyDeclarationPM.ImporterTypeCode = "2";
-                            this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Substring(0, 11);
+                            this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId;
                             if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
                             {
                                 string countryCode = "";
