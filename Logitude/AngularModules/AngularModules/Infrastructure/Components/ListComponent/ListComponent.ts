@@ -1000,7 +1000,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             //console.log("dataSource", this.dataSource);
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-                this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
+                this.GetQueryColumns(this.SelectedQuery.Code, this.UserId);
             });
         }
 
@@ -1213,7 +1213,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 });
             }
 
-            this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
+            this.GetQueryColumns(this.SelectedQuery.Code, this.UserId);
         }
         //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;

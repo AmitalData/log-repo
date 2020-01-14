@@ -229,7 +229,7 @@ export class AdvanceSearchComponent implements OnInit {
 
             this.timeFilterFieldsClass = new FilterFieldsClass(this.isNewViewMode, this, this.pubSubService);
             this.FieldsValues = new FieldsValues();
-            this.currentQuery = window.Queries.filter(q => q.Id == QueryCode)[0];
+            this.currentQuery = window.Queries.filter(q => q.Code == QueryCode)[0];
 
             if (!this.currentQuery) {
                 var iMessageWindow = new MessageWindow();
@@ -289,7 +289,7 @@ export class AdvanceSearchComponent implements OnInit {
                 this.noFiltersField = new FilterField(OFPM, this.currentQuery.Id, this.isWindowViewMode, myResult);
                 this.timeFrameFields.push(this.noFiltersField);
 
-                this.advancedQueryFiltersList = myResult.filter(q => q.QueryId == QueryCode);
+                this.advancedQueryFiltersList = myResult.filter(q => q.QueryCode == QueryCode);
                 this.fillqueryfilters();
             }
         });
