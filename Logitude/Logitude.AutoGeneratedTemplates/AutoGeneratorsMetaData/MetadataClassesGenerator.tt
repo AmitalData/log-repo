@@ -207,7 +207,7 @@ namespace <#= UpdateClassnamespacestring #>
 					&& p.Name != "HasCompactSearch"  && p.Name != "ApplyDefaultValues"  && p.Name != "HasCustomValidator" && p.Name != "ApplyOnPropertyChangedCode" && p.Name != "HasApiHelper" && p.Name != "SortingByDirection"
 					  && p.Name != "DescriptionTextCodeId" && p.Name != "DownloadToExcelFeatureCode"
 					  && p.Name != "Code1"  && p.Name != "Name1" && p.Name != "Code2"  && p.Name != "Name2"
-					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "NoDefaultFeatures")
+					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "NoDefaultFeatures" && p.Name != "IsMetadataOnlyTable")
                 {
 				  #>
 				    <#= p.Name #> =  <#= p.Value #>,

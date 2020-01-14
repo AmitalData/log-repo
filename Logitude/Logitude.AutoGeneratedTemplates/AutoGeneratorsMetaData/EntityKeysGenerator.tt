@@ -41,6 +41,13 @@ public void GenerateKey(string xmlFilePath,string outputFilePath)
 	 keynamespacestring = GetKeyNameSpace(outputFilePath);
     }
 var entity = FromKeyFile(xmlFilePath);
+          if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 WriteKeyMethod(entity);
 SaveKeyOutput(outputFilePath);
 }
@@ -86,6 +93,7 @@ void SaveKeyOutput(string outputFileName)
 <#+
  private void WriteKeyMethod(dynamic entity)
 {
+       
 	string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
 	if(tableName.ToString().Trim('"').Contains("."))
