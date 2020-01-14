@@ -485,7 +485,9 @@
     <None Include="EntityFiles\InfrastructureModel\DWCategories.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectTable.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\EmailAlertSetting.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\EmailAlertSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\EntityStatus.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -520,7 +522,9 @@
     <None Include="EntityFiles\InfrastructureModel\TaskSchedulerHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TasksScheduler.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TextCode.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\TraceEvent.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\TraceEvent.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\TransportMode.lxml" />
     <None Include="EntityFiles\InfrastructureModel\VolumeUnit.lxml">
       <SubType>Designer</SubType>

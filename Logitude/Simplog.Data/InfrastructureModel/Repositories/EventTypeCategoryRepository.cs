@@ -57,6 +57,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.EventTypeCategories.ToList();
         }
 
+        public List<EventTypeCategory> GetAll()
+        {
+            return context.EventTypeCategories.ToList();
+        }
+
         public IWebFreightContext context
         {
             get { return webFreightContext; }

@@ -6,23 +6,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class TraceEventList {
+export class EmailAlertSettingList {
    		Id: string;
 		Tenant: number;
+		Code: string;
+		Description: string;
 		ObjectTableId: string;
-		EntityId: string;
-		EventTypeId: string;
-		EventDateTime: Date;
-		LogDateTime: Date;
-		UserId: string;
-		Notes: string;
-		EventTypeGroupCode: string;
-		EventTypeEnglishName: string;
-		ContactEnglishFirstName: string;
-		Deleted: boolean;
-		ShortView: boolean;
-		CustomerCareUserEmail: string;
-		Location: string;
-		PartnerName: string;
+		InActive: boolean;
+		SettingLevelCode: string;
+		To: string;
+		IndexOrder: number;
 	
 }
