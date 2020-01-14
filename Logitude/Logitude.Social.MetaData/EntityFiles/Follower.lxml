@@ -149,7 +149,8 @@
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
-    IsComposition="false" />
+    IsComposition="false"
+    NoMetaDataField="true" />
   <field
     Id="&quot;dad437d7-a302-49d5-84e6-b9dfd02f8356&quot;"
     FieldName="&quot;CreateDate&quot;"

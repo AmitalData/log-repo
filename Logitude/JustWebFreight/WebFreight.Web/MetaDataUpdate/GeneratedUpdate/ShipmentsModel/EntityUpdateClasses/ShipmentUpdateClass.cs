@@ -40049,6 +40049,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "HousesNumbers",
+					  						OldFieldName =  "HousesNumbers",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -40068,6 +40069,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "HousesNumbers",
 					  						ListPropertyPath =  "HousesNumbers",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

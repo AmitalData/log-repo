@@ -151,7 +151,8 @@
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
-    IsComposition="false" />
+    IsComposition="false"
+    NoMetaDataField="true" />
   <field
     Id="&quot;e528d85c-af1b-4100-baee-575868c740cd&quot;"
     FieldName="&quot;IsCancelled&quot;"

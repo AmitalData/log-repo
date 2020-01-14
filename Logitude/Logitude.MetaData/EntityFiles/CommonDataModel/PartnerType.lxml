@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Partner Type&quot;"
-  Code="&quot;3757&quot;"
+  Code="&quot;7eba&quot;"
   Name="&quot;PartnerType&quot;"
   CloseTableCode="&quot;Id&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -59,6 +59,7 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="true"
+  IsTabsHidden="false"
   SearchFields="&quot;PartnerType,PartnerTypes,,Id,&quot;">
   <field
     Id="&quot;0fdfe6f4-c59a-424c-a7fd-bdb4d4da12ec&quot;"
@@ -123,6 +124,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Id&quot;"
@@ -194,6 +196,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -268,6 +271,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -275,6 +279,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;PartnerTypeHeaderScreen&quot;"
+    ObjectTableName="&quot;PartnerType&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

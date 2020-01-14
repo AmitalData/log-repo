@@ -66,6 +66,7 @@ GenerateMetaDataUpdateClass("~/../../../Logitude.Infrastructure.MetaData/EntityF
 
 GenerateAllUpdateClasses("../EntityFiles/CommonDataModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/CommonDataModel/EntityUpdateClasses","CommonDataModel");
 GenerateMetaDataUpdateClass("../EntityFiles/CommonDataModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/CommonDataModel","CommonDataModelUpdateClass");
+
  
     
 GenerateAllUpdateClasses("../EntityFiles/GlobalModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/GlobalModel/EntityUpdateClasses","GlobalModel");
