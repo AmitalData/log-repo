@@ -105,7 +105,8 @@
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
-    IsComposition="false" />
+    IsComposition="false"
+    NoMetaDataField="true" />
   <field
     Id="&quot;bedc8d05-b8ac-4610-9dd7-4c045bbec1ff&quot;"
     FieldName="&quot;Name&quot;"

@@ -105,7 +105,8 @@
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
-    IsComposition="false" />
+    IsComposition="false"
+    NoMetaDataField="true" />
   <field
     Id="&quot;2672a7cd-012a-40d6-beee-59913cbb7615&quot;"
     FieldName="&quot;ObjectTableId&quot;"

@@ -852,7 +852,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="true"
+    NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"

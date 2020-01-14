@@ -111,7 +111,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true" />
   <field
     Id="&quot;1a7428d6-6ab3-4e51-90c0-29640c922b66&quot;"

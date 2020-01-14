@@ -423,6 +423,26 @@ namespace MetaDataGenerator
 						}
 
 					}
+
+					XmlNodeList tenantxnList = doc.SelectNodes("/entity/field[@FieldName='" + "\"" + "Tenant" + "\"" + "']");
+					foreach (XmlNode xn in tenantxnList)
+					{
+						if (xn.Attributes["NoMetaDataField"] == null)
+						{
+
+							XmlAttribute att = doc.CreateAttribute("NoMetaDataField");
+							att.Value = "true";
+							XmlAttribute typeAttr = xn.Attributes.Append(att);
+							fileChanged = true;
+						}
+						else if (xn.Attributes["NoMetaDataField"].Value == "false")
+						{
+							xn.Attributes["NoMetaDataField"].Value = "true";
+							fileChanged = true;
+						}
+
+					}
+
 					if (fileChanged)
 					{
 						FileStream fileStream = new FileStream(filePath, FileMode.Truncate, FileAccess.Write);

@@ -570,7 +570,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 		noObjectField = (field.Attribute(XName.Get("NoMetaDataField")).Value.ToLower() == "true");
     }
 
-	if(field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" || noObjectField || isCustomField)
+	if( noObjectField || isCustomField)//field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" ||
     {
 		return;
     }
