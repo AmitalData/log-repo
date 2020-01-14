@@ -58,14 +58,14 @@ GenerateMetaDataUpdateClass("~/../../../Logitude.WarehouseLib.MetaData/EntityFil
 
 GenerateAllUpdateClasses("~/../../../Logitude.CRM.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CRMModel");
 GenerateMetaDataUpdateClass("~/../../../Logitude.CRM.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CRMUpdateClass"); //
-GenerateAllUpdateClasses("~/../../../Logitude.CRM.MetaData/MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CRMModel");
-GenerateMetaDataUpdateClass("~/../../../Logitude.CRM.MetaData/MetadataFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","OccasionContactMetadataUpdateClass"); //
+ 
 
 GenerateAllUpdateClasses("~/../../../Logitude.Infrastructure.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","Infrastructure");
 GenerateMetaDataUpdateClass("~/../../../Logitude.Infrastructure.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","InfrastructureUpdateClass");
 
 GenerateAllUpdateClasses("../EntityFiles/CommonDataModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/CommonDataModel/EntityUpdateClasses","CommonDataModel");
 GenerateMetaDataUpdateClass("../EntityFiles/CommonDataModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/CommonDataModel","CommonDataModelUpdateClass");
+
  
     
 GenerateAllUpdateClasses("../EntityFiles/GlobalModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/GlobalModel/EntityUpdateClasses","GlobalModel");

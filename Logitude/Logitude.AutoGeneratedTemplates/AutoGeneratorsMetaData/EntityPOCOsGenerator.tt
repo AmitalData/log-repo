@@ -51,6 +51,13 @@ public void GeneratePoco(string xmlFilePath,string outputFilePath)
 		namespacestring = GetPocoNameSpace(outputFilePath);
     }
     var entity = FromFile(xmlFilePath);
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
     WritePOCOMethod(entity);
     SavePocoOutput(outputFilePath);
     
@@ -98,6 +105,7 @@ void SavePocoOutput(string outputFileName)
 <#+
  private void WritePOCOMethod(dynamic entity)
 {
+		
 	string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
 	string schema ="";

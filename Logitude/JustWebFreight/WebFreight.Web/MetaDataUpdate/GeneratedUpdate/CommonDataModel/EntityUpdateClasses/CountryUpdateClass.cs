@@ -1181,9 +1181,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CNGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CountryGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CountryObjectTable.Id, TabNameTextCodeId = CountryGeneralTextCode_TH0.Id, TabNameTextCodeCode = CountryGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CNGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CountryGeneralFeature_TH0.Id,FeatureUniqeCode = CountryGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CountryObjectTable.Id, TabNameTextCodeId = CountryGeneralTextCode_TH0.Id, TabNameTextCodeCode = CountryGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CountryEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CountryObjectTable.Id, TabNameTextCodeId = CountryEventsTextCode_TH1.Id, TabNameTextCodeCode = CountryEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CountryEventsFeature_TH1.Id,FeatureUniqeCode = CountryEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CountryObjectTable.Id, TabNameTextCodeId = CountryEventsTextCode_TH1.Id, TabNameTextCodeCode = CountryEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

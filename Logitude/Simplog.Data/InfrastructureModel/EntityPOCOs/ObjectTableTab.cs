@@ -20,7 +20,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string FeatureUniqeCode { get; set; }
 
 
-        [ForeignKey("FeatureId")]
+        //[ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
 
 

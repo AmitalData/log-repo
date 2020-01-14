@@ -50,6 +50,13 @@ var entity = FromEntityQueryServiceFile(xmlFilePath);
 			return;
 		}
 	}
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
  
     WriteEntityQueryServiceMethod(entity,contextName);
     SaveEntityQueryServiceOutput(outputFilePath);

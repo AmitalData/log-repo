@@ -25,6 +25,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             report.FilterHtmlComponentUrl = reportPM.FilterHtmlComponentUrl;
             report.DefaultTemplateId = reportPM.DefaultTemplateId;
             report.DefaultMessageTemplateId = reportPM.DefaultMessageTemplateId;
+            report.FeatureUniqeCode = reportPM.FeatureUniqeCode;
+
         }
     }
 }

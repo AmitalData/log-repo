@@ -99,9 +99,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
            }
 //#endif
             // Relationships
-            this.HasOptional(t => t.Feature)
-                .WithMany()
-                .HasForeignKey(d => d.FeatureId);
+            //this.HasOptional(t => t.Feature)
+            //    .WithMany()
+            //    .HasForeignKey(d => d.FeatureId);
             this.HasRequired(t => t.MenuButtonGroup)
                 .WithMany(t => t.MenuButtons)
                 .HasForeignKey(d => d.MenuButtonGroupId);

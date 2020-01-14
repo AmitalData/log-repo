@@ -1230,9 +1230,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SOGN",HtmlComponentName = "ARInvoiceStockGeneralTabComponent",HtmlComponentUrl = "./InvoiceModules/InvoiceStocks/Components/EditTabs/ARInvoiceStockGeneralTabComponent", FeatureId = ARInvoiceStockGeneralFeature_TH0.Id, ControlPath = "./InvoiceModules/InvoiceStocks/Components/EditTabs/ARInvoiceStockGeneralTabComponent", ObjectTableId = ARInvoiceStockObjectTable.Id, TabNameTextCodeId = ARInvoiceStockGeneralTextCode_TH0.Id, TabNameTextCodeCode = ARInvoiceStockGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SOGN",HtmlComponentName = "ARInvoiceStockGeneralTabComponent",HtmlComponentUrl = "./InvoiceModules/InvoiceStocks/Components/EditTabs/ARInvoiceStockGeneralTabComponent", FeatureId = ARInvoiceStockGeneralFeature_TH0.Id,FeatureUniqeCode = ARInvoiceStockGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InvoiceModules/InvoiceStocks/Components/EditTabs/ARInvoiceStockGeneralTabComponent", ObjectTableId = ARInvoiceStockObjectTable.Id, TabNameTextCodeId = ARInvoiceStockGeneralTextCode_TH0.Id, TabNameTextCodeCode = ARInvoiceStockGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SOEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ARInvoiceStockEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ARInvoiceStockObjectTable.Id, TabNameTextCodeId = ARInvoiceStockEventsTextCode_TH1.Id, TabNameTextCodeCode = ARInvoiceStockEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SOEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ARInvoiceStockEventsFeature_TH1.Id,FeatureUniqeCode = ARInvoiceStockEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ARInvoiceStockObjectTable.Id, TabNameTextCodeId = ARInvoiceStockEventsTextCode_TH1.Id, TabNameTextCodeCode = ARInvoiceStockEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1410,6 +1410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ARInvoiceStockMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1427,6 +1428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceStockFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ARInvoiceStockFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ARInvoiceStockMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1444,6 +1446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceStockFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ARInvoiceStockFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

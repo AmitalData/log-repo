@@ -127,6 +127,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "LogitudeMessagesTransmissionLog",
+					  						FieldsDataType =  "Integer",
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						ValidForQuerySection1 =  "LogitudeMessagesTransmissionLog",
+					  						IsRequired =  false,
+					  						DisplayInList =  false,
+					  						Code =  "Tenant",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  true,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						HelpTextCode =  "Tenant",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "SourceTenant",
 					  						ObjectTableName =  "LogitudeMessagesTransmissionLog",
 					  						FieldsDataType =  "Integer",
@@ -1961,9 +2021,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeMessagesTransmissionLogGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogGeneralTextCode_TH0.Id, TabNameTextCodeCode = LogitudeMessagesTransmissionLogGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeMessagesTransmissionLogGeneralFeature_TH0.Id,FeatureUniqeCode = LogitudeMessagesTransmissionLogGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogGeneralTextCode_TH0.Id, TabNameTextCodeCode = LogitudeMessagesTransmissionLogGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTAD",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/TransmissionLogs/TransmissionLogAuditTabComponent", FeatureId = LogitudeMessagesTransmissionLogAuditFeature_TH1.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogAuditTextCode_TH1.Id, TabNameTextCodeCode = LogitudeMessagesTransmissionLogAuditTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTAD",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/TransmissionLogs/TransmissionLogAuditTabComponent", FeatureId = LogitudeMessagesTransmissionLogAuditFeature_TH1.Id,FeatureUniqeCode = LogitudeMessagesTransmissionLogAuditFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogAuditTextCode_TH1.Id, TabNameTextCodeCode = LogitudeMessagesTransmissionLogAuditTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

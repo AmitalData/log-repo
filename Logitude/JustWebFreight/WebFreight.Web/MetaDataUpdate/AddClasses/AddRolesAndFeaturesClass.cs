@@ -165,6 +165,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     };
 
                 featuresRepository.Add(newFeature);
+                tenantFearures.Add(newFeature.Code+ newFeature.ObjectTableId, newFeature);
                 //table.UpdateKey = NewKey;
                 //Repo.Update(table);
                 //Repo.SubmitChanges();

@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -1542,9 +1542,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PKGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PackageTypeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = PackageTypeObjectTable.Id, TabNameTextCodeId = PackageTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = PackageTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PKGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PackageTypeGeneralFeature_TH0.Id,FeatureUniqeCode = PackageTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = PackageTypeObjectTable.Id, TabNameTextCodeId = PackageTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = PackageTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PKEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PackageTypeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PackageTypeObjectTable.Id, TabNameTextCodeId = PackageTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = PackageTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PKEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PackageTypeEventsFeature_TH1.Id,FeatureUniqeCode = PackageTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PackageTypeObjectTable.Id, TabNameTextCodeId = PackageTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = PackageTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
