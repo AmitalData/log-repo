@@ -59,6 +59,13 @@ public void GenerateEntityController(string xmlFilePath,string outputFilePath,st
 	    		return;
 	    	}
 	    } 
+         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 	    if( entity.NoPMController.GetType() == typeof(string))
       	{
 	    	if(entity.NoPMController == "true")
@@ -103,6 +110,13 @@ public void GenerateEntityViewController(string xmlFilePath,string outputFilePat
 	  if( entity.IsComposition.GetType() == typeof(string))
       	{
 	    	if(entity.IsComposition == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
+         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
 	    	{
 	    		return;
 	    	}

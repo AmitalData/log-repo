@@ -71,6 +71,14 @@ public void GenerateEntityPMService(string xmlFilePath,string outputFilePath,str
 	    		return;
 	    	}
 	    } 
+
+          if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 		
           WriteEntityPMServiceMethod(entity,modelname); 
           SaveEntityPMServiceOutput(outputFilePath);

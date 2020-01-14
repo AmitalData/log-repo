@@ -572,9 +572,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             customUpdateClass.LoadEventTypes();
 
                             //CRM
-                            OccasionContactMetadataUpdateClass occasionContactMetadataUpdateClass = new OccasionContactMetadataUpdateClass();
-                            occasionContactMetadataUpdateClass.LoadObjectsTenantZero(context);
-
+                            
                             CRMUpdateClass cRMUpdateClass = new CRMUpdateClass();
                             cRMUpdateClass.LoadObjectsTenantZero(context);
 
