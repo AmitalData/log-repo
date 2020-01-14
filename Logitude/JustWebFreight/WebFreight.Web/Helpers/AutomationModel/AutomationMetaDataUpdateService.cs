@@ -44,6 +44,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
                     UpdateAutomationData(objectFieldLists, tenant);
                     UpdateAutomationHistorysData(objectFieldLists, tenant);
                     UpdateEntityChangesData(objectFieldLists, tenant);
+                    UpdateAutomationResultEmailRecipient(objectFieldLists, tenant);
                 }
 
                 catch (Exception ex)
@@ -53,6 +54,21 @@ namespace WebFreight.Web.Helpers.AutomationModel
             }
 
 
+        }
+
+        private void UpdateAutomationResultEmailRecipient(List<ObjectFieldList> objectFieldLists, TenantList tenant)
+        {
+            AutomationResultEmailRecipientRepository automationResultEmailRecipientRepository = new AutomationResultEmailRecipientRepository(0);
+            List<AutomationResultEmailRecipient> automationResultEmailRecipients = automationResultEmailRecipientRepository.GetAutomationResultEmailRecipients(tenant.Id).Where(d=>d.RecipientType != "Fixed").ToList();
+            if (automationResultEmailRecipients.Count() > 0)
+            {
+                foreach (AutomationResultEmailRecipient automationResultEmailRecipient in automationResultEmailRecipients)
+                {
+                    automationResultEmailRecipient.RecipientValue = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationResultEmailRecipient.RecipientValue);
+                    automationResultEmailRecipientRepository.Update(automationResultEmailRecipient);
+                }
+                automationResultEmailRecipientRepository.SubmitChanges();
+            }
         }
 
         private void UpdateAutomationHistorysData(List<ObjectFieldList> objectFieldLists, TenantList tenant)
@@ -111,7 +127,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
                         entityChangeRepository.SubmitChanges(); loopCount = 0;
                     }
                 }
-                if (loopCount > 0)  entityChangeRepository.SubmitChanges();
+                if (loopCount > 0) entityChangeRepository.SubmitChanges();
             }
         }
 
@@ -153,11 +169,9 @@ namespace WebFreight.Web.Helpers.AutomationModel
             {
                 foreach (Field field in fields)
                 {
-                    if (!string.IsNullOrEmpty(field.Id) && string.IsNullOrEmpty(field.Code))
-                    {
-                        field.Code = GetObjectFieldCodeByObjecFieldId(objectFieldLists, field.Id);
-                        automationConditionFieldLists.Add(field);
-                    }
+                    field.FieldCode = GetObjectFieldCodeByObjecFieldId(objectFieldLists, field.Id);
+                    field.PartnerObjectFieldCode = GetObjectFieldCodeByObjecFieldId(objectFieldLists, field.PartnerObjectFieldId);
+                    automationConditionFieldLists.Add(field);
                 }
             }
 
@@ -174,8 +188,27 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 automatedBackup.DelayAautomationConditionLists = FillObjectFieldCodeOnAutomationConditionLists(objectFieldLists, automatedBackup.DelayAautomationConditionLists);
                 automatedBackup.AutomationSetValueLists = FillObjectFieldCodeOnAutomationSetValueLists(objectFieldLists, automatedBackup.AutomationSetValueLists);
                 automatedBackup.AutomationSetSLAValue = FillObjectFieldCodeOnAutomationSetSLAValue(objectFieldLists, automatedBackup.AutomationSetSLAValue);
+                automatedBackup.AutomationFollowUp = FillObjectFieldCodeOnAutomationFollowUpValue(objectFieldLists, automatedBackup.AutomationFollowUp);
             }
             return automatedBackup;
+        }
+
+        private AutomationFollowUp FillObjectFieldCodeOnAutomationFollowUpValue(List<ObjectFieldList> objectFieldLists, AutomationFollowUp automationFollowUp)
+        {
+            AutomationFollowUp result = automationFollowUp;
+            if (automationFollowUp != null)
+            {
+                if (automationFollowUp.OwnerFieldType == "Field")
+                {
+                    result.OwnerValue = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationFollowUp.OwnerValue);
+                }
+                if (!string.IsNullOrEmpty(automationFollowUp.DateValue))
+                {
+                    result.DateValue = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationFollowUp.DateValue);
+                }
+            }
+
+            return result;
         }
 
         private List<c> FillObjectFieldCodeOnChangesAutomationFields(List<ObjectFieldList> objectFieldLists, List<c> changesAutomationFields)
@@ -215,7 +248,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 {
                     automationCondition.ObjectFieldCode = string.IsNullOrEmpty(automationCondition.ObjectFieldCode) ? GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationCondition.ObjectFieldId) : automationCondition.ObjectFieldCode;
                     automationCondition.PartnerObjectFieldCode = string.IsNullOrEmpty(automationCondition.PartnerObjectFieldCode) ? GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationCondition.PartnerObjectFieldId) : automationCondition.PartnerObjectFieldCode;
-                    automationConditionLists.Add(automationCondition);
+                    if (automationCondition.OperatorCode.Contains("F")) automationCondition.Value = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationCondition.Value);
+                     automationConditionLists.Add(automationCondition);
                 }
             }
 
@@ -231,6 +265,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
                     if (!string.IsNullOrEmpty(automationSetValue.ObjectFieldId) && string.IsNullOrEmpty(automationSetValue.ObjectFieldCode))
                     {
                         automationSetValue.ObjectFieldCode = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationSetValue.ObjectFieldId);
+                        if (automationSetValue.OperatorCode.Contains("F")) automationSetValue.Value = GetObjectFieldCodeByObjecFieldId(objectFieldLists, automationSetValue.Value);
+
                         automationSetValueLists.Add(automationSetValue);
                     }
                 }
