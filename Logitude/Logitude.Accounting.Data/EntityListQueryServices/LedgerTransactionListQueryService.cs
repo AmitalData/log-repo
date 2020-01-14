@@ -508,6 +508,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             query2 = ReconciliationFilter(AccountId, query2);
 
+            LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+            {
+                Tenant = tenant,
+                AccountId = AccountId,
+                QueryOperations = queryOperations,
+                Transactions = query2,
+            };
+            LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+            query2 = transactionsSorter.SortQuery();
+
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
                 .Where(rec => rec.CreateDate <= maxCreateDate)
@@ -527,6 +537,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
 
             query2 = AddFiltersForExternalReconciliations(AccountId, query2, tenant);
+
+            LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+            {
+                Tenant = tenant,
+                AccountId = AccountId,
+                QueryOperations = queryOperations,
+                Transactions = query2,
+            };
+            LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+            query2 = transactionsSorter.SortQuery();
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
