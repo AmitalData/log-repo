@@ -1056,14 +1056,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.columnsObjectFields = [];
         if (this.Queries == null || this.Queries.length == 0) {
             var MyQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-            this.SelectedQuery = MyQueries.filter(x => x.Id === Args.QueryCode)[0];
+            this.SelectedQuery = MyQueries.filter(x => x.Code === Args.QueryCode)[0];
         }
         else {
-            this.SelectedQuery = this.Queries.filter(x => x.Id === Args.QueryCode)[0];
+            this.SelectedQuery = this.Queries.filter(x => x.Code === Args.QueryCode)[0];
         }
 
         if (this.SelectedQuery == null) {
-            this.SelectedQuery = this.UserQueries.filter(x => x.Id === Args.QueryCode)[0];
+            this.SelectedQuery = this.UserQueries.filter(x => x.Code === Args.QueryCode)[0];
         }
         if (this.SelectedQuery != null) {
             this.QueryCode = this.SelectedQuery.Code;
