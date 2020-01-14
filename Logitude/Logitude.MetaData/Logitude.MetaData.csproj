@@ -548,6 +548,7 @@
     </None>
     <None Include="EntityFiles\InvoiceModel\APPaymentMethod.lxml" />
     <None Include="EntityFiles\InvoiceModel\APPaymentStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\APPaymentTransferStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoice.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -572,6 +573,7 @@
     <None Include="EntityFiles\InvoiceModel\ARPaymentChequeReplica.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\InvoiceModel\ARPaymentTransferStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\SATInvoiceStatus.lxml">
       <SubType>Designer</SubType>
     </None>
