@@ -628,6 +628,7 @@
     <None Include="EntityFiles\ShipmentsModel\HarmonizeCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\INTTRABookingStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\INTTRABookingTransStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\INTTRADocumentType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStock.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -642,6 +643,7 @@
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStockUsageHistory.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryTransportMode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -661,6 +663,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentPayable.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentPayableStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDelivery.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDeliveryPackage.lxml">
       <SubType>Designer</SubType>
