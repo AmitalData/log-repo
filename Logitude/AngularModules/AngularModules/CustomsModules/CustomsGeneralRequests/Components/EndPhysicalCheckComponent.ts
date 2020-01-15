@@ -28,6 +28,7 @@ export class EndPhysicalCheckComponent
     public EntityPM: PhysicalCheckPM;
     public ObjectTableName: string = "Customs.PhysicalCheck";
     public endDate: string;
+    private EntityResourceService: EntityResourceService = new EntityResourceService();
 
  
     public id: string;
@@ -36,12 +37,8 @@ export class EndPhysicalCheckComponent
     private CurrentSession = SessionLocator.SelectedSession; 
     constructor(private CD: ChangeDetectorRef) {
         super();
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => { });
     }
-
-    ngOnInit() {
- 
-    }
-
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();

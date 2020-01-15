@@ -65,7 +65,7 @@ export class PhysicalCheckExtendedPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
         return this._http.get(
             // edit API 
-            this._apiUrl + '/GetPhysicalCheckRequest/' + '?mainInterfaceCode=' + mainInterfaceCode + '&communicationLogId=' + communicationLogId + '&tenant=' + tenant + '&stringStepFilter=' + $stepFilter + "&suppressHugeData=" + suppressHugeDataValue,
+            this._apiUrl + '/GetClosedPhysicalCheck/' + '?mainInterfaceCode=' + mainInterfaceCode + '&communicationLogId=' + communicationLogId + '&tenant=' + tenant + '&stringStepFilter=' + $stepFilter + "&suppressHugeData=" + suppressHugeDataValue,
 
             { headers: authHeader }
         ).map(response => {

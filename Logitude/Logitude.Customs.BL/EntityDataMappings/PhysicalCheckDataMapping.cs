@@ -181,7 +181,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             poco.SearchFields = entityPM.SearchFields;
         }
 
-        public static void CustomXmlToPM(List<CommunicationLogStepList> communicationLogStepList, PhysicalCheckPM entityPM)
+        public static void PhysicalCheckRequestXmlToPM(List<CommunicationLogStepList> communicationLogStepList, PhysicalCheckPM entityPM)
         {
             string documentData = communicationLogStepList[0].DocumentData;
             dynamic data = JObject.Parse(documentData);
@@ -267,15 +267,63 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.OpenDate = data.NoticeToClient.openDate;
             }
+        }
+        public static void ClosedPhysicalCheckXmlToPM(List<CommunicationLogStepList> communicationLogStepList, PhysicalCheckPM entityPM)
+        {
+            string documentData = communicationLogStepList[0].DocumentData;
+            dynamic data = JObject.Parse(documentData);
+            PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(entityPM.Tenant);
+            if (data.generalDetails.checkId != null)
+            {
+                entityPM.CheckId = data.generalDetails.checkId;
+            }
+            if (data.generalDetails.endDate != null)
+            {
+                entityPM.EndDate = data.generalDetails.endDate;
+            }
+            if (data.generalDetails.declarationID != null)
+            {
+                Card card = physicalCheckQueryService.GetCustomerNameByDeclartionNo(Convert.ToString(data.generalDetails.declarationID), entityPM.Tenant);
+                entityPM.CustomerName = card.LocalName;
+                entityPM.DeclarationId = data.generalDetails.declarationID;
+                entityPM.CustomFileNo = physicalCheckQueryService.GetCustomFileNoByCheckId(entityPM.DeclarationId, entityPM.Tenant);
 
-            
+            }
+            if (data.generalDetails.entityType != null)
+            {
+                CheckEntityTypeQueryService cargoIdentifireTypeQueryService = new CheckEntityTypeQueryService(entityPM.Tenant);
+                CheckEntityTypePM checkEntityType = cargoIdentifireTypeQueryService.GetSingle(Convert.ToString(data.generalDetails.entityType), false, true);
+                entityPM.CargoTypeCode = checkEntityType.LocalName;
+            }
+            if (data.generalDetails.checkSiteNumber != null)
+            {
+                SiteLookupQueryService siteLookupQueryService = new SiteLookupQueryService(entityPM.Tenant);
+                SiteLookupPM siteLookup = siteLookupQueryService.GetSingle(Convert.ToString(data.generalDetails.checkSiteNumber), false, true);
+                entityPM.CheckSiteName = siteLookup?.LocalName;
 
-
-
-
+            }
+            if (data.CheckEntity.cargoIdentifier.cargoIdentifierType != null)
+            {
+                CargoIdentifireTypeQueryService cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPM.Tenant);
+                CargoIdentifireTypePM cargoIdentifireType = cargoIdentifireTypeQueryService.GetSingle(Convert.ToString(data.CheckEntity.generalDetails.cargoIdentifierType), false, true);
+                entityPM.CargoIdentifierTypeName = cargoIdentifireType.LocalName;
+            }
+            if (data.CheckEntity.cargoIdentifier.cargoIdentifierKey1 != null)
+            {
+                entityPM.CargoIdentifierKey1 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey1;
+            }
+            if (data.CheckEntity.cargoIdentifier.cargoIdentifierKey2 != null)
+            {
+                entityPM.CargoIdentifierKey2 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey2;
+            }
+            if (data.CheckEntity.cargoIdentifier.cargoIdentifierKey3 != null)
+            {
+                entityPM.CargoIdentifierKey2 = data.CheckEntity.cargoIdentifier.cargoIdentifierKey3;
+            }
 
 
         }
+
     }
 
 
