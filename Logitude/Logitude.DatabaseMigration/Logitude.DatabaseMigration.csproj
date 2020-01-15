@@ -1935,6 +1935,7 @@
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.cs" />
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
