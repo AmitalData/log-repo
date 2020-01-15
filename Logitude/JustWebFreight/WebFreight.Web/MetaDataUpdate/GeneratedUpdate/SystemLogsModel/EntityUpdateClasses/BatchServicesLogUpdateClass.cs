@@ -905,6 +905,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 	         Screen BatchServicesLogBatchServicesLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BatchServicesLog.HeaderScreen", Name = "BatchServicesLogHeaderScreen", ObjectTableId = BatchServicesLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    BatchServicesLogObjectTable.HeaderScreenId = BatchServicesLogBatchServicesLogHeaderScreenScreen0.Id;
+		    BatchServicesLogObjectTable.HeaderScreenCode = BatchServicesLogBatchServicesLogHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
