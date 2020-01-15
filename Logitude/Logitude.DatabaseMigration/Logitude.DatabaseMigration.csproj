@@ -1720,6 +1720,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
 
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+    </EmbeddedResource>
+
     <Compile Include="Migrations\202001050942321_VatType_New_Fields.cs" />
     <Compile Include="Migrations\202001050942321_VatType_New_Fields.Designer.cs">
       <DependentUpon>202001050942321_VatType_New_Fields.cs</DependentUpon>
