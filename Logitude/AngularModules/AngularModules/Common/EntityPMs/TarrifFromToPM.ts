@@ -22,7 +22,7 @@ export class TarrifFromToPM {
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
           this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(); 
           this.IsDirty = false;
       }
 

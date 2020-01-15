@@ -256,7 +256,7 @@ export class TarrifHeaderPMService {
         entityPM.TarrifCharges = new Array<TarrifChargePM>();
         for (var item in jsonPM.TarrifCharges) {
             var jItem = jsonPM.TarrifCharges[item];
-            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+            if (mapParent && (jItem.ChangeOp == "Delete" || jItem.ChangeOp == 3)) {
                 continue;
             }
             var newTarrifChargePM: TarrifChargePM;
@@ -282,7 +282,7 @@ export class TarrifHeaderPMService {
             if (mapParent) {
                 newTarrifChargePM.UniqueKey = Guid.newGuid();
                 newTarrifChargePM.ChangeSetOp = "None";
-                jItem.ChangeSetOp = "None";
+                jItem.ChangeOp = "None";
                 newTarrifChargePM.OldEntityPM = this.clone(newTarrifChargePM);
 
 				
@@ -346,7 +346,7 @@ export class TarrifHeaderPMService {
         entityPM.TarrifFromToes = new Array<TarrifFromToPM>();
         for (var item in jsonPM.TarrifFromToes) {
             var jItem = jsonPM.TarrifFromToes[item];
-            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+            if (mapParent && (jItem.ChangeOp == "Delete" || jItem.ChangeOp == 3)) {
                 continue;
             }
             var newTarrifFromToPM: TarrifFromToPM;
@@ -371,8 +371,8 @@ export class TarrifHeaderPMService {
 			 
             if (mapParent) {
                 newTarrifFromToPM.UniqueKey = Guid.newGuid();
-                newTarrifFromToPM.ChangeSetOp = "None";
-                jItem.ChangeSetOp = "None";
+                newTarrifFromToPM.ChangeOp = "None";
+                jItem.ChangeOp = "None";
                 newTarrifFromToPM.OldEntityPM = this.clone(newTarrifFromToPM);
 
 				
@@ -381,10 +381,10 @@ export class TarrifHeaderPMService {
                 if (newTarrifFromToPM.UniqueKey) {
 
                     if (jItem.IsDirty)
-                        newTarrifFromToPM.ChangeSetOp = "Update";
+                        newTarrifFromToPM.ChangeOp = "Update";
                 }
                 else {
-                        newTarrifFromToPM.ChangeSetOp = "Insert";
+                        newTarrifFromToPM.ChangeOp = "Insert";
                 }
  
                 newTarrifFromToPM.OldEntityPM = null;
@@ -417,7 +417,7 @@ export class TarrifHeaderPMService {
 
                       
                         deletedPM.IsDirty = false;
-                        deletedPM.ChangeSetOp = "Delete";
+                        deletedPM.ChangeOp = "Delete";
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.TarrifFromToes.push(deletedPM);
