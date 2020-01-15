@@ -1939,7 +1939,7 @@
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.cs" />
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
-
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
     </EmbeddedResource>
