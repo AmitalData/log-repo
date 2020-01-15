@@ -36,19 +36,25 @@ export class PhysicalCheckComponent
     private CurrentSession = SessionLocator.SelectedSession; 
     constructor(private CD: ChangeDetectorRef) {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => { });
     }
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
     ngAfterViewInit() {
-            this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
-            this.subscribeWrapperComponent()
+        if (this.SuperCustomMessageWrapperComponent == null) {
+            console.warn("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent == null");
+        } else {
+            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null");
+        }
+        this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
+        this.subscribeWrapperComponent()
     }
+
   
     OnMassageDisplayMethod() {
 
         if (this.MyCommunicationLogId != null) {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => { });
             this.getData(this.MyCommunicationLogId, this.MyCustomsMenuItem.MainInterfaceCode);
         }
     }
