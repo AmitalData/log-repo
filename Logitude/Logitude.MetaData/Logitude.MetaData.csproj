@@ -671,7 +671,9 @@
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStockUsageHistory.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryPackageHarmonize.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryPackageHarmonize.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryTransportMode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>

@@ -41,6 +41,8 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityLists;
+
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControllers
 { 
 
