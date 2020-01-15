@@ -179,13 +179,17 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
-    <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml" />
+    <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardExternalCodeByCurrency.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\CommonDataModel\ChargesExternalAccountsByProduct.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ChargesExternalAccountsByProduct.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\CommonDataModel\ComputingPartner.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerAccountManagerByProduct.lxml">
       <SubType>Designer</SubType>

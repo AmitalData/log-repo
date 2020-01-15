@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Filing Inbox Attachment&quot;"
-  Code="&quot;f87d&quot;"
+  Code="&quot;ca59&quot;"
   Name="&quot;FilingInboxAttachment&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -538,6 +538,12 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;FilingInboxAttachment&quot;"
+      DefaultText="&quot;Filing Inbox Attachment&quot;"
+      TextCodeTypeCode="&quot;T&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

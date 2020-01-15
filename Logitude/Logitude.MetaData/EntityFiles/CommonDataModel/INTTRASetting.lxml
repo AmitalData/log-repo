@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;INTTRA Setting&quot;"
-  Code="&quot;d6af&quot;"
+  Code="&quot;9127&quot;"
   Name="&quot;INTTRASetting&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -763,6 +763,12 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;INTTRASetting&quot;"
+      DefaultText="&quot;INTTRA Setting&quot;"
+      TextCodeTypeCode="&quot;T&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

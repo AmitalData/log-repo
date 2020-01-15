@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Help Center",
-			      				    Code =  "1528",
+			      				    Code =  "50c4",
 			      				    Name =  "HelpResource",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Global",
@@ -163,10 +163,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {  
 		   ObjectTable HelpResourceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HelpResource" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature HelpResourceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HelpResourceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HelpResourceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HelpResourceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.PackageFeature", NameTextCodeDefaultText = "HelpResource Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
 
 		   		   //--------------> Additional Features <--------------\\
 
@@ -301,6 +297,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 		   Feature HelpResourceFeature_RELEASEJUL17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RELEASEJUL17", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.ReleaseJuly2017", NameTextCodeDefaultText = @"July 2017 - Version R3.17" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature HelpResourceFeature_FOLLOWUPSTORIAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FOLLOWUPSTORIAL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.FollowUps", NameTextCodeDefaultText = @"Follow Ups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature HelpResourceFeature_Module = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.Module", NameTextCodeDefaultText = @"HelpResource Package Feature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature HelpResourceFeature_READ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.READ", NameTextCodeDefaultText = @"Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

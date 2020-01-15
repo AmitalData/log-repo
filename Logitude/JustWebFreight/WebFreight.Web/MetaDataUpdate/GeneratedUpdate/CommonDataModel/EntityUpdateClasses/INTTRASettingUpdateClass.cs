@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "INTTRA Setting",
-			      				    Code =  "d6af",
+			      				    Code =  "9127",
 			      				    Name =  "INTTRASetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -660,7 +660,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable INTTRASettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "INTTRASetting" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode INTTRASettingTextCode_INTTRASetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "INTTRASetting", DefaultText = "INTTRA Setting",LocalDefaultText = null, ObjectTableId = INTTRASettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
