@@ -23,6 +23,7 @@ namespace Logitude.Accounting.BL.Utils
         private List<string> _WrongAction;
         private List<string> _WrongSum;
         private List<string> _WrongSumToMatch;
+        long _counter = 0;
 
         public ReconciliationStageBBatch()
         {
@@ -84,15 +85,20 @@ namespace Logitude.Accounting.BL.Utils
                     string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
                     if (!String.IsNullOrWhiteSpace(gLAccountId))
                     {
-                        ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                        {
+                            ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
+                            _counter++;
+                            scope.Complete();
+                        }
                         madeList.Add(recoGroup._Acc);
-                    }
+                   }
                 });
                 _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
             }
             catch (Exception e)
             {
-                throw new Exception("ReconciliationStageBBatch failure ", e);
+                throw new Exception($"ReconciliationStageBBatch failure {e.Message} Inner Exception: {e.InnerException.Message}", e);
             }
         }
 
@@ -154,6 +160,11 @@ namespace Logitude.Accounting.BL.Utils
                 _NoLines.Add(groupKey);
                 rv = false;
             }
+            else if (journalLineRecoList.Count == 1)
+            {
+                _WrongSumToMatch.Add(groupKey);
+                rv = false;
+            }
             else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
             {
                 _WrongAction.Add(groupKey);
@@ -185,24 +196,25 @@ namespace Logitude.Accounting.BL.Utils
 
         private void ReconcileOneRef(List<JournalLineReco> journalLineRecoList, string gLAccountId, LedgerTransactionQueryService ledgerTransactionQueryService)
         {
-            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-            {
+ //           using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+ //           {
                 try
                 {
                     List<LedgerTransaction> ledger = GetLedger(journalLineRecoList);
                     List<LedgerTransactionPM> ledgerPMs = ledger.Select(poco => ledgerTransactionQueryService.GetEntityPM(poco)).ToList();
                     CreateReconciliationService createReconciliationService = new CreateReconciliationService();
                     ReconciliationPM reconciliationPM = createReconciliationService.GetReconciliation(ledgerPMs);
+  //****//                  reconciliationPM.CreatedByReconciliationAfterConversion = true;
                     CreateReconciliationService service = new CreateReconciliationService();
                     RecoCallback recoCallback = service.CreateReconciliation(reconciliationPM);
-                    scope.Complete();
+ //                   scope.Complete();
                 }
                 catch (Exception e)
                 {
                     //scope.Dispose();
                     throw new Exception("ReconciliationStageBBatch failed while performing ReconcileOneRef ", e);
                 }
-            }
+ //           }
         }
 
         private class ReconciableGroup
