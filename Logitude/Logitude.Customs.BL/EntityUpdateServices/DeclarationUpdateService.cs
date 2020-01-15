@@ -64,9 +64,9 @@ using System.Diagnostics;
             }
           
             ICustomContext context = MainContext as CustomContext;
-            entityPM.ImporterTypeCode = "1";
-            entityPM.TransferImporterTypeCode = "1";
-            entityPM.EntitleImporterTypeCode = "1";
+            if (string.IsNullOrWhiteSpace(entityPM.ImporterTypeCode)) entityPM.ImporterTypeCode = "1";
+            if (string.IsNullOrWhiteSpace(entityPM.TransferImporterTypeCode)) entityPM.TransferImporterTypeCode = "1";
+            if (string.IsNullOrWhiteSpace(entityPM.EntitleImporterTypeCode)) entityPM.EntitleImporterTypeCode = "1";
 
            //CustomsSettingQueryService customsSettingQueryservice = new CustomsSettingQueryService(context);
 
