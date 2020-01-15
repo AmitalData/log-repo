@@ -99,7 +99,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CheckTypeName, 
 	         CustomerId, 
 	         NoEscortRequired, 
-	         VehicleChassisNumber,
+	         VehicleChassisNumber, 
+	         EndDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
