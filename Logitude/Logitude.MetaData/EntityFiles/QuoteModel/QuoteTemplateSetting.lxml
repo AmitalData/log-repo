@@ -35,14 +35,14 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Quote TemplateS Setting&quot;"
-  Code="&quot;af91&quot;"
+  Code="&quot;fcdf&quot;"
   Name="&quot;QuoteTemplateSetting&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Quote&quot;"
-  NoViewController="false"
+  NoViewController="true"
   NoPMController="false"
   NoTS="false"
-  NoDefaultFeatures="false"
+  NoDefaultFeatures="true"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
@@ -12697,5 +12697,15 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Module&quot;"
+      FeatureTypeCode="&quot;MODL&quot;"
+      FeatureTextCodeCode="&quot;QuoteTemplateSetting.Features.Module&quot;"
+      FeatureDefaultText="&quot;QuoteTemplateSetting Package Feature&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

@@ -2900,6 +2900,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\SATPaymentMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\SATTransferStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\InvoiceModelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\BorderTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\MarkUpTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteClosingReasonUpdateClass.cs" />
@@ -2911,6 +2912,11 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSaleChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteStageUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateSectionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateTableDesignUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateTextCodeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateTextDesignUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTotalVATUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTypeUpdateClass.cs" />

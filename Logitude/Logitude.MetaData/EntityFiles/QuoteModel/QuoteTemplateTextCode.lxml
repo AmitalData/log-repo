@@ -35,14 +35,14 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Quote Template Text Code&quot;"
-  Code="&quot;a25f&quot;"
+  Code="&quot;68f1&quot;"
   Name="&quot;QuoteTemplateTextCode&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Quote&quot;"
-  NoViewController="false"
-  NoPMController="false"
+  NoViewController="true"
+  NoPMController="true"
   NoTS="false"
-  NoDefaultFeatures="false"
+  NoDefaultFeatures="true"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
@@ -745,5 +745,15 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Module&quot;"
+      FeatureTypeCode="&quot;MODL&quot;"
+      FeatureTextCodeCode="&quot;QuoteTemplateTextCode.Features.Module&quot;"
+      FeatureDefaultText="&quot;QuoteTemplateTextCode Package Feature&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>
