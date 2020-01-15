@@ -4548,7 +4548,12 @@ export class ShipmentPM {
 
     private tR3_ToPortId_Original: string;
     public get TR3_ToPortId_Original() { return this.tR3_ToPortId_Original; }
-    public set TR3_ToPortId_Original(newValue: string) { if (this.tR3_ToPortId_Original != newValue) { this.tR3_ToPortId_Original = newValue; this.MarkAsDirty("TR3_ToPortId_Original"); } }
+    public set TR3_ToPortId_Original(newValue: string) {
+        if (this.tR3_ToPortId_Original != newValue) {
+            this.tR3_ToPortId_Original = newValue;
+            this.MarkAsDirty("TR3_ToPortId_Original");
+        }
+    }
 
     public OldEntityPM: ShipmentPM;
 
