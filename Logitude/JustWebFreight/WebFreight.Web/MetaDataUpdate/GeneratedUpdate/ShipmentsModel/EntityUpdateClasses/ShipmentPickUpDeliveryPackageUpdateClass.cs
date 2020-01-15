@@ -1267,7 +1267,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   //ObjectTable ShipmentPickUpDeliveryPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPickUpDeliveryPackage" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ShipmentPickUpDeliveryPackageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ShipmentPickUpDeliveryPackage").ToList();
+		       
+	      
+
+	    //     Screen ShipmentPickUpDeliveryPackageShipmentPickUpDeliveryPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentPickUpDeliveryPackage.HeaderScreen", Name = "ShipmentPickUpDeliveryPackageHeaderScreen", ObjectTableId = ShipmentPickUpDeliveryPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		   // ShipmentPickUpDeliveryPackageObjectTable.HeaderScreenId = ShipmentPickUpDeliveryPackageShipmentPickUpDeliveryPackageHeaderScreenScreen0.Id;
+		   // ShipmentPickUpDeliveryPackageObjectTable.HeaderScreenCode = ShipmentPickUpDeliveryPackageShipmentPickUpDeliveryPackageHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

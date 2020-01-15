@@ -347,6 +347,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen VolumeUnitVolumeUnitHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "VolumeUnit.HeaderScreen", Name = "VolumeUnitHeaderScreen", ObjectTableId = VolumeUnitObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    VolumeUnitObjectTable.HeaderScreenId = VolumeUnitVolumeUnitHeaderScreenScreen0.Id;
+		    VolumeUnitObjectTable.HeaderScreenCode = VolumeUnitVolumeUnitHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

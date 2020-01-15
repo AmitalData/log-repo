@@ -50,9 +50,13 @@
     <Compile Include="Models\ColumnMigration.cs" />
     <Compile Include="Models\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
+    <Compile Include="Models\DXMLDefinitions.cs" />
+    <Compile Include="Models\DXMLProcedure.cs" />
     <Compile Include="Models\DXMLTable.cs" />
     <Compile Include="Models\DXMLValidation.cs" />
+    <Compile Include="Models\DXMLView.cs" />
     <Compile Include="Models\MigrationTool.cs" />
+    <Compile Include="Models\ProcedureDefinition.cs" />
     <Compile Include="Models\RelationsScript.cs" />
     <Compile Include="Models\GeneratedScript.cs" />
     <Compile Include="Models\OracleDatabaseMigrations.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Models\MigrationTypes.cs" />
     <Compile Include="Models\TableDefinition.cs" />
     <Compile Include="Models\TableMigrations.cs" />
+    <Compile Include="Models\ViewDefinition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\XMLParser.cs" />

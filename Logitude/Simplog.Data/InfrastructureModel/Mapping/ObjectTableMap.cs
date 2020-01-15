@@ -18,6 +18,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DependencyFilter3).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.KeyPropertyPath).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.HeaderScreenId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.HeaderScreenCode).HasMaxLength(100).IsUnicode(false);
+
             this.Property(t => t.SortingByObjectField).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.DBTableName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeId).HasMaxLength(30).IsUnicode(false);
@@ -62,6 +64,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.AutoCompleteSearchWindow).HasColumnName("AutoCompleteSearchWindow");
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
             this.Property(t => t.HeaderScreenId).HasColumnName("HeaderScreenId");
+            this.Property(t => t.HeaderScreenCode).HasColumnName("HeaderScreenCode");
+
             this.Property(t => t.CacheOnClient).HasColumnName("CacheOnClient");
             this.Property(t => t.EditableFromAutoCompleteWindow).HasColumnName("EditableFromAutoCompleteWindow");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");

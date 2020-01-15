@@ -141,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             screenFieldsRepository = new ScreenFieldsRepository(objectContext);
             screensRepository = new ScreensRepository(objectContext);
             Dictionary<string, Screen> tenantScreens = screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            Dictionary<string, ScreenField> tenantScreenField = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenId + d.ObjectFieldId);
+            Dictionary<string, ScreenField> tenantScreenField = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldId);
 
             BuildBookingScreens(tenantScreens, tenantScreenField);
 

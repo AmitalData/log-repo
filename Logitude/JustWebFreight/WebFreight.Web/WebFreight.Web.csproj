@@ -2335,6 +2335,7 @@
     </Compile>
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
+    <Compile Include="ExternalAPIs\V1\APInvoiceCancellationController.cs" />
     <Compile Include="ExternalAPIs\V1\APInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceAdditionalDataController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
@@ -2976,6 +2977,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\SpecialServicesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\MasterModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\ShipmentsModelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\SystemLogsModel\EntityUpdateClasses\BatchServicesLogUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\SystemLogsModel\EntityUpdateClasses\ErrorLogUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\SystemLogsModel\SystemLogsModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TariffModuleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TimeManagementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />

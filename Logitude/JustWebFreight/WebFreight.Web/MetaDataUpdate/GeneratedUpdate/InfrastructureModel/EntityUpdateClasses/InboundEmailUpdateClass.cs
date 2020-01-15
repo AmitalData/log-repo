@@ -693,6 +693,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen InboundEmailInboundEmailHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InboundEmail.HeaderScreen", Name = "InboundEmailHeaderScreen", ObjectTableId = InboundEmailObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    InboundEmailObjectTable.HeaderScreenId = InboundEmailInboundEmailHeaderScreenScreen0.Id;
+		    InboundEmailObjectTable.HeaderScreenCode = InboundEmailInboundEmailHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

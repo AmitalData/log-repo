@@ -127,6 +127,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment2FromPortId { get; set; }
         public string Transshipment1FromPortId { get; set; }
         public string MainCarriageFromPortId { get; set; }
+   
 
         public DateTime? Transshipment3ETA { get; set; }
         public DateTime? Transshipment2ETA { get; set; }

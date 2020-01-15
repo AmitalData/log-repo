@@ -1,0 +1,1 @@
+ALTER TABLE ScreenFields DROP CONSTRAINT FK_ScreenScreenField;

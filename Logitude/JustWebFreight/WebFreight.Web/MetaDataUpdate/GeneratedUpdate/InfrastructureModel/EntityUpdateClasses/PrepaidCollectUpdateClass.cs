@@ -409,6 +409,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen PrepaidCollectPrepaidCollectHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PrepaidCollect.HeaderScreen", Name = "PrepaidCollectHeaderScreen", ObjectTableId = PrepaidCollectObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    PrepaidCollectObjectTable.HeaderScreenId = PrepaidCollectPrepaidCollectHeaderScreenScreen0.Id;
+		    PrepaidCollectObjectTable.HeaderScreenCode = PrepaidCollectPrepaidCollectHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

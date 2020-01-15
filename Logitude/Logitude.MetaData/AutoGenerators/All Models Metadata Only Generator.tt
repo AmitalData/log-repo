@@ -74,7 +74,8 @@ GenerateMetaDataUpdateClass("../EntityFiles/GlobalModel","../../JustWebFreight/W
 GenerateAllUpdateClasses("../EntityFiles/InfrastructureModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/InfrastructureModel/EntityUpdateClasses","InfrastructureModel");
 GenerateMetaDataUpdateClass("../EntityFiles/InfrastructureModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/InfrastructureModel","InfrastructureModelUpdateClass");
 
- 
+GenerateAllUpdateClasses("../EntityFiles/SystemLogsModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/SystemLogsModel/EntityUpdateClasses","SystemLogsModel");
+GenerateMetaDataUpdateClass("../EntityFiles/SystemLogsModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/SystemLogsModel","SystemLogsModelUpdateClass"); 
 
 GenerateAllUpdateClasses("../EntityFiles/InvoiceModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/InvoiceModel/EntityUpdateClasses","InvoiceModel");
 GenerateMetaDataUpdateClass("../EntityFiles/InvoiceModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/InvoiceModel","InvoiceModelUpdateClass");

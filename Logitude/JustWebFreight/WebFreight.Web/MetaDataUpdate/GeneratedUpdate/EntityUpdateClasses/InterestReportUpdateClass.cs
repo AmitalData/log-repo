@@ -141,6 +141,128 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "InterestReports",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "מזהה פנימי",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "InterestReports",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "דייר",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "CreateDateTime",
 					  						OldFieldName =  "CreateDateTime",
 					  						ObjectTableName =  "InterestReport",
@@ -1549,19 +1671,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen InterestReportInterestReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReport.HeaderScreen", Name = "InterestReportHeaderScreen", ObjectTableId = InterestReportObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField InterestReportInterestReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestCalculationDate").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestCalculationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestCalculationDate").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestCalculationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "CreatedByLocalName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "CreatedByLocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "CreatedByLocalName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "CreatedByLocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "UpdatedByLocalName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "UpdatedByLocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "UpdatedByLocalName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "UpdatedByLocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    InterestReportObjectTable.HeaderScreenId = InterestReportInterestReportHeaderScreenScreen0.Id;
+		    InterestReportObjectTable.HeaderScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

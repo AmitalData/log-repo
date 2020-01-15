@@ -11066,15 +11066,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region Header Screen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.PhysicalCheck.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsPhysicalCheckObject.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CargoIdentifierTypeNameField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CargoIdentifierKey1Field.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CargoIdentifierKey2Field.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CargoIdentifierKey3Field.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CheckIdField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = LimitDateField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = IsClosedField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CargoIdentifierTypeNameField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CargoIdentifierKey1Field.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CargoIdentifierKey2Field.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CargoIdentifierKey3Field.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CheckIdField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = LimitDateField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = IsClosedField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            CustomsPhysicalCheckObject.HeaderScreenId = HeaderScreen.Id;
+            CustomsPhysicalCheckObject.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
             #region General Screen
@@ -11121,23 +11121,23 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Declaration.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsDeclarationObject.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
 
-            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DeclarationNumberandVersionIdField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ProcedureCurrentNameField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DeclarationNumberandVersionIdField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ProcedureCurrentNameField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
 
-            ScreenField ScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ExternalDeclarationNumberField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = DeclarationOfficeNameField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ExternalDeclarationNumberField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = DeclarationOfficeNameField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            ScreenField ScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TaxationDateTimeField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = HatraDateField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-
-
+            ScreenField ScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TaxationDateTimeField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = HatraDateField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
 
-            ScreenField ScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = DeclarationStatusCodeField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = departmentNameField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            CustomsDeclarationObject.HeaderScreenId = HeaderScreen.Id;
+
+            ScreenField ScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = DeclarationStatusCodeField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = departmentNameField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+
+            CustomsDeclarationObject.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
             #region General Screen
@@ -11170,16 +11170,16 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             #region Header Screen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CourierDeclaration.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsCourierDeclarationObject.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, ScreensRepository, tenantScreens);
-            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DeclarationNumberandVersionIdField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ProcedureCurrentNameField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ExternalDeclarationNumberField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = courierDataField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = courierCustomStatusNameField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = HatraDateField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = DeclarationStatusCodeField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = manifestCargoStatusCodeField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DeclarationNumberandVersionIdField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ProcedureCurrentNameField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ExternalDeclarationNumberField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = courierDataField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = courierCustomStatusNameField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = HatraDateField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = DeclarationStatusCodeField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = manifestCargoStatusCodeField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            CustomsCourierDeclarationObject.HeaderScreenId = HeaderScreen.Id;
+            CustomsCourierDeclarationObject.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
             ObjectContext.SaveChanges();
@@ -11206,10 +11206,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region Header Screen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Vendor.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsVendorObject.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorNumberField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = VendorNameField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorNumberField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = VendorNameField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            CustomsVendorObject.HeaderScreenId = HeaderScreen.Id;
+            CustomsVendorObject.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
             #region General Screen
@@ -11248,14 +11248,14 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.PaymentOrder.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField3.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = objectField1.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField2.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField04 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = objectField5.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField05 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = objectField4.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField06 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = objectField6.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField3.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = objectField1.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField2.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField04 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = objectField5.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField05 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = objectField4.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField06 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = objectField6.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
 
             ObjectContext.SaveChanges();
         }
@@ -11281,11 +11281,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomBank.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
 
@@ -11324,10 +11324,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsPartnersItem.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField04.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField04.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
 
@@ -11362,10 +11362,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsHouseType.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
 
@@ -11400,10 +11400,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.NotificationDefinition.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
 
@@ -11441,11 +11441,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsSetting.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            //ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField05.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            //ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField05.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
 
@@ -11483,10 +11483,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.HouseTypeAdditional.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField04.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField04.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
             ObjectContext.SaveChanges();
@@ -11520,11 +11520,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Vehicle.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
 
@@ -11552,10 +11552,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.GovernmentProcedureType.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
 
@@ -11588,11 +11588,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region HeaderScreen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CourierMaster.HeaderScreen", Name = "Header Screen", ObjectTableId = entityObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField01.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField02.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField screenField03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = objectField03.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            entityObjectTable.HeaderScreenId = HeaderScreen.Id;
+            entityObjectTable.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
 
@@ -11626,15 +11626,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region Header Screen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.DeclarationCargoSplit.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsDeclarationCargoSplitObject.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, ScreensRepository, tenantScreens);
 
-            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CargoTypeNameField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ManifestNumberField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = SecondCargoIDField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = ThirdCargoIDField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = RequestNumberField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = RequestDateField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
-            ScreenField ScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = IsClosedField.Id, ScreenId = HeaderScreen.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CargoTypeNameField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ManifestNumberField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = SecondCargoIDField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = ThirdCargoIDField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = RequestNumberField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = RequestDateField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = IsClosedField.Id, ScreenId = HeaderScreen.Code, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
 
-            CustomsDeclarationCargoSplitObject.HeaderScreenId = HeaderScreen.Id;
+            CustomsDeclarationCargoSplitObject.HeaderScreenId = HeaderScreen.Code;
             #endregion
 
             #region General Screen

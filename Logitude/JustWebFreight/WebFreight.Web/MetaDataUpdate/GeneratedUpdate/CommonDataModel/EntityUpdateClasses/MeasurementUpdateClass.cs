@@ -660,11 +660,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen MeasurementHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Measurement.HeaderScreen", Name = "Header Screen", ObjectTableId = MeasurementObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MeasurementMeasurementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = MeasurementHeaderScreenScreen0.Id, ObjectFieldCode = MeasurementObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MeasurementMeasurementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = MeasurementHeaderScreenScreen0.Id,ScreenCode = MeasurementHeaderScreenScreen0.Code, ObjectFieldCode = MeasurementObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MeasurementMeasurementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = MeasurementHeaderScreenScreen0.Id, ObjectFieldCode = MeasurementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MeasurementMeasurementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = MeasurementHeaderScreenScreen0.Id,ScreenCode = MeasurementHeaderScreenScreen0.Code, ObjectFieldCode = MeasurementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    MeasurementObjectTable.HeaderScreenId = MeasurementHeaderScreenScreen0.Id;
+		    MeasurementObjectTable.HeaderScreenCode = MeasurementHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

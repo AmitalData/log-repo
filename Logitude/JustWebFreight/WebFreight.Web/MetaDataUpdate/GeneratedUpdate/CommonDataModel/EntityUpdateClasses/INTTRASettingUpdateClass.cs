@@ -595,6 +595,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen INTTRASettingINTTRASettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "INTTRASetting.HeaderScreen", Name = "INTTRASettingHeaderScreen", ObjectTableId = INTTRASettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    INTTRASettingObjectTable.HeaderScreenId = INTTRASettingINTTRASettingHeaderScreenScreen0.Id;
+		    INTTRASettingObjectTable.HeaderScreenCode = INTTRASettingINTTRASettingHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

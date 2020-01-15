@@ -20,7 +20,8 @@ export class ObjectTableList {
 		KeyPropertyPath: string;
 		AutoCompleteSearchWindow: boolean;
 		IsClosed: boolean;
-		HeaderScreenId: string;
+        HeaderScreenId: string;
+        HeaderScreenCode: string;
 		HasCounter: boolean;
 		HasCustomValidator: boolean;
 		EnableEditFromLOV: boolean;

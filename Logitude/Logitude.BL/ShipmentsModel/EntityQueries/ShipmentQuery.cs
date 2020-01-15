@@ -2315,7 +2315,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
-            this.MapChampConcurrencyFields(shipmentPM);
+            this.MapAnalyzerConcurrencyFields(shipmentPM);
 
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
@@ -2346,59 +2346,60 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.HousesNumbers = myHousesNumbers;
         }
 
-        private void MapChampConcurrencyFields(ShipmentPM shipmentPM)
+        private void MapAnalyzerConcurrencyFields(ShipmentPM shipmentPM)
         {
-            shipmentPM.IsFSRSent_Original = shipmentPM.IsFSRSent;
-            shipmentPM.FNAReason_Original = shipmentPM.FNAReason;
-            shipmentPM.FWBStatusCode_Original = shipmentPM.FWBStatusCode;
-            shipmentPM.FWBStatusDate_Original = shipmentPM.FWBStatusDate;
             shipmentPM.FHLStatusCode_Original = shipmentPM.FHLStatusCode;
             shipmentPM.FHLStatusDate_Original = shipmentPM.FHLStatusDate;
+            shipmentPM.FWBStatusCode_Original = shipmentPM.FWBStatusCode;
+            shipmentPM.FWBStatusDate_Original = shipmentPM.FWBStatusDate;
             shipmentPM.CarrierLastStatusCode_Original = shipmentPM.CarrierLastStatusCode;
             shipmentPM.CarrierLastStatusDate_Original = shipmentPM.CarrierLastStatusDate;
-            shipmentPM.MainCarriageFromPortId_Original = shipmentPM.MainCarriageFromPortId;
-            shipmentPM.MainCarriageFinalDestinationPortId_Original = shipmentPM.MainCarriageFinalDestinationPortId;
-            shipmentPM.Transshipment3ToPortId_Original = shipmentPM.Transshipment3ToPortId;
-            shipmentPM.Transshipment2ToPortId_Original = shipmentPM.Transshipment2ToPortId;
-            shipmentPM.Transshipment1ToPortId_Original = shipmentPM.Transshipment1ToPortId;
-            shipmentPM.MainCarriageToPortId_Original = shipmentPM.MainCarriageToPortId;
             shipmentPM.NumberOfPackages_Original = shipmentPM.NumberOfPackages;
             shipmentPM.GrossWeight_Original = shipmentPM.GrossWeight;
-            shipmentPM.GrossWeightInKG_Original = shipmentPM.GrossWeightInKG;
             shipmentPM.ChargeableWeight_Original = shipmentPM.ChargeableWeight;
             shipmentPM.GrossWeightUnitCode_Original = shipmentPM.GrossWeightUnitCode;
+            shipmentPM.MAN_FromPortId_Original = shipmentPM.MainCarriageFromPortId;
+            shipmentPM.MainCarriageToPortId_Original = shipmentPM.MainCarriageToPortId;
+            shipmentPM.TR1_ToPortId_Original = shipmentPM.Transshipment1ToPortId;
+            shipmentPM.TR2_ToPortId_Original = shipmentPM.Transshipment2ToPortId;
+            shipmentPM.TR3_ToPortId_Original = shipmentPM.Transshipment3ToPortId;
+            shipmentPM.FIN_PortId_Original = shipmentPM.MainCarriageFinalDestinationPortId;
             shipmentPM.MainCarriageATD_Original = shipmentPM.MainCarriageATD;
             shipmentPM.MainCarriageETD_Original = shipmentPM.MainCarriageETD;
             shipmentPM.MainCarriageSTD_Original = shipmentPM.MainCarriageSTD;
-            shipmentPM.Transshipment1ATD_Original = shipmentPM.Transshipment1ATD;
-            shipmentPM.Transshipment1ETD_Original = shipmentPM.Transshipment1ETD;
-            shipmentPM.Transshipment1STD_Original = shipmentPM.Transshipment1STD;
-            shipmentPM.Transshipment2ATD_Original = shipmentPM.Transshipment2ATD;
-            shipmentPM.Transshipment2ETD_Original = shipmentPM.Transshipment2ETD;
-            shipmentPM.Transshipment2STD_Original = shipmentPM.Transshipment2STD;
-            shipmentPM.Transshipment3ATD_Original = shipmentPM.Transshipment3ATD;
-            shipmentPM.Transshipment3ETD_Original = shipmentPM.Transshipment3ETD;
-            shipmentPM.Transshipment3STD_Original = shipmentPM.Transshipment3STD;
-            shipmentPM.PreCarriageATD_Original = shipmentPM.PreCarriageATD;
-            shipmentPM.PreCarriageETD_Original = shipmentPM.PreCarriageETD;
-            shipmentPM.OnCarriageATD_Original = shipmentPM.OnCarriageATD;
-            shipmentPM.OnCarriageETD_Original = shipmentPM.OnCarriageETD;
             shipmentPM.MainCarriageATA_Original = shipmentPM.MainCarriageATA;
             shipmentPM.MainCarriageETA_Original = shipmentPM.MainCarriageETA;
             shipmentPM.MainCarriageSTA_Original = shipmentPM.MainCarriageSTA;
+            shipmentPM.Transshipment1ATD_Original = shipmentPM.Transshipment1ATD;
+            shipmentPM.Transshipment1ETD_Original = shipmentPM.Transshipment1ETD;
+            shipmentPM.Transshipment1STD_Original = shipmentPM.Transshipment1STD;
             shipmentPM.Transshipment1ATA_Original = shipmentPM.Transshipment1ATA;
             shipmentPM.Transshipment1ETA_Original = shipmentPM.Transshipment1ETA;
             shipmentPM.Transshipment1STA_Original = shipmentPM.Transshipment1STA;
+            shipmentPM.Transshipment2ATD_Original = shipmentPM.Transshipment2ATD;
+            shipmentPM.Transshipment2ETD_Original = shipmentPM.Transshipment2ETD;
+            shipmentPM.Transshipment2STD_Original = shipmentPM.Transshipment2STD;
             shipmentPM.Transshipment2ATA_Original = shipmentPM.Transshipment2ATA;
             shipmentPM.Transshipment2ETA_Original = shipmentPM.Transshipment2ETA;
             shipmentPM.Transshipment2STA_Original = shipmentPM.Transshipment2STA;
+            shipmentPM.Transshipment3ATD_Original = shipmentPM.Transshipment3ATD;
+            shipmentPM.Transshipment3ETD_Original = shipmentPM.Transshipment3ETD;
+            shipmentPM.Transshipment3STD_Original = shipmentPM.Transshipment3STD;
             shipmentPM.Transshipment3ATA_Original = shipmentPM.Transshipment3ATA;
             shipmentPM.Transshipment3ETA_Original = shipmentPM.Transshipment3ETA;
             shipmentPM.Transshipment3STA_Original = shipmentPM.Transshipment3STA;
-            shipmentPM.PreCarriageATA_Original = shipmentPM.PreCarriageATA;
-            shipmentPM.PreCarriageETA_Original = shipmentPM.PreCarriageETA;
+            shipmentPM.OnCarriageATD_Original = shipmentPM.OnCarriageATD;
+            shipmentPM.OnCarriageETD_Original = shipmentPM.OnCarriageETD;
             shipmentPM.OnCarriageATA_Original = shipmentPM.OnCarriageATA;
             shipmentPM.OnCarriageETA_Original = shipmentPM.OnCarriageETA;
+            shipmentPM.PreCarriageATA_Original = shipmentPM.PreCarriageATA;
+            shipmentPM.PreCarriageETA_Original = shipmentPM.PreCarriageETA;
+            shipmentPM.PreCarriageATD_Original = shipmentPM.PreCarriageATD;
+            shipmentPM.PreCarriageETD_Original = shipmentPM.PreCarriageETD;
+            shipmentPM.INTTRABookingStatusCode_Original = shipmentPM.INTTRABookingStatusCode;
+            shipmentPM.BookingConfirmedBy_Original = shipmentPM.BookingConfirmedBy;
+            shipmentPM.BookingConfNumber_Original = shipmentPM.BookingConfirmationNumber;
+            shipmentPM.MAN_CarrierNumber_Original = shipmentPM.MainCarriageCarrierNumber;
         }
 
         private void MapINTTRABookingXMLFields(ShipmentPM shipmentPM)
@@ -4150,6 +4151,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ReleasingAgentNote = s.ReleasingAgentCard != null ? s.ReleasingAgentCard.Notes : null,
                                                         ValueOfGoods = s.ValueOfGoods,
                                                         ManifestLastSharingDate = s.ManifestLastSharingDate,
+                                                        SpecialServicesTypeId = s.SpecialServicesTypeId,
                                                     };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();

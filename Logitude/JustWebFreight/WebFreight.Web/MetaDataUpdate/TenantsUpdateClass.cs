@@ -49,6 +49,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
+using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -154,8 +155,10 @@ namespace WebFreight.Web.MetaDataUpdate
 							InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
 							inframodelUpdateClass.LoadObjectsTenantZero(context);
 
+                            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+                            systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
 
-							ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+                            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
                             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
@@ -465,6 +468,8 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             InfrastructureModelUpdateClass modelUpdateClass = new InfrastructureModelUpdateClass();
                             modelUpdateClass.LoadObjectsTenantZero(context);
+                            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+                            systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
                             break;
                         }
 
@@ -1206,8 +1211,8 @@ namespace WebFreight.Web.MetaDataUpdate
             List<ScreenField> screenFields = screenFieldsRepository.GetScreenFieldsByTenant(tenant).ToList();
             foreach (Screen screen in tenantZeroScreens)
             {
-                ScreenModification screenMod = screenModifications.Where(s => s.ScreenId == screen.Id).FirstOrDefault();
-                List<ScreenField> fields = screenFields.Where(f => f.ScreenId == screen.Id).ToList();
+                ScreenModification screenMod = screenModifications.Where(s => s.ScreenCode == screen.Code).FirstOrDefault();
+                List<ScreenField> fields = screenFields.Where(f => f.ScreenCode == screen.Code).ToList();
                 if (fields.Count > 0)
                 {
                     int columnsNumber = screenMod != null ? screenMod.NumberOfColumns : screen.NumberOfColumns;
@@ -1240,6 +1245,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             {
                                 Id = IdCounter.GetNumber("ScreenModification", tenant),
                                 ScreenId = screen.Id,
+                                ScreenCode = screen.Code,
                                 Tenant = tenant,
                                 NumberOfColumns = screen.NumberOfColumns,
                                 NumberOfRows = newRowsNumber,
