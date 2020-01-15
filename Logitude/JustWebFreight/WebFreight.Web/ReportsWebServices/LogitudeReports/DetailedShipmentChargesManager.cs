@@ -223,6 +223,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 List<Contact> allContacts = new List<Contact>();
                 List<Branch> allBranchs = new List<Branch>();
                 List<Currency> allCurrencies = new List<Currency>();
+                List<Incoterm> allIncoterms = new List<Incoterm>();
 
                 if (allAPInvoices.Count > 0 || allARInvoices.Count > 0 || allShipments.Count > 0)
                 {
@@ -230,6 +231,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     allContacts = this.GetContacts(allAPInvoices, allARInvoices);
                     allBranchs = (from d in myCommonContext.Branches where d.Tenant == tenant select d).ToList();
                     allCurrencies = (from d in myCommonContext.Currencies where d.Tenant == tenant select d).ToList();
+                    allIncoterms = (from d in myCommonContext.Incoterms where d.Tenant == tenant select d).ToList();
                 }
                 #endregion
 
@@ -283,6 +285,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.BranchName = myBranch.EnglishName;
                                     myRecord.BranchLocalName = myBranch.LocalName;
                                     myRecord.BranchExternalId = myBranch.ExternalId;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myShipment.IncotermId))
+                            {
+                                Incoterm myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
+                                if (myIncoterm != null)
+                                {
+                                    myRecord.IncotermCode = myIncoterm.Code;
+                                    myRecord.IncotermName = myIncoterm.Name;
                                 }
                             }
 
@@ -350,6 +362,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.BranchExternalId = myBranch.ExternalId;
                         }
 
+                        if (!string.IsNullOrEmpty(myShipment.IncotermId))
+                        {
+                            Incoterm myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
+                            if (myIncoterm != null)
+                            {
+                                myRecord.IncotermCode = myIncoterm.Code;
+                                myRecord.IncotermName = myIncoterm.Name;
+                            }
+                        }
+
                         myDataProvider.Shipments.Add(myRecord);
                         #endregion
                     }
@@ -409,6 +431,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.BranchName = myBranch.EnglishName;
                                 myRecord.BranchLocalName = myBranch.LocalName;
                                 myRecord.BranchExternalId = myBranch.ExternalId;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(myShipment.IncotermId))
+                        {
+                            Incoterm myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
+                            if (myIncoterm != null)
+                            {
+                                myRecord.IncotermCode = myIncoterm.Code;
+                                myRecord.IncotermName = myIncoterm.Name;
                             }
                         }
 
@@ -533,6 +565,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 List<Contact> allContacts = new List<Contact>();
                 List<Branch> allBranchs = new List<Branch>();
                 List<Currency> allCurrencies = new List<Currency>();
+                List<Incoterm> allIncoterms = new List<Incoterm>();
                 List<ChargesType> allChargesTypes = (from d in myCommonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
 
                 List<ChargeTypeGroupClass> allAPInvoiceLinesData = new List<ChargeTypeGroupClass>();
@@ -543,6 +576,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     allContacts = this.GetContacts(allAPInvoices, allARInvoices);
                     allBranchs = (from d in myCommonContext.Branches where d.Tenant == tenant select d).ToList();
                     allCurrencies = (from d in myCommonContext.Currencies where d.Tenant == tenant select d).ToList();
+                    allIncoterms = (from d in myCommonContext.Incoterms where d.Tenant == tenant select d).ToList();
 
                     if (allAPInvoices.Count > 0)
                     {
@@ -593,9 +627,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 foreach (ShipmentDataView myShipment in allShipments)
                 {
                     Branch myBranch = null;
+                    Incoterm myIncoterm = null;
+
                     if (!string.IsNullOrEmpty(myShipment.BranchId))
                     {
                         myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
+                    }
+
+                    if (!string.IsNullOrEmpty(myShipment.IncotermId))
+                    {
+                        myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
                     }
 
                     #region
@@ -659,6 +700,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                         myRecord.BranchName = myBranch.EnglishName;
                                         myRecord.BranchLocalName = myBranch.LocalName;
                                         myRecord.BranchExternalId = myBranch.ExternalId;
+                                    }
+
+                                    if (myIncoterm != null)
+                                    {
+                                        myRecord.IncotermCode = myIncoterm.Code;
+                                        myRecord.IncotermName = myIncoterm.Name;
                                     }
 
                                     if (item.ChargesTypeId != null)
@@ -736,6 +783,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                         myRecord.BranchExternalId = myBranch.ExternalId;
                                     }
 
+                                    if (myIncoterm != null)
+                                    {
+                                        myRecord.IncotermCode = myIncoterm.Code;
+                                        myRecord.IncotermName = myIncoterm.Name;
+                                    }
+
                                     if (item.ChargesTypeId != null)
                                     {
                                         ChargesType myChargesType = allChargesTypes.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();
@@ -768,6 +821,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             if (invoice.IsMultipleEntities)
                             {
                                 myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
+                                myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
                             }
                             
                             List<ChargeTypeGroupClass> lines_Grouped = allAPInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
@@ -871,6 +925,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.BranchName = myBranch.EnglishName;
                                     myRecord.BranchLocalName = myBranch.LocalName;
                                     myRecord.BranchExternalId = myBranch.ExternalId;
+                                }
+
+                                if (myIncoterm != null)
+                                {
+                                    myRecord.IncotermCode = myIncoterm.Code;
+                                    myRecord.IncotermName = myIncoterm.Name;
                                 }
 
                                 ChargesType myChargesType = allChargesTypes.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();
@@ -978,6 +1038,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.BranchName = myBranch.EnglishName;
                                     myRecord.BranchLocalName = myBranch.LocalName;
                                     myRecord.BranchExternalId = myBranch.ExternalId;
+                                }
+
+                                if (myIncoterm != null)
+                                {
+                                    myRecord.IncotermCode = myIncoterm.Code;
+                                    myRecord.IncotermName = myIncoterm.Name;
                                 }
 
                                 ChargesType myChargesType = allChargesTypes.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();

@@ -132,6 +132,7 @@ namespace WebFreight.Web.DataProviders
 
         public string CountryOfOrigin { get; set; }
         public string CountryOfDestination { get; set; }
-        public string Incoterm { get; set; }
+        public string IncotermCode { get; set; }
+        public string IncotermName { get; set; }
     }
 }
