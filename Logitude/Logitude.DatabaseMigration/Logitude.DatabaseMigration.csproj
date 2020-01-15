@@ -3421,7 +3421,7 @@
     <EmbeddedResource Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.resx">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
+ 
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>

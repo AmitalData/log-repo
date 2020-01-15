@@ -345,6 +345,8 @@ export class NewGLAccountComponent extends BaseComponent {
             }
         }
 
+     
+
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
 
@@ -365,7 +367,25 @@ export class NewGLAccountComponent extends BaseComponent {
 
         this.CurrentSession.StartBusyIndicatorSaving();
         this.EntityPM.AccountTypeCode = AppTool.IsNullOrEmpty(this.AccountTypeCode) ? "1" : this.AccountTypeCode;
-        this.EntityPM.Inactive = false;
+        if (this.EntityPM.AccountTypeCode == '1') {
+            switch (this.EntityPM.ChartOfAccountsTypeCode) {
+                case "3": {
+                    this.EntityPM.AccountTypeCode = "2";
+                    break;
+                }
+                case "4": {
+                    this.EntityPM.AccountTypeCode = "3";
+                    break;
+                }
+                default: {
+                    this.EntityPM.AccountTypeCode = "1";
+                }
+            }
+        }
+        if (AppTool.IsNullOrEmpty(this.EntityPM.AccountTypeCode)) {
+            this.EntityPM.AccountTypeCode = "1"
+        }
+         this.EntityPM.Inactive = false;
         this.EntityPM.IsControlAccount = false;
         this.myService.insert(this.EntityPM).subscribe(myResult => {
             this.CurrentSession.StopBusyIndicator();
