@@ -1886,6 +1886,18 @@
     <Compile Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.Designer.cs">
       <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.cs" />
+    <Compile Include="Migrations\202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.Designer.cs">
+      <DependentUpon>202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.cs" />
+    <Compile Include="Migrations\202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.Designer.cs">
+      <DependentUpon>202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.cs" />
+    <Compile Include="Migrations\202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.Designer.cs">
+      <DependentUpon>202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs" />
     <Compile Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.Designer.cs">
       <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
@@ -1939,8 +1951,6 @@
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
-    </EmbeddedResource>
     <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs" />
     <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.Designer.cs">
       <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
@@ -3366,6 +3376,9 @@
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
+      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.resx">
       <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -3402,11 +3415,17 @@
     <EmbeddedResource Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.resx">
       <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.resx">
+      <DependentUpon>202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.resx">
+      <DependentUpon>202001082034238_Mutaz_Add_Field_HeaderScreenCode_To_ObjectTable_And_Remove_ForiegnKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.resx">
+      <DependentUpon>202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.resx">
       <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
-      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.resx">
       <DependentUpon>202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs</DependentUpon>

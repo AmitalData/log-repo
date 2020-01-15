@@ -402,6 +402,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen CustomsInterfaceCustomsInterfaceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsInterface.HeaderScreen", Name = "CustomsInterfaceHeaderScreen", ObjectTableId = CustomsInterfaceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    CustomsInterfaceObjectTable.HeaderScreenId = CustomsInterfaceCustomsInterfaceHeaderScreenScreen0.Id;
+		    CustomsInterfaceObjectTable.HeaderScreenCode = CustomsInterfaceCustomsInterfaceHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

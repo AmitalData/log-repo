@@ -661,6 +661,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen AirlineMessagingRuleAirlineMessagingRuleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AirlineMessagingRule.HeaderScreen", Name = "AirlineMessagingRuleHeaderScreen", ObjectTableId = AirlineMessagingRuleObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    AirlineMessagingRuleObjectTable.HeaderScreenId = AirlineMessagingRuleAirlineMessagingRuleHeaderScreenScreen0.Id;
+		    AirlineMessagingRuleObjectTable.HeaderScreenCode = AirlineMessagingRuleAirlineMessagingRuleHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

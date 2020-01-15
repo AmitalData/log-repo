@@ -7220,6 +7220,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen TenantTenantHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Tenant.HeaderScreen", Name = "TenantHeaderScreen", ObjectTableId = TenantObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    TenantObjectTable.HeaderScreenId = TenantTenantHeaderScreenScreen0.Id;
+		    TenantObjectTable.HeaderScreenCode = TenantTenantHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

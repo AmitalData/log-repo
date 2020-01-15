@@ -1211,8 +1211,8 @@ namespace WebFreight.Web.MetaDataUpdate
             List<ScreenField> screenFields = screenFieldsRepository.GetScreenFieldsByTenant(tenant).ToList();
             foreach (Screen screen in tenantZeroScreens)
             {
-                ScreenModification screenMod = screenModifications.Where(s => s.ScreenId == screen.Id).FirstOrDefault();
-                List<ScreenField> fields = screenFields.Where(f => f.ScreenId == screen.Id).ToList();
+                ScreenModification screenMod = screenModifications.Where(s => s.ScreenCode == screen.Code).FirstOrDefault();
+                List<ScreenField> fields = screenFields.Where(f => f.ScreenCode == screen.Code).ToList();
                 if (fields.Count > 0)
                 {
                     int columnsNumber = screenMod != null ? screenMod.NumberOfColumns : screen.NumberOfColumns;
@@ -1245,6 +1245,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             {
                                 Id = IdCounter.GetNumber("ScreenModification", tenant),
                                 ScreenId = screen.Id,
+                                ScreenCode = screen.Code,
                                 Tenant = tenant,
                                 NumberOfColumns = screen.NumberOfColumns,
                                 NumberOfRows = newRowsNumber,

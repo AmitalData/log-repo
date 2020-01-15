@@ -278,6 +278,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen FilingInboxAttachmentFilingInboxAttachmentHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "FilingInboxAttachment.HeaderScreen", Name = "FilingInboxAttachmentHeaderScreen", ObjectTableId = FilingInboxAttachmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    FilingInboxAttachmentObjectTable.HeaderScreenId = FilingInboxAttachmentFilingInboxAttachmentHeaderScreenScreen0.Id;
+		    FilingInboxAttachmentObjectTable.HeaderScreenCode = FilingInboxAttachmentFilingInboxAttachmentHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
