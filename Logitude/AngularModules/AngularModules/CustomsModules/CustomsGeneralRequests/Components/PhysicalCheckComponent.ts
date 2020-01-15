@@ -29,29 +29,21 @@ export class PhysicalCheckComponent
     public ObjectTableName: string = "Customs.PhysicalCheck";
     public openDate: string;
     public limitDate: string;
-
- 
+    private EntityResourceService: EntityResourceService = new EntityResourceService();
     public id: string;
 
     _PhysicalCheckPMService: PhysicalCheckExtendedPMService = new PhysicalCheckExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession; 
     constructor(private CD: ChangeDetectorRef) {
         super();
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => { });
     }
-
-    ngOnInit() {
- 
-    }
-
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
     ngAfterViewInit() {
             this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
             this.subscribeWrapperComponent()
-
-
- 
     }
   
     OnMassageDisplayMethod() {
