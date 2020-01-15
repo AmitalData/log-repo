@@ -11,13 +11,13 @@ import { PhysicalCheckWebService } from "../../../Customs/Services/WebServices/P
 import { PhysicalCheckExtendedPMService } from "../../../Common/Services/ExtendedPMs/PhysicalCheckExtendedPMService";
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { DateTimeFormat } from "../../../Infrastructure/Utilities/DateTimeZone";
-import { DateTool } from "../../../Infrastructure/Tools";
+import { DateTool, AppTool } from "../../../Infrastructure/Tools";
 
 
  
 
 @Component({
-    selector: 'PhysicalCheckComponent',
+    selector: 'PhysicalCheckComponent', 
     moduleId: module.id,
     templateUrl: './PhysicalCheckComponent.html',
 })
@@ -186,6 +186,12 @@ export class PhysicalCheckComponent
             this.EntityPM.StorageSiteName = value;
         }
     }
+    public get PhysicalCheckNumberHeader() {
+        if (!AppTool.IsNullOrEmpty(this.CheckId)) {
+            return "בדיקה פיזית מספר" + " " + this.CheckId;
+        }
+        return "בדיקה פיזית";
+    }
     get QueueTypeName() { return this.EntityPM ? this.EntityPM.QueueTypeName : null; }
     set QueueTypeName(value: string) {
         if (this.EntityPM.QueueTypeName != value) {
@@ -194,6 +200,9 @@ export class PhysicalCheckComponent
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {  
+    }
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
     }
     
 
