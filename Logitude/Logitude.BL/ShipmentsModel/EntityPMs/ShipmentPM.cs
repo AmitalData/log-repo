@@ -2348,7 +2348,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool HasContainerException { get; set; }
 
-
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
 
 
         //ShipmentComputedFields
@@ -2385,23 +2385,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CreatedByPartner { get; set; }
 
         // Fields of Champ analyzer Concurrency
-        public bool IsFSRSent_Original { get; set; }
-        public string FNAReason_Original { get; set; }
         public string FWBStatusCode_Original { get; set; }
         public DateTime? FWBStatusDate_Original { get; set; }
         public string FHLStatusCode_Original { get; set; }
         public DateTime? FHLStatusDate_Original { get; set; }
         public string CarrierLastStatusCode_Original { get; set; }
         public DateTime? CarrierLastStatusDate_Original { get; set; }
-        public string MainCarriageFromPortId_Original { get; set; }
-        public string MainCarriageFinalDestinationPortId_Original { get; set; }
-        public string Transshipment3ToPortId_Original { get; set; }
-        public string Transshipment2ToPortId_Original { get; set; }
-        public string Transshipment1ToPortId_Original { get; set; }
         public string MainCarriageToPortId_Original { get; set; }
         public int? NumberOfPackages_Original { get; set; }
         public double? GrossWeight_Original { get; set; }
-        public double? GrossWeightInKG_Original { get; set; }
         public double? ChargeableWeight_Original { get; set; }
         public string GrossWeightUnitCode_Original { get; set; }
         public DateTime? MainCarriageATD_Original { get; set; }
@@ -2436,6 +2428,14 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? PreCarriageETA_Original { get; set; }
         public DateTime? OnCarriageATA_Original { get; set; }
         public DateTime? OnCarriageETA_Original { get; set; }
-        public DateTime? FirstARInvoiceApprovalDate { get; set; }
+        public string INTTRABookingStatusCode_Original { get; set; }
+        public string BookingConfirmedBy_Original { get; set; }
+        public string MAN_FromPortId_Original { get; set; }
+        public string FIN_PortId_Original { get; set; }
+        public string TR3_ToPortId_Original { get; set; }
+        public string TR2_ToPortId_Original { get; set; }
+        public string TR1_ToPortId_Original { get; set; }
+        public string BookingConfNumber_Original { get; set; }
+        public string MAN_CarrierNumber_Original { get; set; }
     }
 }

@@ -35,8 +35,7 @@ CALL :CheckError "Create ARPayment"
 
 
 
-
-rem call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,PaymentCheque>D:\TeamMohammadE2E\Test\prot.log 2>&1
+rem call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque>D:\TeamMohammadE2E\Test\prot.log 2>&1
 rem CALL :CheckError "Create PaymentCheque"
 
 

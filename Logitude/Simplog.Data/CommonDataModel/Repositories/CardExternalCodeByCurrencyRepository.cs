@@ -31,9 +31,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-        public IQueryable<CardExternalCodeByCurrency> GetCardExternalCodeByCurrencies()
+        public IQueryable<CardExternalCodeByCurrency> GetCardExternalCodeByCurrencies(int tenant)
         {
-            return context.CardExternalCodeByCurrencies;
+            return (from record in context.CardExternalCodeByCurrencies.Include("Currency") where record.Tenant == tenant select record);
         }
 
      

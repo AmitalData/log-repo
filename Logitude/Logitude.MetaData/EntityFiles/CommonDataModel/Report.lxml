@@ -1470,6 +1470,7 @@
   <field
     Id="&quot;62a17734-09ee-47b7-a9e1-6b44b76f92d4&quot;"
     FieldName="&quot;FeatureUniqeCode&quot;"
+    OldFieldName="&quot;FeatureUniqeCode&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1493,6 +1494,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;FeatureUniqeCode&quot;"
     ListPropertyPath="&quot;FeatureUniqeCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1553,7 +1555,6 @@
     FeatureTextCodeCode="&quot;ReportObjectTable.Features.AllReports&quot;"
     FeatureDefaultText="&quot;All Reports&quot;"
     IsSpellChecked="false">
-
     <QueryColumns>
       <QueryColumn
         QueryCode="&quot;All Reports&quot;"
@@ -1594,7 +1595,6 @@
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
-
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;Report&quot;"

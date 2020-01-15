@@ -55,6 +55,13 @@ var entity = FromListTSFile(xmlFilePath);
 	    		return;
 	    	}
 	    } 
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 WriteListTSMethod(entity);
 SaveListTSOutput(outputFilePath);
 }

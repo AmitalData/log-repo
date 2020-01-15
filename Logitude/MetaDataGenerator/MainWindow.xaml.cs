@@ -352,30 +352,99 @@ namespace MetaDataGenerator
 		private void btnFormatModelLXMLs_Click(object sender, RoutedEventArgs e)
 		{
 
-			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			SetDontCreateObjectFieldAttribute();
+			return;
+
+			string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+			DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+			string solutionDirectory = solutionDir.FullName;
+
+			string dir = solutionDirectory;//+ @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
+			string[] allFiles = GetAllLXMLFiles();
+			foreach (string filePath in allFiles)
 			{
-				string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-				DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
-				string solutionDirectory = solutionDir.FullName;
+				//string filePath = directoryPath + table.Name + ".lxml";
 
-				string dir = solutionDirectory;//+ @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
-				dialog.SelectedPath = dir;
-				
-				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+				XmlDocument doc = new XmlDocument();
+				doc.Load(filePath);
 
-				if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+
+				FileStream fileStream = new FileStream(filePath, FileMode.Truncate, FileAccess.Write);
+				XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
+				XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
+
+				doc.Save(xmlWriter);
+				xmlWriter.Close();
+				xmlWriter.Dispose();
+			}
+
+			MessageBox.Show("Formating all files completed successfully");
+
+
+
+		}
+
+		private void SetDontCreateObjectFieldAttribute()
+		{
+			//NoMetaDataField
+			//using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			///{
+			string[] allFiles = GetAllLXMLFiles();
+
+			//if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+			//{
+			StringBuilder errorsBuilder = new StringBuilder();
+			//DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+			//string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.FullName).ToArray();//.Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+			foreach (string filePath in allFiles)
+			{
+				//string filePath = directoryPath + table.Name + ".lxml";
+				try
 				{
-					 
-					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
-					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.FullName).ToArray();//.Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-					foreach (string filePath in allFiles)
+					XmlDocument doc = new XmlDocument();
+					doc.Load(filePath);
+
+					bool fileChanged = false;
+					XmlNodeList xnList = doc.SelectNodes("/entity/field[@FieldName='"+ "\"" +"Id" + "\"" + "']");
+					foreach (XmlNode xn in xnList)
 					{
-						//string filePath = directoryPath + table.Name + ".lxml";
+						if (xn.Attributes["NoMetaDataField"] == null)
+						{
+						 
+							XmlAttribute att  = doc.CreateAttribute("NoMetaDataField");
+							att.Value = "true";
+							XmlAttribute typeAttr = xn.Attributes.Append(att);
+							fileChanged = true;
+						}
+						else if(xn.Attributes["NoMetaDataField"].Value == "false")
+						{
+							xn.Attributes["NoMetaDataField"].Value = "true";
+							fileChanged = true;
+						}
 
-						XmlDocument doc = new XmlDocument();
-						doc.Load(filePath);
+					}
 
+					XmlNodeList tenantxnList = doc.SelectNodes("/entity/field[@FieldName='" + "\"" + "Tenant" + "\"" + "']");
+					foreach (XmlNode xn in tenantxnList)
+					{
+						if (xn.Attributes["NoMetaDataField"] == null)
+						{
 
+							XmlAttribute att = doc.CreateAttribute("NoMetaDataField");
+							att.Value = "true";
+							XmlAttribute typeAttr = xn.Attributes.Append(att);
+							fileChanged = true;
+						}
+						else if (xn.Attributes["NoMetaDataField"].Value == "false")
+						{
+							xn.Attributes["NoMetaDataField"].Value = "true";
+							fileChanged = true;
+						}
+
+					}
+
+					if (fileChanged)
+					{
 						FileStream fileStream = new FileStream(filePath, FileMode.Truncate, FileAccess.Write);
 						XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
 						XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
@@ -383,12 +452,34 @@ namespace MetaDataGenerator
 						doc.Save(xmlWriter);
 						xmlWriter.Close();
 						xmlWriter.Dispose();
+						fileStream.Close();
+						fileStream.Dispose();
 					}
-					 
-					MessageBox.Show("Formating all files completed successfully");
-
+				}
+				catch (Exception ex)
+				{
+					errorsBuilder.AppendLine(filePath + ex.Message);
 				}
 			}
+			if (string.IsNullOrEmpty(errorsBuilder.ToString()))
+				MessageBox.Show("Formating all files completed successfully");
+			else
+				MessageBox.Show(errorsBuilder.ToString());
+
+			//}
+			//}
+		}
+
+		private static string[] GetAllLXMLFiles()
+		{
+			string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+			DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+			string solutionDirectory = solutionDir.FullName;
+
+			 
+			string dxmlFilesPath = Path.Combine(solutionDirectory);
+			string[] allFiles = Directory.GetFiles(dxmlFilesPath, "*.lxml", SearchOption.AllDirectories);
+			return allFiles;
 		}
 	}
 }

@@ -300,7 +300,7 @@ tenant);
 
                 openReconciliation = openReconciliation.Concat(openReconciliation_transfer).ToList();
 
-                openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
+                //openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)

@@ -49,6 +49,13 @@ var entity = FromEntityServiceFile(xmlFilePath);
 			return;
 		}
 	}
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
  
     WriteEntityServiceMethod(entity,contextName);
     SaveEntityServiceOutput(outputFilePath);

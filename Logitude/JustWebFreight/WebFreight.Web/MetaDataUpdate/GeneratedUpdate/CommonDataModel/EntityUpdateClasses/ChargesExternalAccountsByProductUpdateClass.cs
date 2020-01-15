@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ChargesExternalAccountsByProductUpdateClass
@@ -119,6 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -132,6 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "PayablesGLAccount",
 					  						ObjectTableName =  "ChargesExternalAccountsByProduct",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "ChargesExternalAccountsByProduct.PayablesGLAccount",
 					  						Code =  "PayablesGLAccount",
 					  						MaxLength =  25,
 					  						IsCustom =  false,
@@ -173,10 +179,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ChargesExternalAccountsByProduct.F.PayablesGLAccount",
+					  						HelpTextCodeCode =  "ChargesExternalAccountsByProduct.PayablesGLAccountHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayablesGLAccount",
-					  						DefaultText =  @"Payables GL Account",
+					  						DefaultText =  "Payables GL Account",
 					  						HelpTextCode =  "PayablesGLAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -188,6 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "PayablesCostCenter",
 					  						ObjectTableName =  "ChargesExternalAccountsByProduct",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "ChargesExternalAccountsByProduct.PayablesCostCenter",
 					  						Code =  "PayablesCostCenter",
 					  						MaxLength =  25,
 					  						IsCustom =  false,
@@ -229,10 +241,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ChargesExternalAccountsByProduct.F.PayablesCostCenter",
+					  						HelpTextCodeCode =  "ChargesExternalAccountsByProduct.PayablesCostCenterHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayablesCostCenter",
-					  						DefaultText =  @"Payables Cost Center",
+					  						DefaultText =  "Payables Cost Center",
 					  						HelpTextCode =  "PayablesCostCenter",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -244,6 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ReceivablesGLAccount",
 					  						ObjectTableName =  "ChargesExternalAccountsByProduct",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "ChargesExternalAccountsByProduct.ReceivablesGLAccount",
 					  						Code =  "ReceivablesGLAccount",
 					  						MaxLength =  25,
 					  						IsCustom =  false,
@@ -285,10 +303,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ChargesExternalAccountsByProduct.F.ReceivablesGLAccount",
+					  						HelpTextCodeCode =  "ChargesExternalAccountsByProduct.ReceivablesGLAccountHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivablesGLAccount",
-					  						DefaultText =  @"Receivables GL Account",
+					  						DefaultText =  "Receivables GL Account",
 					  						HelpTextCode =  "ReceivablesGLAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -300,6 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ReceivablesCostCenter",
 					  						ObjectTableName =  "ChargesExternalAccountsByProduct",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "ChargesExternalAccountsByProduct.ReceivablesCostCenter",
 					  						Code =  "ReceivablesCostCenter",
 					  						MaxLength =  25,
 					  						IsCustom =  false,
@@ -341,10 +365,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ChargesExternalAccountsByProduct.F.ReceivablesCostCenter",
+					  						HelpTextCodeCode =  "ChargesExternalAccountsByProduct.ReceivablesCostCenterHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivablesCostCenter",
-					  						DefaultText =  @"Receivables Cost Center",
+					  						DefaultText =  "Receivables Cost Center",
 					  						HelpTextCode =  "ReceivablesCostCenter",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -357,6 +386,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "ChargesExternalAccountsByProduct",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChargesType",
+					  						FieldCode =  "ChargesExternalAccountsByProduct.ChargesTypeId",
 					  						Code =  "ChargesTypeId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
@@ -398,10 +428,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ChargesExternalAccountsByProduct.F.ChargesTypeId",
+					  						HelpTextCodeCode =  "ChargesExternalAccountsByProduct.ChargesTypeIdHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargesTypeId",
-					  						DefaultText =  @"Charges Type",
+					  						DefaultText =  "Charges Type",
 					  						HelpTextCode =  "ChargesTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -414,6 +449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "ChargesExternalAccountsByProduct",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ProductType",
+					  						FieldCode =  "ChargesExternalAccountsByProduct.ProductTypeCode",
 					  						Code =  "ProductTypeCode",
 					  						MaxLength =  2,
 					  						IsCustom =  false,
@@ -455,10 +491,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ChargesExternalAccountsByProduct.F.ProductTypeCode",
+					  						HelpTextCodeCode =  "ChargesExternalAccountsByProduct.ProductTypeCodeHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ProductTypeCode",
-					  						DefaultText =  @"Product",
+					  						DefaultText =  "Product",
 					  						HelpTextCode =  "ProductTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -470,6 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "UpdateDate",
 					  						ObjectTableName =  "ChargesExternalAccountsByProduct",
 					  						FieldsDataType =  "DateTime",
+					  						FieldCode =  "ChargesExternalAccountsByProduct.UpdateDate",
 					  						Code =  "UpdateDate",
 					  						MaxLength =  1,
 					  						IsCustom =  false,
@@ -511,10 +553,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ChargesExternalAccountsByProduct.F.UpdateDate",
+					  						HelpTextCodeCode =  "ChargesExternalAccountsByProduct.UpdateDateHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -527,6 +574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "ChargesExternalAccountsByProduct",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
+					  						FieldCode =  "ChargesExternalAccountsByProduct.UpdatedByUserId",
 					  						Code =  "UpdatedByUserId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
@@ -568,10 +616,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "ChargesExternalAccountsByProduct.F.UpdatedByUserId",
+					  						HelpTextCodeCode =  "ChargesExternalAccountsByProduct.UpdatedByUserIdHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						HelpTextCode =  "UpdatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -594,10 +647,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable ChargesExternalAccountsByProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesExternalAccountsByProduct" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature ChargesExternalAccountsByProductFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesExternalAccountsByProduct.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ChargesExternalAccountsByProductFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesExternalAccountsByProduct.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ChargesExternalAccountsByProductFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesExternalAccountsByProduct.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ChargesExternalAccountsByProductFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesExternalAccountsByProduct.Features.PackageFeature", NameTextCodeDefaultText = "ChargesExternalAccountsByProduct Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature ChargesExternalAccountsByProductFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesExternalAccountsByProduct.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ChargesExternalAccountsByProductFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesExternalAccountsByProduct.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ChargesExternalAccountsByProductFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesExternalAccountsByProduct.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ChargesExternalAccountsByProductFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesExternalAccountsByProduct.Features.PackageFeature", NameTextCodeDefaultText = "ChargesExternalAccountsByProduct Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
@@ -611,15 +665,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ChargesExternalAccountsByProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesExternalAccountsByProduct" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ChargesExternalAccountsByProductTextCode_ChargesExternalAccountsByProduct = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesExternalAccountsByProduct", DefaultText = "Charges External Accounts By Product",LocalDefaultText = null, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

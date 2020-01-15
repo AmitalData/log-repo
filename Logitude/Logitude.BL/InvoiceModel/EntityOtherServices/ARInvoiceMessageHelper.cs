@@ -309,12 +309,13 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     }
 
 
-
                     VatType LineVat = VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
                     if (LineVat != null)
                     {
                         lineElement.VATExternalId = LineVat.ReceivablesExternalId;
                     }
+
+
 
                     if (!string.IsNullOrEmpty(myline.PrepaidCollectId))
                     {
