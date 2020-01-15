@@ -12,6 +12,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTableHelperControl.Tenant = objectTableHelperControlPM.Tenant;
             objectTableHelperControl.Code = objectTableHelperControlPM.Code;
             objectTableHelperControl.FeatureId = objectTableHelperControlPM.FeatureId;
+            objectTableHelperControl.FeatureUniqeCode = objectTableHelperControlPM.FeatureUniqeCode;
+
         }
     }
 }

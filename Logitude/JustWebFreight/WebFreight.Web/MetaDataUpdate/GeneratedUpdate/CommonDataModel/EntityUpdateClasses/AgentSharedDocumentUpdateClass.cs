@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AgentSharedDocumentUpdateClass
@@ -120,6 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -133,6 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "AgentReference",
 					  						ObjectTableName =  "AgentSharedDocument",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "AgentSharedDocument.AgentReference",
 					  						Code =  "AgentReference",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
@@ -174,12 +180,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "AgentSharedDocument.F.AgentReference",
+					  						HelpTextCodeCode =  "AgentSharedDocument.AgentReferenceHelpText",
+					  						ListTextCodeCode =  "AgentSharedDocument.CH.AgentReferenceListLable",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "AgentReference",
-					  						DefaultText =  @"Agent Ref.",
+					  						DefaultText =  "Agent Ref.",
 					  						ListFieldLable =  "AgentReferenceListLable",
-					  						ListLableDefaultText =  @"Agent Ref.",
+					  						ListLableDefaultText =  "Agent Ref.",
 					  						HelpTextCode =  "AgentReference",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -191,6 +203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "CreateDate",
 					  						ObjectTableName =  "AgentSharedDocument",
 					  						FieldsDataType =  "DateTime",
+					  						FieldCode =  "AgentSharedDocument.CreateDate",
 					  						Code =  "CreateDate",
 					  						MaxLength =  1,
 					  						IsCustom =  false,
@@ -232,13 +245,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "AgentSharedDocument.F.CreateDate",
+					  						HelpTextCodeCode =  "AgentSharedDocument.CreateDateHelpText",
+					  						ListTextCodeCode =  "AgentSharedDocument.CH.CreateDateListLable",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  true,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
+					  						ListLableDefaultText =  "Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -250,6 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "UpdateDate",
 					  						ObjectTableName =  "AgentSharedDocument",
 					  						FieldsDataType =  "DateTime",
+					  						FieldCode =  "AgentSharedDocument.UpdateDate",
 					  						Code =  "UpdateDate",
 					  						MaxLength =  1,
 					  						IsCustom =  false,
@@ -291,13 +311,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "AgentSharedDocument.F.UpdateDate",
+					  						HelpTextCodeCode =  "AgentSharedDocument.UpdateDateHelpText",
+					  						ListTextCodeCode =  "AgentSharedDocument.CH.UpdateDateListLable",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  true,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  @"Update Date",
+					  						ListLableDefaultText =  "Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -309,6 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "StatusCode",
 					  						ObjectTableName =  "AgentSharedDocument",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "AgentSharedDocument.StatusCode",
 					  						Code =  "StatusCode",
 					  						MaxLength =  20,
 					  						IsCustom =  false,
@@ -350,10 +377,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "AgentSharedDocument.F.StatusCode",
+					  						HelpTextCodeCode =  "AgentSharedDocument.StatusCodeHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "StatusCode",
-					  						DefaultText =  @"Status Code",
+					  						DefaultText =  "Status Code",
 					  						HelpTextCode =  "StatusCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -376,10 +408,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable AgentSharedDocumentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AgentSharedDocument" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature AgentSharedDocumentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedDocument.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AgentSharedDocumentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedDocument.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AgentSharedDocumentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedDocument.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AgentSharedDocumentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedDocument.Features.PackageFeature", NameTextCodeDefaultText = "AgentSharedDocument Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   Feature AgentSharedDocumentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedDocument.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AgentSharedDocumentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedDocument.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AgentSharedDocumentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedDocument.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AgentSharedDocumentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedDocument.Features.PackageFeature", NameTextCodeDefaultText = "AgentSharedDocument Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
 
 		   		   //--------------> Additional Features <--------------\\
 
@@ -399,15 +432,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AgentSharedDocumentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AgentSharedDocument" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AgentSharedDocumentTextCode_AgentSharedDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedDocument", DefaultText = "Agent Shared Document",LocalDefaultText = null, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

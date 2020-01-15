@@ -329,7 +329,7 @@ namespace WebFreight.Web.WebServices
                         else
                         {
                             myShipment.IsFSRSent = true;
-                            myBooking.LastSentByUserId = loggedContactId;
+                            myShipment.LastSentByUserId = loggedContactId;
                             myShipment.LastFSRStatusRequestDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                             ShipmentService service = new ShipmentService(shipmentContext, myShipment, email);

@@ -38,7 +38,6 @@ namespace Logitude.IntegrationTest.Core.Login
                 IntegrationTestLoginParameters.LoginUserName = userData.UserName;
             }
         }
-
     }
 
     public class LoginParameters

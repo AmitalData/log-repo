@@ -152,13 +152,15 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
             QueryData.PageIndex = this.PageIndex;
             QueryData.PageSize = this.PageSize;
             QueryData.ColumnsSort = this.DWQueryData.ColumnsSort;
+            var myAndOr = "And";
             if (this.DWQueryData.Filters) {
-                var myAndOr = this.DWQueryData.Filters.AndOr;
+                myAndOr = this.DWQueryData.Filters.AndOr;
             }
             this.DWQueryData.Filters = this.SelectedFiltersDataSource[0];
             if (this.DWQueryData.Filters) {
                 this.DWQueryData.Filters.AndOr = myAndOr;
             }
+           
             this.GetRowData(QueryData);
         }
         else {

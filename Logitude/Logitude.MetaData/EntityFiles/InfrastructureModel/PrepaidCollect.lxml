@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Prepaid Collect&quot;"
-  Code="&quot;7543&quot;"
+  Code="&quot;3d84&quot;"
   Name="&quot;PrepaidCollect&quot;"
   CloseTableCode="&quot;Id&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -47,6 +47,7 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
@@ -59,6 +60,7 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="true"
+  IsTabsHidden="false"
   SearchFields="&quot;PrepaidCollect,PrepaidCollects,,Id,&quot;">
   <field
     Id="&quot;beff139c-7e64-4ebb-b61e-01a88afe1ccb&quot;"
@@ -72,7 +74,9 @@
     MinLength="0"
     MaxLength="1"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -124,13 +128,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Id&quot;"
     IsSpellCheckedFullFieldLable="true"
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="true" />
+    IsSpellCheckedListLocalDefaultText="true"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;cd726ac5-2cd0-4d39-8652-f66b02928aa1&quot;"
     FieldName="&quot;Name&quot;"
@@ -143,7 +149,9 @@
     MinLength="0"
     MaxLength="10"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -195,13 +203,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
     IsSpellCheckedFullFieldLable="true"
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="true" />
+    IsSpellCheckedListLocalDefaultText="true"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;15259b31-5397-4205-9bb1-b96f6e3aae9f&quot;"
     FieldName="&quot;DisplayInLOV&quot;"
@@ -214,7 +224,9 @@
     MinLength="0"
     MaxLength="40"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -264,13 +276,15 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;DisplayInLOV&quot;"
     IsSpellCheckedFullFieldLable="true"
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;67ec2738-77ee-4f3c-9e3b-b21088e4536d&quot;"
     FieldName="&quot;SearchFields&quot;"
@@ -283,7 +297,9 @@
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -335,12 +351,23 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;PrepaidCollectHeaderScreen&quot;"
+    ObjectTableName="&quot;PrepaidCollect&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -402,7 +429,8 @@
         IsCustomType="false"
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;Name&quot;"
         FieldName="&quot;Name&quot;"
@@ -415,8 +443,10 @@
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

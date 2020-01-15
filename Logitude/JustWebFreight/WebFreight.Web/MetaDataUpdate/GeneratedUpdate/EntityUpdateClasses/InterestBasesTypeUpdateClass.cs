@@ -869,9 +869,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBTD",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent", FeatureId = InterestBasesTypeDetailsFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.InterestBasesTypesTabs.InterestBasesTypesDetailsTabControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeDetailsTextCode_TH0.Id, TabNameTextCodeCode = InterestBasesTypeDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBTD",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent", FeatureId = InterestBasesTypeDetailsFeature_TH0.Id,FeatureUniqeCode = InterestBasesTypeDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.InterestBasesTypesTabs.InterestBasesTypesDetailsTabControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeDetailsTextCode_TH0.Id, TabNameTextCodeCode = InterestBasesTypeDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InterestBasesTypeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InterestBasesTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InterestBasesTypeEventsFeature_TH1.Id,FeatureUniqeCode = InterestBasesTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InterestBasesTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1012,6 +1012,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton InterestBasesTypeMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1029,6 +1030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestBasesTypeFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "חסימה",
+						FeatureUniqeCode=  InterestBasesTypeFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

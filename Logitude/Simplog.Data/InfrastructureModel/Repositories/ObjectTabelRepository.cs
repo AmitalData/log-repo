@@ -268,9 +268,29 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             List<ObjectTable> currentTenantTables = new List<ObjectTable>();
             List<ObjectTable> zeroTenantTables = new List<ObjectTable>();
 
+            bool isWRCacheALLOWED = false;
+
+            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+            if (iAppSettings != null)
+            {
+                if (iAppSettings["WRCacheALLOWED"] != null)
+                {
+                    string iValueText = iAppSettings["WRCacheALLOWED"] + "";
+                    if (!string.IsNullOrEmpty(iValueText))
+                    {
+                        if (iValueText.ToLower() == "true")
+                        {
+                            isWRCacheALLOWED = true;
+                        }
+                    }
+                }
+            }
+
+
+
             if (tenant != 0)
             {
-                if (HttpContext.Current != null)
+                if (HttpContext.Current != null || isWRCacheALLOWED)
                 {
                     if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                     {
@@ -303,7 +323,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 }
             }
 
-            if (HttpContext.Current != null)
+            if (HttpContext.Current != null || isWRCacheALLOWED)
             {
                 if (CacheManager.CacheWrapper.Get(listName) == null)
                 {

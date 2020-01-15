@@ -8,7 +8,7 @@ namespace Logitude.DatabaseMigration.Migrations
         public override void Up()
         {
             AddColumn("dbo.ObjectFieldValidations", "ObjectFieldCode", c => c.String(nullable: true, maxLength: 200, unicode: false));
-            Sql(@"update ObjectFieldValidations set ObjectFieldCode = (select ObjectFields.Code from ObjectFields where id = ObjectFieldValidations.ObjectFieldId)");
+            Sql(@"update ObjectFieldValidations set ObjectFieldCode = (select ObjectFields.FieldCode from ObjectFields where id = ObjectFieldValidations.ObjectFieldId)");
             AlterColumn("dbo.ObjectFieldValidations", "ObjectFieldCode", c => c.String(nullable: false, maxLength: 200, unicode: false));
         }
         

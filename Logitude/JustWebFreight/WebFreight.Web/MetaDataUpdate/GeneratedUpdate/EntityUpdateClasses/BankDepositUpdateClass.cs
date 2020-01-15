@@ -2086,9 +2086,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BDDL",HtmlComponentName = "BankDepositDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/BankDeposit/BankDepositDetailsTabComponent", FeatureId = BankDepositDetailsFeature_TH0.Id, ControlPath = "Logitude.Accounting.ViewModels.Tabs.BNK.BankDepositDetailsTabControl", ObjectTableId = BankDepositObjectTable.Id, TabNameTextCodeId = BankDepositDetailsTextCode_TH0.Id, TabNameTextCodeCode = BankDepositDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BDDL",HtmlComponentName = "BankDepositDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/BankDeposit/BankDepositDetailsTabComponent", FeatureId = BankDepositDetailsFeature_TH0.Id,FeatureUniqeCode = BankDepositDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.Accounting.ViewModels.Tabs.BNK.BankDepositDetailsTabControl", ObjectTableId = BankDepositObjectTable.Id, TabNameTextCodeId = BankDepositDetailsTextCode_TH0.Id, TabNameTextCodeCode = BankDepositDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BankDepositEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BankDepositObjectTable.Id, TabNameTextCodeId = BankDepositEventsTextCode_TH1.Id, TabNameTextCodeCode = BankDepositEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BankDepositEventsFeature_TH1.Id,FeatureUniqeCode = BankDepositEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BankDepositObjectTable.Id, TabNameTextCodeId = BankDepositEventsTextCode_TH1.Id, TabNameTextCodeCode = BankDepositEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2219,6 +2219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = BankDepositFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
+						FeatureUniqeCode = BankDepositFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -2236,6 +2237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton BankDepositMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2253,6 +2255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  BankDepositFeature_MB10.Id,
 						Style = "Ordinary",
 						LocalDefaultText = "הדפס",
+						FeatureUniqeCode=  BankDepositFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton BankDepositMenuButton11 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2270,6 +2273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  BankDepositFeature_MB11.Id,
 						Style = null,
 						LocalDefaultText = "ביטול הפקדה",
+						FeatureUniqeCode=  BankDepositFeature_MB11.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

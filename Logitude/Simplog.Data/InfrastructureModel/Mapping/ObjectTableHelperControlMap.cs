@@ -51,9 +51,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
 
             // Relationships
-            this.HasOptional(t => t.Feature)
-                .WithMany()
-                .HasForeignKey(d => d.FeatureId);
+            //this.HasOptional(t => t.Feature)
+            //    .WithMany()
+            //    .HasForeignKey(d => d.FeatureId);
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.ObjectTableHelperControls)
             //    .HasForeignKey(d => d.ObjectTableId);

@@ -27,7 +27,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FilterHtmlComponentUrl).HasMaxLength(256).IsUnicode(false);
             this.Property(t => t.DefaultTemplateId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DefaultMessageTemplateId).HasMaxLength(15).IsUnicode(false);
-            
+            this.Property(t => t.FeatureUniqeCode).HasMaxLength(120).IsUnicode(false);
+
 
             this.ToTable("Reports");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -45,11 +46,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FilterHtmlComponentUrl).HasColumnName("FilterHtmlComponentUrl");
             this.Property(t => t.DefaultMessageTemplateId).HasColumnName("DefaultMessageTemplateId");
             this.Property(t => t.DefaultTemplateId).HasColumnName("DefaultTemplateId");
+            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
 
 
-            this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
+            //this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
             this.HasRequired(d => d.ReportGroup).WithMany().HasForeignKey(d => d.ReportGroupId);
-            this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
+            //this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
             this.HasOptional(t => t.ReportsTemplate).WithMany().HasForeignKey(d => d.DefaultTemplateId);
             this.HasOptional(t => t.ReportsTemplateDefaultMessage).WithMany().HasForeignKey(d => d.DefaultMessageTemplateId);
 

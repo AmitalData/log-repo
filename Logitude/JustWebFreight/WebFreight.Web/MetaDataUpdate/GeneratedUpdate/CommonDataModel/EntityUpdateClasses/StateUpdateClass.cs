@@ -865,9 +865,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "STGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = StateGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = StateObjectTable.Id, TabNameTextCodeId = StateGeneralTextCode_TH0.Id, TabNameTextCodeCode = StateGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "STGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = StateGeneralFeature_TH0.Id,FeatureUniqeCode = StateGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = StateObjectTable.Id, TabNameTextCodeId = StateGeneralTextCode_TH0.Id, TabNameTextCodeCode = StateGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "STEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = StateEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = StateObjectTable.Id, TabNameTextCodeId = StateEventsTextCode_TH1.Id, TabNameTextCodeCode = StateEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "STEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = StateEventsFeature_TH1.Id,FeatureUniqeCode = StateEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = StateObjectTable.Id, TabNameTextCodeId = StateEventsTextCode_TH1.Id, TabNameTextCodeCode = StateEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

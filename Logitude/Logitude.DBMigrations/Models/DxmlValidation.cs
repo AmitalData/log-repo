@@ -46,21 +46,43 @@ namespace Logitude.DBMigrations.Models
 
         private List<DXMLTable> GetDXMLTables()
         {
-            List<DXMLTable> dxmlTableDefinitions = new List<DXMLTable>();
+            List<DXMLTable> dxmlTables = new List<DXMLTable>();
 
             foreach (var dxmlFile in DXMLFiles)
             {
                 string xmlString = File.ReadAllText(dxmlFile);
+                if (xmlString.EndsWith("</Table>"))
+                {
+                    DXMLTable dxmlTable = CreateDXMLTable(xmlString, dxmlFile);
+                    if(dxmlTable == null)
+                    {
+                        ExitTool("Cannot Create Table Definition For " + Path.GetFileName(dxmlFile));
+                    }
+                    dxmlTables.Add(dxmlTable);
+                }
+            }
+
+            return dxmlTables;
+        }
+
+        private DXMLTable CreateDXMLTable(string xmlString, string dxmlFile)
+        {
+            try
+            {
                 TableDefinition dxmlTableDefinition = xmlString.ParseXML<TableDefinition>();
+
                 DXMLTable dxmlTable = new DXMLTable
                 {
                     DXMLFileName = Path.GetFileName(dxmlFile),
                     TableDefinition = dxmlTableDefinition
                 };
-                dxmlTableDefinitions.Add(dxmlTable);
-            }
 
-            return dxmlTableDefinitions;
+                return dxmlTable;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private string ValidateReferencedTables(DXMLTable dxmlTable)

@@ -3011,9 +3011,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCGN",HtmlComponentName = "PaymentChequeGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/PaymentChequeGeneralTabComponent", FeatureId = PaymentChequeGeneralFeature_TH0.Id, ControlPath = "", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeGeneralTextCode_TH0.Id, TabNameTextCodeCode = PaymentChequeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCGN",HtmlComponentName = "PaymentChequeGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/PaymentChequeGeneralTabComponent", FeatureId = PaymentChequeGeneralFeature_TH0.Id,FeatureUniqeCode = PaymentChequeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeGeneralTextCode_TH0.Id, TabNameTextCodeCode = PaymentChequeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentChequeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeEventsTextCode_TH1.Id, TabNameTextCodeCode = PaymentChequeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentChequeEventsFeature_TH1.Id,FeatureUniqeCode = PaymentChequeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeEventsTextCode_TH1.Id, TabNameTextCodeCode = PaymentChequeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -3149,6 +3149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = PaymentChequeFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = "שמור כטיוטה",
+						FeatureUniqeCode = PaymentChequeFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3166,6 +3167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = PaymentChequeFeature_MB1.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
+						FeatureUniqeCode = PaymentChequeFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3183,6 +3185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton PaymentChequeMenuButton20 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3200,6 +3203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB20.Id,
 						Style = null,
 						LocalDefaultText = "הדפסת המחאה",
+						FeatureUniqeCode=  PaymentChequeFeature_MB20.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton PaymentChequeMenuButton21 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3217,6 +3221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB21.Id,
 						Style = null,
 						LocalDefaultText = "ביטול המחאה",
+						FeatureUniqeCode=  PaymentChequeFeature_MB21.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

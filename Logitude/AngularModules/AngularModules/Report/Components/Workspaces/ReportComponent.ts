@@ -97,14 +97,20 @@ export class ReportComponent {
                                 }
                                 else if (item.Code == "SHRR") {
                                     if (SessionLocator.Tenant == 2095 || SessionLocator.Tenant == 2052 || SessionLocator.TenantManagementJS.PackageCode == "DVMT") {
-                                        this.reportList.push(item);
-                                    }
-                                    else {
                                         if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                             this.reportList.push(item);
                                         }
                                     }
                                 }
+
+                                else if (item.Code == "FLBM") {
+                                    if (SessionLocator.Tenant == 2095 || SessionLocator.Tenant == 2052 || FeatureLocator.IsPackage_DVMT()) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
                                 else {
                                     if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                         this.reportList.push(item);

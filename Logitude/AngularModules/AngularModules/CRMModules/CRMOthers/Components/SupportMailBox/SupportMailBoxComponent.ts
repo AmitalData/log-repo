@@ -82,25 +82,6 @@ export class SupportMailBoxComponent {
         });
     }
 
-    DeleteMailBox(mailbox: SupportMailboxPM) {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Delete this Support Mailbox?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicatorSaving();
-
-                this.domainService.DeleteMailBox(mailbox.Id).subscribe((myResponse: ServiceResponse) => {
-                    var pmResponse: ServiceResponse = myResponse;
-                    if (!pmResponse.HasError) {
-                        this.LoadMailBoxes();
-                    }
-
-                    this.CurrentSession.StopBusyIndicator();
-                });
-            }
-        });
-    }
-
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

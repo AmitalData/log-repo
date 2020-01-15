@@ -1821,11 +1821,11 @@
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;CustomerTenantAccess&quot;"
-    NumberOfColumns="5"
-    NumberOfRows="2"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;CustomerTenantAccess.HeaderScreen&quot;">
+    Code="&quot;CustomerTenantAccess.HeaderScreen&quot;"
+    NumberOfColumns="5"
+    NumberOfRows="2">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1891,7 +1891,8 @@
     FeatureCode="&quot;RELATEDCUSTOMER&quot;"
     FeatureTextCodeCode="&quot;CustomerTenantAccess.Features.RelatedCustomers&quot;"
     FeatureDefaultText="&quot;Related Customer&quot;"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -1929,6 +1930,7 @@
       DefaultText="&quot;Deny&quot;"
       MenuButtonType="&quot;button&quot;"
       IndexOrder="100"
+      IsPackagable="false"
       TextCodeCode="&quot;CustomerTenantAccess.B.Deny&quot;" />
   </MenuButtons>
   <DataContracts />

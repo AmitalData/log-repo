@@ -1898,7 +1898,19 @@
     <Compile Include="Migrations\202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.Designer.cs">
       <DependentUpon>202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs" />
+    <Compile Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.Designer.cs">
+      <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.cs" />
+    <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.Designer.cs">
+      <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
+    <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
+      <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -1939,6 +1951,8 @@
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+    </EmbeddedResource>
     <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs" />
     <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.Designer.cs">
       <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
@@ -1954,6 +1968,14 @@
     <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs" />
     <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.Designer.cs">
       <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs" />
+    <Compile Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.Designer.cs">
+      <DependentUpon>202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001060932521_AddingFeatureUniqeCodeToReports_rabaia.cs" />
+    <Compile Include="Migrations\202001060932521_AddingFeatureUniqeCodeToReports_rabaia.Designer.cs">
+      <DependentUpon>202001060932521_AddingFeatureUniqeCodeToReports_rabaia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs" />
     <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.Designer.cs">
@@ -3365,9 +3387,6 @@
     <EmbeddedResource Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.resx">
       <DependentUpon>201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.resx">
-      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.resx">
       <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -3406,6 +3425,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.resx">
       <DependentUpon>202001090621513_Mutaz_Add_Field_ScreenCode_To_ScreenModification_And_Remove_ForiegnKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.resx">
+      <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
+      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.resx">
+      <DependentUpon>202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001060932521_AddingFeatureUniqeCodeToReports_rabaia.resx">
+      <DependentUpon>202001060932521_AddingFeatureUniqeCodeToReports_rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.resx">
+      <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
+      <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

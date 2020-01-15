@@ -55,7 +55,7 @@
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="true"
   HasApiHelper="false"
-  AllowedForComputingPartners="false"
+  AllowedForComputingPartners="true"
   Code1="&quot;78a3&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"

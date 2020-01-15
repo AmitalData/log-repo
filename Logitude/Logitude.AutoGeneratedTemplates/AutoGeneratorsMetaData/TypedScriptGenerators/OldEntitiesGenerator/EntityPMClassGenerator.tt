@@ -118,6 +118,14 @@ public void GeneratePM(string classFilePath,string xmlFilePath,string outputFile
 	    	}
 	    } 
 
+         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
+
 	//PrintPMProperties(elements,properties);
 	WritePMMethod(entity,elements);
 	SaveFileOutput(outputFilePath);

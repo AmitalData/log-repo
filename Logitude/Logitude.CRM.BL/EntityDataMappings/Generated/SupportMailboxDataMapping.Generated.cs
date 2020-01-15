@@ -30,7 +30,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         UpdatedByUserId, 
 	         Mailbox, 
 	         Inactive, 
-	         IsDefault,
+	         IsDefault, 
+	         SearchFields,
 	      }
 
 
@@ -46,6 +47,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         Mailbox, 
 	         Inactive, 
 	         IsDefault, 
+	         SearchFields, 
 	         UpdatedByUserName, 
 	         CreatedByUserName,
 	      }
@@ -95,7 +97,14 @@ namespace Logitude.CRM.BL.EntityDataMappings
             {
 				entityPOCO.IsDefault = entityPM.IsDefault;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
 
 		public void POCOToPM(SupportMailboxPM entityPM, SupportMailbox entityPOCO)
         {
@@ -145,6 +154,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.IsDefault = entityPOCO.IsDefault;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
 		}
 
 		public void PMToOldPM(SupportMailboxPM entityPM, SupportMailboxPM oldEntityPM)
@@ -191,6 +205,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 oldEntityPM.IsDefault = entityPM.IsDefault;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(SupportMailboxPM entityPM)
@@ -199,6 +218,10 @@ namespace Logitude.CRM.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
@@ -212,6 +235,15 @@ namespace Logitude.CRM.BL.EntityDataMappings
         public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
         {
             CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(SupportMailboxPM entityPM, SupportMailbox entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
         }
 			  
    }

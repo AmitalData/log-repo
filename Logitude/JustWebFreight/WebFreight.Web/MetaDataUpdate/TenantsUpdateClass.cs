@@ -49,6 +49,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
+using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -154,8 +155,10 @@ namespace WebFreight.Web.MetaDataUpdate
 							InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
 							inframodelUpdateClass.LoadObjectsTenantZero(context);
 
+                            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+                            systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
 
-							ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+                            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
                             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
@@ -465,6 +468,8 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             InfrastructureModelUpdateClass modelUpdateClass = new InfrastructureModelUpdateClass();
                             modelUpdateClass.LoadObjectsTenantZero(context);
+                            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+                            systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
                             break;
                         }
 
@@ -572,9 +577,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             customUpdateClass.LoadEventTypes();
 
                             //CRM
-                            OccasionContactMetadataUpdateClass occasionContactMetadataUpdateClass = new OccasionContactMetadataUpdateClass();
-                            occasionContactMetadataUpdateClass.LoadObjectsTenantZero(context);
-
+                            
                             CRMUpdateClass cRMUpdateClass = new CRMUpdateClass();
                             cRMUpdateClass.LoadObjectsTenantZero(context);
 
