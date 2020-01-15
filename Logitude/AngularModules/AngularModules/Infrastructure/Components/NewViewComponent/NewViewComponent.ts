@@ -923,7 +923,7 @@ export class NewViewComponent {
         }
         this.timeFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.FieldsValues = new FieldsValues();
-        this.currentQuery = window.Queries.filter(q => q.Id == QueryCode)[0];
+        this.currentQuery = window.Queries.filter(q => q.Code == QueryCode)[0];
 
         if (!this.currentQuery) {
             
@@ -1151,7 +1151,7 @@ export class NewViewComponent {
             if (DoSaving) {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
-                var theCurrentQuery = (window.Queries.filter(q => q.Id == this.QueryCode)[0]);
+                var theCurrentQuery = (window.Queries.filter(q => q.Code == this.QueryCode)[0]);
                 var temp = window.Queries.filter(q => q.ObjectTableId == theCurrentQuery.ObjectTableId && q.UserId == theCurrentQuery.UserId && q.QueryGroupCode == theCurrentQuery.QueryGroupCode).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
                 var maxIndex = temp[temp.length - 1];
                 
