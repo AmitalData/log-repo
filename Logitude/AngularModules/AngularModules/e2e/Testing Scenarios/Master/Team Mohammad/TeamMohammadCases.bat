@@ -29,8 +29,8 @@ CALL :CheckError "Create ARPayment"
 
 
 
-call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,RevGLAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
-CALL :CheckError "Create RevGLAccount"
+rem call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,RevGLAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
+rem CALL :CheckError "Create RevGLAccount"
 
 rem call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque>D:\TeamMohammadE2E\Test\prot.log 2>&1
 rem CALL :CheckError "Create PaymentCheque"
