@@ -3324,7 +3324,6 @@
     <EmbeddedResource Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.resx">
       <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
 
     <Compile Include="Migrations\202001050942321_VatType_New_Fields.cs" />
     <Compile Include="Migrations\202001050942321_VatType_New_Fields.Designer.cs">
