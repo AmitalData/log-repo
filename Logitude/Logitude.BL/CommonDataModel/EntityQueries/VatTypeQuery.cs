@@ -74,8 +74,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 Description = a.Description,
                                 LocalDescription = a.LocalDescription,
                                 ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+
                                 ReceivablesExternalId = a.ReceivablesExternalId,
                                 PayablesExternalId=a.PayablesExternalId,
+
+                             
+
                                 ExternalTAXItemId = a.ExternalTAXItemId,
                                 IsMultiPercentage = a.IsMultiPercentage,
                                 RecognizedPercentage = a.RecognizedPercentage,

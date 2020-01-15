@@ -2335,6 +2335,7 @@
     </Compile>
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
+    <Compile Include="ExternalAPIs\V1\APInvoiceCancellationController.cs" />
     <Compile Include="ExternalAPIs\V1\APInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceAdditionalDataController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />

@@ -3324,6 +3324,14 @@
       <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+
+    <Compile Include="Migrations\202001050942321_VatType_New_Fields.cs" />
+    <Compile Include="Migrations\202001050942321_VatType_New_Fields.Designer.cs">
+      <DependentUpon>202001050942321_VatType_New_Fields.cs</DependentUpon>
+    </Compile>
+  
+
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.resx">
@@ -3335,6 +3343,7 @@
     <EmbeddedResource Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.resx">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.resx">
       <DependentUpon>201912301120494_Mutaz_InterestReportLineByDate_UpdateFieldsFormat.cs</DependentUpon>
     </EmbeddedResource>
@@ -3424,6 +3433,11 @@
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
+ 
+    <EmbeddedResource Include="Migrations\202001050942321_VatType_New_Fields.resx">
+      <DependentUpon>202001050942321_VatType_New_Fields.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
