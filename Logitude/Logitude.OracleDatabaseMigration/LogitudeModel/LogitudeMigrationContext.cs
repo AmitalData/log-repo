@@ -934,6 +934,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<RequestType> RequestType { get; set; }
         public IDbSet<ApprovedProfession> ApprovedProfession { get; set; }
         public IDbSet<DeficitDecision> DeficitDecision { get; set; }
+
+        public IDbSet<SealCompletenes> SealCompletenes { get; set; }
         #endregion
 
         #region Webfreight Context
@@ -4092,7 +4094,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
             modelBuilder.Configurations.Add(new RequestTypeMap());
             modelBuilder.Configurations.Add(new DeficitDecisionMap());
-            
+            modelBuilder.Configurations.Add(new SealCompletenesMap());
+
             #endregion
 
             #region Accounting
