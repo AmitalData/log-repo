@@ -164,6 +164,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 PrimaryInvoiceCounterKey = declarationOrg.PrimaryInvoiceCounterKey,
                 ExcludeConsignment = declarationOrg.ExcludeConsignment,
                 IsClose = declarationOrg.IsClose,
+                AmendmentDontDisplayInList= true,
                 //AdditionalDocument ********************
                 IsAmendment = true,
                 AmendmentOriginalDeclartation = declarationOrg.Id,
