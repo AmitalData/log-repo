@@ -183,6 +183,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\ProcessingReasonDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RefundCustomerActivityTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SealCompletenesDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SeizureFactorTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SeizureMethodTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SiteTypeDetails.Generated.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="CloseTables\EnumGenerated\ProcessingReasonStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\RefundCustomerActivityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\RequestTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SealCompletenesStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SeizureFactorTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SeizureMethodTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SiteTypeStruct.Generated.cs" />
@@ -661,6 +663,7 @@
     <Compile Include="EntityDataMappings\Generated\RequiredGuaranteeTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReturnConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SalesTaxExemptionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SealCompletenesDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SeizureFactorTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SeizureMethodTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignatureTypeDataMapping.Generated.cs" />
@@ -803,6 +806,7 @@
     <Compile Include="EntityDataMappings\RequiredGuaranteeTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReturnConditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\SalesTaxExemptionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SealCompletenesDataMapping.cs" />
     <Compile Include="EntityDataMappings\SeizureFactorTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SeizureMethodTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignatureTypeDataMapping.cs" />
@@ -891,6 +895,7 @@
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\HazardousSubstanceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SealCompletenesQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\PendingByKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentQueryService.cs" />
     <Compile Include="EntityQueryServices\CourierDeclarationQueryService.cs" />
@@ -1378,6 +1383,7 @@
     <Compile Include="EntityUpdateServices\Generated\PointerLevelUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RefundCustomerActivityTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SealCompletenesUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SeizureFactorTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SeizureMethodTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SplitOrMergeReasonUpdateService.Generated.cs" />

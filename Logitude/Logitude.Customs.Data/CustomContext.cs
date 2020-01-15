@@ -552,6 +552,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SalesTaxExemptionTypeMap());
 	
+            modelBuilder.Configurations.Add(new SealCompletenesMap());
+	
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
 	
             modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
@@ -2566,6 +2568,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealCompletenes> SealCompleteness 
 	 {
 	      get; set;
 	 

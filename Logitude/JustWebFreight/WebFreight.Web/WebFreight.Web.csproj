@@ -1520,6 +1520,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequiredGuaranteeTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReturnConditionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SalesTaxExemptionTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SealCompletenesViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SeizureFactorTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SeizureMethodTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SignatureTypeViewsController.Generated.cs" />
@@ -2719,6 +2720,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RevaluationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RevaluationUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SealCompletenesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureFactorTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureMethodTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
