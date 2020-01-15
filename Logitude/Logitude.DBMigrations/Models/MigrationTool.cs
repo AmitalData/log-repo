@@ -523,26 +523,13 @@ namespace Logitude.DBMigrations.Models
         {
             if (DatabaseType.ToLower() == "oracle")
             {
-                return UnescapeScript(viewDefinition.OracleScript) + "\n\n";
+                string viewScript = UnescapeScript(viewDefinition.OracleScript) + "\n\n";
+                return viewScript;
             }
             else
             {
                 string viewScript = "EXEC('IF (OBJECT_ID(''" + "[" + viewDefinition.Schema + "].[" + viewDefinition.Name + "]" + "'', ''V'') IS NOT NULL) BEGIN DROP VIEW " + "[" + viewDefinition.Schema + "].[" + viewDefinition.Name + "]" + " END" + "');\n";
-
-                if(Regex.Matches(viewDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").Count > 0)
-                {
-                    foreach (var script in Regex.Split(viewDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").ToList())
-                    {
-                        viewScript += "EXEC('" + UnescapeScript(script.Trim()).Replace("'", "''") + "');" + "\n";
-                    }
-
-                    viewScript += "\n";
-                }
-                else
-                {
-                    viewScript += "EXEC('" + UnescapeScript(viewDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
-                }
-                
+                viewScript += "EXEC('" + UnescapeScript(viewDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
                 return viewScript;
             }
         }
@@ -557,21 +544,7 @@ namespace Logitude.DBMigrations.Models
             else
             {
                 string procedureScript = "EXEC('IF (OBJECT_ID(''" + "[" + procedureDefinition.Schema + "].[" + procedureDefinition.Name + "]" + "'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE " + "[" + procedureDefinition.Schema + "].[" + procedureDefinition.Name + "]" + " END" + "');\n";
-
-                if (Regex.Matches(procedureDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").Count > 0)
-                {
-                    foreach (var script in Regex.Split(procedureDefinition.SqlScript, @"\r{0,1}\nGO\r{0,1}\n").ToList())
-                    {
-                        procedureScript += "EXEC('" + UnescapeScript(script.Trim()).Replace("'", "''") + "');" + "\n";
-                    }
-
-                    procedureScript += "\n";
-                }
-                else
-                {
-                    procedureScript += "EXEC('" + UnescapeScript(procedureDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
-                }
-
+                procedureScript += "EXEC('" + UnescapeScript(procedureDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
                 return procedureScript;
             }
         }
