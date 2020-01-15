@@ -137,7 +137,7 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("בדיקה פיזית"
             , "PhysicalCheck",
             './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',
-            1100, 450, "190", null, null, null, null, true
+            1010, 450, "190", null, null, null, true
         ));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
 
