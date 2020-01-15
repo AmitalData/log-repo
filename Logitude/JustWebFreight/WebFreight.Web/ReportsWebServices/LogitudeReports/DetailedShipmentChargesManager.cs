@@ -257,6 +257,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                             myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
                             myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
+                            myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                            myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+                            
 
                             myRecord.LineTypeCode = "EFC";
                             myRecord.Payables = this.IsLocalCurrency ? myShipment.OpenPayablesInLocalCurrency : myShipment.OpenPayablesInProfitCurrency;
@@ -309,6 +312,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         myRecord.Direction = myShipment.DirectionName;
+                        myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                        myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -371,6 +376,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         myRecord.Direction = myShipment.DirectionName;
+                        myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                        myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -641,6 +648,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ETD = myShipment.MainCarriageETD;
                                     myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                     myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                    myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                    myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
 
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
@@ -714,6 +723,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ETD = myShipment.MainCarriageETD;
                                     myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                     myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                    myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                    myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
 
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
@@ -790,8 +801,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ETD = myShipment.MainCarriageETD;
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
 
-                                if(this.tenant == 1255)
+                                if (this.tenant == 1255)
                                 {
                                     if (this.IsLocalCurrency)
                                     {
@@ -916,6 +929,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ETD = myShipment.MainCarriageETD;
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
 
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
                                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoice, myRecord);

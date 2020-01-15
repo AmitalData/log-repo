@@ -129,5 +129,9 @@ namespace WebFreight.Web.DataProviders
 
         public string OriginCode { get; set; }
         public string DestinationCode { get; set; }
+
+        public string CountryOfOrigin { get; set; }
+        public string CountryOfDestination { get; set; }
+        public string Incoterm { get; set; }
     }
 }
