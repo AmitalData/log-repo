@@ -10,7 +10,8 @@ import { PhysicalCheckMenuButtonsHandler } from "../../../Customs/Components/Men
 import { PhysicalCheckWebService } from "../../../Customs/Services/WebServices/PhysicalCheckWebService";
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { DateTimeFormat } from "../../../Infrastructure/Utilities/DateTimeZone";
-import { DateTool } from "../../../Infrastructure/Tools";
+import { DateTool, AppTool } from "../../../Infrastructure/Tools";
+import { PhysicalCheckExtendedPMService } from "../../../Common/Services/ExtendedPMs/PhysicalCheckExtendedPMService";
 
 
  
@@ -26,13 +27,12 @@ export class EndPhysicalCheckComponent
     public DataContext: EndPhysicalCheckComponent = this;
     public EntityPM: PhysicalCheckPM;
     public ObjectTableName: string = "Customs.PhysicalCheck";
-    public openDate: string;
-    public limitDate: string;
+    public endDate: string;
 
  
     public id: string;
 
-//    _PhysicalCheckPMService: PhysicalCheckExtendedPMService = new PhysicalCheckExtendedPMService();
+    _PhysicalCheckPMService: PhysicalCheckExtendedPMService = new PhysicalCheckExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession; 
     constructor(private CD: ChangeDetectorRef) {
         super();
@@ -56,34 +56,11 @@ export class EndPhysicalCheckComponent
     OnMassageDisplayMethod() {
 
         if (this.MyCommunicationLogId != null) {
-           // this.getData(this.MyCommunicationLogId, this.MyCustomsMenuItem.MainInterfaceCode);
+            this.getData(this.MyCommunicationLogId, this.MyCustomsMenuItem.MainInterfaceCode);
         }
-        /*
-        this.UIProperties.SetEnabled("OpenDate", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("operationCode", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CheckId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("DeclarationNo", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CheckTypeName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("LimitDate", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("QueueTypeName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CargoTypeCode", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CheckSiteName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("StorageSiteName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CustomerName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("StatusMessageName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("OperationName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ContainerNubmer", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CargoIdentifierKey2", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CargoIdentifierKey1", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("CargoIdentifierTypeName", this.ObjectTableName, false);
-        */
-
-
-
     }
 
-    /*getData(id: string, InterfaceTypeCode: string) {
+    getData(id: string, InterfaceTypeCode: string) {
         this.CurrentSession.StartBusyIndicator("");
         var ary = [20, 30];
         var suppressHugeDataFeature: boolean = true;
@@ -96,24 +73,13 @@ export class EndPhysicalCheckComponent
             .subscribe((response: any) => {
                 this.EntityPM = response.Result;
                 this.CurrentSession.StopBusyIndicator();
-                if (this.EntityPM.OpenDate!= null) {
-                    var myFormats = DateTool.GetDateFormats(this.EntityPM.OpenDate);
-                    this.openDate = myFormats.DateString + " " + myFormats.ShortTimeString;
-                }
-                if (this.EntityPM.LimitDate!=null) {
-                    var myFormats = DateTool.GetDateFormats(this.EntityPM.LimitDate);
-                    this.limitDate = myFormats.DateString + " " + myFormats.ShortTimeString;
-                }
-              /*  if (this.CurrentSession != null && this.CurrentSession.CurrentWindow != null) {
-                    setTimeout(() => {
-                        this.CurrentSession.CurrentWindow.Title = "ddddddd";
-                        this.CD.detectChanges();
-                        console.log("CurrentSession.CurrentWindow");
-                    }, 20000);
-                
+                if (this.EntityPM.EndDate != null) {
+                    var myFormats = DateTool.GetDateFormats(this.EntityPM.EndDate);
+                    this.endDate = myFormats.DateString + " " + myFormats.ShortTimeString;
+                }   
 });
     }
-    */
+    
  
     get CheckId() { return this.EntityPM ? this.EntityPM.CheckId : null; }
     set CheckId(value: string) {
@@ -175,10 +141,18 @@ export class EndPhysicalCheckComponent
             this.EntityPM.CheckSiteName = value;
         }
     }
-    get endDate() { return this.openDate ? this.openDate : null; }
-   
+    public get PhysicalCheckNumberHeader() {
+        if (!AppTool.IsNullOrEmpty(this.CheckId)) {
+            return "סיום בדיקה פיזית מספר" + " " + this.CheckId;
+        }
+        return "סיום בדיקה פיזית";
+    }
+    get EndDate() { return this.endDate ? this.endDate : null; }
+
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {  
     }
-    
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
 
 }

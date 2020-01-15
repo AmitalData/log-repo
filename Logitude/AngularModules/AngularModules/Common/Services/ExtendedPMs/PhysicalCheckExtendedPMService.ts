@@ -49,4 +49,31 @@ export class PhysicalCheckExtendedPMService {
             return pmresponse;
         }).catch(ServiceHelper.HandleServiceError);
     }
+    GetClosedPhysicalCheck(mainInterfaceCode: string, communicationLogId: string, tenant: number, stepFilter: Array<number>, suppressHugeData?: boolean) {
+        var authHeader = new Headers();
+        var $stepFilter = "";
+        for (let a in stepFilter) {
+            if ($stepFilter) {
+                $stepFilter += ",";
+            }
+            $stepFilter += stepFilter[a];
+        }
+        var suppressHugeDataValue: boolean = false;
+        if (suppressHugeData) {
+            suppressHugeDataValue = true;
+        }
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(
+            // edit API 
+            this._apiUrl + '/GetPhysicalCheckRequest/' + '?mainInterfaceCode=' + mainInterfaceCode + '&communicationLogId=' + communicationLogId + '&tenant=' + tenant + '&stringStepFilter=' + $stepFilter + "&suppressHugeData=" + suppressHugeDataValue,
+
+            { headers: authHeader }
+        ).map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response.json();
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
 }
