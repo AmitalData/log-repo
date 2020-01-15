@@ -678,9 +678,9 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between MenuButtons and TextCode.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Delete Constraint between RuleConditionFields and objectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Fill objectfieldcode on RuleConditionFields.sql" />
-
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between ObjectFieldModifications and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on ObjectFieldModifications.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 15 [Rabaia] set FeatureId as NULL.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Delete Constraint between Restrictions and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Fill objectfieldcode on Restrictions.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on CustomerFieldsUpdateSettings.sql" />
@@ -689,11 +689,9 @@
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between AirlineMessagingRules and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill rulefieldcode on AirlineMessagingRules.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Maheera] Fill SearchFields of SLAHeaders Table.sql" />
-    <Content Include="Main Branch\2020\Day 06 [Rabaia] Fill FeatureUniqeCode From FeatureId.sql" />
-    <Content Include="Main Branch\2020\Day 05 [Rabaia] Delete Constraint between Features and FeatureRole and FeaturePackages.sql" />
-
-    <Content Include="Main Branch\2020\01 - 2020\Day05 [Abed] UpdateDocumentIdOnQuoationDocumentsFilings.sql" />
-
+    <Content Include="Main Branch\2020\01 - 2020\Day 06 [Rabaia] Fill FeatureUniqeCode From FeatureId.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 05 [Rabaia] Delete Constraint between Features and FeatureRole and FeaturePackages.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 05 [Abed] UpdateDocumentIdOnQuoationDocumentsFilings.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
