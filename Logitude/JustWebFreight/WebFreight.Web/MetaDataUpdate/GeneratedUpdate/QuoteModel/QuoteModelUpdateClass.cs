@@ -92,6 +92,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 		QuoteTemplateTextDesignUpdateClass  QuoteTemplateTextDesignUpdateClass = new QuoteTemplateTextDesignUpdateClass();
 		QuoteTotalVATUpdateClass  QuoteTotalVATUpdateClass = new QuoteTotalVATUpdateClass();
 		QuoteTypeUpdateClass  QuoteTypeUpdateClass = new QuoteTypeUpdateClass();
+		QuoteVATsTotalUpdateClass  QuoteVATsTotalUpdateClass = new QuoteVATsTotalUpdateClass();
 	
 		public void LoadObjectsTenantZero(IWebFreightContext context)
         {
@@ -206,6 +207,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   	   QuoteTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   QuoteVATsTotalUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
         }
    
 
@@ -254,6 +257,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   	   QuoteTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   QuoteVATsTotalUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
         }
 
 		public void CreateAllQueries()
@@ -300,6 +305,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	   	   QuoteTotalVATUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   QuoteTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   QuoteVATsTotalUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
         }
 
@@ -348,6 +355,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   	   QuoteTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   QuoteVATsTotalUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
         }
 
 		public void CreateAllTabs()
@@ -394,6 +403,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	   	   QuoteTotalVATUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   QuoteTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   QuoteVATsTotalUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
         }
 
@@ -442,6 +453,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   	   QuoteTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   QuoteVATsTotalUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
         }
 
 		public void CreateAllFeatures()
@@ -489,6 +502,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   	   QuoteTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   QuoteVATsTotalUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
         }
 		public void CreateAdditionalTextCodes()
         {
@@ -534,6 +549,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	   	   QuoteTotalVATUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   QuoteTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   QuoteVATsTotalUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
         }
 		public void CreateAllMenuButtons()
@@ -581,6 +598,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   	   QuoteTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   QuoteVATsTotalUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
         }
 
 		public void CreateAllClosedTables()
@@ -612,6 +631,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	   
 	   	   QuoteTypeUpdateClass.FillQuoteType();
 	
+	   
         }
 
    	 

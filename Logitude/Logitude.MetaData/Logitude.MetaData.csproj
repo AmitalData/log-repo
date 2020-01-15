@@ -187,6 +187,7 @@
     <None Include="EntityFiles\CommonDataModel\CardExternalCodeByCurrency.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\Carrier.lxml" />
     <None Include="EntityFiles\CommonDataModel\ChargesExternalAccountsByProduct.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -250,7 +251,9 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\FilingInbox.lxml" />
     <None Include="EntityFiles\CommonDataModel\FilingInboxAttachmentLog.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\OBLType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteVATsTotal.lxml" />
     <None Include="EntityFiles\CommonDataModel\RegistryDateType.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportsTemplate.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportsTemplatesVersion.lxml" />

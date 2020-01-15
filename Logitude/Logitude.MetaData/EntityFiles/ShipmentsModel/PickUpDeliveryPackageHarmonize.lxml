@@ -24,7 +24,7 @@
   CustomFieldsCount="0"
   HasCustomFields="false"
   InActive="false"
-  ParentTableName="Shipment"
+  ParentTableName="ShipmentPickUpDeliveryPackage"
   SearchFields="&quot;PickUpDeliveryPackageHarmonize,PickUpDeliveryPackageHarmonizes,,Id,&quot;"
   IsSaveButtonVisible="true"
   EnableSecurity="true"

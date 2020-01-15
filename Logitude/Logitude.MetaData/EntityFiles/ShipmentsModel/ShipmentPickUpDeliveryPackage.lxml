@@ -1964,15 +1964,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;ShipmentPickUpDeliveryPackageHeaderScreen&quot;"
-    ObjectTableName="&quot;ShipmentPickUpDeliveryPackage&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

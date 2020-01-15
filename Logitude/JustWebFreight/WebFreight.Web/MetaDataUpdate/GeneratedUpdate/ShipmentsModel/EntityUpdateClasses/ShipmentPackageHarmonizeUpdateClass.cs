@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Package Harmonize",
-			      				    Code =  "b00e",
+			      				    Code =  "c080",
 			      				    Name =  "ShipmentPackageHarmonize",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",

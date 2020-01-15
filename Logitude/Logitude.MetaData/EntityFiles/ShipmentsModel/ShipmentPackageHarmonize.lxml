@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package Harmonize&quot;"
-  Code="&quot;b00e&quot;"
+  Code="&quot;c080&quot;"
   Name="&quot;ShipmentPackageHarmonize&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
