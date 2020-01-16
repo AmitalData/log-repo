@@ -172,7 +172,7 @@
                 <table *ngIf="EntityPM && !IsNoAmendmentsMsgVisible" >
 
                     <!--Disble Alert-->
-                    <tr *ngIf="IsDisplayOnly">
+                    <tr *ngIf="IsDisplayOnly" style="height: 28px;">
                         <td colspan="3">
                             <div style="width: 100%;text-align:center">
                                 <div class="DisbleBox">
@@ -257,7 +257,7 @@
                                 </td>
 
                                 <td>
-                                    <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'" (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'"  [IsDisabled] ="IsAmendmentDeficitInitiatedEnabled" (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
                                 <!--<td style="width:7px"></td>-->
 

@@ -92,6 +92,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionReasonName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AcceptanceStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentStatusName);
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
             Card customerCard = CardRepository.GetSingleCard(entityPOCO.CustomerId, entityPOCO.Tenant, true);
@@ -109,6 +110,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.TransportModeName = transportMode.Name;
                
             }
+
+
+            AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(entityPOCO.Tenant);
+            AmendmentStatus amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus);
+            if (amendmentStatus != null)
+            {
+                entityPM.AmendmentStatusName = amendmentStatus.Name;
+
+            }
+
 
             if (!string.IsNullOrEmpty(entityPOCO.DepartmentId))
             {
