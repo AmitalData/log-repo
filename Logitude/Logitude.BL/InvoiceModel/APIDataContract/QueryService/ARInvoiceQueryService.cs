@@ -1,11 +1,15 @@
-﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+﻿using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.CommonDataModel.APIDataContract;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Microsoft.Practices.Unity;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -31,6 +35,18 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     
                 }
             }
+        }
+
+        public void SetBillToGLAccountId(ARInvoicePM entity)
+        {
+           IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+           Logitude.Accounting.Def.EntityPMs.GLAccountPM gLAccount = glAccountQuery.GetGLAccountByDisplayNumber(entity.BillToGLAccountId, entity.Tenant);
+            if(gLAccount!= null)
+            {
+
+                entity.BillToGLAccountId = gLAccount.Id;
+            }
+
         }
 
         public ARInvoicePM UpdateCreditInvoice(ARInvoicePM invoice, int tenant)

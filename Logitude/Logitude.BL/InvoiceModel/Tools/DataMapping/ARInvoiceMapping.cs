@@ -15,6 +15,10 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using System.Linq;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -210,6 +214,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
             entity.CreatedByPartner = entityPM.CreatedByPartner;
+            if(entityPM.BillToGLAccountId == null)
+            entityPM.BillToGLAccountId = GetBillToGLAccountId(entity.BillTo, entityPM.Tenant);
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)
@@ -275,6 +281,21 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ExchangeRate = entityPM.ExchangeRate;
             entity.PaymentAmount = entityPM.PaymentAmount;
 
+        }
+
+        public static string GetBillToGLAccountId(Card billTo,int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM billToAccount = glAccountQuery.GetSingleGLAccountPM(billTo.Id, tenant);
+            if(billToAccount != null)
+            {
+                return billTo.Id;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
     }
 }
