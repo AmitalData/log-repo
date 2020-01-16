@@ -394,7 +394,7 @@ namespace Logitude.DBMigrations.Models
                         
                         foreach (var command in commands)
                         {
-                            oracleCommand.CommandText = (command.Substring(command.Length - 1) == ";" ? command : command + ";");
+                            oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
                             oracleCommand.ExecuteNonQuery();
                         }
                     }
