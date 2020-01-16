@@ -441,7 +441,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     foreach (RoleFeature item in allChildFeatures)
                     {
-                        RoleFeature myParentItem = allRoleFeatures.Where(d => d.FeatureId == item.FeatureId).FirstOrDefault();
+                        RoleFeature myParentItem = allRoleFeatures.Where(d => d.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
 
                         if (item.IsDeleted)
                         {
@@ -477,7 +477,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     foreach (PackageFeature item in allPackageFeatures)
                     {
-                        FeaturePM myFeature = allFeatures.Where(f => f.Id == item.FeatureId).FirstOrDefault();
+                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                         if (myFeature != null)
                         {
                             if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
@@ -493,7 +493,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     foreach (RoleFeature item in allRoleFeatures)
                     {
-                        FeaturePM myFeature = allFeatures.Where(f => f.Id == item.FeatureId).FirstOrDefault();
+                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                         if (myFeature != null)
                         {
                             if (!myResult.Where(d => d.Id == myFeature.Id).Any())
@@ -585,7 +585,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     foreach (RoleFeature item in allChildFeatures)
                     {
-                        RoleFeature myParentItem = allRoleFeatures.Where(d => d.FeatureId == item.FeatureId).FirstOrDefault();
+                        RoleFeature myParentItem = allRoleFeatures.Where(d => d.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
 
                         if (item.IsDeleted)
                         {
@@ -620,10 +620,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     foreach (PackageFeature item in allPackageFeatures)
                     {
-                        FeaturePM myFeature = allFeatures.Where(f => f.Id == item.FeatureId && f.ObjectTableId == ObjectTableId).FirstOrDefault();
+                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode && f.ObjectTableId == ObjectTableId).FirstOrDefault();
                         if (myFeature != null)
                         {
-                            if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
+                            if (!allAllowedPackageFeatures.Where(d => d.FeatureUniqeCode == myFeature.FeatureUniqeCode).Any())
                             {
                                 allAllowedPackageFeatures.Add(myFeature);
                             }
