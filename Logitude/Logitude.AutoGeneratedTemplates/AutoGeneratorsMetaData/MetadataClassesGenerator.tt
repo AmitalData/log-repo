@@ -207,7 +207,7 @@ namespace <#= UpdateClassnamespacestring #>
 					&& p.Name != "HasCompactSearch"  && p.Name != "ApplyDefaultValues"  && p.Name != "HasCustomValidator" && p.Name != "ApplyOnPropertyChangedCode" && p.Name != "HasApiHelper" && p.Name != "SortingByDirection"
 					  && p.Name != "DescriptionTextCodeId" && p.Name != "DownloadToExcelFeatureCode"
 					  && p.Name != "Code1"  && p.Name != "Name1" && p.Name != "Code2"  && p.Name != "Name2"
-					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "NoDefaultFeatures" && p.Name != "IsMetadataOnlyTable")
+					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "HeaderScreenCode" && p.Name != "NoDefaultFeatures" && p.Name != "IsMetadataOnlyTable")
                 {
 				  #>
 				    <#= p.Name #> =  <#= p.Value #>,
@@ -1169,6 +1169,8 @@ private void WriteAddScreenMethod(XElement entity,XElement ScreenAtt,string TblN
 		#>
 	
 		    <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectTable.HeaderScreenId = <#= screenClassName #>.Id;
+		    <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectTable.HeaderScreenCode = <#= screenClassName #>.Code;
+
 	   		<#+
         }
 }
@@ -1185,7 +1187,7 @@ private void WriteAddScreenFieldMethod(XElement entity,XElement ScreenField,int 
 
 #>
 
-            ScreenField <#= TblName.Trim('"').Replace(" ","").Replace(".","") #><#= ScreenName.Trim('"').Replace(" ","").Replace(".","") #>ScreenField<#= index #> = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = <#= Column #>, Row = <#= Row #>, ObjectFieldId = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().Id, ScreenId = <#= screenClassName #>.Id, ObjectFieldCode = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField <#= TblName.Trim('"').Replace(" ","").Replace(".","") #><#= ScreenName.Trim('"').Replace(" ","").Replace(".","") #>ScreenField<#= index #> = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = <#= Column #>, Row = <#= Row #>, ObjectFieldId = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().Id, ScreenId = <#= screenClassName #>.Id,ScreenCode = <#= screenClassName #>.Code, ObjectFieldCode = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          <#+
 }
 
@@ -1417,7 +1419,7 @@ namespace <#= UpdateClassnamespacestring #>
 			TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			tenantAdvancedFilters = advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldCode, a => a);
 			tenantScreens = screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-			tenantScreenFields = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenId + d.ObjectFieldCode);
+			tenantScreenFields = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldCode);
 			TenantObjectTableTabs = objectTableTabsRepository.GetObjectTableTabsByTenant(0).ToDictionary(d => d.Code, a => a);
 			tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			tenantMenuButtons = menuButtonRepository.GetMenuButtonsByTenant(0).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);

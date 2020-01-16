@@ -764,6 +764,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen ObjectFieldObjectFieldHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ObjectField.HeaderScreen", Name = "ObjectFieldHeaderScreen", ObjectTableId = ObjectFieldObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    ObjectFieldObjectTable.HeaderScreenId = ObjectFieldObjectFieldHeaderScreenScreen0.Id;
+		    ObjectFieldObjectTable.HeaderScreenCode = ObjectFieldObjectFieldHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

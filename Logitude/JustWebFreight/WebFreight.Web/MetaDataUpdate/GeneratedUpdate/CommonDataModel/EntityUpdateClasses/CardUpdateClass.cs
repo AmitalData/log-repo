@@ -3679,6 +3679,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen CardCardHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Card.HeaderScreen", Name = "CardHeaderScreen", ObjectTableId = CardObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    CardObjectTable.HeaderScreenId = CardCardHeaderScreenScreen0.Id;
+		    CardObjectTable.HeaderScreenCode = CardCardHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

@@ -791,11 +791,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen PriceStepPriceStepsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PriceSteps.HeaderScreen", Name = "PriceStepsHeaderScreen", ObjectTableId = PriceStepObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PriceStepPriceStepsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PriceStepPriceStepsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PriceStepPriceStepsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PriceStepPriceStepsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PriceStepObjectTable.HeaderScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id;
+		    PriceStepObjectTable.HeaderScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

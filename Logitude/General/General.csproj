@@ -652,6 +652,10 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Rabaia] Delete Constraint between Features and Queries.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Fill TextCodeCode on Translations.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between Translations and TextCode.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Fill objectfieldcode on Restrictions - Copy.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ObjectTable and Screen.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ScreenModifications and Screen.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ScreenFields and Screen.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between CustomerFieldsUpdateSettings and objectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Fill objectfieldcode on ObjectFieldValidations.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Delete Constraint between ObjectFieldValidations and objectFields.sql" />
@@ -682,7 +686,9 @@
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on ObjectFieldModifications.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 15 [Rabaia] set FeatureId as NULL.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Delete Constraint between Restrictions and objectFields.sql" />
-    <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Fill objectfieldcode on Restrictions.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill HeaderScreenCode on ObjectTable.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill ScreenCode on ScreenModifications.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill ScreenCode on ScreenFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on CustomerFieldsUpdateSettings.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Wesam] Fill triggerfieldcode on ObjectTableRules.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Wesam] Delete Constraint between ObjectTableRules and objectFields.sql" />

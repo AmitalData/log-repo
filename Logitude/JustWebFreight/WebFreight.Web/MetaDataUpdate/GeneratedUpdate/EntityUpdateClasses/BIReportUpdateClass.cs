@@ -1170,6 +1170,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         Screen BIReportBIReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BIReport.HeaderScreen", Name = "BIReportHeaderScreen", ObjectTableId = BIReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    BIReportObjectTable.HeaderScreenId = BIReportBIReportHeaderScreenScreen0.Id;
+		    BIReportObjectTable.HeaderScreenCode = BIReportBIReportHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

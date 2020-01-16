@@ -15,6 +15,7 @@ import {InfraSettings} from '../../Utilities/InfraSettings';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {SessionInfo} from '../../Utilities/SessionInfo';
 import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
+import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
 import {TraceEventPM} from '../../EntityPMs/TraceEventPM';
 
@@ -181,20 +182,35 @@ export class TraceEventPMService {
             
             entityPM = new TraceEventPM();
         }
-           
+
+		var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
             var jsonPMKeys = Object.keys(jsonPM);
 
             for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties") {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
                 var property = jsonPMKeys[key];
+				
+			  if(customFields.indexOf(property) > -1)
+                {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
                 entityPM[property] = jsonPM[property];
+            }
+                 
             }
 			
 			 
-            entityPM.IsDirty = false;
+            
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
@@ -204,7 +220,7 @@ export class TraceEventPMService {
 
             entityPM.OldEntityPM = null;
         }
-
+		entityPM.IsDirty = false;
         return entityPM;
     }
 

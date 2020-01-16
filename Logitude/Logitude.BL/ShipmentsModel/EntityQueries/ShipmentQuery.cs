@@ -4151,6 +4151,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ReleasingAgentNote = s.ReleasingAgentCard != null ? s.ReleasingAgentCard.Notes : null,
                                                         ValueOfGoods = s.ValueOfGoods,
                                                         ManifestLastSharingDate = s.ManifestLastSharingDate,
+                                                        SpecialServicesTypeId = s.SpecialServicesTypeId,
                                                     };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();

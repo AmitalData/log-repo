@@ -340,6 +340,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen PartnerTypePartnerTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PartnerType.HeaderScreen", Name = "PartnerTypeHeaderScreen", ObjectTableId = PartnerTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    PartnerTypeObjectTable.HeaderScreenId = PartnerTypePartnerTypeHeaderScreenScreen0.Id;
+		    PartnerTypeObjectTable.HeaderScreenCode = PartnerTypePartnerTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

@@ -400,19 +400,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen RegionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Region.HeaderScreen", Name = "Header Screen", ObjectTableId = RegionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField RegionRegionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionHeaderScreenScreen0.Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RegionRegionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionHeaderScreenScreen0.Id,ScreenCode = RegionHeaderScreenScreen0.Code, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    RegionObjectTable.HeaderScreenId = RegionHeaderScreenScreen0.Id;
+		    RegionObjectTable.HeaderScreenCode = RegionHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen RegionGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Region.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = RegionObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField RegionRegionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RegionRegionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RegionRegionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RegionRegionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RegionRegionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RegionRegionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = RegionGeneralTabScreenScreen1.Id,ScreenCode = RegionGeneralTabScreenScreen1.Code, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

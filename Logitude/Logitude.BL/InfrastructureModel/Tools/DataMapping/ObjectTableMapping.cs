@@ -62,6 +62,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.IsTabsHidden = objectTablePM.IsTabsHidden;
             objectTable.DescriptionTextCodeCode = objectTablePM.DescriptionTextCodeCode;
             objectTable.NewButtonTextCodeCode = objectTablePM.NewButtonTextCodeCode;
+            objectTable.HeaderScreenCode = objectTablePM.HeaderScreenCode;
+
         }
     }
 }

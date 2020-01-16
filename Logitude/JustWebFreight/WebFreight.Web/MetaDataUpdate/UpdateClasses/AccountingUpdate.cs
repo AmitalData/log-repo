@@ -3208,7 +3208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             screenFieldsRepository = new ScreenFieldsRepository(objectContext);
             screensRepository = new ScreensRepository(objectContext);
             Dictionary<string, Screen> tenantScreens = screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            Dictionary<string, ScreenField> tenantScreenField = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenId + d.ObjectFieldId);
+            Dictionary<string, ScreenField> tenantScreenField = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldId);
 
             BuildChartOfAccountScreen(tenantScreens, tenantScreenField);
             BuildGLAccountScreen(tenantScreens, tenantScreenField);
@@ -3234,10 +3234,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             Screen headerScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChartOfAccount.HeaderScreen", Name = "Header Screen", ObjectTableId = chartOfAccountObject.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
 
 
-            ScreenField screenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = codeField.Id, ScreenId = headerScreen.Id, Tenant = 0 }, screenFieldsRepository, tenantScreenFields);
-            ScreenField screenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = englishNameField.Id, ScreenId = headerScreen.Id, Tenant = 0 }, screenFieldsRepository, tenantScreenFields);
+            ScreenField screenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = codeField.Id, ScreenCode = headerScreen.Code, Tenant = 0 }, screenFieldsRepository, tenantScreenFields);
+            ScreenField screenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = englishNameField.Id, ScreenCode = headerScreen.Code, Tenant = 0 }, screenFieldsRepository, tenantScreenFields);
 
-            chartOfAccountObject.HeaderScreenId = headerScreen.Id;
+            chartOfAccountObject.HeaderScreenCode = headerScreen.Code;
             #endregion
 
         }
@@ -3304,38 +3304,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
           
 
             //general tab
-            ScreenField JournalCreateDateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalCreateDate.Id, Row = 0, ScreenId = generalTabScreen.Id, Tenant = 0,}, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalCreatedByScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalCreateBy.Id, Row = 0, ScreenId = generalTabScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalUpdateDateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalUpdateDate.Id, Row = 1, ScreenId = generalTabScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalUpdatedByScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalUpdateBy.Id, Row = 1, ScreenId = generalTabScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalApproveDateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalApproveDate.Id, Row = 2, ScreenId = generalTabScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalApprovedByScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalApprovedBy.Id, Row = 2, ScreenId = generalTabScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalCreateDateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalCreateDate.Id, Row = 0, ScreenCode = generalTabScreen.Code, Tenant = 0,}, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalCreatedByScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalCreateBy.Id, Row = 0, ScreenCode = generalTabScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalUpdateDateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalUpdateDate.Id, Row = 1, ScreenCode = generalTabScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalUpdatedByScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalUpdateBy.Id, Row = 1, ScreenCode = generalTabScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalApproveDateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalApproveDate.Id, Row = 2, ScreenCode = generalTabScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalApprovedByScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalApprovedBy.Id, Row = 2, ScreenCode = generalTabScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
             
             //==============Header screen===========================
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Journal.HeaderScreen", Name = "Header Screen", ObjectTableId = JournalObject.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
 
             //col1
-            ScreenField JournalNumberHeaderScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalNumber.Id, Row = 0, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalCreatedDateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalCreateDate.Id, Row = 1, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalNumberHeaderScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalNumber.Id, Row = 0, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalCreatedDateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, ObjectFieldId = JournalCreateDate.Id, Row = 1, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
             //col2
-            ScreenField JournalStatusHeaderScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalStatus.Id, Row = 0, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalcreatedbyScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalCreateByName.Id, Row = 1, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalStatusHeaderScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalStatus.Id, Row = 0, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalcreatedbyScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, ObjectFieldId = JournalCreateByName.Id, Row = 1, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
             //col3
-            ScreenField JournalOriginalHeaderScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, ObjectFieldId = JournalOriginal.Id, Row = 0, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalapprovedateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, ObjectFieldId = JournalApproveDate.Id, Row = 1, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalOriginalHeaderScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, ObjectFieldId = JournalOriginal.Id, Row = 0, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalapprovedateScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, ObjectFieldId = JournalApproveDate.Id, Row = 1, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
             //col4
-            ScreenField JournalReferenceScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, ObjectFieldId = JournalAccountingEntityReference.Id, Row = 0, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalJournalAccountingEntityNameFild = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, ObjectFieldId = JournalAccountingEntityName.Id, Row = 1, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalReferenceScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, ObjectFieldId = JournalAccountingEntityReference.Id, Row = 0, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalJournalAccountingEntityNameFild = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, ObjectFieldId = JournalAccountingEntityName.Id, Row = 1, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
             //col5
-            ScreenField JournalexNumberScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, ObjectFieldId = JournalexNumberField.Id, Row = 0, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-            ScreenField JournalexSystemScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, ObjectFieldId = JournalexSystemField.Id, Row = 1, ScreenId = HeaderScreen.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalexNumberScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, ObjectFieldId = JournalexNumberField.Id, Row = 0, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField JournalexSystemScreenField = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, ObjectFieldId = JournalexSystemField.Id, Row = 1, ScreenCode = HeaderScreen.Code, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 
 
-            JournalObject.HeaderScreenId = HeaderScreen.Id;
+            JournalObject.HeaderScreenCode = HeaderScreen.Code;
 
             objectContext.SaveChanges();
         }

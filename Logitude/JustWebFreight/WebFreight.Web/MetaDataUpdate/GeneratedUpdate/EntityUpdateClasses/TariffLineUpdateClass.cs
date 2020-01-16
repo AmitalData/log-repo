@@ -4345,6 +4345,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         Screen TariffLineTariffLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffLine.HeaderScreen", Name = "TariffLineHeaderScreen", ObjectTableId = TariffLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    TariffLineObjectTable.HeaderScreenId = TariffLineTariffLineHeaderScreenScreen0.Id;
+		    TariffLineObjectTable.HeaderScreenCode = TariffLineTariffLineHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

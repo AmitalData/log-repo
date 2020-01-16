@@ -152,6 +152,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen GeneralGeneralHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "General.HeaderScreen", Name = "GeneralHeaderScreen", ObjectTableId = GeneralObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    GeneralObjectTable.HeaderScreenId = GeneralGeneralHeaderScreenScreen0.Id;
+		    GeneralObjectTable.HeaderScreenCode = GeneralGeneralHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
