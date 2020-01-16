@@ -360,12 +360,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	    public void FillSharedLogisticsInvitationStatus()
         { 
-            var repo = new SharedLogisticsInvitationStatusRepository(0);
-            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
-            new FillCloseTables().FillCloseTable<
-                                SharedLogisticsInvitationStatus,
-                                Logitude.BL.InfrastructureModel.SharedLogisticsInvitationStatusDetails,
-                                SharedLogisticsInvitationStatusRepository>(repo, dic);
+            //var repo = new SharedLogisticsInvitationStatusRepository(0);
+            //var dic =repo.GetAll().ToDictionary(rec => rec.Code.ToString(), rec => rec);
+            //new FillCloseTables().FillCloseTable<
+            //                    SharedLogisticsInvitationStatus,
+            //                    Logitude.BL.InfrastructureModel.SharedLogisticsInvitationStatusDetails,
+            //                    SharedLogisticsInvitationStatusRepository>(repo, dic);
         }
 
 	    
