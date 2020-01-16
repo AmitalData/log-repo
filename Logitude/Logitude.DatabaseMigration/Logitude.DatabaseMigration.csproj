@@ -1951,6 +1951,8 @@
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+    </EmbeddedResource>
     <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs" />
     <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.Designer.cs">
       <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
