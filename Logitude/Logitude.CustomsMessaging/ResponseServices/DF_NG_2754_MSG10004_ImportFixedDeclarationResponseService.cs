@@ -137,14 +137,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var context = CustomContext.GetContext(tenant);
              DeclarationRepository declarationRepository = new DeclarationRepository(context);
+                var myQueryService = new DeclarationQueryService(context);
 
-            var declarationOrg = declarationRepository.GetSingleDeclarationByNumber(GetValueIDType(declaration.ID), tenant);
+                var declarationOrg = myQueryService.GetDeclarationsByIds(new List<string>{ GetValueIDType(declaration.ID)}, tenant).FirstOrDefault();
                 if(declarationOrg== null)
                 {
-                      declarationOrg = declarationRepository.GetSingleDeclarationById(idOrg, tenant);
+                      declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
 
                 }
-                decIdOrg = declarationOrg.Id;
+
+ 
+                 decIdOrg = declarationOrg.Id;
             isFromImporter = FromImporter;
 
 
@@ -169,6 +172,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 IsAmendment = true,
                 AmendmentOriginalDeclartation = declarationOrg.Id,
                 Consignments = GetConsignments(declaration , tenant),
+                LoadingFactor =declarationOrg.LoadingFactor,
+                DealValue=declarationOrg.DealValue,
+                CIFValue =declarationOrg.CIFValue,
+                TotalTax = declarationOrg.TotalTax,
+                DealValueWithFactor = declarationOrg.DealValueWithFactor,
+                TaxationDateTime= declarationOrg.TaxationDateTime,
+                DealValueWithoutFactor = declarationOrg.DealValueWithoutFactor,
                 //= new List<ConsignmentPM> () {
                 //    new ConsignmentPM() {
 
@@ -190,7 +200,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             }
-            declarationPM.DeclarationTaxes = GetDeclarationTaxesPM(declaration);
 
             if (declaration.DMExtensions != null)
             {
@@ -221,9 +230,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
            var declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
 
+            declarationPM.DeclarationTaxes = GetDeclarationTaxesPM(declaration  , declarationOrg , declarationId);
 
 
-            declarationPM.SupplierInvoices = GetSupplierInvoices(declaration, tenant, context , declarationId );
+            declarationPM.SupplierInvoices = GetSupplierInvoices(declaration, tenant, context , declarationId , declarationOrg);
             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             declarationPM.Consignments.ForEach(x => x.ChangeSetOp = ChangeSetOperation.None);
     //         DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), declarationPM.Tenant);
@@ -558,7 +568,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
         }
-        private List<SupplierInvoicePM> GetSupplierInvoices(Declaration declaration , int tenant, ICustomContext context , string declarationId )
+        private List<SupplierInvoicePM> GetSupplierInvoices(Declaration declaration , int tenant, ICustomContext context , string declarationId , DeclarationPM declarationPMOrg )
         {
             List<SupplierInvoicePM> supplierInvoicePMs = new List<SupplierInvoicePM>();
 
@@ -573,8 +583,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     AccountTypeCode = GetValueCodeType(item.Invoice.TypeCode),
                   DeclarationId = declarationId,
                   Tenant= tenant,
- 
+                   
                 };
+                supplierInvoicePM.ExchangeRate = declarationPMOrg.SupplierInvoices.FirstOrDefault(x=>x.SequenceNumeric == supplierInvoicePM.SequenceNumeric).ExchangeRate;
                   if (item.Invoice.IssueDateTime!=null)  supplierInvoicePM.IssueDate = Convert.ToDateTime(item.Invoice.IssueDateTime);
 
                 if (item.Invoice.DMExtensions != null)
@@ -599,8 +610,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
    
                 supplierInvoicePM.SupplierInvoiceModifications = GetSupplierInvoiceModifications(item , ref supplierInvoicePM , declaration , declarationId, tenant);
 
+                var SupplierInvoicePMOrg = declarationPMOrg.SupplierInvoices.FirstOrDefault(x => x.SequenceNumeric == supplierInvoicePM.SequenceNumeric);
 
-                supplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItems(item , declaration , declarationId , tenant ,supplierInvoicePM,context);
+             supplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItems(item , declaration , declarationId , tenant ,supplierInvoicePM,context , SupplierInvoicePMOrg);
 
  
                 //InsuranceAmount *****
@@ -611,13 +623,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return supplierInvoicePMs;
         }
 
-        private List<SupplierInvoiceItemPM> GetSupplierInvoiceItems(DeclarationGoodsShipment item , Declaration declaration , string declarationId, int tenant , SupplierInvoicePM supplierInvoicePM , ICustomContext context)
+        private List<SupplierInvoiceItemPM> GetSupplierInvoiceItems(DeclarationGoodsShipment item , Declaration declaration , string declarationId, int tenant , SupplierInvoicePM supplierInvoicePM , ICustomContext context , SupplierInvoicePM supplierInvoicePMPMOrg)
         {
             List<SupplierInvoiceItemPM> supplierInvoiceItemPMs = new List<SupplierInvoiceItemPM>();
 
             foreach (var governmentAgencyGoodsItem in item.GovernmentAgencyGoodsItem)
             {
                 SupplierInvoiceItemPM supplierInvoiceItemPM = new SupplierInvoiceItemPM();
+                //SupplierInvoiceItemPM supplierInvoiceItemPMOrg = new SupplierInvoiceItemPM();
+
+                //supplierInvoiceItemPMOrg = declarationPMOrg.SupplierInvoices.FirstOrDefault(x=>x.DeclarationId == )
+
                 supplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
                 supplierInvoiceItemPM.DeclarationId = declarationId;
                 supplierInvoiceItemPM.SequenceNumeric =(int)governmentAgencyGoodsItem.SequenceNumeric;
@@ -815,15 +831,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //AdditionalDocument**********
                         supplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsMods(governmentAgencyGoodsItem , declaration , declarationId, tenant);
 
-               
 
 
-        
 
+                SupplierInvoiceItemPM supplierInvoiceItemPMOrg = supplierInvoicePMPMOrg.SupplierInvoiceItems.FirstOrDefault(x => x.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric);
+                if(supplierInvoiceItemPMOrg!= null)
+                {
+                    supplierInvoiceItemPM.SupplierInvoiceItemTaxes = supplierInvoiceItemPMOrg.SupplierInvoiceItemTaxes;
+
+                    foreach (var supplierInvoiceItemTax in supplierInvoiceItemPM.SupplierInvoiceItemTaxes)
+                    {
+                        supplierInvoiceItemTax.ChangeSetOp = ChangeSetOperation.Insert;
+                        supplierInvoiceItemTax.DeclarationId = supplierInvoiceItemPM.DeclarationId;
+                        
+                    }
+                }
 
 
                 supplierInvoiceItemPMs.Add(supplierInvoiceItemPM);
             }
+
+
 
             return supplierInvoiceItemPMs;
         }
@@ -939,7 +967,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
 
             DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
-
+         
             //var mySupplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant); 
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
@@ -2886,14 +2914,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private List<DeclarationTaxPM> GetDeclarationTaxesPM(Declaration declaration)
+        private List<DeclarationTaxPM> GetDeclarationTaxesPM(Declaration declaration, DeclarationPM declarationPMOrg , string declarationId)
         {
             var declarationTaxPMList = new List<DeclarationTaxPM>();
 
             if (declaration.DutyTaxFee == null)
             {
-                return declarationTaxPMList;
-            }
+                foreach (var item in declarationPMOrg.DeclarationTaxes)
+                {
+                    item.ChangeSetOp = ChangeSetOperation.Insert;
+                    item.DeclarationId = declarationId;
+                    
+                }
+                return declarationPMOrg.DeclarationTaxes;
+             }
 
             foreach (var dutyTaxFee in declaration.DutyTaxFee)
             {
