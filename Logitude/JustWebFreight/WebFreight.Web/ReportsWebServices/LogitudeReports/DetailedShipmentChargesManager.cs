@@ -16,6 +16,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -258,11 +259,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                             myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                             myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
-                            myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
-                            myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
-                            myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
-                            
-
+                            myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;                            
                             myRecord.LineTypeCode = "EFC";
                             myRecord.Payables = this.IsLocalCurrency ? myShipment.OpenPayablesInLocalCurrency : myShipment.OpenPayablesInProfitCurrency;
                             myRecord.LongMaster = longMaster;
@@ -275,6 +272,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Consignee = myShipment.ConsigneeName;
                             myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                             myRecord.Direction = myShipment.DirectionName;
+
+                            if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
+                            {
+                                if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                                {
+                                    Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageFromAddressId).FirstOrDefault();
+                                    if (myAddress != null)
+                                    {
+                                        Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                        if (myCountry != null)
+                                        {
+                                            myRecord.CountryOfOrigin = myCountry.EnglishName;
+                                        }
+                                    }
+                                }
+
+                                if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                                {
+                                    Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageToAddressId).FirstOrDefault();
+                                    if (myAddress != null)
+                                    {
+                                        Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                        if (myCountry != null)
+                                        {
+                                            myRecord.CountryOfDestination = myCountry.EnglishName;
+                                        }
+                                    }
+                                }
+                            }
+
+                            else
+                            {
+                                myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+                            }
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
@@ -324,8 +356,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         myRecord.Direction = myShipment.DirectionName;
-                        myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
-                        myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+
+                        if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
+                        {
+                            if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                            {
+                                Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageFromAddressId).FirstOrDefault();
+                                if (myAddress != null)
+                                {
+                                    Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                    if (myCountry != null)
+                                    {
+                                        myRecord.CountryOfOrigin = myCountry.EnglishName;
+                                    }
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                            {
+                                Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageToAddressId).FirstOrDefault();
+                                if (myAddress != null)
+                                {
+                                    Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                    if (myCountry != null)
+                                    {
+                                        myRecord.CountryOfDestination = myCountry.EnglishName;
+                                    }
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                            myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+                        }
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -398,8 +463,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         myRecord.Direction = myShipment.DirectionName;
-                        myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
-                        myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+
+                        if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
+                        {
+                            if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                            {
+                                Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageFromAddressId).FirstOrDefault();
+                                if (myAddress != null)
+                                {
+                                    Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                    if (myCountry != null)
+                                    {
+                                        myRecord.CountryOfOrigin = myCountry.EnglishName;
+                                    }
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                            {
+                                Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageToAddressId).FirstOrDefault();
+                                if (myAddress != null)
+                                {
+                                    Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                    if (myCountry != null)
+                                    {
+                                        myRecord.CountryOfDestination = myCountry.EnglishName;
+                                    }
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                            myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+                        }
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -689,8 +787,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ETD = myShipment.MainCarriageETD;
                                     myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                     myRecord.CustomerRef2 = myShipment.CustomerReference2;
-                                    myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
-                                    myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+
+                                    if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
+                                    {
+                                        if(!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                                        {
+                                            Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageFromAddressId).FirstOrDefault();
+                                            if(myAddress != null)
+                                            {
+                                                Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                                if(myCountry != null)
+                                                {
+                                                    myRecord.CountryOfOrigin = myCountry.EnglishName;
+                                                }
+                                            }
+                                        }
+
+                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                                        {
+                                            Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageToAddressId).FirstOrDefault();
+                                            if (myAddress != null)
+                                            {
+                                                Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                                if (myCountry != null)
+                                                {
+                                                    myRecord.CountryOfDestination = myCountry.EnglishName;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                        myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+                                    }
 
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
@@ -770,8 +901,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ETD = myShipment.MainCarriageETD;
                                     myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                     myRecord.CustomerRef2 = myShipment.CustomerReference2;
-                                    myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
-                                    myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+
+                                    if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
+                                    {
+                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                                        {
+                                            Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageFromAddressId).FirstOrDefault();
+                                            if (myAddress != null)
+                                            {
+                                                Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                                if (myCountry != null)
+                                                {
+                                                    myRecord.CountryOfOrigin = myCountry.EnglishName;
+                                                }
+                                            }
+                                        }
+
+                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                                        {
+                                            Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageToAddressId).FirstOrDefault();
+                                            if (myAddress != null)
+                                            {
+                                                Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                                if (myCountry != null)
+                                                {
+                                                    myRecord.CountryOfDestination = myCountry.EnglishName;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                        myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+                                    }
 
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
@@ -855,8 +1019,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ETD = myShipment.MainCarriageETD;
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
-                                myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
-                                myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+
+                                if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
+                                {
+                                    if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                                    {
+                                        Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageFromAddressId).FirstOrDefault();
+                                        if (myAddress != null)
+                                        {
+                                            Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                            if (myCountry != null)
+                                            {
+                                                myRecord.CountryOfOrigin = myCountry.EnglishName;
+                                            }
+                                        }
+                                    }
+
+                                    if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                                    {
+                                        Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageToAddressId).FirstOrDefault();
+                                        if (myAddress != null)
+                                        {
+                                            Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                            if (myCountry != null)
+                                            {
+                                                myRecord.CountryOfDestination = myCountry.EnglishName;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                else
+                                {
+                                    myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                    myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+                                }
 
                                 if (this.tenant == 1255)
                                 {
@@ -989,8 +1186,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ETD = myShipment.MainCarriageETD;
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
-                                myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
-                                myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+
+                                if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
+                                {
+                                    if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                                    {
+                                        Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageFromAddressId).FirstOrDefault();
+                                        if (myAddress != null)
+                                        {
+                                            Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                            if (myCountry != null)
+                                            {
+                                                myRecord.CountryOfOrigin = myCountry.EnglishName;
+                                            }
+                                        }
+                                    }
+
+                                    if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                                    {
+                                        Address myAddress = myCommonContext.Addresses.Where(d => d.Id == myShipment.MainCarriageToAddressId).FirstOrDefault();
+                                        if (myAddress != null)
+                                        {
+                                            Country myCountry = myCommonContext.Countries.Where(d => d.Id == myAddress.CountryId).FirstOrDefault();
+                                            if (myCountry != null)
+                                            {
+                                                myRecord.CountryOfDestination = myCountry.EnglishName;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                else
+                                {
+                                    myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                    myRecord.CountryOfDestination = myShipment.MainCarriageFinalDestinationCountryName;
+                                }
 
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
                                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoice, myRecord);
