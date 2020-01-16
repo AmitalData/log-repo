@@ -45,11 +45,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 { 
 
     
-    public partial class QueueMessageMoreDetailsViewsController : ApiController
+    public partial class SharedLogisticsInvitationStatusViewsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(int code)
         {
 		  try
             {
@@ -57,21 +57,20 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "READ", authToken.Tenant);
 				
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-				QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
-				QueueMessageMoreDetailsList entityList = null;
-				QueueMessageMoreDetails entityPoco = queueMessageMoreDetailsRepository.GetSingleQueueMessageMoreDetails(id );
+				SharedLogisticsInvitationStatusRepository  sharedLogisticsInvitationStatusRepository = new SharedLogisticsInvitationStatusRepository(MyContext);
+				SharedLogisticsInvitationStatusList entityList = null;
+				SharedLogisticsInvitationStatus entityPoco = sharedLogisticsInvitationStatusRepository.GetSingleSharedLogisticsInvitationStatus(code );
 
 				if (entityPoco != null)
 				{
-									List<QueueMessageMoreDetails> singleEntityList = new List<QueueMessageMoreDetails>();
+									List<SharedLogisticsInvitationStatus> singleEntityList = new List<SharedLogisticsInvitationStatus>();
 					singleEntityList.Add(entityPoco);
 
-					QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
-					IQueryable<QueueMessageMoreDetails> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<QueueMessageMoreDetailsList> iQueryableEntityList = queueMessageMoreDetailsQuery.GetIQueryableEntityList(iQueryable);
+					SharedLogisticsInvitationStatusQuery sharedLogisticsInvitationStatusQuery = new SharedLogisticsInvitationStatusQuery(sharedLogisticsInvitationStatusRepository);
+					IQueryable<SharedLogisticsInvitationStatus> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<SharedLogisticsInvitationStatusList> iQueryableEntityList = sharedLogisticsInvitationStatusQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -95,17 +94,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "READ", authToken.Tenant);
 
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-				QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
-				IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails();
+				SharedLogisticsInvitationStatusRepository  sharedLogisticsInvitationStatusRepository = new SharedLogisticsInvitationStatusRepository(MyContext);
+				IQueryable<SharedLogisticsInvitationStatus> entityPocos = sharedLogisticsInvitationStatusRepository.GetSharedLogisticsInvitationStatus();
 
-				QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
-			    IQueryable<QueueMessageMoreDetailsList> entityLists = queueMessageMoreDetailsQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
-				List<QueueMessageMoreDetailsList> listResult = entityLists.ToList();
+				SharedLogisticsInvitationStatusQuery sharedLogisticsInvitationStatusQuery = new SharedLogisticsInvitationStatusQuery(sharedLogisticsInvitationStatusRepository);
+			    IQueryable<SharedLogisticsInvitationStatusList> entityLists = sharedLogisticsInvitationStatusQuery.GetIQueryableEntityList(entityPocos);
+				entityLists = entityLists.OrderBy(d => d.Name);
+				List<SharedLogisticsInvitationStatusList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -126,21 +124,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				                
-				SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "QueueMessageMoreDetails",
+                    ObjectTableName = "SharedLogisticsInvitationStatus",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "QueueMessageMoreDetails",
+                    QuerySection = "SharedLogisticsInvitationStatus",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> QueueMessageMoreDetailsObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QueueMessageMoreDetails",tenant);
+				List<ObjectField> SharedLogisticsInvitationStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("SharedLogisticsInvitationStatus",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -163,7 +159,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = QueueMessageMoreDetailsObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = SharedLogisticsInvitationStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -190,7 +186,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = QueueMessageMoreDetailsObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = SharedLogisticsInvitationStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -216,29 +212,29 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 GenericSort sortClass = new GenericSort();
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
-                QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
-                IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails();
+                SharedLogisticsInvitationStatusRepository  sharedLogisticsInvitationStatusRepository = new SharedLogisticsInvitationStatusRepository(MyContext);
+                IQueryable<SharedLogisticsInvitationStatus> entityPocos = sharedLogisticsInvitationStatusRepository.GetSharedLogisticsInvitationStatus();
 
-                QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
+                SharedLogisticsInvitationStatusQuery sharedLogisticsInvitationStatusQuery = new SharedLogisticsInvitationStatusQuery(sharedLogisticsInvitationStatusRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<QueueMessageMoreDetails>(nonListQueryOperation, entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery<SharedLogisticsInvitationStatus>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<QueueMessageMoreDetailsList> entityLists = queueMessageMoreDetailsQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<SharedLogisticsInvitationStatusList> entityLists = sharedLogisticsInvitationStatusQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<QueueMessageMoreDetailsList>(listQueryOperation, entityLists);
+                entityLists = genericFilter.GetFilteredQuery<SharedLogisticsInvitationStatusList>(listQueryOperation, entityLists);
 
 		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(QueueMessageMoreDetailsList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(SharedLogisticsInvitationStatusList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in QueueMessageMoreDetailsObjectFields
+                   ObjectField objectField = (from a in SharedLogisticsInvitationStatusObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -246,7 +242,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<SharedLogisticsInvitationStatusList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -256,41 +252,41 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SharedLogisticsInvitationStatusList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SharedLogisticsInvitationStatusList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SharedLogisticsInvitationStatusList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SharedLogisticsInvitationStatusList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SharedLogisticsInvitationStatusList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SharedLogisticsInvitationStatusList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.Name);
                                 break;
                             }
                     }
@@ -299,7 +295,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             }
 		    else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.Name);
             }
 
 			ServiceResponse response = new ServiceResponse();
@@ -315,7 +311,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<QueueMessageMoreDetailsList> listResult = entityLists.ToList();
+			   List<SharedLogisticsInvitationStatusList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
