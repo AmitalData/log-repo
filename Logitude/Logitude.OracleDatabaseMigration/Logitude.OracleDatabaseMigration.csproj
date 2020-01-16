@@ -452,6 +452,10 @@
     <Compile Include="Migrations\202001151307414_AddMigrationSealCompletenes.Designer.cs">
       <DependentUpon>202001151307414_AddMigrationSealCompletenes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001160629471_removeDWHSetting.cs" />
+    <Compile Include="Migrations\202001160629471_removeDWHSetting.Designer.cs">
+      <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -781,6 +785,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001151307414_AddMigrationSealCompletenes.resx">
       <DependentUpon>202001151307414_AddMigrationSealCompletenes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001160629471_removeDWHSetting.resx">
+      <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
