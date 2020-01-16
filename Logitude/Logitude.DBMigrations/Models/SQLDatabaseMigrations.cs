@@ -333,6 +333,11 @@ namespace Logitude.DBMigrations.Models
             return DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
         }
 
+        protected override RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation)
+        {
+            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).First();
+        }
+
         protected override bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnShortName, string dxmlColumnOldNames)
         {
             bool isColumnInCurrentTable = false;

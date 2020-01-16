@@ -1,4 +1,5 @@
 Description,Time(ms)
-Get DXML Files From Root,0
-Generate Scripts From DXML Files,51
-Save The Generated Scripts,5
+Get DXML Files From Root,1200
+Generate Scripts From DXML Files,90264
+Save The Generated Scripts,1
+Execute The Generated Scripts,21
