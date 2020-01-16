@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Help Center&quot;"
-  Code="&quot;50c4&quot;"
+  Code="&quot;4cac&quot;"
   Name="&quot;HelpResource&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Global&quot;"
@@ -1625,24 +1625,6 @@
       FeatureTextCodeCode="&quot;HelpResource.Features.FollowUps&quot;"
       FeatureDefaultText="&quot;Follow Ups&quot;"
       IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;Module&quot;"
-      FeatureTypeCode="&quot;MODL&quot;"
-      FeatureTextCodeCode="&quot;HelpResource.Features.Module&quot;"
-      FeatureDefaultText="&quot;HelpResource Package Feature&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;READ&quot;"
-      FeatureTypeCode="&quot;READ&quot;"
-      FeatureTextCodeCode="&quot;HelpResource.Features.READ&quot;"
-      FeatureDefaultText="&quot;Read&quot;"
-      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
