@@ -69,6 +69,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
                 this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null);
+                this.LoadDeclarationAmendmentsList();
                  this.BuildColumns();
 
 
@@ -224,7 +225,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                 item.LineNumber = i;
                 i++;
                   if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
-            this.CanOpenNewAmendment = false;
+                 this.CanOpenNewAmendment = false;
                  this.amendmentObslist.Insert(item);
             });
              
@@ -256,7 +257,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                     if (!response.HasError) {
                         var entity = response.Result;
                         if (entity != null) {
-                           // this.LoadDeclarationAmendmentsList();
+                             this.LoadDeclarationAmendmentsList();
                             setTimeout(() => {
                                 this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                             }, 10);
