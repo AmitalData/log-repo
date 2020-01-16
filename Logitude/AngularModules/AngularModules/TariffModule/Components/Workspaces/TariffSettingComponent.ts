@@ -27,12 +27,18 @@ export class TariffSettingComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsAirEditBtnEnabled = false;
     public IsLCLEditBtnEnabled = false;
+    public AirDefaultStepsName: string;
+    public LCLDefaultStepsName: string;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myService = new TariffSettingPMService();
         this.myDomainService = new TariffDomainService();
+        this.GetSingletariffSetting();
+      
+    }
 
+    private GetSingletariffSetting() {
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res1: any) => {
             this.myDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
@@ -55,7 +61,6 @@ export class TariffSettingComponent extends BaseComponent {
             });
         });
     }
-
     private SetUIPropertiesForEditButtons() {
         this.IsLCLEditBtnEnabled = false;
         this.IsAirEditBtnEnabled = false;
@@ -114,7 +119,7 @@ export class TariffSettingComponent extends BaseComponent {
     set DefaultPriceSteps(value: string) {
         if (this.EntityPM.DefaultPriceSteps != value) {
             this.EntityPM.DefaultPriceSteps = value;
-           
+
         }
     }
 
@@ -201,7 +206,7 @@ export class TariffSettingComponent extends BaseComponent {
                 errors.push("LCL Default Steps field is required");
             }
 
-            this.ValidationErrorsList =  this.ValidationErrorsList.concat(errors);
+            this.ValidationErrorsList = this.ValidationErrorsList.concat(errors);
 
             if (this.ValidationErrorsList.length == 0) {
 
@@ -266,14 +271,17 @@ export class TariffSettingComponent extends BaseComponent {
                 if (d && d != "cancel") {
                     if (type == "LCL") {
                         this.LCLDefaultStepsId = s.EntityPM.Id;
+                        this.LCLDefaultStepsName = s.EntityPM.Name;
                     }
                     else if (type == "Air") {
                         this.AirDefaultStepsId = s.EntityPM.Id;
+                        this.AirDefaultStepsName = s.EntityPM.Name;
                     }
                 }
             });
         });
     }
+
 }
 
 class TariffSettingStep extends BaseComponent {
