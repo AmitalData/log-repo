@@ -746,6 +746,11 @@
                                    VerticalAlignment="Center"
                                    FontWeight="{Binding ForeignEntityFontWeight}"
                                    Text="Navigation Property Name:" />
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="{Binding ForeignEntityFontWeight}"
+                                   Text="Dont Build Relation On DB:" />
 
                         <CheckBox Grid.Row="1"
                                   Grid.Column="1"
@@ -771,8 +776,16 @@
                                  IsEnabled="{Binding IsDBFieldEnabled}"
                                  Text="{Binding NavigationPropertyName,
                                                 Mode=TwoWay}" />
+                        <CheckBox Grid.Row="4"
+                                  Grid.Column="2"
+                                  Height="22"
+                                  Margin="2"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding DontBuildRelationOnDB,
+                                                      Mode=TwoWay}"
+                                  IsEnabled="{Binding IsDBFieldEnabled}" />
 
-                        <Border Grid.Row="4"
+                        <Border Grid.Row="5"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"

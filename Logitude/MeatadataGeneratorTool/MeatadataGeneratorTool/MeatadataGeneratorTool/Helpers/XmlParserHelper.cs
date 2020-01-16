@@ -228,6 +228,9 @@ namespace MeatadataGeneratorTool.Helpers
             field.IsCustomFilter = GetAttributeBoolValue(fieldNode.Attributes["IsCustomFilter"]);
             field.IsDBField = GetAttributeBoolValue(fieldNode.Attributes["HasDataBaseField"]);
             field.IsForeignKey = GetAttributeBoolValue(fieldNode.Attributes["IsForeignKey"]);
+
+            field.DontBuildRelationOnDB = GetAttributeBoolValue(fieldNode.Attributes["DontBuildRelationOnDB"]);
+
             field.IsMulti = GetAttributeBoolValue(fieldNode.Attributes["IsMulti"]);
             field.IsPMField = GetAttributeBoolValue(fieldNode.Attributes["HasPMField"]);
             field.IsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["IsPrimaryKey"]);

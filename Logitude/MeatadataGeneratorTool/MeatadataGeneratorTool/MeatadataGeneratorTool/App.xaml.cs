@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -116,12 +117,21 @@ namespace MeatadataGeneratorTool
                 loadFileWindow.Show();
             }
 
+            LXMLFilesPaths = new List<string>();
+            DXMLFilesPaths = new List<string>();
+
+            Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
+            thread.Start();
+
+            base.OnStartup(e);
+        }
+
+        public void GetLXMLAndDXMLFilesPaths()
+        {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string logitudePath = projectDirectory.Split(new string[] { @"\Logitude" }, StringSplitOptions.None)[0];
             LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
             DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
-
-            base.OnStartup(e);
         }
 
         private void MainControl_Closed(object sender, EventArgs e)

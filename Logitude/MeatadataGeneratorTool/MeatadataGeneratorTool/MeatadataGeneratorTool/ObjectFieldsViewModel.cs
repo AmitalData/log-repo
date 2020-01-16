@@ -925,6 +925,13 @@ namespace MeatadataGeneratorTool
             set { isForeignKey = value; FirePropertyChanged("IsForeignKey"); FirePropertyChanged("ForeignEntityFontWeight"); }
         }
 
+        bool dontBuildRelationOnDB;
+        public bool DontBuildRelationOnDB
+        {
+            get { return dontBuildRelationOnDB; }
+            set { dontBuildRelationOnDB = value; FirePropertyChanged("DontBuildRelationOnDB"); FirePropertyChanged("ForeignEntityFontWeight"); }
+        }
+
         string foreignEntity;
         public string ForeignEntity
         {

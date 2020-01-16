@@ -1302,6 +1302,8 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsForeignKey", f.IsForeignKey.ToString().ToLower(), fieldElement, null);
                 SetAttribute("ForeignEntity", f.ForeignEntity, fieldElement, null);
 
+                SetAttribute("DontBuildRelationOnDB", f.DontBuildRelationOnDB.ToString().ToLower(), fieldElement, null);
+
                 SetAttribute("NavigationPropertyName", f.NavigationPropertyName, fieldElement, null);
 
                 SetAttribute("IsPrimaryKey", f.IsPrimaryKey.ToString().ToLower(), fieldElement, null);
@@ -2068,6 +2070,8 @@ namespace MeatadataGeneratorTool
                     XmlElement relationElement = doc.CreateElement("Relation");
                     tableElement.AppendChild(relationElement);
 
+                    string dontBuildRelationOnDB = field.DontBuildRelationOnDB ? "true" : "false";
+
                     string fieldNavigationPropertyName = field.NavigationPropertyName;
 
                     string[] filedsWithSameNavigationPropertyName = table.ObsList.Where(f => f.IsDBField && f.IsForeignKey && f.NavigationPropertyName == fieldNavigationPropertyName).Select(f => f.FieldName).ToArray();
@@ -2084,6 +2088,8 @@ namespace MeatadataGeneratorTool
                         relationElement.SetAttribute("ReferencedColumn", foreignEntityData.ReferencedColumn);
                         relationElement.SetAttribute("ReferencedTableSchema", foreignEntityData.ReferencedTableSchema);
                     }
+
+                    relationElement.SetAttribute("Ignore", dontBuildRelationOnDB);
 
                     foreach (string fieldName in filedsWithSameNavigationPropertyName)
                     {
