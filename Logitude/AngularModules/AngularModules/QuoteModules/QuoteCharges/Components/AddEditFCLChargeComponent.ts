@@ -144,8 +144,11 @@ export class AddEditFCLChargeComponent {
         var freightLineCostCurrencyId: string = "";
         var freightLineSaleCurrencyId: string = "";
         if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-            freightLineCostCurrencyId = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0].CostCurrencyId;
-            freightLineSaleCurrencyId = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0].SaleCurrencyId;
+            var quoteCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
+            if (quoteCharge) {
+                freightLineCostCurrencyId = quoteCharge.CostCurrencyId;
+                freightLineSaleCurrencyId = quoteCharge.SaleCurrencyId;
+            }
         }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.CostMeasurementCode)) {

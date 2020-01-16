@@ -36,6 +36,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         private string ShipmentId;
         private string ShipmentNumber;
         private bool IsAccepted;
+        private bool isBookingControl = false;
         //private string HeaderDocumentIdentifier;
         private ShipmentPM shipmentPM;
         private AnalyzeQueue myAnalyzeQueue;
@@ -426,7 +427,9 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     if (Parts[0] == "B")
                                     {
                                         is_CONTRL_Tenant = Int32.TryParse(Parts[2], out CONTRL_Tenant);
+                                        this.isBookingControl = true;
                                     }
+
                                     else
                                     {
                                         is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);

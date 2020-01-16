@@ -204,7 +204,7 @@ namespace Logitude.Accounting.BL.Utils
                     List<LedgerTransactionPM> ledgerPMs = ledger.Select(poco => ledgerTransactionQueryService.GetEntityPM(poco)).ToList();
                     CreateReconciliationService createReconciliationService = new CreateReconciliationService();
                     ReconciliationPM reconciliationPM = createReconciliationService.GetReconciliation(ledgerPMs);
-  //****//                  reconciliationPM.CreatedByReconciliationAfterConversion = true;
+                    reconciliationPM.CreatedByReconciliationStageB = true;
                     CreateReconciliationService service = new CreateReconciliationService();
                     RecoCallback recoCallback = service.CreateReconciliation(reconciliationPM);
  //                   scope.Complete();
