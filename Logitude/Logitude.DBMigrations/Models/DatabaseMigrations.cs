@@ -41,7 +41,10 @@ namespace Logitude.DBMigrations.Models
             {
                 foreach (var relation in DXMLTable.Relations)
                 {
-                    tableRelationsScript += GetCreateRelationScript(relation);
+                    if (!relation.Ignore)
+                    {
+                        tableRelationsScript += GetCreateRelationScript(relation);
+                    }
                 }
             }
             else
@@ -52,13 +55,23 @@ namespace Logitude.DBMigrations.Models
                     {
                         tableRelationsScript += GetDropRelationScript(relation);
                     }
+                    else
+                    {
+                        if (DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).First().Ignore)
+                        {
+                            tableRelationsScript += GetDropRelationScript(relation);
+                        }
+                    }
                 }
 
                 foreach (var relation in DXMLTable.Relations)
                 {
                     if (!IsRelationInCurrentTable(relation))
                     {
-                        tableRelationsScript += GetCreateRelationScript(relation);
+                        if (!relation.Ignore)
+                        {
+                            tableRelationsScript += GetCreateRelationScript(relation);
+                        }
                     }
                 }
             }
