@@ -381,7 +381,9 @@
     <Compile Include="GlobalModel\EntityPMs\BluesnapTransactionPM.cs" />
     <Compile Include="GlobalModel\EntityQueries\BluesnapTransactionQuery.cs" />
     <Compile Include="GlobalModel\Tools\DataMapping\BluesnapTransactionMapping.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\EventTypeCategoryDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SchedulerProcedureDetails.Generated.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\EventTypeCategoryStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\SchedulerProcedureStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\EntityLists\SchedulerProcedureList.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />

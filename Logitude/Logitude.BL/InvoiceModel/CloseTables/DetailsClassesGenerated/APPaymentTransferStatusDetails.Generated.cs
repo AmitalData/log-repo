@@ -20,17 +20,62 @@ namespace Logitude.BL.InvoiceModel
    {
        public List<APPaymentTransferStatusDetails> GetAll()
        {
-		    var all = new List<APPaymentTransferStatusDetails>(); 
+		    var all = new List<APPaymentTransferStatusDetails>();  
+            all.Add(new APPaymentTransferStatusDetails()
+            {    
+                Code = "BL", 
+                SearchFields = "BL,Blocked", 
+                Name = "Blocked", 
+			});
+			 
+            all.Add(new APPaymentTransferStatusDetails()
+            {    
+                Code = "ET", 
+                SearchFields = "ET,Error In Transfer", 
+                Name = "Error In Transfer", 
+			});
+			 
+            all.Add(new APPaymentTransferStatusDetails()
+            {    
+                Code = "IP", 
+                SearchFields = "IP,In Progress", 
+                Name = "In Progress", 
+			});
+			 
+            all.Add(new APPaymentTransferStatusDetails()
+            {    
+                Code = "NR", 
+                SearchFields = "NR,Not Ready", 
+                Name = "Not Ready", 
+			});
+			 
+            all.Add(new APPaymentTransferStatusDetails()
+            {    
+                Code = "RD", 
+                SearchFields = "RD,Ready", 
+                Name = "Ready", 
+			});
+			 
+            all.Add(new APPaymentTransferStatusDetails()
+            {    
+                Code = "TR", 
+                SearchFields = "TR,Transferred", 
+                Name = "Transferred", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(APPaymentTransferStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Name = this.Name;   
         }
 
 		public string GetSearchFields(APPaymentTransferStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Name,",");
         }
    }
 }
