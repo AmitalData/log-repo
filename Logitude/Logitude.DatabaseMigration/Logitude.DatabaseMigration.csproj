@@ -1894,6 +1894,10 @@
     <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.Designer.cs">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001151002313_RuleUpdateHistory_table.cs" />
+    <Compile Include="Migrations\202001151002313_RuleUpdateHistory_table.Designer.cs">
+      <DependentUpon>202001151002313_RuleUpdateHistory_table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3322,13 +3326,6 @@
     <EmbeddedResource Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.resx">
       <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
     </EmbeddedResource>
-     
-    <Compile Include="Migrations\202001050942321_VatType_New_Fields.cs" />
-    <Compile Include="Migrations\202001050942321_VatType_New_Fields.Designer.cs">
-      <DependentUpon>202001050942321_VatType_New_Fields.cs</DependentUpon>
-    </Compile>
-  
-
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -3424,6 +3421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001151002313_RuleUpdateHistory_table.resx">
+      <DependentUpon>202001151002313_RuleUpdateHistory_table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

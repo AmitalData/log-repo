@@ -383,8 +383,13 @@
     <Compile Include="GlobalModel\Tools\DataMapping\BluesnapTransactionMapping.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SchedulerProcedureDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\SchedulerProcedureStruct.Generated.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\RuleUpdateHistoryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\SchedulerProcedureList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\RuleUpdateHistoryPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoice.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceLine.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceStatus.Generated.cs" />

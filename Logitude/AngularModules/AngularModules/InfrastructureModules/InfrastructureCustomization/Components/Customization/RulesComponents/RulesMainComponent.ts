@@ -138,6 +138,28 @@ export class RulesMainComponent {
         });
     }
 
+    OnViewRuleHitory(item) {
+        var ObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.ObjectTableId)[0];
+        this.entityResourceService.getEntityResourceByTableName("RuleUpdateHistory", 0).subscribe(response => {
+            var windowArgs: any = {};
+            windowArgs.ObjectTableId = this.ObjectTableId;
+            windowArgs.EntityPM = item;
+           
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = "Events History";
+            logWindow.ShowCloseButton = true;
+           // logWindow.
+            //logWindow.IsFillScreen_115 = true;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/RulesComponents/RuleUpdateHistoryComponent');
+
+            logWindow.WindowClosed.subscribe(($event: string) => {
+                 
+            });
+
+        });
+    }
+
     OnAddRule() {
         var ObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.ObjectTableId)[0];
         this.entityResourceService.getEntityResourceByTableName(ObjectTable.Name, 0).subscribe(response => {
