@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29411.108
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFreight.Web", "JustWebFreight\WebFreight.Web\WebFreight.Web.csproj", "{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}"
 EndProject
@@ -229,6 +229,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.HybridTest", "Logi
 	ProjectSection(ProjectDependencies) = postProject
 		{8408E4E5-B4B7-46BC-8300-1AE163B36E2D} = {8408E4E5-B4B7-46BC-8300-1AE163B36E2D}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogitudeDataLoading", "LogitudeDataLoading\LogitudeDataLoading.csproj", "{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -3197,6 +3199,48 @@ Global
 		{98DF8D4E-D654-401C-BC5D-E7DF18984A80}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
 		{98DF8D4E-D654-401C-BC5D-E7DF18984A80}.SingleImage|x86.ActiveCfg = Release|Any CPU
 		{98DF8D4E-D654-401C-BC5D-E7DF18984A80}.SingleImage|x86.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.All Projects|Any CPU.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.All Projects|Any CPU.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.All Projects|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.All Projects|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.All Projects|x86.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.All Projects|x86.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.CD_ROM|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.CD_ROM|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.CD_ROM|x86.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Debug|x86.Build.0 = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.DVD-5|x86.Build.0 = Debug|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.None|Any CPU.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.None|Any CPU.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.None|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.None|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.None|x86.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.None|x86.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Release|x86.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.Release|x86.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}.SingleImage|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -3284,6 +3328,7 @@ Global
 		{55776E1B-6AF0-424B-96F5-4FF5DCF0E79A} = {61E75C12-A7AA-4E3A-B459-985D04E42F84}
 		{B4B8C0F5-3FA6-4674-83FC-633E1701CEBF} = {EA704120-33C4-4C09-8831-B640B652A926}
 		{98DF8D4E-D654-401C-BC5D-E7DF18984A80} = {61E75C12-A7AA-4E3A-B459-985D04E42F84}
+		{1C73E85C-6D71-4A78-8E4C-17E69AF3C978} = {EA704120-33C4-4C09-8831-B640B652A926}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {200673A7-D16A-4B01-A6B6-BEE63415EBD0}
