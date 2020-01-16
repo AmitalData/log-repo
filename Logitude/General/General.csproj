@@ -692,7 +692,6 @@
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on CustomerFieldsUpdateSettings.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Wesam] Fill triggerfieldcode on ObjectTableRules.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Wesam] Delete Constraint between ObjectTableRules and objectFields.sql" />
-
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between AirlineMessagingRules and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill rulefieldcode on AirlineMessagingRules.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Maheera] Fill SearchFields of SLAHeaders Table.sql" />
@@ -2015,8 +2014,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DataViews And Procedures\DataViews\AgingReportInvoiceDataView.dxml" />
-    <None Include="DataViews And Procedures\Stored Procedures\UpdateTenantCustomersActualData.dxml" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceappSettings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.appSettings.config" />

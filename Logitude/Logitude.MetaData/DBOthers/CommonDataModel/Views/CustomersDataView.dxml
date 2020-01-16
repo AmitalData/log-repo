@@ -1,0 +1,70 @@
+<View DBType="Main" Name="CustomersDataView" Schema="dbo">
+  <SqlScript>
+    <![CDATA[
+CREATE VIEW [dbo].[CustomersDataView]
+AS
+SELECT        
+dbo.Customers.Id, dbo.Customers.Tenant,dbo.cards.EnglishName,dbo.cards.ZipCode,dbo.cards.Address1,dbo.cards.Address2,dbo.cards.Phone,dbo.Cards.LocalName,dbo.Cards.ReceivablesAccountingCard, dbo.Cards.PayablesAccountingCard, dbo.Cards.ExternalId2,dbo.Cards.InActive,dbo.Cards.EnableConsolidationInvoices, dbo.Cards.ExternalAccountingBusinessArea, dbo.Cards.SATPaymentMethodCode,dbo.Cards.SATForeignRFC,dbo.Cards.MetodoPagoCode,dbo.Cards.UsoCFDICode
+,dbo.Cards.Notes,dbo.Customers.BillToId,dbo.Cards.Website,dbo.Customers.SalesmanUserId,dbo.Cards.PaymentTermId,dbo.Cards.CreateDate,dbo.Cards.UpdateDate,dbo.Cards.CreatedByUserId,dbo.Cards.UpdatedByUserId
+,dbo.Cards.VatNumber,dbo.Cards.SearchFields,dbo.PaymentTerms.EnglishName as PaymentTermEnglishName,dbo.Cards.InvoiceCurrencyId,dbo.Customers.LastShipmentDate,dbo.Customers.StartWorkingDate,dbo.Customers.StartWorkingManuallySet
+,AccountManagerUserContacts.EnglishName as AccountManagerUserEnglishName,SalesmanUserContacts.EnglishName as SalesmanUserEnglishName,CollectorContacts.EnglishName as CollectorName,ClassifierContacts.EnglishName as ClassifierName
+,dbo.Cards.CityName ,dbo.Cards.VatTypeId,BillToCards.EnglishName as BillToName,dbo.Customers.Field1,dbo.Customers.Field2,dbo.Customers.Field3,dbo.Customers.Field4,dbo.Customers.Field5,dbo.Customers.Field6,dbo.Customers.Field7,dbo.Customers.Field8
+,dbo.Customers.Field9,dbo.Customers.Field10,dbo.Ranks.Code as RankCode,dbo.Ranks.Name as RankName
+,dbo.Cards.SharedLogisticsInvitationStatusCode, dbo.Customers.ActivityWatch 
+,dbo.SharedLogisticsInvitationStatus.Name as SharedLogisticsInvitationStatusName
+,dbo.cards.LastLoginDate,dbo.cards.InvitationDate,dbo.Industries.Name as IndustryName
+,dbo.customers.LeadDescription,dbo.customers.ClassifierId ,dbo.Cards.IsCustomer,dbo.Customers.CollectorId,dbo.customers.FreelancerId,FreelancerContacts.EnglishName as FreelancerName,dbo.customers.ForwarderId,ForwarderCards.EnglishName as ForwarderName
+,dbo.Customers.CustomsAgentId,CustomsAgentCards.EnglishName as CustomsAgentName,dbo.customers.MediatorId,MediatorCards.EnglishName as MediatorName,dbo.customers.BeforeDeactiveStatusCode,dbo.Customers.ReadyForActivationDate,CreatedByUserContacts.EnglishName as UpdatedByUserName
+,PrimaryContacts.EnglishName as PrimaryContactName
+,PrimaryContacts.Email as PrimaryContactEmail
+,dbo.cards.PrimaryContactId,dbo.customers.RegionId,dbo.regions.Name as RegionName, dbo.customers.CustomerStatusCode,dbo.CustomerStatus.Name as CustomerStatusName
+,dbo.Customers.RankId, dbo.Customers.LeadSourceId, LeadSources.Name as LeadSourceName, dbo.Customers.IndustryId
+,dbo.cards.CountryId ,dbo.cards.CountryCode, dbo.cards.CountryName
+,dbo.customers.AccountManagerUserId,CreatedByUserContacts.EnglishName as CreatedByUserName,dbo.cards.code,customers.FirstShipmentDate,dbo.cards.IsActiveForMobile as  IsActiveForMobile
+,SalesmanUsers.BusinessUnitId as SalesmanBusinessUnitId,dbo.customers.FirstInvoiceDate,customers.LastOpportunityDate,customers.LastOpportunitySubject,customers.LastOpportunityStatus, customers.LastMeetingDate,customers.LastCallDate,customers.LastQuoteDate,customers.LastInteractionDate
+,InvoiceCurrency.Code as InvoiceCurrencyCode
+,dbo.Customers.KnownConsignor, dbo.Customers.KCExpirationDate,
+dbo.Cards.PartnerTypeId, dbo.customers.CustomerSizeId, CustomerSizes.Name as CustomerSizeName, dbo.Cards.SupportNotes,
+dbo.Customers.IsCreditLimitEnabled, dbo.Customers.CreditLimitAmount, dbo.Customers.CreditLimitOpenBalance, dbo.Customers.CreditLimitWarningPercentage,
+dbo.Customers.BlockNewInvoiceCreation, dbo.Customers.BlockNewShipmentCreation,dbo.Customers.CompetitorFields,
+dbo.Customers.ActivatedByUserId, dbo.Customers.ActivationRequestedByUserId, dbo.Customers.SetAsInactiveByUserId,
+ActivatedByUserContacts.EnglishName as ActivatedByUserName, SetAsInactiveByUserContacts.EnglishName as SetAsInactiveByName,
+ActivationRequestedByUserContacts.EnglishName as ActivationRequestedByUserName, dbo.Customers.ActivationDate, dbo.Customers.InactiveDate, dbo.Customers.ActivationRequestDate,dbo.cards.CreatedByPartner
+
+
+FROM            dbo.Customers Inner join
+                         dbo.Cards ON  dbo.Customers.Id = dbo.Cards.Id LEFT OUTER JOIN
+                         dbo.PaymentTerms ON dbo.Cards.PaymentTermId = dbo.PaymentTerms.Id LEFT OUTER JOIN
+                         dbo.Contacts AS AccountManagerUserContacts ON dbo.Customers.AccountManagerUserId = AccountManagerUserContacts.Id LEFT OUTER JOIN
+                         dbo.Contacts AS SalesmanUserContacts ON dbo.Customers.SalesmanUserId = SalesmanUserContacts.Id LEFT OUTER JOIN
+                         dbo.Contacts AS CollectorContacts ON dbo.Customers.CollectorId = CollectorContacts.Id LEFT OUTER JOIN
+                         dbo.Contacts AS ClassifierContacts ON dbo.Customers.ClassifierId = ClassifierContacts.Id LEFT OUTER JOIN
+                         dbo.Cards AS BillToCards ON dbo.Customers.BillToId = BillToCards.Id LEFT OUTER JOIN
+                         dbo.Ranks  ON dbo.Customers.RankId = dbo.Ranks.Id LEFT OUTER JOIN
+                         dbo.SharedLogisticsInvitationStatus ON dbo.Cards.SharedLogisticsInvitationStatusCode = dbo.SharedLogisticsInvitationStatus.Code LEFT OUTER JOIN
+                         dbo.Industries ON dbo.Customers.IndustryId = dbo.Industries.Id LEFT OUTER JOIN
+                         dbo.Contacts AS FreelancerContacts ON dbo.Customers.FreelancerId = FreelancerContacts.Id LEFT OUTER JOIN
+                         dbo.Cards AS ForwarderCards ON dbo.Customers.ForwarderId = ForwarderCards.Id LEFT OUTER JOIN
+                         dbo.Cards AS CustomsAgentCards ON dbo.Customers.CustomsAgentId = CustomsAgentCards.Id LEFT OUTER JOIN
+                         dbo.Cards AS MediatorCards ON dbo.Customers.MediatorId = MediatorCards.Id LEFT OUTER JOIN
+                         dbo.Contacts AS CreatedByUserContacts ON dbo.Cards.CreatedByUserId = CreatedByUserContacts.Id LEFT OUTER JOIN
+                         dbo.Contacts AS UpdatedByUserContacts ON dbo.Cards.UpdatedByUserId = UpdatedByUserContacts.Id LEFT OUTER JOIN
+                         dbo.Contacts AS PrimaryContacts ON dbo.Cards.PrimaryContactId = PrimaryContacts.Id LEFT OUTER JOIN
+                         dbo.Regions ON dbo.Customers.RegionId = dbo.Regions.Id LEFT OUTER JOIN
+                         dbo.CustomerStatus ON dbo.Customers.CustomerStatusCode = dbo.CustomerStatus.Code LEFT OUTER JOIN
+                         dbo.Users as SalesmanUsers on dbo.customers.SalesmanUserId = SalesmanUsers.Id LEFT OUTER JOIN
+						 dbo.Countries as MainAddressCountries on dbo.Cards.CountryId = MainAddressCountries.Id LEFT OUTER JOIN
+						 dbo.CustomerSizes ON dbo.Customers.CustomerSizeId = CustomerSizes.Id LEFT OUTER JOIN
+						 dbo.LeadSources ON dbo.Customers.LeadSourceId = LeadSources.Id LEFT OUTER JOIN
+						 dbo.Currencies as InvoiceCurrency on dbo.Cards.InvoiceCurrencyId = InvoiceCurrency.Id LEFT OUTER JOIN
+						 dbo.Contacts AS ActivatedByUserContacts ON dbo.Customers.ActivatedByUserId = ActivatedByUserContacts.Id LEFT OUTER JOIN
+						 dbo.Contacts AS SetAsInactiveByUserContacts ON dbo.Customers.SetAsInactiveByUserId = SetAsInactiveByUserContacts.Id LEFT OUTER JOIN
+						 dbo.Contacts AS ActivationRequestedByUserContacts ON dbo.Customers.ActivationRequestedByUserId = ActivationRequestedByUserContacts.Id
+						
+						 
+where dbo.Cards.PartnerTypeId <> 'AC'
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>
