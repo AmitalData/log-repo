@@ -17472,6 +17472,55 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             }, EventTypesRepository, tenantEventTypes);
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMA",
+                EnglishName = "Declaration Amendment Approved",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה אושרה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMP",
+                EnglishName = "Declaration Amendment Partial Approval",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה אושרה חלקית",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMD",
+                EnglishName = "Declaration Amendment Denial",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה נדחתה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMC",
+                EnglishName = "Declaration Amendment Cancelled",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה בוטלה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
             EventTypesRepository.SubmitChanges();
         }
 
