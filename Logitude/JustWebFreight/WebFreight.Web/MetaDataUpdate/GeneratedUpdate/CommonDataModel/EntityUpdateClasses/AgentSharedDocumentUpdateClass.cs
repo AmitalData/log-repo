@@ -412,6 +412,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen AgentSharedDocumentAgentSharedDocumentHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AgentSharedDocument.HeaderScreen", Name = "AgentSharedDocumentHeaderScreen", ObjectTableId = AgentSharedDocumentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    AgentSharedDocumentObjectTable.HeaderScreenId = AgentSharedDocumentAgentSharedDocumentHeaderScreenScreen0.Id;
+		    AgentSharedDocumentObjectTable.HeaderScreenCode = AgentSharedDocumentAgentSharedDocumentHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

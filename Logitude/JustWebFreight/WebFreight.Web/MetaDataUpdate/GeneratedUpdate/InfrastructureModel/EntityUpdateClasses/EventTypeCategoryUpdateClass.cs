@@ -345,6 +345,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen EventTypeCategoryEventTypeCategoryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EventTypeCategory.HeaderScreen", Name = "EventTypeCategoryHeaderScreen", ObjectTableId = EventTypeCategoryObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    EventTypeCategoryObjectTable.HeaderScreenId = EventTypeCategoryEventTypeCategoryHeaderScreenScreen0.Id;
+		    EventTypeCategoryObjectTable.HeaderScreenCode = EventTypeCategoryEventTypeCategoryHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

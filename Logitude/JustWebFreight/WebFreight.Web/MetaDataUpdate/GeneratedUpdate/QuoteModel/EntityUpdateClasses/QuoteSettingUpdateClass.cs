@@ -883,6 +883,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	         Screen QuoteSettingQuoteSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteSetting.HeaderScreen", Name = "QuoteSettingHeaderScreen", ObjectTableId = QuoteSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    QuoteSettingObjectTable.HeaderScreenId = QuoteSettingQuoteSettingHeaderScreenScreen0.Id;
+		    QuoteSettingObjectTable.HeaderScreenCode = QuoteSettingQuoteSettingHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

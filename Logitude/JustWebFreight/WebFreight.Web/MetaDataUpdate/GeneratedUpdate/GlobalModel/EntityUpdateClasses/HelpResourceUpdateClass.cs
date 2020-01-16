@@ -151,6 +151,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	         Screen HelpResourceHelpResourceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "HelpResource.HeaderScreen", Name = "HelpResourceHeaderScreen", ObjectTableId = HelpResourceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    HelpResourceObjectTable.HeaderScreenId = HelpResourceHelpResourceHeaderScreenScreen0.Id;
+		    HelpResourceObjectTable.HeaderScreenCode = HelpResourceHelpResourceHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -298,9 +300,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 		   Feature HelpResourceFeature_FOLLOWUPSTORIAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FOLLOWUPSTORIAL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.FollowUps", NameTextCodeDefaultText = @"Follow Ups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   //Feature HelpResourceFeature_Module = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.Module", NameTextCodeDefaultText = @"HelpResource Package Feature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature HelpResourceFeature_Module = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.Module", NameTextCodeDefaultText = @"HelpResource Package Feature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   //Feature HelpResourceFeature_READ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.READ", NameTextCodeDefaultText = @"Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature HelpResourceFeature_READ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.READ", NameTextCodeDefaultText = @"Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

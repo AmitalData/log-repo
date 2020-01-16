@@ -151,6 +151,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	         Screen QuoteTemplateTableDesignQuoteTemplateTableDesignHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteTemplateTableDesign.HeaderScreen", Name = "QuoteTemplateTableDesignHeaderScreen", ObjectTableId = QuoteTemplateTableDesignObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    QuoteTemplateTableDesignObjectTable.HeaderScreenId = QuoteTemplateTableDesignQuoteTemplateTableDesignHeaderScreenScreen0.Id;
+		    QuoteTemplateTableDesignObjectTable.HeaderScreenCode = QuoteTemplateTableDesignQuoteTemplateTableDesignHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

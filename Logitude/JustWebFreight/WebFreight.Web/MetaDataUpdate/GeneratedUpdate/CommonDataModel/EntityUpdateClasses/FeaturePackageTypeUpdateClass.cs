@@ -342,6 +342,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen FeaturePackageTypeFeaturePackageTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "FeaturePackageType.HeaderScreen", Name = "FeaturePackageTypeHeaderScreen", ObjectTableId = FeaturePackageTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    FeaturePackageTypeObjectTable.HeaderScreenId = FeaturePackageTypeFeaturePackageTypeHeaderScreenScreen0.Id;
+		    FeaturePackageTypeObjectTable.HeaderScreenCode = FeaturePackageTypeFeaturePackageTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

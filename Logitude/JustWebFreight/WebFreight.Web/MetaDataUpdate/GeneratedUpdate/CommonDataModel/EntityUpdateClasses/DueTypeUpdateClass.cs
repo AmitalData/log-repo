@@ -343,6 +343,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen DueTypeDueTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DueType.HeaderScreen", Name = "DueTypeHeaderScreen", ObjectTableId = DueTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    DueTypeObjectTable.HeaderScreenId = DueTypeDueTypeHeaderScreenScreen0.Id;
+		    DueTypeObjectTable.HeaderScreenCode = DueTypeDueTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

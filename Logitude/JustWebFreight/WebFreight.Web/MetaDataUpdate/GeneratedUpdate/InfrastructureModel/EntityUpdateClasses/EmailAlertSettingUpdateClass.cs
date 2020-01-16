@@ -469,6 +469,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen EmailAlertSettingEmailAlertSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EmailAlertSetting.HeaderScreen", Name = "EmailAlertSettingHeaderScreen", ObjectTableId = EmailAlertSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    EmailAlertSettingObjectTable.HeaderScreenId = EmailAlertSettingEmailAlertSettingHeaderScreenScreen0.Id;
+		    EmailAlertSettingObjectTable.HeaderScreenCode = EmailAlertSettingEmailAlertSettingHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

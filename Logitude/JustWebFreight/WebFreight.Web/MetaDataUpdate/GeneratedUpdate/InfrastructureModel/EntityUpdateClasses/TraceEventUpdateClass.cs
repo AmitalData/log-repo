@@ -532,6 +532,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen TraceEventTraceEventHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TraceEvent.HeaderScreen", Name = "TraceEventHeaderScreen", ObjectTableId = TraceEventObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    TraceEventObjectTable.HeaderScreenId = TraceEventTraceEventHeaderScreenScreen0.Id;
+		    TraceEventObjectTable.HeaderScreenCode = TraceEventTraceEventHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

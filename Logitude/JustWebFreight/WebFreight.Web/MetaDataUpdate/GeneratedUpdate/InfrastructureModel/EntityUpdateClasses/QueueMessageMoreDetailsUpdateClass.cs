@@ -278,6 +278,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QueueMessageMoreDetails.HeaderScreen", Name = "QueueMessageMoreDetailsHeaderScreen", ObjectTableId = QueueMessageMoreDetailsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    QueueMessageMoreDetailsObjectTable.HeaderScreenId = QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0.Id;
+		    QueueMessageMoreDetailsObjectTable.HeaderScreenCode = QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

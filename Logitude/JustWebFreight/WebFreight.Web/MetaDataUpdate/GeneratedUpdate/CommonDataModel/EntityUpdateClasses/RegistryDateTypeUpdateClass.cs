@@ -343,6 +343,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen RegistryDateTypeRegistryDateTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RegistryDateType.HeaderScreen", Name = "RegistryDateTypeHeaderScreen", ObjectTableId = RegistryDateTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    RegistryDateTypeObjectTable.HeaderScreenId = RegistryDateTypeRegistryDateTypeHeaderScreenScreen0.Id;
+		    RegistryDateTypeObjectTable.HeaderScreenCode = RegistryDateTypeRegistryDateTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

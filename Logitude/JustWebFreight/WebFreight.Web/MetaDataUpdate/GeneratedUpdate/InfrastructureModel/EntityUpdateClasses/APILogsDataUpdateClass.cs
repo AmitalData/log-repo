@@ -523,6 +523,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen APILogsDataAPILogsDataHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APILogsData.HeaderScreen", Name = "APILogsDataHeaderScreen", ObjectTableId = APILogsDataObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    APILogsDataObjectTable.HeaderScreenId = APILogsDataAPILogsDataHeaderScreenScreen0.Id;
+		    APILogsDataObjectTable.HeaderScreenCode = APILogsDataAPILogsDataHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

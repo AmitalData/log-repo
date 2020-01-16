@@ -72,9 +72,9 @@ using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
 
-namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
-   public class TarrifFromToUpdateClass
+   public class SharedLogisticsInvitationStatusUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -82,52 +82,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "TarrifFromTo",
-			      				    IsNew =  false,
-			      				    DBTableName =  "TarrifFromToes",
-			      				    OldDBTableName =  "TarrifFromToes",
-			      				    ObjectTableSingular =  "Tariff FromTo",
-			      				    ObjectTablePlural =  "TarrifFromToes",
-			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  true,
+	             				    ObjectTableName =  "SharedLogisticsInvitationStatus",
+			      				    DBTableName =  "SharedLogisticsInvitationStatus",
+			      				    ObjectTableSingular =  "Shared Logistics Invitation Status",
+			      				    ObjectTablePlural =  "Shared Logistics Invitation Status",
+			      				    DefaultText =  "Shared Logistics Invitation Status",
+			      				    Name =  "SharedLogisticsInvitationStatus",
 			      				    IsNewWizard =  false,
-			      				    KeyPropertyPath =  "Id",
+			      				    LookUp1 =  "Name",
+			      				    HasCustomFilter =  false,
+			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  false,
-			      				    CacheOnClient =  false,
+			      				    IsClosed =  true,
+			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
-			      				    IsAutoComplete =  false,
-			      				    EnableEditFromLOV =  false,
+			      				    IsMain =  false,
+			      				    ClientModuleName =  "Infrastructure",
+			      				    IsAutoComplete =  true,
+			      				    CustomFieldsCount =  0,
+			      				    HasCustomFields =  false,
 			      				    InActive =  false,
+			      				    SearchFields =  "SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatus,,Code,",
 			      				    IsSaveButtonVisible =  true,
-			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    IsComposition =  false,
+			      				    MaxNumberOfCustomFields =  0,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Tariff FromTo",
-			      				    Code =  "fe4d",
-			      				    Name =  "TarrifFromTo",
-			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Common",
-			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    CustomFieldsCount =  0,
-			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
+			      				    IsLookUp =  true,
+			      				    IsEditable =  true,
+			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
+			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			      				    IsTabsHidden =  false,
-			      				    SearchFields =  "TarrifFromTo,TarrifFromToes,,Id,",
+			      				    CloseTableCode =  "Code",
+			      				    CloseTableName =  "Name",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -138,125 +137,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "TarrifHeaderId",
-					  						OldFieldName =  "TarrifHeaderId",
-					  						ObjectTableName =  "TarrifFromTo",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "TarrifHeader",
+					 						FieldName =  "Code",
+					  						ObjectTableName =  "SharedLogisticsInvitationStatus",
+					  						FieldsDataType =  "Integer",
+					  						FieldCode =  "SharedLogisticsInvitationStatus.Code",
+					  						Code =  "Code",
+					  						MaxLength =  0,
+					  						IsCustom =  false,
 					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TarrifHeaderId",
-					  						ListPropertyPath =  "TarrifHeaderId",
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "Code",
+					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "SharedLogisticsInvitationStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "TarrifHeaderId",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TarrifHeaderId",
-					  						DefaultText =  "Tariff Header",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "SharedLogisticsInvitationStatus.F.Code",
+					  						HelpTextCodeCode =  "SharedLogisticsInvitationStatus.CodeHelpText",
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "TarrifHeader",
 					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "TarrifFromToTypeCode",
-					  						OldFieldName =  "TarrifFromToTypeCode",
-					  						ObjectTableName =  "TarrifFromTo",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "TarrifFromToType",
-					  						MinLength =  0,
-					  						MaxLength =  4,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TarrifFromToTypeCode",
-					  						ListPropertyPath =  "TarrifFromToTypeCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "TarrifFromToTypeCode",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TarrifFromToTypeCode",
-					  						DefaultText =  "Tariff From To Type Code",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "TarrifFromToTypeCode",
-					  						EnableFullscreenTextBox =  false,
+					  						FullFieldLable =  "Code",
+					  						DefaultText =  "Code",
+					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -264,62 +198,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PortId",
-					  						OldFieldName =  "PortId",
-					  						ObjectTableName =  "TarrifFromTo",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Port",
+					 						FieldName =  "Name",
+					  						ObjectTableName =  "SharedLogisticsInvitationStatus",
+					  						FieldsDataType =  "Text",
+					  						FieldCode =  "SharedLogisticsInvitationStatus.Name",
+					  						Code =  "Name",
+					  						MaxLength =  40,
+					  						IsCustom =  false,
 					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						DisplayOnLookUp =  true,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PortId",
-					  						ListPropertyPath =  "PortId",
-					  						DisplayInLookUpIndex =  0,
+					  						DisplayInSearchWindowList =  true,
+					  						DisplayInSearchWindowFilters =  true,
+					  						PMPropertyPath =  "Name",
+					  						ListPropertyPath =  "Name",
+					  						DisplayInLookUpIndex =  1,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "SharedLogisticsInvitationStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "PortId",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PortId",
-					  						DefaultText =  "Port",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "SharedLogisticsInvitationStatus.F.Name",
+					  						HelpTextCodeCode =  "SharedLogisticsInvitationStatus.NameHelpText",
+					  						ListTextCodeCode =  "SharedLogisticsInvitationStatus.CH.NameListLable",
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "Port",
 					  						EnableFullscreenTextBox =  false,
+					  						IsRequired =  true,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  "Name",
+					  						FullLocalDefaultText =  "שם",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  "Name",
+					  						ListLocalDefaultText =  "שם",
+					  						HelpTextCode =  "Name",
+					  						HelpLocalDefaultText =  "שם",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -327,62 +266,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CountryId",
-					  						OldFieldName =  "CountryId",
-					  						ObjectTableName =  "TarrifFromTo",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Country",
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "SharedLogisticsInvitationStatus",
+					  						FieldsDataType =  "Text",
+					  						FieldCode =  "SharedLogisticsInvitationStatus.SearchFields",
+					  						Code =  "SearchFields",
+					  						MaxLength =  1000,
+					  						IsCustom =  false,
 					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CountryId",
-					  						ListPropertyPath =  "CountryId",
+					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "SharedLogisticsInvitationStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "CountryId",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  "Country",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "SharedLogisticsInvitationStatus.F.SearchFields",
+					  						HelpTextCodeCode =  "SharedLogisticsInvitationStatus.SearchFieldsHelpText",
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "Country",
 					  						EnableFullscreenTextBox =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search codes/ names",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  "Searching by :\n1: codes \n2: names",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -393,19 +330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
-
-		   ObjectTable TarrifFromToObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TarrifFromTo" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TarrifFromToObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TarrifFromTo").ToList();
-		       
-	      
-
-	         Screen TarrifFromToTarrifFromToHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TarrifFromTo.HeaderScreen", Name = "TarrifFromToHeaderScreen", ObjectTableId = TarrifFromToObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    TarrifFromToObjectTable.HeaderScreenId = TarrifFromToTarrifFromToHeaderScreenScreen0.Id;
-		    TarrifFromToObjectTable.HeaderScreenCode = TarrifFromToTarrifFromToHeaderScreenScreen0.Code;
-
-	   		  
+	    {    
 
 	    }
 
@@ -420,43 +345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable TarrifFromToObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TarrifFromTo" && d.Tenant == 0).FirstOrDefault(); 
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "CREV",
-                EnglishName =  "Created",
-                LocalName =  "Created",
-                IsManualEntry =  false,
-                ShortView =  true,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = TarrifFromToObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "UPEV",
-                EnglishName =  "Updated",
-                LocalName =  "Updated",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = TarrifFromToObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
+			ObjectTable SharedLogisticsInvitationStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SharedLogisticsInvitationStatus" && d.Tenant == 0).FirstOrDefault(); 
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -468,7 +357,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    
 }
 
-    
+
+	    public void FillSharedLogisticsInvitationStatus()
+        { 
+            var repo = new SharedLogisticsInvitationStatusRepository(0);
+            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
+            new FillCloseTables().FillCloseTable<
+                                SharedLogisticsInvitationStatus,
+                                Logitude.BL.InfrastructureModel.SharedLogisticsInvitationStatusDetails,
+                                SharedLogisticsInvitationStatusRepository>(repo, dic);
+        }
+
+	    
 
    }
     

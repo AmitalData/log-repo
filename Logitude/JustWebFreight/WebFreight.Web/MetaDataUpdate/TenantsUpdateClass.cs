@@ -884,9 +884,16 @@ namespace WebFreight.Web.MetaDataUpdate
                         var data = TableQueryReflector.GetTableListData(objectTable.Name);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
                         if (data != null)
                         {
+                        try
+                        {
                             var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(data);
                             var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
                             cachedCloseTableJosnByte.Add(objectTable.Name, buffer);
+                        }
+                        catch
+                        {
+                            string s = objectTable.Name;
+                        }
                         }
                         else
                         {

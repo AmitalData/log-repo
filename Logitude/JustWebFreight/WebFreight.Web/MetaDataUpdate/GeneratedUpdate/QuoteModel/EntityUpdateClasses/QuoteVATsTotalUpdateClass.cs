@@ -397,6 +397,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	         Screen QuoteVATsTotalQuoteVATsTotalHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteVATsTotal.HeaderScreen", Name = "QuoteVATsTotalHeaderScreen", ObjectTableId = QuoteVATsTotalObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    QuoteVATsTotalObjectTable.HeaderScreenId = QuoteVATsTotalQuoteVATsTotalHeaderScreenScreen0.Id;
+		    QuoteVATsTotalObjectTable.HeaderScreenCode = QuoteVATsTotalQuoteVATsTotalHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

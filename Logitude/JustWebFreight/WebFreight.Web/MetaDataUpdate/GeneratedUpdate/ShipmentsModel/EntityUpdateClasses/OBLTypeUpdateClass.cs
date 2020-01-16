@@ -343,6 +343,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	         Screen OBLTypeOBLTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OBLType.HeaderScreen", Name = "OBLTypeHeaderScreen", ObjectTableId = OBLTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    OBLTypeObjectTable.HeaderScreenId = OBLTypeOBLTypeHeaderScreenScreen0.Id;
+		    OBLTypeObjectTable.HeaderScreenCode = OBLTypeOBLTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

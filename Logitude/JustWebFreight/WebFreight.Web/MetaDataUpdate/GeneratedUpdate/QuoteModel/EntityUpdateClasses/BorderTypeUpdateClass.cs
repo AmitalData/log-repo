@@ -273,6 +273,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	         Screen BorderTypeBorderTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BorderType.HeaderScreen", Name = "BorderTypeHeaderScreen", ObjectTableId = BorderTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    BorderTypeObjectTable.HeaderScreenId = BorderTypeBorderTypeHeaderScreenScreen0.Id;
+		    BorderTypeObjectTable.HeaderScreenCode = BorderTypeBorderTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

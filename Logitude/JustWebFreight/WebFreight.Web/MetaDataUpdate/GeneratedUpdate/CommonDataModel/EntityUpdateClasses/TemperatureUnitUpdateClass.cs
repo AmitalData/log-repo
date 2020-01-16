@@ -343,6 +343,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen TemperatureUnitTemperatureUnitHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TemperatureUnit.HeaderScreen", Name = "TemperatureUnitHeaderScreen", ObjectTableId = TemperatureUnitObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    TemperatureUnitObjectTable.HeaderScreenId = TemperatureUnitTemperatureUnitHeaderScreenScreen0.Id;
+		    TemperatureUnitObjectTable.HeaderScreenCode = TemperatureUnitTemperatureUnitHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
