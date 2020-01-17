@@ -2345,6 +2345,7 @@
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerOpenFilesAmountController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
+    <Compile Include="ExternalAPIs\V1\GLAccountMoreDataController.cs" />
     <Compile Include="ExternalAPIs\V1\MasterController.cs" />
     <Compile Include="ExternalAPIs\V1\JournalController.cs" />
     <Compile Include="ExternalAPIs\V1\PODBlobInfoController.cs" />

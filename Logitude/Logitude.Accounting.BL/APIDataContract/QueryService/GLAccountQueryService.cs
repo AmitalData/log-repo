@@ -522,7 +522,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
             if (gLAccountPM == null)
             {
-                throw new Exception("GLAccount with internal number " + gLAccountPM.InternalNumber + " does not exist");
+                throw new Exception("GLAccount with internal number " + number + " does not exist");
             }
             return GLAccountDataMappingAndValidatin(gLAccountPM, tenant);
 
