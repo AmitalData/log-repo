@@ -128,6 +128,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
+                        IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
+                        ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
+                        ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+                        entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
@@ -166,6 +171,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 						IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Update(true);
+
+                        IShipmentsContext updatedEntityContext = ShipmentsContext.GetContext(tenant);
+                        ShipmentRepository updatedEntityRepository = new ShipmentRepository(updatedEntityContext);
+                        ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+                        entityPM = updatedShipmentQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);

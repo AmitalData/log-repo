@@ -2010,6 +2010,7 @@
     <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
+    <Compile Include="DataProviders\FlightBookingsManifestDataProvider.cs" />
     <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
     <Compile Include="DataContracts\EventTypeArgs.cs" />
@@ -2317,6 +2318,7 @@
     </Compile>
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
+    <Compile Include="ExternalAPIs\V1\APInvoiceCancellationController.cs" />
     <Compile Include="ExternalAPIs\V1\APInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceAdditionalDataController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
@@ -5230,6 +5232,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysCategoryManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />

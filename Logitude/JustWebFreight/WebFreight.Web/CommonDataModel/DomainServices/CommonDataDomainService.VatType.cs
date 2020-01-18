@@ -130,7 +130,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     Tenant = entityPoco.Tenant,
                     Description = entityPoco.Description,
                     LocalDescription = entityPoco.LocalDescription,
-                    ExternalVATCard = entityPoco.ExternalVATCard,
+                    ReceivablesExternalId = entityPoco.ReceivablesExternalId,
                     ExternalTAXItemId = entityPoco.ExternalTAXItemId
 
                 };

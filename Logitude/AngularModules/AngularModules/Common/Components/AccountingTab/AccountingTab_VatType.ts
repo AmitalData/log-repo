@@ -48,10 +48,17 @@ export class AccountingTab_VatType extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    get ExternalVATCard() { return this.EntityPM.ExternalVATCard; }
-    set ExternalVATCard(value: string) {
-        if (this.EntityPM.ExternalVATCard != value) {
-            this.EntityPM.ExternalVATCard = value;
+    get ReceivablesExternalId() { return this.EntityPM.ReceivablesExternalId; }
+    set ReceivablesExternalId(value: string) {
+        if (this.EntityPM.ReceivablesExternalId != value) {
+            this.EntityPM.ReceivablesExternalId = value;
+        }
+    }
+
+    get PayablesExternalId() { return this.EntityPM.PayablesExternalId; }
+    set PayablesExternalId(value: string) {
+        if (this.EntityPM.PayablesExternalId != value) {
+            this.EntityPM.PayablesExternalId = value;
         }
     }
 }

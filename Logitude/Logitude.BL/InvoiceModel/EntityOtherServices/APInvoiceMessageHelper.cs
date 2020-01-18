@@ -274,7 +274,13 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         Quantity=null,
                     };
 
-                    if(tenant == 303 || tenant == 814)
+                    VatType LineVat = VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
+                    if (LineVat != null)
+                    {
+                        lineElement.VATExternalId = LineVat.PayablesExternalId;
+                    }
+
+                    if (tenant == 303 || tenant == 814)
                     {
                         lineElement.Quantity = 0;
                     }

@@ -3883,7 +3883,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 LocalCurrencyAmount = item.LocalCurrencyAmount,
                                 InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
                                 ProfitCurrencyAmount = item.ProfitCurrencyAmount,
-                                ExternalVatCard = lineVatType.ExternalVATCard,
+                                ExternalVatCard = lineVatType.ReceivablesExternalId,
                                 ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                                 IsExpense = item.IsExpense,
                             };
@@ -3909,7 +3909,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                                 if (vatType != null)
                                 {
-                                    newItem.ExternalVatCard = vatType.ExternalVATCard;
+                                    newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                                     newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                                 }
 

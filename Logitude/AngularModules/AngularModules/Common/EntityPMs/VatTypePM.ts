@@ -99,9 +99,14 @@ export class VatTypePM {
     public set NewEntityPercentageDate(newValue: Date) { if (this.newEntityPercentageDate != newValue) { this.newEntityPercentageDate = newValue; this.MarkAsDirty("NewEntityPercentageDate"); } }
        
 	 
-    private externalVATCard: string;
-    public get ExternalVATCard() { return this.externalVATCard; }
-    public set ExternalVATCard(newValue: string) { if (this.externalVATCard != newValue) { this.externalVATCard = newValue; this.MarkAsDirty("ExternalVATCard"); } }
+    private payablesExternalId: string;
+    public get PayablesExternalId() { return this.payablesExternalId; }
+    public set PayablesExternalId(newValue: string) { if (this.payablesExternalId != newValue) { this.payablesExternalId = newValue; this.MarkAsDirty("PayablesExternalId"); } }
+       
+	 
+    private receivablesExternalId: string;
+    public get ReceivablesExternalId() { return this.receivablesExternalId; }
+    public set ReceivablesExternalId(newValue: string) { if (this.receivablesExternalId != newValue) { this.receivablesExternalId = newValue; this.MarkAsDirty("ReceivablesExternalId"); } }
        
 	 
     private externalTAXItemId: string;

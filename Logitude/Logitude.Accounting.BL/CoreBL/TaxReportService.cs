@@ -55,7 +55,8 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         public static string FilePath = @"E:\PCN874.txt";
-
+        private static Simplog.Data.CommonDataModel.EntityPOCOs.Card card;
+        private static List<TaxReportData> ledgerTransactons;
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
@@ -168,7 +169,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 //inputs
                 LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
-                List<TaxReportData> ledgerTransactons = ledgerTransactionRepository.GetLedgerTransactionsForTaxReport(taxReport.TaxReportMonth, tenant);
+                ledgerTransactons = ledgerTransactionRepository.GetLedgerTransactionsForTaxReport(taxReport.TaxReportMonth, tenant);
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
                 FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
                 FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
@@ -199,9 +200,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 foreach (TaxReportData a in ledgerTransactons)
                 {
                     VatNumber = null;
-                    Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
-
-                   
+                     card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
                     if (a.AccountingEntity == AccountingEntityValues.APInvoice)
                     {
                         aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
@@ -222,18 +221,16 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             VatNumber = card.VatNumber;
                         }
+                        else
+                        {
+                            SetVatAmounts(a);
+                        }
+                      
+
                     }
                     else
                     {
-                        InputVatAmount = a.LocalAmountDebit;
-
-                        if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
-                            VatNumber = card.VatNumber;
-                      
-                        //IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
-                        //decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
-                        var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
-                        InputInvoiceAmount = transactionSum - InputVatAmount;
+                        SetVatAmounts(a);
                     }
                     
                     if (VatNumber == null)
@@ -435,6 +432,18 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 referenceGroup = "0000";
             }
+        }
+
+       private static void SetVatAmounts(TaxReportData report)
+        {
+            InputVatAmount = report.LocalAmountDebit;
+
+            if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
+                VatNumber = card.VatNumber;
+          
+            var transactionSum = ledgerTransactons.Where(d => d.JournalId == report.JournalId && d.Reference == report.Reference).Sum(d => d.LocalAmountCredit);
+            InputInvoiceAmount = transactionSum - InputVatAmount;
+
         }
 
         private static string SetTransmitStatusByDocumentDate(DateTime referenceDate)

@@ -968,7 +968,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                     if (vatType != null)
                     {
-                        newItem.ExternalVatCard = vatType.ExternalVATCard;
+                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                         newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                     }
 
@@ -1180,7 +1180,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                     if (vatType != null)
                     {
-                        newItem.ExternalVatCard = vatType.ExternalVATCard;
+                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                         newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                     }
 
@@ -1591,7 +1591,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 LocalCurrencyAmount = item.LocalCurrencyAmount,
                                 InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
                                 ProfitCurrencyAmount = item.ProfitCurrencyAmount,
-                                ExternalVatCard = lineVatType.ExternalVATCard,
+                                ExternalVatCard = lineVatType.ReceivablesExternalId,
                                 ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                             };
 
@@ -1615,7 +1615,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                                 if (vatType != null)
                                 {
-                                    newItem.ExternalVatCard = vatType.ExternalVATCard;
+                                    newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                                     newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                                 }
 

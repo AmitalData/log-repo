@@ -40,9 +40,17 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public double? NewEntityPercentage { get; set; }
         public DateTime? NewEntityPercentageDate { get; set; }
 
+        //[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        //public string ExternalVATCard { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ExternalVATCard { get; set; }
-        
+        public string PayablesExternalId { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ReceivablesExternalId { get; set; }
+
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExternalTAXItemId { get; set; }
 

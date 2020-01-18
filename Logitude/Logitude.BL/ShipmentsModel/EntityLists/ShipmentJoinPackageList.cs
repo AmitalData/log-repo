@@ -14,6 +14,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime CreateDateTime { get; set; }
         public string ShipmentNumber { get; set; }
         public DateTime? MainCarriageETD { get; set; } //ETD
+        public DateTime? MainCarriageATD { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string MainCarriageFromPortName { get; set; } //POL
@@ -126,6 +127,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment2FromPortId { get; set; }
         public string Transshipment1FromPortId { get; set; }
         public string MainCarriageFromPortId { get; set; }
+   
 
         public DateTime? Transshipment3ETA { get; set; }
         public DateTime? Transshipment2ETA { get; set; }
@@ -152,5 +154,14 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public int? NumberOfContainers { get; set; }
         public string Reference1 { get; set; }
+        public string CustomAgentImportId { get; set; }
+        public string CustomAgentImportName { get; set; }
+        public string CommodityNumber { get; set; }
+        public int? PackageQuantity { get; set; }
+        public string MoveTypeName { get; set; }
+        public double? PackageVolumeitricWeight { get; set; }
+        public string MainCarriageCarrierCode { get; set; }
+        public string MainCarriageCarrierNumber { get; set; }
+        public DateTime? MainCarriageDateFilter { get; set; }
     }
 }

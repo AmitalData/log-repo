@@ -1014,7 +1014,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     item.VatTypeId = vatTypeId;
                     item.VatPercent = itemVatPercentage;
                     item.VatTypeCell = itemVatTypeCell;
-                    item.ExternalVATCard = vat.ExternalVATCard;
+                    item.ExternalVATCard = vat.ReceivablesExternalId;
                     item.ExternalTAXItemId = vat.ExternalTAXItemId;
                     item.QuoteCurrencyVatableAmount = myVatableAmount;
                     item.LocalCurrencyVatableAmount = myVatableAmountLocal;
@@ -1587,7 +1587,7 @@ export class QuoteChargeItem extends BaseComponent {
                         if (list) {
                             this.VatTypeName = list.EnglishName;
                             this.VatIsMultiPercentage = list.IsMultiPercentage;
-                            this.EntityPM.ExternalVATCard = list.ExternalVATCard;
+                            this.EntityPM.ExternalVATCard = list.ReceivablesExternalId;
                             this.EntityPM.ExternalTAXItemId = list.ExternalTAXItemId;
 
                             if (list.IsMultiPercentage) {
