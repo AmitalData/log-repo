@@ -202,11 +202,11 @@ export class InvoiceDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    ValidateAPInvoiceFullAccounting(currency: string, vendor: string, accountingdate: Date) {
+    ValidateAPInvoiceFullAccounting(currency: string, vendor: string, accountingdate: Date, invoiceNumber:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAPInvoiceValidatingList?currency=' + currency + "&vendor=" + vendor + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate), {
+            return this._http.get(this._apiUrl + '/GetAPInvoiceValidatingList?currency=' + currency + "&vendor=" + vendor + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate)+ "&invoiceNumber=" + invoiceNumber, {
                 headers: authHeader
             }).map(response => {
                 var result = response.json();

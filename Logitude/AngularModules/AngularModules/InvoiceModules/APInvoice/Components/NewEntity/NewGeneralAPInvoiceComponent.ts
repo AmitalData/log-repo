@@ -604,7 +604,10 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
+        var invoiceNumber_REGEXP1 = this.InvoiceNumber.match(/[^A-Za-z0-9]+/);
+        if (!this.InvoiceNumber.match(/[^A-Za-z0-9]+/))
+        {
+        }
         if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VendorId")));
         }
@@ -667,7 +670,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsAccountingActivated == true) {
                 var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-                invoiceDomainService.ValidateAPInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.VendorId, this.EntityPM.AccountingDate).subscribe((response: ServiceResponse) => {
+                invoiceDomainService.ValidateAPInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.VendorId, this.EntityPM.AccountingDate, this.EntityPM.InvoiceNumber).subscribe((response: ServiceResponse) => {
                     if (response != null) {
                         if (!response.HasError) {
                             this.ValidateInvoiceDate(errors);

@@ -31,6 +31,7 @@ using System.Data.Entity.Core;
 using System.Web;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.DataContracts;
+using System.Text.RegularExpressions;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -188,7 +189,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
-            ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate);
+            ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate, entityPM.InvoiceNumber);
             ValidateExternalAPI(entityPM, myCommonContext);
         }
 
@@ -525,7 +526,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        public static void ValidateFullAccounting(int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
+        public static void ValidateFullAccounting(int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate, string invoiceNumber)
         {
             var errors = "";
 
@@ -553,6 +554,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         errors += msg + ";";
                     }
                 }
+                Regex regex= new Regex("^[A-Za-z0-9]*$");
+                if (!regex.IsMatch(invoiceNumber))
+                {
+                    string msg = TranslateTextsClass.Translate("APInvoice.O.InvalidNumber", tenant, useLocal);
+                    errors += msg + ";";
+
+                }
+
 
                 IAccountingContext myContext = AccountingContext.GetContext(tenant);
                 AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
