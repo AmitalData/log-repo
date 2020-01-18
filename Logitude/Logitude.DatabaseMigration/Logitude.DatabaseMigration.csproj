@@ -1906,6 +1906,11 @@
     <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.Designer.cs">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001181129036_GLAccountNameForPrinting\chequesMigration.cs" />
+    <Compile Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.cs" />
+    <Compile Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.Designer.cs">
+      <DependentUpon>202001181132561_GLAccountNameForPrintingChequesMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3375,6 +3380,9 @@
     <EmbeddedResource Include="Migrations\201912301451035_WesamAddTextCodeCodeToTranslationsTable.resx">
       <DependentUpon>201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.resx">
+      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -3440,6 +3448,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.resx">
+      <DependentUpon>202001181132561_GLAccountNameForPrintingChequesMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
