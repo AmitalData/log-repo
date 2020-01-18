@@ -145,9 +145,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                       declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
 
                 }
+                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
- 
-                 decIdOrg = declarationOrg.Id;
+                declarationOrg.IsAmendment = false;
+                declarationOrg.ChangeSetOp = ChangeSetOperation.Update;
+                declarationUpdateService.Update(declarationOrg, true);
+                decIdOrg = declarationOrg.Id;
             isFromImporter = FromImporter;
 
 
@@ -158,7 +161,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //  DeclarationNumber = GetValueIDType(declaration.ID),
                 DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID),
                 Tenant = tenant,
-                IsConnectedToUnifreight = true,
+                IsConnectedToUnifreight = false,
                 CustomerId = declarationOrg.CustomerId,
                 DepartmentId = declarationOrg.DepartmentId,
                 TransportModeId = declarationOrg.TransportModeId,
@@ -224,7 +227,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 SetImporters(ref declarationPM, declaration, tenant , context);
             }
 
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), declarationPM.Tenant);
             declarationUpdateService.Update(declarationPM, true);
 
 
@@ -240,7 +242,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             declarationUpdateService.Update(declarationPM, true);
 
 
-            CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(tenant);
+
+
+
+                CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(tenant);
             List<CustomsDocumentsTicketPM> customsDocumentsTicketPMs=  customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationOrg.Id, "", "", "", tenant, "Declaration");
             CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), declarationPM.Tenant);
 

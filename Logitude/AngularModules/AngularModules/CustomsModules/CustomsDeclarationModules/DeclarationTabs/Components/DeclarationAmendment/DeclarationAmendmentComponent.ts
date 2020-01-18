@@ -224,6 +224,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             myResponse.Result.forEach((item) => {
                 item.LineNumber = i;
                 i++;
+                debugger;
                   if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
                  this.CanOpenNewAmendment = false;
                  this.amendmentObslist.Insert(item);
@@ -248,6 +249,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         searchParams.ResponseName = "Declaration Response";
         searchParams.RequestVIA = SendRequestVIA.DCABatch;
         searchParams.ForcePersonalSign = false;
+        this.CurrentSession.StartBusyIndicatorCreating();
 
         this._declarationWebService
             .GetNewAmendmentDeclaration(searchParams)
@@ -261,7 +263,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                             setTimeout(() => {
                                 this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                             }, 10);
-                        this.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                           
                             this.openNewDeclaration(entity.Id);
 
@@ -289,7 +291,8 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: TextCodeTranslator.Translate("General.MH.Declaration") });
+                cmpRef.instance.Run({
+                    EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;

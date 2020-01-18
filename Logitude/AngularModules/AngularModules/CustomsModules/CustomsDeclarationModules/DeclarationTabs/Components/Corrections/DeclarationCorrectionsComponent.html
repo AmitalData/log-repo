@@ -257,7 +257,7 @@
                                 </td>
 
                                 <td>
-                                    <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'"  [IsDisabled] ="IsAmendmentDeficitInitiatedEnabled" (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'"  (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
                                 <!--<td style="width:7px"></td>-->
 
