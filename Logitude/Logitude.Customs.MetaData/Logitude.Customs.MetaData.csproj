@@ -146,6 +146,7 @@
     <None Include="EntityFiles\RefundCustomerActivityType.lxml" />
     <None Include="EntityFiles\SealCompletenes.lxml" />
     <None Include="EntityFiles\SealType.lxml" />
+    <None Include="EntityFiles\SealUpdateReasonType.lxml" />
     <None Include="EntityFiles\SeizureFactorType.lxml" />
     <None Include="EntityFiles\SeizureMethodType.lxml" />
     <None Include="EntityFiles\TPGFileType.lxml" />
