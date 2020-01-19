@@ -41,6 +41,33 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationNumber == number && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+
+
+        public Declaration GetDeclarationNotAmendmentDontDisplayInList(string id,string amendmentOriginalDeclartation,  int tenant)
+        {
+
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return (from a in context.Declarations
+                    where ((a.DeclarationNumber == id && a.AmendmentDontDisplayInList == false) || (a.DeclarationNumber == amendmentOriginalDeclartation && a.AmendmentDontDisplayInList == false))
+                    && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+
+        public Declaration GetAcceptDeclarationAmendment(string id, int tenant)
+        {
+
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return (from a in context.Declarations
+                    where ((a.DeclarationNumber == id && a.AmendmentDontDisplayInList == false) || (a.AmendmentOriginalDeclartation == id && a.AmendmentDontDisplayInList == false))
+                    && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
         public void GetDailyStatistic(int tenant,
             out int TotDec,
             out int TotDecPay,
@@ -286,6 +313,17 @@ namespace Logitude.Customs.Data.Repsitories
                                               select a).ToList();
 
             return declarations;
+
+        }
+
+        public Declaration GetDeclarationByFunctionalReferenceID(string declarationNumber,  string functionalReferenceID)
+        {
+
+           Declaration declaration = (from a in context.Declarations
+                                              where declarationNumber == a.Id && functionalReferenceID ==a.AmendmentRequestNumber
+                                       select a).FirstOrDefault();
+
+            return declaration;
 
         }
 

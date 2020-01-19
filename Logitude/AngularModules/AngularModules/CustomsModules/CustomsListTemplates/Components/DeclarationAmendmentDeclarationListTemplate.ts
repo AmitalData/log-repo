@@ -12,6 +12,7 @@ import { GenericRequestParams } from '../../../Customs/DataContract/RequestParam
 import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationWebService } from '../../../Customs/Services/WebServices/DeclarationWebService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     moduleId: module.id,
@@ -31,16 +32,19 @@ export class DeclarationAmendmentListTemplate {
 
     public IsDisplayOnly: boolean = false;
     public color: string;
-    constructor(private CD: ChangeDetectorRef, private _declarationWebService: DeclarationWebService) {
+    constructor(private CD: ChangeDetectorRef, private _declarationWebService: DeclarationWebService, private EntityResourceService: EntityResourceService) {
         
     }
 
     setVariables(DeclarationListRecord: DeclarationList, fieldName: string, additionalData: any)
     {
-          this.rowData = DeclarationListRecord;
-        this.fieldName = fieldName;
-        this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as DeclarationPM;
-          this.CD.detectChanges();
+        this.EntityResourceService.getEntityResourceByTableName("General").subscribe(response => {
+
+            this.rowData = DeclarationListRecord;
+            this.fieldName = fieldName;
+            this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as DeclarationPM;
+            this.CD.detectChanges();
+        });
     }
  
 
@@ -90,10 +94,10 @@ export class DeclarationAmendmentListTemplate {
 
 
     openNewDeclaration(id: string) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: TextCodeTranslator.Translate("General.MH.Declaration") });
+                cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;

@@ -389,7 +389,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
-        public IDbSet<DWHSetting> DWHSettings { get; set; }
+        //public IDbSet<DWHSetting> DWHSettings { get; set; }
         public IDbSet<Warehouse> Warehouses
         {
             get;
@@ -4176,7 +4176,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TMProjectMap());
             #endregion
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
-            modelBuilder.Configurations.Add(new DWHSettingMap());
+            //modelBuilder.Configurations.Add(new DWHSettingMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
             modelBuilder.Configurations.Add(new CustomerFieldsUpdateSettingMap());

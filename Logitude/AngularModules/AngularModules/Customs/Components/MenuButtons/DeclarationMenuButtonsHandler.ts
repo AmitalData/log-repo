@@ -199,7 +199,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         if (this.EntityPM.IsCourierDeclaration) {
                             button.IsHidden = false;
                             if (!this.IsDisplayOnly) {
-                                if (!(this.EntityPM.CourierPaymentStatusCode != 'P' &&
+                                if (!((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null  ) &&
                                     (this.EntityPM.CourierManifestStatusCode == 'V' || this.EntityPM.CourierManifestStatusCode == 'R')
                                 )){
 

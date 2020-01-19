@@ -14118,6 +14118,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DifferentTotals", DefaultText = "Tax to pay is different than File taxes , screen is display only", LocalDefaultText = "המס לתשלום שונה מהמיסים לתיק , המסך לתצוגה בלבד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclaration", DefaultText = "Declaration was already paid , screen is display only", LocalDefaultText = "הצהרה כבר שולמה , המסך לתצוגה בלבד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.WaitingApproval", DefaultText = "Declaration Paid , waiting for constraint approval", LocalDefaultText = "טיוטה הוגשה , ממתינה לאילוץ הגשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAmendmentDontDisplay", DefaultText = "Amendment Declaration , screen is display only", LocalDefaultText = "לתצוגה בלבד - הצהרת תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAmendment", DefaultText = "Amendment Declaration", LocalDefaultText = "הצהרת תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FuturePayment", DefaultText = "Future payment was done", LocalDefaultText = "בוצעה הגשה עתידית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclaration", DefaultText = "Declaration data was changed , please send again before trying to pay", LocalDefaultText = "בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשת תשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -17470,6 +17472,55 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             }, EventTypesRepository, tenantEventTypes);
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMA",
+                EnglishName = "Declaration Amendment Approved",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה אושרה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMP",
+                EnglishName = "Declaration Amendment Partial Approval",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה אושרה חלקית",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMD",
+                EnglishName = "Declaration Amendment Denial",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה נדחתה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMC",
+                EnglishName = "Declaration Amendment Cancelled",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה בוטלה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
             EventTypesRepository.SubmitChanges();
         }
 
