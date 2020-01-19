@@ -24,6 +24,7 @@
 
             //**OLD ENV 
             ////"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ57;port=1521;sid=amital"  ///573 --מפסיקים הפצת customs ל 5.7
+            ///       "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"  ///583
             //** OLD ENV
 
 
@@ -31,9 +32,8 @@
             var connectionInfo =
                 //OracleConnectionInfo.CreateConnection("User Id=devart;  Password=devart; Server=srv64bit;");
                 OracleConnectionInfo.CreateConnection(
-               // "User Id=AMINETCST_MAIN;  Password=AMINETCST_MAIN;Direct=True;Data Source=UNIDB2016;port=1521;sid=amital" ///593    
-                "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"  ///583
-
+                    ///please note -we have only 1 env to update !!!
+                "User Id=AMINETCST_MAIN;  Password=AMINETCST_MAIN;Direct=True;Data Source=UNIDB2016;port=1521;sid=amital" ///593    
                 );
 
 
