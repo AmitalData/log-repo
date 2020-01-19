@@ -220,7 +220,7 @@ import { CourierCustomStatusListService } from './Services/StandardLists/Courier
 import { PendingByKeywordListService } from './Services/StandardLists/PendingByKeywordListService';
 import { HazardousSubstanceListService } from './Services/StandardLists/HazardousSubstanceListService';
 import { SealCompletenesListService } from './Services/StandardLists/SealCompletenesListService';
-
+import { SealTypeListService } from './Services/StandardLists/SealTypeListService';
 
 //#endregion
 
@@ -574,6 +574,7 @@ export class ModuleProviders {
             case "CourierCustomStatusListService": { myResult = new CourierCustomStatusListService(); break; }
             case "HazardousSubstanceListService": { myResult = new HazardousSubstanceListService(); break; }
             case "SealCompletenesListService": { myResult = new SealCompletenesListService(); break; }
+            case "SealTypeListService": { myResult = new SealTypeListService(); break; }
              //#endregion                
 
             //#region StandardPMs
