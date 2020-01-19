@@ -179,306 +179,313 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         private APInvoicePM GetMappedEntity(int tenant, APInvoicePM entityPM)
         {
-            string apinvoiceId = entityPM.Id;
-
-            APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(repository.context);
-            APInvoiceEntityRepository invoiceEntityRepository = new APInvoiceEntityRepository(repository.context);
-            APInvoicePaymentRepository invoicePaymentRepository = new APInvoicePaymentRepository(repository.context);
-            APInvoiceTotalVATRepository myTotalVATRepository = new APInvoiceTotalVATRepository(repository.context);
-            APInvoiceEntityQuery apInvoiceEntityQuery = new APInvoiceEntityQuery(invoiceEntityRepository);
-            APInvoicePaymentQuery apInvoicePaymentQuery = new APInvoicePaymentQuery(invoicePaymentRepository);
-            APInvoiceTotalVATQuery myTotalVATQuery = new APInvoiceTotalVATQuery(myTotalVATRepository);
-
-            entityPM.InvoiceEntities = apInvoiceEntityQuery.GetInvoiceEntitiesPMForInvoice(apinvoiceId, tenant);
-            entityPM.InvoicePayments = apInvoicePaymentQuery.GetAPInvoicePaymentPMsForInvoice(apinvoiceId, tenant);
-            entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(apinvoiceId, tenant).ToList();
-
-            List<APInvoiceLine> allInvoiceLines = null;
-            List<APInvoiceLinePM> allInvoiceLinesPM = null;
-
-            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
-            if (entityPM.IsMultipleEntities)
+            if (entityPM != null)
             {
-                double? d1 = 0;
-                double? d2 = 0;
+                string apinvoiceId = entityPM.Id;
 
-                d1 = entityPM.SubTotalInInvoiceCurrency;
-                d2 = entityPM.TotalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
-                d1 = (double)MethodHelper.Round(d1, 2);
-                d2 = (double)MethodHelper.Round(d2, 2);
-                entityPM.AmountInInvoiceCurrency_Summary = (double)MethodHelper.Round(d1 + d2, 2);
+                APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(repository.context);
+                APInvoiceEntityRepository invoiceEntityRepository = new APInvoiceEntityRepository(repository.context);
+                APInvoicePaymentRepository invoicePaymentRepository = new APInvoicePaymentRepository(repository.context);
+                APInvoiceTotalVATRepository myTotalVATRepository = new APInvoiceTotalVATRepository(repository.context);
+                APInvoiceEntityQuery apInvoiceEntityQuery = new APInvoiceEntityQuery(invoiceEntityRepository);
+                APInvoicePaymentQuery apInvoicePaymentQuery = new APInvoicePaymentQuery(invoicePaymentRepository);
+                APInvoiceTotalVATQuery myTotalVATQuery = new APInvoiceTotalVATQuery(myTotalVATRepository);
 
-                d1 = entityPM.SubTotalInLocalCurrency;
-                d2 = entityPM.TotalVATs.Sum(s => s.LocalVATAmount);
-                d1 = (double)MethodHelper.Round(d1, 2);
-                d2 = (double)MethodHelper.Round(d2, 2);
-                entityPM.AmountInLocalCurrency_Summary = (double)MethodHelper.Round(d1 + d2, 2);
+                entityPM.InvoiceEntities = apInvoiceEntityQuery.GetInvoiceEntitiesPMForInvoice(apinvoiceId, tenant);
+                entityPM.InvoicePayments = apInvoicePaymentQuery.GetAPInvoicePaymentPMsForInvoice(apinvoiceId, tenant);
+                entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(apinvoiceId, tenant).ToList();
 
-                if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
+                List<APInvoiceLine> allInvoiceLines = null;
+                List<APInvoiceLinePM> allInvoiceLinesPM = null;
+
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+                if (entityPM.IsMultipleEntities)
                 {
-                    entityPM.AmountInProfitCurrency_Summary = entityPM.AmountInInvoiceCurrency_Summary;
-                }
+                    double? d1 = 0;
+                    double? d2 = 0;
 
-                else if (entityPM.ProfitCurrencyId == entityPM.LocalCurrencyId)
-                {
-                    entityPM.AmountInProfitCurrency_Summary = entityPM.AmountInLocalCurrency_Summary;
-                }
+                    d1 = entityPM.SubTotalInInvoiceCurrency;
+                    d2 = entityPM.TotalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
+                    d1 = (double)MethodHelper.Round(d1, 2);
+                    d2 = (double)MethodHelper.Round(d2, 2);
+                    entityPM.AmountInInvoiceCurrency_Summary = (double)MethodHelper.Round(d1 + d2, 2);
 
-                else
-                {
-                    entityPM.AmountInProfitCurrency_Summary = (double)MethodHelper.Round(entityPM.AmountInLocalCurrency_Summary / entityPM.ProfitCurrencyExchangeRate, 2);
+                    d1 = entityPM.SubTotalInLocalCurrency;
+                    d2 = entityPM.TotalVATs.Sum(s => s.LocalVATAmount);
+                    d1 = (double)MethodHelper.Round(d1, 2);
+                    d2 = (double)MethodHelper.Round(d2, 2);
+                    entityPM.AmountInLocalCurrency_Summary = (double)MethodHelper.Round(d1 + d2, 2);
 
-                }
+                    if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
+                    {
+                        entityPM.AmountInProfitCurrency_Summary = entityPM.AmountInInvoiceCurrency_Summary;
+                    }
 
-                if (entityPM.InvoiceEntities.Count > 0)
-                {
-                    List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups
-                                                        where d.Tenant == tenant
-                                                        select d).ToList();
+                    else if (entityPM.ProfitCurrencyId == entityPM.LocalCurrencyId)
+                    {
+                        entityPM.AmountInProfitCurrency_Summary = entityPM.AmountInLocalCurrency_Summary;
+                    }
 
-                    VatTypeRepository vatTypeRepository = new VatTypeRepository(myCommonContext);
-                    List<VatType> allVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
+                    else
+                    {
+                        entityPM.AmountInProfitCurrency_Summary = (double)MethodHelper.Round(entityPM.AmountInLocalCurrency_Summary / entityPM.ProfitCurrencyExchangeRate, 2);
 
-                    VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
-                    VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
-                    List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
+                    }
 
-                    #region InvoiceMultipleShipments
+                    if (entityPM.InvoiceEntities.Count > 0)
+                    {
+                        List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups
+                                                            where d.Tenant == tenant
+                                                            select d).ToList();
 
-                    allInvoiceLines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(apinvoiceId, tenant).ToList();
+                        VatTypeRepository vatTypeRepository = new VatTypeRepository(myCommonContext);
+                        List<VatType> allVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
-                    List<string> shipmentsIds = entityPM.InvoiceEntities.Select(s => s.EntityId).ToList();
-                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                    List<ShipmentDataView> myShipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIds, tenant);
+                        VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
+                        VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
+                        List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
 
-                    foreach (ShipmentDataView item in myShipments)
-                    {                        
-                        string myLongMaster = EntityFieldsHelper.GetLongMasterField(item);
+                        #region InvoiceMultipleShipments
 
-                        APInvoiceMultipleShipmentPM entityShipment = new APInvoiceMultipleShipmentPM()
+                        allInvoiceLines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(apinvoiceId, tenant).ToList();
+
+                        List<string> shipmentsIds = entityPM.InvoiceEntities.Select(s => s.EntityId).ToList();
+                        ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                        List<ShipmentDataView> myShipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIds, tenant);
+
+                        foreach (ShipmentDataView item in myShipments)
                         {
-                            ShipmentId = item.Id,
-                            APInvoiceId = entityPM.Id,
-                            Tenant = tenant,
-                            House = item.House,
-                            Master = item.Master,
-                            LongMaster = myLongMaster,
-                            ShipmentNumber = item.ShipmentNumber,
-                            ShipmentLevelCode = item.ShipmentLevelCode,
-                            MainCarriageCarrierName = item.MainCarriageCarrierName,
-                            PartnerType = item.ShipmentLevelCode == "C" ? "Agent" : "Customer",
-                            PartnerName = item.ShipmentLevelCode == "C" ? item.AgentName : item.CustomerName,
-                            OperationalDate=item.OperationalDate,
-                            MainCarriageOrigin=item.FromPortCode,
-                            MainCarriageFinalDestination=item.ToPortCode,
-                            ChargeableWeight=item.ChargeableWeight,
-                            TotalReceivables=item.AccountedReceivablesInProfitCurrency,
-                            Profit= item.ProfitInProfitCurrency,
-                            
+                            string myLongMaster = EntityFieldsHelper.GetLongMasterField(item);
 
-                        };
-
-                        APInvoiceEntityPM myEntity = entityPM.InvoiceEntities.Where(d => d.EntityId == item.Id).FirstOrDefault();
-                        if (myEntity != null)
-                        {
-                            entityShipment.IndexOrder = myEntity.IndexOrder;
-                        }
-
-                        if (entityPM.InvoiceCurrencyId == entityPM.ProfitCurrencyId)
-                        {
-                            entityShipment.OpenAmount = item.OpenPayablesInProfitCurrency;
-                            entityShipment.AccountedAmount = item.AccountedPayablesInProfitCurrency;
-                        }
-
-                        else
-                        {
-                            entityShipment.OpenAmount = (double?)MethodHelper.Round(item.OpenPayablesInLocalCurrency / entityPM.InvoiceCurrencyExchangeRate, 2);
-                            entityShipment.AccountedAmount = (double?)MethodHelper.Round(item.AccountedPayablesInLocalCurrency / entityPM.InvoiceCurrencyExchangeRate, 2);
-                        }
-
-                        entityShipment.ExpectedAmount = entityShipment.OpenAmount + entityShipment.AccountedAmount;
-
-                        List<APInvoiceLine> myInvoiceLines = allInvoiceLines.Where(d => d.EntityId == item.Id).ToList();
-
-                        if (myInvoiceLines.Count == 0)
-                        {
-                            entityShipment.SubTotalInLocalCurrency = 0;
-                            entityShipment.SubTotalInInvoiceCurrency = 0;
-                            entityShipment.TotalAmount = 0;
-                            entityShipment.TotalVATAmount = 0;
-                        }
-
-                        else
-                        {
-                            entityShipment.SubTotalInLocalCurrency = (double?)MethodHelper.Round(myInvoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
-                            entityShipment.SubTotalInInvoiceCurrency = (double?)MethodHelper.Round(myInvoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
-
-                            List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
-                            foreach (APInvoiceLine line in myInvoiceLines)
+                            APInvoiceMultipleShipmentPM entityShipment = new APInvoiceMultipleShipmentPM()
                             {
-                                #region
-                                VatType lineVatType = allVatTypes.Where(d => d.Id == line.VatTypeId).FirstOrDefault();
+                                ShipmentId = item.Id,
+                                APInvoiceId = entityPM.Id,
+                                Tenant = tenant,
+                                House = item.House,
+                                Master = item.Master,
+                                LongMaster = myLongMaster,
+                                ShipmentNumber = item.ShipmentNumber,
+                                ShipmentLevelCode = item.ShipmentLevelCode,
+                                MainCarriageCarrierName = item.MainCarriageCarrierName,
+                                PartnerType = item.ShipmentLevelCode == "C" ? "Agent" : "Customer",
+                                PartnerName = item.ShipmentLevelCode == "C" ? item.AgentName : item.CustomerName,
+                                OperationalDate = item.OperationalDate,
+                                MainCarriageOrigin = item.FromPortCode,
+                                MainCarriageFinalDestination = item.ToPortCode,
+                                ChargeableWeight = item.ChargeableWeight,
+                                TotalReceivables = item.AccountedReceivablesInProfitCurrency,
+                                Profit = item.ProfitInProfitCurrency,
 
-                                if (lineVatType != null)
+
+                            };
+
+                            APInvoiceEntityPM myEntity = entityPM.InvoiceEntities.Where(d => d.EntityId == item.Id).FirstOrDefault();
+                            if (myEntity != null)
+                            {
+                                entityShipment.IndexOrder = myEntity.IndexOrder;
+                            }
+
+                            if (entityPM.InvoiceCurrencyId == entityPM.ProfitCurrencyId)
+                            {
+                                entityShipment.OpenAmount = item.OpenPayablesInProfitCurrency;
+                                entityShipment.AccountedAmount = item.AccountedPayablesInProfitCurrency;
+                            }
+
+                            else
+                            {
+                                entityShipment.OpenAmount = (double?)MethodHelper.Round(item.OpenPayablesInLocalCurrency / entityPM.InvoiceCurrencyExchangeRate, 2);
+                                entityShipment.AccountedAmount = (double?)MethodHelper.Round(item.AccountedPayablesInLocalCurrency / entityPM.InvoiceCurrencyExchangeRate, 2);
+                            }
+
+                            entityShipment.ExpectedAmount = entityShipment.OpenAmount + entityShipment.AccountedAmount;
+
+                            List<APInvoiceLine> myInvoiceLines = allInvoiceLines.Where(d => d.EntityId == item.Id).ToList();
+
+                            if (myInvoiceLines.Count == 0)
+                            {
+                                entityShipment.SubTotalInLocalCurrency = 0;
+                                entityShipment.SubTotalInInvoiceCurrency = 0;
+                                entityShipment.TotalAmount = 0;
+                                entityShipment.TotalVATAmount = 0;
+                            }
+
+                            else
+                            {
+                                entityShipment.SubTotalInLocalCurrency = (double?)MethodHelper.Round(myInvoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
+                                entityShipment.SubTotalInInvoiceCurrency = (double?)MethodHelper.Round(myInvoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
+
+                                List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
+                                foreach (APInvoiceLine line in myInvoiceLines)
                                 {
-                                    if (!lineVatType.IsMultiPercentage)
-                                    {
-                                        InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                                        {
-                                            Id = line.VatTypeId,
-                                            VatTypeId = line.VatTypeId,
-                                            VatTypePercentage = line.VatPercentage,
-                                            LocalCurrencyAmount = line.LocalCurrencyAmount,
-                                            InvoiceCurrencyAmount = line.InvoiceCurrencyAmount,
-                                            ProfitCurrencyAmount = line.ProfitCurrencyAmount,
-                                        };
+                                    #region
+                                    VatType lineVatType = allVatTypes.Where(d => d.Id == line.VatTypeId).FirstOrDefault();
 
-                                        group_Source.Add(newItem);
-                                    }
-
-                                    else
+                                    if (lineVatType != null)
                                     {
-                                        List<VATTypesGroup> myVatGroups = allVatGroups.Where(d => d.GroupVATTypeId == line.VatTypeId).ToList();
-                                        foreach (VATTypesGroup itemGroup in myVatGroups)
+                                        if (!lineVatType.IsMultiPercentage)
                                         {
                                             InvoiceTotalsClass newItem = new InvoiceTotalsClass()
                                             {
-                                                Id = itemGroup.SingleVATTypeId,
-                                                VatTypeId = itemGroup.SingleVATTypeId,
+                                                Id = line.VatTypeId,
+                                                VatTypeId = line.VatTypeId,
+                                                VatTypePercentage = line.VatPercentage,
                                                 LocalCurrencyAmount = line.LocalCurrencyAmount,
                                                 InvoiceCurrencyAmount = line.InvoiceCurrencyAmount,
                                                 ProfitCurrencyAmount = line.ProfitCurrencyAmount,
                                             };
 
-
-                                            VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                            if (myPercentagePM != null)
-                                            {
-                                                newItem.VatTypePercentage = myPercentagePM.Percentage;
-                                            }
-
                                             group_Source.Add(newItem);
                                         }
+
+                                        else
+                                        {
+                                            List<VATTypesGroup> myVatGroups = allVatGroups.Where(d => d.GroupVATTypeId == line.VatTypeId).ToList();
+                                            foreach (VATTypesGroup itemGroup in myVatGroups)
+                                            {
+                                                InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+                                                {
+                                                    Id = itemGroup.SingleVATTypeId,
+                                                    VatTypeId = itemGroup.SingleVATTypeId,
+                                                    LocalCurrencyAmount = line.LocalCurrencyAmount,
+                                                    InvoiceCurrencyAmount = line.InvoiceCurrencyAmount,
+                                                    ProfitCurrencyAmount = line.ProfitCurrencyAmount,
+                                                };
+
+
+                                                VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                                                if (myPercentagePM != null)
+                                                {
+                                                    newItem.VatTypePercentage = myPercentagePM.Percentage;
+                                                }
+
+                                                group_Source.Add(newItem);
+                                            }
+                                        }
                                     }
+                                    #endregion
                                 }
-                                #endregion
+
+                                List<InvoiceTotalsClass> group_data
+                                    = (from items in group_Source
+                                       group items by new { items.VatTypeId, items.VatTypePercentage } into g
+                                       select new InvoiceTotalsClass()
+                                       {
+                                           Id = g.Key.VatTypeId,
+                                           VatTypeId = g.Key.VatTypeId,
+                                           VatTypePercentage = g.Key.VatTypePercentage,
+                                           LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
+                                           InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
+                                           ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
+                                       }).ToList();
+
+                                entityShipment.TotalVATAmount = (double?)MethodHelper.Round(group_data.Sum(s => s.InvoiceCurrencyAmount * s.VatTypePercentage / 100), 2);
+                                entityShipment.TotalAmount = (double?)MethodHelper.Round(entityShipment.SubTotalInInvoiceCurrency + entityShipment.TotalVATAmount, 2);
+
+                                foreach (var itemGroup in group_data)
+                                {
+                                    VatType lineVatType = allVatTypes.Where(d => d.Id == itemGroup.VatTypeId).FirstOrDefault();
+
+                                    if (itemGroup.VatTypePercentage == null)
+                                    {
+                                        itemGroup.VatTypePercentage = 0;
+                                    }
+
+                                    if (itemGroup.LocalCurrencyAmount == null)
+                                    {
+                                        itemGroup.LocalCurrencyAmount = 0;
+                                    }
+
+                                    if (itemGroup.InvoiceCurrencyAmount == null)
+                                    {
+                                        itemGroup.InvoiceCurrencyAmount = 0;
+                                    }
+
+                                    if (itemGroup.ProfitCurrencyAmount == null)
+                                    {
+                                        itemGroup.ProfitCurrencyAmount = 0;
+                                    }
+
+                                    string VATCell = lineVatType.EnglishName + " (" + itemGroup.VatTypePercentage + "%)";
+
+                                    string myString = itemGroup.VatTypeId;
+                                    myString += ":" + itemGroup.VatTypePercentage;
+                                    myString += ":" + itemGroup.LocalCurrencyAmount;
+                                    myString += ":" + itemGroup.InvoiceCurrencyAmount;
+                                    myString += ":" + itemGroup.ProfitCurrencyAmount;
+                                    myString += ":" + VATCell;
+                                    entityShipment.TotalVatsList.Add(myString);
+                                }
                             }
 
-                            List<InvoiceTotalsClass> group_data
-                                = (from items in group_Source
-                                   group items by new { items.VatTypeId, items.VatTypePercentage } into g
-                                   select new InvoiceTotalsClass()
-                                   {
-                                       Id = g.Key.VatTypeId,
-                                       VatTypeId = g.Key.VatTypeId,
-                                       VatTypePercentage = g.Key.VatTypePercentage,
-                                       LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
-                                       InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
-                                       ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
-                                   }).ToList();
-
-                            entityShipment.TotalVATAmount = (double?)MethodHelper.Round(group_data.Sum(s => s.InvoiceCurrencyAmount * s.VatTypePercentage / 100), 2);
-                            entityShipment.TotalAmount = (double?)MethodHelper.Round(entityShipment.SubTotalInInvoiceCurrency + entityShipment.TotalVATAmount, 2);
-
-                            foreach (var itemGroup in group_data)
-                            {
-                                VatType lineVatType = allVatTypes.Where(d => d.Id == itemGroup.VatTypeId).FirstOrDefault();
-
-                                if (itemGroup.VatTypePercentage == null)
-                                {
-                                    itemGroup.VatTypePercentage = 0;
-                                }
-
-                                if (itemGroup.LocalCurrencyAmount == null)
-                                {
-                                    itemGroup.LocalCurrencyAmount = 0;
-                                }
-
-                                if (itemGroup.InvoiceCurrencyAmount == null)
-                                {
-                                    itemGroup.InvoiceCurrencyAmount = 0;
-                                }
-
-                                if (itemGroup.ProfitCurrencyAmount == null)
-                                {
-                                    itemGroup.ProfitCurrencyAmount = 0;
-                                }
-
-                                string VATCell = lineVatType.EnglishName + " (" + itemGroup.VatTypePercentage + "%)";
-
-                                string myString = itemGroup.VatTypeId;
-                                myString += ":" + itemGroup.VatTypePercentage;
-                                myString += ":" + itemGroup.LocalCurrencyAmount;
-                                myString += ":" + itemGroup.InvoiceCurrencyAmount;
-                                myString += ":" + itemGroup.ProfitCurrencyAmount;
-                                myString += ":" + VATCell;
-                                entityShipment.TotalVatsList.Add(myString);
-                            }
+                            entityPM.InvoiceMultipleShipments.Add(entityShipment);
                         }
-
-                        entityPM.InvoiceMultipleShipments.Add(entityShipment);
+                        #endregion
                     }
-                    #endregion
-                }
-            }
-
-            else
-            {
-                APInvoiceLineQuery apInvoiceLineQuery = new APInvoiceLineQuery(invoiceLineRepository);
-                allInvoiceLinesPM = apInvoiceLineQuery.GetInvoiceLinesByInvoiceId(entityPM.Id, tenant);
-                entityPM.InvoiceLines = allInvoiceLinesPM;
-
-                if (!string.IsNullOrEmpty(entityPM.MainEntityId))
-                {
-                    IShipmentsContext iShipmentsContext = ShipmentsContext.GetContext(tenant);
-                    entityPM.ShipmentConcurrencyGUID = (from d in iShipmentsContext.Shipments where d.Id == entityPM.MainEntityId select d.ConcurrencyGUID).FirstOrDefault();
-                    entityPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
-                }
-            }
-
-            foreach (APInvoiceEntityPM item in entityPM.InvoiceEntities)
-            {
-                if (string.IsNullOrEmpty(entityPM.ConnectedEntityReferences))
-                {
-                    entityPM.ConnectedEntityReferences = item.EntityReference;
                 }
 
                 else
                 {
-                    entityPM.ConnectedEntityReferences += "," + item.EntityReference;
+                    APInvoiceLineQuery apInvoiceLineQuery = new APInvoiceLineQuery(invoiceLineRepository);
+                    allInvoiceLinesPM = apInvoiceLineQuery.GetInvoiceLinesByInvoiceId(entityPM.Id, tenant);
+                    entityPM.InvoiceLines = allInvoiceLinesPM;
+
+                    if (!string.IsNullOrEmpty(entityPM.MainEntityId))
+                    {
+                        IShipmentsContext iShipmentsContext = ShipmentsContext.GetContext(tenant);
+                        entityPM.ShipmentConcurrencyGUID = (from d in iShipmentsContext.Shipments where d.Id == entityPM.MainEntityId select d.ConcurrencyGUID).FirstOrDefault();
+                        entityPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
+                    }
                 }
-            }
 
-            entityPM.TransferLines = this.GetAPInvoiceTransferLines(entityPM, allInvoiceLines, allInvoiceLinesPM);
-
-            //Full Accounting 
-            TenantRepository tenantRepository = new TenantRepository(myCommonContext);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
-            {
-                JournalRepository rep = new JournalRepository(tenant);
-                JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
-                if (journal != null)
+                foreach (APInvoiceEntityPM item in entityPM.InvoiceEntities)
                 {
-                    entityPM.JournalId = journal.JournalId;
-                    entityPM.JournalNumber = journal.JournalNumber;
+                    if (string.IsNullOrEmpty(entityPM.ConnectedEntityReferences))
+                    {
+                        entityPM.ConnectedEntityReferences = item.EntityReference;
+                    }
+
+                    else
+                    {
+                        entityPM.ConnectedEntityReferences += "," + item.EntityReference;
+                    }
                 }
-            }
 
-            APInvoicePM securedPM = new APInvoicePM();
-            SecuredMapping.GetMappedPM(entityPM, securedPM, "APInvoice", tenant);
+                entityPM.TransferLines = this.GetAPInvoiceTransferLines(entityPM, allInvoiceLines, allInvoiceLinesPM);
 
-            if (securedPM != null)
-            {
-                securedPM = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
-
-                if (securedPM == null)
+                //Full Accounting 
+                TenantRepository tenantRepository = new TenantRepository(myCommonContext);
+                Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+                if (tenantPOCO != null && tenantPOCO.AccountingActivated)
                 {
-                    throw new ApplicationException("This invoice is branch Restricted");
+                    JournalRepository rep = new JournalRepository(tenant);
+                    JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
+                    if (journal != null)
+                    {
+                        entityPM.JournalId = journal.JournalId;
+                        entityPM.JournalNumber = journal.JournalNumber;
+                    }
                 }
-            }
 
-            return securedPM;
+                APInvoicePM securedPM = new APInvoicePM();
+                SecuredMapping.GetMappedPM(entityPM, securedPM, "APInvoice", tenant);
+
+                if (securedPM != null)
+                {
+                    securedPM = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+
+                    if (securedPM == null)
+                    {
+                        throw new ApplicationException("This invoice is branch Restricted");
+                    }
+                }
+
+                return securedPM;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
