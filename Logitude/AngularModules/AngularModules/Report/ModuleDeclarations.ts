@@ -53,6 +53,9 @@ import { AutomationTestReportFilterComponent } from './Components/FilterReportCo
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
+import {RacingQuotesComponent} from './Components/FiltersComponent/CRM/RacingQuotesComponent';
+
+
 
 // CRM
 import {ApprovedOpportunitiesFilterComponent} from './Components/FilterReportComponent/ApprovedOpportunitiesFilterComponent';
@@ -147,6 +150,7 @@ export const Components =
         AutomationTestReportFilterComponent,
         ShipperReturnsReportFilterComponent,
         FlightBookingsManifestFilterComponent,
+        RacingQuotesComponent,
     ];
 
 export class ModuleDeclarations {
@@ -219,7 +223,9 @@ export class ModuleDeclarations {
             case "ShipmentsEventsListFilterComponent": { myResult = ShipmentsEventsListFilterComponent; break; }   
             case "AutomationTestReportFilterComponent": { myResult = AutomationTestReportFilterComponent; break; }
             case "ShipperReturnsReportFilterComponent": { myResult = ShipperReturnsReportFilterComponent; break; }
-            case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; } 
+            case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; }
+            case "RacingQuotesComponent": { myResult = RacingQuotesComponent; break; }
+                
         }
 
         return myResult;
