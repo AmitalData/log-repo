@@ -17,6 +17,7 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
@@ -493,7 +494,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string vendorId = args.VendorId;
                 string entityId = args.EntityId;
-                string invoiceNumber = args.InvoiceNumber;
+                string invoiceNumber = MethodHelper.Trim(args.InvoiceNumber);
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

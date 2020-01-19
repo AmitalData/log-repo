@@ -323,6 +323,12 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
             this.EntityPM.InvoiceNumber = value;
+            //this.CheckDuplication();
+        }
+    }
+
+    OnInvoiceNumberLostFocus(input: string) {
+        if (!AppTool.IsNullOrEmpty(input)) {
             this.CheckDuplication();
         }
     }
