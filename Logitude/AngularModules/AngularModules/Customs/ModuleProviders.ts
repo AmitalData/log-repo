@@ -221,6 +221,9 @@ import { PendingByKeywordListService } from './Services/StandardLists/PendingByK
 import { HazardousSubstanceListService } from './Services/StandardLists/HazardousSubstanceListService';
 import { SealCompletenesListService } from './Services/StandardLists/SealCompletenesListService';
 import { SealTypeListService } from './Services/StandardLists/SealTypeListService';
+import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
+
+
 
 //#endregion
 
@@ -575,6 +578,7 @@ export class ModuleProviders {
             case "HazardousSubstanceListService": { myResult = new HazardousSubstanceListService(); break; }
             case "SealCompletenesListService": { myResult = new SealCompletenesListService(); break; }
             case "SealTypeListService": { myResult = new SealTypeListService(); break; }
+            case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
              //#endregion                
 
             //#region StandardPMs
