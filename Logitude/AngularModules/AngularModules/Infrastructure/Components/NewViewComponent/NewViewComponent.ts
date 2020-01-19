@@ -1270,7 +1270,7 @@ export class NewViewComponent {
             newColumn.ObjectFieldFieldLableTextCodeDefaultText = column.ObjectFieldFieldLableTextCodeDefaultText;
             newColumn.ObjectFieldListLabelTextCodeCode = column.ObjectFieldListLabelTextCodeCode;
             newColumn.ObjectFieldName = column.ObjectFieldName;
-            newColumn.QueryCode = column.QueryCode;
+            //newColumn.QueryCode = column.QueryCode;
             newColumn.QueryObjectTableName = column.QueryObjectTableName;
             newColumn.DisplayInList = true;
             newColumn.ObjectFieldCode = column.ObjectFieldCode;
@@ -1297,7 +1297,7 @@ export class NewViewComponent {
                 advanceFilter.DisplayInList = field.ObjectField.DisplayInList;
                 advanceFilter.IsCustomFilter = field.ObjectField.IsCustomFilter;
                 advanceFilter.ObjectFieldName = field.ObjectField.FieldName;
-                advanceFilter.QueryCode = this.currentQuery.Code;
+                //advanceFilter.QueryCode = this.currentQuery.Code;
                 advanceFilter.QueryObjectTableName = this.currentQuery.ObjectTableName;
                 advanceFilter.QueryUserId = this.currentQuery.UserId;
                 advanceFilter.ObjectFieldOperator = field.ObjectField.Operator;
@@ -1565,7 +1565,7 @@ export class NewViewComponent {
                 advanceFilter.DisplayInList = item.ObjectField.DisplayInList;
                 advanceFilter.IsCustomFilter = item.ObjectField.IsCustomFilter;
                 advanceFilter.ObjectFieldName = item.ObjectField.FieldName;
-                advanceFilter.QueryCode = this.currentQuery.Code;
+                //advanceFilter.QueryCode = this.currentQuery.Code;
                 advanceFilter.QueryObjectTableName = this.currentQuery.ObjectTableName;
                 advanceFilter.QueryUserId = this.currentQuery.UserId;
                 advanceFilter.ObjectFieldOperator = item.ObjectField.Operator;
