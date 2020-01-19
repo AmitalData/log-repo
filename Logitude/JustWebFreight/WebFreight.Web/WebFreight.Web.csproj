@@ -2306,6 +2306,7 @@
     <Compile Include="DataProviders\PickUpDeliveryLine.Shared.cs" />
     <Compile Include="DataProviders\RevenueExpenseDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentAssemblyLine.Shared.cs" />
+    <Compile Include="DataProviders\RacingQuoteDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipperReturnsDataProvider.cs" />
     <Compile Include="DataProviders\UnicargoExportDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentDetailsDataProvider.Shared.cs" />
@@ -5295,6 +5296,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
+
+    <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
+
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
