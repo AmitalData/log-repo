@@ -96,7 +96,7 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
 
     Load() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ?false:true;
+        var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ?true:false;
         this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibrary(this.ObjectTableId, SessionInfo.LoggedUserTenant, isfilter, this.TransportModeId, this.ShipmentlevelCode).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
