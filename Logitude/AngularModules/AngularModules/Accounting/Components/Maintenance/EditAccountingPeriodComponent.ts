@@ -137,6 +137,8 @@ export class EditAccountingPeriodComponent extends BaseComponent {
                 // begin: invoice row logic
                 if (this.EntityPM.PeriodTypeCode == "2") { //2-invoice
                     if (this.OpenMonth+1 > this.accountingPeriod.OpenMonth) {
+                        this.ValidationErrorsList = [];
+                        this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantOpenInvoiceMonth"));
                         return;
                     }
                 }
