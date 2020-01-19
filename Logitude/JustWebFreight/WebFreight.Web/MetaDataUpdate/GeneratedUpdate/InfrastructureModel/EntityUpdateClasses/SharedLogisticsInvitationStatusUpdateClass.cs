@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shared Logistics Invitation Status",
-			      				    Code =  "f08f",
+			      				    Code =  "0d41",
 			      				    Name =  "SharedLogisticsInvitationStatus",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -145,7 +145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					 
 					 						FieldName =  "Code",
 					  						OldFieldName =  "Code",
-					  						ObjectTableName =  "1",
+					  						ObjectTableName =  "SharedLogisticsInvitationStatus",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -207,7 +207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					 
 					 						FieldName =  "Name",
 					  						OldFieldName =  "Name",
-					  						ObjectTableName =  "1",
+					  						ObjectTableName =  "SharedLogisticsInvitationStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
@@ -274,7 +274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						ObjectTableName =  "1",
+					  						ObjectTableName =  "SharedLogisticsInvitationStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -337,19 +337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
-
-		   ObjectTable SharedLogisticsInvitationStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SharedLogisticsInvitationStatus" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> SharedLogisticsInvitationStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SharedLogisticsInvitationStatus").ToList();
-		       
-	      
-
-	         Screen SharedLogisticsInvitationStatusSharedLogisticsInvitationStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SharedLogisticsInvitationStatus.HeaderScreen", Name = "SharedLogisticsInvitationStatusHeaderScreen", ObjectTableId = SharedLogisticsInvitationStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    SharedLogisticsInvitationStatusObjectTable.HeaderScreenId = SharedLogisticsInvitationStatusSharedLogisticsInvitationStatusHeaderScreenScreen0.Id;
-		    SharedLogisticsInvitationStatusObjectTable.HeaderScreenCode = SharedLogisticsInvitationStatusSharedLogisticsInvitationStatusHeaderScreenScreen0.Code;
-
-	   		  
+	    {    
 
 	    }
 

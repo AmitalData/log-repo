@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Shared Logistics Invitation Status&quot;"
-  Code="&quot;f08f&quot;"
+  Code="&quot;0d41&quot;"
   Name="&quot;SharedLogisticsInvitationStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -70,7 +70,7 @@
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
-    ObjectTableName="&quot;1&quot;"
+    ObjectTableName="&quot;SharedLogisticsInvitationStatus&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="0"
@@ -143,7 +143,7 @@
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
-    ObjectTableName="&quot;1&quot;"
+    ObjectTableName="&quot;SharedLogisticsInvitationStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="40"
@@ -221,7 +221,7 @@
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
-    ObjectTableName="&quot;1&quot;"
+    ObjectTableName="&quot;SharedLogisticsInvitationStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="1000"
@@ -287,19 +287,11 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;SharedLogisticsInvitationStatusHeaderScreen&quot;"
-    ObjectTableName="&quot;1&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
+ 
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;1&quot;"
+      ObjectTableName="&quot;SharedLogisticsInvitationStatus&quot;"
       EnglishName="&quot;Created&quot;"
       LocalName="&quot;Created&quot;"
       IsManualEntry="false"
@@ -312,7 +304,7 @@
       IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;1&quot;"
+      ObjectTableName="&quot;SharedLogisticsInvitationStatus&quot;"
       EnglishName="&quot;Updated&quot;"
       LocalName="&quot;Updated&quot;"
       IsManualEntry="false"
