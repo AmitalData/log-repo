@@ -646,7 +646,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsAccountingActivated == true) {
                 var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-                invoiceDomainService.ValidateAPInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.VendorId, this.EntityPM.AccountingDate).subscribe((response: ServiceResponse) => {
+                invoiceDomainService.ValidateAPInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.VendorId, this.EntityPM.AccountingDate, this.EntityPM.InvoiceNumber).subscribe((response: ServiceResponse) => {
                     if (response != null) {
                         if (!response.HasError) {
                             this.CompleteSubmission(errors);
