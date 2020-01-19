@@ -951,6 +951,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(amendmentType, amendmentTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(amendmentType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealReason = closedSystemTables.Where(d => d.id == "1459").FirstOrDefault();
+            ObjectTable sealReasonObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealUpdateReasonType", 0, false);
+            InsertClosedTableRecord(sealReason, sealReasonObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(sealReason);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealCompletenes = closedSystemTables.Where(d => d.id == "1273").FirstOrDefault();
             ObjectTable sealCompletenesObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealCompletenes", 0, false);
             InsertClosedTableRecord(sealCompletenes, sealCompletenesObjectTable, customsClosedTables, customsClosedTableRepository);
