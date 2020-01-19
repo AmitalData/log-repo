@@ -30,12 +30,15 @@ namespace Logitude.IntegrationTest.Core
 
         public static async Task GetBasicArgsFromUser()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("Userviews/getbyfilters??ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&Filter1Value=" + IntegrationTestLoginParameters.Email);
-            var stringResult = response.Content.ReadAsStringAsync().Result;
-            UserPM user = JsonConvert.DeserializeObject<UserPM>(stringResult);
+            HttpResponseMessage response = await RestClientService.GetAsync("Userviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&Filter1Value=" + IntegrationTestLoginParameters.Email);
+            //var stringResult = response.Content.ReadAsStringAsync().Result;
+            UsersList user= RestClientService.ParseResponse<UsersList>(response);
+            CorePreparationVariables.UserId = user.Id;
             CorePreparationVariables.BranchId = user.BranchId;
             CorePreparationVariables.DepartmentId = user.DepartmentId;
             CorePreparationVariables.BusinessUnitId = user.BusinessUnitId;
         }
     }
+
+   
 }

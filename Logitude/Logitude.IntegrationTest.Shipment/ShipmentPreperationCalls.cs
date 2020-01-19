@@ -49,13 +49,14 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentVariables.PackageTypePP2Id = await GetPackageTypeId("PP2", "A", false);
             ShipmentVariables.PaymentTermCashId = await GetPaymentTermId("Cash");
             ShipmentVariables.VATTypeZeroId = await GetVATTypeId("ZERO");
-            ShipmentVariables.QuoteStageQTDRId = await GetQuoteStageId("QuTDR");
+            ShipmentVariables.QuoteStageQTDRId = await GetQuoteStageId("QTDR");
             ShipmentVariables.VendorId = await GetVendorId("Vendor 1");
             ShipmentVariables.AgentId = await GetAgentId("Agent 1");
             ShipmentVariables.CustomerId = await GetCustomerId("Customer 1");
             ShipmentVariables.CustomAgentId = await GetCustomsAgentId("custom agent 1");
             ShipmentVariables.ShippingAgentId = await GetShippingAgentId("shipping agent 1");
             ShipmentVariables.WarehouseId = await GetWarehouseId("Warehouse 1","WR1");
+            ShipmentVariables.ShipperExport1 = await GetCustomerId("TstShipExport1");
 
 
 
@@ -570,6 +571,8 @@ namespace Logitude.IntegrationTest.Shipment
             customerPM.CountryId = ShipmentVariables.CountryUSId;
             return customerPM;
         }
+
+      
         public static async Task<string> GetCustomsAgentId(string cutomsAgentName)
         {
             HttpResponseMessage response = await RestClientService.GetAsync("customagentviews" + QueryFiltersPreparation.GetUrlParameters(cutomsAgentName));
@@ -637,7 +640,7 @@ namespace Logitude.IntegrationTest.Shipment
             warehousePM.CountryId = ShipmentVariables.CountryUSId;
             return warehousePM;
         }
-        public static async Task<PartnerServicePM> CreatePartner(string partnerTypeId, string partnerName, string partnerCode = null)
+        public static async Task<PartnerServicePM> CreatePartner(string partnerTypeId, string partnerName, string partnerCode=null)
         {
             PartnerServicePM partnerServicePM = CreatePartnerServicePM(partnerTypeId, partnerName, partnerCode);
             HttpResponseMessage response = await RestClientService.PostAsync(partnerServicePM, "PartnersDomain");
