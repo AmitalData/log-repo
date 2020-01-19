@@ -261,6 +261,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ReturnCondition> ReturnConditions { get; }
 		 IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes { get; }
 		 IDbSet<SealCompletenes> SealCompleteness { get; }
+		 IDbSet<SealType> SealTypes { get; }
 		 IDbSet<SeizureFactorType> SeizureFactorTypes { get; }
 		 IDbSet<SeizureMethodType> SeizureMethodTypes { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }

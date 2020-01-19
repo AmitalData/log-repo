@@ -464,6 +464,10 @@
     <Compile Include="Migrations\202001191042122_AddAmendmentTypes.Designer.cs">
       <DependentUpon>202001191042122_AddAmendmentTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001191215152_AddMigrationSealType.cs" />
+    <Compile Include="Migrations\202001191215152_AddMigrationSealType.Designer.cs">
+      <DependentUpon>202001191215152_AddMigrationSealType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -799,6 +803,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001160629471_removeDWHSetting.resx">
       <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001191215152_AddMigrationSealType.resx">
+      <DependentUpon>202001191215152_AddMigrationSealType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001191042122_AddAmendmentTypes.resx">
       <DependentUpon>202001191042122_AddAmendmentTypes.cs</DependentUpon>

@@ -24,6 +24,7 @@
 
             //**OLD ENV 
             ////"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ57;port=1521;sid=amital"  ///573 --מפסיקים הפצת customs ל 5.7
+            ///       "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"  ///583
             //** OLD ENV
 
 
