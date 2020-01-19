@@ -107,6 +107,8 @@ namespace WebFreight.Web.InfrastructureModel
         static OpportunityTypeRepository opportunityTypeRepository;
         static DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository;
         static AccountingPaymentMethodRepository PaymentMethodRepository;
+        // Tariff 
+        static PriceStepRepository priceStepRepository;
 
         //Tickets 
         static TicketTypeRepository ticketTypeRepository;
@@ -251,6 +253,9 @@ namespace WebFreight.Web.InfrastructureModel
             documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(theTenant);
             PaymentMethodRepository = new Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository(theTenant);
 
+            //Tariff 
+            priceStepRepository = new PriceStepRepository(theTenant);
+
             //Tickets 
             ticketTypeRepository = new TicketTypeRepository(theTenant);
             ticketStageRepository = new TicketStageRepository(theTenant);
@@ -351,6 +356,7 @@ namespace WebFreight.Web.InfrastructureModel
                 List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods;
                 List<BankCode> tenantZeroBankCodes = null;
                 List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
+
                 //Tickets
                 List<TicketType> tenantZeroTicketTypes = null;
                 List<TicketStage> tenantZeroTicketStages = null;
@@ -411,6 +417,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroDocumentsMetaDataType = documentsMetaDataTypeRepository.GetDocumentsMetaDataTypes(0).ToList();
                     tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
                     tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
+
                     //Tickets 
                     tenantZeroTicketTypes = ticketTypeRepository.GetAll(0).ToList();
                     tenantZeroTicketStages = ticketStageRepository.GetAll(0).ToList();
@@ -436,6 +443,7 @@ namespace WebFreight.Web.InfrastructureModel
                 InitializeRepositories(tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
                 AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
+
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -497,6 +505,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddTaxWithholdingAssessOffice(tenant, taxWithholdingAssessOfficeRepository, tenantZeroTaxWithholdingAssessOffices);
                 //AddJournalActionTypes(tenant);
 
+               
 
                 if (setting.WorkEnvironment == "customs")
                 {
@@ -717,6 +726,40 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
             return password;
+        }
+
+        private static void AddPriceSteps(TariffSetting setting)
+        {
+            List<PriceStep>  tenantZeroPriceSteps = priceStepRepository.GetAll(0).ToList();
+            List<PriceStep> priceSteps = tenantZeroPriceSteps.Where(d => d.Tenant == 0).ToList();
+            TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
+
+            foreach (PriceStep item in priceSteps)
+            {
+                PriceStep newPriceStep = new PriceStep()
+                {
+                    Id = IdCounter.GetNumber("PriceStep", tenant).ToString(),
+                    Tenant = tenant,
+                    CreateDate = item.CreateDate,
+                    CreatedByUserId = item.CreatedByUserId,
+                    UpdateDate = item.UpdateDate,
+                    UpdatedByUserId = item.UpdatedByUserId,
+                    Name = item.Name,
+                    Steps = item.Steps,
+                    Inactive = item.Inactive,
+                    SearchFields = item.SearchFields,
+                };
+
+                priceStepRepository.Add(newPriceStep);
+                priceStepRepository.SubmitChanges();
+                if (setting != null)
+                {
+                    setting.AirDefaultStepsId = newPriceStep.Id;
+                    setting.LCLDefaultStepsId = newPriceStep.Id;
+                    tariffSettingRepository.Update(setting);
+                    tariffSettingRepository.SubmitChanges();
+                }
+            }
         }
 
         private static void AddAutomationFromTenantZero(int tenant, List<DocumentTypePM> tenantZeroDocumentTypes)
@@ -975,7 +1018,8 @@ namespace WebFreight.Web.InfrastructureModel
 
                 iRepository.Add(settings);
                 iRepository.SubmitChanges();
-            }
+                AddPriceSteps(settings);
+            }   
         }
 
         private static void AddDefaultAccountingSettings(int theTenant, AccountingSettingRepository theAccountingSettingsRepository, AccountingSetting tenantZeroAccoutingSettings)

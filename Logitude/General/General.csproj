@@ -698,6 +698,10 @@
     <Content Include="Main Branch\2020\01 - 2020\Day 06 [Rabaia] Fill FeatureUniqeCode From FeatureId.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Rabaia] Delete Constraint between Features and FeatureRole and FeaturePackages.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Abed] UpdateDocumentIdOnQuoationDocumentsFilings.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 15 [Maheera] Fill Default PriceSteps.sql" />
+    <Content Include="Main Branch\2020\Day 06 [Rabaia] Fill FeatureUniqeCode From FeatureId.sql" />
+    <Content Include="Main Branch\2020\Day 05 [Rabaia] Delete Constraint between Features and FeatureRole and FeaturePackages.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day05 [Abed] UpdateDocumentIdOnQuoationDocumentsFilings.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
