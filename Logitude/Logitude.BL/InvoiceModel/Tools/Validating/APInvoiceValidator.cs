@@ -31,6 +31,7 @@ using System.Data.Entity.Core;
 using System.Web;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.DataContracts;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -188,7 +189,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
-            ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate);
+            ValidateFullAccounting(entityPM);
             ValidateExternalAPI(entityPM, myCommonContext);
         }
 
@@ -525,59 +526,91 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        public static void ValidateFullAccounting(int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
+        public static void ValidateFullAccounting(APInvoicePM invoicePM)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
         {
-            var errors = "";
+            Tenant tenantPOCO = GetTenant(invoicePM.Tenant);
 
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
-                bool useLocal = true;
-                var user = GetLoggedContact(tenant);
-                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                string errors = "";
+                ValidateInvoiceGLaccount(invoicePM, ref errors, invoicePM.Tenant);
+                ValidateAccountingPeriod(invoicePM, ref errors, invoicePM.Tenant);
+                ThrowErrors(errors);
+            }
+        }
 
-                GLAccountPM glAccount = getGLAccount(vendorId, tenant);
+        private static Tenant GetTenant(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            return tenantPOCO;
+        }
 
-                if (glAccount == null)
+        private static void ThrowErrors(string errors)
+        {
+            if (!string.IsNullOrEmpty(errors))
+            {
+                errors = errors.TrimEnd(';');
+                throw new ApplicationException(errors);
+            }
+
+        }
+
+        private static void ValidateAccountingPeriod(APInvoicePM invoicePM, ref string errors, int tenant)
+        {
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+
+            IAccountingContext myContext = AccountingContext.GetContext(tenant);
+            AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
+            AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(invoicePM.AccountingDate.Value.Year, "1", tenant);
+            if (accountingPeriodList != null && invoicePM.AccountingDate != null)
+            {
+                var month = invoicePM.AccountingDate.Value.Month;
+                if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
                 {
 
-                    string msg = TranslateTextsClass.Translate("APInvoice.M.VendorNoGLAccount",tenant, useLocal);
+                    string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
                     errors += msg + ";";
-                }
-                if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
-                {
-                    if (glAccount.CurrencyId != invoiceCurrencyId)
-                    {
-                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + " "+ glAccount.CurrencyName + " ";
-                        errors += msg + ";";
-                    }
-                }
-
-                IAccountingContext myContext = AccountingContext.GetContext(tenant);
-                AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
-                AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(accountingDate.Value.Year, "1", tenant);
-                if (accountingPeriodList != null && accountingDate != null)
-                {
-                    var month = accountingDate.Value.Month;
-                    if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
-                    {
-                        
-                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, useLocal);
-                        errors += msg + ";";
-                    }
-                }
-                else
-                {
-                    string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, useLocal);
-                    errors += msg + ";";
-                }
-                if (!string.IsNullOrEmpty(errors))
-                {
-                    errors = errors.TrimEnd(';');
-                    throw new ApplicationException(errors);
                 }
             }
+            else
+            {
+                string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
+                errors += msg + ";";
+            }
+
+        }
+
+        private static void ValidateInvoiceGLaccount(APInvoicePM invoicePM, ref string errors, int tenant)
+        {
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+
+            GLAccountPM glAccount = GetInvoiceGLAccount(invoicePM, tenant);
+
+            if (glAccount == null)
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.M.VendorNoGLAccount", tenant, showLocal);
+                errors += msg + ";";
+            }
+
+            if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
+            {
+                if (glAccount.CurrencyId != invoicePM.InvoiceCurrencyId)
+                {
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, showLocal) + " " + glAccount.CurrencyName + " ";
+                    errors += msg + ";";
+                }
+            }
+        }
+
+        private static GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM, int tenant)
+        {
+            GLAccountPM glAccount;
+            if (invoicePM.VendorGLAccountId != null)
+                glAccount = GetGLAccountById(invoicePM.VendorGLAccountId, tenant);
+            else
+                glAccount = GetGLAccountByCardId(invoicePM.VendorId, tenant);
+            return glAccount;
         }
 
         public static string ValidateFullAccountingInvoiceDate(DateTime? invoiceDate, int tenant, string email)
@@ -601,17 +634,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         }
 
 
-        private static GLAccountPM getGLAccount(string vendorId, int tenant)
+        private static GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
         {
             GLAccountPM glaAccount = null;
             CardRepository cardRep = new CardRepository(tenant);
-            Card card = cardRep.GetSingleCard(vendorId, tenant);
+            Card card = cardRep.GetSingleCard(cardId, tenant);
             if (card != null)
             {
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             }
 
+            return glaAccount;
+        }
+        private static GLAccountPM GetGLAccountById(string glaccountId, int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM glaAccount = glAccountQuery.GetSingleGLAccountPM(glaccountId, tenant);
             return glaAccount;
         }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }

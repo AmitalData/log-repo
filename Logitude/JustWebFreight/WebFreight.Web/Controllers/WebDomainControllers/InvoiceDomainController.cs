@@ -385,7 +385,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 DateTime? accountingDate = DateHelper.GetDate(accountingDateString);
-                APInvoiceValidator.ValidateFullAccounting(tenant, vendor, currency, accountingDate);
+                //APInvoiceValidator.ValidateFullAccounting(tenant, vendor, currency, accountingDate);
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
