@@ -88,6 +88,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string CountryId { get; set; }
 	      
         public virtual Country Country { get; set; }
+        [Column("IsUsed")]
+	    public bool IsUsed { get; set; }
     }
 }
 	 

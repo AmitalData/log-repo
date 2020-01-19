@@ -207,6 +207,26 @@ export class WarehouseReleasePackagePM {
     public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
        
 	 
+    private isUsed: boolean;
+    public get IsUsed() { return this.isUsed; }
+    public set IsUsed(newValue: boolean) { if (this.isUsed != newValue) { this.isUsed = newValue; this.MarkAsDirty("IsUsed"); } }
+       
+	 
+    private shipmentId: string;
+    public get ShipmentId() { return this.shipmentId; }
+    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+       
+	 
+    private releaseStatus: string;
+    public get ReleaseStatus() { return this.releaseStatus; }
+    public set ReleaseStatus(newValue: string) { if (this.releaseStatus != newValue) { this.releaseStatus = newValue; this.MarkAsDirty("ReleaseStatus"); } }
+       
+	 
+    private releaseNumber: string;
+    public get ReleaseNumber() { return this.releaseNumber; }
+    public set ReleaseNumber(newValue: string) { if (this.releaseNumber != newValue) { this.releaseNumber = newValue; this.MarkAsDirty("ReleaseNumber"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePackagePM;
 	

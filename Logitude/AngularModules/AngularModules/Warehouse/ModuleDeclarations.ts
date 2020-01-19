@@ -34,7 +34,7 @@ import {WarehouseReleasePackagesDetailsComponent} from './Components/WarehouseRe
 
 
 import {WarehouseReleaseRoutingsTabComponent} from './Components/EditTabs/RoutingsTab/WarehouseReleaseRoutingsTabComponent'; 
-
+import {ChoosePackagesFromWarehousePackageReleasesComponent} from './Components/ChoosePackagesFromWarehousePackageReleasesComponent';
 
 
 
@@ -65,6 +65,7 @@ export const Components =
         WarehouseReleasePackagesDetailsComponent,
         NewFullWarehouseReleaseComponent,
         WarehouseReleaseRoutingsTabComponent,
+        ChoosePackagesFromWarehousePackageReleasesComponent,
     ];
 
 export class ModuleDeclarations {
@@ -99,9 +100,8 @@ export class ModuleDeclarations {
             case "WarehouseReleasePackagesDetailsComponent": { myResult = WarehouseReleasePackagesDetailsComponent; break; } 
             case "NewFullWarehouseReleaseComponent": { myResult = NewFullWarehouseReleaseComponent; break; }
             case "WarehouseReleaseRoutingsTabComponent": { myResult = WarehouseReleaseRoutingsTabComponent; break; }
-
-                
-      
+            case "ChoosePackagesFromWarehousePackageReleasesComponent": { myResult = ChoosePackagesFromWarehousePackageReleasesComponent; break; }
+   
         }
 
 

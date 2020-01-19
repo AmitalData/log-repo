@@ -1906,6 +1906,10 @@
     <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.Designer.cs">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001191342198_AbedAddIsUsedToWarehouseReleasePackage.cs" />
+    <Compile Include="Migrations\202001191342198_AbedAddIsUsedToWarehouseReleasePackage.Designer.cs">
+      <DependentUpon>202001191342198_AbedAddIsUsedToWarehouseReleasePackage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3438,6 +3442,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001191342198_AbedAddIsUsedToWarehouseReleasePackage.resx">
+      <DependentUpon>202001191342198_AbedAddIsUsedToWarehouseReleasePackage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

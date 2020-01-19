@@ -48,7 +48,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Color, 
 	         ChassisNumber, 
 	         RegistrationNumber, 
-	         CountryId,
+	         CountryId, 
+	         IsUsed,
 	      }
 
 
@@ -90,7 +91,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Color, 
 	         ChassisNumber, 
 	         RegistrationNumber, 
-	         CountryId,
+	         CountryId, 
+	         IsUsed, 
+	         ShipmentId, 
+	         ReleaseStatus, 
+	         ReleaseNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -227,6 +232,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryId))
             {
 				entityPOCO.CountryId = entityPM.CountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
+            {
+				entityPOCO.IsUsed = entityPM.IsUsed;
 			}
 			}
 
@@ -368,6 +378,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.CountryId = entityPOCO.CountryId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsUsed))
+            {
+					entityPM.IsUsed = entityPOCO.IsUsed;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePackagePM entityPM, WarehouseReleasePackagePM oldEntityPM)
@@ -502,6 +517,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryId))
             {
                 oldEntityPM.CountryId = entityPM.CountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
+            {
+                oldEntityPM.IsUsed = entityPM.IsUsed;
             }
 			
 		}

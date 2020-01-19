@@ -44,6 +44,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     PackageType: string;
     IsFromFullWarehouseReleaseComponent: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    OldCustomerId: string;
     constructor(private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
     }
@@ -71,7 +72,9 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.warehouseReleasePM = args.WarehouseReleasePM;
         this.ViewModelTrigger = args.ViewModelTrigger;
  
-        
+        if (this.warehouseReleasePM) {
+            this.OldCustomerId = this.warehouseReleasePM.CustomerId;
+        }
 
         this.transportModeId = this.ViewModelTrigger.TransportModeId ? this.ViewModelTrigger.TransportModeId : "All";
         this.DirectionId = this.ViewModelTrigger.DirectionId ? this.ViewModelTrigger.DirectionId : "All";
@@ -161,6 +164,11 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             item.EntityPM.IsSelected = item.OldIsSelected;
 
         });
+
+
+        this.ViewModelTrigger.CustomerId = this.warehouseReleasePM.CustomerId = this.OldCustomerId;
+
+
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -332,7 +340,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             this.fromPortId = newValue;
             this.ViewModelTrigger.FromPortId = newValue;
             this.FilterWarehouseEntryPackageList();
-            this.LoadWarehouseEntryPackageListsByCustomerId();
+
         }
     }
 
@@ -344,7 +352,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             this.toPortId = newValue;
             this.ViewModelTrigger.ToPortId = newValue;
             this.FilterWarehouseEntryPackageList();
-            this.LoadWarehouseEntryPackageListsByCustomerId();
+     
         }
     }
 

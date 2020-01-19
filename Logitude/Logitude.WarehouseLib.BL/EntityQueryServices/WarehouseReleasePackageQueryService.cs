@@ -100,7 +100,39 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
 
 
-        
+
+        public IQueryable<WarehouseReleasePackagePM> GetWarehouseReleasePackagePMLists(int tenant)
+        {
+
+            IQueryable<WarehouseReleasePackagePM> myResult = (from a in context.WarehouseReleasePackages.Include("WarehouseRelease").Include("WarehouseRelease.WarehouseReleaseStatus")
+                                                              where a.Tenant == tenant
+                                                              select new WarehouseReleasePackagePM()
+                                                              {
+                                                                  Id = a.Id,
+                                                                  Tenant = a.Tenant,
+                                                                  Seal = a.Seal,
+                                                                  Description = a.Description,
+                                                                  ContainerNumber = a.ContainerNumber,
+                                                                  Dimensions = a.IsContainer ? "" : a.Length + "-" + a.Width + "-" + a.Height,
+                                                                  Harmonize = a.Harmonize,
+                                                                  Height = a.Height,
+                                                                  Length = a.Length,
+                                                                  PackageTypeName = a.PackageType != null ? a.PackageType.EnglishName : null,
+                                                                  WarehouseReleaseId = a.WarehouseReleaseId,
+                                                                  Width = a.Width,
+                                                                  PackageTypeId = a.PackageTypeId,
+                                                                  Volume = a.Volume,
+                                                                  Quantity = a.Quantity,
+                                                                  Weight = a.Weight,
+                                                                  IsContainer = a.IsContainer,
+                                                                  IsUsed = a.IsUsed,
+                                                                  ShipmentId = a.WarehouseRelease.ShipmentId,
+                                                                  ReleaseNumber = a.WarehouseRelease.ReleaseNumber,
+                                                                  ReleaseStatus = a.WarehouseRelease.WarehouseReleaseStatus!=null ? a.WarehouseRelease.WarehouseReleaseStatus.Name : null,
+                                                              });
+
+            return myResult;
+        }
 
 
     }

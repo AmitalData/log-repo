@@ -71,6 +71,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private firstDigit: string = ",";
     private secondDigit: string = ".";
 
+    private chooseShipmentPackageFromWarehouseReleasePackages: boolean = false;
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
@@ -99,6 +100,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         this.saveAfterDeletePackages = false;
                         this.CreatePackagesFromExcel();
                     }
+
+                    if (this.chooseShipmentPackageFromWarehouseReleasePackages) {
+                        this.chooseShipmentPackageFromWarehouseReleasePackages = false;
+                        this.OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow();
+                    }
+
                 }
             });
 
@@ -839,33 +846,43 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     GeneratePackagesfromCrossDockReleasesButtonClicked() {
 
-        if (!this.IsLCLEntity) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Only Container Packages can be added to your shipment packages");
-            confirmWindow.NoButtonText = "Cancel";
-            confirmWindow.YesButtonText = "Add";
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.GetWarehouseReleasePackageLists(true);
-                }
-            });
+        //if (!this.IsLCLEntity) {
+        //    var confirmWindow = new ConfirmWindow();
+        //    confirmWindow.Show("Only Container Packages can be added to your shipment packages");
+        //    confirmWindow.NoButtonText = "Cancel";
+        //    confirmWindow.YesButtonText = "Add";
+        //    confirmWindow.WindowClosed.subscribe((event: any) => {
+        //        if (confirmWindow.Yes) {
+        //            this.GetWarehouseReleasePackageLists(true);
+        //        }
+        //    });
 
-        } else this.GetWarehouseReleasePackageLists();
+        //} else this.GetWarehouseReleasePackageLists();
+
+        if (this.EntityPM.IsDirty) {
+            this.chooseShipmentPackageFromWarehouseReleasePackages = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+        else this.OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow();
+
     }
 
-    GetWarehouseReleasePackageLists(iscontainer: boolean = false) {
-        var warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService = new WarehouseReleasePackageListExtendedService();
-        warehouseReleasePackageListExtendedService.getWarehouseReleasePackageListsByShipmentId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var releasePackages: any = myResponse.Result;
-                if (releasePackages && releasePackages.length > 0) {
-                    if (iscontainer) releasePackages = releasePackages.filter(d => d.IsContainer);
-                    if (releasePackages.length>0) {
-                        this.GeneratePackagesFromWarehouseReleasesPackages(releasePackages);
-                    }
-                }
-            }
-        }); 
+
+
+    OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow() {
+
+        var windowArgs: any = {};
+
+        windowArgs.ViewModelTrigger = this;
+        windowArgs.IsContainer = !this.IsLCLEntity;
+        var logWindow = new LogitudeWindow();
+ 
+        logWindow.Width = !windowArgs.IsContainer ? 1200:1130;
+        logWindow.Height = 550;
+        logWindow.Title = "Choose Packages";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Warehouse/Components/ChoosePackagesFromWarehousePackageReleasesComponent");
+
     }
     
     SetGenerateData() {

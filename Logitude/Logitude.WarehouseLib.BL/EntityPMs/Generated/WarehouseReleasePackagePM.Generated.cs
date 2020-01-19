@@ -848,6 +848,98 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isUsed ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsUsed  
+	   {
+	    
+	     get
+		{
+		   return isUsed;
+		 }
+		 set
+		 {
+		   if(isUsed != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUsed",OldValue=isUsed,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isUsed=value;
+		   }
+			
+		 }
+	   }
+	  private string shipmentId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentId  
+	   {
+	    
+	     get
+		{
+		   return shipmentId;
+		 }
+		 set
+		 {
+		   if(shipmentId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentId",OldValue=shipmentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentId=value;
+		   }
+			
+		 }
+	   }
+	  private string releaseStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReleaseStatus  
+	   {
+	    
+	     get
+		{
+		   return releaseStatus;
+		 }
+		 set
+		 {
+		   if(releaseStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReleaseStatus",OldValue=releaseStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   releaseStatus=value;
+		   }
+			
+		 }
+	   }
+	  private string releaseNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReleaseNumber  
+	   {
+	    
+	     get
+		{
+		   return releaseNumber;
+		 }
+		 set
+		 {
+		   if(releaseNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReleaseNumber",OldValue=releaseNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   releaseNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

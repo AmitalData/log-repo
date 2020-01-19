@@ -76,6 +76,8 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.RegistrationNumber).HasColumnName("RegistrationNumber").HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.CountryId).HasColumnName("CountryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsUsed).HasColumnName("IsUsed");
         }
     }
 }

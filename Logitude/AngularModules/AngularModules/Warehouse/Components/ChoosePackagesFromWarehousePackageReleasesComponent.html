@@ -1,0 +1,356 @@
+﻿<table *ngIf="IsLoadPage">
+
+
+    <tr style="height:10px"><td colspan="3"><div></div></td></tr>
+
+
+    <!--<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
+        <td colspan="3">
+            <div style="height:5px"></div>
+        </td>
+    </tr>-->
+
+
+
+    <!-- Measurment -->
+    <tr style="height: 34px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:117px;">
+                        <div [style.opacity]="IsDisableFilter ? '0.5':'1'" [style.pointer-events]="IsDisableFilter ? 'none':'auto'">
+
+                            <TransportsFilter [SelectedValue]="TransportModeId" (SelectedValueChanged)="TransportModeId = $event"></TransportsFilter>
+
+                        </div>
+                    </td>
+
+
+
+                    <td style="width:35px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:1px;">
+                        <div [style.opacity]="IsDisableFilter ? '0.5':'1'" [style.pointer-events]="IsDisableFilter ? 'none':'auto'">
+                            <DirectionsFilter [HideCustomsImport]="true" [SelectedValue]="DirectionId" (SelectedValueChanged)="DirectionId = $event"></DirectionsFilter>
+                        </div>
+                    </td>
+
+
+                    <td>
+
+
+                        <div style="width: 70px; display: block; float:left; margin-left: 35px;">
+                            <LogLabel [HideColumns]="true" [DataContext]="DataContext" [Text]="'Customer'"></LogLabel>
+                        </div>
+
+                        <div style="width: 165px; display: block; float:left; ">
+                            <LogLov [ObjectFieldName]="'CustomerId'"
+                                    [SelectedValue]="CustomerId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Card'"
+                                    [HideLastColumn]="true">
+                            </LogLov>
+                        </div>
+
+                        <div style="width: 50px; display: block; float:left; margin-left: 35px;">
+                            <LogLabel [HideColumns]="true" [DataContext]="DataContext" [Text]="'Origin'"></LogLabel>
+
+                        </div>
+
+
+                        <div style="width: 170px; display: block; float:left; ">
+                            <LogLov [ObjectFieldName]="'FromPortId'"
+                                    [SelectedValue]="FromPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [HideLastColumn]="true"
+                                    [DependencyFilter1Value]="TransportModeId">
+                            </LogLov>
+                        </div>
+
+
+                        <div style="width: 75px; display: block; float:left; margin-left: 35px;">
+                            <LogLabel [HideColumns]="true" [DataContext]="DataContext" [Text]="'Destination'"></LogLabel>
+
+                        </div>
+
+
+                        <div style="width: 170px; display: block; float:left; ">
+
+                            <LogLov [ObjectFieldName]="'ToPortId'"
+                                    [SelectedValue]="ToPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="TransportModeId"
+                                    [HideLastColumn]="true">
+                            </LogLov>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+
+    <tr style="vertical-align:central;">
+        <td colspan="3">
+            <table>
+                <tr style="height: 10px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:100%">
+
+
+                    <td>
+                        <table>
+                       
+                            <tr style="height:100%">
+                                <td>
+                                    <div class="MediaFill">
+                                        <div class="SimpleGridView">
+                                            <div class="SimpleGridViewHeader">
+                                                <table>
+                                                    <tr>
+
+                                                        <td style="width: 30px; min-width: 30px;"></td>
+                                                        <td style="width: 30px; min-width: 30px;"></td>
+                                                        <td style="width: 115px; min-width: 115px;">Package Type</td>
+                                                        <td *ngIf="IsContainerShipment" style="width: 110px; min-width: 110px;max-width: 110px;">Container Number</td>
+                                                  
+                                                        <td *ngIf="!IsContainerShipment" style="width: 75px; min-width: 75px;max-width: 75px;">Length ({{DimensionsUnitCode}})</td>
+                                                        <td *ngIf="!IsContainerShipment" style="width: 75px; min-width: 75px;max-width: 75px;">Width ({{DimensionsUnitCode}})</td>
+                                                        <td *ngIf="!IsContainerShipment" style="width: 75px; min-width: 75px;max-width: 75px;">Height ({{DimensionsUnitCode}})</td>
+
+
+                                                        <td style="width: 65px; min-width: 65px;">Quantity</td>
+                                                        <td style="width: 90px; min-width: 90px;">{{VolumeLabel}}</td>
+                                                        <td style="width: 110px;min-width: 110px;">{{GrossWeightLabel}}</td>
+
+                                                        <td style="width: 125px;min-width:125px;max-width: 125px;">Description Of Goods</td>
+                                                        <td style="width: 100px;min-width :100px">Release Number</td>
+                                                        <td style="width: 100px;min-width :100px">Release Status</td>
+
+                                                        <td style="width: 100%;min-width :100%;max-width:100%;" class="LastChild">Connected To Shipment</td>
+
+
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="SimpleGridViewBody" style="vertical-align:top;text-align:center;margin-top:5px;height:50px;" *ngIf="IsShowMessageNoResult"><span style="font-size:15px;color:gray;margin-top:10px">No Result Found</span></div>
+                                            <div *ngIf="!IsShowMessageNoResult" class="SimpleGridViewBody">
+                                                <table>
+                                                    <tr style="height: 1px;">
+                                                        <td>
+                                                            <table>
+                                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of WarehouseReleasePackagePMLists">
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr style="height:25px;" (click)="SelectedWarehouseEntryPackage = item" [class.RowSelected]="item === SelectedWarehouseEntryPackage">
+
+
+                                                                                <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;vertical-align:central">
+                                                                                   
+                                                                                
+                                                                                        <CheckBox [IsChecked]="item.IsSelected" (Checked)="item.IsSelected=$event"></CheckBox>
+                                                                              
+                                                                                </td>
+
+
+
+                                                                                <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;vertical-align:central">
+
+                                                                                    <img *ngIf="!item.IsContainer" src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                                                                    <img *ngIf="item.IsContainer" src="./Images/CellIcons/Container.png" class="CenterCenter" />
+
+                                                                                </td>
+
+
+                                                                                <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px;">
+                                                                                    {{item.PackageTypeName}}
+
+
+                                                                                </td>
+
+                                                                                <td class="GridViewCell" *ngIf="IsContainerShipment" style="width: 110px; min-width: 110px; max-width: 110px">
+
+
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 15px;" *ngIf="item.ContainerNumberWarning">
+                                                                                                <img [attr.title]="item.ContainerNumberWarning" src="./Images/WarningIcon.png" style="vertical-align: middle; display: block; margin:auto;" />
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;" *ngIf="item.ContainerNumberWarning">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>{{item.ContainerNumber}}</td>
+
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+
+
+
+
+                                                                                <td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                                    {{item.Length}}
+                                                                                </td>
+
+                                                                                <td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                                    {{item.Width}}
+                                                                                </td>
+                                                                                <td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                                    {{item.Height}}
+                                                                                </td>
+
+                                                                                <td class="GridViewCell" style="width: 65px; min-width: 65px; max-width: 65px;text-align:right">
+
+                                                                                    {{item.Quantity}}
+                                                                                </td>
+
+                                                                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;text-align:right">
+
+                                                                                    {{item.Volume | NumbersPipe:'N3'}}
+                                                                                </td>
+                                                          
+
+                                                                                <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;text-align:right">
+                                                                                    {{item.Weight | NumbersPipe:'N3'}}
+
+
+                                                                                </td>
+
+
+
+
+                                                                                <td class="GridViewCell" style="width:125px; min-width: 125px; max-width: 125px; position: relative;">
+
+
+
+                                                                                    <div style="width:125px;max-width:125px">{{item.Description}}</div>
+
+
+
+                                                                                </td>
+                                                                  
+
+                                                                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;vertical-align:central">
+                                                                               
+                                                                                    <span class="hyperlink" style="color:#1B90CB; font-size:12px;" (click)="ViewReleaseClicked(item)">{{item.ReleaseNumber}}</span>
+
+                                                                                </td>
+                                     
+                                                                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;vertical-align:central;">
+
+                                                                                   {{item.ReleaseStatus}}
+
+                                                                                </td>
+
+
+                                                                                <td class="CellStretched" style="width:  100%; min-width: 100%; max-width:  100%; position: relative;">
+                                                                                    <div [style.width]="!IsContainerShipment ? '133px':'100%'">
+                                                                                        <img class="CenterCenter" *ngIf="item.IsConnectedToShipment" style="width:20px;height:20px;" src="./Images/SimplogIcons/tick.png" />
+                                                                                    </div>
+
+                                                                                </td>
+
+
+
+
+
+
+                                                                            </tr>
+                                                                            <tr><td colspan="15"></td></tr>
+                                                                        </table>
+
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+
+                </tr>
+
+                <tr style="height: 10px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+
+    <tr style="height: 32px;">
+        <td colspan="3" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
