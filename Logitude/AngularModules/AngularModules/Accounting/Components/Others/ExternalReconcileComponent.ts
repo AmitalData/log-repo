@@ -1037,7 +1037,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         serviceArgs.refDateReconcile = this.ReferenceDateCheckBoxChecked;
         serviceArgs.objectTableId = objectTable.Id;
         serviceArgs.entityId = this.EntityPM.Id;
-        serviceArgs.glAccountId = this.GLAccountPM.Id;
+
+        if(this.ObjectTableName == "BankAccount")
+            serviceArgs.glAccountId = this.EntityPM.GLAccountId;
+        else if(this.ObjectTableName == "GLAccount")
+            serviceArgs.glAccountId = this.EntityPM.Id;
+
         serviceArgs.filters = filters;
         return serviceArgs;
     }

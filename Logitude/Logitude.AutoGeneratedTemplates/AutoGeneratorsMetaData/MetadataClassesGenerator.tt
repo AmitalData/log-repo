@@ -526,7 +526,11 @@ foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
 	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
 	string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
 	string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
-    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs."))
+		 string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	    	 
+    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs.") &&(IsMetadataOnlyTable == "false"))
     {
 	 #>
 
@@ -1801,6 +1805,8 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	 
 	 var path= Host.ResolvePath(file);
      XElement entity = XDocument.Load(path).Root; 
+ 
+	    
 	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
 	 string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
 	if(tableName.Contains("."))
@@ -1818,6 +1824,13 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
 	 string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
 	string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
+			string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	    	if(IsMetadataOnlyTable == "true")
+	    	{
+                continue;
+	    	}
     if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs."))
     {
     #>

@@ -93,6 +93,14 @@ public void GenerateEnumClass(string xmlFilePath,string outputFilePath)
     string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
 	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
 	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
+
+			 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
     if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null)
     {
 		 WriteEnumMethod(entity);

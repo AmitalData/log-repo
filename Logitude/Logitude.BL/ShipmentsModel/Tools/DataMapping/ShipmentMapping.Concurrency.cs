@@ -149,8 +149,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
 
-            entityPoco.IsFSRSent = entityPM.IsFSRSent;
-            entityPoco.FNAReason = entityPM.FNAReason;
+
             entityPoco.LastSentByUserId = entityPM.LastSentByUserId;
             entityPoco.LastFSRStatusRequestDate = entityPM.LastFSRStatusRequestDate;
             entityPoco.CargonautFHLStatusCode = entityPM.CargonautFHLStatusCode;

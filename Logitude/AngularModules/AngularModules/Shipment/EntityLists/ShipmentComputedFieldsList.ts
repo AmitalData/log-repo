@@ -30,5 +30,20 @@ export class ShipmentComputedFieldsList {
 		FinalDeliveryETA: Date;
 		FinalDeliveryATD: Date;
 		FinalDeliveryATA: Date;
+		OperationallyClosedByUserId: string;
+		NumberOfDeliveries: number;
+		ImportDeclarationDate: Date;
+		ImportDeclarationNumber: string;
+		LastPickupETA: Date;
+		LastPickupETD: Date;
+		LastPickupATA: Date;
+		LastPickupATD: Date;
+		DeliveryToCity: string;
+		DeliveryToPortId: string;
+		ContainsDangerousGoods: boolean;
+		DeliveryFrom: string;
+		DeliveryTo: string;
+		PickupFrom: string;
+		PickupTo: string;
 	
 }

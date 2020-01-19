@@ -57,7 +57,8 @@ namespace Logitude.DBMigrations.Models
                     }
                     else
                     {
-                        if (DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).First().Ignore)
+                        RelationDefinition relationFromDxml = GetRelationFromDXMLTable(relation);
+                        if (relationFromDxml.Ignore)
                         {
                             tableRelationsScript += GetDropRelationScript(relation);
                         }
@@ -743,5 +744,7 @@ namespace Logitude.DBMigrations.Models
         protected abstract bool IsRelationInCurrentTable(RelationDefinition relation);
 
         protected abstract bool IsRelationInDXMLTable(RelationDefinition relation);
+
+        protected abstract RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation);
     }
 }

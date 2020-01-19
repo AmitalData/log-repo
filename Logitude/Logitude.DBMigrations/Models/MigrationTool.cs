@@ -7,7 +7,6 @@ using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Security;
-using System.Text.RegularExpressions;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -17,7 +16,8 @@ namespace Logitude.DBMigrations.Models
         private string PerformanceData = "Description,Time(ms)\n";
         private string[] Arguments;
         private List<TableDefinition> DXMLTables;
-
+        private string ScriptSemicolonCode = "|(;)|";
+        
         public MigrationTool(string[] args)
         {
             Arguments = args;
@@ -140,12 +140,11 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("Generating Script For " + dxmlView.DXMLFileName + " ...");
 
-                string viewScript = "-- DataView Script From " + dxmlView.DXMLFileName + "\n";
-                viewScript += GetScriptFromViewDefinition(dxmlView.ViewDefinition);
+                string viewScript = GetScriptFromViewDefinition(dxmlView.ViewDefinition, dxmlView.DXMLFileName);
 
                 if (!String.IsNullOrEmpty(viewScript))
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlView.ViewDefinition.DBType, viewScript);
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlView.ViewDefinition.DBType, ReplaceScriptSemicolon(viewScript));
                 }
             }
 
@@ -153,12 +152,11 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("Generating Script For " + dxmlProcedure.DXMLFileName + " ...");
 
-                string procedureScript = "-- Procedure Script From " + dxmlProcedure.DXMLFileName + "\n";
-                procedureScript += GetScriptFromProcedureDefinition(dxmlProcedure.ProcedureDefinition);
+                string procedureScript = GetScriptFromProcedureDefinition(dxmlProcedure.ProcedureDefinition, dxmlProcedure.DXMLFileName);
 
                 if (!String.IsNullOrEmpty(procedureScript))
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, procedureScript);
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, ReplaceScriptSemicolon(procedureScript));
                 }
             }
 
@@ -171,17 +169,21 @@ namespace Logitude.DBMigrations.Models
         {
             var stopwatch = Stopwatch.StartNew();
 
+            string globalScript = generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";");
+            string mainScript = generatedScript.MainScript.Replace(ScriptSemicolonCode, ";");
+            string systemLogsScript = generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";");
+            
             Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
             string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
-            File.WriteAllText(globalScriptFilePath, generatedScript.GlobalScript);
+            File.WriteAllText(globalScriptFilePath, globalScript);
 
             string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
-            File.WriteAllText(mainScriptFilePath, generatedScript.MainScript);
+            File.WriteAllText(mainScriptFilePath, mainScript);
 
             string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
-            File.WriteAllText(systemLogsScriptFilePath, generatedScript.SystemLogsScript);
+            File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
 
             Console.WriteLine("The Generated Scripts Saved Successfully");
 
@@ -381,32 +383,18 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
-                    //string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
-                    //commands = commands.Take(commands.Count() - 1).ToArray();
-
-                    //foreach (var command in commands)
-                    //{
-                    //    OracleCommand oracleCommand = new OracleCommand();
-                    //    oracleCommand.Connection = oracleConnection;
-                    //    oracleCommand.CommandText = (command.EndsWith(" END") ? command + ";" : command);
-                    //    oracleConnection.Open();
-                    //    oracleCommand.ExecuteNonQuery();
-                    //    oracleConnection.Close();
-                    //}
-                    //return null;
-
                     oracleConnection.Open();
 
                     string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
-                    commands = commands.Take(commands.Count() - 1).ToArray();
+                    commands = commands.Take(commands.Count() - 1).Select(c => c.Replace(ScriptSemicolonCode, ";")).ToArray();
 
                     using (OracleCommand oracleCommand = new OracleCommand())
                     {
                         oracleCommand.Connection = oracleConnection;
-
+                        
                         foreach (var command in commands)
                         {
-                            oracleCommand.CommandText = (command.EndsWith(" END") ? command + ";" : command);
+                            oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
                             oracleCommand.ExecuteNonQuery();
                         }
                     }
@@ -414,8 +402,6 @@ namespace Logitude.DBMigrations.Models
                     oracleConnection.Close();
 
                     return null;
-
-
                 }
                 catch (Exception exception)
                 {
@@ -432,7 +418,7 @@ namespace Logitude.DBMigrations.Models
                     sqlConnection.Open();
 
                     string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
-                    commands = commands.Take(commands.Count() - 1).ToArray();
+                    commands = commands.Take(commands.Count() - 1).Select(c => c.Replace(ScriptSemicolonCode, ";")).ToArray();
 
                     using (SqlCommand sqlCommand = new SqlCommand())
                     {
@@ -519,31 +505,57 @@ namespace Logitude.DBMigrations.Models
             PerformanceData += description + "," + stopwatch.ElapsedMilliseconds + "\n";
         }
 
-        private string GetScriptFromViewDefinition(ViewDefinition viewDefinition)
+        private string GetScriptFromViewDefinition(ViewDefinition viewDefinition, string dxmlFileName)
         {
+            string viewScript = "-- DataView Script From " + dxmlFileName + "\n";
+
             if (DatabaseType.ToLower() == "oracle")
             {
-                string viewScript = UnescapeScript(viewDefinition.OracleScript) + "\n\n";
+                if (String.IsNullOrEmpty(viewDefinition.OracleScript))
+                {
+                    return null;
+                }
+
+                string unescapedScript = UnescapeScript(viewDefinition.OracleScript);
+                viewScript += unescapedScript + (unescapedScript.EndsWith(";") ? null : ";") + "\n\n";
                 return viewScript;
             }
             else
             {
-                string viewScript = "EXEC('IF (OBJECT_ID(''" + "[" + viewDefinition.Schema + "].[" + viewDefinition.Name + "]" + "'', ''V'') IS NOT NULL) BEGIN DROP VIEW " + "[" + viewDefinition.Schema + "].[" + viewDefinition.Name + "]" + " END" + "');\n";
+                if (String.IsNullOrEmpty(viewDefinition.SqlScript))
+                {
+                    return null;
+                }
+
+                viewScript += "EXEC('IF (OBJECT_ID(''" + "[" + viewDefinition.Schema + "].[" + viewDefinition.Name + "]" + "'', ''V'') IS NOT NULL) BEGIN DROP VIEW " + "[" + viewDefinition.Schema + "].[" + viewDefinition.Name + "]" + " END" + "');\n";
                 viewScript += "EXEC('" + UnescapeScript(viewDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
                 return viewScript;
             }
         }
 
-        private string GetScriptFromProcedureDefinition(ProcedureDefinition procedureDefinition)
+        private string GetScriptFromProcedureDefinition(ProcedureDefinition procedureDefinition, string dxmlFileName)
         {
+            string procedureScript = "-- Procedure Script From " + dxmlFileName + "\n";
+
             if (DatabaseType.ToLower() == "oracle")
             {
-                string procedureScript = UnescapeScript(procedureDefinition.OracleScript) + "\n\n";
+                if (String.IsNullOrEmpty(procedureDefinition.OracleScript))
+                {
+                    return null;
+                }
+
+                string unescapedScript = UnescapeScript(procedureDefinition.OracleScript);
+                procedureScript += unescapedScript + (unescapedScript.EndsWith(";") ? null : ";") + "\n\n";
                 return procedureScript;
             }
             else
             {
-                string procedureScript = "EXEC('IF (OBJECT_ID(''" + "[" + procedureDefinition.Schema + "].[" + procedureDefinition.Name + "]" + "'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE " + "[" + procedureDefinition.Schema + "].[" + procedureDefinition.Name + "]" + " END" + "');\n";
+                if (String.IsNullOrEmpty(procedureDefinition.SqlScript))
+                {
+                    return null;
+                }
+
+                procedureScript += "EXEC('IF (OBJECT_ID(''" + "[" + procedureDefinition.Schema + "].[" + procedureDefinition.Name + "]" + "'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE " + "[" + procedureDefinition.Schema + "].[" + procedureDefinition.Name + "]" + " END" + "');\n";
                 procedureScript += "EXEC('" + UnescapeScript(procedureDefinition.SqlScript).Replace("'", "''") + "');" + "\n\n";
                 return procedureScript;
             }
@@ -646,6 +658,20 @@ namespace Logitude.DBMigrations.Models
             }
 
             return script;
+        }
+
+        private string ReplaceScriptSemicolon(string script)
+        {
+            int lastIndex = script.LastIndexOf(';');
+            if (lastIndex > 0)
+            {
+                script = script.Substring(0, lastIndex).Replace(";", ScriptSemicolonCode) + script.Substring(lastIndex);
+                return script;
+            }
+            else
+            {
+                return script;
+            }
         }
 
         private void ExitTool(string message)

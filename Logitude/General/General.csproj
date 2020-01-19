@@ -692,13 +692,16 @@
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on CustomerFieldsUpdateSettings.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Wesam] Fill triggerfieldcode on ObjectTableRules.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Wesam] Delete Constraint between ObjectTableRules and objectFields.sql" />
-
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between AirlineMessagingRules and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill rulefieldcode on AirlineMessagingRules.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Maheera] Fill SearchFields of SLAHeaders Table.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 06 [Rabaia] Fill FeatureUniqeCode From FeatureId.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Rabaia] Delete Constraint between Features and FeatureRole and FeaturePackages.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Abed] UpdateDocumentIdOnQuoationDocumentsFilings.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 15 [Maheera] Fill Default PriceSteps.sql" />
+    <Content Include="Main Branch\2020\Day 06 [Rabaia] Fill FeatureUniqeCode From FeatureId.sql" />
+    <Content Include="Main Branch\2020\Day 05 [Rabaia] Delete Constraint between Features and FeatureRole and FeaturePackages.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day05 [Abed] UpdateDocumentIdOnQuoationDocumentsFilings.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
@@ -2015,8 +2018,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DataViews And Procedures\DataViews\AgingReportInvoiceDataView.dxml" />
-    <None Include="DataViews And Procedures\Stored Procedures\UpdateTenantCustomersActualData.dxml" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceappSettings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.appSettings.config" />
