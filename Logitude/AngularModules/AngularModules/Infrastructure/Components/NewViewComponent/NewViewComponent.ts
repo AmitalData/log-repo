@@ -653,6 +653,7 @@ export class NewViewComponent {
                     var newQueryColumn = new QueryColumnPM();
 
                     newQueryColumn.QueryCode = this.QueryCode;
+                    newQueryColumn.QueryId = this.QueryId;
                     newQueryColumn.ObjectFieldId = field.Id;
                     newQueryColumn.ObjectFieldName = field.FieldName;
                     newQueryColumn.ObjectFieldFieldLableTextCodeDefaultText = field.FullNameTextCodeDefaultText;
@@ -681,6 +682,7 @@ export class NewViewComponent {
                 var newQueryColumn = new QueryColumnPM();
 
                 newQueryColumn.QueryCode = this.QueryCode;
+                newQueryColumn.QueryId = this.QueryId;
                 newQueryColumn.ObjectFieldId = field.Id;
                 newQueryColumn.ObjectFieldName = field.FieldName;
                 newQueryColumn.ObjectFieldFieldLableTextCodeDefaultText = field.FullNameTextCodeDefaultText;

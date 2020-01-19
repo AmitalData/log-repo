@@ -55,6 +55,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     UserId = a.UserId,
                                                                     ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
+
+ 
             return advancedFilters;
 
         }
@@ -85,6 +87,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     UserId = a.UserId,
                                                                     ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
+
+ 
             return advancedFilters;
 
         }
@@ -122,6 +126,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                           UserId = a.UserId,
                                           ObjectFieldCode = a.ObjectFieldCode,
                                       };
+
+ 
                 }
 
                 else
@@ -150,7 +156,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                           UserId = a.UserId,
                                           ObjectFieldCode = a.ObjectFieldCode,
                                       };
-                }
+
+                 }
             }
 
             return advancedFilters;
@@ -182,6 +189,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     UserId = a.UserId,
                                                                     ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
+
+ 
             return advancedFilters;
 
         }
@@ -212,6 +221,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     UserId = a.UserId,
                                                                     ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
+
+ 
             return advancedFilters;
 
         }
@@ -241,6 +252,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     UserId = a.UserId,
                                                                     ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
+
+ 
             return advancedFilters;
 
         }
@@ -271,6 +284,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     UserId = a.UserId,
                                                                     ObjectFieldCode = a.ObjectFieldCode,
                                                                 }).FirstOrDefault();
+
+ 
             return advancedFilters;
 
         }
