@@ -600,9 +600,10 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-
+     invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
     OkButtonClicked() {
         var errors: string[] = [];
+       
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         var invoiceNumber_REGEXP1 = this.InvoiceNumber.match(/[^A-Za-z0-9]+/);
         if (!this.InvoiceNumber.match(/[^A-Za-z0-9]+/))
@@ -668,24 +669,41 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            if (this.IsAccountingActivated == true) {
-                var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-                invoiceDomainService.ValidateAPInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.VendorId, this.EntityPM.AccountingDate, this.EntityPM.InvoiceNumber).subscribe((response: ServiceResponse) => {
-                    if (response != null) {
-                        if (!response.HasError) {
-                            this.ValidateInvoiceDate(errors);
-                        }
-                        else {
-                            this.ValidationErrorsList = response.ErrorsArray;
-                        }
-                    }
-                });
-            }
-            else {
-                this.CompleteSubmission();
-            }
+            this.ValidateInvoiceNumber(errors);
         }
     }
+
+    ValidateInvoiceNumber(errors:string[]) {
+        this.invoiceDomainService.ValidateInvoiceNumber(this.EntityPM.InvoiceNumber).subscribe((response: ServiceResponse) => {
+            if (response != null) {
+                if (!response.HasError) {
+                    if (this.IsAccountingActivated == true) {
+                        this.ValidateAPInvoiceFullAccounting(errors);
+                    }
+                    else {
+                        this.CompleteSubmission();
+                    }
+                }
+                else {
+                    this.ValidationErrorsList = response.ErrorsArray;
+                }
+            }
+        });
+    }
+    ValidateAPInvoiceFullAccounting(errors: string[]) {
+       // var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        this.invoiceDomainService.ValidateAPInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.VendorId, this.EntityPM.AccountingDate).subscribe((response: ServiceResponse) => {
+            if (response != null) {
+                if (!response.HasError) {
+                    this.ValidateInvoiceDate(errors);
+                }
+                else {
+                    this.ValidationErrorsList = response.ErrorsArray;
+                }
+            }
+        });
+    }
+    
     CompleteSubmission() {
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 
@@ -697,8 +715,8 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-            var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-            invoiceDomainService.ValidateInvoiceDate(this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
+           // var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+            this.invoiceDomainService.ValidateInvoiceDate(this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
                 if (response != null) {
                   this.CurrentSession.StopBusyIndicator();
                     if (!response.HasError ) {

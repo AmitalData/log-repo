@@ -202,11 +202,11 @@ export class InvoiceDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    ValidateAPInvoiceFullAccounting(currency: string, vendor: string, accountingdate: Date, invoiceNumber:string) {
+    ValidateAPInvoiceFullAccounting(currency: string, vendor: string, accountingdate: Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAPInvoiceValidatingList?currency=' + currency + "&vendor=" + vendor + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate)+ "&invoiceNumber=" + invoiceNumber, {
+            return this._http.get(this._apiUrl + '/GetAPInvoiceValidatingList?currency=' + currency + "&vendor=" + vendor + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate), {
                 headers: authHeader
             }).map(response => {
                 var result = response.json();
@@ -223,6 +223,23 @@ export class InvoiceDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetValidateInvoiceDate?invoiceDateString=' + ServiceHelper.GetDateString(invoiceDate) , {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = result;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
+
+    }
+    ValidateInvoiceNumber(invoiceNumber: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetValidateInvoiceNumber?invoiceNumber=' + invoiceNumber, {
                 headers: authHeader
             }).map(response => {
                 var result = response.json();

@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                 }
             }
-
+            CheckInvoiceNumberFormat(entityPM.InvoiceNumber, entityPM.Tenant);
 
             List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
 
@@ -189,8 +189,33 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
-            ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate, entityPM.InvoiceNumber);
+            ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate);
             ValidateExternalAPI(entityPM, myCommonContext);
+        }  
+
+
+        public static void CheckInvoiceNumberFormat(string invoiceNumber, int tenant)
+        {
+            bool showLocal = SetShowLocal(tenant);
+            Regex regex = new Regex("^[A-Za-z0-9]*$");
+            if (!regex.IsMatch(invoiceNumber))
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.O.InvalidNumber", tenant, showLocal);
+                throw new ApplicationException(msg);
+
+            }
+
+        }
+
+        private static bool SetShowLocal(int tenant)
+        {
+            bool showLocal = false;
+            var user = GetLoggedContact(tenant);
+            if (user != null)
+            {
+                showLocal= !(GetLoggedContact(tenant).DontShowLocal);
+            }
+            return showLocal;
         }
 
         private static void ValidateExternalAPI(APInvoicePM entityPM, ICommonDataContext myCommonContext)
@@ -526,7 +551,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        public static void ValidateFullAccounting(int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate, string invoiceNumber)
+        public static void ValidateFullAccounting(int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
         {
             var errors = "";
 
@@ -554,15 +579,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         errors += msg + ";";
                     }
                 }
-                Regex regex= new Regex("^[A-Za-z0-9]*$");
-                if (!regex.IsMatch(invoiceNumber))
-                {
-                    string msg = TranslateTextsClass.Translate("APInvoice.O.InvalidNumber", tenant, useLocal);
-                    errors += msg + ";";
-
-                }
-
-
+               
                 IAccountingContext myContext = AccountingContext.GetContext(tenant);
                 AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
                 AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(accountingDate.Value.Year, "1", tenant);
