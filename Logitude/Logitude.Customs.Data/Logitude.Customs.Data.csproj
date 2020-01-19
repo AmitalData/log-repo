@@ -101,6 +101,7 @@
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
     <Compile Include="EntityKeys\AmendmentStatusKeys.cs" />
+    <Compile Include="EntityKeys\AmendmentTypeKeys.cs" />
     <Compile Include="EntityKeys\ApprovedProfessionKeys.cs" />
     <Compile Include="EntityKeys\CargoSplitRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoStatusKeys.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmendmentStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AmendmentTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ApprovedProfessionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoSplitRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoStatusListQueryService.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="EntityListQueryServices\Generated\ActionCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AgentTalkBackTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmendmentStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AmendmentTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ApprovedProfessionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoSplitRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoStatusListQueryService.Generated.cs" />
@@ -293,6 +296,7 @@
     <Compile Include="EntityLists\Generated\ActionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AgentTalkBackTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AmendmentStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AmendmentTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ApprovedProfessionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoSplitRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoStatusList.Generated.cs" />
@@ -358,6 +362,7 @@
     <Compile Include="EntityMapping\ActionCodeMap.cs" />
     <Compile Include="EntityMapping\AgentTalkBackTypeMap.cs" />
     <Compile Include="EntityMapping\AmendmentStatusMap.cs" />
+    <Compile Include="EntityMapping\AmendmentTypeMap.cs" />
     <Compile Include="EntityMapping\ApprovedProfessionMap.cs" />
     <Compile Include="EntityMapping\CargoSplitRequestStatusMap.cs" />
     <Compile Include="EntityMapping\CargoStatusMap.cs" />
@@ -422,6 +427,7 @@
     <Compile Include="EntityPOCOs\ActionCode.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
     <Compile Include="EntityPOCOs\AmendmentStatus.cs" />
+    <Compile Include="EntityPOCOs\AmendmentType.cs" />
     <Compile Include="EntityPOCOs\ApprovedProfession.cs" />
     <Compile Include="EntityPOCOs\CargoSplitRequestStatus.cs" />
     <Compile Include="EntityPOCOs\CargoStatus.cs" />
@@ -487,6 +493,7 @@
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
     <Compile Include="Repsitories\AmendmentStatusRepository.cs" />
+    <Compile Include="Repsitories\AmendmentTypeRepository.cs" />
     <Compile Include="Repsitories\ApprovedProfessionRepository.cs" />
     <Compile Include="Repsitories\CargoSplitRequestStatusRepository.cs" />
     <Compile Include="Repsitories\CargoStatusRepository.cs" />
@@ -530,6 +537,7 @@
     <Compile Include="Repsitories\Generated\ActionCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AgentTalkBackTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmendmentStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\AmendmentTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ApprovedProfessionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoSplitRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoStatusRepository.Generated.cs" />

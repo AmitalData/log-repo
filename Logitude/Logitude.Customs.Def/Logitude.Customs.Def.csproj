@@ -68,6 +68,7 @@
     <Compile Include="Contracts\IIIGClosedTable.cs" />
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SealCompletenesPM.Generated.cs" />
     <Compile Include="EntityPMs\PhysicalCheckPMRequest.cs" />
     <Compile Include="EntityPMs\CityPM.cs" />

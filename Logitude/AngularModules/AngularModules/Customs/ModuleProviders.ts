@@ -219,6 +219,8 @@ import { GatepassReturnCodeListService } from './Services/StandardLists/Gatepass
 import { CourierCustomStatusListService } from './Services/StandardLists/CourierCustomStatusListService';
 import { PendingByKeywordListService } from './Services/StandardLists/PendingByKeywordListService';
 import { HazardousSubstanceListService } from './Services/StandardLists/HazardousSubstanceListService';
+import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
+
 
 
 
@@ -573,6 +575,7 @@ export class ModuleProviders {
             case "RequestTypeListService": { myResult = new RequestTypeListService(); break; } 
             case "CourierCustomStatusListService": { myResult = new CourierCustomStatusListService(); break; }
             case "HazardousSubstanceListService": { myResult = new HazardousSubstanceListService(); break; }
+            case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
              //#endregion                
 
             //#region StandardPMs

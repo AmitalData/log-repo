@@ -2925,6 +2925,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<CertificatesStatus> CertificatesStatuses { get; set; }
         public IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; set; }
         public IDbSet<AmendmentStatus> AmendmentStatuses {get; set;}
+        public IDbSet<AmendmentType> AmendmentTypes  { get; set; }
         public IDbSet<DeclarationStatementType> DeclarationStatementTypes { get; set; }
         public IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; set; }
         public IDbSet<VendorCommission> VendorCommissions { get; set; }
@@ -4048,6 +4049,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CertificatesStatusMap());
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
+            modelBuilder.Configurations.Add(new AmendmentTypeMap());
             modelBuilder.Configurations.Add(new AmendmentFieldReasonTypeMap());
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
             modelBuilder.Configurations.Add(new SupplierInvoiceItemVehicleAddMap());

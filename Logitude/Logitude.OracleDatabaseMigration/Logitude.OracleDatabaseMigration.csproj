@@ -448,20 +448,21 @@
     <Compile Include="Migrations\202001081021093_AddDWHSettingP.Designer.cs">
       <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001151307414_AddMigrationSealCompletenes.cs" />
     <Compile Include="Migrations\202001151307414_AddMigrationSealCompletenes.Designer.cs">
       <DependentUpon>202001151307414_AddMigrationSealCompletenes.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.cs" />
     <Compile Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.Designer.cs">
       <DependentUpon>202001131439222_AddAmendmentDontDisplayInList.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001160629471_removeDWHSetting.cs" />
     <Compile Include="Migrations\202001160629471_removeDWHSetting.Designer.cs">
       <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001191042122_AddAmendmentTypes.cs" />
+    <Compile Include="Migrations\202001191042122_AddAmendmentTypes.Designer.cs">
+      <DependentUpon>202001191042122_AddAmendmentTypes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -790,17 +791,17 @@
     <EmbeddedResource Include="Migrations\202001081021093_AddDWHSettingP.resx">
       <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001151307414_AddMigrationSealCompletenes.resx">
       <DependentUpon>202001151307414_AddMigrationSealCompletenes.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.resx">
       <DependentUpon>202001131439222_AddAmendmentDontDisplayInList.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001160629471_removeDWHSetting.resx">
       <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001191042122_AddAmendmentTypes.resx">
+      <DependentUpon>202001191042122_AddAmendmentTypes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
