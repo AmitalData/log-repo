@@ -915,6 +915,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void InitializeComponent()
         {
+            if (entityPM.IsInvoiceNumberManuallySet)
+            {
+                entityPM.InvoiceNumber = MethodHelper.Trim(entityPM.InvoiceNumber);
+            }
+
             // DR: Draft
             // CN: Connected
             // NT: Not Connected
