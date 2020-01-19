@@ -794,18 +794,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         //[XmlIgnore]
         public List<LedgerTransactionList> MyLedgerTransactionList { get; set; }
+        public string GLAccountId { get; set; }
 
-
-
-
-
-
-
-
-
-
-
-        
+        public long TookMS { get; set; }
     }
 
     public class LedgerTransactionBalanceFilterCallBack : LedgerTransactionBalanceFilterCallBackCanBeNull

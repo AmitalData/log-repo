@@ -39,6 +39,7 @@ import {ExternalReconciliationExtendedPMService} from '../../Services/ExtendedPM
 import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import {ExternalReconciliationExtendedListService, ExternalAutoReconcileServiceArgs} from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
 import { retry } from 'rxjs/operators';
+import { ExternalReconciliationOpService } from '../../Services/ExtendedPMs/ExternalReconciliationOpService';
 
 
 
@@ -78,6 +79,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     _ExternalReconciliationExtendedListService: ExternalReconciliationExtendedListService = new ExternalReconciliationExtendedListService();
     externalReconciliationExtendedPMService: ExternalReconciliationExtendedPMService = new ExternalReconciliationExtendedPMService();
     externalReconciliationPMService: ExternalReconciliationPMService = new ExternalReconciliationPMService();
+    _ExternalReconciliationOpService: ExternalReconciliationOpService = new ExternalReconciliationOpService();
 
 
     constructor(private CD: ChangeDetectorRef) {
@@ -1240,7 +1242,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     SubmitChanges(entity) {
 
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.externalReconciliationPMService.insert(entity).subscribe(myResult => {
+        this._ExternalReconciliationOpService.insert(entity).subscribe(myResult => {
             this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;

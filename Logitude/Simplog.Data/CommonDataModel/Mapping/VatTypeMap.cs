@@ -16,6 +16,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Description).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.LocalDescription).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.ReceivablesExternalId).HasMaxLength(25).IsUnicode(false);
+            this.Property(t => t.PayablesExternalId).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.ExternalVATCard).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.ExternalTAXItemId).HasMaxLength(25).IsUnicode(false);
             // Table & Column Mappings
@@ -30,6 +32,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.LocalDescription).HasColumnName("LocalDescription");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.ReceivablesExternalId).HasColumnName("ReceivablesExternalId");
+            this.Property(t => t.PayablesExternalId).HasColumnName("PayablesExternalId");
             this.Property(t => t.ExternalVATCard).HasColumnName("ExternalVATCard");
             this.Property(t => t.ExternalTAXItemId).HasColumnName("ExternalTAXItemId");
             this.Property(t => t.IsMultiPercentage).HasColumnName("IsMultiPercentage");

@@ -53,15 +53,12 @@ export class OccasionMainTabComponent extends BaseComponent {
         if (this.CurrentSession.CurrentEditComponent != null) {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.SetUIProperties_EntityClosed();
                     this.LoadOccasionLinesData();
                   
                 }
             });
-
-
-
 
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {

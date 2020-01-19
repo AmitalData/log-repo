@@ -826,7 +826,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private GLAccountPM GetGLAccountForLine(APInvoiceLinePM line)
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            GLAccountPM glaAccount = glAccountQuery.GetGLAccountByDisplayNumber(line.DebitAccount, tenant);
+            GLAccountPM glaAccount = glAccountQuery.GetGLAccountByInternalNumber(line.DebitAccount, tenant);
             return glaAccount;
         }
         #endregion
@@ -974,7 +974,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else if (myVatType != null)
                             {
-                                itemVAT.ExternalVATCard = myVatType.ExternalVATCard;
+                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
                             }
                         }
 
@@ -1609,7 +1609,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                     else
                                     {
-                                        newItem.ExternalVatCard = lineVatType.ExternalVATCard;
+                                        newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
                                     }
                                 }
 
@@ -1655,7 +1655,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         }
                                         else if (vatType != null)
                                         {
-                                            newItem.ExternalVatCard = vatType.ExternalVATCard;
+                                            newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                                         }
                                     }
 

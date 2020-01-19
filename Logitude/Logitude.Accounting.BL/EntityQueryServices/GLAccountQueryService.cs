@@ -1079,11 +1079,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 string msg = "";
                 CardPM cardPM = GetCardById(cardId, tenant);
 
-                if(cardPM.PartnerTypeId == PartnerTypeValues.Vendor)
-                    msg = GetVendorsWarningMessage(tenant, connectedCards);
-                else
-                    msg = GetCustomersErrorMessage(tenant, connectedCards);
 
+                if (cardPM.PartnerTypeId == PartnerTypeValues.Customer || cardPM.PartnerTypeId == PartnerTypeValues.CustomClearance || cardPM.PartnerTypeId == PartnerTypeValues.CustomAgent || cardPM.PartnerTypeId == PartnerTypeValues.CustomsShipper || cardPM.PartnerTypeId == PartnerTypeValues.Coloader)
+                    msg = GetCustomersErrorMessage(tenant, connectedCards);
+                else 
+                    msg = GetVendorsWarningMessage(tenant, connectedCards);
                 throw new ApplicationException(msg);
             }
         }

@@ -58,7 +58,7 @@ export class LanguageSettingsComponent {
 
             else {
                 this.selectedLanguageCode = value.Code;
-                this.TenantPM.Language = value.Description;
+                this.TenantPM.Language = value.Code;
             }
         }
     }

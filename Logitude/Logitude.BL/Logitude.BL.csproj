@@ -2581,6 +2581,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Assembly.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestsCountMapping.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Concurrency.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\FBLStockMapping.cs" />

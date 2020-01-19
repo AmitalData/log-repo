@@ -14,11 +14,14 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime CreateDateTime { get; set; }
         public string ShipmentNumber { get; set; }
         public DateTime? MainCarriageETD { get; set; } //ETD
+        public DateTime? MainCarriageATD { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string MainCarriageFromPortName { get; set; } //POL
         public string MainCarriageFinalDestinationPortName { get; set; } //POD
+        public string MainCarriageFinalDestinationPortId{ get; set; } //POD
         public string ShipperName { get; set; }
+        public string ShipperId { get; set; }
         public string MainCarriageCarrierName { get; set; }
         public string ContainerNumber { get; set; } //all the containers numbers + types
         public string ShipmentTypeId { get; set; }
@@ -110,6 +113,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageToPortId { get; set; }
         public string MainCarriageToPortName { get; set; }
         public double? PackagesGrossWeight { get; set; }
+        public double? PackagesVolumetricWeight { get; set; }
+        public int? PackagesQuantity { get; set; }
+        
         public bool? ContainerFollowUp { get; set; }
         public bool? SplitOnCarriage { get; set; }
         public DateTime? PackageOnCarriageATD { get; set; }
@@ -121,6 +127,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment2FromPortId { get; set; }
         public string Transshipment1FromPortId { get; set; }
         public string MainCarriageFromPortId { get; set; }
+   
 
         public DateTime? Transshipment3ETA { get; set; }
         public DateTime? Transshipment2ETA { get; set; }
@@ -146,5 +153,15 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageCarrierId { get; set; }
 
         public int? NumberOfContainers { get; set; }
+        public string Reference1 { get; set; }
+        public string CustomAgentImportId { get; set; }
+        public string CustomAgentImportName { get; set; }
+        public string CommodityNumber { get; set; }
+        public int? PackageQuantity { get; set; }
+        public string MoveTypeName { get; set; }
+        public double? PackageVolumeitricWeight { get; set; }
+        public string MainCarriageCarrierCode { get; set; }
+        public string MainCarriageCarrierNumber { get; set; }
+        public DateTime? MainCarriageDateFilter { get; set; }
     }
 }

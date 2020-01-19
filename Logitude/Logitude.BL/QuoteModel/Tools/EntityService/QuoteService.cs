@@ -1399,7 +1399,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             byte[] pdfData = new byte[] { };
             if (itemPM.VersionType == "G")
             {
-                pdfData = quoteTemplateService.GetQuoteTemplatePdfReport(itemPM.QuoteId, itemPM.QuoteTemplateId, itemPM.CreatedByUserId, itemPM.Tenant, null);
+                pdfData = quoteTemplateService.GetQuoteTemplatePdfReport(itemPM.QuoteId, itemPM.QuoteTemplateId, itemPM.CreatedByUserId, itemPM.Tenant, null, null, itemPM.VersionNumber);
             }
 
             DocumentRepository documentRep = new DocumentRepository(myCommonContext);
@@ -1419,13 +1419,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             itemPM.DocumentId = document.Id;
 
-            //string localPath = "quotetemplatesectionfiles/" + document.Id + "." + document.Extension;
-            //var blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-            //var blobfile = blobContainer.GetBlockBlobReference(localPath);
-            //using (Stream blobstream = blobfile.OpenWrite())
-            //{
-            //    blobstream.Write(pdfData, 0, (int)pdfData.Length);
-            //}
 
             Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
             {
@@ -1438,10 +1431,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
             storageservice.Write(pdfData, fileInfo);
 
-            //QuoteRepository quoteRep = new QuoteRepository(objectContext);
-            //Quote quote = quoteRep.GetSingleQuote(itemPM.QuoteId, itemPM.Tenant);
-            //quote.LastVersionNumber = itemPM.VersionNumber;
-            //quote.QuoteTemplateId = itemPM.QuoteTemplateId;
+
 
             this.entityPM.LastVersionNumber = itemPM.VersionNumber;
             this.entityPM.QuoteTemplateId = itemPM.QuoteTemplateId;
@@ -1702,7 +1692,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         VatTypePercentage = item.VatPercentage,
                                         QuoteCurrencyAmount = item.SaleTotalAmount,
                                         LocalCurrencyAmount = item.SaleTotalAmountLocal,
-                                        ExternalVATCard = lineVatType.ExternalVATCard,
+                                        ExternalVATCard = lineVatType.ReceivablesExternalId,
                                         ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                                     };
 
@@ -1725,7 +1715,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                                         if (vatType != null)
                                         {
-                                            newItem.ExternalVATCard = vatType.ExternalVATCard;
+                                            newItem.ExternalVATCard = vatType.ReceivablesExternalId;
                                             newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                                         }
 

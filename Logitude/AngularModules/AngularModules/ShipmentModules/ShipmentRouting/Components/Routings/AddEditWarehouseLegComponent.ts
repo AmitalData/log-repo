@@ -177,9 +177,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     if (result) {
                         this.WarehouseLegAddressId = result.MainAddressId;
                         this.FatherComponent.WarehouseLegTerminalName = result.EnglishName;
-                        if (this.IsFirmCodeVisible) {
-                            this.WarehouseLegTerminalCode = result.FirmCode;
-                        }
+                        this.WarehouseLegTerminalCode = result.FirmCode;
                     }
                 }
             }

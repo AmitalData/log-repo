@@ -99,6 +99,7 @@
     <Content Include="Accounting\Components\Others\JournalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ExternalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
+    <Content Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\TaxReportShortTitleComponent.html" />
@@ -417,6 +418,7 @@
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
@@ -1095,6 +1097,7 @@
     <Content Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Operational\FlightBookingsManifestFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.html" />
@@ -3555,6 +3558,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\FlightBookingsManifestFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.ts" />
@@ -6813,6 +6817,9 @@
     <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCasesStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorCloudCollection.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Islam\RunTestCasesProd.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Islam\RunTestCasesProdStaging.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Mohammad\TeamMohammadCases.bat" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
