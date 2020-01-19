@@ -2412,7 +2412,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (isNewWizard) {
                         var IsOriginalMaster: boolean = false;
                         if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryCode)) {
-                            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQuery.OriginalQueryCode)[0];
+                            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Code == this.SelectedQuery.OriginalQueryCode)[0];
                             if (query.Code == "Masters" || query.Code == "Open Payables Masters" || query.Code == "All Masters") {
                                 IsOriginalMaster = true;
                             }
