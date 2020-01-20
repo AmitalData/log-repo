@@ -243,6 +243,7 @@
     <None Include="EntityFiles\CommonDataModel\CustomerDeposition.lxml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DBTables\" />
     <Folder Include="test2\" />
     <Folder Include="test\" />
   </ItemGroup>
