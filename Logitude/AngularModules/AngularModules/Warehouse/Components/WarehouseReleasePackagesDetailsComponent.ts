@@ -93,8 +93,8 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
                 this.ToPortId = shipment.ToPortId;
             }
         } else {
-            this.ToPortId = null;
-            this.FromPortId = null;
+            this.ToPortId = this.ViewModelTrigger.ToPortId;
+            this.FromPortId = this.ViewModelTrigger.FromPortId;
         }
     }
 

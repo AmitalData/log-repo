@@ -73,6 +73,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     ChargeableWeightLabel: string;
     DataContext: any = this;
     private CurrentSession = SessionLocator.SelectedSession;
+    public FromPortId: string;
+    public ToPortId: string;
     constructor(public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService, private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
         this.GetNewInstance();
@@ -153,9 +155,14 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 this.warehouseReleasePM.ShipmentTypeId = this.ShipmentPM.ShipmentTypeId;
                 this.warehouseReleasePM.DirectionId = this.ShipmentPM.DirectionId;
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
+            } else {
+                this.warehouseReleasePM.ShipmentId = args.ShipmentId;
+                this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
             }
 
-
+            this.FromPortId = args.FromPortId;
+            this.ToPortId = args.ToPortId;
+            this.warehouseReleasePM.CustomerId = args.CustomerId ? args.CustomerId : this.warehouseReleasePM.CustomerId;
 
             this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
 
@@ -318,19 +325,19 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     //}
 
 
-    get ToPortId() {
-        var toportid: string = null;
-        if (this.warehouseReleasePM) toportid = this.warehouseReleasePM.ToPortId;
-        return toportid;
-    }
-    set ToPortId(value: string) {
-        if (this.warehouseReleasePM != null) {
-            if (value != this.warehouseReleasePM.ToPortId) {
-                this.warehouseReleasePM.ToPortId = value;
-                // this.OnActualReleaseDateDatePickerChange(value);
-            }
-        }
-    }
+    //get ToPortId() {
+    //    var toportid: string = null;
+    //    if (this.warehouseReleasePM) toportid = this.warehouseReleasePM.ToPortId;
+    //    return toportid;
+    //}
+    //set ToPortId(value: string) {
+    //    if (this.warehouseReleasePM != null) {
+    //        if (value != this.warehouseReleasePM.ToPortId) {
+    //            this.warehouseReleasePM.ToPortId = value;
+    //            // this.OnActualReleaseDateDatePickerChange(value);
+    //        }
+    //    }
+    //}
 
     get ActualReleaseDate() {
         var actualReleaseDate: Date = null;
