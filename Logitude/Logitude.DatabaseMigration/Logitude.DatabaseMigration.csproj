@@ -1874,6 +1874,14 @@
     <Compile Include="Migrations\202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.Designer.cs">
       <DependentUpon>202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001201213182_Add_Field_UniqueCode_To_Query.cs" />
+    <Compile Include="Migrations\202001201213182_Add_Field_UniqueCode_To_Query.Designer.cs">
+      <DependentUpon>202001201213182_Add_Field_UniqueCode_To_Query.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs" />
+    <Compile Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.Designer.cs">
+      <DependentUpon>202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -3329,6 +3337,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.resx">
       <DependentUpon>202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201213182_Add_Field_UniqueCode_To_Query.resx">
+      <DependentUpon>202001201213182_Add_Field_UniqueCode_To_Query.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.resx">
+      <DependentUpon>202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

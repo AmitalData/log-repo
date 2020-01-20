@@ -29,7 +29,7 @@ export class QueryPM {
 
     private uniqueCode: string;
     public get UniqueCode() { return this.uniqueCode; }
-    public set UniqueCode(newValue: string) { this.code = uniqueCode; }
+    public set UniqueCode(newValue: string) { this.code = this.uniqueCode; }
 
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }

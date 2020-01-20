@@ -1,0 +1,1 @@
+update Queries set UniqeCode = (select ObjectTables.Name from ObjectTables where Id= Queries.ObjectTableId)+'.'+Queries.Code

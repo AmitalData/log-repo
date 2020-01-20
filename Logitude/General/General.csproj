@@ -679,6 +679,7 @@
     <Content Include="Main Branch\2020\1 - 2020\Day 8 [Mutaz] Delete Constraint between QueryColumns and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 8 [Mutaz] Delete Constraint between AdvancedQueryFilters and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 8 [Mutaz] Fill OriginalQueryCode on Query.sql" />
+    <Content Include="Main Branch\2020\1 - 2020\Day 20 [Mutaz] Fill UniqeCode on Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 8 [Mutaz] Fill QueryCode on QueryColumns.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Fill QueryCode on SharedUserQueries.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 8 [Mutaz] Fill QueryCode on AdvancedQueryFilters.sql" />
