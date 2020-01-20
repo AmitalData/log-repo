@@ -59,6 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShipmentPreperationCalls.cs" />
     <Compile Include="ShipmentVariables.cs" />
+    <Compile Include="Tests\IntegrationShipmentPayable.cs" />
+    <Compile Include="Tests\IntegrationShipmentReceivable.cs" />
+    <Compile Include="Tests\IntegrationShipmentPackages.cs" />
     <Compile Include="Tests\ShipmentsTests.cs" />
   </ItemGroup>
   <ItemGroup>

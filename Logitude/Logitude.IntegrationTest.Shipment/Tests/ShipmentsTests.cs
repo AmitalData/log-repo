@@ -6,6 +6,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Logitude.IntegrationTest.Shipment.Tests;
 
 namespace Logitude.IntegrationTest.Shipment
 {
@@ -53,7 +54,7 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.AWBCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.ValueOfGoodsCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
-            shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString(); ;
+            shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
 
 
             shipmentPM.PackagesQuantity = 5;
@@ -61,28 +62,14 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.ChargeableWeight = 100;
             shipmentPM.NumberOfPackages = 5;
 
-            shipmentPM.ShipmentPackages = ShipmentPackages();
+            shipmentPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
+            shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
+            shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
+
             return shipmentPM;
         }
-        public static List<ShipmentPackagePM> ShipmentPackages()
-        {
-            List<ShipmentPackagePM> shipmentPackagePM = new List<ShipmentPackagePM>();
+        
 
-            shipmentPackagePM.Add(ShipmentPackageItem(5,5,5,5,100));
-            shipmentPackagePM.Add(ShipmentPackageItem(7, 10, 10, 10, 120));
-            return shipmentPackagePM;
-        }
-        public static ShipmentPackagePM ShipmentPackageItem(int quantity, double? length, double? width, double? height, double? weight)
-        {
-            ShipmentPackagePM shipmentPackageItem = new ShipmentPackagePM();
-
-            shipmentPackageItem.Quantity = quantity;
-            shipmentPackageItem.Length = length;
-            shipmentPackageItem.Width = width;
-            shipmentPackageItem.Height = height;
-            shipmentPackageItem.Weight = weight;
-            //shipmentPackageItem.VolumetricWeight = 0.104;
-            return shipmentPackageItem;
-        }
+      
     }
 }
