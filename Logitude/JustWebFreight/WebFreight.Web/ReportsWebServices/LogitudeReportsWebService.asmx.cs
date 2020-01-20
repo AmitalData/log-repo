@@ -10716,6 +10716,8 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_CollectorId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CollectoId").FirstOrDefault();
             QueryFilterItem filterItem_SalesmanId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalesmanId").FirstOrDefault();
             QueryFilterItem filterItem_Detailed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Detailed").FirstOrDefault();
+            QueryFilterItem filterItem_BalanceFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BalanceFilter").FirstOrDefault();
+            QueryFilterItem filterItem_BalanceFilterValue = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BalanceFilterValue").FirstOrDefault();
 
             //GLAccountType
             string accountType = null;
@@ -10808,6 +10810,26 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            //BalanceFilter
+            string BalanceFilter = null;
+            if (filterItem_BalanceFilter != null)
+            {
+                if (filterItem_BalanceFilter.FieldValue != null)
+                {
+                    BalanceFilter = filterItem_BalanceFilter.FieldValue.ToString();
+                }
+            }
+
+            //BalanceFilterValue
+            decimal BalanceFilterValue = 0;
+            if (filterItem_BalanceFilterValue != null)
+            {
+                if (filterItem_BalanceFilterValue.FieldValue != null)
+                {
+                    BalanceFilterValue = Convert.ToDecimal(filterItem_BalanceFilterValue.FieldValue);
+                }
+            }
+
             #endregion
 
             #region Base Data Filtered
@@ -10858,6 +10880,13 @@ namespace WebFreight.Web.ReportsWebServices
             var agingReport = new AgingReportService(myAgingReportParam);
             agingReport.RunReport();
             List<PeriodMExtended> result = agingReport.MyPeriodExtendedList;
+
+            if(BalanceFilter == "All" || BalanceFilter == "Debtors")
+                result = result.Where(d => d.Total >= 0).ToList();
+            else if (BalanceFilter == "DebtAbove")
+                result = result.Where(d => d.Total >= BalanceFilterValue).ToList();
+
+
             #endregion
 
             #region Fill Report Data

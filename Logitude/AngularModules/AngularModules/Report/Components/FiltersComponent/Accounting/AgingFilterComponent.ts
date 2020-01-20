@@ -193,6 +193,14 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         }
     }
 
+    private balance: number;
+    public get Balance() { return this.balance; }
+    public set Balance(value: number) {
+        if (this.balance != value) {
+            this.balance = value;
+        }
+    }
+
 
     //#endregion
 
@@ -238,6 +246,9 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
             myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+
+            myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_","")));
+            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
@@ -298,5 +309,34 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     }
       //#endregion
+
+      public balanceFilterSelectedValue: string = 'filter_All';
+      BalanceFilterItemClicked(itemValue: string)
+      {
+          if (this.balanceFilterSelectedValue != itemValue) {
+              this.balanceFilterSelectedValue = itemValue;
+              this.BalanceFilterChanged();
+          }
+      }
+      BalanceFilterChanged()
+      {
+
+        //   switch (this.balanceFilterSelectedValue) {
+        //       case 'filter_All':
+        //           this.AccountTypeCode = '2';
+        //           break;
+        //       case 'filter_Debtors':
+        //           this.AccountTypeCode = '2';
+        //           break;
+        //       case 'filter_DebtAbove':
+        //           this.AccountTypeCode = '3';
+        //           break;
+        //       default:
+        //           break;
+        //   }
+
+          this.SetUIProperties();
+
+      }
 
 }
