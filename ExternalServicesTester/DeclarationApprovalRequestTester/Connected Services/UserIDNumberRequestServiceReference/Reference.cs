@@ -8,31 +8,55 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference {
+namespace DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference {
     using System.Runtime.Serialization;
     using System;
     
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DeclarationApprovalRequestPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserIdNumberRequestPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
     [System.SerializableAttribute()]
-    public partial class DeclarationApprovalRequestPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class UserIdNumberRequestPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeclarationXmlDataField;
+        private string CustomerAddressField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RemarksField;
+        private string CustomerNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipmentNumberField;
+        private string DeclarationNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ForwarderShipmentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GoodsDescritpionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HawbField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MasterField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SenderDetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentValueInNISField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WeightField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -45,40 +69,131 @@ namespace DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceRefe
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DeclarationXmlData {
+        public string CustomerAddress {
             get {
-                return this.DeclarationXmlDataField;
+                return this.CustomerAddressField;
             }
             set {
-                if ((object.ReferenceEquals(this.DeclarationXmlDataField, value) != true)) {
-                    this.DeclarationXmlDataField = value;
-                    this.RaisePropertyChanged("DeclarationXmlData");
+                if ((object.ReferenceEquals(this.CustomerAddressField, value) != true)) {
+                    this.CustomerAddressField = value;
+                    this.RaisePropertyChanged("CustomerAddress");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Remarks {
+        public string CustomerName {
             get {
-                return this.RemarksField;
+                return this.CustomerNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.RemarksField, value) != true)) {
-                    this.RemarksField = value;
-                    this.RaisePropertyChanged("Remarks");
+                if ((object.ReferenceEquals(this.CustomerNameField, value) != true)) {
+                    this.CustomerNameField = value;
+                    this.RaisePropertyChanged("CustomerName");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipmentNumber {
+        public string DeclarationNumber {
             get {
-                return this.ShipmentNumberField;
+                return this.DeclarationNumberField;
             }
             set {
-                if ((object.ReferenceEquals(this.ShipmentNumberField, value) != true)) {
-                    this.ShipmentNumberField = value;
-                    this.RaisePropertyChanged("ShipmentNumber");
+                if ((object.ReferenceEquals(this.DeclarationNumberField, value) != true)) {
+                    this.DeclarationNumberField = value;
+                    this.RaisePropertyChanged("DeclarationNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ForwarderShipmentNumber {
+            get {
+                return this.ForwarderShipmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ForwarderShipmentNumberField, value) != true)) {
+                    this.ForwarderShipmentNumberField = value;
+                    this.RaisePropertyChanged("ForwarderShipmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GoodsDescritpion {
+            get {
+                return this.GoodsDescritpionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GoodsDescritpionField, value) != true)) {
+                    this.GoodsDescritpionField = value;
+                    this.RaisePropertyChanged("GoodsDescritpion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Hawb {
+            get {
+                return this.HawbField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HawbField, value) != true)) {
+                    this.HawbField = value;
+                    this.RaisePropertyChanged("Hawb");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Master {
+            get {
+                return this.MasterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MasterField, value) != true)) {
+                    this.MasterField = value;
+                    this.RaisePropertyChanged("Master");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Quantity {
+            get {
+                return this.QuantityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuantityField, value) != true)) {
+                    this.QuantityField = value;
+                    this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SenderDetails {
+            get {
+                return this.SenderDetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SenderDetailsField, value) != true)) {
+                    this.SenderDetailsField = value;
+                    this.RaisePropertyChanged("SenderDetails");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentValueInNIS {
+            get {
+                return this.ShipmentValueInNISField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentValueInNISField, value) != true)) {
+                    this.ShipmentValueInNISField = value;
+                    this.RaisePropertyChanged("ShipmentValueInNIS");
                 }
             }
         }
@@ -92,6 +207,19 @@ namespace DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceRefe
                 if ((this.TenantField.Equals(value) != true)) {
                     this.TenantField = value;
                     this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Weight {
+            get {
+                return this.WeightField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WeightField, value) != true)) {
+                    this.WeightField = value;
+                    this.RaisePropertyChanged("Weight");
                 }
             }
         }
@@ -248,53 +376,49 @@ namespace DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceRefe
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DeclarationApprovalRequestServiceReference.IDeclarationApprovalRequestWcfService")]
-    public interface IDeclarationApprovalRequestWcfService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserIDNumberRequestServiceReference.IUserIDNumberRequestWcfService")]
+    public interface IUserIDNumberRequestWcfService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeclarationApprovalRequestWcfService/RequestDeclarationApprov" +
-            "al", ReplyAction="http://tempuri.org/IDeclarationApprovalRequestWcfService/RequestDeclarationApprov" +
-            "alResponse")]
-        DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.Response RequestDeclarationApproval(DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestPM declarationApprovalRequestPM);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserIDNumberRequestWcfService/RequestUserIDNumber", ReplyAction="http://tempuri.org/IUserIDNumberRequestWcfService/RequestUserIDNumberResponse")]
+        DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.Response RequestUserIDNumber(DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.UserIdNumberRequestPM declarationApprovalRequestPM);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeclarationApprovalRequestWcfService/RequestDeclarationApprov" +
-            "al", ReplyAction="http://tempuri.org/IDeclarationApprovalRequestWcfService/RequestDeclarationApprov" +
-            "alResponse")]
-        System.Threading.Tasks.Task<DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.Response> RequestDeclarationApprovalAsync(DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestPM declarationApprovalRequestPM);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserIDNumberRequestWcfService/RequestUserIDNumber", ReplyAction="http://tempuri.org/IUserIDNumberRequestWcfService/RequestUserIDNumberResponse")]
+        System.Threading.Tasks.Task<DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.Response> RequestUserIDNumberAsync(DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.UserIdNumberRequestPM declarationApprovalRequestPM);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IDeclarationApprovalRequestWcfServiceChannel : DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.IDeclarationApprovalRequestWcfService, System.ServiceModel.IClientChannel {
+    public interface IUserIDNumberRequestWcfServiceChannel : DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.IUserIDNumberRequestWcfService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class DeclarationApprovalRequestWcfServiceClient : System.ServiceModel.ClientBase<DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.IDeclarationApprovalRequestWcfService>, DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.IDeclarationApprovalRequestWcfService {
+    public partial class UserIDNumberRequestWcfServiceClient : System.ServiceModel.ClientBase<DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.IUserIDNumberRequestWcfService>, DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.IUserIDNumberRequestWcfService {
         
-        public DeclarationApprovalRequestWcfServiceClient() {
+        public UserIDNumberRequestWcfServiceClient() {
         }
         
-        public DeclarationApprovalRequestWcfServiceClient(string endpointConfigurationName) : 
+        public UserIDNumberRequestWcfServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public DeclarationApprovalRequestWcfServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public UserIDNumberRequestWcfServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public DeclarationApprovalRequestWcfServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public UserIDNumberRequestWcfServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public DeclarationApprovalRequestWcfServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public UserIDNumberRequestWcfServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
-        public DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.Response RequestDeclarationApproval(DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestPM declarationApprovalRequestPM) {
-            return base.Channel.RequestDeclarationApproval(declarationApprovalRequestPM);
+        public DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.Response RequestUserIDNumber(DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.UserIdNumberRequestPM declarationApprovalRequestPM) {
+            return base.Channel.RequestUserIDNumber(declarationApprovalRequestPM);
         }
         
-        public System.Threading.Tasks.Task<DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.Response> RequestDeclarationApprovalAsync(DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestPM declarationApprovalRequestPM) {
-            return base.Channel.RequestDeclarationApprovalAsync(declarationApprovalRequestPM);
+        public System.Threading.Tasks.Task<DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.Response> RequestUserIDNumberAsync(DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.UserIdNumberRequestPM declarationApprovalRequestPM) {
+            return base.Channel.RequestUserIDNumberAsync(declarationApprovalRequestPM);
         }
     }
 }
