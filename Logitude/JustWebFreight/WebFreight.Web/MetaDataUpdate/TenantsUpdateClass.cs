@@ -536,6 +536,15 @@ namespace WebFreight.Web.MetaDataUpdate
                             break;
                         }
 
+                    case "updateautomationmetadata":
+                        {
+                            AutomationMetaDataUpdateService automationMetaDataUpdateService = new AutomationMetaDataUpdateService();
+                            automationMetaDataUpdateService.UpdateAutomationMetaData();
+
+                            break;
+                        }
+
+
                     case "all":
                         {
                             //Tenant 0
