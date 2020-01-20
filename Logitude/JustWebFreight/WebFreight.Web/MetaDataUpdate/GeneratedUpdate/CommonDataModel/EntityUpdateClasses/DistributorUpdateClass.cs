@@ -376,7 +376,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllDistributorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DistributorTextCode_0.Id, NameTextCodeCode = DistributorTextCode_0.Code, Code = "All Distributors",  QueryGroupCode = "DIST", IndexOrder = 0, Tenant = 0, ObjectTableId = DistributorObjectTable.Id, QuerySection = "Distributor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DistributorFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllDistributorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DistributorTextCode_0.Id, NameTextCodeCode = DistributorTextCode_0.Code, ObjectTableName = "Distributor", Code = "All Distributors",  QueryGroupCode = "DIST", IndexOrder = 0, Tenant = 0, ObjectTableId = DistributorObjectTable.Id, QuerySection = "Distributor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DistributorFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllDistributorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDistributorsQuery.Id,QueryCode = AllDistributorsQuery.Code, IndexOrder = 0, ObjectFieldId = DistributorObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DistributorObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

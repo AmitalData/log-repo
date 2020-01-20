@@ -1059,7 +1059,7 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 
            #> 
 
-			  Query <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = <#= TblName.Trim('"') #>TextCode_<#= index #>.Id, NameTextCodeCode = <#= TblName.Trim('"') #>TextCode_<#= index #>.Code, Code = <#= Code #>, <#+
+			  Query <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = <#= TblName.Trim('"') #>TextCode_<#= index #>.Id, NameTextCodeCode = <#= TblName.Trim('"') #>TextCode_<#= index #>.Code, ObjectTableName = <#= TblName #>, Code = <#= Code #>, <#+
     if (!string.IsNullOrEmpty(SpotlightDataTemplate) && SpotlightDataTemplate != "&quot;&quot;" && SpotlightDataTemplate != "\"\"")
     {
 			  #> SpotlightDataTemplate = <#= SpotlightDataTemplate #>, <#+ } 

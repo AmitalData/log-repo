@@ -5273,7 +5273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineTextCode_0.Id, NameTextCodeCode = AirlineTextCode_0.Code, Code = "Airlines",  QueryGroupCode = "ARLN", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineObjectTable.Id, QuerySection = "Airline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AirlineFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineTextCode_0.Id, NameTextCodeCode = AirlineTextCode_0.Code, ObjectTableName = "Airline", Code = "Airlines",  QueryGroupCode = "ARLN", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineObjectTable.Id, QuerySection = "Airline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AirlineFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AirlinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.Code, IndexOrder = 0, ObjectFieldId = AirlineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AirlineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AirlineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

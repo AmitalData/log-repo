@@ -389,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query allcategories5Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category5TextCode_0.Id, NameTextCodeCode = Category5TextCode_0.Code, Code = "allcategories5",  QueryGroupCode = "0283", IndexOrder = 0, Tenant = 0, ObjectTableId = Category5ObjectTable.Id, QuerySection = "Category5", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category5Feature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query allcategories5Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category5TextCode_0.Id, NameTextCodeCode = Category5TextCode_0.Code, ObjectTableName = "Category5", Code = "allcategories5",  QueryGroupCode = "0283", IndexOrder = 0, Tenant = 0, ObjectTableId = Category5ObjectTable.Id, QuerySection = "Category5", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category5Feature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn allcategories5QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories5Query.Id,QueryCode = allcategories5Query.Code, IndexOrder = 0, ObjectFieldId = Category5ObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == Category5ObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = Category5ObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == Category5ObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -895,7 +895,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CountryCitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryCityTextCode_0.Id, NameTextCodeCode = CountryCityTextCode_0.Code, Code = "Country Cities",  QueryGroupCode = "CCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryCityObjectTable.Id, QuerySection = "CountryCity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CountryCityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CountryCitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryCityTextCode_0.Id, NameTextCodeCode = CountryCityTextCode_0.Code, ObjectTableName = "CountryCity", Code = "Country Cities",  QueryGroupCode = "CCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryCityObjectTable.Id, QuerySection = "CountryCity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CountryCityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CountryCitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryCitiesQuery.Id,QueryCode = CountryCitiesQuery.Code, IndexOrder = 0, ObjectFieldId = CountryCityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CountryCityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CountryCityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CountryCityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -1269,7 +1269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query QuoteTemplatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTemplateTextCode_0.Id, NameTextCodeCode = QuoteTemplateTextCode_0.Code, Code = "QuoteTemplates",  EditWizardName = "Simplog.QuoteLib.Views.QuoteTemplateViews.QuoteTemplateWizardEditControl",
+			  Query QuoteTemplatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTemplateTextCode_0.Id, NameTextCodeCode = QuoteTemplateTextCode_0.Code, ObjectTableName = "QuoteTemplate", Code = "QuoteTemplates",  EditWizardName = "Simplog.QuoteLib.Views.QuoteTemplateViews.QuoteTemplateWizardEditControl",
 			   QueryGroupCode = "QUTE", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteTemplateObjectTable.Id, QuerySection = "QuoteTemplate", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteTemplateFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn QuoteTemplatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = QuoteTemplatesQuery.Id,QueryCode = QuoteTemplatesQuery.Code, IndexOrder = 0, ObjectFieldId = QuoteTemplateObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteTemplateObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == QuoteTemplateObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);

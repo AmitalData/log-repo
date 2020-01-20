@@ -778,7 +778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllQuestionnairesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuestionnaireTextCode_0.Id, NameTextCodeCode = QuestionnaireTextCode_0.Code, Code = " All Questionnaires",  EditWizardName = "Logitude.CRM.Views.QuestionnairesView.QuestionnaireWizardEditControl",
+			  Query AllQuestionnairesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuestionnaireTextCode_0.Id, NameTextCodeCode = QuestionnaireTextCode_0.Code, ObjectTableName = "Questionnaire", Code = " All Questionnaires",  EditWizardName = "Logitude.CRM.Views.QuestionnairesView.QuestionnaireWizardEditControl",
 			   EditWizardComponentPath = "./CRMModules/CRMOthers/Components/Questionnaire/AddEditQuestionnaireComponent",
 			   QueryGroupCode = "QUQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuestionnaireObjectTable.Id, QuerySection = "Questionnaire", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuestionnaireFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	

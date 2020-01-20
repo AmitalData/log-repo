@@ -3278,7 +3278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ChargestypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesTypeTextCode_0.Id, NameTextCodeCode = ChargesTypeTextCode_0.Code, Code = "Charges types",  QueryGroupCode = "CHTP", IndexOrder = 0, Tenant = 0, ObjectTableId = ChargesTypeObjectTable.Id, QuerySection = "ChargesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChargesTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ChargestypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesTypeTextCode_0.Id, NameTextCodeCode = ChargesTypeTextCode_0.Code, ObjectTableName = "ChargesType", Code = "Charges types",  QueryGroupCode = "CHTP", IndexOrder = 0, Tenant = 0, ObjectTableId = ChargesTypeObjectTable.Id, QuerySection = "ChargesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChargesTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ChargestypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id,QueryCode = ChargestypesQuery.Code, IndexOrder = 0, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

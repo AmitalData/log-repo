@@ -3106,7 +3106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ShippinglinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShippingLineTextCode_0.Id, NameTextCodeCode = ShippingLineTextCode_0.Code, Code = "Shipping lines",  QueryGroupCode = "SHLN", IndexOrder = 0, Tenant = 0, ObjectTableId = ShippingLineObjectTable.Id, QuerySection = "ShippingLine", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShippingLineFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ShippinglinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShippingLineTextCode_0.Id, NameTextCodeCode = ShippingLineTextCode_0.Code, ObjectTableName = "ShippingLine", Code = "Shipping lines",  QueryGroupCode = "SHLN", IndexOrder = 0, Tenant = 0, ObjectTableId = ShippingLineObjectTable.Id, QuerySection = "ShippingLine", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShippingLineFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ShippinglinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.Code, IndexOrder = 0, ObjectFieldId = ShippingLineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShippingLineObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ShippingLineObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
