@@ -3388,6 +3388,9 @@
     <EmbeddedResource Include="Migrations\201912301451035_WesamAddTextCodeCodeToTranslationsTable.resx">
       <DependentUpon>201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.resx">
+      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
