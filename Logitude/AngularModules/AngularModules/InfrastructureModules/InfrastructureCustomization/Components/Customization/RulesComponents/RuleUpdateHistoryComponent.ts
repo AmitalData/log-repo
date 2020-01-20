@@ -18,6 +18,9 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { RuleUpdateHistoryListService } from '../../../../../Infrastructure/Services/StandardLists/RuleUpdateHistoryListService';
 import { from } from 'rxjs/observable/from';
+import { RuleUpdateHistoryList } from '../../../../../Infrastructure/EntityLists/RuleUpdateHistoryList';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { filter } from 'rxjs/operator/filter';
 declare var window: any;
 
 @Component({
@@ -25,29 +28,54 @@ declare var window: any;
     templateUrl: './RuleUpdateHistoryComponent.html',
 })
 export class RuleUpdateHistoryComponent {
-    private _ruleUpdateHistoryListService: RuleUpdateHistoryListService = new RuleUpdateHistoryListService();
-    private _objectTableRuleFieldPMService: ObjectTableRuleFieldPMService = new ObjectTableRuleFieldPMService();
-    private _objectTableRulePMService: ObjectTableRulePMService = new ObjectTableRulePMService();
+
+    public IsNoDataFound:boolean = false;
+    private ruleUpdateHistoryListService: RuleUpdateHistoryListService;
     public IsResourcesReady: boolean = false;
     private ObjectTableId: string;
-    public TableRulesItems: ObjectTableRulePM[] = [];
-    public AllTableRules: ObjectTableRulePM[] = [];
+    private RulePM:ObjectTableRulePM;
+    public RuleUpdateHistoryItems: RuleUpdateHistoryList[] = [];
+    
     private entityResourceService: EntityResourceService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         //        window.ObjectTableRules = [];
 
         this.entityResourceService = new EntityResourceService();
+        this.ruleUpdateHistoryListService =  new RuleUpdateHistoryListService();     
     }
 
     SetWindowArgs(windowArgs: any) {
         this.ObjectTableId = windowArgs.ObjectTableID;
-
+        this.RulePM = windowArgs.EntityPM;
         //this.AllTableRules = window.ObjectTableRules.filter(r => r.ObjectTableId === this.ObjectTableId && r.Internal === false);
         //this.TableRulesItems = this.AllTableRules;
 
         this.IsResourcesReady = true;
 
-        //this.LoadRules();
+        this.LoadRuleHistoryItems();
+    }
+    LoadRuleHistoryItems(){
+        let filters:ApiQueryFilters = new ApiQueryFilters();
+        filters.Filter1Name = "RuleCode";
+        filters.Filter1Operator = "Equals",
+        filters.Filter1Value = this.RulePM.RuleCode;
+        filters.GetAll = true;
+        //filters.addAdditionalFilter("RuleCode",this.RulePM.RuleCode,null,null,"Equal");
+        this.ruleUpdateHistoryListService.getByFilters(filters).subscribe((response:ServiceResponse)=>{
+            if (!response.HasError) {
+                this.RuleUpdateHistoryItems = response.Result;
+                this.IsNoDataFound = this.RuleUpdateHistoryItems.length === 0;
+            }
+            else
+            {
+                this.IsNoDataFound = true;
+            }
+
+        });
+    }
+
+    CloseClicked() {
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

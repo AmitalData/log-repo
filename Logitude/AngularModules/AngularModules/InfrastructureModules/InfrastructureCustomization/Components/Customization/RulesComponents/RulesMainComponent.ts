@@ -138,7 +138,7 @@ export class RulesMainComponent {
         });
     }
 
-    OnViewRuleHitory(item) {
+    OnViewRuleHistory(item) {
         var ObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.ObjectTableId)[0];
         this.entityResourceService.getEntityResourceByTableName("RuleUpdateHistory", 0).subscribe(response => {
             var windowArgs: any = {};
