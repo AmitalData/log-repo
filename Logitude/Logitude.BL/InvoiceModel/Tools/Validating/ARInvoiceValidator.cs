@@ -490,6 +490,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         }
         private static void ValidateExternalAPI(ARInvoicePM entityPM, ICommonDataContext myCommonContext)
         {
+            double? localAmount_Computed=0;
             if (entityPM.IsExternalAPI)
             {
                 int tenant = entityPM.Tenant;
@@ -513,6 +514,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                     double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
                     double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
+                    localAmount_Computed = localAmount_Computed + lineLocalAmount_Computed ;
+                    if(item.VatPercentage != 0)
+                    {
+                        localAmount_Computed = localAmount_Computed + (lineLocalAmount_Computed* item.VatPercentage/100);
+                    }
                     if (lineLocalAmount != lineLocalAmount_Computed)
                     {
                         throw new ApplicationException("Wrong Line Local Amount");
@@ -702,8 +708,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 #region Local Amount
                 double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
                 //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
-                double computedLocalAmount = (Math.Truncate(100 * (double)(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate)) / 100);
-                double? localAmount_Computed = Math.Round(computedLocalAmount, 1, MidpointRounding.AwayFromZero);
+               // double computedLocalAmount = (Math.Truncate(100 * (double)(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate)) / 100);
+                 localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
                 if (localAmount != localAmount_Computed)
                 {
                     throw new ApplicationException("Wrong Invoice Local Amount");
