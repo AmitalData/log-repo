@@ -1883,13 +1883,13 @@ User/Pass",
             new CopyData().Show();
         }
 
-        private void ConvertXmalTemplateToHtmlButton_Click(object sender, EventArgs e)
-        {
+        //private void ConvertXmalTemplateToHtmlButton_Click(object sender, EventArgs e)
+        //{
 
-            Thread thread = new Thread(() => UpdateModule(0, "converttemplatefromxmaltohtml", ConvertXmalTemplateLable));
-            thread.IsBackground = true;
-            thread.Start();
-        }
+        //    Thread thread = new Thread(() => UpdateModule(0, "converttemplatefromxmaltohtml", ConvertXmalTemplateLable));
+        //    thread.IsBackground = true;
+        //    thread.Start();
+        //}
 
         private void WarehouseButton_Click(object sender, EventArgs e)
         {
@@ -4076,6 +4076,15 @@ User/Pass",
                 ticketRepository.SubmitChanges();
             }
         }
+
+        private void UpdateAutomationMetadataButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "updateautomationmetadata", ConvertXmalTemplateLable));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+     
     }
 
     public class TenantMailBox

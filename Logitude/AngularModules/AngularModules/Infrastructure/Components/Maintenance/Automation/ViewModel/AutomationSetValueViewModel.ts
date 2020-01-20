@@ -47,7 +47,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
         this.AutomationHelper = new AutomationHelper(this.CurrentEntityPM, this.AddEditAutomationsViewModel, this, "SetValue");
         this.InitLOVFilters();
         this.AutomationSetValuebjectFieldLists = addEditAutomationsViewModel.AutomationSetValuebjectFieldLists;
-        var objectField: ObjectFieldPM = this.AutomationSetValuebjectFieldLists.filter(d => d.Id == this.CurrentEntityPM.ObjectFieldId)[0];
+        var objectField: ObjectFieldPM = this.AutomationSetValuebjectFieldLists.filter(d => d.FieldCode == this.CurrentEntityPM.ObjectFieldCode)[0];
 
         this.FieldValue = this.CurrentEntityPM.Value;
         this.DateTypeList = [];
@@ -210,7 +210,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
                 if (this.SelectedCustomField) {
                     this.UIProperties.SetEnabled(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, true);
                     this.UIProperties.SetRequired(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, false);
-                    this.CurrentEntityPM.ObjectFieldId = this.SelectedCustomField.Id;
+                    this.CurrentEntityPM.ObjectFieldCode = this.SelectedCustomField.FieldCode;
                     this.CurrentEntityPM.FieldName = this.SelectedCustomField.FieldName;
                     this.CurrentEntityPM.DataTypeCode = this.SelectedCustomField.DataTypeCode;
                 }

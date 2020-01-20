@@ -425,6 +425,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
         }
+
+        public HttpResponseMessage GetValidateInvoiceNumber(string invoiceNumber)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+               APInvoiceValidator.CheckInvoiceNumberFormat(invoiceNumber, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
         public HttpResponseMessage GetIsARInvoiceNumberExists(string InvoiceNumber)
         {
             try
