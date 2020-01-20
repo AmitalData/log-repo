@@ -3395,7 +3395,6 @@
     <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.resx">
 
     <EmbeddedResource Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.resx">
       <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
