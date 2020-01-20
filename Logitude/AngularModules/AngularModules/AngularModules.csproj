@@ -6665,6 +6665,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBSpecialHandlingCodePMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Args.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.ts" />
@@ -6694,10 +6695,13 @@
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMInitServices\TariffPMInitService.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLineExpirationDatePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinePM.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinesContainersPricePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffSettingPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffTypePM.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionAllInChargePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionPM.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleProviders.ts" />
