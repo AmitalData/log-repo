@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Trace Event",
-			      				    Code =  "9084",
+			      				    Code =  "a432",
 			      				    Name =  "TraceEvent",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -634,6 +634,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode TraceEventTextCode_TraceEventOLogs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TraceEvent.O.Logs", DefaultText = "Logs",LocalDefaultText = @"יומנים", ObjectTableId = TraceEventObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TraceEventTextCode_TraceEventOAddEvent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TraceEvent.O.AddEvent", DefaultText = "Add Event",LocalDefaultText = @"הוסף אירוע", ObjectTableId = TraceEventObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TraceEventTextCode_TraceEventOSearchByHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TraceEvent.O.SearchByHelpText", DefaultText = " Code  Name  User  Notes",LocalDefaultText = null, ObjectTableId = TraceEventObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
