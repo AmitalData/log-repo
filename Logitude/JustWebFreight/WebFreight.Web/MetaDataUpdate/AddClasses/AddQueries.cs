@@ -42,6 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 query.Perspective = queryDetails.Perspective;
                 query.IsHiddenFromView = queryDetails.IsHiddenFromView;
                 query.IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly;
+                query.UniqueCode = queryDetails.ObjectTableName + "." + queryDetails.Code;
                 queryRepository.Update(query);
                 return query;
             }
@@ -77,7 +78,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Perspective = queryDetails.Perspective,
                     IsHiddenFromView = queryDetails.IsHiddenFromView,
                     IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly,
-                }; ;
+                    UniqueCode = queryDetails.ObjectTableName + "." + queryDetails.Code,
+
+            };  
                 queryRepository.Add(newQuery);
                 return newQuery;
             }

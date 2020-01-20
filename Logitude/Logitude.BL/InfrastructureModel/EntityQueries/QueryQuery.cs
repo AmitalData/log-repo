@@ -41,6 +41,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              select new QueryPM()
              {
                  Code = a.Code,
+                 UniqueCode = a.UniqueCode,
                  DisplayCount = a.DisplayCount,
                  Id = a.Id,
                  IndexOrder = a.IndexOrder,
@@ -98,6 +99,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              select new QueryPM()
              {
                  Code = a.Code,
+                 UniqueCode = a.UniqueCode,
                  DisplayCount = a.DisplayCount,
                  Id = a.Id,
                  IndexOrder = a.IndexOrder,
@@ -159,6 +161,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
+                                         UniqueCode = a.UniqueCode,
                                          DisplayCount = a.DisplayCount,
                                          Id = a.Id,
                                          IndexOrder = a.IndexOrder,
@@ -222,6 +225,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                    select new QueryPM()
                    {
                        Code = a.Code,
+                       UniqueCode = a.UniqueCode,
                        DisplayCount = a.DisplayCount,
                        Id = a.Id,
                        IndexOrder = a.IndexOrder,
@@ -271,6 +275,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
+                                         UniqueCode = a.UniqueCode,
                                          DisplayCount = a.DisplayCount,
                                          Id = a.Id,
                                          IndexOrder = a.IndexOrder,
@@ -343,6 +348,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
+                                         UniqueCode = a.UniqueCode,
                                          DisplayCount = a.DisplayCount,
                                          Id = a.Id,
                                          IndexOrder = a.IndexOrder,
@@ -406,6 +412,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               select new QueryPM()
                               {
                                   Code = a.Code,
+                                  UniqueCode = a.UniqueCode,
                                   DisplayCount = a.DisplayCount,
                                   Id = a.Id,
                                   IndexOrder = a.IndexOrder,
@@ -475,6 +482,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                      select new QueryPM()
                      {
                          Code = a.Code,
+                         UniqueCode = a.UniqueCode,
                          DisplayCount = a.DisplayCount,
                          Id = a.Id,
                          IndexOrder = a.IndexOrder,
@@ -523,6 +531,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          select new QueryPM()
                          {
                              Code = a.Code,
+                             UniqueCode = a.UniqueCode,
                              DisplayCount = a.DisplayCount,
                              Id = a.Id,
                              IndexOrder = a.IndexOrder,
@@ -590,6 +599,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
+                                         UniqueCode = a.UniqueCode,
                                          DisplayCount = a.DisplayCount,
                                          Id = a.Id,
                                          IndexOrder = a.IndexOrder,

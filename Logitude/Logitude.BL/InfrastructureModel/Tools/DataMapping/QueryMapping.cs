@@ -10,6 +10,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             if (isNewState)
             {
                 entityPOCO.Code = entityPM.Code;
+                entityPOCO.UniqueCode = entityPM.UniqueCode;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
 

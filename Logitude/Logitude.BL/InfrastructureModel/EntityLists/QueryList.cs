@@ -9,6 +9,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string QueryCode { get; set; }
         public int Tenant { get; set; }
         public string Code { get; set; }
+        public string UniqueCode { get; set; }
         public string UserId { get; set; }
         public string ObjectTableId { get; set; }
         public bool SystemLevel { get; set; }

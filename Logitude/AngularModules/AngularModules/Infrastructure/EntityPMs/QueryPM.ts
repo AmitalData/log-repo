@@ -26,7 +26,11 @@ export class QueryPM {
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { this.code = newValue; }
-       	 
+
+    private uniqueCode: string;
+    public get UniqueCode() { return this.uniqueCode; }
+    public set UniqueCode(newValue: string) { this.code = uniqueCode; }
+
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }
     public set ObjectTableId(newValue: string) { this.objectTableId = newValue; }

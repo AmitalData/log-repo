@@ -1016,6 +1016,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
 
                 this.QueryColumns.forEach((value, key) => {
+
+                    var mutaz = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0];
                     this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
                 });
 
