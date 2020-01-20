@@ -365,7 +365,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         var _linesAmount2reco = 0;
         var _linespaymentReconciledAmount = 0;
         this.TransactionsList.Collection.forEach((line: TransactionLineModel) => {
-            if (line && line.AmountToReconcile >= 0) {
+            if (line){ // && line.AmountToReconcile >= 0) {
                 _linesAmount2reco += line.AmountToReconcile;
                 _linespaymentReconciledAmount += line.PaymentReconciledAmount;
             }

@@ -2019,11 +2019,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
 
             // Validate lines amount to reconcile
-            if (_payment.InvoicesLedgerTransactions
-                .Any(d =>
-                    d.AmountToReconcile > CalculateInvoiceAmount(d, _payment.GLAccountRecoMethodCode == "0")
-                ))
-                throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliations.O.ErrorsInSelectedLines", _payment.Tenant, showLocal));
+            foreach (var invoice in _payment.InvoicesLedgerTransactions)
+            {
+                if(invoice.AmountToReconcile > 0)
+                {
+                    if(invoice.AmountToReconcile > CalculateInvoiceAmount(invoice, _payment.GLAccountRecoMethodCode == "0"))
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliations.O.ErrorsInSelectedLines", _payment.Tenant, showLocal));
+                }
+                else
+                {
+                    if (invoice.AmountToReconcile < CalculateInvoiceAmount(invoice, _payment.GLAccountRecoMethodCode == "0"))
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliations.O.ErrorsInSelectedLines", _payment.Tenant, showLocal));
+                }
+            }
+            
         }
 
         private void CheckLinesAmountToReconcileTotal(ARPaymentPM _payment)
