@@ -1,2 +1,2 @@
-ALTER TABLE AdvancedQueryFilters
-DROP CONSTRAINT  FK_QueryAdvancedQueryFilter
+--ALTER TABLE AdvancedQueryFilters
+--DROP CONSTRAINT  FK_QueryAdvancedQueryFilter

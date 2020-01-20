@@ -1,1 +1,1 @@
-update Queries set OriginalQueryCode =  Queries.Code
+update Queries set OriginalQueryCode =  Queries.UniqueCode

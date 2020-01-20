@@ -1,1 +1,1 @@
-update SharedUserQueries set QueryCode = (select Queries.Code from Queries where Id = SharedUserQueries.QueryId)
+update SharedUserQueries set QueryCode = (select Queries.UniqueCode from Queries where Id = SharedUserQueries.QueryId)

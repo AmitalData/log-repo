@@ -1,4 +1,4 @@
-ALTER TABLE QueryColumns DROP CONSTRAINT  FK_QueryColumnQuery
+--ALTER TABLE QueryColumns DROP CONSTRAINT  FK_QueryColumnQuery
 
 
 

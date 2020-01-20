@@ -1882,6 +1882,14 @@
     <Compile Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.Designer.cs">
       <DependentUpon>202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001201315200_Mutaz_AlterCoulmnUniqeCode.cs" />
+    <Compile Include="Migrations\202001201315200_Mutaz_AlterCoulmnUniqeCode.Designer.cs">
+      <DependentUpon>202001201315200_Mutaz_AlterCoulmnUniqeCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001201324071_Mutaz_Alter_QueryCode.cs" />
+    <Compile Include="Migrations\202001201324071_Mutaz_Alter_QueryCode.Designer.cs">
+      <DependentUpon>202001201324071_Mutaz_Alter_QueryCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
@@ -3343,6 +3351,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.resx">
       <DependentUpon>202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201315200_Mutaz_AlterCoulmnUniqeCode.resx">
+      <DependentUpon>202001201315200_Mutaz_AlterCoulmnUniqeCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201324071_Mutaz_Alter_QueryCode.resx">
+      <DependentUpon>202001201324071_Mutaz_Alter_QueryCode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
