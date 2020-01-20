@@ -100,7 +100,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new AccountingEntityDetails()
             {    
-                Code = 12, 
+                Code = "12", 
                 LocalName = "התאמת בנק", 
                 EnglishName = "Bank Adjustment", 
 			});

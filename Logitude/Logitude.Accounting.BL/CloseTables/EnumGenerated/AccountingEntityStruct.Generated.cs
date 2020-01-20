@@ -21,7 +21,7 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string PaymentCheque = "9";  
        public const string Adjustment = "10";  
        public const string YearTransfer = "11";  
-       public const string BankAdjustment = 12;  
+       public const string BankAdjustment = "12";  
     }
 }
 
