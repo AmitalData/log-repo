@@ -29,9 +29,9 @@ export class AmendmentTypePM {
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
-    private name: string;
-    public get Name() { return this.name; }
-    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+    private englishName: string;
+    public get EnglishName() { return this.englishName; }
+    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
        
 	 
     private searchFields: string;

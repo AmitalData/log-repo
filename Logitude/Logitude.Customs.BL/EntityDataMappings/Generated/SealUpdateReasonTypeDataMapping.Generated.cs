@@ -23,7 +23,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
           { 
 		     None,  
 	         Code, 
-	         Name, 
+	         EnglishName, 
 	         SearchFields, 
 	         LocalName, 
 	         Inactive,
@@ -34,7 +34,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
           { 
 		     None,  
 	         Code, 
-	         Name, 
+	         EnglishName, 
 	         SearchFields, 
 	         LocalName, 
 	         Inactive,
@@ -46,9 +46,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(SealUpdateReasonTypePM entityPM, SealUpdateReasonType entityPOCO)
         {
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
             {
-				entityPOCO.Name = entityPM.Name;
+				entityPOCO.EnglishName = entityPM.EnglishName;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
@@ -77,9 +77,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Code = entityPOCO.Code;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Name))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
             {
-					entityPM.Name = entityPOCO.Name;
+					entityPM.EnglishName = entityPOCO.EnglishName;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
@@ -103,9 +103,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
             {
-                oldEntityPM.Name = entityPM.Name;
+                oldEntityPM.EnglishName = entityPM.EnglishName;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))

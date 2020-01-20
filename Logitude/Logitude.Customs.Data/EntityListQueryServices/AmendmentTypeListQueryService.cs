@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                      
 					                          Code = a.Code,
 					
-					                          Name = a.Name,
+					                          EnglishName = a.EnglishName,
 					
 					                          SearchFields = a.SearchFields,
 					

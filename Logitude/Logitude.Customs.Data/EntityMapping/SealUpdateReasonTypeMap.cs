@@ -23,13 +23,13 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.Code });
 	 
-            this.Property(t => t.Code).HasColumnName("Code").HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.Name).HasColumnName("Name").HasMaxLength(300).IsUnicode(false);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(300).IsUnicode(true);
+            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(40).IsUnicode(true);
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
         }
