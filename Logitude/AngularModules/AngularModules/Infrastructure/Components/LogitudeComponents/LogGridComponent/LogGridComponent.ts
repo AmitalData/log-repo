@@ -774,7 +774,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             var index = 0
           var left = 0;
           if (this.ObjectTable) {
-            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Code == this.queryCode)[0];
+              var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.queryCode)[0];
             if (query && !AppTool.IsNullOrEmpty(query.SpotlightDataTemplate)) {
               this.IsSpotLight = true;
               this.SpotlightDataTemplate = query.SpotlightDataTemplate;
@@ -1364,7 +1364,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
         //this.rows = [];
         if (this.ObjectTable) {
-            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Code == this.queryCode)[0];
+            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.queryCode)[0];
             if (query && !AppTool.IsNullOrEmpty(query.SpotlightDataTemplate)) {
                 this.IsSpotLight = true;
                 this.SpotlightDataTemplate = query.SpotlightDataTemplate;

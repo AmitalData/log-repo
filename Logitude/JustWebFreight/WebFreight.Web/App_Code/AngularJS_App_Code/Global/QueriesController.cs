@@ -41,6 +41,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.Counters;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
 {
@@ -78,7 +79,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 QueryService service = new QueryService(objectContext, entityPM.Tenant);
-                //entityPM.OriginalQueryId = null;
+                entityPM.Id = IdCounter.GetNumber("Query", entityPM.Tenant).ToString();
+                entityPM.Code = entityPM.Id;
+                entityPM.UniqueCode = entityPM.ObjectTableName + '.' + entityPM.Code;
                 service.Create(entityPM);
 
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -109,7 +112,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
             }
         }
 
-        public HttpResponseMessage Delete(string Code, string userId)
+        public HttpResponseMessage Delete(string UniqueCode, string userId)
         {
             try
             {
@@ -124,8 +127,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 QueryColumnRepository queryColumnRepository = new QueryColumnRepository(objectContext);
                 AdvancedQueryFilterRepository advancedQueryFilterRepository = new AdvancedQueryFilterRepository(objectContext);
 
-                Query myQuery = queryRepository.GetSingleQuery(Code);
-                List<SharedUserQuery> sharedUserQueries = sharedUserQueryRepository.GetAllByQueryCode(Code);
+                Query myQuery = queryRepository.GetSingleQueryByUniqueCode(UniqueCode);
+                List<SharedUserQuery> sharedUserQueries = sharedUserQueryRepository.GetAllByQueryCode(UniqueCode);
                 List<QueryColumn> queryColumns = null;
                 List<AdvancedQueryFilter> advancedQueryFilters = null;
 
@@ -133,14 +136,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 {
                     if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
                     {
-                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryCodeAndUser(tenant, myQuery.SharedByUserId, Code);
-                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndUserAndQuery(tenant, myQuery.SharedByUserId, Code);
+                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryCodeAndUser(tenant, myQuery.SharedByUserId, UniqueCode);
+                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndUserAndQuery(tenant, myQuery.SharedByUserId, UniqueCode);
                     }
 
                     else
                     {
-                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryCode(tenant, Code);
-                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndAndQuery(tenant, Code);
+                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryCode(tenant, UniqueCode);
+                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndAndQuery(tenant, UniqueCode);
                     }
 
                     foreach (QueryColumn column in queryColumns)
@@ -171,7 +174,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
             }
         }
 
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string UniqueCode)
         {
             try
             {
@@ -181,7 +184,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 QueryQuery queryQuery = new QueryQuery(authToken.Tenant);
-                QueryPM queryPM = queryQuery.GetSingleQueryPM(id, authToken.Tenant);
+                QueryPM queryPM = queryQuery.GetSingleQueryPM(UniqueCode, authToken.Tenant);
                 
                 return Request.CreateResponse(HttpStatusCode.OK, queryPM);
 

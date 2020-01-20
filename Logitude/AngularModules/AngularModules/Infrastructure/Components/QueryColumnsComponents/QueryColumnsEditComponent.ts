@@ -70,7 +70,7 @@ export class QueryColumnsEditComponent {
     }
     SetWindowArgs(args: any) {
         this.QueryId = args.queryId;
-        this.QueryCode = args.queryCode;
+        this.QueryCode = /*this.ObjectTableName + '.' +*/args.queryCode;
         this.isNewQueryMode = args.isNewQueryMode;
         this.CurrentObjectTable = args.currentObjectTable;
         this.IsEnabled = false;
@@ -97,7 +97,7 @@ export class QueryColumnsEditComponent {
         this.HasChanges = false;
         var copy = false;
 
-        var currentQuery = window.Queries.filter(d => d.Code == this.QueryCode)[0];
+        var currentQuery = window.Queries.filter(d => d.UniqueCode == this.QueryCode)[0];
         this.addedQueryColumnList = [];
         this.removedQueryColumnList = [];
         //queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
@@ -132,7 +132,7 @@ export class QueryColumnsEditComponent {
                                     newcolumn.ObjectFieldListLabelTextCodeCode = querycolumn.ObjectFieldListLabelTextCodeCode,
                                     newcolumn.QueryCode = querycolumn.QueryCode,
                                     newcolumn.QueryId = querycolumn.QueryId,
-                                    newcolumn.QueryCode = querycolumn.QueryCode,
+                                    //newcolumn.QueryCode = querycolumn.QueryCode,
                                     newcolumn.QueryObjectTableName = querycolumn.QueryObjectTableName,
                                     newcolumn.ObjectFieldFieldLableTextCodeCode = querycolumn.ObjectFieldFieldLableTextCodeCode,
                                     newcolumn.ObjectFieldCode = querycolumn.ObjectFieldCode,

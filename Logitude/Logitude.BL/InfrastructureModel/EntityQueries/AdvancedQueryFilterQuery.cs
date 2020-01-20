@@ -96,7 +96,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<AdvancedQueryFilterPM> GetAdvancedQueryFilterPMsByTenantAndUserAndQuery(int tenant, string userId, string queryCode)
         {
             IQueryable<AdvancedQueryFilterPM> advancedFilters = null;
-            Query myQuery = repository.context.Queries.Where(d => d.Code == queryCode).FirstOrDefault();
+            Query myQuery = repository.context.Queries.Where(d => d.UniqueCode == queryCode).FirstOrDefault();
 
             if (myQuery != null)
             {

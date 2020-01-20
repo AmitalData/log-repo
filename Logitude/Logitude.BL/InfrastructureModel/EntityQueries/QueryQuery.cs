@@ -37,7 +37,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             QueryPM result =
             (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode").Include("SharedByUser")
-             where a.Code == Code && (a.Tenant == tenant || a.Tenant == 0)
+             where a.UniqueCode == Code && (a.Tenant == tenant || a.Tenant == 0)
              select new QueryPM()
              {
                  Code = a.Code,
@@ -85,7 +85,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             if (result != null)
             {
                 SharedUserQueryQuery sharedUserQueryQuery = new SharedUserQueryQuery(tenant);
-                result.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(result.Id, tenant).ToList();
+                result.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(result.UniqueCode, tenant).ToList();
             }
 
             return result;
@@ -95,7 +95,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             QueryPM result =
             (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
-             where a.Code == Code
+             where a.UniqueCode == Code
              select new QueryPM()
              {
                  Code = a.Code,
@@ -322,7 +322,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 if (item.SharedWithSpecificUsers)
                 {
-                    if (sharedUserQueries.Where(d => d.QueryCode == item.Id && d.UserId == userid).Any())
+                    if (sharedUserQueries.Where(d => d.QueryCode == item.UniqueCode && d.UserId == userid).Any())
                     {
                         myResult.Add(item);
                     }
@@ -408,7 +408,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public QueryPM GetQueryByNameTenant(int tenant, string name)
         {
             QueryPM result = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
-                              where a.Code == name && a.Tenant == tenant
+                              where a.UniqueCode == name && a.Tenant == tenant
                               select new QueryPM()
                               {
                                   Code = a.Code,

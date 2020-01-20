@@ -24,7 +24,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.QueryCode)
                 .IsRequired()
-                .HasMaxLength(30)
+                .HasMaxLength(200)
                 .IsUnicode(false);
 
             this.Property(t => t.ObjectFieldId)

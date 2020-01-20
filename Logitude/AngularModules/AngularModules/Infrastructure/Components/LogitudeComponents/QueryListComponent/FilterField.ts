@@ -99,7 +99,7 @@ export class FilterField extends BaseComponent {
             }
         }
 
-        var currentQuery = window.Queries.filter(d => d.Code == this.QueryCode)[0];
+        var currentQuery = window.Queries.filter(d => d.UniqueCode == this.QueryCode)[0];
         if (currentQuery != null) {
             if (!AppTool.IsNullOrEmpty(currentQuery.SharedByUserId) && currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
                 if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {

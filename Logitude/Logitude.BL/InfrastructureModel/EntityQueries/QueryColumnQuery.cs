@@ -238,7 +238,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCodeAndUser(int tenant, string userId, string queryCode)
         {
             IQueryable<QueryColumnPM> queries = null;
-            Query myQuery = repository.context.Queries.Where(d => d.Code == queryCode).FirstOrDefault();
+            Query myQuery = repository.context.Queries.Where(d => d.UniqueCode == queryCode).FirstOrDefault();
             if (myQuery != null)
             {
                 if (!string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
@@ -304,7 +304,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCodeAndUserAngular(int tenant, string userId, string queryCode)
         {
             IQueryable<QueryColumnPM> queries = null;
-            Query myQuery = repository.context.Queries.Where(d => d.Code == queryCode).FirstOrDefault();
+            Query myQuery = repository.context.Queries.Where(d => d.UniqueCode == queryCode).FirstOrDefault();
 
             if (myQuery != null)
             {

@@ -1142,7 +1142,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<ObjectFieldPM> GetAdvanceFilteredObjectFields(int tenant, string queryCode, int currenttenant)
         {
             List<ObjectFieldPM> objectFields = (from q in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("ObjectField.ObjectTable_LookUpTable").Include("ObjectField.FullNameTextCode").Include("ObjectField.ShortNameTextCode").Include("ObjectField.FullNameTextCode").Include("ObjectField.ShortNameTextCode").Include("ObjectField.HelpTextCode").Include("ObjectField.ListTextCode").Include("ObjectField.ObjectTable_MultiTable")
-                                                where q.Tenant == tenant && q.Query.Code == queryCode
+                                                where q.Tenant == tenant && q.Query.UniqueCode == queryCode
                                                 select q).Select(a => new ObjectFieldPM()
                                                 {
                                                     IsMaxLength = a.ObjectField.IsMaxLength,

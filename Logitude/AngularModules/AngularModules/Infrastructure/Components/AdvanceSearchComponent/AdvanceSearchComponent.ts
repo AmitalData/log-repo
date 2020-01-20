@@ -229,7 +229,7 @@ export class AdvanceSearchComponent implements OnInit {
 
             this.timeFilterFieldsClass = new FilterFieldsClass(this.isNewViewMode, this, this.pubSubService);
             this.FieldsValues = new FieldsValues();
-            this.currentQuery = window.Queries.filter(q => q.Code == QueryCode)[0];
+            this.currentQuery = window.Queries.filter(q => q.UniqueCode == /*this.ObjectTableName+"."+*/QueryCode)[0];
 
             if (!this.currentQuery) {
                 var iMessageWindow = new MessageWindow();
@@ -671,7 +671,7 @@ export class AdvanceSearchComponent implements OnInit {
 
     public EditViewClicked() {
         var windowArgs: any = {};
-        windowArgs.queryCode = this.currentQuery.Code;
+        windowArgs.queryCode = this.currentQuery.UniqueCode;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = false;
         windowArgs.QueryName = TextCodeTranslator.Translate(this.currentQuery.NameTextCodeCode);

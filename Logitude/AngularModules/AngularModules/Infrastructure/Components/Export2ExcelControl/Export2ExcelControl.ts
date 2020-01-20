@@ -43,7 +43,7 @@ export class Export2ExcelControl {
         this.tenant = args.tenant;
         this.queryName = TextCodeTranslator.Translate(args.query.NameTextCodeCode);
         this.queryId = args.query.Id;
-        this.queryCode = args.query.Code;
+        this.queryCode = args.query.UniqueCode;
 
         this.userid = args.userid;
         this.Filters = args.Filters;

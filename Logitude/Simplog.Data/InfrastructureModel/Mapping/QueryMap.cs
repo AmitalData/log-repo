@@ -11,7 +11,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.UniqueCode).IsRequired().HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.UniqueCode).IsRequired().HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.UserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OriginalQueryId).HasMaxLength(15).IsUnicode(false);
@@ -26,7 +26,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Perspective).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.EditWizardComponentPath).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.NameTextCodeCode).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.OriginalQueryCode).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.OriginalQueryCode).HasMaxLength(200).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Queries");

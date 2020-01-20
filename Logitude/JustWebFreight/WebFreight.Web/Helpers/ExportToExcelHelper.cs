@@ -48,15 +48,15 @@ namespace WebFreight.Web.Helpers
             QueryQuery queryQuery = new QueryQuery(queryRep);
             QueryPM query = queryQuery.GetSingleQueryPM(queryCode, tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRep);
-            List<QueryColumnPM> queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, query.Code).OrderBy(q => q.IndexOrder).ToList();
+            List<QueryColumnPM> queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
             if (queryColumns.Count == 0)
             {
-                queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(0, userid, query.Code).OrderBy(q => q.IndexOrder).ToList();
+                queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(0, userid, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
             }
 
             if (queryColumns.Count == 0)
             {
-                queryColumns = queryColumnQuery.GetZeroQueryColumnsByQueryCode(0, query.Code).OrderBy(q => q.IndexOrder).ToList();
+                queryColumns = queryColumnQuery.GetZeroQueryColumnsByQueryCode(0, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
             }
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
