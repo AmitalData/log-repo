@@ -50,6 +50,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
+using WebFreight.Web.Helpers.AutomationModel;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
