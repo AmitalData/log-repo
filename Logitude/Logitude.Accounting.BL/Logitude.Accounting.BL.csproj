@@ -233,6 +233,7 @@
     <Compile Include="CoreBL\Reconcile\LedgerTransactionsSorter.cs" />
     <Compile Include="CoreBL\Reports\BalanceGroupByCollectorService.cs" />
     <Compile Include="CoreBL\Reports\CardIndexReportService.cs" />
+    <Compile Include="CoreBL\Reports\RevenueExpenseV1ReportService.cs" />
     <Compile Include="CoreBL\RevaluationService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />
     <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
