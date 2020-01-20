@@ -2369,6 +2369,7 @@
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
+    <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
@@ -4475,6 +4476,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\UserIDNumberRequestWcfService.svc" />
     <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
     <Content Include="WcfApi\DepositionRequestWcfService.svc" />
     <Content Include="WcfApi\DocumentInWcfService.svc" />
@@ -5992,6 +5994,9 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\UserIDNumberRequestWcfService.svc.cs">
+      <DependentUpon>UserIDNumberRequestWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\DeclarationApprovalRequestWcfService.svc.cs">
       <DependentUpon>DeclarationApprovalRequestWcfService.svc</DependentUpon>
     </Compile>
@@ -6044,6 +6049,7 @@
     <Compile Include="WcfApi\ICustomerAdditionalServiceDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerCompetitorDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerDWWcfService.cs" />
+    <Compile Include="WcfApi\IUserIDNumberRequestWcfService.cs" />
     <Compile Include="WcfApi\IDeclarationApprovalRequestWcfService.cs" />
     <Compile Include="WcfApi\IDepositionRequestWcfService.cs" />
     <Compile Include="WcfApi\IDocumentInWcfService.cs" />
