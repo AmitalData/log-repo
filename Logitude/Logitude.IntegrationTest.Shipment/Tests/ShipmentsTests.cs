@@ -61,18 +61,18 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.ChargeableWeight = 100;
             shipmentPM.NumberOfPackages = 5;
 
-            shipmentPM.ShipmentPackages = ShipmentPackagesList();
+            shipmentPM.ShipmentPackages = ShipmentPackages();
             return shipmentPM;
         }
-        public static List<ShipmentPackagePM> ShipmentPackagesList()
+        public static List<ShipmentPackagePM> ShipmentPackages()
         {
             List<ShipmentPackagePM> shipmentPackagePM = new List<ShipmentPackagePM>();
 
-            shipmentPackagePM.Add(shipmentPackageItem(5,5,5,5,100));
-            shipmentPackagePM.Add(shipmentPackageItem(7, 10, 10, 10, 120));
+            shipmentPackagePM.Add(ShipmentPackageItem(5,5,5,5,100));
+            shipmentPackagePM.Add(ShipmentPackageItem(7, 10, 10, 10, 120));
             return shipmentPackagePM;
         }
-        public static ShipmentPackagePM shipmentPackageItem(int quantity, double? length, double? width, double? height, double? weight)
+        public static ShipmentPackagePM ShipmentPackageItem(int quantity, double? length, double? width, double? height, double? weight)
         {
             ShipmentPackagePM shipmentPackageItem = new ShipmentPackagePM();
 
