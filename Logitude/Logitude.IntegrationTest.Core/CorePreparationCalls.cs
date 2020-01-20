@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.IntegrationTest.Core.Login;
 using Newtonsoft.Json;
 using System;
@@ -32,7 +33,7 @@ namespace Logitude.IntegrationTest.Core
         {
             HttpResponseMessage response = await RestClientService.GetAsync("Userviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&Filter1Value=" + IntegrationTestLoginParameters.Email);
             //var stringResult = response.Content.ReadAsStringAsync().Result;
-            UsersList user= RestClientService.ParseResponse<UsersList>(response);
+            UserList user= RestClientService.ParseResponse<UserList>(response);
             CorePreparationVariables.UserId = user.Id;
             CorePreparationVariables.BranchId = user.BranchId;
             CorePreparationVariables.DepartmentId = user.DepartmentId;
