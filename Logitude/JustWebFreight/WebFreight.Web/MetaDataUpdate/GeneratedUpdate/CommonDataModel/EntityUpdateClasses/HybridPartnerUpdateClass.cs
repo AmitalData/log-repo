@@ -567,6 +567,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen HybridPartnerHybridPartnerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "HybridPartner.HeaderScreen", Name = "HybridPartnerHeaderScreen", ObjectTableId = HybridPartnerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    HybridPartnerObjectTable.HeaderScreenId = HybridPartnerHybridPartnerHeaderScreenScreen0.Id;
+		    HybridPartnerObjectTable.HeaderScreenCode = HybridPartnerHybridPartnerHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

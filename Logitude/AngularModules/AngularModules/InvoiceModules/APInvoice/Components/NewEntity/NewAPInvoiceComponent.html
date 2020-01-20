@@ -45,7 +45,7 @@
                     </td>
 
                     <td>
-                        <LogTextBox [InputType]="'text'" [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        <LogTextBox (LostFocus)="OnInvoiceNumberLostFocus($event)" [InputType]="'text'" [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                     </td>
 
                     <td>

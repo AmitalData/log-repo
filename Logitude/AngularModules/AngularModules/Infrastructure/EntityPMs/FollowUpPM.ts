@@ -12,6 +12,8 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+
 
 export class FollowUpPM {
 
@@ -31,15 +33,7 @@ export class FollowUpPM {
     private shipmentId: string;
     public get ShipmentId() { return this.shipmentId; }
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-
-
-    private quoteId: string;
-    public get QuoteId() { return this.quoteId; }
-    public set QuoteId(newValue: string) { if (this.quoteId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("QuoteId"); } }
-
-
-
-
+       
 	 
     private jobId: string;
     public get JobId() { return this.jobId; }
@@ -130,18 +124,22 @@ export class FollowUpPM {
     public get OwnerUserName() { return this.ownerUserName; }
     public set OwnerUserName(newValue: string) { if (this.ownerUserName != newValue) { this.ownerUserName = newValue; this.MarkAsDirty("OwnerUserName"); } }
        
-    private documentTypeId: string;
-    public get DocumentTypeId() { return this.documentTypeId; }
-    public set DocumentTypeId(newValue: string) { this.documentTypeId = newValue; this.MarkAsDirty(); }
-
-
-    private automationId: string;
-    public get AutomationId() { return this.automationId; }
-    public set AutomationId(newValue: string) { this.automationId = newValue; this.MarkAsDirty(); }
-
+	 
     private area: string;
     public get Area() { return this.area; }
-    public set Area(newValue: string) { this.area = newValue; this.MarkAsDirty(); }
+    public set Area(newValue: string) { if (this.area != newValue) { this.area = newValue; this.MarkAsDirty("Area"); } }
+       
+	 
+    private documentTypeId: string;
+    public get DocumentTypeId() { return this.documentTypeId; }
+    public set DocumentTypeId(newValue: string) { if (this.documentTypeId != newValue) { this.documentTypeId = newValue; this.MarkAsDirty("DocumentTypeId"); } }
+       
+	 
+    private automationId: string;
+    public get AutomationId() { return this.automationId; }
+    public set AutomationId(newValue: string) { if (this.automationId != newValue) { this.automationId = newValue; this.MarkAsDirty("AutomationId"); } }
+       
+	 
 
     public OldEntityPM: FollowUpPM;
 		

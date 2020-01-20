@@ -727,6 +727,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         Screen SupportMailboxSupportMailboxHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SupportMailbox.HeaderScreen", Name = "SupportMailboxHeaderScreen", ObjectTableId = SupportMailboxObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    SupportMailboxObjectTable.HeaderScreenId = SupportMailboxSupportMailboxHeaderScreenScreen0.Id;
+		    SupportMailboxObjectTable.HeaderScreenCode = SupportMailboxSupportMailboxHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

@@ -529,6 +529,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen DWHSettingDWHSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DWHSetting.HeaderScreen", Name = "DWHSettingHeaderScreen", ObjectTableId = DWHSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    DWHSettingObjectTable.HeaderScreenId = DWHSettingDWHSettingHeaderScreenScreen0.Id;
+		    DWHSettingObjectTable.HeaderScreenCode = DWHSettingDWHSettingHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

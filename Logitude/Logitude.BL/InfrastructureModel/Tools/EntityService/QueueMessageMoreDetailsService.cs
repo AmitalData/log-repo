@@ -14,7 +14,6 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
-using Simplog.Data.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {

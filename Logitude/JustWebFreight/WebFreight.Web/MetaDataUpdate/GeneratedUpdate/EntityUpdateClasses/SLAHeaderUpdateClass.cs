@@ -855,6 +855,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         Screen SLAHeaderSLAHeaderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SLAHeader.HeaderScreen", Name = "SLAHeaderHeaderScreen", ObjectTableId = SLAHeaderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    SLAHeaderObjectTable.HeaderScreenId = SLAHeaderSLAHeaderHeaderScreenScreen0.Id;
+		    SLAHeaderObjectTable.HeaderScreenCode = SLAHeaderSLAHeaderHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

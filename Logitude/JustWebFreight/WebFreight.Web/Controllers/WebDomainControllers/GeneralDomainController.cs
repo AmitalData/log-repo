@@ -485,13 +485,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 var MyTenantFields = MyQuery.GetScreenFieldPMsByTenant(authToken.Tenant).Where(a => a.Tenant != 0);
                 ScreenFieldService MyService = new ScreenFieldService(objectContext, authToken.Tenant);
                 ScreensRepository myRepo = new ScreensRepository(authToken.Tenant);
-                var ScreenModification = myRepo.GetScreenModificationByScreen(args.ScreenId, authToken.Tenant);
+                var ScreenModification = myRepo.GetScreenModificationByScreen(args.ScreenCode, authToken.Tenant);
                 if (ScreenModification == null)
                 {
                     ScreenModification = new ScreenModification()
                     {
                         Tenant = authToken.Tenant,
                         ScreenId = args.ScreenId,
+                        ScreenCode = args.ScreenCode,
                         NumberOfColumns = args.Columns,
                         NumberOfRows = args.Rows,
                         Id = IdCounter.GetNumber("ScreenModification", authToken.Tenant)
@@ -512,7 +513,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     foreach (var item in args.ScreenFields)
                     {
-                        var temp = MyTenantFields.Where(a => a.ObjectFieldCode == item.ObjectFieldCode && a.ScreenId == item.ScreenId).FirstOrDefault();
+                        var temp = MyTenantFields.Where(a => a.ObjectFieldCode == item.ObjectFieldCode && a.ScreenCode == item.ScreenCode).FirstOrDefault();
                         if (temp != null)
                         {
                             item.Id = temp.Id;
@@ -548,7 +549,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetScreenModificationByScreenId(string ScreenId)
+        public HttpResponseMessage GetScreenModificationByScreenCode(string ScreenCode)
         {
             try
             {
@@ -558,7 +559,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ScreensRepository myRepo = new ScreensRepository(authToken.Tenant);
-                var temp = myRepo.GetScreenModificationByScreen(ScreenId, authToken.Tenant);
+                var temp = myRepo.GetScreenModificationByScreen(ScreenCode, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, temp);
             }

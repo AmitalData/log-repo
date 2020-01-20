@@ -843,9 +843,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen EmployeeGroupEmployeeGroupHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EmployeeGroup.EmployeeGroupHeaderScreen", Name = "EmployeeGroupHeaderScreen", ObjectTableId = EmployeeGroupObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField EmployeeGroupEmployeeGroupEmployeeGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField EmployeeGroupEmployeeGroupEmployeeGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id,ScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    EmployeeGroupObjectTable.HeaderScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id;
+		    EmployeeGroupObjectTable.HeaderScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

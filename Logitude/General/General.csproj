@@ -652,6 +652,10 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Rabaia] Delete Constraint between Features and Queries.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Fill TextCodeCode on Translations.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 30 [Wesam] Delete Constraint between Translations and TextCode.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Fill objectfieldcode on Restrictions - Copy.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ObjectTable and Screen.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ScreenModifications and Screen.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Delete Constraint between ScreenFields and Screen.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between CustomerFieldsUpdateSettings and objectFields.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Fill objectfieldcode on ObjectFieldValidations.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Delete Constraint between ObjectFieldValidations and objectFields.sql" />
@@ -680,21 +684,24 @@
     <Content Include="Main Branch\2019\12 - 2019\Day 31 [Wesam] Fill objectfieldcode on RuleConditionFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between ObjectFieldModifications and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on ObjectFieldModifications.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 15 [Rabaia] set FeatureId as NULL.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Delete Constraint between Restrictions and objectFields.sql" />
-    <Content Include="Main Branch\2020\01 - 2020\Day 06 [Wesam] Fill objectfieldcode on Restrictions.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill HeaderScreenCode on ObjectTable.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill ScreenCode on ScreenModifications.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 08 [Mutaz] Fill ScreenCode on ScreenFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill objectfieldcode on CustomerFieldsUpdateSettings.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Wesam] Fill triggerfieldcode on ObjectTableRules.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 05 [Wesam] Delete Constraint between ObjectTableRules and objectFields.sql" />
-
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Delete Constraint between AirlineMessagingRules and objectFields.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 02 [Wesam] Fill rulefieldcode on AirlineMessagingRules.sql" />
     <Content Include="Main Branch\2020\01 - 2020\Day 08 [Maheera] Fill SearchFields of SLAHeaders Table.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 06 [Rabaia] Fill FeatureUniqeCode From FeatureId.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 05 [Rabaia] Delete Constraint between Features and FeatureRole and FeaturePackages.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 05 [Abed] UpdateDocumentIdOnQuoationDocumentsFilings.sql" />
+    <Content Include="Main Branch\2020\01 - 2020\Day 15 [Maheera] Fill Default PriceSteps.sql" />
     <Content Include="Main Branch\2020\Day 06 [Rabaia] Fill FeatureUniqeCode From FeatureId.sql" />
     <Content Include="Main Branch\2020\Day 05 [Rabaia] Delete Constraint between Features and FeatureRole and FeaturePackages.sql" />
-
     <Content Include="Main Branch\2020\01 - 2020\Day05 [Abed] UpdateDocumentIdOnQuoationDocumentsFilings.sql" />
-
-
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
@@ -2011,8 +2018,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DataViews And Procedures\DataViews\AgingReportInvoiceDataView.dxml" />
-    <None Include="DataViews And Procedures\Stored Procedures\UpdateTenantCustomersActualData.dxml" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceappSettings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.appSettings.config" />

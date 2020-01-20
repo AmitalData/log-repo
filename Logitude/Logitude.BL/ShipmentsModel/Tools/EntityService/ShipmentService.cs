@@ -2619,6 +2619,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void InitializeComponent()
         {
+            entityPM.House = MethodHelper.Trim(entityPM.House);
+
             entityPM.CalculateProfit = false;
             entityPM.CalculatePayables = false;
             entityPM.CalculateReceivables = false;

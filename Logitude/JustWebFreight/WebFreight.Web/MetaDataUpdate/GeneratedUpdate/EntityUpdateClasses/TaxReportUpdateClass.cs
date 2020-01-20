@@ -2082,13 +2082,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TaxReportTaxReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxReport.HeaderScreen", Name = "TaxReportHeaderScreen", ObjectTableId = TaxReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TaxReportTaxReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportNumber").FirstOrDefault().Id, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id, ObjectFieldCode = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxReportTaxReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportNumber").FirstOrDefault().Id, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TaxReportTaxReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth").FirstOrDefault().Id, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id, ObjectFieldCode = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxReportTaxReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth").FirstOrDefault().Id, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TaxReportTaxReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "StatusEnglishName").FirstOrDefault().Id, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id, ObjectFieldCode = TaxReportObjectFields.Where(d => d.FieldName == "StatusEnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxReportTaxReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "StatusEnglishName").FirstOrDefault().Id, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = TaxReportObjectFields.Where(d => d.FieldName == "StatusEnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TaxReportObjectTable.HeaderScreenId = TaxReportTaxReportHeaderScreenScreen0.Id;
+		    TaxReportObjectTable.HeaderScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

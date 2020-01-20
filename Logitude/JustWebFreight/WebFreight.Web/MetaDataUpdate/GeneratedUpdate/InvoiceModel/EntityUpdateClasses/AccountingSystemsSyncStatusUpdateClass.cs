@@ -525,6 +525,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	         Screen AccountingSystemsSyncStatusAccountingSystemsSyncStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingSystemsSyncStatus.HeaderScreen", Name = "AccountingSystemsSyncStatusHeaderScreen", ObjectTableId = AccountingSystemsSyncStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    AccountingSystemsSyncStatusObjectTable.HeaderScreenId = AccountingSystemsSyncStatusAccountingSystemsSyncStatusHeaderScreenScreen0.Id;
+		    AccountingSystemsSyncStatusObjectTable.HeaderScreenCode = AccountingSystemsSyncStatusAccountingSystemsSyncStatusHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

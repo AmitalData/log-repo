@@ -344,17 +344,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TMProjectCategoryGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMProjectCategory.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMProjectCategoryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TMProjectCategoryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMProjectCategoryGeneralTabScreenScreen0.Id, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMProjectCategoryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMProjectCategoryGeneralTabScreenScreen0.Id,ScreenCode = TMProjectCategoryGeneralTabScreenScreen0.Code, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TMProjectCategoryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMProjectCategoryGeneralTabScreenScreen0.Id, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMProjectCategoryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMProjectCategoryGeneralTabScreenScreen0.Id,ScreenCode = TMProjectCategoryGeneralTabScreenScreen0.Code, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen TMProjectCategoryTMProjectCategoryHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMProjectCategory.HeaderScreen", Name = "TMProjectCategoryHeaderScreen", ObjectTableId = TMProjectCategoryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TMProjectCategoryTMProjectCategoryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Id, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMProjectCategoryTMProjectCategoryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Id,ScreenCode = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Code, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TMProjectCategoryObjectTable.HeaderScreenId = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Id;
+		    TMProjectCategoryObjectTable.HeaderScreenCode = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }

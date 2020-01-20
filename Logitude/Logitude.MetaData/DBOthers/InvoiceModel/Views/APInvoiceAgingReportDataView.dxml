@@ -1,0 +1,18 @@
+<View DBType="Main" Name="APAgingReportDataView" Schema="dbo">
+  <SqlScript>
+    <![CDATA[
+CREATE VIEW [dbo].[APAgingReportDataView]
+AS
+SELECT        Id, Tenant, InvoiceNumber, GETDATE() AS CurrentDate, DueDate, CONVERT(varchar(40), CASE WHEN DueDate < GETDATE() THEN (CASE WHEN (((GETDATE()) 
+                         - DueDate) < 30) THEN '1-30' ELSE (CASE WHEN (((GETDATE()) - DueDate) < 60) THEN '31-60' ELSE (CASE WHEN (((GETDATE()) - DueDate) < 90) 
+                         THEN '61-90' ELSE (CASE WHEN (((GETDATE()) - DueDate) > 90) THEN '+90' ELSE '' END) END) END) END) ELSE 'Current' END) AS DateRange, AmountDueInLocalCurrency, AmountDueInProfitCurrency ,
+                         CONVERT(int, CASE WHEN DueDate < GETDATE() THEN (CASE WHEN (((GETDATE()) - DueDate) < 30) THEN 4 ELSE (CASE WHEN (((GETDATE()) - DueDate) < 60) 
+                         THEN 3 ELSE (CASE WHEN (((GETDATE()) - DueDate) < 90) THEN 2 ELSE (CASE WHEN (((GETDATE()) - DueDate) > 90) THEN 1 ELSE '' END) END) END) END) 
+                         ELSE 5 END) AS IndexOrder, StatusCode,BranchId
+FROM            dbo.APInvoices
+where IsClosed=0 
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

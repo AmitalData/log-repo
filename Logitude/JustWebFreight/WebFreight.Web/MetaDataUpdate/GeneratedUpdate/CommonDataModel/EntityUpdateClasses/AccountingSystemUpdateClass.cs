@@ -1478,11 +1478,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AccountingSystemHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingSystem.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountingSystemObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id, ObjectFieldCode = AccountingSystemObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id,ScreenCode = AccountingSystemHeaderScreenScreen0.Code, ObjectFieldCode = AccountingSystemObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id, ObjectFieldCode = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id,ScreenCode = AccountingSystemHeaderScreenScreen0.Code, ObjectFieldCode = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingSystemObjectTable.HeaderScreenId = AccountingSystemHeaderScreenScreen0.Id;
+		    AccountingSystemObjectTable.HeaderScreenCode = AccountingSystemHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

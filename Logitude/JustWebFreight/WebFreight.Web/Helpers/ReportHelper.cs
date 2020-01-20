@@ -1375,6 +1375,16 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
+
+
+                case "RCRF":
+                    { 
+                        XmlSerializer serializer = new XmlSerializer(typeof(RacingQuoteDataProvider));
+                        RacingQuoteDataProvider reportDataProvider = (RacingQuoteDataProvider)serializer.Deserialize(memorystream);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "RacingQuote", Name = "RacingQuoteDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
             }
             return urlImage;
         }
@@ -1890,6 +1900,13 @@ namespace WebFreight.Web.Helpers
                 case "FLBM":
                     {
                         FlightBookingsManifestManager myDataManager = new FlightBookingsManifestManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+
+                case "RCRF":
+                    {
+                        RacingQuoteManager myDataManager = new RacingQuoteManager(filters, reportFliter.tenant);
                         dataProvider = myDataManager.GetData();
                         break;
                     }

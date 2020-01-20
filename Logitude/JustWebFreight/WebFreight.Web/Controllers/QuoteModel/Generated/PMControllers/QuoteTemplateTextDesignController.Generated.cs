@@ -41,38 +41,38 @@ using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.Tools.EntityService;
 
 namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
-{
+{ 
 
-
+    
     public partial class QuoteTemplateTextDesignsController : ApiController
     {
-
-
+	  
+       
         public HttpResponseMessage GetSingle(string id)
         {
-            try
+		  try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
+			    string logKey = PerformanceLogger.LogCurrentTime();
+			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 QuoteTemplateTextDesignQuery quoteTemplateTextDesignQuery = new QuoteTemplateTextDesignQuery(authToken.Tenant);
                 QuoteTemplateTextDesignPM quoteTemplateTextDesignPM = quoteTemplateTextDesignQuery.GetSinglePM(id, authToken.Tenant);
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, quoteTemplateTextDesignPM);
-
-            }
+			 
+			}
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
+           
         }
 
-
-
+         
+		
 
         public HttpResponseMessage Post(QuoteTemplateTextDesignPM entityPM)
         {
@@ -86,10 +86,20 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                
                         IQuotesContext MyContext = QuotesContext.GetContext(entityPM.Tenant);
                         QuoteTemplateTextDesignService service = new QuoteTemplateTextDesignService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
+				
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("QuoteTemplateTextDesign", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -104,7 +114,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 }
             }
             else
-            {
+            { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
@@ -133,11 +143,22 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         {
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
-
+                
                         IQuotesContext MyContext = QuotesContext.GetContext(entityPM.Tenant);
                         QuoteTemplateTextDesignService service = new QuoteTemplateTextDesignService(MyContext, entityPM.Tenant);
-
+ 
                         service.Update(entityPM);
+
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("QuoteTemplateTextDesign", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
+
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -152,14 +173,28 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 }
             }
             else
-            {
+            { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
 
+        // DELETE api/<controller>/5
+        public void Delete(int id)
+        {
+        }
+	    
 
 
+		
+          
+			
+			 
+		  
+        
 
-
+		
+			 		
+      
     }
 }
+	 

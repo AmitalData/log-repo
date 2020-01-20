@@ -331,6 +331,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen RestrictionRestrictionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Restriction.HeaderScreen", Name = "RestrictionHeaderScreen", ObjectTableId = RestrictionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    RestrictionObjectTable.HeaderScreenId = RestrictionRestrictionHeaderScreenScreen0.Id;
+		    RestrictionObjectTable.HeaderScreenCode = RestrictionRestrictionHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

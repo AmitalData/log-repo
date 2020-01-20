@@ -127,6 +127,10 @@ namespace Logitude.Accounting.BL.Validators
 
                 Validate_CreatedByReconciliationAfterConversion(errorsList, jlList);
             }
+            if (myReconciliationPM.CreatedByReconciliationStageB)
+            {
+                ///not neeed - ohad+ alex
+            }
             decimal sum = 0;
             foreach (var reconciliationLine in myReconciliationPM.ReconciliationLines)
             {

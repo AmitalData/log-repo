@@ -322,11 +322,11 @@ export class GeneralDomainService {
         );
     }
 
-    GetScreenModificationByScreenId(ScreenId: string) {
+    GetScreenModificationByScreenCode(ScreenCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetScreenModificationByScreenId?ScreenId=' + ScreenId;
+        var url = this._apiUrl + '/GetScreenModificationByScreenCode?ScreenCode=' + ScreenCode;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {

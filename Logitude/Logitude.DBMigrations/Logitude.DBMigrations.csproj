@@ -51,6 +51,7 @@
     <Compile Include="Models\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
     <Compile Include="Models\DXMLDefinitions.cs" />
+    <Compile Include="Models\DXMLHash.cs" />
     <Compile Include="Models\DXMLProcedure.cs" />
     <Compile Include="Models\DXMLTable.cs" />
     <Compile Include="Models\DXMLValidation.cs" />
