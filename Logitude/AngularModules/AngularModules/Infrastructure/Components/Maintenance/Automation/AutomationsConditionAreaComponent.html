@@ -83,28 +83,28 @@
                                                                                 <div style="width:195px;text-align:center">
 
                                                                                     <LogLov *ngIf="item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
-                                                                                            [ObjectFieldName]="'ObjectFieldId'"
+                                                                                            [ObjectFieldName]="'ObjectFieldCode'"
                                                                                             [QueryFilterItems]="item.AutomationCondationFieldListFilterItems"
                                                                                             [ObjectTableName]="'ObjectField'"
                                                                                             [DataContext]="item"
                                                                                             [LookUpTableName]="'ObjectField'"
                                                                                             [NoValidation]="true"
                                                                                             [IsFreeText]="true"
-                                                                                            [SelectedValue]="item.ObjectFieldId"
+                                                                                            [SelectedValue]="item.ObjectFieldCode"
                                                                                             [HideColumns]="true"
                                                                                             [HideLastColumn]="true"
                                                                                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                                                     </LogLov>
 
                                                                                     <LogLov *ngIf="!item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
-                                                                                            [ObjectFieldName]="'ObjectFieldId'"
+                                                                                            [ObjectFieldName]="'ObjectFieldCode'"
                                                                                             [QueryFilterItems]="item.AutomationCondationFieldListFilterItems"
                                                                                             [ObjectTableName]="'ObjectField'"
                                                                                             [DataContext]="item"
                                                                                             [LookUpTableName]="'ObjectField'"
                                                                                             [NoValidation]="true"
                                                                                             [IsFreeText]="true"
-                                                                                            [SelectedValue]="item.ObjectFieldId"
+                                                                                            [SelectedValue]="item.ObjectFieldCode"
                                                                                             [HideColumns]="true"
                                                                                             [HideLastColumn]="true"
                                                                                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
@@ -147,14 +147,14 @@
                                                                                             <!--Custom Fields Combox-->
                                                                                             <div style="width:202px;" *ngIf="item.IsCustomCombox">
                                                                                                 <LogLov *ngIf="!item.IsRefreshObjectFieldLov" (SelectedItemChanged)="item.ObjectFieldCondationValueChange($event)"
-                                                                                                        [ObjectFieldName]="'CustomObjectFieldId'"
+                                                                                                        [ObjectFieldName]="'CustomObjectFieldCode'"
                                                                                                         [QueryFilterItems]="item.CustomAutomationCondationFieldListFilterItems"
                                                                                                         [ObjectTableName]="'ObjectField'"
                                                                                                         [DataContext]="item"
                                                                                                         [LookUpTableName]="'ObjectField'"
                                                                                                         [NoValidation]="true"
                                                                                                         [IsFreeText]="true"
-                                                                                                        [SelectedValue]="item.CustomObjectFieldId"
+                                                                                                        [SelectedValue]="item.CustomObjectFieldCode"
                                                                                                         [HideColumns]="true"
                                                                                                         [HideLastColumn]="true"
                                                                                                      
@@ -162,14 +162,14 @@
                                                                                                 </LogLov>
 
                                                                                                 <LogLov *ngIf="item.IsRefreshObjectFieldLov" (SelectedItemChanged)="item.ObjectFieldCondationValueChange($event)"
-                                                                                                        [ObjectFieldName]="'CustomObjectFieldId'"
+                                                                                                        [ObjectFieldName]="'CustomObjectFieldCode'"
                                                                                                         [QueryFilterItems]="item.CustomAutomationCondationFieldListFilterItems"
                                                                                                         [ObjectTableName]="'ObjectField'"
                                                                                                         [DataContext]="item"
                                                                                                         [LookUpTableName]="'ObjectField'"
                                                                                                         [NoValidation]="true"
                                                                                                         [IsFreeText]="true"
-                                                                                                        [SelectedValue]="item.CustomObjectFieldId"
+                                                                                                        [SelectedValue]="item.CustomObjectFieldCode"
                                                                                                         [HideColumns]="true"
                                                                                                         [HideLastColumn]="true"
                                                                                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
