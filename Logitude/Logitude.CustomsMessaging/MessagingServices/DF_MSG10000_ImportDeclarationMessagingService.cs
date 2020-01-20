@@ -16,6 +16,7 @@ using UnifreightIIG.Common.TheGateway;
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -139,6 +140,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             GenericRequestParams requestParams, 
             out string exceptionMessage)
         {
+            if (requestParams.TestCase != null)
+            {
+                var myFake1DF_NG_2754_MSG10004_ImportDeclarationResponse = new Fake1DF_NG_2754_MSG10004_ImportDeclarationResponse();
+                return myFake1DF_NG_2754_MSG10004_ImportDeclarationResponse
+                    .CallWS(customRequest, requestParams, out exceptionMessage);
+            }
             exceptionMessage = null;
             var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
           
