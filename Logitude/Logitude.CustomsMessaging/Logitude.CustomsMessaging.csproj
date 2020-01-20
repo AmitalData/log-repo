@@ -142,6 +142,8 @@
     <Compile Include="CustomsBook\CustomsItemDetailsHistoryImport.cs" />
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
+    <Compile Include="FakeMessagingServices\Fake1DF_NG_2754_MSG10004_ImportDeclarationResponse.cs" />
+    <Compile Include="FakeMessagingServices\FakeResponseBase.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
     <Compile Include="Dca\DCARenameIncomeFileService.cs" />
