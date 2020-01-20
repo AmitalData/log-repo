@@ -10881,11 +10881,6 @@ namespace WebFreight.Web.ReportsWebServices
             agingReport.RunReport();
             List<PeriodMExtended> result = agingReport.MyPeriodExtendedList;
 
-            if(BalanceFilter == "All" || BalanceFilter == "Debtors")
-                result = result.Where(d => d.Total >= 0).ToList();
-            else if (BalanceFilter == "DebtAbove")
-                result = result.Where(d => d.Total >= BalanceFilterValue).ToList();
-
 
             #endregion
 
@@ -10915,37 +10910,22 @@ namespace WebFreight.Web.ReportsWebServices
 
                 record.PeriodName = item.PeriodName;
                 record.AccountName = item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName;
-           
+                record.AccountEnglishName = item.AccountEnglishName;
+                record.AccountLocalName = item.AccountLocalName;
+
                 record.Total = item.Total;
 
                 totalData.AgingPeriods.Add(record);
             }
 
+            
+
+            AddTotalBalancePeriods(totalData, showLocals, result);
+            FilterCustomerPeriodsOnBalance(totalData, showLocals, BalanceFilter, BalanceFilterValue);
+
             // order the list
             int i = 0;
             decimal sum = 0;
-
-            Dictionary<PeriodMExtended, decimal> sums = new Dictionary<PeriodMExtended, decimal>();
-            foreach (var period in result)
-            {
-                sums.Add(period, 0);
-            }
-            foreach (var period in result)
-            {
-                sums[period] += period.Total;
-            }
-            foreach (var sumValue in sums)
-            {
-                totalData.AgingPeriods.Add(new AgingPeriod()
-                {
-                    PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
-                    Total = sumValue.Value,
-                    AccountName = sumValue.Key.AccountLocalName != null? sumValue.Key.AccountLocalName  : sumValue.Key.AccountEnglishName,
-                  
-                });
-            }
-
-
             foreach (var period in result.OrderBy(d => d.OrderDate).ToList())
             {
                 i++;
@@ -10979,7 +10959,7 @@ namespace WebFreight.Web.ReportsWebServices
                     item.PeriodName = item.PeriodName.Replace("b4", showLocals ? "לפני" : "Before");
             }
 
-            if(totalData.AgingPeriods.Count > 0)
+            if (totalData.AgingPeriods.Count > 0)
                 totalData.AgingPeriods[0].Totals = new List<AgingPeriodTotal>();
             //totalData.AgingPeriods[0].Totals.Add(new AgingPeriodTotal() { TotalCredit = 111, TotalDebit = 222 });
 
@@ -11009,6 +10989,66 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             return totalData;
+        }
+
+        private static void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData, bool showLocals, string BalanceFilter, decimal BalanceFilterValue)
+        {
+            List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
+            foreach (var totalBalance in totalBalances)
+            {
+                if (BalanceFilter == "Debtors" && !(totalBalance.Total >= 0))
+                    RemoveCustomerPeriods(totalData, totalBalance);
+                else if (BalanceFilter == "DebtAbove" && !(totalBalance.Total >= BalanceFilterValue))
+                    RemoveCustomerPeriods(totalData, totalBalance);
+            }
+        }
+
+        private static void RemoveCustomerPeriods(AccountingAgingDataProvider totalData, AgingPeriod totalBalance)
+        {
+            var name = totalBalance.AccountLocalName != null ? totalBalance.AccountLocalName : totalBalance.AccountEnglishName;
+            List<AgingPeriod> items = totalData.AgingPeriods.Where(d => d.AccountName == name).ToList();
+            foreach (var item in items)
+                totalData.AgingPeriods.Remove(item);
+        }
+
+        private static void AddTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals, List<PeriodMExtended> result)
+        {
+            Dictionary<PeriodMExtended, decimal> sums = new Dictionary<PeriodMExtended, decimal>();
+            foreach (var period in result)
+            {
+                sums.Add(period, 0);
+            }
+            foreach (var period in result)
+            {
+                sums[period] += period.Total;
+            }
+
+            foreach (var sumValue in sums)
+            {
+                var pname = showLocals ? "סה''כ יתרה" : "Total Balance";
+                var _balancePeriod = totalData.AgingPeriods.FirstOrDefault(d => d.AccountEnglishName == sumValue.Key.AccountEnglishName && d.PeriodName == pname);
+                if (_balancePeriod == null)
+                    totalData.AgingPeriods.Add(new AgingPeriod()
+                    {
+                        PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
+                        Total = sumValue.Value,
+                        AccountName = sumValue.Key.AccountLocalName != null ? sumValue.Key.AccountLocalName : sumValue.Key.AccountEnglishName,
+                        AccountLocalName = sumValue.Key.AccountLocalName,
+                        AccountEnglishName = sumValue.Key.AccountEnglishName,
+
+                    });
+                else
+                {
+                    _balancePeriod.Total += sumValue.Value;
+                }
+            }
+        }
+
+        private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
+        {
+            var balancePeriod = showLocals ? "סה''כ יתרה" : "Total Balance";
+            List<AgingPeriod> totalBalances = totalData.AgingPeriods.Where(d => d.PeriodName == balancePeriod).ToList();
+            return totalBalances;
         }
         #endregion
 

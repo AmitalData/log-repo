@@ -321,19 +321,19 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
       BalanceFilterChanged()
       {
 
-        //   switch (this.balanceFilterSelectedValue) {
-        //       case 'filter_All':
-        //           this.AccountTypeCode = '2';
-        //           break;
-        //       case 'filter_Debtors':
-        //           this.AccountTypeCode = '2';
-        //           break;
-        //       case 'filter_DebtAbove':
-        //           this.AccountTypeCode = '3';
-        //           break;
-        //       default:
-        //           break;
-        //   }
+          switch (this.balanceFilterSelectedValue) {
+              case 'filter_All':
+                //   this.AccountTypeCode = '2';
+                  break;
+              case 'filter_Debtors':
+                //   this.AccountTypeCode = '2';
+                  break;
+              case 'filter_DebtAbove':
+                  this.balance = 0;
+                  break;
+              default:
+                  break;
+          }
 
           this.SetUIProperties();
 

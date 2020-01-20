@@ -210,7 +210,7 @@
 
                             <td style="width: 120px;">
 
-                                <LogTextBox [ObjectFieldName]="'Balance'" [InputType]="'decimal'" [DataContext]="DataContext"
+                                <LogTextBox *ngIf="balanceFilterSelectedValue === 'filter_DebtAbove'" [ObjectFieldName]="'Balance'" [InputType]="'decimal'" [DataContext]="DataContext"
                                     [Text]="Balance" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true">
                                 </LogTextBox>
                             </td>
