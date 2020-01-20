@@ -207,6 +207,12 @@
     <Content Include="CRMModules\CRMTickets\Components\NewEntity\ChooseShipmentComponent.html" />
     <Content Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.html" />
     <Content Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.html" />
+    <Content Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\OpenQuotesByStageComponent.html" />
+    <Content Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuoteDashboardComponent.html" />
+    <Content Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuotesByCountryComponent.html" />
+    <Content Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuotesConversionComponent.html" />
+    <Content Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\SentQuotesKPIComponent.html" />
+    <Content Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\TopFiveSalesmanProfitComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclAP3LoisComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclATabComponent.html" />
@@ -598,6 +604,12 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\OpenQuotesByStageComponent.ts" />
+    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuoteDashboardComponent.ts" />
+    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuotesByCountryComponent.ts" />
+    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuotesConversionComponent.ts" />
+    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\SentQuotesKPIComponent.ts" />
+    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\TopFiveSalesmanProfitComponent.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionContactList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionInviteeList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionList.ts" />
