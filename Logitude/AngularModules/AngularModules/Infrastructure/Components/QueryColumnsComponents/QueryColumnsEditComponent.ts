@@ -97,7 +97,7 @@ export class QueryColumnsEditComponent {
         this.HasChanges = false;
         var copy = false;
 
-        var currentQuery = window.Queries.filter(d => d.Id == this.QueryCode)[0];
+        var currentQuery = window.Queries.filter(d => d.Code == this.QueryCode)[0];
         this.addedQueryColumnList = [];
         this.removedQueryColumnList = [];
         //queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
