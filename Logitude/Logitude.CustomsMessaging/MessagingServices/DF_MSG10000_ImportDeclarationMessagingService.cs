@@ -140,12 +140,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             GenericRequestParams requestParams, 
             out string exceptionMessage)
         {
-            if (requestParams.TestCase != null)
+            /*if (requestParams.TestCase != null)
             {
                 var myFake1DF_NG_2754_MSG10004_ImportDeclarationResponse = new Fake1DF_NG_2754_MSG10004_ImportDeclarationResponse();
                 return myFake1DF_NG_2754_MSG10004_ImportDeclarationResponse
                     .CallWS(customRequest, requestParams, out exceptionMessage);
-            }
+            }*/
             exceptionMessage = null;
             var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
           
