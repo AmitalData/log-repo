@@ -148,7 +148,8 @@ namespace AmitalCustomsWindowsService
                             return true;
                         }
                     };
-                Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe("StartStatic", false, "", DateTime.MaxValue);
+
+                Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe?.Invoke("StartStatic", false, "", DateTime.MaxValue);//problem in the amial windows service debug mode after merge
 
                 CustomsRegistrations.Register();
                 _ThreadStartStaticLoaded = true;

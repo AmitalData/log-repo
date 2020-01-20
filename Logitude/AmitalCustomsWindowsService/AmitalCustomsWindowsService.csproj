@@ -239,7 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommunicationWorkerRole\CommunicationWorkerRole.csproj">
-      <Project>{d5834b27-2c00-4ab3-9aa3-4266314b5aba}</Project>
+      <Project>{ba2a42b8-a348-4d44-984c-1d718cb20b6f}</Project>
       <Name>CommunicationWorkerRole</Name>
     </ProjectReference>
     <ProjectReference Include="..\CustomsWorkerRole\CustomsWorkerRole.csproj">
