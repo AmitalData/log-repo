@@ -155,9 +155,15 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             Feature quotesFeature = tenantFeatures.Where(d => d.Code == "QUOTESSTATISTICS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature shipmentProfitVSQuoteEstimateFeature = tenantFeatures.Where(d => d.Code == "Report.Features.ShipmentProfitVSQuoteEstimate" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature RacingReportFeature = tenantFeatures.Where(d => d.Code == "RCRF" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
+
+            
 
             AddReports.AddReport(new ReportDetails() { Code = "RQUO", Description = "Quotes Statistics", Name = "Quotes Statistics", FilterControlName = "QuotesFilterControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = quotesFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/QuotesFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "SPQS", Description = "Shipment Profit vs. Quote Estimate", Name = "Shipment Profit vs. Quote Estimate", FilterControlName = "ShipmentProfitVSQuoteEstimateFilterControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = shipmentProfitVSQuoteEstimateFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/ShipmentProfitVSQuoteEstimateComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RCRF", Description = "Racing - Quotes", Name = "Racing - Quotes", FilterControlName = "RacingReportControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = RacingReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/RacingQuotesComponent" }, reportRepository, tenantReports);
+
         }
         private void LoadReports_CRM(ReportGroup cRMGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {
