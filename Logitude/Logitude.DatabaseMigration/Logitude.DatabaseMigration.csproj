@@ -1925,8 +1925,7 @@
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
-
+    
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -1967,8 +1966,7 @@
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
-    </EmbeddedResource>
+    
     <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs" />
     <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.Designer.cs">
       <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
@@ -3328,9 +3326,7 @@
     <EmbeddedResource Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.resx">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912221319308_AddSupportMailboxTable.resx">
-      <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
-    </EmbeddedResource>
+     
     <EmbeddedResource Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.resx">
       <DependentUpon>201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs</DependentUpon>
     </EmbeddedResource>
