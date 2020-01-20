@@ -82,5 +82,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
         }
+        public GLAccountMoreDataPM GetSinglePMByAccountId(string accountId, int tenant)
+        {
+            GLAccountMoreData accountMoreData = repository.GetSingle(accountId, tenant);
+            return GetEntityPM(accountMoreData);
+        }
+
+
     }
 }

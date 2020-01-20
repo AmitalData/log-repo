@@ -31,7 +31,11 @@ using System.Data.Entity.Core;
 using System.Web;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.DataContracts;
+
 using Logitude.BL.Resolvers;
+
+using System.Text.RegularExpressions;
+
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -75,7 +79,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                 }
             }
-
+            CheckInvoiceNumberFormat(entityPM.InvoiceNumber, entityPM.Tenant);
 
             List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
 
@@ -191,6 +195,31 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
             ValidateFullAccounting(entityPM);
             ValidateExternalAPI(entityPM, myCommonContext);
+        }  
+
+
+        public static void CheckInvoiceNumberFormat(string invoiceNumber, int tenant)
+        {
+            bool showLocal = SetShowLocal(tenant);
+            Regex regex = new Regex("^[A-Za-z0-9]*$");
+            if (!regex.IsMatch(invoiceNumber))
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.O.InvalidNumber", tenant, showLocal);
+                throw new ApplicationException(msg);
+
+            }
+
+        }
+
+        private static bool SetShowLocal(int tenant)
+        {
+            bool showLocal = false;
+            var user = GetLoggedContact(tenant);
+            if (user != null)
+            {
+                showLocal= !(GetLoggedContact(tenant).DontShowLocal);
+            }
+            return showLocal;
         }
 
         private static void ValidateExternalAPI(APInvoicePM entityPM, ICommonDataContext myCommonContext)
@@ -556,9 +585,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
         }
 
+
         private static void ValidateAccountingPeriod(APInvoicePM invoicePM, ref string errors, int tenant)
         {
             bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+
 
             IAccountingContext myContext = AccountingContext.GetContext(tenant);
             AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
