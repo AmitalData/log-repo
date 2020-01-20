@@ -112,7 +112,7 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
         automationConditionPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.OperatorCode = "Equals";
-        automationConditionPM.ObjectFieldId = "";
+        automationConditionPM.ObjectFieldCode = "";
 
 
         if (conditionType == "And") {

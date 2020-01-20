@@ -35,13 +35,13 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 entityPM.TariffNumber = CodeCounter.GetNumber("Tariff", entityPM.Tenant).ToString();
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
                 if (entityPM.PriceSteps == null && (entityPM.TypeCode == "AFC" || entityPM.TypeCode == "OLC"))
                 {
                     ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                     IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
                     TariffSetting iTariffSetting = (from d in iContext.TariffSettings where d.Tenant == entityPM.Tenant select d).FirstOrDefault();
                     
-
                     if (iTariffSetting != null)
                     {
                         if(entityPM.TypeCode== "AFC")
@@ -57,11 +57,35 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     }
                 }
 
+                //if(entityPM.TypeCode == "OFS")
+                //{
+                //    string BCNTId = this.GetBCNTMeasurements(entityPM.Tenant);
+
+                //    if(!string.IsNullOrEmpty(BCNTId))
+                //    {
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 1);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 2);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 3);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 4);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 5);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 6);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 7);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 8);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 9);
+                //        this.FillBCNTMeasurements(entityPM, BCNTId, 10);
+                //    }
+
+                //    else
+                //    {
+                //        throw new ApplicationException("BCNT Measurement is not found");
+                //    }
+                //}
+
                 this.ValidateSurchargeUniqueSeller(entityPM);
                 this.ValidateFCLSurchargeUniqueSeller(entityPM);
             }
         }
-
+        
         protected override void OnUpdating(TariffPM entityPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
@@ -131,8 +155,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             this.InsertTariffSurchargeLog(entityPM);
         }
-
-
+        
         List<ChargesType> ChargeTypes;
         private void InsertTariffSurchargeLog(TariffPM tariff)
         {
@@ -818,6 +841,25 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
 
             return newPort;
+        }
+
+        private string GetBCNTMeasurements(int tenant)
+        {
+            MeasurementRepository measurementRepository = new MeasurementRepository(tenant);
+            string id = measurementRepository.GetMeasurementIdbyCode("BCNT", tenant);
+
+            return id;
+        }
+        private void FillBCNTMeasurements(TariffPM entityPM, string BCNTId, int index)
+        {
+            PropertyInfo valuePropInfo1 = entityPM.GetType().GetProperty("Surcharge" + index + "Id");
+            string value1 = valuePropInfo1.GetValue(entityPM).ToString();
+
+            if (!string.IsNullOrEmpty(value1))
+            {
+                PropertyInfo valuePropInfo2 = entityPM.GetType().GetProperty("Surcharge" + index + "UOM");
+                valuePropInfo2.SetValue(entityPM, BCNTId);
+            }
         }
     }
 }

@@ -2549,6 +2549,20 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
 
 
+        public List<ObjectFieldList> GetObjectFieldsForAutomations()
+        {
+            return (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
+                    where  (a.AllowedinAutomationConditions == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
+                    select new ObjectFieldList()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        FieldCode = a.FieldCode,
+                    }).ToList();
+        }
+
+
+
 
 
 

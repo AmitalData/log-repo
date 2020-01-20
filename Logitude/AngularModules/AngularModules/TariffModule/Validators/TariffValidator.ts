@@ -99,6 +99,7 @@ export class TariffValidator {
                     });
                 }
             }
+
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
                     tempErrors.push(IdPropsName[index - 1] + " is required");
@@ -145,17 +146,9 @@ export class TariffValidator {
                     }
                 }
             }
-            if (this.entityPM.TypeCode == "OFS" && this.entityPM[UOMProps[index - 1]] != null) {
-                this.measurementPMService.getSingleFromCache(this.entityPM[UOMProps[index - 1]]).subscribe(res => {
-                    if (!res.HasError) {
-                        var UOMEntity: MeasurementList = res.Result;
-                        if (res) {
-                            if (UOMEntity.Code == "BCNT") {
-                                this.HasAContainerTypeUOM = true;
-                            }
-                        }
-                    }
-                });
+
+            if (this.entityPM.TypeCode == "OFS") {
+                this.HasAContainerTypeUOM = true;
             }
         }
 

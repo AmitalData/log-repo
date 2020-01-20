@@ -33,7 +33,7 @@ import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
-import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager'; 
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 
 
 @Component({
@@ -47,12 +47,13 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
     AdditionalData: any = {
-        RequestPaymentData: {}, PaymentData: {}};
+        RequestPaymentData: {}, PaymentData: {}
+    };
     externalDocs: any[] = [];
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
-    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService; 
+    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
 
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
@@ -84,10 +85,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     }
     ShowFinalMessage: boolean = false;
-    SecurityKey:string = "";
-    Tenant : number = null;
+    SecurityKey: string = "";
+    Tenant: number = null;
     RunComponent() {
-        
+
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq") {
@@ -149,7 +150,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 if (this.RefreshTimer) {
                     clearTimeout(this.RefreshTimer);
                 }
-                
+
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
@@ -195,7 +196,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.ShowFinalMessage = true;
                 }
             });
-        } 
+        }
     }
     private companyLogo: string = "";
     public get CompanyLogo() { return this.companyLogo }
@@ -300,14 +301,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
 
     ViewAggreement() {
-        this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
-             
-            if (myResult.Result) { 
-                var securityId = myResult.Result.SecurityId;
-                DownloadManager.DownloadPage(null, securityId);
-            }
-        });
-      
+        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+
+        //if (myResult.Result) { 
+        //var securityId = myResult.Result.SecurityId;
+        DownloadManager.DownloadPage(null, this.TermsOfUseDocumentId);
+        //  }
+        //});
+
     }
 
 
