@@ -617,96 +617,6 @@
                             </td>
                         </tr>
 
-                        <!--Ocean FCL Surchage Cost-->
-                        <tr *ngIf="TariffType == 'OFS'" style="height:1px;">
-                            <td colspan="3">
-                                <table>
-
-                                    <tr style="height:10px;">
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="FormFieldRow">
-                                        <td style="width:100px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
-                                            {{DataContext.FatherComponent.Container1Label}}
-                                        </td>
-
-                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container1Visibility"></td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
-                                            {{DataContext.FatherComponent.Container2Label}}
-                                        </td>
-
-                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container2Visibility"></td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
-                                            {{DataContext.FatherComponent.Container3Label}}
-                                        </td>
-
-                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container3Visibility"></td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
-                                            {{DataContext.FatherComponent.Container4Label}}
-                                        </td>
-
-                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container4Visibility"></td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
-                                            {{DataContext.FatherComponent.Container5Label}}
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="FormFieldRow" *ngFor="let item in DataContext.FatherComponent.tariffCharges">
-                                        <td style="width:100px;">
-                                            <LogLabel [ObjectFieldName]="'Price1'" [Text]="DataContext.FatherComponent.Surcharge1PriceLabel" [ObjectTableName]="'TariffLinesContainersPrice'" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
-                                            {{DataContext.FatherComponent.Container1Label}}
-                                        </td>
-
-                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container1Visibility"></td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
-                                            {{DataContext.FatherComponent.Container2Label}}
-                                        </td>
-
-                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container2Visibility"></td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
-                                            {{DataContext.FatherComponent.Container3Label}}
-                                        </td>
-
-                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container3Visibility"></td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
-                                            {{DataContext.FatherComponent.Container4Label}}
-                                        </td>
-
-                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container4Visibility"></td>
-
-                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
-                                            {{DataContext.FatherComponent.Container5Label}}
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
                         <tr class="FormFieldRow">
                             <td style="vertical-align:top;">
                                 <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -726,6 +636,172 @@
 
                             <td>
                                 <div></div>
+                            </td>
+                        </tr>
+
+                        <!--Ocean FCL Surchage Cost-->
+                        <tr *ngIf="TariffType == 'OFS'">
+                            <td colspan="3">
+                                <table>
+                                    <tr style="height:10px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <div class="SimpleGridView">
+                                                    <div class="SimpleGridViewHeader">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"></td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container1Visibility">{{DataContext.FatherComponent.Container1Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container2Visibility">{{DataContext.FatherComponent.Container2Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container3Visibility">{{DataContext.FatherComponent.Container3Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container4Visibility">{{DataContext.FatherComponent.Container4Label}}</td>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container5Visibility">{{DataContext.FatherComponent.Container5Label}}</td>
+                                                                <td class="LastChild">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="SimpleGridViewBody">
+                                                        <table>
+                                                            <tr class="SimpleGridViewRow" *ngFor="let item of DataContext.ContainerPricesItemsSource">
+                                                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; color:#6E7172">
+                                                                    {{item.ChargeLabel}}
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price1'" [Text]="item.Price1" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price2'" [Text]="item.Price2" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price3'" [Text]="item.Price3" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price4'" [Text]="item.Price4" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
+                                                                    <LogTextBox [ObjectFieldName]="'Price5'" [Text]="item.Price5" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="GridViewCell">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="6">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+
+
+                                    <!--<tr class="FormFieldRow">
+                    <td style="width:100px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:100px; max-width:100px; font-size:12px; color:#1B90CB; background-color:red" *ngIf="DataContext.FatherComponent.Container1Visibility">
+                        <label>{{DataContext.FatherComponent.Container1Label}}</label>
+                    </td>
+
+                    <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container1Visibility"></td>
+
+                    <td style="width:100px; max-width:100px; font-size:12px; color:#1B90CB; background-color:yellow" *ngIf="DataContext.FatherComponent.Container2Visibility">
+                        {{DataContext.FatherComponent.Container2Label}}
+                    </td>
+
+                    <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container2Visibility"></td>
+
+                    <td style="width:100px; max-width:100px; font-size:12px; color:#1B90CB" *ngIf="DataContext.FatherComponent.Container3Visibility">
+                        {{DataContext.FatherComponent.Container3Label}}
+                    </td>
+
+                    <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container3Visibility"></td>
+
+                    <td style="width:100px; max-width:100px; font-size:12px; color:#1B90CB" *ngIf="DataContext.FatherComponent.Container4Visibility">
+                        {{DataContext.FatherComponent.Container4Label}}
+                    </td>
+
+                    <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container4Visibility"></td>
+
+                    <td style="width:100px; max-width:100px; font-size:12px; color:#1B90CB" *ngIf="DataContext.FatherComponent.Container5Visibility">
+                        {{DataContext.FatherComponent.Container5Label}}
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="11">
+                        <ul>
+                            <li *ngFor="let item of DataContext.FatherComponent.tariffCharges">
+                                <table>
+                                    <tr class="FormFieldRow">
+                                        <td style="width:100px;">
+                                            <LogLabel [NoObjectField]="true" [Text]="item.DisplyText" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width:100px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Price1'" [ObjectTableName]="'TariffLinesContainersPrice'" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container1Visibility"></td>
+
+                                        <td style="width:100px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Price2'" [ObjectTableName]="'TariffLinesContainersPrice'" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container2Visibility"></td>
+
+                                        <td style="width:100px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Price3'" [ObjectTableName]="'TariffLinesContainersPrice'" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container3Visibility"></td>
+
+                                        <td style="width:100px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Price4'" [ObjectTableName]="'TariffLinesContainersPrice'" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container4Visibility"></td>
+
+                                        <td style="width:100px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Price5'" [ObjectTableName]="'TariffLinesContainersPrice'" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>-->
+                                </table>
                             </td>
                         </tr>
 

@@ -760,6 +760,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
+        this.BuildContainerPricesItemsSource();
     }
 
     private CheckIfLineHasError() {
@@ -1444,12 +1445,39 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     BuildContainerPricesItemsSource() {
         this.ContainerPricesItemsSource = [];
 
+        var list: TariffLinesContainersPricePM[] = [];
+        this.EntityPM.ContainersPrices.forEach((item) => {
+            list.push(item);
+        });
+
+        if (list.length < 10) {
+            for (var i = list.length; i < 10; i++) {
+                var chargeId: string = this.TariffPM['Surcharge' + (i + 1) + 'Id'];
+
+                if (!AppTool.IsNullOrEmpty(chargeId)) {
+                    var item: TariffLinesContainersPricePM = new TariffLinesContainersPricePM(null);
+                    item.Tenant = this.EntityPM.Tenant;
+                    item.TariffId = this.EntityPM.TariffId;
+                    item.TariffLineId = this.EntityPM.Id;
+                    item.SurchargeId = chargeId;
+                    list.push(item);
+                }
+            }
+        }
+
+        list.forEach(item => {
+            this.ContainerPricesItemsSource.push(new ContainerPricesItem(item, this));
+        });
+
+
+        //this.ContainerPricesItemsSource = [];
+
         //this.EntityPM.conta.forEach(item => {
         //    this.ContainerPricesItemsSource.push(new ContainerPricesItem(item, this));
         //});
 
-        this.RowDetailsHeights = (this.ContainerPricesItemsSource.length * 26) + 20 + 28;
-        this.FatherComponent.ReloadDetails.emit("");
+        //this.RowDetailsHeights = (this.ContainerPricesItemsSource.length * 26) + 20 + 28;
+        //this.FatherComponent.ReloadDetails.emit("");
     }
 }
 
@@ -1471,19 +1499,77 @@ export class ContainerPricesItem extends BaseComponent {
         if (this.IsNewEntity) {
             
         }
+
+        this.FillChargeLabels();
     }
 
     public IsEditingEnabled: boolean = false;
-    public SetUIProperties() {
-        var isFieldEnabled = false;
-        var isVolumeEnabled = false;
-        var isDimensionEnabled = false;
+    public SetUIProperties() {        
         this.IsEditingEnabled = this.FatherComponent.IsEditEnabled;
         
         if (this.IsEditingEnabled) {
             
         }        
-    }    
+    }
+
+    public ChargeLabel: string;
+    private FillChargeLabels() {
+
+    }
+
+    get SurchargeId() {
+        return this.EntityPM.SurchargeId;
+    }
+    set SurchargeId(value: string) {
+        if (this.EntityPM.SurchargeId != value) {
+            this.EntityPM.SurchargeId = value;
+        }
+    }
+
+    get Price1() {
+        return this.EntityPM.Price1;
+    }
+    set Price1(value: number) {
+        if (this.EntityPM.Price1 != value) {
+            this.EntityPM.Price1 = value;
+        }
+    }
+
+    get Price2() {
+        return this.EntityPM.Price2;
+    }
+    set Price2(value: number) {
+        if (this.EntityPM.Price2 != value) {
+            this.EntityPM.Price2 = value;
+        }
+    }
+
+    get Price3() {
+        return this.EntityPM.Price3;
+    }
+    set Price3(value: number) {
+        if (this.EntityPM.Price3 != value) {
+            this.EntityPM.Price3 = value;
+        }
+    }
+
+    get Price4() {
+        return this.EntityPM.Price4;
+    }
+    set Price4(value: number) {
+        if (this.EntityPM.Price4 != value) {
+            this.EntityPM.Price4 = value;
+        }
+    }
+
+    get Price5() {
+        return this.EntityPM.Price5;
+    }
+    set Price5(value: number) {
+        if (this.EntityPM.Price5 != value) {
+            this.EntityPM.Price5 = value;
+        }
+    }
 }
 
 export class VersionClass {
