@@ -11,6 +11,7 @@ namespace Logitude.DBMigrations.Models
         {
             ConnectionString = connectionString;
             DXMLTable = dxmlTable;
+            DXMLTables = dxmlTables;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -575,15 +576,9 @@ namespace Logitude.DBMigrations.Models
         
         protected override string GetSetNullableScript(ColumnMigration columnMigration)////
         {
-            string primaryKeyConstraintScript = null;
-
             bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
             bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
             bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
-            //if (columnMigration.CurrentColumn.Constraints.PrimaryKey)
-            //{
-            //    primaryKeyConstraintScript = GetPrimaryKeyConstraintScript() + "\n\n";
-            //}
             string setNullableScript = "-- Set Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
             setNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             setNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
@@ -591,7 +586,7 @@ namespace Logitude.DBMigrations.Models
             setNullableScript += " NULL";
             setNullableScript += ";\n\n";
 
-            string setNullableWithHistoryScript = primaryKeyConstraintScript + setNullableScript + GetInsertScriptForMigrationsHistory("Set Column Nullable", TableMigrations.DxmlTableName, setNullableScript);
+            string setNullableWithHistoryScript = setNullableScript + GetInsertScriptForMigrationsHistory("Set Column Nullable", TableMigrations.DxmlTableName, setNullableScript);
 
             return setNullableWithHistoryScript;
         }

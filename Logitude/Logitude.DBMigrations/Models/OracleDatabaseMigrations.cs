@@ -611,23 +611,17 @@ namespace Logitude.DBMigrations.Models
         {
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
 
-            string primaryKeyConstraintScript = null;
-
             bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
             bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
             bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
             string setNullableScript = "-- Set Nullable For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
-            //if (columnMigration.CurrentColumn.Constraints.PrimaryKey)
-            //{
-            //    setNullableScript += GetPrimaryKeyConstraintScript() + "\n\n";
-            //}
             setNullableScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
             setNullableScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
             setNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
             setNullableScript += " NULL";
             setNullableScript += ";\n\n";
 
-            string setNullableWithHistoryScript = primaryKeyConstraintScript + setNullableScript + GetInsertScriptForMigrationsHistory("Set Column Nullable", tableName, setNullableScript);
+            string setNullableWithHistoryScript = setNullableScript + GetInsertScriptForMigrationsHistory("Set Column Nullable", tableName, setNullableScript);
 
             return setNullableWithHistoryScript;
         }
