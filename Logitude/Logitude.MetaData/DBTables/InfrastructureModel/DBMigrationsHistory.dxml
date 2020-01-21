@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DBMigrationsHistory" Schema="dbo">
+
+  <Column Name="Id" Type="bigint" Identity="true">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+
+  <Column Name="MigrationType" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  
+  <Column Name="Date" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  
+  <Column Name="TableName" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  
+  <Column Name="Script" Type="nvarchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+
+</Table>

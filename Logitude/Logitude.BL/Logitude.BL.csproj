@@ -2527,6 +2527,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableStatusPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\SpecialServicesTypePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\UserIdNumberRequestPM.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AccountingInformationIdentifierQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBAdditionalHandlingInfoQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBChargeCodesQuery.cs" />

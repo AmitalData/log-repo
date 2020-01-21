@@ -12,7 +12,7 @@ export class AutomationCondition {
 
     public Tenant: number;
 
-    public ObjectFieldId: string;
+    //public ObjectFieldId: string;
     public OperatorCode: string;
     public Value: string;
     public ConditionType: string;
@@ -20,7 +20,8 @@ export class AutomationCondition {
 
     public UpdatedByUserId: string;
     public ObjectFieldType: string;
-    public PartnerObjectFieldId: string;
-
+    //public PartnerObjectFieldId: string;
+    public PartnerObjectFieldCode: string;
+    public ObjectFieldCode: string;
 }
 

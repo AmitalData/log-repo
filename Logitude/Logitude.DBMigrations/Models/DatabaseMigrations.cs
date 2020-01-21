@@ -665,7 +665,7 @@ namespace Logitude.DBMigrations.Models
             alterPrimaryKeyScript += GetDropPrimaryKeyConstraintScript(primaryKeyConstraintName);
             if (IsTableHasPrimaryKeys(DXMLTable))
             {
-                alterPrimaryKeyScript += "\n";
+                alterPrimaryKeyScript += "\n\n";
                 alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName);
             }
             return alterPrimaryKeyScript;
@@ -746,5 +746,7 @@ namespace Logitude.DBMigrations.Models
         protected abstract bool IsRelationInDXMLTable(RelationDefinition relation);
 
         protected abstract RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation);
+
+        protected abstract string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string script);
     }
 }

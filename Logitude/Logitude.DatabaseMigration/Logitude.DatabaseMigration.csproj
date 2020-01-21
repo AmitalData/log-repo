@@ -1902,6 +1902,7 @@
     <Compile Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.Designer.cs">
       <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.cs" />
     <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.Designer.cs">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
@@ -1914,6 +1915,12 @@
     <Compile Include="Migrations\202001051029247_Mutaz_Add_Index_To_IntersertTransaction.Designer.cs">
       <DependentUpon>202001051029247_Mutaz_Add_Index_To_IntersertTransaction.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.cs" />
+    <Compile Include="Migrations\202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.Designer.cs">
+      <DependentUpon>202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3381,12 +3388,17 @@
     <EmbeddedResource Include="Migrations\201912301451035_WesamAddTextCodeCodeToTranslationsTable.resx">
       <DependentUpon>201912301451035_WesamAddTextCodeCodeToTranslationsTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.resx">
+      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.resx">
       <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -3444,6 +3456,7 @@
     <EmbeddedResource Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.resx">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -3453,6 +3466,11 @@
     <EmbeddedResource Include="Migrations\202001051029247_Mutaz_Add_Index_To_IntersertTransaction.resx">
       <DependentUpon>202001051029247_Mutaz_Add_Index_To_IntersertTransaction.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.resx">
+      <DependentUpon>202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

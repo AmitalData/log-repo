@@ -128,7 +128,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     FollowUpDateObjectFieldSelected: ObjectFieldPM;
 
     FollowUpOwnerId: string = "";
-    FollowOwnerObjectFieldId: string = "";
+    FollowOwnerObjectFieldCode: string = "";
 
     DateValue: string = "";
   
@@ -572,7 +572,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
                 }
 
-                this.FollowOwnerObjectFieldId = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.AutomationFollowUp.OwnerValue : "";
+                this.FollowOwnerObjectFieldCode = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.AutomationFollowUp.OwnerValue : "";
                 this.FollowUpOwnerId = this.AutomationFollowUp.OwnerFieldType == "Specific" ? this.AutomationFollowUp.OwnerValue : "";
                 this.DateValue = this.AutomationFollowUp.DateValue;
                 this.FollowUpNote = this.AutomationFollowUp.NoteValue;
@@ -724,7 +724,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             if (this.ObjectTableName == "Ticket") {
                 if (objectField.FieldName == "SLAId") {
-                    this.AutomationSetSLAValue.ObjectFieldId = objectField.Id;
+                    this.AutomationSetSLAValue.ObjectFieldCode = objectField.FieldCode;
                 }
             }
         });
@@ -734,7 +734,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.DataViewModel.EntityObjectAutomationFieldLists && this.DataViewModel.EntityObjectAutomationFieldLists.length > 0) {
             this.DataViewModel.EntityObjectAutomationFieldLists.forEach((objectField) => {
 
-                if (!this.AllowedinAutomationConditionsFieldLists.filter(d => d.Id == objectField.Id)[0]) {
+                if (!this.AllowedinAutomationConditionsFieldLists.filter(d => d.FieldCode == objectField.FieldCode)[0]) {
                     this.AllowedinAutomationConditionsFieldLists.push(objectField);
                 }
             });
@@ -746,22 +746,22 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         var specifiOwnerObjectField: ObjectFieldPM = new ObjectFieldPM();
         specifiOwnerObjectField.FullNameTextCodeDefaultText = "Specific";
-        specifiOwnerObjectField.Id = "Specific";
+        specifiOwnerObjectField.FieldCode = "Specific";
         specifiOwnerObjectField.FieldName = "Specific";
         this.FollowUpOwnerObjectFieldLists.push(specifiOwnerObjectField);
 
         if (this.FollowUpOwnerObjectFieldLists) {
 
             if (this.AutomationFollowUp.OwnerFieldType == "Specific") {
-                this.FollowUpOwnerObjectFieldSelected = this.FollowUpOwnerObjectFieldLists.filter(d => d.Id == "Specific")[0];
+                this.FollowUpOwnerObjectFieldSelected = this.FollowUpOwnerObjectFieldLists.filter(d => d.FieldCode == "Specific")[0];
             }
 
             else {
-                this.FollowUpOwnerObjectFieldSelected = this.FollowUpOwnerObjectFieldLists.filter(d => d.Id == this.FollowOwnerObjectFieldId)[0];
+                this.FollowUpOwnerObjectFieldSelected = this.FollowUpOwnerObjectFieldLists.filter(d => d.FieldCode == this.FollowOwnerObjectFieldCode)[0];
             }
         }
 
-        this.FollowUpDateObjectFieldSelected = this.FollowUpDateObjectFieldLists.filter(d => d.Id == this.DateValue)[0];
+        this.FollowUpDateObjectFieldSelected = this.FollowUpDateObjectFieldLists.filter(d => d.FieldCode == this.DateValue)[0];
 
         if (this.AutomatedBackupClass) {
             this.BuildAutomationCondition();
@@ -867,7 +867,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automationConditionPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.OperatorCode = "Equals";
-        automationConditionPM.ObjectFieldId = "";
+        automationConditionPM.ObjectFieldCode = "";
         
         if (conditionType == "And") {
             this.AutomationCondationAndList.push(new AutomationConditionViewModel(automationConditionPM, this));
@@ -934,7 +934,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     
     AddAutomationSetValueButtonClick() {
         var automationSetValue: AutomationSetValue = new AutomationSetValue();
-        automationSetValue.ObjectFieldId = "";
+        automationSetValue.ObjectFieldCode = "";
         automationSetValue.OperatorCode = "SV";
         automationSetValue.Value = "";
         automationSetValue.FieldName = "";
@@ -993,7 +993,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         var isFollowUp: boolean = this.IsFollowUp();
 
         if (isFollowUp) {
-            this.AutomationFollowUp.OwnerValue = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.FollowOwnerObjectFieldId : this.FollowUpOwnerId;
+            this.AutomationFollowUp.OwnerValue = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.FollowOwnerObjectFieldCode : this.FollowUpOwnerId;
             this.AutomationFollowUp.NoteValue = this.FollowUpNote;
             this.AutomationFollowUp.DateEscalationTime = this.FollowDateEscalationTime;
             this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode;
@@ -1197,15 +1197,15 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 }
             });
 
-            this.EntityContactVariable.forEach((Id) => {
-                if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == Id && (d.RecipientType == "Variable" || d.RecipientType == "Emails"))[0]) {
+            this.EntityContactVariable.forEach((fieldCode) => {
+                if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == fieldCode && (d.RecipientType == "Variable" || d.RecipientType == "Emails"))[0]) {
                     var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM()
                     automationResultEmailRecipientPM.RecipientType = "Variable",
-                        automationResultEmailRecipientPM.RecipientValue = Id,
+                        automationResultEmailRecipientPM.RecipientValue = fieldCode,
                         automationResultEmailRecipientPM.Tenant = SessionLocator.Tenant;
                     automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id
 
-                    var objectFieldPM: ObjectFieldPM = this.AutomationEmailRecipientFieldLists.filter(d => d.Id == Id)[0];
+                    var objectFieldPM: ObjectFieldPM = this.AutomationEmailRecipientFieldLists.filter(d => d.FieldCode == fieldCode)[0];
                     if (objectFieldPM != null) {
                         if (objectFieldPM.DataTypeCode == "Emails") {
                             automationResultEmailRecipientPM.RecipientType = "Emails";
@@ -1354,7 +1354,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     FollowUpOwnerObjectFieldComboBoxChanged(item: any) {
         this.FollowUpOwnerId = "";
         if (item) {
-            this.FollowOwnerObjectFieldId = item.Id;
+            this.FollowOwnerObjectFieldCode = item.FieldCode;
             this.AutomationFollowUp.OwnerFieldType = item.FieldName == "Specific" ? "Specific" : "Field";
         }
 
@@ -1364,7 +1364,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     FollowUpOwnerValueChange(item: any) {
         if (item) {
             this.FollowUpOwnerId = item.Id;
-            this.FollowOwnerObjectFieldId = "";
+            this.FollowOwnerObjectFieldCode = "";
             this.AutomationFollowUp.OwnerFieldType = "Specific"; 
         }
                
@@ -1374,7 +1374,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     //Date
     FollowUpDateObjectFieldComboBoxChanged(item: any) {
         if (item) {
-            this.DateValue = item.Id;
+            this.DateValue = item.FieldCode;
         } else this.DateValue = "";
 
         this.FollowUpDateObjectFieldSelected = item;

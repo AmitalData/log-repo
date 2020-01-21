@@ -53,5 +53,16 @@ public class RacingQuoteItem
         public string QuoteField8 { get; set; }
         public string QuoteField9 { get; set; }
         public string QuoteField10 { get; set; }
+        public string QuoteField11 { get; set; }
+        public string QuoteField12 { get; set; }
+        public string QuoteField13 { get; set; }
+        public string QuoteField14 { get; set; }
+        public string QuoteField15 { get; set; }
+        public string QuoteField16 { get; set; }
+        public string QuoteField17 { get; set; }
+        public string QuoteField18 { get; set; }
+        public string QuoteField19 { get; set; }
+        public string QuoteField20 { get; set; }
+
     }
 }
