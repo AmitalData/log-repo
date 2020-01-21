@@ -367,8 +367,8 @@ export class CustomerWorkspaceComponent extends BaseComponent {
 
         var date1Formats: DateFormats = DateTool.GetDateFormats(last1MonthDateTime);
         var date2Formats: DateFormats = DateTool.GetDateFormats(last2MonthDateTime);
-        var last1MonthLabel: string = date1Formats.MonthName + " " + date1Formats.DateParts.Year;
-        var last2MonthLabel: string = date2Formats.MonthName + " " + date2Formats.DateParts.Year;
+        var last1MonthLabel: string = date1Formats.MonthName + " " + (date1Formats.DateParts.Year-1);
+        var last2MonthLabel: string = date2Formats.MonthName + " " + (date2Formats.DateParts.Year-1);
 
         this.DecreasedShipmentsTimeRangeList = [];
         this.DecreasedShipmentsTimeRangeList.push(new CodeNameClass("LM", last1MonthLabel + " vs. " + last2MonthLabel));
