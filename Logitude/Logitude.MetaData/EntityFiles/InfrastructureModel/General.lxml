@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c1bb&quot;"
+  Code="&quot;5bc8&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -98,11 +98,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;General&quot;"
-      DefaultText="&quot;General&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="true" />
     <TextCode
       Code="&quot;General.M.FieldWarning&quot;"
       DefaultText="&quot;%FieldName Field is not filled&quot;"
