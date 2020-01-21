@@ -162,7 +162,7 @@ export const Components =
 
         //Edit Tabs
         GLAccountGeneralTabComponent,
-        CashBookGeneralTabComponent,
+        //CashBookGeneralTabComponent,
         GLAccountOverviewComponent,
         GLAccountTransactionsTabComponent,
         ManageReconciliationsTabComponent,
@@ -285,7 +285,7 @@ export class ModuleDeclarations {
 
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
-            case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
+            //case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }

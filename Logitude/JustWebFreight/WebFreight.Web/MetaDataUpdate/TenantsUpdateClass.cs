@@ -195,11 +195,11 @@ namespace WebFreight.Web.MetaDataUpdate
                                 ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                                 shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
-                            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
-                            masterModelUpdateClass.LoadObjectsTenantZero(context);
+                                MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+                                masterModelUpdateClass.LoadObjectsTenantZero(context);
 
-                            QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
-                            quotemodelUpdateClass.LoadObjectsTenantZero(context);
+                                QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
+                                quotemodelUpdateClass.LoadObjectsTenantZero(context);
 
                                 InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
                                 invoicemodelUpdateClass.LoadObjectsTenantZero(context);
@@ -217,36 +217,38 @@ namespace WebFreight.Web.MetaDataUpdate
                                 systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
 
                                 InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
-							modelUpdateClass.LoadObjectsTenantZero(context);
+                                modelUpdateClass.LoadObjectsTenantZero(context);
 
                                 updateClass.LoadUpdateTenantZero(context, false);
 
-                            //updateClass.LoadOtherFields(context);
-                            updateClass.LoadTranslationHeaders();
-                            updateClass.LoadMeasurements();
-                            updateClass.LoadCreditCardTypes();
-                            updateClass.LoadMoveTypes();
-							//updateClass.loadQueries();
-							//updateClass.loadScreens();
-							//updateClass.LoadObjectTableTabs();
-							context.SaveChanges();
+                                //updateClass.LoadOtherFields(context);
+                                updateClass.LoadTranslationHeaders();
+                                updateClass.LoadMeasurements();
+                                updateClass.LoadCreditCardTypes();
+                                updateClass.LoadMoveTypes();
+                                //updateClass.loadQueries();
+                                //updateClass.loadScreens();
+                                //updateClass.LoadObjectTableTabs();
+                                context.SaveChanges();
 
-                            updateClass.LoadRolesAndFeatures(0);
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadEntityStatus();
-                            updateClass.LoadEventTypes();
-                            updateClass.LoadRanks();
-                            updateClass.LoadMenustables();
-                            updateClass.LoadDefaultReports();
-                            updateClass.LoadHelpResources();
-                            updateClass.CreateMasterCounter(0);
-                            updateClass.LoadEmailAlertSettings();
-                            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
-                            {
-                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                                updateClass.LoadRolesAndFeatures(0);
+                                updateClass.LoadObjectTableHelperControls();
+                                updateClass.LoadEntityStatus();
+                                updateClass.LoadEventTypes();
+                                updateClass.LoadRanks();
+                                updateClass.LoadMenustables();
+                                updateClass.LoadDefaultReports();
+                                updateClass.LoadHelpResources();
+                                updateClass.CreateMasterCounter(0);
+                                updateClass.LoadEmailAlertSettings();
+                                if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+                                {
+                                    updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                                }
+
+
+                                
                             }
-                    
-
                             break;
                         }
                     case "updatetenantzero":
