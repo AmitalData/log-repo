@@ -27,6 +27,8 @@ import { UpdateTariffArgs } from '../../../Args';
 import { PortList } from '../../../../Common/EntityLists/PortList';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { TariffLinesContainersPricePM } from '../../../EntityPMs/TariffLinesContainersPricePM';
+import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
+import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
 
 @Component({
     moduleId: module.id,
@@ -57,6 +59,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
+    public AllPackageTypes: PackageTypeList[];
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
@@ -77,6 +80,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
         var iChargesTypeListService = new ChargesTypeListService();
         var iMeasurementListService = new MeasurementListService();
+        var iPackageTypeListService = new PackageTypeListService();
 
         iChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -99,6 +103,13 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                         }
                     }
                 });
+            }
+        });
+
+        iPackageTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllPackageTypes = myResponse.Result;
+                this.SetContainersLabelsAndVisibility();
             }
         });
     }
@@ -139,6 +150,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                     }
 
                     this.SetSurchargesLabelsAndVisibility();
+                    this.SetContainersLabelsAndVisibility();
                 }
 
                 else {
@@ -216,7 +228,18 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         this.IsApproveVersionButtonVisible = isApproveVersionButtonVisible;
         this.IsUpdateSurchargesButtonVisible = isUpdateSurchargesButtonVisible;
     }
-    
+
+    public Container1Label: string;
+    public Container2Label: string;
+    public Container3Label: string;
+    public Container4Label: string;
+    public Container5Label: string;
+    public Container1Visibility: boolean;
+    public Container2Visibility: boolean;
+    public Container3Visibility: boolean;
+    public Container4Visibility: boolean;
+    public Container5Visibility: boolean;
+
     public Surcharge1PriceLabel: string;
     public Surcharge2PriceLabel: string;
     public Surcharge3PriceLabel: string;
@@ -226,8 +249,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public Surcharge7PriceLabel: string;
     public Surcharge8PriceLabel: string;
     public Surcharge9PriceLabel: string;
-    public Surcharge10PriceLabel: string;
-    
+    public Surcharge10PriceLabel: string;    
     public Surcharge1PriceVisibility: boolean;
     public Surcharge2PriceVisibility: boolean;
     public Surcharge3PriceVisibility: boolean;
@@ -239,7 +261,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public Surcharge9PriceVisibility: boolean;
     public Surcharge10PriceVisibility: boolean;
     
-    private tariffCharges: CodeNameClass[] = [];
+    public tariffCharges: CodeNameClass[] = [];
     SetSurchargesLabelsAndVisibility() {
         this.AddChargeColumn(this.EntityPM.Surcharge1Id, this.EntityPM.Surcharge1UOM, 1);
         this.AddChargeColumn(this.EntityPM.Surcharge2Id, this.EntityPM.Surcharge2UOM, 2);
@@ -251,9 +273,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         this.AddChargeColumn(this.EntityPM.Surcharge8Id, this.EntityPM.Surcharge8UOM, 8);
         this.AddChargeColumn(this.EntityPM.Surcharge9Id, this.EntityPM.Surcharge9UOM, 9);
         this.AddChargeColumn(this.EntityPM.Surcharge10Id, this.EntityPM.Surcharge10UOM, 10);
-    }
-
-    public BCNTCharges: string[] = [];
+    }    
     AddChargeColumn(iChargeTypeId: string, iMeasurementId: string, index: number) {
         if (!AppTool.IsNullOrEmpty(iChargeTypeId)) {
             var iChargeType: ChargesTypeList = this.AllChargesTypes.filter(a => a.Id == iChargeTypeId)[0];
@@ -275,6 +295,24 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
+            }
+        }
+    }
+
+    private SetContainersLabelsAndVisibility() {
+        this.AddContainerColumn(this.EntityPM.ContainerType1Id, 1);
+        this.AddContainerColumn(this.EntityPM.ContainerType2Id, 2);
+        this.AddContainerColumn(this.EntityPM.ContainerType3Id, 3);
+        this.AddContainerColumn(this.EntityPM.ContainerType4Id, 4);
+        this.AddContainerColumn(this.EntityPM.ContainerType5Id, 5);
+    }
+    AddContainerColumn(iContainerTypeId: string, index: number) {
+        if (!AppTool.IsNullOrEmpty(iContainerTypeId)) {
+            var iContainerType: PackageTypeList = this.AllPackageTypes.filter(a => a.Id == iContainerTypeId)[0];
+            if (iContainerType) {
+
+                this['Container' + index + 'Label'] = iContainerType.Code;
+                this['Container' + index + 'Visibility'] = true;
             }
         }
     }

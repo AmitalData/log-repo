@@ -299,7 +299,7 @@
                         </tr>
 
                         <!-- Air Surcharges Cost-->
-                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'" style="height:1px;">
+                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC'" style="height:1px;">
                             <td colspan="3">
                                 <table>
                                     <!-- Surcharge1Price -->
@@ -607,6 +607,96 @@
 
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.Surcharge5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <!--Ocean FCL Surchage Cost-->
+                        <tr *ngIf="TariffType == 'OFS'" style="height:1px;">
+                            <td colspan="3">
+                                <table>
+
+                                    <tr style="height:10px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td style="width:100px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
+                                            {{DataContext.FatherComponent.Container1Label}}
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container1Visibility"></td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
+                                            {{DataContext.FatherComponent.Container2Label}}
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container2Visibility"></td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
+                                            {{DataContext.FatherComponent.Container3Label}}
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container3Visibility"></td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
+                                            {{DataContext.FatherComponent.Container4Label}}
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container4Visibility"></td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
+                                            {{DataContext.FatherComponent.Container5Label}}
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow" *ngFor="let item in DataContext.FatherComponent.tariffCharges">
+                                        <td style="width:100px;">
+                                            <LogLabel [ObjectFieldName]="'Price1'" [Text]="DataContext.FatherComponent.Surcharge1PriceLabel" [ObjectTableName]="'TariffLinesContainersPrice'" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
+                                            {{DataContext.FatherComponent.Container1Label}}
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container1Visibility"></td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
+                                            {{DataContext.FatherComponent.Container2Label}}
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container2Visibility"></td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
+                                            {{DataContext.FatherComponent.Container3Label}}
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container3Visibility"></td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
+                                            {{DataContext.FatherComponent.Container4Label}}
+                                        </td>
+
+                                        <td style="width:5px;" *ngIf="DataContext.FatherComponent.Container4Visibility"></td>
+
+                                        <td class="BlueTitle" style="width:70px; font-size:12px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
+                                            {{DataContext.FatherComponent.Container5Label}}
                                         </td>
 
                                         <td>
