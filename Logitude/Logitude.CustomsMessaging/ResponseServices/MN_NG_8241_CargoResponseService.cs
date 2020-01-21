@@ -916,7 +916,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     count = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count();
                     //|| string.IsNullOrEmpty(p.PackageTypeCode)
-                    var packages = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Where(p => p.PackageMeasureQualifierCode == "2" && (p.PackageTypeCode == package.packingType ));
+                    var packages = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Where(p => p.PackageMeasureQualifierCode == "2" && (p.PackageTypeCode == package.packingType || string.IsNullOrEmpty(p.PackageTypeCode)));
                     if(packages != null && packages.Count()>0)
                     {
                         foreach (var packagePM in packages)
@@ -926,6 +926,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if((packagePM.PackageQuantity== null || packagePM.PackageQuantity==0) && (packagePM.GrossMassMeasure == null || packagePM.GrossMassMeasure == 0))
                             {
+                                packagePM.PackageTypeCode = package.packingType;
                                 packagePM.PackageQuantity = package.sumQuantity;
                                 packagePM.GrossMassMeasure = package.sumGrossMassMeasureWeight;
                                 packagePM.ChangeSetOp = ChangeSetOperation.Update;
