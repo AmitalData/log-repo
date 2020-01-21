@@ -8,7 +8,7 @@ namespace Logitude.DatabaseMigration.Migrations
         public override void Up()
         {
             AlterColumn("dbo.AdvancedQueryFilters", "QueryCode", c => c.String(nullable: false, maxLength: 200, unicode: false));
-            AlterColumn("dbo.Queries", "UniqueCode", c => c.String(nullable: false, maxLength: 200, unicode: false));
+            //AlterColumn("dbo.Queries", "UniqueCode", c => c.String(nullable: false, maxLength: 200, unicode: false));
             AlterColumn("dbo.Queries", "OriginalQueryCode", c => c.String(maxLength: 200, unicode: false));
             AlterColumn("dbo.QueryColumns", "QueryCode", c => c.String(nullable: false, maxLength: 200, unicode: false));
             AlterColumn("dbo.SharedUserQueries", "QueryCode", c => c.String(nullable: false, maxLength: 200, unicode: false));
