@@ -726,44 +726,49 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     }
 
     InitDisplayOnlyMessage() {
-        if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2" || this.EntityPM.AmendmentStatus == null)) {
+        if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2")) {
             this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.EntityPM.AmendmentStatusName;
-        this.IsDisplayMessage = true;
+            this.IsDisplayMessage = true;
+        }
+        else if (this.EntityPM.IsAmendment == false) {
+            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.EntityPM.Id).subscribe
+                (data => {
+                    if (data.Result == null || data.Result.length <= 0) return;
+
+                    data.Result = data.Result.sort((obj1, obj2) => {
+                        if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                            return 1;
+                        }
+
+                        if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
+                    var temp = false;
+
+                    data.Result.forEach((item) => {
+                        if ((temp == false) && (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "4" || item.AmendmentStatus == "2")) {
+                            {
+                                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                                this.IsDisplayMessage = true;
+                                temp = true;
+
+                            }
+                        }
+
+                    });
+                    //this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                    //this.IsDisplayMessage = true;
+
+                }
+
+
+                );
+
+        }
     }
-    else if (this.EntityPM.IsAmendment == false) {
-        this.declarationExtendedListService.GetDeclarationAmendmentsById(this.EntityPM.Id).subscribe
-            (data => {
-                if (data.Result == null || data.Result.length <= 0) return;
-
-                data.Result = data.Result.sort((obj1, obj2) => {
-                    if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
-                        return 1;
-                    }
-
-                    if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
-                        return -1;
-                    }
-
-                    return 0;
-                });
-
-                data.Result.forEach((item) => {
-                    if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
-                        this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
-                        return;
-                    }
-
-                });
-                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
-                this.IsDisplayMessage = true;
-
-            }
-
-
-            );
-
-    }
-}
 }
 
 

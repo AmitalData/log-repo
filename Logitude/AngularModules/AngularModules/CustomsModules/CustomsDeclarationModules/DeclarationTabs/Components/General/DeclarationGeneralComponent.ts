@@ -1160,6 +1160,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
     DisplayOnlyCheck() {
+        debugger;
         this.DrawMe = true;
         this.IsDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         debugger;
@@ -1198,7 +1199,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         });
     }
     InitDisplayOnlyMessage() {
-         if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2" || this.EntityPM.AmendmentStatus == null)) {
+         if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2")) {
             this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.EntityPM.AmendmentStatusName;
             this.IsDisplayMessage = true;
         }
@@ -1219,17 +1220,19 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                         return 0;
                     });
 
-                     data.Result.forEach((item) => {
-                        if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
-                            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
-                            this.IsDisplayMessage = true;
-
-                            return;
+                    var temp = false;
+                      data.Result.forEach((item) => {
+                          if (temp==false && (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "4"|| item.AmendmentStatus == "2")) {
+                            {
+                                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                                this.IsDisplayMessage = true;
+                               temp = true;
+                            }
                         }
 
                     });
-                    this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
-                    this.IsDisplayMessage = true;
+                    //this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                    //this.IsDisplayMessage = true;
 
                 }
 

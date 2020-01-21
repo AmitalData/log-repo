@@ -259,7 +259,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
 
     InitDisplayOnlyMessage() {
-        if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2" || this.EntityPM.AmendmentStatus == null)) {
+        if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2")) {
             this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.EntityPM.AmendmentStatusName;
             this.IsDisplayMessage = true;
         }
@@ -279,18 +279,21 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
                         return 0;
                     });
+                    var temp = false;
 
-                    data.Result.forEach((item) => {
-                        if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
-                            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
-                            this.IsDisplayMessage = true;
+                     data.Result.forEach((item) => {
+                         if ((temp == false) && (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "4" || item.AmendmentStatus == "2")) {
+                            {
+                                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                                this.IsDisplayMessage = true;
+                                 temp = true;
 
-                            return;
+                            }
                         }
 
                     });
-                    this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
-                    this.IsDisplayMessage = true;
+                    //this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                    //this.IsDisplayMessage = true;
 
                 }
 

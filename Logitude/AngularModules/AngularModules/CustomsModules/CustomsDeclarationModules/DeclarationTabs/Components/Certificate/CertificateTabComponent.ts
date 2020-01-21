@@ -483,19 +483,20 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                         return 0;
                     });
 
+                    var temp = false;
+
                     data.Result.forEach((item) => {
-                        if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
+                        if ((temp == false )&& ( item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "4"|| item.AmendmentStatus == "2")) {
                             {
                             this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
                                 this.IsDisplayMessage = true;
+                                temp = true;
 
-                                return;
                             }
                         }
 
                     });
-                    this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
-                    this.IsDisplayMessage = true;
+                
 
                 }
 
