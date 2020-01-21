@@ -622,6 +622,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             entityComputedFields.FirstPickupLocation = entityPM.FirstPickupLocation;
             entityComputedFields.Commodity = entityPM.AWBCommodityItemNumber;
+            entityComputedFields.OperationallyClosedByUserId = entityPM.OperationalClosedByUserId;
+            entityComputedFields.NumberOfDeliveries = entityPM.ShipmentDeliveries != null ? entityPM.ShipmentDeliveries.Count() : 0;
+            entityComputedFields.ContainsDangerousGoods = entityPM.ShipmentContanisDangerousGoods;
 
             string myContainersNumbers = null;
 
@@ -644,10 +647,150 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     myContainersNumbers = myContainersNumbers.Substring(0, 1000);
                 }
             }
-
+            
+            GetShipmentLastPickUpFields();
+            GetShipmentDeliveriesFields();
+            GetShipmentPickUpFields();
             entityComputedFields.ContainersNumbers = myContainersNumbers;
+        }
 
+        private void GetShipmentLastPickUpFields()
+        {
+            ShipmentPickUpPM lastPickup = entityPM.ShipmentPickUps.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
+            if (lastPickup != null)
+            {
+                entityComputedFields.LastPickupATA = lastPickup.ATA;
+                entityComputedFields.LastPickupATD = lastPickup.ATD;
+                entityComputedFields.LastPickupETA = lastPickup.ETA;
+                entityComputedFields.LastPickupETD = lastPickup.ETD;
+            }
+        }
+
+        private void GetShipmentPickUpFields()
+        {
+            if (entityPM.ShipmentPickUps.Count() > 0)
+            {
+                ShipmentPickUpPM finalPickUp = entityPM.ShipmentPickUps.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                ShipmentPickUpPM firstPickUp = entityPM.ShipmentPickUps.OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                if (finalPickUp.PickUpDeliveryToTypeCode == "PART") {
+                    GetPickupToAddressFromPartner(finalPickUp.ToAddressId);
+                } else if (finalPickUp.PickUpDeliveryToTypeCode == "CASL") {
+                    entityComputedFields.PickupTo = finalPickUp.ToAddressCity;
+                } else {
+                    GetPickupToAddressFromPort(finalPickUp.ToPortId);
+                }
+
+                if (firstPickUp.PickUpDeliveryFromTypeCode == "PART") {
+                    GetPickUpFromAddressFromPartner(firstPickUp.FromAddressId);
+                }
+                else if (firstPickUp.PickUpDeliveryFromTypeCode == "CASL") {
+                    entityComputedFields.PickupFrom = firstPickUp.FromAddressCity;
+                } else {
+                    GetPickupFromAddressFromPort(firstPickUp.FromPortId);
+                }
+            }
+        }
+
+        private void GetPickupFromAddressFromPort(string fromPortId)
+        {
+            if (!string.IsNullOrEmpty(fromPortId))
+            {
+                Port fromPort = myPortRepository.GetSinglePort(fromPortId, tenant);
+                entityComputedFields.DeliveryFrom = fromPort.EnglishName;
+            }
+        }
+
+        private void GetPickUpFromAddressFromPartner(string fromAddressId)
+        {
+            if (!string.IsNullOrEmpty(fromAddressId))
+            {
+                Address partnerAddress = myAddressRepository.GetSingleAddress(fromAddressId, tenant);
+                entityComputedFields.PickupFrom = partnerAddress != null ? partnerAddress.City : "";
+            }
+        }
+
+        private void GetPickupToAddressFromPort(string toPortId)
+        {
+            if (!string.IsNullOrEmpty(toPortId))
+            {
+                Port toPort = myPortRepository.GetSinglePort(toPortId, tenant);
+                entityComputedFields.PickupTo = toPort.EnglishName;
+            }
+        }
+
+        private void GetPickupToAddressFromPartner(string toAddressId)
+        {
+            if (!string.IsNullOrEmpty(toAddressId))
+            {
+                Address partnerAddress = myAddressRepository.GetSingleAddress(toAddressId, tenant);
+                entityComputedFields.PickupTo = partnerAddress != null ? partnerAddress.City : "";
+            }
+        }
+
+        private void GetShipmentDeliveriesFields()
+        {
+            if (entityPM.ShipmentDeliveries.Count > 0)
+            {
+                ShipmentDeliveryPM finalDelivery = entityPM.ShipmentDeliveries.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                ShipmentDeliveryPM firstDelivery = entityPM.ShipmentDeliveries.OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                if (finalDelivery.PickUpDeliveryToTypeCode == "PART") {
+                    GetDeliveryToAddressFromPartner(finalDelivery.ToAddressId);
+                } else if (finalDelivery.PickUpDeliveryToTypeCode == "CASL") {
+                    entityComputedFields.DeliveryToCity = finalDelivery.ToAddressCity;
+                    entityComputedFields.DeliveryTo = finalDelivery.ToAddressCity;
+                } else {
+                    GetDeliveryToAddressFromPort(finalDelivery.ToPortId);
+                }
+
+                if (firstDelivery.PickUpDeliveryFromTypeCode == "PART") {
+                    GetDeliveryFromAddressFromPartner(firstDelivery.FromAddressId);
+                } else if (firstDelivery.PickUpDeliveryFromTypeCode == "CASL") {
+                    entityComputedFields.DeliveryFrom = firstDelivery.FromAddressCity;
+                } else {
+                    GetDeliveryFromAddressFromPort(firstDelivery.FromPortId);
+                }
+            }
+        }
+
+        private void GetDeliveryFromAddressFromPort(string fromPortId)
+        {
+            if (!string.IsNullOrEmpty(fromPortId))
+            {
+                Port fromPort = myPortRepository.GetSinglePort(fromPortId, tenant);
+                entityComputedFields.DeliveryFrom = fromPort.EnglishName;
+            }
+        }
+
+        private void GetDeliveryFromAddressFromPartner(string fromAddressId)
+        {
+            if (!string.IsNullOrEmpty(fromAddressId))
+            {
+                Address partnerAddress = myAddressRepository.GetSingleAddress(fromAddressId, tenant);
+                entityComputedFields.DeliveryFrom = partnerAddress != null ? partnerAddress.City : "";
+            }
+        }
+
+        private void GetDeliveryToAddressFromPort(string toPortId)
+        {
+            if (!string.IsNullOrEmpty(toPortId))
+            {
+                Port toPort = myPortRepository.GetSinglePort(toPortId, tenant);
+                entityComputedFields.DeliveryToCity = toPort.StateName;
+                entityComputedFields.DeliveryTo = toPort.EnglishName;
+            }
+        }
+
+        private void GetDeliveryToAddressFromPartner(string finalDeliveryToAddressId)
+        {
+            if (!string.IsNullOrEmpty(finalDeliveryToAddressId))
+            {
+                Address partnerAddress = myAddressRepository.GetSingleAddress(finalDeliveryToAddressId, tenant);
+                entityComputedFields.DeliveryToCity = partnerAddress != null ? partnerAddress.City : "";
+                entityComputedFields.DeliveryTo = partnerAddress != null ? partnerAddress.City : "";
+            }
         }
 
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
