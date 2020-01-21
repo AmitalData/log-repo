@@ -66,7 +66,6 @@ namespace Logitude.IntegrationTest.Shipment
 
            
             shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
-
             shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
             
             shipmentPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
