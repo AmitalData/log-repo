@@ -27,32 +27,12 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             ShipmentPickUpItem.ToPortId = ToPortId;
             ShipmentPickUpItem.FromPartnerCardId = FromPartnerCardId;
             ShipmentPickUpItem.CarrierId = CarrierId;
-            ShipmentPickUpItem.ShipmentPickUpDeliveryPackages =ShipmentPickUpDeliveryPackage();
+            ShipmentPickUpItem.ShipmentPickUpDeliveryPackages = IntegrationShipmentPickUpDeliveriesPackages.ShipmentPickUpDeliveryPackage();
             return ShipmentPickUpItem;
 
         }
 
-        public static List<ShipmentPickUpDeliveryPackagePM> ShipmentPickUpDeliveryPackage()
-        {
-            List<ShipmentPickUpDeliveryPackagePM> ShipmentPickUpDeliveryPackage = new List<ShipmentPickUpDeliveryPackagePM>();
-             ShipmentPickUpDeliveryPackage.Add(PickUpPackageItem(1,10,10,10,10));
-            ShipmentPickUpDeliveryPackage.Add(PickUpPackageItem(3, 10, 10, 10, 10));
-
-            return ShipmentPickUpDeliveryPackage;
-        }
-
-        public static  ShipmentPickUpDeliveryPackagePM PickUpPackageItem(int quantity, double? length, double? width, double? height, double? weight)
-        {
-            ShipmentPickUpDeliveryPackagePM PickUpPackageItem = new ShipmentPickUpDeliveryPackagePM();
-
-            PickUpPackageItem.Quantity = quantity;
-            PickUpPackageItem.Length = length;
-            PickUpPackageItem.Width = width;
-            PickUpPackageItem.Height = height;
-            PickUpPackageItem.Weight = weight;
-           
-            return PickUpPackageItem;
-        }
+        
 
     }
 }

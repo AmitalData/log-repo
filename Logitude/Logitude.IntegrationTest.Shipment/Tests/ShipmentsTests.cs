@@ -70,6 +70,7 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
             
             shipmentPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
+            shipmentPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
 
             return shipmentPM;
         }
