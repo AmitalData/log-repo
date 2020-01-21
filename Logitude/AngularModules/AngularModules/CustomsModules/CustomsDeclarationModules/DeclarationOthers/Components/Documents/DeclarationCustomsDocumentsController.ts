@@ -48,7 +48,8 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     private http: Http;
     private apiUrl: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private declarationPM: DeclarationPM, private childEntity1Id: string, private ChildEntity1Code: string, private declarationExtendedListService: DeclarationExtendedListService) {
+    private declarationExtendedListService = new DeclarationExtendedListService();
+    constructor(private declarationPM: DeclarationPM, private childEntity1Id: string, private ChildEntity1Code: string) {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
         this.http = ServiceHelper.Http;
    
@@ -499,6 +500,36 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         return Observable.defer(() => {
             return declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.declarationPM).map((response: ServiceResponse) => {
+
+                this.declarationExtendedListService.GetDeclarationAmendmentsById(this.declarationPM.Id).subscribe
+                    (data => {
+                        if (data.Result == null || data.Result.length <= 0) return;
+
+                        data.Result = data.Result.sort((obj1, obj2) => {
+                            if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                                return 1;
+                            }
+
+                            if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                                return -1;
+                            }
+
+                            return 0;
+                        });
+
+                        data.Result.forEach((item) => {
+                            if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "2" || item.AmendmentStatus == "4" ) {
+
+                                var rresponse: ServiceResponse = new ServiceResponse();
+                                rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName };
+                                return rresponse;
+                             }
+
+                        });
+                      //  return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+
+                   
+
                 var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
                 var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
                 var displayOnlyMessage = null;
@@ -527,17 +558,20 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
                     return rresponse;
                 }
-                else {
-                    let message =  this.InitDisplayOnlyMessage();
-                    if (message != "") {
-                        var rresponse: ServiceResponse = new ServiceResponse();
-                        rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
-                        return rresponse;
-                    }
-                }
+                //else {
+                //    let message =  this.InitDisplayOnlyMessage();
+                //    if (message != "") {
+                //        var rresponse: ServiceResponse = new ServiceResponse();
+                //        rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
+                //        return rresponse;
+                //    }
+                //}
                 var rresponse:ServiceResponse = new ServiceResponse();
                 rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
                 return rresponse;
+ }
+                );
+           
             });
         });
     }
