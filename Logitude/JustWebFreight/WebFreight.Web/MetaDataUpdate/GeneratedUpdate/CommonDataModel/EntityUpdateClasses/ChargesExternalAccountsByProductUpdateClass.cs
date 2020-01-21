@@ -671,8 +671,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable ChargesExternalAccountsByProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesExternalAccountsByProduct" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ChargesExternalAccountsByProductTextCode_CustomerAccountManagerByProduct = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerAccountManagerByProduct", DefaultText = "Customer Account Manager By Product",LocalDefaultText = null, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode ChargesExternalAccountsByProductTextCode_ChargesExternalAccountsByProduct = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesExternalAccountsByProduct", DefaultText = "Charges External Accounts By Product",LocalDefaultText = null, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
