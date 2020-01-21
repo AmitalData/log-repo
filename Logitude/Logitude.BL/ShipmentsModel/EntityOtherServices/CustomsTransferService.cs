@@ -391,7 +391,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 {
                     shipperAddress = addressRepository.GetSingleAddress(item.ShipperAddressId, tenant);
                     consigneeAddress = addressRepository.GetSingleAddress(item.ConsigneeAddressId, tenant);
-                    List<ShipmentPayable> shipmentPayables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(item.Id, tenant);
+                    //List<ShipmentPayable> shipmentPayables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(item.Id, tenant);
 
                     string typeOper = item.TransportModeId;
                     switch(item.DirectionId)
@@ -411,26 +411,50 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                     DataRow row = dataTable.NewRow();
                     row[0] = typeOper;
-                    row[1] = item.LongMaster;
+                    row[1] = item.AirlinePrefix + item.Master;
                     row[2] = item.MainCarriageFromPortCode;
                     row[3] = item.MainCarriageFromPortName;
                     row[4] = item.MainCarriageFinalDestinationPortCode;
                     row[5] = item.MainCarriageFinalDestinationPortName;
-                    row[6] = item.House;
-
-                    if (shipmentPayables.Count > 0)
+                                        
+                    if (!string.IsNullOrEmpty(item.House))
                     {
-                        ShipmentPayable shipmentPayable = shipmentPayables.Where(d => d.ChargesType != null && d.ChargesType.ChargesGroupCode == "FRT").FirstOrDefault();
-                        if (shipmentPayable != null)
+                        if (item.House.Contains('-'))
                         {
-                            Currency currency = CurrencyRepository.GetSingleCurrency(shipmentPayable.CurrencyId, tenant, true);
-                            if (currency != null)
+                            string[] houseArray = item.House.Split('-');
+
+                            string house = "";
+                            for(int i = 0; i < houseArray.Length; i++)
                             {
-                                row[7] = shipmentPayable.Currency.Code;
+                                if(string.IsNullOrEmpty(house))
+                                {
+                                    house = houseArray[i];
+                                }
+
+                                else
+                                {
+                                    house = house + houseArray[i];
+                                }
                             }
+
+                            row[6] = house;
+                        }
+
+                        else
+                        {
+                            row[6] = item.House;
+                        }                       
+                    }
+                    
+                    if (!string.IsNullOrEmpty(item.ValueOfGoodsCurrencyId))
+                    {
+                        Currency currency = CurrencyRepository.GetSingleCurrency(item.ValueOfGoodsCurrencyId, tenant, true);
+                        if (currency != null)
+                        {
+                            row[7] = currency.Code;
                         }
                     }
-
+                    
                     row[8] = item.MainCarriageCarrierCode;
                     row[9] = item.MainCarriageCarrierName;
                     row[10] = item.NumberOfPackages;
@@ -569,7 +593,6 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 {
                     FileName = fileProps[0],
                     HasExternalContainer = true,
-                    //FolderName = "others",
                     Extension = "xls",
                     Tenant = tenant,
                     FileSize = ComputedData.Length,
