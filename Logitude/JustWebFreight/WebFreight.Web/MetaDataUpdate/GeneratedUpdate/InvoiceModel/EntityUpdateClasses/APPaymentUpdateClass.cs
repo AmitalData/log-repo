@@ -5144,26 +5144,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						LocalDefaultText = "ביטול",
 						FeatureUniqeCode=  APPaymentFeature_MB21.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-
-            MenuButton APPaymentMenuButton23 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-            {
-                EventCode = "SendToQBO",
-                Index = 10,
-                IsActive = true,
-                LabelTextCodeCode = "APPayment.B.SendToQBO",
-                LabelTextCodeDefaultText = "Send To QBO",
-                Tenant = 0,
-                MenuButtonGroupId = APPaymentMenuButtonGroup.Id,
-                ParentMenuButtonId = APPaymentMenuButton2.Id,
-                ObjectTableId = APPaymentObjectTable.Id,
-                MenuButtonType = "menuitem",
-                FeatureId=  APPaymentFeature_MB22.Id,
-                Style = null,
-                LocalDefaultText = null,
-                FeatureUniqeCode=  APPaymentFeature_MB22.FeatureUniqeCode,
-            }, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-
-        }
+	   
+			   MenuButton APPaymentMenuButton23 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "SendToQBO",
+						Index = 10, 
+						IsActive = true,
+						LabelTextCodeCode = "APPayment.B.SendToQBO",
+						LabelTextCodeDefaultText = "Send To QBO",
+						Tenant = 0,
+						MenuButtonGroupId = APPaymentMenuButtonGroup.Id,
+						ParentMenuButtonId = APPaymentMenuButton2.Id,
+						ObjectTableId = APPaymentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  APPaymentFeature_MB22.Id,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode=  APPaymentFeature_MB22.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  

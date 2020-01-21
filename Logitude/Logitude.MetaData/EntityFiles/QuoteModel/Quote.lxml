@@ -23765,7 +23765,7 @@
     IsPackagable="true"
     QueryGroupName="&quot;Follow Ups&quot;"
     FeatureCode="&quot;FOLLOWUPS&quot;"
-    FeatureTextCodeCode="&quot;Master.Features.FollowUps&quot;"
+    FeatureTextCodeCode="&quot;Quote.Features.FollowUps&quot;"
     FeatureDefaultText="&quot;Follow Ups&quot;"
     IsSpellChecked="false">
     <QueryColumns>

@@ -78390,7 +78390,7 @@
     QueryGroupName="&quot;Queries&quot;"
     TextCodeCode="&quot;Shipment.Q.AllMasters&quot;"
     FeatureCode="&quot;ALLMASTERS&quot;"
-    FeatureTextCodeCode="&quot;Master.Features.AllMasters&quot;"
+    FeatureTextCodeCode="&quot;Shipment.Features.AllMasters&quot;"
     FeatureDefaultText="&quot;All Masters&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -78478,7 +78478,7 @@
     QueryGroupName="&quot;Queries&quot;"
     TextCodeCode="&quot;Shipment.Q.ImportShipments&quot;"
     FeatureCode="&quot;IMPORTSHIPMETNS&quot;"
-    FeatureTextCodeCode="&quot;General.Features.ImportShipments&quot;"
+    FeatureTextCodeCode="&quot;Shipment.Features.ImportShipments&quot;"
     FeatureDefaultText="&quot;Import Shipments&quot;"
     IsSpellChecked="false">
     <QueryColumns>
