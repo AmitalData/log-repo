@@ -2008,6 +2008,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (_payment.IsFullAccounting)
             {
                 CheckLinesAmountToReconcileLimit(_payment);
+                CheckCreditLinesAmountToReconcile(_payment);
                 CheckLinesAmountToReconcileTotal(_payment);
             }
 
@@ -2034,7 +2035,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             
         }
+        private void CheckCreditLinesAmountToReconcile(ARPaymentPM _payment)
+        {
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(_payment.Tenant);
 
+
+            var linesAmountToReconcileSum = _payment.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
+            if(linesAmountToReconcileSum < 0)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliation.O.CantReconcileCreditInvoiceOnly", _payment.Tenant, showLocal));
+
+        }
         private void CheckLinesAmountToReconcileTotal(ARPaymentPM _payment)
         {
 
