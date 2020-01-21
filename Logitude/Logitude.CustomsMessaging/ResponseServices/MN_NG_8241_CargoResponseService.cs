@@ -254,18 +254,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (!_IsChanged) _IsChanged = true;
                         }
 
-                        if (_MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null
-                            && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count > 0
-                            && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions[0].SiteCode != null
-                            && customResponse.CargoItem != null)
-                        {
-                            LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPMForInternalTransitions (MN_NG_8241_CargoResponseService)");
-                            _MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPMForInternalTransitions(customResponse, _MyDeclarationPM.Consignments[0]);
-                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-                            if (!_IsChanged) _IsChanged = true;
-                        }
-                        else
-                        {
+                        //if (_MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null
+                        //    && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count > 0
+                        //    && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions[0].SiteCode != null
+                        //    && customResponse.CargoItem != null)
+                        //{
+                        //    LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPMForInternalTransitions (MN_NG_8241_CargoResponseService)");
+                        //    _MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPMForInternalTransitions(customResponse, _MyDeclarationPM.Consignments[0]);
+                        //    _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                        //    if (!_IsChanged) _IsChanged = true;
+                        //}
+                        //else
+                        //{
                             GetDeclarationConsignmentsPackagesPM(customResponse);
                             ////If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
                             //if (_MyDeclarationPM.Consignments[0].ConsignmentPackages == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 0 ||
@@ -298,7 +298,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         if(_MyDeclarationPM.Consignments[0].ChangeSetOp == ChangeSetOperation.Update)
                                 if (!_IsChanged) _IsChanged = true;
-                        }
+             //           }
                     }
                     if (_MyDeclarationPM.Consignments[0].ChangeSetOp == ChangeSetOperation.None)
                     {
@@ -915,7 +915,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (_MyDeclarationPM.Consignments[0].ConsignmentPackages!= null && _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count()>0)
                 {
                     count = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count();
-                    var packages = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Where(p => p.PackageMeasureQualifierCode == "2" && (p.PackageTypeCode == package.packingType || string.IsNullOrEmpty(p.PackageTypeCode)));
+                    //|| string.IsNullOrEmpty(p.PackageTypeCode)
+                    var packages = _MyDeclarationPM.Consignments[0].ConsignmentPackages.Where(p => p.PackageMeasureQualifierCode == "2" && (p.PackageTypeCode == package.packingType ));
                     if(packages != null && packages.Count()>0)
                     {
                         foreach (var packagePM in packages)
