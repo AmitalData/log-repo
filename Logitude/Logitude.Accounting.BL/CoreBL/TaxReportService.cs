@@ -168,9 +168,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
                 FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
                 JournalQueryService journalQueryService = new JournalQueryService(tenant);
-                string VatNumber = null;
-                decimal? InputVatAmount = 0;
-                decimal? InputInvoiceAmount = 0;
+               
+              
                 bool isEquipment = false;
                 APInvoicePM aPInvoice = null;
 
@@ -179,7 +178,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 cards = cardRepository.GetCardsByGLAccountIds(glAccountIds, tenant).ToList();
 
                 List<string> apInvoiceIds = ledgerTransactons.Where(d => d.AccountingEntity == "4").Select(d => d.AccountingEntityId).ToList();
-                List<APInvoicePM> aPInvoices = aPInvoiceQueryService.GetAPInvoicesByIds(apInvoiceIds, tenant);
+                List<APInvoicePM> aPInvoices = aPInvoiceQueryService.GetAPInvoicesByIds(apInvoiceIds, tenant, taxReport.TaxReportMonth);
 
                 List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
                 List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
@@ -187,7 +186,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<string> ids = new List<string>();
                 ids = aPInvoices.Select(d => d.Id).ToList();
                 APInvoiceTotalVATQuery myTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
-                List<APInvoiceTotalVATPM> totalvats = new List<APInvoiceTotalVATPM>();
+                totalvats = new List<APInvoiceTotalVATPM>();
                 totalvats = myTotalVATQuery.GetTotalVATs(ids, tenant);
                
                 
@@ -201,12 +200,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (a.AccountingEntity == AccountingEntityValues.APInvoice)
                     {
                         aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+
                         if (aPInvoice != null)
                         {
-                            aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
-                            VatNumber = aPInvoice.VATNumber;
-                            InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVATAmount);
-                            InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency ?? 0;
+                            SetVatFieldsForAPInvoiceTransaction(aPInvoice);
+                        }
+                        else
+                        {
+                            continue;
                         }
                     }
 
@@ -365,7 +366,27 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-       static string  reference = null;
+
+        static void SetVatFieldsForAPInvoiceTransaction(APInvoicePM aPInvoice)
+        {
+            aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
+            VatNumber = aPInvoice.VATNumber;
+            if (aPInvoice.StatusCode == "AC")
+            {
+                InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVatableAmount)*-1;
+                InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency*-1 ?? 0;
+            }
+            else if (aPInvoice.StatusCode == "AD")
+            {
+                InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVatableAmount);
+                InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency ?? 0;
+            }
+        }
+        static List<APInvoiceTotalVATPM> totalvats;
+        static string VatNumber = null;
+        static decimal? InputVatAmount = 0;
+        static decimal? InputInvoiceAmount = 0;
+        static string  reference = null;
         static string referenceGroup = null;
         private static void SetReferenceFields(string Reference)
         {

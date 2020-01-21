@@ -58,11 +58,15 @@ export class GLAccountInterestComponent extends BaseComponent{
             this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
             this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
             this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", true);
+            this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", true);
+
         }
         else {
             this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", false);
             this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
             this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
+            this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
+
         }
     }
     SetWindowArgs(args) {
@@ -151,6 +155,17 @@ export class GLAccountInterestComponent extends BaseComponent{
                     this.SetUIProperties();
 
                 }
+
+                if (this.entityArgs.EditComponent.ValidationErrorsList.length != 0) {
+                    if (this.GLAccountInterestPeriodsList.Collection.length > 0) {
+                        var errors = [];
+                        var lastRow = this.GLAccountInterestPeriodsList.Collection[this.GLAccountInterestPeriodsList.Collection.length - 1];
+                        var ObjectTableName: string = "GLAccountInterestPeriod";
+                        Validator.TryValidateObject(lastRow, ObjectTableName, errors);
+                        if (errors.length > 0)
+                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+                    }
+                }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -205,7 +220,12 @@ export class GLAccountInterestComponent extends BaseComponent{
     set MinimumInterestInvoiceBilling(newValue: number) {
             this.EntityPM.MinimumInterestInvoiceBilling = newValue;
     }
-
+    get InterestCreditLimit() {
+        return this.EntityPM.InterestCreditLimit;
+    }
+    set InterestCreditLimit(newValue: number) {
+        this.EntityPM.InterestCreditLimit = newValue;
+    }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);

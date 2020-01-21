@@ -16,6 +16,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {DueTypeList} from '../../EntityLists/DueTypeList';
 
 @Injectable()
@@ -48,7 +49,7 @@ export class DueTypeListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
-				
+				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DueType", "GetSingleList", 'code=' + code); 
 
@@ -84,7 +85,7 @@ export class DueTypeListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;  
-			
+				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DueType", "GetAll", ""); 
 
@@ -151,7 +152,7 @@ export class DueTypeListService {
                 }   
 
                 serviceResponse.Result = _mappedListsArray;      
-		      
+		        serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DueType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  				
@@ -176,6 +177,7 @@ export class DueTypeListService {
             return Observable.defer(() => {
 
                 var filteredData = DueTypeListService.CachedData.filter(a => a.Code === code)[0];
+				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
 
@@ -200,7 +202,7 @@ export class DueTypeListService {
 
                 var filteredData = DueTypeListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.Result = filteredData; 
-				
+				serviceResponse.CallTime = callTime;
 			     
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "DueType", "GetSingleListFromCache", 'code=' + code); 
 
@@ -242,6 +244,7 @@ export class DueTypeListService {
 				{
 					var filteredData = InfraGenericFilter.GetFilteredArray(DueTypeListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
 				}
                 return Observable.of(serviceResponse);
 
@@ -279,6 +282,7 @@ export class DueTypeListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "DueType", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 					serviceResponse.Result = _mappedListsArray; 
+					serviceResponse.CallTime = callTime;
 				}
                 return serviceResponse;
 

@@ -184,6 +184,7 @@ export class AddEditRuleComponent extends BaseComponent {
         tenantLevelRule.RuleNotificationTypeCode = systemLevelRule.RuleNotificationTypeCode;
         tenantLevelRule.TriggerTypeCode = systemLevelRule.TriggerTypeCode;
         tenantLevelRule.TriggerFieldId = systemLevelRule.TriggerFieldId;
+        tenantLevelRule.TriggerFieldCode = systemLevelRule.TriggerFieldCode;
         tenantLevelRule.ActiveForNew = systemLevelRule.ActiveForNew;
         tenantLevelRule.ActiveForUpdate = systemLevelRule.ActiveForUpdate;
         tenantLevelRule.AdvancedCondition = systemLevelRule.AdvancedCondition;
@@ -448,7 +449,7 @@ export class AddEditRuleComponent extends BaseComponent {
         }
 
         if (this.DataContext.TriggerTypeCode == "FLDC") {
-            if (AppTool.IsNullOrEmpty(this.DataContext.TriggerFieldId)) {
+            if (AppTool.IsNullOrEmpty(this.DataContext.TriggerFieldCode)) {
                 this.ValidationErrorsList.push("Trigger Field is required");
             }
         }

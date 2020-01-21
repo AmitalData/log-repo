@@ -211,11 +211,42 @@ export class DocumentTypePM {
     public set LimitedPrintCopyId(newValue: string) { if (this.limitedPrintCopyId != newValue) { this.limitedPrintCopyId = newValue; this.MarkAsDirty("LimitedPrintCopyId"); } }
        
 	 
-    private fileName: string;
-    public get FileName() { return this.fileName; }
-    public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
-
-
+    private isAgentSharedInMaster: boolean;
+    public get IsAgentSharedInMaster() { return this.isAgentSharedInMaster; }
+    public set IsAgentSharedInMaster(newValue: boolean) { if (this.isAgentSharedInMaster != newValue) { this.isAgentSharedInMaster = newValue; this.MarkAsDirty("IsAgentSharedInMaster"); } }
+       
+	 
+    private isAgentSharedInDirect: boolean;
+    public get IsAgentSharedInDirect() { return this.isAgentSharedInDirect; }
+    public set IsAgentSharedInDirect(newValue: boolean) { if (this.isAgentSharedInDirect != newValue) { this.isAgentSharedInDirect = newValue; this.MarkAsDirty("IsAgentSharedInDirect"); } }
+       
+	 
+    private isAgentSharedInHouse: boolean;
+    public get IsAgentSharedInHouse() { return this.isAgentSharedInHouse; }
+    public set IsAgentSharedInHouse(newValue: boolean) { if (this.isAgentSharedInHouse != newValue) { this.isAgentSharedInHouse = newValue; this.MarkAsDirty("IsAgentSharedInHouse"); } }
+       
+	 
+    private sharedDocumentTypeCopyId: string;
+    public get SharedDocumentTypeCopyId() { return this.sharedDocumentTypeCopyId; }
+    public set SharedDocumentTypeCopyId(newValue: string) { if (this.sharedDocumentTypeCopyId != newValue) { this.sharedDocumentTypeCopyId = newValue; this.MarkAsDirty("SharedDocumentTypeCopyId"); } }
+       
+	 
+    private isAirDigitalSignRequired: boolean;
+    public get IsAirDigitalSignRequired() { return this.isAirDigitalSignRequired; }
+    public set IsAirDigitalSignRequired(newValue: boolean) { if (this.isAirDigitalSignRequired != newValue) { this.isAirDigitalSignRequired = newValue; this.MarkAsDirty("IsAirDigitalSignRequired"); } }
+       
+	 
+    private isOceanDigitalSignRequired: boolean;
+    public get IsOceanDigitalSignRequired() { return this.isOceanDigitalSignRequired; }
+    public set IsOceanDigitalSignRequired(newValue: boolean) { if (this.isOceanDigitalSignRequired != newValue) { this.isOceanDigitalSignRequired = newValue; this.MarkAsDirty("IsOceanDigitalSignRequired"); } }
+       
+	 
+    private isInlandDigitalSignRequired: boolean;
+    public get IsInlandDigitalSignRequired() { return this.isInlandDigitalSignRequired; }
+    public set IsInlandDigitalSignRequired(newValue: boolean) { if (this.isInlandDigitalSignRequired != newValue) { this.isInlandDigitalSignRequired = newValue; this.MarkAsDirty("IsInlandDigitalSignRequired"); } }
+       
+	 
+     
 	private documentTypeCustomFields: DocumentTypeCustomFieldPM[];
     get  DocumentTypeCustomFields() {
         if (this.documentTypeCustomFields == null) {
@@ -294,47 +325,23 @@ export class DocumentTypePM {
     private orderBy: number;
     public get OrderBy() { return this.orderBy; }
     public set OrderBy(newValue: number) { if (this.orderBy != newValue) { this.orderBy = newValue; this.MarkAsDirty("OrderBy"); } }
-
-
-    private sharedDocumentTypeCopyId: string;
-    public get SharedDocumentTypeCopyId() { return this.sharedDocumentTypeCopyId; }
-    public set SharedDocumentTypeCopyId(newValue: string) { if (this.sharedDocumentTypeCopyId != newValue) { this.sharedDocumentTypeCopyId = newValue; this.MarkAsDirty("SharedDocumentTypeCopyId"); } }
-
-    private isAgentSharedInHouse: boolean;
-    public get IsAgentSharedInHouse() { return this.isAgentSharedInHouse; }
-    public set IsAgentSharedInHouse(newValue: boolean) { if (this.isAgentSharedInHouse != newValue) { this.isAgentSharedInHouse = newValue; this.MarkAsDirty("IsAgentSharedInHouse"); } }
-
-    private isAgentSharedInMaster: boolean;
-    public get IsAgentSharedInMaster() { return this.isAgentSharedInMaster; }
-    public set IsAgentSharedInMaster(newValue: boolean) { if (this.isAgentSharedInMaster != newValue) { this.isAgentSharedInMaster = newValue; this.MarkAsDirty("IsAgentSharedInMaster"); } }
-
-    private isAgentSharedInDirect: boolean;
-    public get IsAgentSharedInDirect() { return this.isAgentSharedInDirect; }
-    public set IsAgentSharedInDirect(newValue: boolean) { if (this.isAgentSharedInDirect != newValue) { this.isAgentSharedInDirect = newValue; this.MarkAsDirty("IsAgentSharedInDirect"); } }
-
-    private isAirDigitalSignRequired: boolean;
-    public get IsAirDigitalSignRequired() { return this.isAirDigitalSignRequired; }
-    public set IsAirDigitalSignRequired(newValue: boolean) { if (this.isAirDigitalSignRequired != newValue) { this.isAirDigitalSignRequired = newValue; this.MarkAsDirty("IsAirDigitalSignRequired"); } }
-
-    private isOceanDigitalSignRequired: boolean;
-    public get IsOceanDigitalSignRequired() { return this.isOceanDigitalSignRequired; }
-    public set IsOceanDigitalSignRequired(newValue: boolean) { if (this.isOceanDigitalSignRequired != newValue) { this.isOceanDigitalSignRequired = newValue; this.MarkAsDirty("IsOceanDigitalSignRequired"); } }
-
-    private isInlandDigitalSignRequired: boolean;
-    public get IsInlandDigitalSignRequired() { return this.isInlandDigitalSignRequired; }
-    public set IsInlandDigitalSignRequired(newValue: boolean) { if (this.isInlandDigitalSignRequired != newValue) { this.isInlandDigitalSignRequired = newValue; this.MarkAsDirty("IsInlandDigitalSignRequired"); } }
-
-
+       
+	 
+    private fileName: string;
+    public get FileName() { return this.fileName; }
+    public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
+       
+	 
     private isSystemAdditionalPrintingFields: boolean;
     public get IsSystemAdditionalPrintingFields() { return this.isSystemAdditionalPrintingFields; }
     public set IsSystemAdditionalPrintingFields(newValue: boolean) { if (this.isSystemAdditionalPrintingFields != newValue) { this.isSystemAdditionalPrintingFields = newValue; this.MarkAsDirty("IsSystemAdditionalPrintingFields"); } }
-
-
+       
+	 
     private printingFieldsScreenCode: string;
     public get PrintingFieldsScreenCode() { return this.printingFieldsScreenCode; }
     public set PrintingFieldsScreenCode(newValue: string) { if (this.printingFieldsScreenCode != newValue) { this.printingFieldsScreenCode = newValue; this.MarkAsDirty("PrintingFieldsScreenCode"); } }
-
-
+       
+	 
 
     public OldEntityPM: DocumentTypePM;
 		

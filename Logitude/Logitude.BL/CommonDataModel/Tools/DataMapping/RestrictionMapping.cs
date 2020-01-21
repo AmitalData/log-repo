@@ -19,6 +19,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             restriction.ObjectTableId = restrictionPm.ObjectTableId;
             restriction.Tenant = restrictionPm.Tenant;
             restriction.Value = restrictionPm.Value;
+            restriction.ObjectFieldCode = restrictionPm.ObjectFieldCode;
         }
     }
 }

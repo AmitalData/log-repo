@@ -2123,9 +2123,9 @@ namespace WebFreight.Web.InfrastructureModel
                 ObjectTable objectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
                 ObjectField triggerfield = null;
-                if (rule.TriggerFieldId != null)
+                if (rule.TriggerFieldCode != null)
                 {
-                    ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == rule.TriggerFieldId).FirstOrDefault();
+                    ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.FieldCode == rule.TriggerFieldCode).FirstOrDefault();
                     triggerfield = currentTenantObjectFields.Where(d => d.FieldName == zeroObjectField.FieldName && d.ObjectTableId == objectTable.Id).FirstOrDefault();
                 }
 
@@ -2144,6 +2144,7 @@ namespace WebFreight.Web.InfrastructureModel
                     ActiveForNew = rule.ActiveForNew,
                     ActiveForUpdate = rule.ActiveForUpdate,
                     TriggerFieldId = triggerfield != null ? triggerfield.Id : null,
+                    TriggerFieldCode = triggerfield != null ? triggerfield.FieldCode : null,
                     TriggerTypeCode = rule.TriggerTypeCode,
                     RuleNotificationTypeCode = rule.RuleNotificationTypeCode,
 

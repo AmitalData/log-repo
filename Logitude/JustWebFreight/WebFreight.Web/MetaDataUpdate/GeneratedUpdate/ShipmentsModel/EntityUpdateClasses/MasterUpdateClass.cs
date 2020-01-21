@@ -25375,33 +25375,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHOV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterOverviewFeature_TH0.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterOverview.MasterOverviewControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterOverviewTextCode_TH0.Id, TabNameTextCodeCode = MasterOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHOV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterOverviewFeature_TH0.Id,FeatureUniqeCode = MasterOverviewFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterOverview.MasterOverviewControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterOverviewTextCode_TH0.Id, TabNameTextCodeCode = MasterOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterGeneralTextCode_TH1.Id, TabNameTextCodeCode = MasterGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterGeneralFeature_TH1.Id,FeatureUniqeCode = MasterGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterGeneralTextCode_TH1.Id, TabNameTextCodeCode = MasterGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHOR",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterBookingFeature_TH2.Id, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterBookingTextCode_TH2.Id, TabNameTextCodeCode = MasterBookingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHOR",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterBookingFeature_TH2.Id,FeatureUniqeCode = MasterBookingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterBookingTextCode_TH2.Id, TabNameTextCodeCode = MasterBookingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPartnersFeature_TH3.Id, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPartnersTextCode_TH3.Id, TabNameTextCodeCode = MasterPartnersTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPartnersFeature_TH3.Id,FeatureUniqeCode = MasterPartnersFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPartnersTextCode_TH3.Id, TabNameTextCodeCode = MasterPartnersTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPK",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPackagesFeature_TH4.Id, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPackagesTextCode_TH4.Id, TabNameTextCodeCode = MasterPackagesTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPK",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPackagesFeature_TH4.Id,FeatureUniqeCode = MasterPackagesFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPackagesTextCode_TH4.Id, TabNameTextCodeCode = MasterPackagesTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHRT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterRoutingsFeature_TH5.Id, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterRoutingsTextCode_TH5.Id, TabNameTextCodeCode = MasterRoutingsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHRT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterRoutingsFeature_TH5.Id,FeatureUniqeCode = MasterRoutingsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterRoutingsTextCode_TH5.Id, TabNameTextCodeCode = MasterRoutingsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPY",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPayablesFeature_TH6.Id, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPayablesTextCode_TH6.Id, TabNameTextCodeCode = MasterPayablesTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHPY",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterPayablesFeature_TH6.Id,FeatureUniqeCode = MasterPayablesFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterPayablesTextCode_TH6.Id, TabNameTextCodeCode = MasterPayablesTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHRE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterReceivablesFeature_TH7.Id, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterReceivablesTextCode_TH7.Id, TabNameTextCodeCode = MasterReceivablesTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHRE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterReceivablesFeature_TH7.Id,FeatureUniqeCode = MasterReceivablesFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterReceivablesTextCode_TH7.Id, TabNameTextCodeCode = MasterReceivablesTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHDO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterDocsOutFeature_TH8.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterDocuments.MasterDocOutControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterDocsOutTextCode_TH8.Id, TabNameTextCodeCode = MasterDocsOutTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHDO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterDocsOutFeature_TH8.Id,FeatureUniqeCode = MasterDocsOutFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterDocuments.MasterDocOutControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterDocsOutTextCode_TH8.Id, TabNameTextCodeCode = MasterDocsOutTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHDI",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterDocsInFeature_TH9.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterDocuments.MasterDocInControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterDocsInTextCode_TH9.Id, TabNameTextCodeCode = MasterDocsInTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHDI",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterDocsInFeature_TH9.Id,FeatureUniqeCode = MasterDocsInFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterDocuments.MasterDocInControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterDocsInTextCode_TH9.Id, TabNameTextCodeCode = MasterDocsInTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterCommunicationFeature_TH10.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterCommunicationTextCode_TH10.Id, TabNameTextCodeCode = MasterCommunicationTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterCommunicationFeature_TH10.Id,FeatureUniqeCode = MasterCommunicationFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterCommunicationTextCode_TH10.Id, TabNameTextCodeCode = MasterCommunicationTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterEventsFeature_TH11.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterEventsTextCode_TH11.Id, TabNameTextCodeCode = MasterEventsTextCode_TH11.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterEventsFeature_TH11.Id,FeatureUniqeCode = MasterEventsFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterEventsTextCode_TH11.Id, TabNameTextCodeCode = MasterEventsTextCode_TH11.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterShipmentsFeature_TH12.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterShipmentsTextCode_TH12.Id, TabNameTextCodeCode = MasterShipmentsTextCode_TH12.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterShipmentsFeature_TH12.Id,FeatureUniqeCode = MasterShipmentsFeature_TH12.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterShipmentsTextCode_TH12.Id, TabNameTextCodeCode = MasterShipmentsTextCode_TH12.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterConnectedEntitiesFeature_TH13.Id, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterConnectedEntitiesTextCode_TH13.Id, TabNameTextCodeCode = MasterConnectedEntitiesTextCode_TH13.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JHCN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasterConnectedEntitiesFeature_TH13.Id,FeatureUniqeCode = MasterConnectedEntitiesFeature_TH13.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = MasterObjectTable.Id, TabNameTextCodeId = MasterConnectedEntitiesTextCode_TH13.Id, TabNameTextCodeCode = MasterConnectedEntitiesTextCode_TH13.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -25495,6 +25495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton MasterMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25512,6 +25513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25529,6 +25531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25546,6 +25549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB02.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton03 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25563,6 +25567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB03.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB03.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton04 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25580,6 +25585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton05 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25597,6 +25603,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB04.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB04.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton06 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25614,6 +25621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton07 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25631,6 +25639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton08 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25648,6 +25657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB05.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB05.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton09 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25665,6 +25675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB06.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB06.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton010 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25682,6 +25693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB07.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB07.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton MasterMenuButton011 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25699,6 +25711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB08.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MasterFeature_MB08.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

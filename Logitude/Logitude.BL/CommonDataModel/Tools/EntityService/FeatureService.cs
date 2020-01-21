@@ -105,7 +105,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void UpdateRoleFeature()
         {
-            RoleFeature myRoleFeature = roleFeatureRepository.GetRoleFeatureByRoleAndFeature(entityPM.RoleId, entityPM.Id, entityPM.RoleTenant);
+            RoleFeature myRoleFeature = roleFeatureRepository.GetRoleFeatureByRoleAndFeatureUCode(entityPM.RoleId, entityPM.FeatureUniqeCode, entityPM.RoleTenant);
 
             if (entityPM.AccessLevelCode == "NO")
             {       
@@ -131,6 +131,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Tenant = entityPM.RoleTenant,
                     IsDeleted = false,
                     FeatureAccessLevelCode = entityPM.AccessLevelCode,
+                    FeatureUniqeCode = entityPM.FeatureUniqeCode,
                 };
 
                 roleFeatureRepository.Add(myRoleFeature);
@@ -140,6 +141,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 myRoleFeature.IsDeleted = false;
                 myRoleFeature.FeatureAccessLevelCode = entityPM.AccessLevelCode;
+                myRoleFeature.FeatureUniqeCode = entityPM.FeatureUniqeCode;
+
                 roleFeatureRepository.Update(myRoleFeature);
             }
         }
@@ -157,6 +160,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         Tenant = entityPM.RoleTenant,
                         IsDeleted = true,
                         FeatureAccessLevelCode = entityPM.AccessLevelCode,
+                        FeatureUniqeCode = entityPM.FeatureUniqeCode,
+
                     };
 
                     roleFeatureRepository.Add(myRoleFeature);
@@ -166,6 +171,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     myRoleFeature.IsDeleted = true;
                     myRoleFeature.FeatureAccessLevelCode = entityPM.AccessLevelCode;
+                    myRoleFeature.FeatureUniqeCode = entityPM.FeatureUniqeCode;
+
                     roleFeatureRepository.Update(myRoleFeature);
                 }
             }
@@ -183,7 +190,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (entityPM.IsAdded)
             {
-                PackageFeature instanceDb = packageFeatureRepository.GetSinglePackageFeatureByPackageAndFeature(entityPM.PackageCode, entityPM.Id, tenant);
+                PackageFeature instanceDb = packageFeatureRepository.GetSinglePackageFeatureByPackageAndFeatureUCode(entityPM.PackageCode, entityPM.FeatureUniqeCode, tenant);
                 if (instanceDb == null)
                 {
                     PackageFeature newPackageFeature = new PackageFeature()
@@ -191,7 +198,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         Id = IdCounter.GetNumber("PackageFeature", tenant).ToString(),
                         PackageCode = entityPM.PackageCode,
                         FeatureId = entityPM.Id,
-                        Tenant = tenant
+                        Tenant = tenant,
+                        FeatureUniqeCode = entityPM.FeatureUniqeCode
                     };
 
                     packageFeatureRepository.Add(newPackageFeature);
@@ -200,7 +208,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (entityPM.IsRemoved)
             {
-                PackageFeature packageFeature = packageFeatureRepository.GetSinglePackageFeatureByPackageAndFeature(entityPM.PackageCode, entityPM.Id, tenant);
+                PackageFeature packageFeature = packageFeatureRepository.GetSinglePackageFeatureByPackageAndFeatureUCode(entityPM.PackageCode, entityPM.FeatureUniqeCode, tenant);
                 if (packageFeature != null)
                 {
                     packageFeatureRepository.Remove(packageFeature);

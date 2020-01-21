@@ -455,7 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AHFG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AWBAdditionalHandlingInfoGeneralFeature_TH0.Id, ControlPath = "Simplog.ShipmentLib.Views.AWBAdditionalHandling.AWBAdditionalHandlingGeneralTab", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, TabNameTextCodeId = AWBAdditionalHandlingInfoGeneralTextCode_TH0.Id, TabNameTextCodeCode = AWBAdditionalHandlingInfoGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AHFG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AWBAdditionalHandlingInfoGeneralFeature_TH0.Id,FeatureUniqeCode = AWBAdditionalHandlingInfoGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.AWBAdditionalHandling.AWBAdditionalHandlingGeneralTab", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, TabNameTextCodeId = AWBAdditionalHandlingInfoGeneralTextCode_TH0.Id, TabNameTextCodeCode = AWBAdditionalHandlingInfoGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

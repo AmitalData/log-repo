@@ -22,6 +22,7 @@ export class ReportList {
 		InActive: boolean;
 		FilterHtmlComponentUrl: string;
 		DefaultTemplateId: string;
-		DefaultMessageTemplateId: string;
+    DefaultMessageTemplateId: string;
+    FeatureUniqeCode: string;
 	
 }

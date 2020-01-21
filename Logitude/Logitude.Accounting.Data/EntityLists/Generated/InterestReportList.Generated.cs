@@ -58,6 +58,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string UpdatedByLocalName  { get; set; }
        [DataMember]
        public string InterestReportStatusName  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string InterestReportStatusLocalName  { get; set; }
    }
 
 }

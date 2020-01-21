@@ -1464,8 +1464,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     newDocumentFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     newDocumentFiling.HasCopies = true;
                     newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
-
+                    newDocumentFiling.DocumentId = document.Id;
+                    newDocumentFiling.SecurityId = newDocumentFiling.Id + StringHelper.GetRandomString(10);
                     documentsFilingRepository.Add(newDocumentFiling);
+
 
                     documentout = new DocumentOut()
                     {
@@ -1541,6 +1543,19 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         };
 
                         documentOutCopyRepository.Add(docoutCopy);
+                    }
+
+
+                    DocumentsFiling documentsFiling = (from a in myCommonContext.DocumentsFilings
+                                                      where a.Id == documentout.Id && a.Tenant == tenant
+                                                      select a).FirstOrDefault();
+                    if (documentsFiling != null)
+                    {
+                        if (documentsFiling.DocumentId != document.Id)
+                        {
+                            documentsFiling.DocumentId = document.Id;
+                            documentsFilingRepository.Update(documentsFiling);
+                        }
                     }
                 }
 

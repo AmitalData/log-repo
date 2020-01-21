@@ -17,6 +17,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsBusinessUnitEnabled { get; set; }
         public bool IsOld { get; set; }
         public bool IsCoreFeature { get; set; }
+        public string FeatureUniqeCode { get; set; }
 
         // Dummy
         public string Name { get; set; }

@@ -391,7 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CargoStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoStatusTextCode_0.Id, Code = "CargoStatus",  QueryGroupCode = "1362", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoStatusObjectTable.Id, QuerySection = "Customs.CargoStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoStatusFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query CargoStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoStatusTextCode_0.Id, Code = "CargoStatus",  QueryGroupCode = "1362", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoStatusObjectTable.Id, QuerySection = "Customs.CargoStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoStatusFeature_0.Id,FeatureUniqeCode= CargoStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CargoStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id, IndexOrder = 0, ObjectFieldId = CargoStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 

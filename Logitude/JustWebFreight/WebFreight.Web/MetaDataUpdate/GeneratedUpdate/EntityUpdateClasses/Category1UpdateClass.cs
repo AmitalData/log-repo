@@ -446,9 +446,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "C1GT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = Category1GeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = Category1ObjectTable.Id, TabNameTextCodeId = Category1GeneralTextCode_TH0.Id, TabNameTextCodeCode = Category1GeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "C1GT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = Category1GeneralFeature_TH0.Id,FeatureUniqeCode = Category1GeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = Category1ObjectTable.Id, TabNameTextCodeId = Category1GeneralTextCode_TH0.Id, TabNameTextCodeCode = Category1GeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "C1ET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = Category1EventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = Category1ObjectTable.Id, TabNameTextCodeId = Category1EventsTextCode_TH1.Id, TabNameTextCodeCode = Category1EventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "C1ET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = Category1EventsFeature_TH1.Id,FeatureUniqeCode = Category1EventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = Category1ObjectTable.Id, TabNameTextCodeId = Category1EventsTextCode_TH1.Id, TabNameTextCodeCode = Category1EventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

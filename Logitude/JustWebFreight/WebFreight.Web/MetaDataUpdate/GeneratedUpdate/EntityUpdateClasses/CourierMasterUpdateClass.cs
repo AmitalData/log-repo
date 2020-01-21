@@ -2361,7 +2361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALLCOURIERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_0.Id, Code = "ALLCOURIERS",  QueryGroupCode = "dcc9", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_0.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ALLCOURIERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_0.Id, Code = "ALLCOURIERS",  QueryGroupCode = "dcc9", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_0.Id,FeatureUniqeCode= CourierMasterFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ALLCOURIERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

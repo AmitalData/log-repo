@@ -71,7 +71,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
     private selectedObjectField: ObjectFieldPM;
     public get SelectedObjectField() {
         if (this.EntityPM) {
-            this.selectedObjectField = this.ObjectFieldPMLists.filter(t => t.Id === this.EntityPM.ObjectFieldId)[0];
+            this.selectedObjectField = this.ObjectFieldPMLists.filter(t => t.FieldCode === this.EntityPM.ObjectFieldCode)[0];
         }
 
         return this.selectedObjectField;
@@ -81,6 +81,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
         if (this.selectedObjectField != newValue) {
             this.selectedObjectField = newValue;
             this.EntityPM.ObjectFieldId = newValue.Id;
+            this.EntityPM.ObjectFieldCode = newValue.FieldCode;
 
         }
     }
@@ -118,7 +119,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
                                 if (!pmResponse.HasError && pmResponse.Result) {
                                     this.EntityPM = pmResponse.Result;
 
-                                    this.SelectedObjectField = this.ObjectFieldPMLists.filter(d => d.Id == this.EntityPM.ObjectFieldId)[0];
+                                    this.SelectedObjectField = this.ObjectFieldPMLists.filter(d => d.FieldCode == this.EntityPM.ObjectFieldCode)[0];
                                     this.SelectedUpdateDirection = this.UpdateDirectionLists.filter(t => t.Code === this.EntityPM.UpdateDirection)[0];
                                 }
 

@@ -5,8 +5,8 @@
         <td>
             <div class="ShortTitleMainControl" style="float: left;" [ngStyle]="{background: Background}">
                 <div class="ShortTitleDiv">
-                    <span><img style="vertical-align: middle; margin:0;" [attr.src]="DirectionImageSRC" /></span>
-                    <span><img style="vertical-align: middle; margin:0;" [attr.src]="TransportModeImageSRC" /></span>
+                    <span *ngIf="EntityPM && EntityPM.DirectionId"><img style="vertical-align: middle; margin:0;" [attr.src]="DirectionImageSRC" /></span>
+                    <span *ngIf="EntityPM && EntityPM.TransportModeId"><img style="vertical-align: middle; margin:0;" [attr.src]="TransportModeImageSRC" /></span>
                 </div>
 
                 <div class="ShortTitleDiv" style="padding-left: 5px; font-size: 18px; color: #1B90CB;">

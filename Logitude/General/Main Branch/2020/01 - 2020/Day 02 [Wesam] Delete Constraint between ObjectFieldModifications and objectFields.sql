@@ -1,0 +1,3 @@
+
+ALTER TABLE ObjectFieldModifications
+DROP CONSTRAINT  FK_ObjectFieldModificationObjectField;

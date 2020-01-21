@@ -7,17 +7,18 @@ import { Validator } from '../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
 import { PackageTypeListService } from '../../Common/Services/StandardLists/PackageTypeListService';
 import { PackageTypeList } from '../../Common/EntityLists/PackageTypeList';
-import { MeasurementList } from '../../Common/EntityLists/MeasurementList';
 import { MeasurementListService } from '../../Common/Services/StandardLists/MeasurementListService';
+import { MeasurementList } from '../../Common/EntityLists/MeasurementList';
 
 export class TariffValidator {
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     private chargesTypePMService: ChargesTypeListService;
     private packageTypeListService: PackageTypeListService;
+    private measurementPMService: MeasurementListService;
     private Errors: string[] = [];
     private entityPM: TariffPM;
-    private measurementPMService: MeasurementListService;
+    public HasAContainerTypeUOM: boolean = false;
 
     public Validate = (entityPM: TariffPM): any[] => {
         this.Errors = [];
@@ -26,15 +27,24 @@ export class TariffValidator {
         if (entityPM != null) {
             Validator.TryValidateObject(this.entityPM, "Tariff", this.Errors);
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS") {
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC") {
                 this.chargesTypePMService = new ChargesTypeListService();
-                this.measurementPMService = new MeasurementListService();
                 this.FillChargesIDsAndUOMS();
                 this.ValidateSurcharge();
             }
-
             else if (entityPM.TypeCode == "OFC") {
                 this.packageTypeListService = new PackageTypeListService();
+                this.FillContainersIDs();
+                this.ValidateContainers();
+                this.HasAContainerTypeUOM = true;
+            }
+            else if (entityPM.TypeCode == "OFS") {
+                this.chargesTypePMService = new ChargesTypeListService();
+                this.packageTypeListService = new PackageTypeListService();
+                this.measurementPMService = new MeasurementListService();
+                this.HasAContainerTypeUOM = false;
+                this.FillChargesIDsAndUOMS();
+                this.ValidateSurcharge();
                 this.FillContainersIDs();
                 this.ValidateContainers();
             }
@@ -68,67 +78,27 @@ export class TariffValidator {
         var emptyLines: boolean = false;
         var FirstLineEmpty: boolean = false;
         var tempErrors: Array<string> = [];
+        this.HasAContainerTypeUOM = false;
 
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
             UOMProps.push("Surcharge" + index + "UOM");
             IdPropsName.push("Charge Type " + index);
             UOMPropsName.push("UOM " + index);
-
-            if (this.entityPM.TypeCode == "OFS") {
-                if (this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0] != null) {
-                    if (this.UOMProps.filter(p => this.entityPM[p + ""] == this.entityPM[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this.entityPM[UOMProps[index - 1]] != null)[0] != null) {
-                        var chargeTypes = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]]);
-                        var isDuplicatiedUOMT: boolean = false;
-                        var pair: string = "";
-                        var pairs = [];
-                        chargeTypes.forEach(item => {
-                            var UOM = item.replace("Id", "UOM");
-                            pair = this.entityPM[item] + " " + this.entityPM[UOM];
-                            if (pairs.includes(pair)) {
-                                isDuplicatiedUOMT = true;
-                                return;
-                            }
-                            else {
-                                pairs.push(pair);
-                            }
-                        });
-                        if (isDuplicatiedUOMT) {
-                            var chargresType = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0];
-                            var UOMsType = this.UOMProps.filter(p => this.entityPM[p + ""] == this.entityPM[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this.entityPM[UOMProps[index - 1]] != null)[0];
-                            var value = this.entityPM[chargresType + ""] + " " + this.entityPM[UOMsType + ""];
-                            if (!DuplicatedChargesIds.includes(value)) {
-                                DuplicatedChargesIds.push(value);
-                                //Enable using the same charge type with different measurment
-                                this.chargesTypePMService.getSingleFromCache(this.entityPM[chargresType + ""]).subscribe(res => {
-                                    if (!res.HasError) {
-                                        var chargesTypeList: ChargesTypeList = res.Result;
-                                        if (res) {
-                                            this.Errors.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
-                                        }
-                                    }
-                                });
+            if (this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0] != null) {
+                var chargresType = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0];
+                if (!DuplicatedChargesIds.includes(this.entityPM[chargresType + ""])) {
+                    DuplicatedChargesIds.push(this.entityPM[chargresType + ""]);
+                    this.chargesTypePMService.getSingleFromCache(this.entityPM[chargresType + ""]).subscribe(res => {
+                        if (!res.HasError) {
+                            var chargesTypeList: ChargesTypeList = res.Result;
+                            if (res) {
+                                this.Errors.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
                             }
                         }
-                    }
-                }
-            } else {
-                if (this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0] != null) {
-                    var chargresType = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0];
-                    if (!DuplicatedChargesIds.includes(this.entityPM[chargresType + ""])) {
-                        DuplicatedChargesIds.push(this.entityPM[chargresType + ""]);
-                        this.chargesTypePMService.getSingleFromCache(this.entityPM[chargresType + ""]).subscribe(res => {
-                            if (!res.HasError) {
-                                var chargesTypeList: ChargesTypeList = res.Result;
-                                if (res) {
-                                    this.Errors.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
-                                }
-                            }
-                        });
-                    }
+                    });
                 }
             }
-
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
                     tempErrors.push(IdPropsName[index - 1] + " is required");
@@ -175,14 +145,13 @@ export class TariffValidator {
                     }
                 }
             }
-            //Disable "By Container Type" UOM
             if (this.entityPM.TypeCode == "OFS" && this.entityPM[UOMProps[index - 1]] != null) {
                 this.measurementPMService.getSingleFromCache(this.entityPM[UOMProps[index - 1]]).subscribe(res => {
                     if (!res.HasError) {
                         var UOMEntity: MeasurementList = res.Result;
                         if (res) {
                             if (UOMEntity.Code == "BCNT") {
-                                this.Errors.push("By Container Type measurment isn't enabled");
+                                this.HasAContainerTypeUOM = true;
                             }
                         }
                     }
@@ -227,10 +196,11 @@ export class TariffValidator {
 
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
-                    tempErrors.push(IdPropsName[index - 1] + " is required");
+                    if (this.HasAContainerTypeUOM) {
+                        tempErrors.push(IdPropsName[index - 1] + " is required");
+                    }
                     FirstLineEmpty = true;
                 }
-                
             }
 
             else {

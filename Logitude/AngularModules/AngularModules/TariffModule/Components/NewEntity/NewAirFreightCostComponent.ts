@@ -18,7 +18,6 @@ import { PackageTypeListService } from '../../../Common/Services/StandardLists/P
 import { MeasurementListService } from '../../../Common/Services/StandardLists/MeasurementListService';
 import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
 
-
 @Component({
     selector: 'NewAirFreightCostComponent',
     moduleId: module.id,
@@ -33,11 +32,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     public SelectedLocationFilter: any;
     public VisibileSurchargesArea: boolean = false;
     public VisibleFCLFreightArea: boolean = false;
+    public VisibleContainerTypeAreaInOFS: boolean = false;
     public ChargeTypesQueryFilters: ApiQueryFilters;
-    public MeasurmentQueryFilters: ApiQueryFilters;
     private chargesTypePMService: ChargesTypeListService;
-    private measurementPMService: MeasurementListService;
     private packageTypePMService: PackageTypeListService;
+    private measurementPMService: MeasurementListService;
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     private ContainerTypesProperties: string[] = [];
@@ -46,12 +45,12 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     public PriceStepsText: string;
     public TariffCurrencyTextCode: string;
     public SellerDependancy: string = "AL";
+    public HasAContainerTypeUOM: boolean = false;
 
     constructor() {
         super();
         this.myService = new TariffPMService();
         this.chargesTypePMService = new ChargesTypeListService();
-        this.measurementPMService = new MeasurementListService();
         this.packageTypePMService = new PackageTypeListService();       
         this.EntityPM = this.myService.GetNewEntityPM();
         this.FillChargesIDsAndUOMS();
@@ -70,10 +69,16 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         }
         else if (this.EntityPM.TypeCode == "OFC") {
             this.VisibleFCLFreightArea = true;
+            this.HasAContainerTypeUOM = true;
         }
         else {
             this.VisibileSurchargesArea = false; 
             this.TariffCurrencyTextCode = "Tariff.F.CurrencyId";
+        }
+        if (this.EntityPM.TypeCode == "OFS") {
+            this.VisibleContainerTypeAreaInOFS = true;
+            this.HasAContainerTypeUOM = false;
+            this.measurementPMService = new MeasurementListService();
         }
         this.BuildQueryFilters();
         this.SetUIProperties();
@@ -112,13 +117,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
             this.SellerDependancy = "SL";
         }
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.MeasurmentQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
-        if (this.EntityPM.TypeCode != "OFS") {
-            this.MeasurmentQueryFilters.addAdditionalFilter("IsContainer", false, null, null, "Equals", false, false, false, "Boolean");
-        }
         this.Validate(true);
         this.SetContainerTypeUIProperties(true);
     }
@@ -547,7 +548,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     }
                 }
                 else {
-                    if (index == 1) {
+                    if (index == 1 && this.HasAContainerTypeUOM) {
                         this.UIProperties.SetRequired(this.ContainerTypesProperties[index - 1], this.ObjectTableName, false);
                     }
                 }
@@ -582,64 +583,26 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         var emptyLines: boolean = false;
         var FirstLineEmpty: boolean = false;
         var tempErrors: Array<string> = [];
-
+        this.HasAContainerTypeUOM = false;
+        
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
             UOMProps.push("Surcharge" + index + "UOM");
             IdPropsName.push("Charge Type " + index );
             UOMPropsName.push("UOM " + index);
 
-            if (this.EntityPM.TypeCode == "OFS") {
-                if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
-                    if (this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this[UOMProps[index - 1]] != null)[0] != null) {
-                        var chargeTypes = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]]);
-                        var isDuplicatiedUOMT: boolean = false;
-                        var pair: string = "";
-                        var pairs = [];
-                        chargeTypes.forEach(item => {
-                            var UOM = item.replace("Id", "UOM");
-                            pair = this[item] + " " + this[UOM];
-                            if (pairs.includes(pair)) {
-                                isDuplicatiedUOMT = true;
-                                return;
-                            }
-                            else {
-                                pairs.push(pair);
-                            }
-                        });
-                        if (isDuplicatiedUOMT) {
-                            var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
-                            var UOMsType = this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this[UOMProps[index - 1]] != null)[0];
-                            var value = this[chargresType + ""] + " " + this[UOMsType + ""] + ", ";
-                            if (!DuplicatedChargesIds.includes(value)) {
-                                DuplicatedChargesIds.push(value);
-                                //Enable using the same charge type with different measurment
-                                this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
-                                    if (!res.HasError) {
-                                        var chargesTypeList: ChargesTypeList = res.Result;
-                                        if (res) {
-                                            this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
-                                        }
-                                    }
-                                });
+            if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
+                var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
+                if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
+                    DuplicatedChargesIds.push(this[chargresType + ""]);
+                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
+                        if (!res.HasError) {
+                            var chargesTypeList: ChargesTypeList = res.Result;
+                            if (res) {
+                                this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
                             }
                         }
-                     }
-                }
-            } else {
-                if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
-                    var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
-                    if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
-                        DuplicatedChargesIds.push(this[chargresType + ""]);
-                        this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
-                            if (!res.HasError) {
-                                var chargesTypeList: ChargesTypeList = res.Result;
-                                if (res) {
-                                    this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
-                                }
-                            }
-                        });
-                    }
+                    });
                 }
             }
             
@@ -688,14 +651,15 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     }
                 }
             }
-            //Disable "By Container Type" UOM
             if (this.EntityPM.TypeCode == "OFS" && this[UOMProps[index - 1]] != null) {
                 this.measurementPMService.getSingleFromCache(this[UOMProps[index - 1]]).subscribe(res => {
                     if (!res.HasError) {
                         var UOMEntity: MeasurementList = res.Result;
                         if (res) {
                             if (UOMEntity.Code == "BCNT") {
-                                this.ValidationErrorsList.push("By Container Type measurment isn't enabled");
+                                this.HasAContainerTypeUOM = true;
+                            } else {
+                                this.HasAContainerTypeUOM = false;
                             }
                         }
                     }
@@ -736,10 +700,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     }); 
                 }
             }
-        
             if (firstIndex == 1) {
                 if (AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
-                    tempErrors.push(ContainerTypeNamesProperties[firstIndex - 1] + " is required");
+                    if (this.HasAContainerTypeUOM) {
+                        tempErrors.push(ContainerTypeNamesProperties[firstIndex - 1] + " is required");
+                    }
                     FirstLineEmpty = true;
                 }
             } else {
@@ -753,7 +718,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                     if (!AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
                         if (FirstLineEmpty) {
                             emptyLines = true;
-                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 1 and line 2");
+                            this.ValidationErrorsList.push("Empty Container Lines aren't allowed between line 1 and line 2");
                             EmptyIndex = 1;
                         }
                     }
@@ -802,7 +767,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
             this.ValidateSurcharge();
         }
 
-        if (this.EntityPM.TypeCode == "OFC") {
+        if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
             var validator: ClassLevelValidator = new ClassLevelValidator();
             var errorsArray = validator.Validate("Tariff", this.EntityPM);
             this.ValidationErrorsList.concat(errorsArray);

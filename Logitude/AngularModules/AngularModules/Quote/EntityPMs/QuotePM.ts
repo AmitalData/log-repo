@@ -1213,9 +1213,64 @@ export class QuotePM {
     public set QuoteHTMLDocumentId(newValue: string) { if (this.quoteHTMLDocumentId != newValue) { this.quoteHTMLDocumentId = newValue; this.MarkAsDirty("QuoteHTMLDocumentId"); } }
        
 	 
+    private quoteVersion: string;
+    public get QuoteVersion() { return this.quoteVersion; }
+    public set QuoteVersion(newValue: string) { if (this.quoteVersion != newValue) { this.quoteVersion = newValue; this.MarkAsDirty("QuoteVersion"); } }
+       
+	 
     private numberOfFollowUps: number;
     public get NumberOfFollowUps() { return this.numberOfFollowUps; }
     public set NumberOfFollowUps(newValue: number) { if (this.numberOfFollowUps != newValue) { this.numberOfFollowUps = newValue; this.MarkAsDirty("NumberOfFollowUps"); } }
+       
+	 
+    private field11: CustomFieldClass;
+    public get Field11() {if(!this.field11){ this.field11 = new CustomFieldClass(null, "Field11", "Quote");} return this.field11; }
+    public set Field11(newValue: CustomFieldClass) {  this.field11 = newValue; this.MarkAsDirty("Field11");  }
+       
+	 
+    private field12: CustomFieldClass;
+    public get Field12() {if(!this.field12){ this.field12 = new CustomFieldClass(null, "Field12", "Quote");} return this.field12; }
+    public set Field12(newValue: CustomFieldClass) {  this.field12 = newValue; this.MarkAsDirty("Field12");  }
+       
+	 
+    private field13: CustomFieldClass;
+    public get Field13() {if(!this.field13){ this.field13 = new CustomFieldClass(null, "Field13", "Quote");} return this.field13; }
+    public set Field13(newValue: CustomFieldClass) {  this.field13 = newValue; this.MarkAsDirty("Field13");  }
+       
+	 
+    private field14: CustomFieldClass;
+    public get Field14() {if(!this.field14){ this.field14 = new CustomFieldClass(null, "Field14", "Quote");} return this.field14; }
+    public set Field14(newValue: CustomFieldClass) {  this.field14 = newValue; this.MarkAsDirty("Field14");  }
+       
+	 
+    private field15: CustomFieldClass;
+    public get Field15() {if(!this.field15){ this.field15 = new CustomFieldClass(null, "Field15", "Quote");} return this.field15; }
+    public set Field15(newValue: CustomFieldClass) {  this.field15 = newValue; this.MarkAsDirty("Field15");  }
+       
+	 
+    private field16: CustomFieldClass;
+    public get Field16() {if(!this.field16){ this.field16 = new CustomFieldClass(null, "Field16", "Quote");} return this.field16; }
+    public set Field16(newValue: CustomFieldClass) {  this.field16 = newValue; this.MarkAsDirty("Field16");  }
+       
+	 
+    private field17: CustomFieldClass;
+    public get Field17() {if(!this.field17){ this.field17 = new CustomFieldClass(null, "Field17", "Quote");} return this.field17; }
+    public set Field17(newValue: CustomFieldClass) {  this.field17 = newValue; this.MarkAsDirty("Field17");  }
+       
+	 
+    private field18: CustomFieldClass;
+    public get Field18() {if(!this.field18){ this.field18 = new CustomFieldClass(null, "Field18", "Quote");} return this.field18; }
+    public set Field18(newValue: CustomFieldClass) {  this.field18 = newValue; this.MarkAsDirty("Field18");  }
+       
+	 
+    private field19: CustomFieldClass;
+    public get Field19() {if(!this.field19){ this.field19 = new CustomFieldClass(null, "Field19", "Quote");} return this.field19; }
+    public set Field19(newValue: CustomFieldClass) {  this.field19 = newValue; this.MarkAsDirty("Field19");  }
+       
+	 
+    private field20: CustomFieldClass;
+    public get Field20() {if(!this.field20){ this.field20 = new CustomFieldClass(null, "Field20", "Quote");} return this.field20; }
+    public set Field20(newValue: CustomFieldClass) {  this.field20 = newValue; this.MarkAsDirty("Field20");  }
        
 	 
      

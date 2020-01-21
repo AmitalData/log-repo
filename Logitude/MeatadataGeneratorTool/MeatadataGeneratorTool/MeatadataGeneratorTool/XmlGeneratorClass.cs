@@ -1049,6 +1049,11 @@ namespace MeatadataGeneratorTool
             SetAttribute("ApplyOnPropertyChangedCode", table.ApplyOnPropertyChangedCode.ToString().ToLower(), entityElement);
             SetAttribute("HasApiHelper", table.HasApiHelper.ToString().ToLower(), entityElement);
             SetAttribute("AllowedForComputingPartners", table.AllowedForComputingPartners.ToString().ToLower(), entityElement);
+            if(table.IsMetadataOnlyTable != false)
+            {
+                SetAttribute("IsMetadataOnlyTable", table.IsMetadataOnlyTable.ToString().ToLower(), entityElement);
+                
+            }
             if (!string.IsNullOrEmpty(table.QueryGroupCode1) && !string.IsNullOrEmpty(table.QueryGroupName1))
             {
                 SetAttribute("Code1", GetStringValue(table.QueryGroupCode1), entityElement, null);

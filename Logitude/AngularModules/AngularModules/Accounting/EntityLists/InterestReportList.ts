@@ -30,6 +30,8 @@ export class InterestReportList {
 	ARInvoiceNumber: string;
 	UpdatedByLocalName: string;
 	InterestReportStatusName: string;
+	SearchFields: string;
+	InterestReportStatusLocalName: string;
 	
 }
  

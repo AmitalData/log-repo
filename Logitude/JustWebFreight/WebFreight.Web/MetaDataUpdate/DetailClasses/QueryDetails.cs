@@ -31,5 +31,6 @@
         public string EditWizardComponentPath { get; set; }
         public string NameTextCodeCode { get; set; }
         public string ObjectTableName { get; set; }
+        public string FeatureUniqeCode { get; set; }
     }
 }

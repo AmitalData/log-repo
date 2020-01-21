@@ -329,6 +329,7 @@
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.html" />
@@ -526,6 +527,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreasPortPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\INTTRASettingPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\UserExtendedListService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
@@ -536,10 +538,13 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\RegistryDateTypeListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\DWHSettingPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\INTTRASettingPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />
     <TypeScriptCompile Include="Controls\InvitedFilter.ts" />
     <TypeScriptCompile Include="Controls\ParticipatedFilter.ts" />
@@ -943,6 +948,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.ts" />
@@ -1138,6 +1144,7 @@
     <Content Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Operational\FlightBookingsManifestFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.html" />
@@ -3603,6 +3610,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\FlightBookingsManifestFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.ts" />
@@ -6863,6 +6871,9 @@
     <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCasesStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorCloudCollection.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Islam\RunTestCasesProd.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Islam\RunTestCasesProdStaging.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Mohammad\TeamMohammadCases.bat" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />

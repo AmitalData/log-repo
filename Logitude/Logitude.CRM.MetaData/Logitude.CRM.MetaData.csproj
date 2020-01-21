@@ -184,7 +184,7 @@
     <None Include="EntityFiles\TimeUnit.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="MetadataFiles\OccasionContact.lxml">
+    <None Include="EntityFiles\OccasionContact.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

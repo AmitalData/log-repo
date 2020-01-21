@@ -1,4 +1,4 @@
-﻿
+
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {MenuButtonGroupPM} from './MenuButtonGroupPM'
 
@@ -100,6 +100,11 @@ export class MenuButtonPM {
     private displayText: string;
     public get DisplayText() { return this.displayText; }
     public set DisplayText(newValue: string) { this.displayText = newValue; this.MarkAsDirty(); }
+
+    private featureUniqeCode: string;
+    public get FeatureUniqeCode() { return this.featureUniqeCode; }
+    public set FeatureUniqeCode(newValue: string) { this.featureUniqeCode = newValue; this.MarkAsDirty(); }
+    
 
 
     public OldEntityPM: MenuButtonPM;

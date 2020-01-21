@@ -1894,7 +1894,47 @@
     <Compile Include="Migrations\202001201424190_Mutaz_Alter_UniqueQueryCode.Designer.cs">
       <DependentUpon>202001201424190_Mutaz_Alter_UniqueQueryCode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs" />
+    <Compile Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.Designer.cs">
+      <DependentUpon>202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001011952246_CustomerOpenFileAmountMigration.cs" />
+    <Compile Include="Migrations\202001011952246_CustomerOpenFileAmountMigration.Designer.cs">
+      <DependentUpon>202001011952246_CustomerOpenFileAmountMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.cs" />
+    <Compile Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.Designer.cs">
+      <DependentUpon>202001020946537_CustomerOpenFileAmountTenantMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051238437_WesamAddObjectFieldCodeToRestrictionTable.cs" />
+    <Compile Include="Migrations\202001051238437_WesamAddObjectFieldCodeToRestrictionTable.Designer.cs">
+      <DependentUpon>202001051238437_WesamAddObjectFieldCodeToRestrictionTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs" />
+    <Compile Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.Designer.cs">
+      <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs" />
+    <Compile Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.Designer.cs">
+      <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs" />
+    <Compile Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.Designer.cs">
+      <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs" />
+    <Compile Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.Designer.cs">
+      <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.cs" />
+    <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.Designer.cs">
+      <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
+    <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
+      <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.cs" />
     <Compile Include="Migrations\201912221319308_AddSupportMailboxTable.Designer.cs">
       <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
@@ -1931,6 +1971,35 @@
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.cs" />
+    <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
+      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs" />
+    <Compile Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.Designer.cs">
+      <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs" />
+    <Compile Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.Designer.cs">
+      <DependentUpon>201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201912310555127_TestFeatureRelation_Rabaia.Designer.cs">
+      <DependentUpon>201912310555127_TestFeatureRelation_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs" />
+    <Compile Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.Designer.cs">
+      <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs" />
+    <Compile Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.Designer.cs">
+      <DependentUpon>202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001060932521_AddingFeatureUniqeCodeToReports_rabaia.cs" />
+    <Compile Include="Migrations\202001060932521_AddingFeatureUniqeCodeToReports_rabaia.Designer.cs">
+      <DependentUpon>202001060932521_AddingFeatureUniqeCodeToReports_rabaia.cs</DependentUpon>
+    </Compile>
+    
     <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs" />
     <Compile Include="Migrations\201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.Designer.cs">
       <DependentUpon>201912301107537_WesamAddLabelTextCodeCodeToMenuButtonsTable.cs</DependentUpon>
@@ -3332,38 +3401,65 @@
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
+     
+    <EmbeddedResource Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.resx">
+      <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.resx">
+      <DependentUpon>201912301409192_DropRelationMenuTablesWithFeatureNew_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    
+    <EmbeddedResource Include="Migrations\202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.resx">
+      <DependentUpon>202001020720010_AddingFeatureUniqeCodeToPackageFeature_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.resx">
       <DependentUpon>201912311135291_WesamAddObjectFieldCodeToRuleConditionFieldsTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.resx">
       <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.resx">
-      <DependentUpon>202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.resx">
+      <DependentUpon>202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.resx">
-      <DependentUpon>202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001011952246_CustomerOpenFileAmountMigration.resx">
+      <DependentUpon>202001011952246_CustomerOpenFileAmountMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.resx">
-      <DependentUpon>202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001020946537_CustomerOpenFileAmountTenantMigration.resx">
+      <DependentUpon>202001020946537_CustomerOpenFileAmountTenantMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.resx">
-      <DependentUpon>202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001051238437_WesamAddObjectFieldCodeToRestrictionTable.resx">
+      <DependentUpon>202001051238437_WesamAddObjectFieldCodeToRestrictionTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001201213182_Add_Field_UniqueCode_To_Query.resx">
-      <DependentUpon>202001201213182_Add_Field_UniqueCode_To_Query.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.resx">
+      <DependentUpon>202001020818509_WesamAddObjectFieldCodeToCustomerFieldsUpdateSetting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.resx">
-      <DependentUpon>202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.resx">
+      <DependentUpon>202001051020182_WesamAddTriggerFieldCodeToObjectTableRuleTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001201315200_Mutaz_AlterCoulmnUniqeCode.resx">
-      <DependentUpon>202001201315200_Mutaz_AlterCoulmnUniqeCode.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.resx">
+      <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001201324071_Mutaz_Alter_QueryCode.resx">
-      <DependentUpon>202001201324071_Mutaz_Alter_QueryCode.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.resx">
+      <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001201424190_Mutaz_Alter_UniqueQueryCode.resx">
-      <DependentUpon>202001201424190_Mutaz_Alter_UniqueQueryCode.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
+      <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+   
+     
+     
+    <EmbeddedResource Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.resx">
+      <DependentUpon>202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001060932521_AddingFeatureUniqeCodeToReports_rabaia.resx">
+      <DependentUpon>202001060932521_AddingFeatureUniqeCodeToReports_rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.resx">
+      <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+    <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
+      <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

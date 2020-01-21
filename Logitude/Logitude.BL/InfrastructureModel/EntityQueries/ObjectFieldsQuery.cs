@@ -144,9 +144,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
             objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
+            string fieldCode = repository.GetObjectFieldCodeById(fieldId, tenant);
 
             ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
-                                           where a.ObjectFieldId == fieldId && a.Tenant == tenant
+                                           where a.ObjectFieldCode == fieldCode && a.Tenant == tenant
                                            select a).FirstOrDefault();
             if (mod != null)
             {
@@ -575,8 +576,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public ObjectFieldPM GetStandardFieldsByFieldId(string fieldId, int tenant)
         {
+            string fieldCode = repository.GetObjectFieldCodeById(fieldId, tenant);
             ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
-                                           where a.ObjectFieldId == fieldId && a.Tenant == tenant
+                                           where a.ObjectFieldCode == fieldCode && a.Tenant == tenant
                                            select a).FirstOrDefault();
 
             ObjectFieldPM objectField = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
@@ -1481,7 +1483,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 objectFieldValidationsDictionary = objectFieldValidationQuery.GetObjectFieldValidationPMsByTenant(tenant).ToDictionary(objv => objv.Id, objv => objv);
 
                 Dictionary<string, ObjectFieldModification> objectFieldModificationsDictionary = new Dictionary<string, ObjectFieldModification>();
-                objectFieldModificationsDictionary = context.ObjectFieldModifications.Where(te => te.Tenant == tenant).ToDictionary(objm => objm.ObjectFieldId, objm => objm);
+                objectFieldModificationsDictionary = context.ObjectFieldModifications.Where(te => te.Tenant == tenant).ToDictionary(objm => objm.ObjectFieldCode, objm => objm);
 
                 ObjectTableRepository tableRep = new ObjectTableRepository(context);
 
@@ -1492,9 +1494,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
 					if (objectFieldModificationsDictionary.Count != 0 && tenant != 0)
 					{
-						if (objectFieldModificationsDictionary.Keys.Contains(objectField.Id))
+						if (objectFieldModificationsDictionary.Keys.Contains(objectField.FieldCode))
 						{
-							ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.Id];
+							ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.FieldCode];
 
 							if (mod != null)
 							{
@@ -2418,7 +2420,132 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return objectfields;
         }
 
+        public ObjectFieldPM GetObjectFieldByFieldCode(string fieldCode, int tenant)
+        {
+            ObjectFieldPM objectField = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
+                                         where (a.Tenant == tenant || a.Tenant == 0)
+                                         && a.FieldCode == fieldCode
+                                         && a.InActive == false
+                                         select new ObjectFieldPM()
+                                         {
+                                             FieldCode = a.FieldCode,
+                                             IsMaxLength = a.IsMaxLength,
+                                             AutomaticField = a.AutomaticField,
+                                             CanFilter = a.CanFilter,
+                                             ConverterName = a.ConverterName,
+                                             DataTemplateName = a.DataTemplateName,
+                                             DataTypeCode = a.DataTypeCode,
+                                             DependencyFilter1Type = a.DependencyFilter1Type,
+                                             DependencyFilter1Value = a.DependencyFilter1Value,
+                                             DependencyFilter2Type = a.DependencyFilter2Type,
+                                             DependencyFilter2Value = a.DependencyFilter2Value,
+                                             DisplayInList = a.DisplayInList,
+                                             DisplayInLookUpIndex = a.DisplayInLookUpIndex,
+                                             DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
+                                             DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
+                                             DisplayInSearchWindowList = a.DisplayInSearchWindowList,
+                                             DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
+                                             DisplayOnLookUp = a.DisplayOnLookUp,
+                                             DisplayOnly = a.DisplayOnly,
+                                             FullNameTextCodeId = a.FullNameTextCodeId,
+                                             FieldName = a.FieldName,
+                                             ShortNameTextCodeId = a.ShortNameTextCodeId,
+                                             HelpTextCodeId = a.HelpTextCodeId,
+                                             Id = a.Id,
+                                             IsCustom = a.IsCustom,
+                                             IsCustomFilter = a.IsCustomFilter,
+                                             IsMulti = a.IsMulti,
+                                             IsRequiered = a.IsRequiered,
+                                             IsTimeFrameFilter = a.IsTimeFrameFilter,
+                                             ListTextCodeId = a.ListTextCodeId,
+                                             ListPropertyPath = a.ListPropertyPath,
+                                             LookUpControlName = a.LookUpControlName,
+                                             LookUpTableId = a.LookUpTableId,
+                                             MaxLength = a.MaxLength,
+                                             MinLength = a.MinLength,
+                                             MultiLine = a.MultiLine,
+                                             MultiTableId = a.MultiTableId,
+                                             ObjectTableId = a.ObjectTableId,
+                                             ObjectTableName = a.ObjectTable.Name,
+                                             Operator = a.Operator,
+                                             PMPropertyPath = a.PMPropertyPath,
+                                             SystemMaxLength = a.SystemMaxLength,
+                                             SystemRequired = a.SystemRequired,
+                                             Tenant = a.Tenant,
+                                             UniqueField = a.UniqueField,
+                                             ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
+                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
+                                             ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
+                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                             HelpTextCodeCode = a.HelpTextCodeCode,
+                                             ListTextCodeCode = a.ListTextCodeCode,
+                                             ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
+                                             ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
+                                             HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
+                                             ValidForQuerySection2 = a.ValidForQuerySection2,
+                                             ValidForQuerySection1 = a.ValidForQuerySection1,
+                                             IsRestrictable = a.IsRestrictable,
+                                             DisplayInEntityVariables = a.DisplayInEntityVariables,
+                                             DigitsAfterPoint = a.DigitsAfterPoint,
+                                             TextCase = a.TextCase,
+                                             SearchFields = a.SearchFields,
+                                             DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
+                                             ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
+                                             TenantZeroIsRequired = a.IsRequiered,
+                                             TenantZeroMaxLength = a.MaxLength,
+                                             TenantZeroMinLength = a.MinLength,
+                                             UserTenant = tenant,
+                                             DisplayLongName = a.DisplayLongName,
+                                             AgentPermissionTypeCode = a.AgentPermissionTypeCode,
+                                             CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
+                                             ControlField1 = a.ControlField1,
+                                             ControlField2 = a.ControlField2,
+                                             CustomPickListCode = a.CustomPickListCode,
+                                             NumberOfDigits = a.NumberOfDigits,
+                                             DependencyFilter1IsList = a.DependencyFilter1IsList,
+                                             DependencyFilter2IsList = a.DependencyFilter2IsList,
+                                             FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
+                                             AllowedinAutomationConditions = a.AllowedinAutomationConditions,
+                                             AutomationEmailRecipient = a.AutomationEmailRecipient,
+                                             AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
+                                             CanAutomateSetValue = a.CanAutomateSetValue,
+                                             HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
+                                             HtmlListComponentUrl = a.HtmlListComponentUrl,
+                                             HtmlHeaderComponentName = a.HtmlHeaderComponentName,
+                                             HtmlListComponentName = a.HtmlListComponentName,
+                                             HasTemplate = a.HasTemplate,
+                                             AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
+                                             GeneratedComponentPath = a.GeneratedComponentPath,
+                                             DisplayInDocumentReferences = a.DisplayInDocumentReferences,
+                                             Code = a.Code,
+                                             ControlField3 = a.ControlField3,
+                                             DependencyFilter3Value = a.DependencyFilter3Value,
+                                             DependencyFilter3Type = a.DependencyFilter3Type,
+                                             DependencyFilter3IsList = a.DependencyFilter3IsList,
+                                             CopyToDW = a.CopyToDW,
+                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                             EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                             RecordType = a.RecordType,
+                                             DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
 
+                                         }).FirstOrDefault();
+
+            ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
+
+            ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
+                                           where a.ObjectFieldCode == fieldCode && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+            if (mod != null)
+            {
+                objectField.IsRequiered = mod.IsRequired;
+                objectField.MaxLength = mod.MaxLength;
+                objectField.MinLength = mod.MinLength;
+            }
+
+            return objectField;
+        }
 
 
 

@@ -17,8 +17,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Code { get; set; }
         public string FeatureId { get; set; }
         public string TabNameTextCodeCode { get; set; }
+        public string FeatureUniqeCode { get; set; }
 
-        [ForeignKey("FeatureId")]
+
+        //[ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
 
 

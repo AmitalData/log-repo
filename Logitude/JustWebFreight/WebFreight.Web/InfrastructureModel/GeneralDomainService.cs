@@ -699,6 +699,7 @@ namespace WebFreight.Web.InfrastructureModel
             rule.Condition = rulePM.Condition;
             rule.TriggerTypeCode = rulePM.TriggerTypeCode;
             rule.TriggerFieldId = rulePM.TriggerFieldId;
+            rule.TriggerFieldCode = rulePM.TriggerFieldCode;
             rule.ActiveForUpdate = rulePM.ActiveForUpdate;
             rule.ActiveForNew = rulePM.ActiveForNew;
             rule.RuleNotificationTypeCode = rulePM.RuleNotificationTypeCode;

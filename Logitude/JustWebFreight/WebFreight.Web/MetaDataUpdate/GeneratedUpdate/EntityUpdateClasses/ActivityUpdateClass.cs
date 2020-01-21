@@ -5859,9 +5859,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMActivity/Components/EditTabs/ActivityGeneralTabComponent", FeatureId = ActivityGeneralFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.ActivityTabs.ActivityGeneralTabControl", ObjectTableId = ActivityObjectTable.Id, TabNameTextCodeId = ActivityGeneralTextCode_TH0.Id, TabNameTextCodeCode = ActivityGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMActivity/Components/EditTabs/ActivityGeneralTabComponent", FeatureId = ActivityGeneralFeature_TH0.Id,FeatureUniqeCode = ActivityGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.ActivityTabs.ActivityGeneralTabControl", ObjectTableId = ActivityObjectTable.Id, TabNameTextCodeId = ActivityGeneralTextCode_TH0.Id, TabNameTextCodeCode = ActivityGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACVN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ActivityEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ActivityObjectTable.Id, TabNameTextCodeId = ActivityEventsTextCode_TH1.Id, TabNameTextCodeCode = ActivityEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACVN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ActivityEventsFeature_TH1.Id,FeatureUniqeCode = ActivityEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ActivityObjectTable.Id, TabNameTextCodeId = ActivityEventsTextCode_TH1.Id, TabNameTextCodeCode = ActivityEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -6080,6 +6080,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = ActivityFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = ActivityFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -6097,6 +6098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ActivityMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6114,6 +6116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  ActivityFeature_MB10.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ActivityFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ActivityMenuButton11 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6131,6 +6134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  ActivityFeature_MB11.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ActivityFeature_MB11.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ActivityMenuButton12 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6148,6 +6152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  ActivityFeature_MB12.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ActivityFeature_MB12.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

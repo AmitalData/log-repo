@@ -9,6 +9,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
+        [Index(IsUnique = true)]
+        public string FeatureUniqeCode { get; set; }
         public int Tenant { get; set; }
         public string Code { get; set; }
         public string ObjectTableId { get; set; }

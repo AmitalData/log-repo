@@ -4727,17 +4727,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPOV",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityOverviewTabComponent", FeatureId = OpportunityMainFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.OverviewTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityMainTextCode_TH0.Id, TabNameTextCodeCode = OpportunityMainTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPOV",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityOverviewTabComponent", FeatureId = OpportunityMainFeature_TH0.Id,FeatureUniqeCode = OpportunityMainFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.OverviewTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityMainTextCode_TH0.Id, TabNameTextCodeCode = OpportunityMainTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityGeneralTabComponent", FeatureId = OpportunityGeneralFeature_TH1.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.OpportunityGeneralTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityGeneralTextCode_TH1.Id, TabNameTextCodeCode = OpportunityGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityGeneralTabComponent", FeatureId = OpportunityGeneralFeature_TH1.Id,FeatureUniqeCode = OpportunityGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.OpportunityGeneralTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityGeneralTextCode_TH1.Id, TabNameTextCodeCode = OpportunityGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPPR",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityProductsTabComponent", FeatureId = OpportunityProductsFeature_TH2.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.ProductsTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityProductsTextCode_TH2.Id, TabNameTextCodeCode = OpportunityProductsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPPR",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityProductsTabComponent", FeatureId = OpportunityProductsFeature_TH2.Id,FeatureUniqeCode = OpportunityProductsFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.ProductsTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityProductsTextCode_TH2.Id, TabNameTextCodeCode = OpportunityProductsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPDO",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityDocsOutTabComponent", FeatureId = OpportunityDocsOutFeature_TH3.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.DocsOutTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityDocsOutTextCode_TH3.Id, TabNameTextCodeCode = OpportunityDocsOutTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPDO",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityDocsOutTabComponent", FeatureId = OpportunityDocsOutFeature_TH3.Id,FeatureUniqeCode = OpportunityDocsOutFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.DocsOutTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityDocsOutTextCode_TH3.Id, TabNameTextCodeCode = OpportunityDocsOutTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPDI",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityDocsInTabComponent", FeatureId = OpportunityDocsInFeature_TH4.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.DocsInTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityDocsInTextCode_TH4.Id, TabNameTextCodeCode = OpportunityDocsInTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPDI",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityDocsInTabComponent", FeatureId = OpportunityDocsInFeature_TH4.Id,FeatureUniqeCode = OpportunityDocsInFeature_TH4.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.DocsInTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityDocsInTextCode_TH4.Id, TabNameTextCodeCode = OpportunityDocsInTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityEventsFeature_TH5.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityEventsTextCode_TH5.Id, TabNameTextCodeCode = OpportunityEventsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityEventsFeature_TH5.Id,FeatureUniqeCode = OpportunityEventsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityEventsTextCode_TH5.Id, TabNameTextCodeCode = OpportunityEventsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -5258,6 +5258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5275,6 +5276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB1.Id,
 						Style = "RedButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5292,6 +5294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5309,6 +5312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB3.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB3.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5326,6 +5330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = OpportunityFeature_MB4.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = OpportunityFeature_MB4.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -5343,6 +5348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton OpportunityMenuButton50 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5360,6 +5366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB50.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  OpportunityFeature_MB50.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton OpportunityMenuButton51 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5377,6 +5384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB51.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  OpportunityFeature_MB51.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton OpportunityMenuButton52 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5394,6 +5402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB52.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  OpportunityFeature_MB52.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton OpportunityMenuButton53 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -5411,6 +5420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpportunityFeature_MB53.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  OpportunityFeature_MB53.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

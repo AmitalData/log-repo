@@ -140,7 +140,7 @@ export class RulesValidator {
         for (var k in entityTableRules) {
             var rule: ObjectTableRulePM = entityTableRules[k];
 
-            var field: ObjectFieldPM = this._tenantObjectFields.filter(x => x.Id === rule.TriggerFieldId)[0];
+            var field: ObjectFieldPM = this._tenantObjectFields.filter(x => x.FieldCode === rule.TriggerFieldCode)[0];
 
             if (field && field.FieldName == propertyName && entity.OldEntityPM) {
 

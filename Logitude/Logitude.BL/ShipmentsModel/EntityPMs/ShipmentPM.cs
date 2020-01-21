@@ -2372,6 +2372,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ARInvoices { get; set; }
         public bool ConvertShipmentToLCL { get; set; }
         public bool ConvertShipmentToFCL { get; set; }
+        public string HousesNumbers { get; set; }
 
         public bool ShipmentDirectionConverted { get; set; }
         public bool ShipmentConvertedNewNumber { get; set; }

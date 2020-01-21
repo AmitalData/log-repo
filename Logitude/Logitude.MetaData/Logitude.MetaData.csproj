@@ -179,9 +179,18 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml" />
     <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CardExternalCodeByCurrency.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\ChargesExternalAccountsByProduct.lxml" />
     <None Include="EntityFiles\CommonDataModel\ComputingPartner.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerAccountManagerByProduct.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CustomerOpenFilesAmount.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerTenantAccessRequest.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierAreasPort.lxml">
@@ -193,6 +202,14 @@
     <None Include="EntityFiles\CommonDataModel\CardContactProduct.lxml" />
     <None Include="EntityFiles\CommonDataModel\CheckDigitControlAlgorithm.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DueType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DWHSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\FilingInboxAttachment.lxml" />
+    <None Include="EntityFiles\CommonDataModel\INTTRABranchRegisteredCarrier.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\INTTRASetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\INTTRASettingMode.lxml" />
     <None Include="EntityFiles\CommonDataModel\NumberFormat.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -228,11 +245,13 @@
     <None Include="EntityFiles\CommonDataModel\FilingInbox.lxml" />
     <None Include="EntityFiles\CommonDataModel\FilingInboxAttachmentLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
+    <None Include="EntityFiles\CommonDataModel\RegistryDateType.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportsTemplate.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportsTemplatesVersion.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentFilingBackupSetting.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\TemperatureUnit.lxml" />
     <None Include="EntityFiles\CommonDataModel\TenantAdditionalData.lxml" />
     <None Include="EntityFiles\CommonDataModel\User.lxml">
       <SubType>Designer</SubType>
@@ -468,7 +487,9 @@
     <None Include="EntityFiles\InfrastructureModel\EventType.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\InfrastructureModel\General.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\General.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\IATACode.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -638,7 +659,9 @@
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentPayable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDelivery.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDeliveryPackage.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDeliveryPackage.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
