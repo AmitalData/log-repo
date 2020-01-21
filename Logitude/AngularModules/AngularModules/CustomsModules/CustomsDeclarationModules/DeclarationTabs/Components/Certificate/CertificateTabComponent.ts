@@ -36,10 +36,12 @@ import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQu
 import {CertificateConnectedItem} from '../../../../../Customs/DataContract/CertificateConnectedItem';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {ConfirmationTypePM} from  '../../../../../Customs/EntityPMs/ConfirmationTypePM';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     moduleId: module.id,
     templateUrl: './CertificateTabComponent.html',
+    providers: [DeclarationExtendedListService]
 })
 
 export class CertificateTabComponent extends BaseComponent implements OnInit {
@@ -62,13 +64,14 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     public ExcludedItems: ObservableCollection;
 
     SelectedItemsCountText: string;
-    SelectedItemsCount: number;;
+    SelectedItemsCount: number;IsDisplayMessage: boolean;
+;
     public IsVisible: boolean;
     showTemplate: boolean = false;
     CertificateTicketsList: CertificateTicketListItem[] = [];
     preventSelect: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.SelectedItemsCount = 0;
         this.CurrentSession.SubscriptionAdd(
@@ -435,6 +438,9 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
         }
+        else {
+            this.InitDisplayOnlyMessage();
+        }
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.DeclarationPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
@@ -446,12 +452,58 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             }
+            else {
+                this.InitDisplayOnlyMessage();
+            }
             this.timerToken = setTimeout(() => {
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             }, 200);
         });
     }
 
+    InitDisplayOnlyMessage() {
+        if (this.DeclarationPM.IsAmendment && (this.DeclarationPM.AmendmentStatus == "2" || this.DeclarationPM.AmendmentStatus == null)) {
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.DeclarationPM.AmendmentStatusName;
+            this.IsDisplayMessage = true;
+        }
+        else if (this.DeclarationPM.IsAmendment == false) {
+            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.DeclarationPM.Id).subscribe
+                (data => {
+                    if (data.Result == null || data.Result.length <= 0) return;
+
+                    data.Result = data.Result.sort((obj1, obj2) => {
+                        if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                            return 1;
+                        }
+
+                        if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
+
+                    data.Result.forEach((item) => {
+                        if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
+                            {
+                            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                                this.IsDisplayMessage = true;
+
+                                return;
+                            }
+                        }
+
+                    });
+                    this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                    this.IsDisplayMessage = true;
+
+                }
+
+
+                );
+
+        }
+    }
 
     public columns: any[] = null;
 

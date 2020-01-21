@@ -23,13 +23,15 @@ import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 declare var window: any;
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 
 @Component({
     selector: 'DeclarationSupplierInvoiceTabComponent',
     moduleId: module.id,
     templateUrl: './DeclarationSupplierInvoiceTabComponent.html',
-})
+    providers: [DeclarationExtendedListService]
+ })
 
 export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implements OnInit{
 
@@ -55,7 +57,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     NumberOfLoadedItems: number = 500;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+    IsDisplayMessage: boolean;
+    constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
        // this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
         this.customsDocumentPointerService = new CustomsDocumentPointerService();
@@ -691,6 +694,9 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
+        else {
+            this.InitDisplayOnlyMessage();
+        }
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
@@ -701,6 +707,9 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+            }
+            else {
+                this.InitDisplayOnlyMessage();
             }
             if (this.EntityPM.SupplierInvoices != null) {
                 for (var i = 0; i < this.EntityPM.SupplierInvoices.length; i++) {
@@ -715,7 +724,49 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         this.SelectedRow2 = CurrentRow.rowData;
         
     }
+
+    InitDisplayOnlyMessage() {
+        if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2" || this.EntityPM.AmendmentStatus == null)) {
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.EntityPM.AmendmentStatusName;
+        this.IsDisplayMessage = true;
+    }
+    else if (this.EntityPM.IsAmendment == false) {
+        this.declarationExtendedListService.GetDeclarationAmendmentsById(this.EntityPM.Id).subscribe
+            (data => {
+                if (data.Result == null || data.Result.length <= 0) return;
+
+                data.Result = data.Result.sort((obj1, obj2) => {
+                    if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                        return 1;
+                    }
+
+                    if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                        return -1;
+                    }
+
+                    return 0;
+                });
+
+                data.Result.forEach((item) => {
+                    if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
+                        this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                        return;
+                    }
+
+                });
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                this.IsDisplayMessage = true;
+
+            }
+
+
+            );
+
+    }
 }
+}
+
+
 
 //export class SupplierInvoiceLine extends BaseComponent {
 //    public SupplierInvoicePM: SupplierInvoicePM = null;

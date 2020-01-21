@@ -30,10 +30,12 @@ import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataC
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     moduleId: module.id,
     templateUrl: './DeclarationGeneralComponent.html',
+    providers: [DeclarationExtendedListService],
 })
 
 export class DeclarationGeneralComponent extends BaseComponent implements AfterViewInit, OnDestroy {
@@ -42,6 +44,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public DataContext: any = this;
     public CurrentEditComponentId: string;
     public IsDisplayOnly: boolean = false;
+    public IsDisplayMessage: boolean = false;
+
     public IsGetTableName: boolean = true;
 
     public IsImporerCodeEnabled: boolean = true;
@@ -56,7 +60,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     ConsigmentTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
 
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
@@ -1158,6 +1162,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     DisplayOnlyCheck() {
         this.DrawMe = true;
         this.IsDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        debugger;
         if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
@@ -1168,6 +1173,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
+        else {
+            this.InitDisplayOnlyMessage();
+        }
+
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
@@ -1179,9 +1188,55 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
+
+            else {
+                this.InitDisplayOnlyMessage();
+            }
+
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
+    }
+    InitDisplayOnlyMessage() {
+         if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2" || this.EntityPM.AmendmentStatus == null)) {
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.EntityPM.AmendmentStatusName;
+            this.IsDisplayMessage = true;
+        }
+        else if (this.EntityPM.IsAmendment == false) {
+            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.EntityPM.Id).subscribe
+                (data => {
+                    if (data.Result == null || data.Result.length <= 0) return;
+
+                      data.Result = data.Result.sort((obj1, obj2) => {
+                          if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                            return 1;
+                        }
+
+                          if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
+
+                     data.Result.forEach((item) => {
+                        if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
+                            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                            this.IsDisplayMessage = true;
+
+                            return;
+                        }
+
+                    });
+                    this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                    this.IsDisplayMessage = true;
+
+                }
+
+
+            );
+
+        }
     }
 
     BuildConsignments() {

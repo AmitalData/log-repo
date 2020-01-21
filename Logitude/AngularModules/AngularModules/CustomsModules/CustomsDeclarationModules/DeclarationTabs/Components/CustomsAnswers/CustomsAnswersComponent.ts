@@ -34,9 +34,12 @@ import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsAnswersComponent.html',
+    providers: [DeclarationExtendedListService]
+
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
@@ -60,6 +63,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllCount: string = "";
     SystemMessageDescribtion: string;
     IsCourierDeclaration: boolean = false;
+    IsDisplayMessage: boolean;
     
     public get DepositionStatusCode(): string {
         if (this.EntityPM == null) return null; 
@@ -88,7 +92,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     //#endregion
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
@@ -231,6 +235,9 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
+        else {
+            this.InitDisplayOnlyMessage();
+        }
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
@@ -242,9 +249,55 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
+            else {
+                this.InitDisplayOnlyMessage();
+            }
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
+    }
+
+
+    InitDisplayOnlyMessage() {
+        if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2" || this.EntityPM.AmendmentStatus == null)) {
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.EntityPM.AmendmentStatusName;
+            this.IsDisplayMessage = true;
+        }
+        else if (this.EntityPM.IsAmendment == false) {
+            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.EntityPM.Id).subscribe
+                (data => {
+                    if (data.Result == null || data.Result.length <= 0) return;
+
+                    data.Result = data.Result.sort((obj1, obj2) => {
+                        if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                            return 1;
+                        }
+
+                        if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
+
+                    data.Result.forEach((item) => {
+                        if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
+                            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                            this.IsDisplayMessage = true;
+
+                            return;
+                        }
+
+                    });
+                    this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                    this.IsDisplayMessage = true;
+
+                }
+
+
+                );
+
+        }
     }
 
     //#region Filter Methods
