@@ -3444,10 +3444,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
-    </EmbeddedResource>
-   
-     
-     
+    </EmbeddedResource> 
     <EmbeddedResource Include="Migrations\202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.resx">
       <DependentUpon>202001051120521_AddingFeatureUniqeCodeToRoleFeatures_rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -3457,7 +3454,6 @@
     <EmbeddedResource Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.resx">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
