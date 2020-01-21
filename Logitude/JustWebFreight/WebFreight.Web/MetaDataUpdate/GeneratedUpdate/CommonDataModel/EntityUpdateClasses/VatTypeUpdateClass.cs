@@ -1178,7 +1178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query VattypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VatTypeTextCode_0.Id, NameTextCodeCode = VatTypeTextCode_0.Code, ObjectTableName = "VatType", Code = "Vat types",  QueryGroupCode = "VATT", IndexOrder = 0, Tenant = 0, ObjectTableId = VatTypeObjectTable.Id, QuerySection = "VatType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VatTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query VattypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VatTypeTextCode_0.Id, NameTextCodeCode = VatTypeTextCode_0.Code, ObjectTableName = "VatType", Code = "Vat types",  QueryGroupCode = "VATT", IndexOrder = 0, Tenant = 0, ObjectTableId = VatTypeObjectTable.Id, QuerySection = "VatType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VatTypeFeature_0.Id,FeatureUniqeCode= VatTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn VattypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -74,7 +74,7 @@ using Logitude.TariffModule.BL.CLoseTable;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
-   public class CustomerAccountManagerByProductsUpdateClass
+   public class CustomerAccountManagerByProductUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -82,7 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "CustomerAccountManagerByProducts",
+	             				    ObjectTableName =  "CustomerAccountManagerByProduct",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CustomerAccountManagerByProducts",
 			      				    OldDBTableName =  "CustomerAccountManagerByProducts",
@@ -136,205 +136,206 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
+	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ProductTypeCode",
+					  						OldFieldName =  "ProductTypeCode",
+					  						ObjectTableName =  "CustomerAccountManagerByProduct",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "ProductType",
+					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ProductTypeCode",
+					  						ListPropertyPath =  "ProductTypeCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerAccountManagerByProduct",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "ProductTypeCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ProductTypeCode",
+					  						DefaultText =  "Product Type",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "ProductTypeCode",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "AccountManagerId",
+					  						OldFieldName =  "AccountManagerId",
+					  						ObjectTableName =  "CustomerAccountManagerByProduct",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "User",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "AccountManagerId",
+					  						ListPropertyPath =  "AccountManagerId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerAccountManagerByProduct",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "AccountManagerId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "AccountManagerId",
+					  						DefaultText =  "Account Manager",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "AccountManagerId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 
-                FieldName = "ProductTypeCode",
-                OldFieldName = "ProductTypeCode",
-                ObjectTableName = "CustomerAccountManagerByProduct",
-                FieldsDataType = "LookUp",
-                LookUpTableName = "ProductType",
-                MinLength = 0,
-                MaxLength = 2,
-                IsRequired = true,
-                CopyToDW = false,
-                DisplayOnLookUp = false,
-                DisplayOnLookUpLocal = false,
-                CanFilter = true,
-                DisplayOnly = false,
-                SystemRequired = false,
-                SystemMaxLength = 0,
-                DisplayInList = true,
-                IsCustomFilter = false,
-                Operator = "StartsWith",
-                MultiLine = false,
-                IsTimeFrameFilter = false,
-                DisplayInSearchWindowList = false,
-                PMPropertyPath = "ProductTypeCode",
-                ListPropertyPath = "ProductTypeCode",
-                DisplayInLookUpIndex = 0,
-                AutomaticField = false,
-                UniqueField = false,
-                DisplayInSearchWindowListIndex = 0,
-                IsMulti = false,
-                DependencyFilter1IsList = false,
-                DependencyFilter2IsList = false,
-                DependencyFilter3IsList = false,
-                ValidForQuerySection1 = "CustomerAccountManagerByProduct",
-                IsRestrictable = false,
-                DisplayInEntityVariables = true,
-                Code = "ProductTypeCode",
-                AllowedInCustomerFieldsSettings = false,
-                DisplayInSearchWindowFilters = false,
-                DisplayInSearchWindowFiltersIndex = 0,
-                DisplayInDocumentReferences = false,
-                NumberOfDigits = 0,
-                DigitsAfterPoint = 0,
-                InActive = false,
-                DisplayLongName = false,
-                FullFieldLable = "ProductTypeCode",
-                DefaultText = "Product Type",
-                IsMaxLength = false,
-                IsFixedLength = false,
-                EnableAutoFill = false,
-                IncludeInSearchField = false,
-                AllowedinAutomationConditions = false,
-                AutomationEmailRecipient = false,
-                CanAutomateSetValue = false,
-                DisplayInAutomationAsEnitity = false,
-                HasTemplate = false,
-                IsCustom = false,
-                HelpTextCode = "ProductTypeCode",
-                EnableFullscreenTextBox = false,
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerId",
+					  						OldFieldName =  "CustomerId",
+					  						ObjectTableName =  "CustomerAccountManagerByProduct",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customer",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerId",
+					  						ListPropertyPath =  "CustomerId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "CustomerId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerId",
+					  						DefaultText =  "Customer",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "CustomerId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+	    }
 
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-
-                FieldName = "AccountManagerId",
-                OldFieldName = "AccountManagerId",
-                ObjectTableName = "CustomerAccountManagerByProduct",
-                FieldsDataType = "LookUp",
-                LookUpTableName = "User",
-                MinLength = 0,
-                MaxLength = 15,
-                IsRequired = false,
-                CopyToDW = false,
-                DisplayOnLookUp = false,
-                DisplayOnLookUpLocal = false,
-                CanFilter = true,
-                DisplayOnly = false,
-                SystemRequired = false,
-                SystemMaxLength = 0,
-                DisplayInList = false,
-                IsCustomFilter = false,
-                Operator = "Equals",
-                MultiLine = false,
-                IsTimeFrameFilter = false,
-                DisplayInSearchWindowList = false,
-                PMPropertyPath = "AccountManagerId",
-                ListPropertyPath = "AccountManagerId",
-                DisplayInLookUpIndex = 0,
-                AutomaticField = false,
-                UniqueField = false,
-                DisplayInSearchWindowListIndex = 0,
-                IsMulti = false,
-                DependencyFilter1IsList = false,
-                DependencyFilter2IsList = false,
-                DependencyFilter3IsList = false,
-                ValidForQuerySection1 = "CustomerAccountManagerByProduct",
-                IsRestrictable = false,
-                DisplayInEntityVariables = true,
-                Code = "AccountManagerId",
-                AllowedInCustomerFieldsSettings = false,
-                DisplayInSearchWindowFilters = false,
-                DisplayInSearchWindowFiltersIndex = 0,
-                DisplayInDocumentReferences = false,
-                NumberOfDigits = 0,
-                DigitsAfterPoint = 0,
-                InActive = false,
-                DisplayLongName = false,
-                FullFieldLable = "AccountManagerId",
-                DefaultText = "Account Manager",
-                IsMaxLength = false,
-                IsFixedLength = false,
-                EnableAutoFill = false,
-                IncludeInSearchField = false,
-                AllowedinAutomationConditions = false,
-                AutomationEmailRecipient = false,
-                CanAutomateSetValue = false,
-                DisplayInAutomationAsEnitity = false,
-                HasTemplate = false,
-                IsCustom = false,
-                HelpTextCode = "AccountManagerId",
-                EnableFullscreenTextBox = false,
-
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-
-                FieldName = "CustomerId",
-                OldFieldName = "CustomerId",
-                ObjectTableName = "CustomerAccountManagerByProduct",
-                FieldsDataType = "LookUp",
-                LookUpTableName = "Customer",
-                MinLength = 0,
-                MaxLength = 15,
-                IsRequired = false,
-                CopyToDW = false,
-                DisplayOnLookUp = false,
-                DisplayOnLookUpLocal = false,
-                CanFilter = true,
-                DisplayOnly = false,
-                SystemRequired = false,
-                SystemMaxLength = 0,
-                DisplayInList = true,
-                IsCustomFilter = false,
-                Operator = "Equals",
-                MultiLine = false,
-                IsTimeFrameFilter = false,
-                DisplayInSearchWindowList = false,
-                PMPropertyPath = "CustomerId",
-                ListPropertyPath = "CustomerId",
-                DisplayInLookUpIndex = 0,
-                AutomaticField = false,
-                UniqueField = false,
-                DisplayInSearchWindowListIndex = 0,
-                IsMulti = false,
-                DependencyFilter1IsList = false,
-                DependencyFilter2IsList = false,
-                DependencyFilter3IsList = false,
-                IsRestrictable = false,
-                DisplayInEntityVariables = true,
-                Code = "CustomerId",
-                AllowedInCustomerFieldsSettings = false,
-                DisplayInSearchWindowFilters = false,
-                DisplayInSearchWindowFiltersIndex = 0,
-                DisplayInDocumentReferences = false,
-                NumberOfDigits = 0,
-                DigitsAfterPoint = 0,
-                InActive = false,
-                DisplayLongName = false,
-                FullFieldLable = "CustomerId",
-                DefaultText = "Customer",
-                IsMaxLength = false,
-                IsFixedLength = false,
-                EnableAutoFill = false,
-                IncludeInSearchField = false,
-                AllowedinAutomationConditions = false,
-                AutomationEmailRecipient = false,
-                CanAutomateSetValue = false,
-                DisplayInAutomationAsEnitity = false,
-                HasTemplate = false,
-                IsCustom = false,
-                HelpTextCode = "CustomerId",
-                EnableFullscreenTextBox = false,
-
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-        }
-
-        public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
+	    {    
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
@@ -342,18 +343,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {
-            ObjectTable CustomerAccountManagerByProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerAccountManagerByProduct" && d.Tenant == 0).FirstOrDefault();
-            Feature CustomerAccountManagerByProductFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomerAccountManagerByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerAccountManagerByProduct.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-            Feature CustomerAccountManagerByProductFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomerAccountManagerByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerAccountManagerByProduct.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-            Feature CustomerAccountManagerByProductFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomerAccountManagerByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerAccountManagerByProduct.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-            Feature CustomerAccountManagerByProductFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomerAccountManagerByProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerAccountManagerByProduct.Features.PackageFeature", NameTextCodeDefaultText = "CustomerAccountManagerByProduct Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-        }
+	    {     
+	    
+		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable CustomerAccountManagerByProductsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerAccountManagerByProducts" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable CustomerAccountManagerByProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerAccountManagerByProduct" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -367,7 +363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = CustomerAccountManagerByProductsObjectTable.Id,
+                ObjectTableId = CustomerAccountManagerByProductObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -385,7 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = CustomerAccountManagerByProductsObjectTable.Id,
+                ObjectTableId = CustomerAccountManagerByProductObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

@@ -913,7 +913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTeamsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TeamTextCode_0.Id, NameTextCodeCode = TeamTextCode_0.Code, ObjectTableName = "Team", Code = "All Teams",  QueryGroupCode = "72bf", IndexOrder = 0, Tenant = 0, ObjectTableId = TeamObjectTable.Id, QuerySection = "Team", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TeamFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTeamsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TeamTextCode_0.Id, NameTextCodeCode = TeamTextCode_0.Code, ObjectTableName = "Team", Code = "All Teams",  QueryGroupCode = "72bf", IndexOrder = 0, Tenant = 0, ObjectTableId = TeamObjectTable.Id, QuerySection = "Team", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TeamFeature_0.Id,FeatureUniqeCode= TeamFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTeamsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TeamObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TeamObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TeamObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TeamObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 

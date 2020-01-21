@@ -922,7 +922,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query VesselsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VesselTextCode_0.Id, NameTextCodeCode = VesselTextCode_0.Code, ObjectTableName = "Vessel", Code = "Vessels",  QueryGroupCode = "VSSL", IndexOrder = 0, Tenant = 0, ObjectTableId = VesselObjectTable.Id, QuerySection = "Vessel", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VesselFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query VesselsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VesselTextCode_0.Id, NameTextCodeCode = VesselTextCode_0.Code, ObjectTableName = "Vessel", Code = "Vessels",  QueryGroupCode = "VSSL", IndexOrder = 0, Tenant = 0, ObjectTableId = VesselObjectTable.Id, QuerySection = "Vessel", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VesselFeature_0.Id,FeatureUniqeCode= VesselFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn VesselsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

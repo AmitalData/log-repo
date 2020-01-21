@@ -568,7 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountTextCode_0.Id, NameTextCodeCode = AccountTextCode_0.Code, ObjectTableName = "Account", Code = "All Accounts",  QueryGroupCode = "ACCT", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountObjectTable.Id, QuerySection = "Account", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountTextCode_0.Id, NameTextCodeCode = AccountTextCode_0.Code, ObjectTableName = "Account", Code = "All Accounts",  QueryGroupCode = "ACCT", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountObjectTable.Id, QuerySection = "Account", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountFeature_0.Id,FeatureUniqeCode= AccountFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountsQuery.Id,QueryCode = AllAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AccountObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 

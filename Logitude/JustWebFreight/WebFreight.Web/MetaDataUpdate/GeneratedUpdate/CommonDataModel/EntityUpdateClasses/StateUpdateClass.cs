@@ -794,7 +794,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query StatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = StateTextCode_0.Id, NameTextCodeCode = StateTextCode_0.Code, ObjectTableName = "State", Code = "States",  QueryGroupCode = "STAT", IndexOrder = 0, Tenant = 0, ObjectTableId = StateObjectTable.Id, QuerySection = "State", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = StateFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query StatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = StateTextCode_0.Id, NameTextCodeCode = StateTextCode_0.Code, ObjectTableName = "State", Code = "States",  QueryGroupCode = "STAT", IndexOrder = 0, Tenant = 0, ObjectTableId = StateObjectTable.Id, QuerySection = "State", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = StateFeature_0.Id,FeatureUniqeCode= StateFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn StatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = StateObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == StateObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = StateObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == StateObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
