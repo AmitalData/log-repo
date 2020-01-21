@@ -2950,7 +2950,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllPaymentChequesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentChequeTextCode_0.Id, Code = "AllPaymentCheques",  QueryGroupCode = "d25b", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentChequeObjectTable.Id, QuerySection = "PaymentCheque", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentChequeFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllPaymentChequesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentChequeTextCode_0.Id, NameTextCodeCode = PaymentChequeTextCode_0.Code, Code = "AllPaymentCheques",  QueryGroupCode = "d25b", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentChequeObjectTable.Id, QuerySection = "PaymentCheque", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentChequeFeature_0.Id,FeatureUniqeCode= PaymentChequeFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllPaymentChequesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2980,15 +2980,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen PaymentChequePaymentChequeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentCheque.PaymentChequeHeaderScreen", Name = "PaymentChequeHeaderScreen", ObjectTableId = PaymentChequeObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "ChequeNumber").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "ChequeNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "ChequeNumber").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "ChequeNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "GLAccountName").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "GLAccountName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "GLAccountName").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "GLAccountName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "PaymentChequeStatusCode").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "PaymentChequeStatusCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "PaymentChequeStatusCode").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "PaymentChequeStatusCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "JournalId").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "JournalId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "JournalId").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = PaymentChequeObjectFields.Where(d => d.FieldName == "JournalId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PaymentChequeObjectTable.HeaderScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id;
+		    PaymentChequeObjectTable.HeaderScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -3009,9 +3011,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCGN",HtmlComponentName = "PaymentChequeGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/PaymentChequeGeneralTabComponent", FeatureId = PaymentChequeGeneralFeature_TH0.Id, ControlPath = "", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCGN",HtmlComponentName = "PaymentChequeGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/PaymentChequeGeneralTabComponent", FeatureId = PaymentChequeGeneralFeature_TH0.Id,FeatureUniqeCode = PaymentChequeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeGeneralTextCode_TH0.Id, TabNameTextCodeCode = PaymentChequeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentChequeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentChequeEventsFeature_TH1.Id,FeatureUniqeCode = PaymentChequeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeEventsTextCode_TH1.Id, TabNameTextCodeCode = PaymentChequeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -3147,6 +3149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = PaymentChequeFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = "שמור כטיוטה",
+						FeatureUniqeCode = PaymentChequeFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3164,6 +3167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = PaymentChequeFeature_MB1.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
+						FeatureUniqeCode = PaymentChequeFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3181,6 +3185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton PaymentChequeMenuButton20 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3198,6 +3203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB20.Id,
 						Style = null,
 						LocalDefaultText = "הדפסת המחאה",
+						FeatureUniqeCode=  PaymentChequeFeature_MB20.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton PaymentChequeMenuButton21 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3215,6 +3221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB21.Id,
 						Style = null,
 						LocalDefaultText = "ביטול המחאה",
+						FeatureUniqeCode=  PaymentChequeFeature_MB21.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

@@ -28,10 +28,10 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  InterestReportLine GetSingle(string interestreportid, int tenant)
+		public  InterestReportLine GetSingle(string interestreportid, string interesttransactionid, int tenant)
         {
             return (from a in context.InterestReportLines
-                    where a.InterestReportId == interestreportid && a.Tenant == tenant
+                    where a.InterestReportId == interestreportid && a.InterestTransactionId == interesttransactionid && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             InterestReportLineKeys keys = entityKeys as InterestReportLineKeys;
             return (from a in context.InterestReportLines
-                    where a.InterestReportId == keys.InterestReportId
+                    where a.InterestReportId == keys.InterestReportId && a.InterestTransactionId == keys.InterestTransactionId
                     select a).FirstOrDefault();
         }
 		         

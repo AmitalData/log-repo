@@ -19,6 +19,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool AutoCompleteSearchWindow { get; set; }
         public bool IsClosed { get; set; }
         public string HeaderScreenId { get; set; }
+        public string HeaderScreenCode { get; set; }
+
         public bool HasCounter { get; set; }
         public bool HasCustomValidator { get; set; }
         public bool EnableEditFromLOV { get; set; }

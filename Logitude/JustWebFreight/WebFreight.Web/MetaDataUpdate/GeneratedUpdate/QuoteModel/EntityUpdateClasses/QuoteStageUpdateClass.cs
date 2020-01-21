@@ -691,7 +691,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllQuoteStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteStageTextCode_0.Id, Code = "All Quote Stages",  QueryGroupCode = "QSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteStageObjectTable.Id, QuerySection = "QuoteStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteStageFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllQuoteStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteStageTextCode_0.Id, NameTextCodeCode = QuoteStageTextCode_0.Code, Code = "All Quote Stages",  QueryGroupCode = "QSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteStageObjectTable.Id, QuerySection = "QuoteStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteStageFeature_0.Id,FeatureUniqeCode= QuoteStageFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllQuoteStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == QuoteStageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteStageObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == QuoteStageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -713,11 +713,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteStageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteStage.HeaderScreen", Name = "Header Screen", ObjectTableId = QuoteStageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField QuoteStageQuoteStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id, ObjectFieldCode = QuoteStageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteStageQuoteStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id,ScreenCode = QuoteStageHeaderScreenScreen0.Code, ObjectFieldCode = QuoteStageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteStageQuoteStageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id, ObjectFieldCode = QuoteStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteStageQuoteStageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id,ScreenCode = QuoteStageHeaderScreenScreen0.Code, ObjectFieldCode = QuoteStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    QuoteStageObjectTable.HeaderScreenId = QuoteStageHeaderScreenScreen0.Id;
+		    QuoteStageObjectTable.HeaderScreenCode = QuoteStageHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -738,9 +740,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QSGN",HtmlComponentName = "QuoteStageGeneralTabComponent",HtmlComponentUrl = "./Common/Components/Maintenance/QuoteStage/QuoteStageGeneralTabComponent", FeatureId = QuoteStageGeneralFeature_TH0.Id, ControlPath = "Simplog.QuoteLib.Views.QuoteStage.StageGeneralTabControl", ObjectTableId = QuoteStageObjectTable.Id, TabNameTextCodeId = QuoteStageGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QSGN",HtmlComponentName = "QuoteStageGeneralTabComponent",HtmlComponentUrl = "./Common/Components/Maintenance/QuoteStage/QuoteStageGeneralTabComponent", FeatureId = QuoteStageGeneralFeature_TH0.Id,FeatureUniqeCode = QuoteStageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.QuoteStage.StageGeneralTabControl", ObjectTableId = QuoteStageObjectTable.Id, TabNameTextCodeId = QuoteStageGeneralTextCode_TH0.Id, TabNameTextCodeCode = QuoteStageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteStageEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteStageObjectTable.Id, TabNameTextCodeId = QuoteStageEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteStageEventsFeature_TH1.Id,FeatureUniqeCode = QuoteStageEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteStageObjectTable.Id, TabNameTextCodeId = QuoteStageEventsTextCode_TH1.Id, TabNameTextCodeCode = QuoteStageEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

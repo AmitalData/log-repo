@@ -72,6 +72,8 @@ namespace Logitude.TariffModule.Data
 	
             modelBuilder.Configurations.Add(new TariffLineMap());
 	
+            modelBuilder.Configurations.Add(new TariffLinesContainersPriceMap());
+	
             modelBuilder.Configurations.Add(new TariffSettingMap());
 	
             modelBuilder.Configurations.Add(new TariffSurchargesUpdateMap());
@@ -142,6 +144,16 @@ namespace Logitude.TariffModule.Data
 			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge9MinPrice).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge10MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price1).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price2).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price3).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price4).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price5).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -434,6 +446,12 @@ namespace Logitude.TariffModule.Data
 	 
 	 }
 	
+	 public IDbSet<TariffLinesContainersPrice> TariffLinesContainersPrices 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<TariffSetting> TariffSettings 
 	 {
 	      get; set;
@@ -473,4 +491,4 @@ namespace Logitude.TariffModule.Data
  }
 
 
-}
+}

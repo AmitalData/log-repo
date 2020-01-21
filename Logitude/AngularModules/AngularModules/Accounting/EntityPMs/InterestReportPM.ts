@@ -44,9 +44,9 @@ export class InterestReportPM {
     public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
        
 	 
-    private updateDate: Date;
-    public get UpdateDate() { return this.updateDate; }
-    public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
+    private updateDateTime: Date;
+    public get UpdateDateTime() { return this.updateDateTime; }
+    public set UpdateDateTime(newValue: Date) { if (this.updateDateTime != newValue) { this.updateDateTime = newValue; this.MarkAsDirty("UpdateDateTime"); } }
        
 	 
     private updatedByUserId: string;
@@ -102,6 +102,46 @@ export class InterestReportPM {
     private interestReportStatusCode: string;
     public get InterestReportStatusCode() { return this.interestReportStatusCode; }
     public set InterestReportStatusCode(newValue: string) { if (this.interestReportStatusCode != newValue) { this.interestReportStatusCode = newValue; this.MarkAsDirty("InterestReportStatusCode"); } }
+       
+	 
+    private createdByLocalName: string;
+    public get CreatedByLocalName() { return this.createdByLocalName; }
+    public set CreatedByLocalName(newValue: string) { if (this.createdByLocalName != newValue) { this.createdByLocalName = newValue; this.MarkAsDirty("CreatedByLocalName"); } }
+       
+	 
+    private gLAccountDisplayNumber: string;
+    public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
+    public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
+       
+	 
+    private gLAccountLocalName: string;
+    public get GLAccountLocalName() { return this.gLAccountLocalName; }
+    public set GLAccountLocalName(newValue: string) { if (this.gLAccountLocalName != newValue) { this.gLAccountLocalName = newValue; this.MarkAsDirty("GLAccountLocalName"); } }
+       
+	 
+    private aRInvoiceNumber: string;
+    public get ARInvoiceNumber() { return this.aRInvoiceNumber; }
+    public set ARInvoiceNumber(newValue: string) { if (this.aRInvoiceNumber != newValue) { this.aRInvoiceNumber = newValue; this.MarkAsDirty("ARInvoiceNumber"); } }
+       
+	 
+    private updatedByLocalName: string;
+    public get UpdatedByLocalName() { return this.updatedByLocalName; }
+    public set UpdatedByLocalName(newValue: string) { if (this.updatedByLocalName != newValue) { this.updatedByLocalName = newValue; this.MarkAsDirty("UpdatedByLocalName"); } }
+       
+	 
+    private interestReportStatusName: string;
+    public get InterestReportStatusName() { return this.interestReportStatusName; }
+    public set InterestReportStatusName(newValue: string) { if (this.interestReportStatusName != newValue) { this.interestReportStatusName = newValue; this.MarkAsDirty("InterestReportStatusName"); } }
+       
+	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private interestReportStatusLocalName: string;
+    public get InterestReportStatusLocalName() { return this.interestReportStatusLocalName; }
+    public set InterestReportStatusLocalName(newValue: string) { if (this.interestReportStatusLocalName != newValue) { this.interestReportStatusLocalName = newValue; this.MarkAsDirty("InterestReportStatusLocalName"); } }
        
 	 
 

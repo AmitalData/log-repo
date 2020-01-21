@@ -441,7 +441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllBusinessUnitsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BusinessUnitTextCode_0.Id, Code = "All Business Units",  QueryGroupCode = "BUQG", IndexOrder = 0, Tenant = 0, ObjectTableId = BusinessUnitObjectTable.Id, QuerySection = "BusinessUnit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BusinessUnitFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllBusinessUnitsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BusinessUnitTextCode_0.Id, NameTextCodeCode = BusinessUnitTextCode_0.Code, Code = "All Business Units",  QueryGroupCode = "BUQG", IndexOrder = 0, Tenant = 0, ObjectTableId = BusinessUnitObjectTable.Id, QuerySection = "BusinessUnit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BusinessUnitFeature_0.Id,FeatureUniqeCode= BusinessUnitFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllBusinessUnitsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessUnitsQuery.Id, IndexOrder = 1, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -459,11 +459,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen BusinessUnitHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessUnit.HeaderScreen", Name = "Header Screen", ObjectTableId = BusinessUnitObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessUnitHeaderScreenScreen0.Id, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessUnitHeaderScreenScreen0.Id,ScreenCode = BusinessUnitHeaderScreenScreen0.Code, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName").FirstOrDefault().Id, ScreenId = BusinessUnitHeaderScreenScreen0.Id, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName").FirstOrDefault().Id, ScreenId = BusinessUnitHeaderScreenScreen0.Id,ScreenCode = BusinessUnitHeaderScreenScreen0.Code, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BusinessUnitObjectTable.HeaderScreenId = BusinessUnitHeaderScreenScreen0.Id;
+		    BusinessUnitObjectTable.HeaderScreenCode = BusinessUnitHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -484,9 +486,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BUGN",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/BusinessUnit/BusinessUnitGeneralTabComponent", FeatureId = BusinessUnitGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.BusinessUnit.BusinessUnitGeneralTabControl", ObjectTableId = BusinessUnitObjectTable.Id, TabNameTextCodeId = BusinessUnitGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BUGN",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/BusinessUnit/BusinessUnitGeneralTabComponent", FeatureId = BusinessUnitGeneralFeature_TH0.Id,FeatureUniqeCode = BusinessUnitGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.BusinessUnit.BusinessUnitGeneralTabControl", ObjectTableId = BusinessUnitObjectTable.Id, TabNameTextCodeId = BusinessUnitGeneralTextCode_TH0.Id, TabNameTextCodeCode = BusinessUnitGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BUEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BusinessUnitEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BusinessUnitObjectTable.Id, TabNameTextCodeId = BusinessUnitEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BUEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BusinessUnitEventsFeature_TH1.Id,FeatureUniqeCode = BusinessUnitEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BusinessUnitObjectTable.Id, TabNameTextCodeId = BusinessUnitEventsTextCode_TH1.Id, TabNameTextCodeCode = BusinessUnitEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

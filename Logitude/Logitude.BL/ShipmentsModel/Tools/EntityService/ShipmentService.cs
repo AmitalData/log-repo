@@ -493,6 +493,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
+                    this.UpdateCrossDockRelease();
 
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
                     this.UpdateShipmentFollowUpsCollection();
@@ -574,6 +575,36 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+
+        #region UpdateCrossDockRelease
+        private void UpdateCrossDockRelease()
+        {
+            if (entityPM.MainCarriageATD == null) ChangeCrossDockReleaseStatus("RELE", "CREA");
+            else if (entityPM.MainCarriageATD != null)
+            {
+                EntityStatus departedStatus = EntityStatusRepository.GetSingleEntityStatusByCode("SDEP", entityPM.Tenant, true);
+                if (departedStatus != null)
+                {
+                    EntityStatus entityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPM.StatusId, entityPM.Tenant, true);
+                    if (entityStatus != null && entityStatus.StatusWeight>= departedStatus.StatusWeight) ChangeCrossDockReleaseStatus("CREA", "RELE");
+                }
+            }
+        }
+        private void ChangeCrossDockReleaseStatus(string fromStatusCode, string toStatusCode)
+        {
+            bool isWarehouseReleaseStatusHasChange = false;
+            WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
+            List<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetAll(entityPM.Tenant).Where(d => d.ShipmentId == entityPM.Id && d.StatusCode == fromStatusCode).ToList();
+            foreach (WarehouseRelease item in warehouseReleases)
+            {
+                item.StatusCode = toStatusCode;
+                warehouseReleaseRepository.Update(item);
+                isWarehouseReleaseStatusHasChange = true;
+            }
+            if (isWarehouseReleaseStatusHasChange) warehouseReleaseRepository.SubmitChanges();
+
+        }
+        #endregion
 
         private void UpdateShipmentComputedFields()
         {
@@ -2588,6 +2619,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void InitializeComponent()
         {
+            entityPM.House = MethodHelper.Trim(entityPM.House);
+
             entityPM.CalculateProfit = false;
             entityPM.CalculatePayables = false;
             entityPM.CalculateReceivables = false;
@@ -3094,6 +3127,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     else if (entityPM.IsShipmentAdditionalCloudDataChange)
                     {
                         shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
+                        shipmentAdditionalCloudData.ApprovedByUserName = null;
+                        shipmentAdditionalCloudData.DenyReason = null;
+                        shipmentAdditionalCloudData.ApproveDateTime = null;
                         shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                     }
 

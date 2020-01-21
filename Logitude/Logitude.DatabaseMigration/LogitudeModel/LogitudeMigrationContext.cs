@@ -77,7 +77,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
 
         #region Common Context
-
+        public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
+        
         public IDbSet<MetodoPago> MetodoPagos { get; set; }
         public IDbSet<BlobFile> BlobFiles
         {
@@ -3686,6 +3687,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+        public IDbSet<TariffLinesContainersPrice> TariffLinesContainersPrices
+        {
+            get;
+            set;
+
+        }
         #endregion
 
 
@@ -4544,6 +4551,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TariffVersionAllInChargeMap());
             modelBuilder.Configurations.Add(new TariffSurchargesUpdateMap());
             modelBuilder.Configurations.Add(new TariffSurchargesUpdateMethodMap());
+            modelBuilder.Configurations.Add(new TariffLinesContainersPriceMap());
             #endregion
 
             #region Infrastructure Generated
@@ -5096,6 +5104,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWHBuildStatusMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
+            modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
 
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
@@ -5115,7 +5124,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-
+            
             base.OnModelCreating(modelBuilder);
         }
     }

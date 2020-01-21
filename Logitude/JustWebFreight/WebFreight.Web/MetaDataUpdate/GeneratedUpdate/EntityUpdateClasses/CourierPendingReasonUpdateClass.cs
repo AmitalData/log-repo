@@ -691,7 +691,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCouriersPendingQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierPendingReasonTextCode_0.Id, Code = "AllCouriersPending",  QueryGroupCode = "aef0", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierPendingReasonObjectTable.Id, QuerySection = "Customs.CourierPendingReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierPendingReasonFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query AllCouriersPendingQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierPendingReasonTextCode_0.Id, Code = "AllCouriersPending",  QueryGroupCode = "aef0", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierPendingReasonObjectTable.Id, QuerySection = "Customs.CourierPendingReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierPendingReasonFeature_0.Id,FeatureUniqeCode= CourierPendingReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCouriersPendingQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id, IndexOrder = 0, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -21,6 +21,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
 
             entityPOCO.ObjectFieldId = entityPM.ObjectFieldId;
+            entityPOCO.ObjectFieldCode = entityPM.ObjectFieldCode;
             entityPOCO.UpdateDirection = entityPM.UpdateDirection;
            
 

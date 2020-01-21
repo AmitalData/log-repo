@@ -585,7 +585,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                               IsActive = a.IsActive,
                                               //IsDisabled
                                               LabelTextCodeId = a.LabelTextCodeId,
-                                              LabelTextCodeCode = a.TextCode.Code,
+                                              LabelTextCodeCode = a.LabelTextCodeCode,
                                               MenuButtonGroupId = a.MenuButtonGroupId,
                                               MenuButtonType = a.MenuButtonType,
                                               ParentMenuButtonId = a.ParentMenuButtonId,
@@ -721,7 +721,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             if (privatelabel != null)
             {
                 TextCode textCode = txtCodeRep.GetTextCodeByTenantAndCode("General.MH.Importers", translationTenant);
-                Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeId == textCode.Id);
+                Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                 if (tra != null)
                 {
                     tra.TranslatedText = privatelabel.PrivateLabelName;
@@ -736,13 +736,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         Tenant = translationTenant,
                         TranslatedText = privatelabel.PrivateLabelName,
                         TranslationHeaderCode = tenantPoco.Language,
+                        TextCodeCode = textCode.Code,
 
                     };
 
                     AllTranslations.Add(tra);
                 }
                 textCode = txtCodeRep.GetTextCodeByTenantAndCode("General.MH.ActivationWizard", translationTenant);
-                tra = AllTranslations.FirstOrDefault(t => t.TextCodeId == textCode.Id);
+                tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                 if (tra != null)
                 {
                     tra.TranslatedText = privatelabel.PrivateLabelShortName + " Services";
@@ -757,6 +758,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         Tenant = translationTenant,
                         TranslatedText = privatelabel.PrivateLabelShortName + " Services",
                         TranslationHeaderCode = tenantPoco.Language,
+                        TextCodeCode = textCode.Code,
                     };
 
                     AllTranslations.Add(tra);
@@ -794,7 +796,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (privatelabel != null)
                 {
                     TextCode textCode = txtCodeRep.GetTextCodeByTenantAndCode("General.MH.Importers", tenant);
-                    Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeId == textCode.Id);
+                    Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                     if (tra != null)
                     {
                         tra.TranslatedText = privatelabel.PrivateLabelName;
@@ -809,13 +811,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             Tenant = tenant,
                             TranslatedText = privatelabel.PrivateLabelName,
                             TranslationHeaderCode = tenantPoco.Language,
+                            TextCodeCode = textCode.Code,
 
                         };
 
                         AllTranslations.Add(tra);
                     }
                     textCode = txtCodeRep.GetTextCodeByTenantAndCode("General.MH.ActivationWizard", tenant);
-                    tra = AllTranslations.FirstOrDefault(t => t.TextCodeId == textCode.Id);
+                    tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                     if (tra != null)
                     {
                         tra.TranslatedText = privatelabel.PrivateLabelShortName + " Services";
@@ -830,6 +833,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             Tenant = tenant,
                             TranslatedText = privatelabel.PrivateLabelShortName + " Services",
                             TranslationHeaderCode = tenantPoco.Language,
+                            TextCodeCode = textCode.Code,
                         };
 
                         AllTranslations.Add(tra);

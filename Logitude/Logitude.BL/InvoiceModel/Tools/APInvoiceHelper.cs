@@ -245,7 +245,6 @@ namespace Logitude.BL.InvoiceModel.Tools
                                         myError = string.IsNullOrEmpty(myError) ? error : myError + ";" + error;
                                 }
 
-                                
                                 if (FieldIsEmpty(myVatType.ReceivablesExternalId))
                                 {
                                     vatError = "VAT Type: " + myVatType.EnglishName + ". External ID is missing.";

@@ -121,7 +121,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -194,7 +194,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -9672,11 +9672,11 @@
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;GLAccount&quot;"
+    NumberOfColumns="5"
+    NumberOfRows="2"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;GLAccount.HeaderScreen&quot;"
-    NumberOfColumns="5"
-    NumberOfRows="2">
+    Code="&quot;GLAccount.HeaderScreen&quot;">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -10460,8 +10460,7 @@
         DefaultText="&quot;Reactivate&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
-        LocalDefaultText="&quot;הפעל מחדש&quot;"
-        IsPackagable="false" />
+        LocalDefaultText="&quot;הפעל מחדש&quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>
@@ -11590,6 +11589,24 @@
       Code="&quot;GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired&quot;"
       DefaultText="&quot;At least one GLAccount Interest Periods record is required&quot;"
       LocalDefaultText="&quot;חובה להזין לפחות רשומה אחת של תקופת ריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Customer&quot;"
+      DefaultText="&quot;Customer&quot;"
+      LocalDefaultText="&quot;לקוחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Vendor&quot;"
+      DefaultText="&quot;Vendor&quot;"
+      LocalDefaultText="&quot;ספקים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.GroupByDate&quot;"
+      DefaultText="&quot;Group By Date:&quot;"
+      LocalDefaultText="&quot;לפי תאריך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

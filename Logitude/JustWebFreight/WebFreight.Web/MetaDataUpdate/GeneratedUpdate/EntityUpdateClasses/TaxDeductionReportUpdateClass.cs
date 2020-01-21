@@ -1009,7 +1009,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALLTaxDeductionReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxDeductionReportTextCode_0.Id, Code = "ALLTaxDeductionReports",  QueryGroupCode = "1c9c", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxDeductionReportObjectTable.Id, QuerySection = "TaxDeductionReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxDeductionReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ALLTaxDeductionReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxDeductionReportTextCode_0.Id, NameTextCodeCode = TaxDeductionReportTextCode_0.Code, Code = "ALLTaxDeductionReports",  QueryGroupCode = "1c9c", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxDeductionReportObjectTable.Id, QuerySection = "TaxDeductionReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxDeductionReportFeature_0.Id,FeatureUniqeCode= TaxDeductionReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ALLTaxDeductionReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id, IndexOrder = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "TaxYear" && d.ObjectTableId == TaxDeductionReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TaxDeductionReportObjectFields.Where(d => d.FieldName == "TaxYear" && d.ObjectTableId == TaxDeductionReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1031,11 +1031,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TaxDeductionReportTaxDeductionReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxDeductionReport.HeaderScreen", Name = "TaxDeductionReportHeaderScreen", ObjectTableId = TaxDeductionReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "TaxYear").FirstOrDefault().Id, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id, ObjectFieldCode = TaxDeductionReportObjectFields.Where(d => d.FieldName == "TaxYear").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "TaxYear").FirstOrDefault().Id, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id,ScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code, ObjectFieldCode = TaxDeductionReportObjectFields.Where(d => d.FieldName == "TaxYear").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id, ObjectFieldCode = TaxDeductionReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id,ScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code, ObjectFieldCode = TaxDeductionReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TaxDeductionReportObjectTable.HeaderScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Id;
+		    TaxDeductionReportObjectTable.HeaderScreenCode = TaxDeductionReportTaxDeductionReportHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -1060,11 +1062,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TDGN",HtmlComponentName = "TaxDeductionReportGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent", FeatureId = TaxDeductionReportGeneralFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TDGN",HtmlComponentName = "TaxDeductionReportGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent", FeatureId = TaxDeductionReportGeneralFeature_TH0.Id,FeatureUniqeCode = TaxDeductionReportGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportGeneralTextCode_TH0.Id, TabNameTextCodeCode = TaxDeductionReportGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LOG",HtmlComponentName = "TaxDeductionReportLogTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportLogTabComponent", FeatureId = TaxDeductionReportLogFeature_TH1.Id, ControlPath = "TaxDeductionReportLogTabComponent", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportLogTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LOG",HtmlComponentName = "TaxDeductionReportLogTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportLogTabComponent", FeatureId = TaxDeductionReportLogFeature_TH1.Id,FeatureUniqeCode = TaxDeductionReportLogFeature_TH1.FeatureUniqeCode, ControlPath = "TaxDeductionReportLogTabComponent", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportLogTextCode_TH1.Id, TabNameTextCodeCode = TaxDeductionReportLogTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TDEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TaxDeductionReportEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TDEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TaxDeductionReportEventsFeature_TH2.Id,FeatureUniqeCode = TaxDeductionReportEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportEventsTextCode_TH2.Id, TabNameTextCodeCode = TaxDeductionReportEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1152,6 +1154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TaxDeductionReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1169,6 +1172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxDeductionReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הורד קובץ טקסט",
+						FeatureUniqeCode=  TaxDeductionReportFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton TaxDeductionReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1186,6 +1190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxDeductionReportFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "הורד קובץ PDF  ",
+						FeatureUniqeCode=  TaxDeductionReportFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

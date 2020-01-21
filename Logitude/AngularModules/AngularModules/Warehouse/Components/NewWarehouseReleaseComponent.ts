@@ -48,7 +48,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
 
     public WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
-
+    ObjectTableName: string = "WarehouseRelease";
     public ValidationErrorsList: string[];
     ShipmentPM: any;
     warehouseReleasePM: WarehouseReleasePM = new WarehouseReleasePM();
@@ -129,9 +129,6 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     Start(args: any) {
 
         this.ShipmentPM = args.ShipmentPM;
-
-
-        this.SetLabel();
         this.SetValue(args);
         this.RunComponent();
         this.IsLoadPage = true;
@@ -144,6 +141,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         if (this.warehouseReleasePM) {
 
             if (this.ShipmentPM) {
+                this.UIProperties.SetEnabled("ShipmentId", "WarehouseRelease", false);
+
                 if (this.ShipmentPM.ShipmentLevelCode == "D") this.warehouseReleasePM.CustomerId = this.ShipmentPM.CustomerId;
                 this.warehouseReleasePM.ShipmentId = this.ShipmentPM.Id;
                 this.warehouseReleasePM.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
@@ -160,9 +159,6 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
             this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
 
-            //this.FromPortId = this.ShipmentPM ? this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId : "";
-
-            //this.ToPortId = this.ShipmentPM.ShipmentLevelCode == "H" ? this.ShipmentPM.MainCarriageFinalDestinationPortId : this.ShipmentPM.FinalDistenationPortId;
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
 
@@ -194,86 +190,50 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         }
     }
 
-    SetLabel() {
+   
 
-        this.VolumeLabel = "Volume (" + SessionLocator.TenantPM.VolumeUnitCode + ")";
-        this.GrossWeightLabel = "Gross Weight (" + SessionLocator.TenantPM.GrossWeightUnitCode + ")";
-        this.DimensionsLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.DimensionsUnitCode + ")";
-        this.ChargeableWeightLabel = "ChargeableWeight (" + SessionLocator.TenantPM.ChargeableWeightUnitCode + ")";
-
-
-        this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.ShipmentPM.GrossWeightUnitCode);
-        this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.ShipmentPM.DimensionsUnitCode);
-        this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.ShipmentPM.ChargeableWeightUnitCode);
-        this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
-    }
-
-
-    LoadAllWarehouseEntryPackagesLists() {
-
-        //if (this.ShipmentPM) {
-        //    this.CurrentSession.StartBusyIndicatorLoading();
-        //    this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.ShipmentPM.Id, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.ShipmentPM.Tenant).subscribe((res: any) => {
-        //        var pmResponse: ServiceResponse = res;
-        //        this.CurrentSession.CurrentWindow.StopBusyIndicator();
-        //        if (!pmResponse.HasError) {
-        //            this.AllWarehouseEntryPackagesLists = pmResponse.Result;
-
-        //        }
-
-        //    });
-        //}
-        if (this.ShipmentPM) {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(null, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.ShipmentPM.Tenant).subscribe((res: any) => {
-                var pmResponse: ServiceResponse = res;
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                if (!pmResponse.HasError) {
-                    this.AllWarehouseEntryPackagesLists = pmResponse.Result;
-
-                }
-
-            });
-        }
-    }
 
     CustomerValueChange(item) {
         if (item) {
-            this.RefreshWarehouseEntryPackagesLists("CustomerId", item);
+            this.RefreshWarehouseEntryPackagesLists();
         }
     }
     WarehouseValueChange(item) {
 
         if (item) {
-            this.RefreshWarehouseEntryPackagesLists("WarehouseId", item);
+            this.RefreshWarehouseEntryPackagesLists();
         }
     }
 
 
 
-    RefreshWarehouseEntryPackagesLists(fieldName: string, item: any) {
-        if (this.CustomWarehouseEntryPackagesLists && this.CustomWarehouseEntryPackagesLists.length > 0) {
-            var lists = [];
-            if (fieldName == "WarehouseId") {
-                lists = this.CustomWarehouseEntryPackagesLists.filter(d => d.WarehouseId == item.Id && d.CustomerId == this.warehouseReleasePM.CustomerId);
-            }
-            else {
-                lists = this.CustomWarehouseEntryPackagesLists.filter(d => d.CustomerId == item.Id && d.WarehouseId == this.warehouseReleasePM.WarehouseId);
-            }
-
-            if (!lists || (lists && lists.length == 0)) {
-                this.IsChangeWarehouseIdOrCustomerId = true;
-                this.WarehouseReleasePackagesLists = [];
-            }
-        }
-        else {
-            this.IsChangeWarehouseIdOrCustomerId = true;
-            this.WarehouseReleasePackagesLists = [];
-        }
-
+    RefreshWarehouseEntryPackagesLists() {
+        this.IsChangeWarehouseIdOrCustomerId = true;
+        this.WarehouseReleasePackagesLists = [];
     }
 
 
+
+    get ShipmentId() { return this.warehouseReleasePM.ShipmentId; }
+    set ShipmentId(newValue: string) {
+        if (this.warehouseReleasePM.ShipmentId != newValue) {
+            this.warehouseReleasePM.ShipmentId = newValue;
+            this.RefreshWarehouseEntryPackagesLists();
+
+        }
+    }
+
+    ShipmentValueChange(shipment: any) {
+        this.warehouseReleasePM.ShipmentNumber = null;
+        if (this.ShipmentPM) {
+            this.warehouseReleasePM.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
+        }
+
+        this.ShipmentPM = shipment;
+        if (this.warehouseReleasePackagesDetailsComponent) {
+            this.warehouseReleasePackagesDetailsComponent.SetPortData();
+        }
+    }
 
 
 
@@ -463,16 +423,16 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-
+    warehouseReleasePackagesDetailsComponent: any;
     LoadChildComponent() {
-
+       
         let warehouseEntryPackagesDetailsComponenttLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "WRPD")[0];
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                 .then(cmpRef => {
-                    var windowArgs: any = { WarehouseEntryPM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM };
+                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM };
                     cmpRef.instance.SetWindowArgs(windowArgs);
-
+                    this.warehouseReleasePackagesDetailsComponent = cmpRef.instance;
                 });
 
         }

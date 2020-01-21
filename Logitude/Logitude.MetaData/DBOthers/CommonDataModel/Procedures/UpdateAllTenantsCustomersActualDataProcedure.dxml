@@ -1,0 +1,36 @@
+<Procedure DBType="Main" Name="usp_UpdateAllTenantsCustomersActualData" Schema="dbo">
+  <SqlScript>
+    <![CDATA[
+CREATE PROCEDURE [dbo].[usp_UpdateAllTenantsCustomersActualData]
+AS
+
+declare @Tenant integer
+
+BEGIN 
+
+	DECLARE TenantsCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id
+	From Tenants
+	OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant
+	WHILE @@FETCH_STATUS = 0
+
+	BEGIN
+		
+
+			EXECUTE usp_UpdateTenantCustomersActualData @Tenant
+
+
+	FETCH NEXT FROM TenantsCursor INTO @Tenant	
+	END
+
+	CLOSE TenantsCursor
+	DEALLOCATE TenantsCursor
+
+END
+    ]]>
+  </SqlScript>
+  
+  <OracleScript>
+  </OracleScript>
+</Procedure>

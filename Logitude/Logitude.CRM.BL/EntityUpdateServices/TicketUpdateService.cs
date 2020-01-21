@@ -39,6 +39,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 if (string.IsNullOrEmpty(entityPM.Id))
                 {
                     entityPM.Id = IdCounter.GetNumber("Ticket", entityPM.Tenant);
+                    entityPM.SupportMailboxId = this.GetDefaultSupportMailBox(entityPM.Tenant);
                 }
 
                 if (string.IsNullOrEmpty(entityPM.TicketNumber))
@@ -125,6 +126,15 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 TicketEscalationAnalyzer ticketEscalationAnalyzer = new TicketEscalationAnalyzer(entityPM, true);
 
             }
+        }
+
+        private string GetDefaultSupportMailBox(int tenant)
+        {
+            string defaultMailBoxId = null;
+            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(tenant);
+            SupportMailbox supportMailbox = mailboxRepository.GetDefaultMailBox(tenant);
+            defaultMailBoxId = supportMailbox != null ? supportMailbox.Id : null;
+            return defaultMailBoxId;
         }
 
         protected override void OnUpdating(EntityPMs.TicketPM entityPM)

@@ -1812,5 +1812,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return vatNumber;
         }
 
+        public bool TenantExist(int tenant, int copyFromTenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            return tenantRepository.TenantExist(copyFromTenant);
+        }
     }
 }

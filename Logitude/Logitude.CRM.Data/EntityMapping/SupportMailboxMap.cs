@@ -40,6 +40,8 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.Inactive).HasColumnName("Inactive").IsRequired();
 
             this.Property(t => t.IsDefault).HasColumnName("IsDefault").IsRequired();
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

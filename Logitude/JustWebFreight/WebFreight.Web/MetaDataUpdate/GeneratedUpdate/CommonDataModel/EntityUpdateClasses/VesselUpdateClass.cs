@@ -922,7 +922,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query VesselsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VesselTextCode_0.Id, Code = "Vessels",  QueryGroupCode = "VSSL", IndexOrder = 0, Tenant = 0, ObjectTableId = VesselObjectTable.Id, QuerySection = "Vessel", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VesselFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query VesselsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VesselTextCode_0.Id, NameTextCodeCode = VesselTextCode_0.Code, Code = "Vessels",  QueryGroupCode = "VSSL", IndexOrder = 0, Tenant = 0, ObjectTableId = VesselObjectTable.Id, QuerySection = "Vessel", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VesselFeature_0.Id,FeatureUniqeCode= VesselFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn VesselsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id, IndexOrder = 0, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -948,13 +948,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen VesselHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Vessel.HeaderScreen", Name = "Header Screen", ObjectTableId = VesselObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField VesselVesselHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VesselVesselHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VesselVesselHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VesselVesselHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VesselVesselHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VesselVesselHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    VesselObjectTable.HeaderScreenId = VesselHeaderScreenScreen0.Id;
+		    VesselObjectTable.HeaderScreenCode = VesselHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -975,9 +977,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VSGC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/Vessel/VesselGeneralTabComponent", FeatureId = VesselGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = VesselObjectTable.Id, TabNameTextCodeId = VesselGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VSGC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/Vessel/VesselGeneralTabComponent", FeatureId = VesselGeneralFeature_TH0.Id,FeatureUniqeCode = VesselGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = VesselObjectTable.Id, TabNameTextCodeId = VesselGeneralTextCode_TH0.Id, TabNameTextCodeCode = VesselGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VesselEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VesselObjectTable.Id, TabNameTextCodeId = VesselEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VesselEventsFeature_TH1.Id,FeatureUniqeCode = VesselEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VesselObjectTable.Id, TabNameTextCodeId = VesselEventsTextCode_TH1.Id, TabNameTextCodeCode = VesselEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

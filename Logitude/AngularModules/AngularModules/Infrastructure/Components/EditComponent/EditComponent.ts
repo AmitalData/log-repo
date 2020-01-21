@@ -679,7 +679,7 @@ export class EditComponent implements OnDestroy {
     private BuildSingleEditTab() {
         var singleTab = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId && d.IndexOrder === 0)[0];
         if (singleTab) {
-            if (FeatureLocator.IsFeatureGranted(singleTab.FeatureId)) {
+            if (FeatureLocator.IsFeatureGrantedByUniqeCode(singleTab.FeatureUniqeCode)) {
                 if (!AppTool.IsNullOrEmpty(singleTab.HtmlComponentUrl)) {
                     this.SingleDetailsTab = singleTab;
                 }
@@ -719,7 +719,7 @@ export class EditComponent implements OnDestroy {
                 //}
             }
 
-            if (FeatureLocator.IsFeatureGranted(tab.FeatureId)) {
+            if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                 if (this.ObjectTableName == "GLAccount") {
 

@@ -1,0 +1,3 @@
+
+ALTER TABLE Features
+DROP CONSTRAINT  FK_FeatureTextCode;

@@ -823,7 +823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllEmployeeGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EmployeeGroupTextCode_0.Id, Code = "All Employee Groups",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = EmployeeGroupObjectTable.Id, QuerySection = "EmployeeGroup", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = EmployeeGroupFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllEmployeeGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EmployeeGroupTextCode_0.Id, NameTextCodeCode = EmployeeGroupTextCode_0.Code, Code = "All Employee Groups",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = EmployeeGroupObjectTable.Id, QuerySection = "EmployeeGroup", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = EmployeeGroupFeature_0.Id,FeatureUniqeCode= EmployeeGroupFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllEmployeeGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id, IndexOrder = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -843,9 +843,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen EmployeeGroupEmployeeGroupHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EmployeeGroup.EmployeeGroupHeaderScreen", Name = "EmployeeGroupHeaderScreen", ObjectTableId = EmployeeGroupObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField EmployeeGroupEmployeeGroupEmployeeGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField EmployeeGroupEmployeeGroupEmployeeGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id,ScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    EmployeeGroupObjectTable.HeaderScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id;
+		    EmployeeGroupObjectTable.HeaderScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -866,9 +868,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EGGE",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMEmployeeGroup/Components/EditTabs/EmployeeGroupGeneralTabComponent", FeatureId = EmployeeGroupGeneralFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.EmployeeGroupTabs.EmployeeGroupGeneralTabControl", ObjectTableId = EmployeeGroupObjectTable.Id, TabNameTextCodeId = EmployeeGroupGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EGGE",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMEmployeeGroup/Components/EditTabs/EmployeeGroupGeneralTabComponent", FeatureId = EmployeeGroupGeneralFeature_TH0.Id,FeatureUniqeCode = EmployeeGroupGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.EmployeeGroupTabs.EmployeeGroupGeneralTabControl", ObjectTableId = EmployeeGroupObjectTable.Id, TabNameTextCodeId = EmployeeGroupGeneralTextCode_TH0.Id, TabNameTextCodeCode = EmployeeGroupGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = EmployeeGroupEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = EmployeeGroupObjectTable.Id, TabNameTextCodeId = EmployeeGroupEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = EmployeeGroupEventsFeature_TH1.Id,FeatureUniqeCode = EmployeeGroupEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = EmployeeGroupObjectTable.Id, TabNameTextCodeId = EmployeeGroupEventsTextCode_TH1.Id, TabNameTextCodeCode = EmployeeGroupEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

@@ -107,6 +107,8 @@ namespace WebFreight.Web.InfrastructureModel
         static OpportunityTypeRepository opportunityTypeRepository;
         static DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository;
         static AccountingPaymentMethodRepository PaymentMethodRepository;
+        // Tariff 
+        static PriceStepRepository priceStepRepository;
 
         //Tickets 
         static TicketTypeRepository ticketTypeRepository;
@@ -251,6 +253,9 @@ namespace WebFreight.Web.InfrastructureModel
             documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(theTenant);
             PaymentMethodRepository = new Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository(theTenant);
 
+            //Tariff 
+            priceStepRepository = new PriceStepRepository(theTenant);
+
             //Tickets 
             ticketTypeRepository = new TicketTypeRepository(theTenant);
             ticketStageRepository = new TicketStageRepository(theTenant);
@@ -351,6 +356,7 @@ namespace WebFreight.Web.InfrastructureModel
                 List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods;
                 List<BankCode> tenantZeroBankCodes = null;
                 List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
+
                 //Tickets
                 List<TicketType> tenantZeroTicketTypes = null;
                 List<TicketStage> tenantZeroTicketStages = null;
@@ -411,6 +417,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroDocumentsMetaDataType = documentsMetaDataTypeRepository.GetDocumentsMetaDataTypes(0).ToList();
                     tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
                     tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
+
                     //Tickets 
                     tenantZeroTicketTypes = ticketTypeRepository.GetAll(0).ToList();
                     tenantZeroTicketStages = ticketStageRepository.GetAll(0).ToList();
@@ -436,6 +443,7 @@ namespace WebFreight.Web.InfrastructureModel
                 InitializeRepositories(tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
                 AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
+
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -497,6 +505,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddTaxWithholdingAssessOffice(tenant, taxWithholdingAssessOfficeRepository, tenantZeroTaxWithholdingAssessOffices);
                 //AddJournalActionTypes(tenant);
 
+               
 
                 if (setting.WorkEnvironment == "customs")
                 {
@@ -717,6 +726,40 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
             return password;
+        }
+
+        private static void AddPriceSteps(TariffSetting setting)
+        {
+            List<PriceStep>  tenantZeroPriceSteps = priceStepRepository.GetAll(0).ToList();
+            List<PriceStep> priceSteps = tenantZeroPriceSteps.Where(d => d.Tenant == 0).ToList();
+            TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
+
+            foreach (PriceStep item in priceSteps)
+            {
+                PriceStep newPriceStep = new PriceStep()
+                {
+                    Id = IdCounter.GetNumber("PriceStep", tenant).ToString(),
+                    Tenant = tenant,
+                    CreateDate = item.CreateDate,
+                    CreatedByUserId = item.CreatedByUserId,
+                    UpdateDate = item.UpdateDate,
+                    UpdatedByUserId = item.UpdatedByUserId,
+                    Name = item.Name,
+                    Steps = item.Steps,
+                    Inactive = item.Inactive,
+                    SearchFields = item.SearchFields,
+                };
+
+                priceStepRepository.Add(newPriceStep);
+                priceStepRepository.SubmitChanges();
+                if (setting != null)
+                {
+                    setting.AirDefaultStepsId = newPriceStep.Id;
+                    setting.LCLDefaultStepsId = newPriceStep.Id;
+                    tariffSettingRepository.Update(setting);
+                    tariffSettingRepository.SubmitChanges();
+                }
+            }
         }
 
         private static void AddAutomationFromTenantZero(int tenant, List<DocumentTypePM> tenantZeroDocumentTypes)
@@ -978,7 +1021,8 @@ namespace WebFreight.Web.InfrastructureModel
 
                 iRepository.Add(settings);
                 iRepository.SubmitChanges();
-            }
+                AddPriceSteps(settings);
+            }   
         }
 
         private static void AddDefaultAccountingSettings(int theTenant, AccountingSettingRepository theAccountingSettingsRepository, AccountingSetting tenantZeroAccoutingSettings)
@@ -1607,7 +1651,7 @@ namespace WebFreight.Web.InfrastructureModel
                         ValidationOrder = validation.ValidationOrder,
                         ValidationExpression = validation.ValidationExpression,
                         Code = validation.Code,
-
+                        ObjectFieldCode = newObjectField.FieldCode,
                     };
                     theObjectFieldValidationRepository.Add(newValidation);
                 }
@@ -1638,7 +1682,7 @@ namespace WebFreight.Web.InfrastructureModel
         {
             foreach (Feature feature in tenantZeroFeatures)
             {
-                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Id == feature.NameTextCodeId).FirstOrDefault();
+                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == feature.NameTextCodeCode).FirstOrDefault();
                 TextCode featureText = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == feature.ObjectTableId).FirstOrDefault();
                 ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
@@ -1648,6 +1692,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Tenant = theTenant,
                     Code = feature.Code,
                     NameTextCodeId = featureText.Id,
+                    NameTextCodeCode = featureText.Code,
                     ObjectTableId = featureObjectTable.Id,
                     Id = IdCounter.GetNumber("Feature", theTenant).ToString(),
                 };
@@ -2002,7 +2047,7 @@ namespace WebFreight.Web.InfrastructureModel
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == tab.ObjectTableId).FirstOrDefault();
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
-                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Id == tab.TabNameTextCodeId).FirstOrDefault();
+                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == tab.TabNameTextCodeCode).FirstOrDefault();
                 TextCode text = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
 
                 ObjectTableTab newTab = new ObjectTableTab()
@@ -2011,6 +2056,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Code = tab.Code,
                     ObjectTableId = currentObjectTable.Id,
                     TabNameTextCodeId = text.Id,
+                    TabNameTextCodeCode = text.Code,
                     IndexOrder = tab.IndexOrder,
                     ControlPath = tab.ControlPath,
                     Id = IdCounter.GetNumber("ObjectTableTab", theTenant).ToString(),
@@ -2072,13 +2118,13 @@ namespace WebFreight.Web.InfrastructureModel
             List<ScreenPM> currentScreens = screensQuery.GetScreenPMsByTenant(theTenant).ToList();
             foreach (ObjectTable objectTable in tenantZeroObjectTables)
             {
-                if (objectTable.HeaderScreenId != null)
+                if (objectTable.HeaderScreenCode != null)
                 {
-                    ScreenPM zeroScreen = tenantZeroScreens.Where(d => d.Id == objectTable.HeaderScreenId).FirstOrDefault();
+                    ScreenPM zeroScreen = tenantZeroScreens.Where(d => d.Id == objectTable.HeaderScreenCode).FirstOrDefault();
                     ScreenPM currentScreen = currentScreens.Where(d => d.Code == zeroScreen.Code).FirstOrDefault();
 
                     ObjectTable currentObject = currentTenantObjectTables.Where(d => d.Name == objectTable.Name).FirstOrDefault();
-                    currentObject.HeaderScreenId = currentScreen.Id;
+                    currentObject.HeaderScreenCode = currentScreen.Id;
                     objectTabelRepository.Update(currentObject);
                 }
             }
@@ -2105,6 +2151,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Id = IdCounter.GetNumber("ScreenField", theTenant).ToString(),
                     ObjectFieldId = currentObjectField.Id,
                     ScreenId = currentScreen.Id,
+                    ScreenCode = currentScreen.Code,
                     Tenant = theTenant,
                     Row = field.Row,
                     Column = field.Column,
@@ -2124,9 +2171,9 @@ namespace WebFreight.Web.InfrastructureModel
                 ObjectTable objectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
                 ObjectField triggerfield = null;
-                if (rule.TriggerFieldId != null)
+                if (rule.TriggerFieldCode != null)
                 {
-                    ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == rule.TriggerFieldId).FirstOrDefault();
+                    ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.FieldCode == rule.TriggerFieldCode).FirstOrDefault();
                     triggerfield = currentTenantObjectFields.Where(d => d.FieldName == zeroObjectField.FieldName && d.ObjectTableId == objectTable.Id).FirstOrDefault();
                 }
 
@@ -2145,6 +2192,7 @@ namespace WebFreight.Web.InfrastructureModel
                     ActiveForNew = rule.ActiveForNew,
                     ActiveForUpdate = rule.ActiveForUpdate,
                     TriggerFieldId = triggerfield != null ? triggerfield.Id : null,
+                    TriggerFieldCode = triggerfield != null ? triggerfield.FieldCode : null,
                     TriggerTypeCode = rule.TriggerTypeCode,
                     RuleNotificationTypeCode = rule.RuleNotificationTypeCode,
 
@@ -2175,6 +2223,7 @@ namespace WebFreight.Web.InfrastructureModel
                     SystemLevel = ruleField.SystemLevel,
                     RuleNotificationTypeCode = ruleField.RuleNotificationTypeCode,
                     Expression = ruleField.Expression,
+                    ObjectFieldCode = objectField.FieldCode,
                 };
 
                 theObjectTableRuleFieldRepository.Add(newRuleField);
@@ -2202,6 +2251,7 @@ namespace WebFreight.Web.InfrastructureModel
                     IndexOrder = q.IndexOrder,
                     DisplayCount = q.DisplayCount,
                     NameTextCodeId = textCode.Id,
+                    NameTextCodeCode = textCode.Code,
                     QueryGroupCode = q.QueryGroupCode,
                     IsAddNewEntityEnabled = q.IsAddNewEntityEnabled,
                     DefaultSortDirection = q.DefaultSortDirection,

@@ -140,6 +140,81 @@ export class ShipmentComputedFieldsPM {
     public set FinalDeliveryATA(newValue: Date) { if (this.finalDeliveryATA != newValue) { this.finalDeliveryATA = newValue; this.MarkAsDirty("FinalDeliveryATA"); } }
        
 	 
+    private operationallyClosedByUserId: string;
+    public get OperationallyClosedByUserId() { return this.operationallyClosedByUserId; }
+    public set OperationallyClosedByUserId(newValue: string) { if (this.operationallyClosedByUserId != newValue) { this.operationallyClosedByUserId = newValue; this.MarkAsDirty("OperationallyClosedByUserId"); } }
+       
+	 
+    private numberOfDeliveries: number;
+    public get NumberOfDeliveries() { return this.numberOfDeliveries; }
+    public set NumberOfDeliveries(newValue: number) { if (this.numberOfDeliveries != newValue) { this.numberOfDeliveries = newValue; this.MarkAsDirty("NumberOfDeliveries"); } }
+       
+	 
+    private importDeclarationDate: Date;
+    public get ImportDeclarationDate() { return this.importDeclarationDate; }
+    public set ImportDeclarationDate(newValue: Date) { if (this.importDeclarationDate != newValue) { this.importDeclarationDate = newValue; this.MarkAsDirty("ImportDeclarationDate"); } }
+       
+	 
+    private importDeclarationNumber: string;
+    public get ImportDeclarationNumber() { return this.importDeclarationNumber; }
+    public set ImportDeclarationNumber(newValue: string) { if (this.importDeclarationNumber != newValue) { this.importDeclarationNumber = newValue; this.MarkAsDirty("ImportDeclarationNumber"); } }
+       
+	 
+    private lastPickupETA: Date;
+    public get LastPickupETA() { return this.lastPickupETA; }
+    public set LastPickupETA(newValue: Date) { if (this.lastPickupETA != newValue) { this.lastPickupETA = newValue; this.MarkAsDirty("LastPickupETA"); } }
+       
+	 
+    private lastPickupETD: Date;
+    public get LastPickupETD() { return this.lastPickupETD; }
+    public set LastPickupETD(newValue: Date) { if (this.lastPickupETD != newValue) { this.lastPickupETD = newValue; this.MarkAsDirty("LastPickupETD"); } }
+       
+	 
+    private lastPickupATA: Date;
+    public get LastPickupATA() { return this.lastPickupATA; }
+    public set LastPickupATA(newValue: Date) { if (this.lastPickupATA != newValue) { this.lastPickupATA = newValue; this.MarkAsDirty("LastPickupATA"); } }
+       
+	 
+    private lastPickupATD: Date;
+    public get LastPickupATD() { return this.lastPickupATD; }
+    public set LastPickupATD(newValue: Date) { if (this.lastPickupATD != newValue) { this.lastPickupATD = newValue; this.MarkAsDirty("LastPickupATD"); } }
+       
+	 
+    private deliveryToCity: string;
+    public get DeliveryToCity() { return this.deliveryToCity; }
+    public set DeliveryToCity(newValue: string) { if (this.deliveryToCity != newValue) { this.deliveryToCity = newValue; this.MarkAsDirty("DeliveryToCity"); } }
+       
+	 
+    private deliveryToPortId: string;
+    public get DeliveryToPortId() { return this.deliveryToPortId; }
+    public set DeliveryToPortId(newValue: string) { if (this.deliveryToPortId != newValue) { this.deliveryToPortId = newValue; this.MarkAsDirty("DeliveryToPortId"); } }
+       
+	 
+    private containsDangerousGoods: boolean;
+    public get ContainsDangerousGoods() { return this.containsDangerousGoods; }
+    public set ContainsDangerousGoods(newValue: boolean) { if (this.containsDangerousGoods != newValue) { this.containsDangerousGoods = newValue; this.MarkAsDirty("ContainsDangerousGoods"); } }
+       
+	 
+    private deliveryFrom: string;
+    public get DeliveryFrom() { return this.deliveryFrom; }
+    public set DeliveryFrom(newValue: string) { if (this.deliveryFrom != newValue) { this.deliveryFrom = newValue; this.MarkAsDirty("DeliveryFrom"); } }
+       
+	 
+    private deliveryTo: string;
+    public get DeliveryTo() { return this.deliveryTo; }
+    public set DeliveryTo(newValue: string) { if (this.deliveryTo != newValue) { this.deliveryTo = newValue; this.MarkAsDirty("DeliveryTo"); } }
+       
+	 
+    private pickupFrom: string;
+    public get PickupFrom() { return this.pickupFrom; }
+    public set PickupFrom(newValue: string) { if (this.pickupFrom != newValue) { this.pickupFrom = newValue; this.MarkAsDirty("PickupFrom"); } }
+       
+	 
+    private pickupTo: string;
+    public get PickupTo() { return this.pickupTo; }
+    public set PickupTo(newValue: string) { if (this.pickupTo != newValue) { this.pickupTo = newValue; this.MarkAsDirty("PickupTo"); } }
+       
+	 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		

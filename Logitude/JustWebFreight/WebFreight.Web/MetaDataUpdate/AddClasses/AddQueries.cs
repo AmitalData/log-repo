@@ -30,6 +30,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 query.DefaultSortDirection = queryDetails.DefaultSortDirection;
                 query.DefaultSortColumn = queryDetails.DefaultSortName;
                 query.NameTextCodeId = queryDetails.NameTextCodeId;
+                query.NameTextCodeCode = queryDetails.NameTextCodeCode;
                 query.SpotlightDataTemplate = queryDetails.SpotlightDataTemplate;
                 query.Customer = queryDetails.Customer;
                 query.Agent = queryDetails.Agent;
@@ -40,6 +41,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 query.Perspective = queryDetails.Perspective;
                 query.IsHiddenFromView = queryDetails.IsHiddenFromView;
                 query.IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly;
+                query.FeatureUniqeCode = queryDetails.FeatureUniqeCode;
                 queryRepository.Update(query);
                 return query;
             }
@@ -63,6 +65,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     DefaultSortColumn = queryDetails.DefaultSortName,
                     Id = IdCounter.GetNumber("Query", queryDetails.Tenant).ToString(),
                     NameTextCodeId = queryDetails.NameTextCodeId,
+                    NameTextCodeCode = queryDetails.NameTextCodeCode,
                     SpotlightDataTemplate = queryDetails.SpotlightDataTemplate,
                     Agent = queryDetails.Agent,
                     Customer = queryDetails.Customer,
@@ -73,6 +76,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Perspective = queryDetails.Perspective,
                     IsHiddenFromView = queryDetails.IsHiddenFromView,
                     IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly,
+                    FeatureUniqeCode = queryDetails.FeatureUniqeCode,
+
                 }; ;
                 queryRepository.Add(newQuery);
                 return newQuery;

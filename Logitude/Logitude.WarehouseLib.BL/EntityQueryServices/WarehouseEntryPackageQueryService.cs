@@ -182,7 +182,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             List<WarehouseEntryPackageItem> myResult = new List<WarehouseEntryPackageItem>();
 
             IQueryable<WarehouseEntryPackageItem> warehouseEntryPackageItemLists = (from a in context.WarehouseEntryPackages.Include("WarehouseEntry").Include("WarehouseEntry.Customer").Include("WarehouseEntry.Warehouse").Include("PackageType")
-                                                                                    where a.Tenant == tenant && a.WarehouseEntry != null && a.WarehouseEntry.ActualEntryDate != null
+                                                                                    where a.Tenant == tenant && a.WarehouseEntry != null && a.WarehouseEntry.ActualEntryDate != null && a.Instock>0
                                                                                     select new WarehouseEntryPackageItem()
                                                                                     {
                                                                                         WarehouseEntryPackagId = a.Id,
@@ -211,6 +211,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                                                         SpecialInstructions = a.WarehouseEntry.SpecialInstruction,
                                                                                         VolumetricWeight = a.VolumetricWeight,
                                                                                         EntryReference = a.WarehouseEntry != null ? a.WarehouseEntry.EntryReference : "",
+                                                                                        Commodity = a.CommodityNumber,
                                                                                     });
 
 
@@ -221,37 +222,37 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             if (!string.IsNullOrEmpty(shipperConsigneesId)) warehouseEntryPackageItemLists = warehouseEntryPackageItemLists.Where(d => d.ConsigneeId == shipperConsigneesId || d.ShipperId == shipperConsigneesId);
             myResult = warehouseEntryPackageItemLists.ToList();
 
-            List<string> warehouseEntryPackageIds = myResult.GroupBy(d => d.WarehouseEntryPackagId).Select(d => d.First().WarehouseEntryPackagId).ToList();
+            //List<string> warehouseEntryPackageIds = myResult.GroupBy(d => d.WarehouseEntryPackagId).Select(d => d.First().WarehouseEntryPackagId).ToList();
 
-            IWarehouseContext myContext = WarehouseContext.GetContext(tenant);
-            WarehouseEntryPackagesReleaseQueryService warehouseEntryPackagesReleaseQueryService = new WarehouseEntryPackagesReleaseQueryService(myContext);
-            List<WarehouseEntryPackagesReleaseList> warehouseEntryPackagesReleaseLists = warehouseEntryPackagesReleaseQueryService.GetWarehouseEntryPackagePMListsByCustomerIdIdAndWarehouseId(warehouseEntryPackageIds, tenant);
-            if (warehouseEntryPackagesReleaseLists.Count > 0)
-            {
-                List<string> packageReleaseIds = warehouseEntryPackagesReleaseLists.GroupBy(d => d.ReleasePackageId).Select(d => d.First().ReleasePackageId).ToList();
-                WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(myContext);
-                List<WarehouseReleasePackageList> warehouseReleasePackageLists = warehouseReleasePackageQueryService.GetWarehouseReleasePackageListsByIds(packageReleaseIds, tenant);
-                if (warehouseReleasePackageLists.Count > 0)
-                {
-                    foreach (WarehouseEntryPackagesReleaseList warehouseEntryPackagesReleaseList in warehouseEntryPackagesReleaseLists)
-                    {
-                        WarehouseReleasePackageList releasePackage = warehouseReleasePackageLists.Where(d => d.Id == warehouseEntryPackagesReleaseList.ReleasePackageId).FirstOrDefault();
-                        if (releasePackage != null)
-                        {
-                            if (releasePackage.ActualReleaseDate != null)
-                            {
-                                WarehouseEntryPackageItem warehouseEntryPackageItem = myResult.Where(d => d.WarehouseEntryPackagId == warehouseEntryPackagesReleaseList.EntryPackageId).FirstOrDefault();
-                                if (warehouseEntryPackageItem != null && warehouseEntryPackageItem.QuantityNotRelease == 0)
-                                {
-                                    myResult = myResult.Where(d => d.WarehouseEntryPackagId != warehouseEntryPackagesReleaseList.EntryPackageId).ToList();
-                                }
+            //IWarehouseContext myContext = WarehouseContext.GetContext(tenant);
+            //WarehouseEntryPackagesReleaseQueryService warehouseEntryPackagesReleaseQueryService = new WarehouseEntryPackagesReleaseQueryService(myContext);
+            //List<WarehouseEntryPackagesReleaseList> warehouseEntryPackagesReleaseLists = warehouseEntryPackagesReleaseQueryService.GetWarehouseEntryPackagePMListsByCustomerIdIdAndWarehouseId(warehouseEntryPackageIds, tenant);
+            //if (warehouseEntryPackagesReleaseLists.Count > 0)
+            //{
+            //    List<string> packageReleaseIds = warehouseEntryPackagesReleaseLists.GroupBy(d => d.ReleasePackageId).Select(d => d.First().ReleasePackageId).ToList();
+            //    WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(myContext);
+            //    List<WarehouseReleasePackageList> warehouseReleasePackageLists = warehouseReleasePackageQueryService.GetWarehouseReleasePackageListsByIds(packageReleaseIds, tenant);
+            //    if (warehouseReleasePackageLists.Count > 0)
+            //    {
+            //        foreach (WarehouseEntryPackagesReleaseList warehouseEntryPackagesReleaseList in warehouseEntryPackagesReleaseLists)
+            //        {
+            //            WarehouseReleasePackageList releasePackage = warehouseReleasePackageLists.Where(d => d.Id == warehouseEntryPackagesReleaseList.ReleasePackageId).FirstOrDefault();
+            //            if (releasePackage != null)
+            //            {
+            //                if (releasePackage.ActualReleaseDate != null)
+            //                {
+            //                    WarehouseEntryPackageItem warehouseEntryPackageItem = myResult.Where(d => d.WarehouseEntryPackagId == warehouseEntryPackagesReleaseList.EntryPackageId).FirstOrDefault();
+            //                    if (warehouseEntryPackageItem != null && warehouseEntryPackageItem.QuantityNotRelease == 0)
+            //                    {
+            //                        myResult = myResult.Where(d => d.WarehouseEntryPackagId != warehouseEntryPackagesReleaseList.EntryPackageId).ToList();
+            //                    }
 
-                            }
-                        }
-                    }
-                }
+            //                }
+            //            }
+            //        }
+            //    }
 
-            }
+            //}
 
             #region Fill Prop
 

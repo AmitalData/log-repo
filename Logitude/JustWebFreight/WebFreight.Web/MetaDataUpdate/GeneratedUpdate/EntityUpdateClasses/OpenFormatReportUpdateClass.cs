@@ -1059,7 +1059,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllOpenFormatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpenFormatReportTextCode_0.Id, Code = "AllOpenFormats",  QueryGroupCode = "7d37", IndexOrder = 0, Tenant = 0, ObjectTableId = OpenFormatReportObjectTable.Id, QuerySection = "OpenFormatReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpenFormatReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllOpenFormatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpenFormatReportTextCode_0.Id, NameTextCodeCode = OpenFormatReportTextCode_0.Code, Code = "AllOpenFormats",  QueryGroupCode = "7d37", IndexOrder = 0, Tenant = 0, ObjectTableId = OpenFormatReportObjectTable.Id, QuerySection = "OpenFormatReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpenFormatReportFeature_0.Id,FeatureUniqeCode= OpenFormatReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllOpenFormatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id, IndexOrder = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1081,21 +1081,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OpenFormatReportOpenFormatReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpenFormatReport.HeaderScreen", Name = "OpenFormatReportHeaderScreen", ObjectTableId = OpenFormatReportObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    OpenFormatReportObjectTable.HeaderScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id;
+		    OpenFormatReportObjectTable.HeaderScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen OpenFormatReportGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpenFormatReport.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = OpenFormatReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpenFormatReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().Id, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().Id, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpenFormatReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().Id, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().Id, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -1116,9 +1118,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OFGN",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = OpenFormatReportGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = OpenFormatReportObjectTable.Id, TabNameTextCodeId = OpenFormatReportGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OFGN",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = OpenFormatReportGeneralFeature_TH0.Id,FeatureUniqeCode = OpenFormatReportGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = OpenFormatReportObjectTable.Id, TabNameTextCodeId = OpenFormatReportGeneralTextCode_TH0.Id, TabNameTextCodeCode = OpenFormatReportGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OGLG",HtmlComponentName = "OpenFormatReportLogTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent", FeatureId = OpenFormatReportLogFeature_TH1.Id, ControlPath = "./Accounting/Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent", ObjectTableId = OpenFormatReportObjectTable.Id, TabNameTextCodeId = OpenFormatReportLogTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OGLG",HtmlComponentName = "OpenFormatReportLogTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent", FeatureId = OpenFormatReportLogFeature_TH1.Id,FeatureUniqeCode = OpenFormatReportLogFeature_TH1.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent", ObjectTableId = OpenFormatReportObjectTable.Id, TabNameTextCodeId = OpenFormatReportLogTextCode_TH1.Id, TabNameTextCodeCode = OpenFormatReportLogTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1206,6 +1208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "יותר",
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton OpenFormatReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1223,6 +1226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpenFormatReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הורדה",
+						FeatureUniqeCode=  OpenFormatReportFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton OpenFormatReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1240,6 +1244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpenFormatReportFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "PDF הורד קובץ ",
+						FeatureUniqeCode=  OpenFormatReportFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

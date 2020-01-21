@@ -67,7 +67,9 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 }
 	   }
 	  private string interestTransactionId ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]

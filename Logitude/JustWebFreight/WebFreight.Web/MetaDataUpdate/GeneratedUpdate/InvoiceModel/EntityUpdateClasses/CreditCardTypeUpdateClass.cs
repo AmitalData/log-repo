@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ClientModuleName =  "Invoice",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -195,6 +195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -259,6 +260,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -322,6 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -385,6 +388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -447,6 +451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BankAccountId",
@@ -475,7 +480,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, NameTextCodeCode = CreditCardTypeTextCode_0.Code, Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id,FeatureUniqeCode= CreditCardTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCreditCardTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id, IndexOrder = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -495,21 +500,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	         Screen CreditCardTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CreditCardType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CreditCardTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen CreditCardTypeHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CreditCardType.HeaderScreen", Name = "Header Screen", ObjectTableId = CreditCardTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CreditCardTypeHeaderScreenScreen1.Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CreditCardTypeHeaderScreenScreen1.Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CreditCardTypeObjectTable.HeaderScreenId = CreditCardTypeHeaderScreenScreen1.Id;
+		    CreditCardTypeObjectTable.HeaderScreenCode = CreditCardTypeHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -530,9 +537,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CreditCardTypeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CreditCardTypeObjectTable.Id, TabNameTextCodeId = CreditCardTypeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CreditCardTypeGeneralFeature_TH0.Id,FeatureUniqeCode = CreditCardTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CreditCardTypeObjectTable.Id, TabNameTextCodeId = CreditCardTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = CreditCardTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CreditCardTypeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CreditCardTypeObjectTable.Id, TabNameTextCodeId = CreditCardTypeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CreditCardTypeEventsFeature_TH1.Id,FeatureUniqeCode = CreditCardTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CreditCardTypeObjectTable.Id, TabNameTextCodeId = CreditCardTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = CreditCardTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

@@ -49,6 +49,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
+                response.TookMS= ledgerTransactionBalanceService.Response.TookMS;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;

@@ -826,7 +826,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private GLAccountPM GetGLAccountForLine(APInvoiceLinePM line)
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            GLAccountPM glaAccount = glAccountQuery.GetGLAccountByDisplayNumber(line.DebitAccount, tenant);
+            GLAccountPM glaAccount = glAccountQuery.GetGLAccountByInternalNumber(line.DebitAccount, tenant);
             return glaAccount;
         }
         #endregion
@@ -2256,7 +2256,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     // Insert Journal Lines 
                     // [Credit-Vendor]
-                    GLAccountPM glAccount = getCreditGLAccount(theEntityPm.VendorId, theEntityPm.Tenant);
+                    GLAccountPM glAccount = GetInvoiceGLAccount(theEntityPm);
                     JournalLinePM journalLine = new JournalLinePM();
                     journalLine.Tenant = tenant;
                     journalLine.JournalId = journal.Id;
@@ -2359,6 +2359,34 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM glaAccount = null;
             CardRepository cardRep = new CardRepository(tenant);
             Card card = cardRep.GetSingleCard(vendorId, tenant);
+            if (card != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+            }
+
+            return glaAccount;
+        }
+        private static GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM)
+        {
+            GLAccountPM glAccount;
+            if (invoicePM.VendorGLAccountId != null)
+                glAccount = GetGLAccountById(invoicePM.VendorGLAccountId, invoicePM.Tenant);
+            else
+                glAccount = GetGLAccountByCardId(invoicePM.VendorId, invoicePM.Tenant);
+            return glAccount;
+        }
+        private static GLAccountPM GetGLAccountById(string glaccountId, int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM glaAccount = glAccountQuery.GetSingleGLAccountPM(glaccountId, tenant);
+            return glaAccount;
+        }
+        private static GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
+        {
+            GLAccountPM glaAccount = null;
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(cardId, tenant);
             if (card != null)
             {
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;

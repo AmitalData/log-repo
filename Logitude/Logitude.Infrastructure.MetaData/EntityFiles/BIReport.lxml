@@ -117,7 +117,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="true"
@@ -187,7 +187,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="true"
@@ -1439,6 +1439,15 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <Screen
+    Name="&quot;BIReportHeaderScreen&quot;"
+    ObjectTableName="&quot;BIReport&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;General&quot;"
@@ -1518,6 +1527,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReportCopy&quot;"
       FeatureDefaultText="&quot;Copy&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;BIReportCopyFromLibrary&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;BIReport.Features.BIReportCopyFromLibrary&quot;"
+      FeatureDefaultText="&quot;Copy From Library&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

@@ -17,6 +17,7 @@ export class DirectShipment {
         this.Helper.WaitByIdAndClick('NEWDIRECT');
         this.ShipmentModes.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
         this.FillDirectShipmentFields(ReferenceNumber, TransportMode, Direction);
+        this.Helper.ItemsPresent('ShipmentCreatebtn');
         this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
     }
 
@@ -45,17 +46,19 @@ export class DirectShipment {
 
             this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestConsi');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_ConsigneeId', 'TestConsi');
+            this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', 'Flight555');
 
             if (Direction == 'Domestic') {
                 this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
                 this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageFromPortId', 'eze');
-
+            
                 this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'eze');
                 this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageToPortId', 'eze');
             } else {
                 this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
                 this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageFromPortId', 'eze');
-
+          
+                this.Helper.ItemsPresent('Shipment_MainCarriageToPortId');
                 this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
                 this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageToPortId', 'mvd');
             }
@@ -65,7 +68,7 @@ export class DirectShipment {
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageCarrierId', 'BA');
 
             this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', '115');
-
+            this.Helper.ItemsPresent('Shipment_MoveTypeId');
             this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIdAirMTA');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MoveTypeId', 'TestMoveTypeIdAirMTA');
 
@@ -91,9 +94,6 @@ export class DirectShipment {
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MoveTypeId', 'TestMoveTypeIdInlandMTI');
         }
 
-
-        this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'CIF');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_IncotermId', 'CIF');
 
 
         // this.Helper.WaitByIdAndClick('Shipment_OrderIsDangerouseGoods');

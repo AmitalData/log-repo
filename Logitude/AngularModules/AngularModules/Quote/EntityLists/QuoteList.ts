@@ -173,5 +173,15 @@ export class QuoteList {
 		NumberOfFollowUps: number;
 		IsDangerous: boolean;
 		QuoteHTMLDocumentId: string;
+		Field11: string;
+		Field12: string;
+		Field13: string;
+		Field14: string;
+		Field15: string;
+		Field16: string;
+		Field17: string;
+		Field18: string;
+		Field19: string;
+		Field20: string;
 	
 }

@@ -25,33 +25,20 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
     {
 
         [TestMethod]
-        public void ARInvoice_12PMCS_Create()
+        public async Task CreateARInvoice_Post_Failed()
         {
-            Task.Run(async () =>
-            {
-                ARInvoicePM entityPM = GetNewARInvoice_12PMCS();
+
+                ARInvoicePM entityPM = GetNewARInvoice();
                 HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "ARInvoices");
-                ARInvoicePM ARInvoice12PMCS = RestClientService.ParseResponse<ARInvoicePM>(response);
-                Assert.AreEqual(entityPM.Id, ARInvoice12PMCS.Id);
-                FullAccountingVariables.InvoiceNumber12PMCSId = ARInvoice12PMCS.Id;
-            }).GetAwaiter().GetResult();
+                ARInvoicePM ARInvoicePM = RestClientService.ParseResponse<ARInvoicePM>(response);
+                Assert.AreEqual(entityPM.Id, ARInvoicePM.Id);
         }
-        [TestMethod]
-        public void ARInvoice_12PMCS_GetSingle()
-        {
-            Task.Run(async () =>
-            {
-                HttpResponseMessage response = await RestClientService.GetAsync("ARInvoiceViews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1897&GetCount=true&PageSize=23");
-                ARInvoiceList ARInvoice12PMCS = RestClientService.ParseResponse<ARInvoiceList>(response);
-                Assert.IsNotNull(ARInvoice12PMCS);
-                Assert.AreEqual(FullAccountingVariables.InvoiceNumber12PMCSId, ARInvoice12PMCS.Id);
-            }).GetAwaiter().GetResult();
-        }
-        private ARInvoicePM GetNewARInvoice_12PMCS()
+
+        private ARInvoicePM GetNewARInvoice()
         {
             ARInvoicePM ARInvoicePM = new ARInvoicePM();
             ARInvoicePM.Tenant = IntegrationTestLoginParameters.Tenant;
-            ARInvoicePM.InvoiceNumber = RestClientService.GetUniqueIdByDate() ;
+            ARInvoicePM.InvoiceNumber = VariablesGenerater.GetUniqueIdByDate() ;
             ARInvoicePM.ARInvoiceTypeCode = "IN";
             ARInvoicePM.BillToId = "1-53459";
             ARInvoicePM.BillToPartnerTypeId = "CS";

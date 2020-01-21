@@ -49,6 +49,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
+using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -163,6 +164,9 @@ namespace WebFreight.Web.MetaDataUpdate
                                 GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
                                 globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
+                                SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+                                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+
                                 updateClass.LoadUpdateTenantZero(context, false);
                                 updateClass.LoadOtherFields(context);
 
@@ -191,8 +195,11 @@ namespace WebFreight.Web.MetaDataUpdate
                                 ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                                 shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
-                                QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
-                                quotemodelUpdateClass.LoadObjectsTenantZero(context);
+                            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+                            masterModelUpdateClass.LoadObjectsTenantZero(context);
+
+                            QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
+                            quotemodelUpdateClass.LoadObjectsTenantZero(context);
 
                                 InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
                                 invoicemodelUpdateClass.LoadObjectsTenantZero(context);
@@ -206,34 +213,40 @@ namespace WebFreight.Web.MetaDataUpdate
                                 GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
                                 globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
-							InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
+                                SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+                                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+
+                                InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
 							modelUpdateClass.LoadObjectsTenantZero(context);
 
                                 updateClass.LoadUpdateTenantZero(context, false);
 
-                                //updateClass.LoadOtherFields(context);
-                                updateClass.LoadTranslationHeaders();
-                                updateClass.LoadMeasurements();
-                                updateClass.LoadCreditCardTypes();
-                                updateClass.LoadMoveTypes();
-                                //updateClass.loadQueries();
-                                //updateClass.loadScreens();
-                                //updateClass.LoadObjectTableTabs();
-                                updateClass.LoadRolesAndFeatures(0);
-                                updateClass.LoadObjectTableHelperControls();
-                                updateClass.LoadEntityStatus();
-                                updateClass.LoadEventTypes();
-                                updateClass.LoadRanks();
-                                updateClass.LoadMenustables();
-                                updateClass.LoadDefaultReports();
-                                updateClass.LoadHelpResources();
-                                updateClass.CreateMasterCounter(0);
-                                updateClass.LoadEmailAlertSettings();
-                                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-                                {
-                                    updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
-                                }
+                            //updateClass.LoadOtherFields(context);
+                            updateClass.LoadTranslationHeaders();
+                            updateClass.LoadMeasurements();
+                            updateClass.LoadCreditCardTypes();
+                            updateClass.LoadMoveTypes();
+							//updateClass.loadQueries();
+							//updateClass.loadScreens();
+							//updateClass.LoadObjectTableTabs();
+							context.SaveChanges();
+
+                            updateClass.LoadRolesAndFeatures(0);
+                            updateClass.LoadObjectTableHelperControls();
+                            updateClass.LoadEntityStatus();
+                            updateClass.LoadEventTypes();
+                            updateClass.LoadRanks();
+                            updateClass.LoadMenustables();
+                            updateClass.LoadDefaultReports();
+                            updateClass.LoadHelpResources();
+                            updateClass.CreateMasterCounter(0);
+                            updateClass.LoadEmailAlertSettings();
+                            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+                            {
+                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
                             }
+                    
+
                             break;
                         }
                     case "updatetenantzero":
@@ -462,6 +475,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
+                            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+                            masterModelUpdateClass.LoadObjectsTenantZero(context);
+
                             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                             {
                                 MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
@@ -497,6 +513,8 @@ namespace WebFreight.Web.MetaDataUpdate
                                 MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
                                 updateClass.UpgradeClosedTablesForTenantZero();
                             }
+                            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+                            systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
                             break;
                         }
 
@@ -604,9 +622,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             customUpdateClass.LoadEventTypes();
 
                             //CRM
-                            OccasionContactMetadataUpdateClass occasionContactMetadataUpdateClass = new OccasionContactMetadataUpdateClass();
-                            occasionContactMetadataUpdateClass.LoadObjectsTenantZero(context);
-
+                            
                             CRMUpdateClass cRMUpdateClass = new CRMUpdateClass();
                             cRMUpdateClass.LoadObjectsTenantZero(context);
 
@@ -1247,8 +1263,8 @@ namespace WebFreight.Web.MetaDataUpdate
             List<ScreenField> screenFields = screenFieldsRepository.GetScreenFieldsByTenant(tenant).ToList();
             foreach (Screen screen in tenantZeroScreens)
             {
-                ScreenModification screenMod = screenModifications.Where(s => s.ScreenId == screen.Id).FirstOrDefault();
-                List<ScreenField> fields = screenFields.Where(f => f.ScreenId == screen.Id).ToList();
+                ScreenModification screenMod = screenModifications.Where(s => s.ScreenCode == screen.Code).FirstOrDefault();
+                List<ScreenField> fields = screenFields.Where(f => f.ScreenCode == screen.Code).ToList();
                 if (fields.Count > 0)
                 {
                     int columnsNumber = screenMod != null ? screenMod.NumberOfColumns : screen.NumberOfColumns;
@@ -1281,6 +1297,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             {
                                 Id = IdCounter.GetNumber("ScreenModification", tenant),
                                 ScreenId = screen.Id,
+                                ScreenCode = screen.Code,
                                 Tenant = tenant,
                                 NumberOfColumns = screen.NumberOfColumns,
                                 NumberOfRows = newRowsNumber,

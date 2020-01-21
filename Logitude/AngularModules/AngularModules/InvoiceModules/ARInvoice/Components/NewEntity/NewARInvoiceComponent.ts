@@ -906,95 +906,97 @@ export class NewARInvoiceComponent extends BaseComponent {
     ValidateCreditLimitPartnersRestrictions(errors: string[]) {
         var errorText_Blocking: string = "Credit limit setting is blocking invoice for ";
 
-        switch (this.billToCorePartnerTypeId) {
-            case "CS":
-                {
-                    if (this.billToIsCustomer) {
-                        if (ObjectsLocator.CreditLimitSettingPM.CustomersInvoicesBlock) {
-                            errors.push(errorText_Blocking + "Customers");
+        if (ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled) {
+            switch (this.billToCorePartnerTypeId) {
+                case "CS":
+                    {
+                        if (this.billToIsCustomer) {
+                            if (ObjectsLocator.CreditLimitSettingPM.CustomersInvoicesBlock) {
+                                errors.push(errorText_Blocking + "Customers");
+                            }
                         }
-                    }
 
-                    else {
-                        if (ObjectsLocator.CreditLimitSettingPM.ShipperConsigneeInvoiceBlock) {
-                            errors.push(errorText_Blocking + "Shippers and Consignees");
+                        else {
+                            if (ObjectsLocator.CreditLimitSettingPM.ShipperConsigneeInvoiceBlock) {
+                                errors.push(errorText_Blocking + "Shippers and Consignees");
+                            }
                         }
+
+                        break;
                     }
 
-                    break;
-                }
+                case "AG":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.AgentsInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Agents");
+                        }
 
-            case "AG":
-                {
-                    if (ObjectsLocator.CreditLimitSettingPM.AgentsInvoicesBlock) {
-                        errors.push(errorText_Blocking + "Agents");
+                        break;
                     }
 
-                    break;
-                }
+                case "CG":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.CustomsAgentsInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Customs Agents");
+                        }
 
-            case "CG":
-                {
-                    if (ObjectsLocator.CreditLimitSettingPM.CustomsAgentsInvoicesBlock) {
-                        errors.push(errorText_Blocking + "Customs Agents");
+                        break;
                     }
 
-                    break;
-                }
+                case "SG":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.ShippingAgentsInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Shipping Agents");
+                        }
 
-            case "SG":
-                {
-                    if (ObjectsLocator.CreditLimitSettingPM.ShippingAgentsInvoicesBlock) {
-                        errors.push(errorText_Blocking + "Shipping Agents");
+                        break;
                     }
 
-                    break;
-                }
+                case "AL":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.AirlinesInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Airlines");
+                        }
 
-            case "AL":
-                {
-                    if (ObjectsLocator.CreditLimitSettingPM.AirlinesInvoicesBlock) {
-                        errors.push(errorText_Blocking + "Airlines");
+                        break;
                     }
 
-                    break;
-                }
+                case "SL":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.ShippingLinesInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Shipping Lines");
+                        }
 
-            case "SL":
-                {
-                    if (ObjectsLocator.CreditLimitSettingPM.ShippingLinesInvoicesBlock) {
-                        errors.push(errorText_Blocking + "Shipping Lines");
+                        break;
                     }
 
-                    break;
-                }
+                case "TR":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.TruckersInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Truckers");
+                        }
 
-            case "TR":
-                {
-                    if (ObjectsLocator.CreditLimitSettingPM.TruckersInvoicesBlock) {
-                        errors.push(errorText_Blocking + "Truckers");
+                        break;
                     }
 
-                    break;
-                }
+                case "VD":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.VendorsInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Vendors");
+                        }
 
-            case "VD":
-                {
-                    if (ObjectsLocator.CreditLimitSettingPM.VendorsInvoicesBlock) {
-                        errors.push(errorText_Blocking + "Vendors");
+                        break;
                     }
 
-                    break;
-                }
+                case "WH":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.WarehousesInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Warehouses");
+                        }
 
-            case "WH":
-                {
-                    if (ObjectsLocator.CreditLimitSettingPM.WarehousesInvoicesBlock) {
-                        errors.push(errorText_Blocking + "Warehouses");
+                        break;
                     }
-
-                    break;
-                }
+            }
         }
     }
 

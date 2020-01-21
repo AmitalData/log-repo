@@ -322,11 +322,11 @@ export class GeneralDomainService {
         );
     }
 
-    GetScreenModificationByScreenId(ScreenId: string) {
+    GetScreenModificationByScreenCode(ScreenCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetScreenModificationByScreenId?ScreenId=' + ScreenId;
+        var url = this._apiUrl + '/GetScreenModificationByScreenCode?ScreenCode=' + ScreenCode;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
@@ -359,6 +359,29 @@ export class GeneralDomainService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;                
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetSingleObjectFieldByFieldCodeFromZeroTenant(fieldCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleObjectFieldByFieldCodeFromZeroTenant?' + 'fieldCode=' + fieldCode, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+                var entity: ObjectFieldPM;
+                if (pm) {
+                    entity = this.MapJsonToObjectFieldPM(pm);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
@@ -712,6 +735,7 @@ export class FieldsTranslations {
     }
     
     public TextCodeId: string;
+    public TextCodeCode: string;
     public Code: string;
     
     private translatedText: string;

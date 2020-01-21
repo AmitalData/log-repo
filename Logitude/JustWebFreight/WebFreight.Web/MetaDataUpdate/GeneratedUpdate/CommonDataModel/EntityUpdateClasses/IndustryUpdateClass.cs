@@ -387,7 +387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IndustryTextCode_0.Id, Code = "All Lead Sources",  QueryGroupCode = "IDST", IndexOrder = 0, Tenant = 0, ObjectTableId = IndustryObjectTable.Id, QuerySection = "Industry", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IndustryFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IndustryTextCode_0.Id, NameTextCodeCode = IndustryTextCode_0.Code, Code = "All Lead Sources",  QueryGroupCode = "IDST", IndexOrder = 0, Tenant = 0, ObjectTableId = IndustryObjectTable.Id, QuerySection = "Industry", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IndustryFeature_0.Id,FeatureUniqeCode= IndustryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllLeadSourcesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id, IndexOrder = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -407,21 +407,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen IndustryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Industry.HeaderScreen", Name = "Header Screen", ObjectTableId = IndustryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField IndustryIndustryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    IndustryObjectTable.HeaderScreenId = IndustryHeaderScreenScreen0.Id;
+		    IndustryObjectTable.HeaderScreenCode = IndustryHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen IndustryGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Industry.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = IndustryObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField IndustryIndustryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -442,9 +444,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IYGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = IndustryGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = IndustryObjectTable.Id, TabNameTextCodeId = IndustryGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IYGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = IndustryGeneralFeature_TH0.Id,FeatureUniqeCode = IndustryGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = IndustryObjectTable.Id, TabNameTextCodeId = IndustryGeneralTextCode_TH0.Id, TabNameTextCodeCode = IndustryGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IYEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = IndustryEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = IndustryObjectTable.Id, TabNameTextCodeId = IndustryEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IYEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = IndustryEventsFeature_TH1.Id,FeatureUniqeCode = IndustryEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = IndustryObjectTable.Id, TabNameTextCodeId = IndustryEventsTextCode_TH1.Id, TabNameTextCodeCode = IndustryEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

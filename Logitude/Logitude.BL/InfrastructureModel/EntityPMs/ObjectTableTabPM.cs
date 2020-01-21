@@ -22,5 +22,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public string HtmlComponentName { get; set; }
         public string HtmlComponentUrl { get; set; }
+        public string FeatureUniqeCode { get; set; }
+
     }
 }

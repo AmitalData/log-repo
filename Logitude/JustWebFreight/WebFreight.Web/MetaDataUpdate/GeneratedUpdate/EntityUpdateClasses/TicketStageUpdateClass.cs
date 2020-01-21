@@ -327,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketStageTextCode_0.Id, Code = "All Ticket Stages",  QueryGroupCode = "TAQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketStageObjectTable.Id, QuerySection = "TicketStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketStageFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTicketStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketStageTextCode_0.Id, NameTextCodeCode = TicketStageTextCode_0.Code, Code = "All Ticket Stages",  QueryGroupCode = "TAQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketStageObjectTable.Id, QuerySection = "TicketStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketStageFeature_0.Id,FeatureUniqeCode= TicketStageFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTicketStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketStagesQuery.Id, IndexOrder = 0, ObjectFieldId = TicketStageObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketStageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketStageObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketStageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -345,17 +345,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TicketStageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketStage.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketStageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TicketStageTicketStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketStageHeaderScreenScreen0.Id, ObjectFieldCode = TicketStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketStageTicketStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketStageHeaderScreenScreen0.Id,ScreenCode = TicketStageHeaderScreenScreen0.Code, ObjectFieldCode = TicketStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TicketStageObjectTable.HeaderScreenId = TicketStageHeaderScreenScreen0.Id;
+		    TicketStageObjectTable.HeaderScreenCode = TicketStageHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen TicketStageGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketStage.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TicketStageObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TicketStageTicketStageGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketStageGeneralTabScreenScreen1.Id, ObjectFieldCode = TicketStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketStageTicketStageGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketStageGeneralTabScreenScreen1.Id,ScreenCode = TicketStageGeneralTabScreenScreen1.Code, ObjectFieldCode = TicketStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketStageTicketStageGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TicketStageObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TicketStageGeneralTabScreenScreen1.Id, ObjectFieldCode = TicketStageObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketStageTicketStageGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TicketStageObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TicketStageGeneralTabScreenScreen1.Id,ScreenCode = TicketStageGeneralTabScreenScreen1.Code, ObjectFieldCode = TicketStageObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -376,9 +378,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TAGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketStageGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TicketStageObjectTable.Id, TabNameTextCodeId = TicketStageGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TAGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketStageGeneralFeature_TH0.Id,FeatureUniqeCode = TicketStageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TicketStageObjectTable.Id, TabNameTextCodeId = TicketStageGeneralTextCode_TH0.Id, TabNameTextCodeCode = TicketStageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketStageEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TicketStageObjectTable.Id, TabNameTextCodeId = TicketStageEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketStageEventsFeature_TH1.Id,FeatureUniqeCode = TicketStageEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TicketStageObjectTable.Id, TabNameTextCodeId = TicketStageEventsTextCode_TH1.Id, TabNameTextCodeCode = TicketStageEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

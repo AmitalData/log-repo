@@ -475,7 +475,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CargoSplitRequestStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoSplitRequestStatusTextCode_0.Id, Code = "CargoSplitRequestStatus",  QueryGroupCode = "7f60", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoSplitRequestStatusObjectTable.Id, QuerySection = "Customs.CargoSplitRequestStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoSplitRequestStatusFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query CargoSplitRequestStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoSplitRequestStatusTextCode_0.Id, Code = "CargoSplitRequestStatus",  QueryGroupCode = "7f60", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoSplitRequestStatusObjectTable.Id, QuerySection = "Customs.CargoSplitRequestStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoSplitRequestStatusFeature_0.Id,FeatureUniqeCode= CargoSplitRequestStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CargoSplitRequestStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoSplitRequestStatusQuery.Id, IndexOrder = 0, ObjectFieldId = CargoSplitRequestStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CargoSplitRequestStatusObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

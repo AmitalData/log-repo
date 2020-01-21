@@ -101,7 +101,7 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-                _ResponseText = $"Made Customers: {_CustomersMade},  Vendors: {_VendorsMade},   All others: {_AllOthersMade}, Errors: {String.Join(", ", _badList.ToArray())}";
+                _ResponseText = $"Made Customers: {_CustomersMade},  Vendors: {_VendorsMade},   All others: {_AllOthersMade}, Errors: {String.Join(", \n", _badList.ToArray())}";
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         if (!String.IsNullOrEmpty(cardList.PayablesAccountingCard))
                         {
-                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardList.PayablesAccountingCard, "3", tenant);
+                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardList.PayablesAccountingCard, "1", tenant);
                             if (gLAccountList != null)
                             {
                                 GLAccount gLAccount = gLAccountList.FirstOrDefault();
@@ -134,6 +134,10 @@ namespace Logitude.Accounting.BL.Utils
                                     catch (Exception ex)
                                     {
                                         string errorText = ex.Message;
+                                        if (ex.InnerException != null && !String.IsNullOrEmpty(ex.InnerException.Message))
+                                        { 
+                                            errorText += ", " + ex.InnerException.Message;
+                                        }
                                         _badList.Add(errorText);
                                     }
                                 }
@@ -151,7 +155,7 @@ namespace Logitude.Accounting.BL.Utils
                         }
                         else if (!String.IsNullOrEmpty(cardList.ReceivablesAccountingCard))
                         {
-                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardList.ReceivablesAccountingCard, "3", tenant);
+                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardList.ReceivablesAccountingCard, "1", tenant);
                             if (gLAccountList != null)
                             {
                                 GLAccount gLAccount = gLAccountList.FirstOrDefault();
@@ -165,6 +169,10 @@ namespace Logitude.Accounting.BL.Utils
                                     catch (Exception ex)
                                     {
                                         string errorText = ex.Message;
+                                        if (ex.InnerException != null && !String.IsNullOrEmpty(ex.InnerException.Message))
+                                        {
+                                            errorText += ", " + ex.InnerException.Message;
+                                        }
                                         _badList.Add(errorText);
                                     }
                                 }
@@ -215,6 +223,10 @@ namespace Logitude.Accounting.BL.Utils
                                     catch (Exception ex)
                                     {
                                         string errorText = ex.Message;
+                                        if (ex.InnerException != null && !String.IsNullOrEmpty(ex.InnerException.Message))
+                                        {
+                                            errorText += ", " + ex.InnerException.Message;
+                                        }
                                         _badList.Add(errorText);
                                     }
                                 }
@@ -265,6 +277,10 @@ namespace Logitude.Accounting.BL.Utils
                                     catch (Exception ex)
                                     {
                                         string errorText = ex.Message;
+                                        if (ex.InnerException != null && !String.IsNullOrEmpty(ex.InnerException.Message))
+                                        {
+                                            errorText += ", " + ex.InnerException.Message;
+                                        }
                                         _badList.Add(errorText);
                                     }
                                 }

@@ -31,15 +31,15 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.UpdateDateTime).HasColumnName("UpdateDateTime");
 
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.GLAccountId).HasColumnName("GLAccountId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.GLAccountId).HasColumnName("GLAccountId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ReportNumber).HasColumnName("ReportNumber").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.InterestCalculationDate).HasColumnName("InterestCalculationDate");
+            this.Property(t => t.InterestCalculationDate).HasColumnName("InterestCalculationDate").IsRequired();
 
             this.Property(t => t.TotalAmount).HasColumnName("TotalAmount").HasPrecision(18, 2);
 
@@ -54,6 +54,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.GLAccountInterestCreditLimit).HasColumnName("GLAccountInterestCreditLimit").HasPrecision(18, 2);
 
             this.Property(t => t.InterestReportStatusCode).HasColumnName("InterestReportStatusCode").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

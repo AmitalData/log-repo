@@ -434,7 +434,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 		noObjectField = (field.Attribute(XName.Get("NoMetaDataField")).Value.ToLower() == "true");
     }
 
-	if(field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" || noObjectField)
+	if(noObjectField)//field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" || 
     {
 		return;
     }
@@ -677,7 +677,7 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 			  if (!string.IsNullOrEmpty(EditWizardName) && EditWizardName != "&quot;&quot;"  && SpotlightDataTemplate != "\"\"")
     {
 			  #> EditWizardName = <#= EditWizardName #>,
-			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #> }, queriesRepository, tenantQueries);
+			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id,FeatureUniqeCode= <#= TblName.Trim('"') #>Feature_<#= index #>.FeatureUniqeCode, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #> }, queriesRepository, tenantQueries);
 	<#+
 	    int i = 0;
 	    foreach(XElement Column in QueryAtt.Elements("QueryColumns").FirstOrDefault().Elements("QueryColumn"))
@@ -795,7 +795,7 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName)
 	  
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = tenantFeatures.Where(d => d.Code == "<#= TblName.Trim('"') #>.Tab.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "<#= TableNameFull.Trim('"') #>.TH.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = tenantFeatures.Where(d => d.Code == "<#= TblName.Trim('"') #>.Tab.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id,FeatureUniqeCode = tenantFeatures.Where(d => d.Code == "<#= TblName.Trim('"') #>.Tab.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "<#= TableNameFull.Trim('"') #>.TH.<#= Name.Trim(new char[]{' ','"'}).Replace(" ","") #>" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 

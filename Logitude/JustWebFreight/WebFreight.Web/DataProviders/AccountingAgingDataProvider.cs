@@ -7,6 +7,10 @@ namespace WebFreight.Web.DataProviders
 {
     public class AccountingAgingDataProvider : BaseDataProvider
     {
+        public AccountingAgingDataProvider()
+        {
+            AgingPeriods = new List<AgingPeriod>();
+        }
         public string CustomerFilterValue { get; set; }
         public DateTime? Month { get; set; }
         public string PrintedByUser { get; set; }

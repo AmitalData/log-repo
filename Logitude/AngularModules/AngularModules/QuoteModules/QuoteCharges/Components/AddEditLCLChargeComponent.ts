@@ -36,8 +36,12 @@ export class AddEditLCLChargeComponent {
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
+    public CheckChargeTypeDuplicationFlag: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;    
     private IsHyprid: boolean;
+    private ChargesTypeCode: string;
+    
+
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
         this.StepsItemsSource = new ObservableCollection([]);
@@ -66,7 +70,8 @@ export class AddEditLCLChargeComponent {
         this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
-        
+        this.ChargesTypeCode = this.EntityPM.ChargesTypeCode;
+
         this.DataContext.SetUIProperties();
         this.BuildItemsSource();
         this.BuildQueryFilters();
@@ -175,13 +180,25 @@ export class AddEditLCLChargeComponent {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
+
+    CheckChargeTypeDuplication() {
+        if (!this.DataContext.IsNew && (this.ChargesTypeCode != this.EntityPM.ChargesTypeCode)) {
+            this.CheckChargeTypeDuplicationFlag = true;
+        }
+        if (this.DataContext.IsNew) {
+            this.CheckChargeTypeDuplicationFlag = true;
+        }
+    }
+
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (this.IsHyprid) {
+        this.CheckChargeTypeDuplication();
+
+        if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
             var quoteValidator: QuoteValidator = new QuoteValidator();
             quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
         }
@@ -228,14 +245,17 @@ export class AddEditLCLChargeComponent {
         var freightLineCostCurrencyId: string = "";
         var freightLineSaleCurrencyId: string = "";
         if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-            freightLineCostCurrencyId = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0].CostCurrencyId;
-            freightLineSaleCurrencyId = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0].SaleCurrencyId;
+            var quoteCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
+            if (quoteCharge) {
+                freightLineCostCurrencyId = quoteCharge.CostCurrencyId;
+                freightLineSaleCurrencyId = quoteCharge.SaleCurrencyId;
+            }
         }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.CostMeasurementCode)) {
             if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
                 if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
-                    errors.push("Cost Currency should be same as Freight Charge Cost Currency when Cost Measurement is Percent of Freight");
+                    errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
                 }
             }
         }
@@ -243,7 +263,7 @@ export class AddEditLCLChargeComponent {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.SaleMeasurementCode)) {
             if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
                 if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
-                    errors.push("Sale Currency should be same as Freight Charge Sale Currency when Sale Measurement is Percent of Freight");
+                    errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
                 }
             }
         }

@@ -179,6 +179,56 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetLedgerTransactionByAccountDisplayNumber(int tenant, string accountDisplayNumber,string dateType, DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                //int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
+                var qs = new GLAccountQueryService(tenant);
+                var list = qs.GetByDisplayNumber(accountDisplayNumber, tenant);
+                var pm = list.First();
+                var myLedgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter()
+                {
+                    Tenant = tenant,
+                    From = fromDate,
+                    To = toDate,
+                    //CurrencyId = currencyId,
+                    DateTypeCode = dateType,
+                    GLAccountId = pm.Id,
+
+                    SearchFields = "",
+                    PageStartAtRecordIndex = 0,
+                    PageSize = 500,
+                    //CallBack = new LedgerTransactionBalanceFilterCallBack()
+                    //{
+
+                    //}
+
+                };
+
+                var accountingContext = AccountingContext.GetContext(tenant);
+                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, myLedgerTransactionBalanceFilter);
+                ledgerTransactionBalanceService.Run();
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, ledgerTransactionBalanceService.Response.MyLedgerTransactionList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetCheckBalance(int tenant, string accountId, string totalDateType, DateTime theDate)
         {
             try

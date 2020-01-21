@@ -23,5 +23,6 @@ export class ReportList {
 		FilterHtmlComponentUrl: string;
 		DefaultTemplateId: string;
 		DefaultMessageTemplateId: string;
+		FeatureUniqeCode: string;
 	
 }

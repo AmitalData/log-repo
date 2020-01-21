@@ -763,7 +763,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllPricesStepsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PriceStepTextCode_0.Id, Code = "AllPricesSteps",  QueryGroupCode = "ff18", IndexOrder = 0, Tenant = 0, ObjectTableId = PriceStepObjectTable.Id, QuerySection = "PriceSteps", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PriceStepFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllPricesStepsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PriceStepTextCode_0.Id, NameTextCodeCode = PriceStepTextCode_0.Code, Code = "AllPricesSteps",  QueryGroupCode = "ff18", IndexOrder = 0, Tenant = 0, ObjectTableId = PriceStepObjectTable.Id, QuerySection = "PriceSteps", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PriceStepFeature_0.Id,FeatureUniqeCode= PriceStepFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllPricesStepsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id, IndexOrder = 0, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -791,11 +791,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen PriceStepPriceStepsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PriceSteps.HeaderScreen", Name = "PriceStepsHeaderScreen", ObjectTableId = PriceStepObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PriceStepPriceStepsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PriceStepPriceStepsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PriceStepPriceStepsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PriceStepPriceStepsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().Id, ScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id,ScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Steps").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PriceStepObjectTable.HeaderScreenId = PriceStepPriceStepsHeaderScreenScreen0.Id;
+		    PriceStepObjectTable.HeaderScreenCode = PriceStepPriceStepsHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -816,9 +818,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PSGN",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureOthers/Components/PriceSteps/PriceStepsGeneralTabComponent", FeatureId = PriceStepGeneralFeature_TH0.Id, ControlPath = "./InfrastructureModules/InfrastructureOthers/Components/PriceSteps/PriceStepsGeneralTabComponent", ObjectTableId = PriceStepObjectTable.Id, TabNameTextCodeId = PriceStepGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PSGN",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureOthers/Components/PriceSteps/PriceStepsGeneralTabComponent", FeatureId = PriceStepGeneralFeature_TH0.Id,FeatureUniqeCode = PriceStepGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureOthers/Components/PriceSteps/PriceStepsGeneralTabComponent", ObjectTableId = PriceStepObjectTable.Id, TabNameTextCodeId = PriceStepGeneralTextCode_TH0.Id, TabNameTextCodeCode = PriceStepGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PriceStepEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PriceStepObjectTable.Id, TabNameTextCodeId = PriceStepEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PriceStepEventsFeature_TH1.Id,FeatureUniqeCode = PriceStepEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PriceStepObjectTable.Id, TabNameTextCodeId = PriceStepEventsTextCode_TH1.Id, TabNameTextCodeCode = PriceStepEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

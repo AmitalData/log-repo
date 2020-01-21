@@ -53,7 +53,7 @@ export class OccasionMainTabComponent extends BaseComponent {
         if (this.CurrentSession.CurrentEditComponent != null) {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.SetUIProperties_EntityClosed();
                     this.LoadOccasionLinesData();
                   
@@ -64,6 +64,7 @@ export class OccasionMainTabComponent extends BaseComponent {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties_EntityClosed();
+                    this.LoadOccasionLinesData();
                 }
             });
 

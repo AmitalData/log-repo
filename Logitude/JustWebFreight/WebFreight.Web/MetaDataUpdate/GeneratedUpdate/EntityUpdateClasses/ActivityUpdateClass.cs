@@ -5686,7 +5686,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query MyOpenActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_0.Id, Code = "My Open Activities",  QueryGroupCode = "ACTV", IndexOrder = 0, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_0.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyOpenActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_0.Id, NameTextCodeCode = ActivityTextCode_0.Code, Code = "My Open Activities",  QueryGroupCode = "ACTV", IndexOrder = 0, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_0.Id,FeatureUniqeCode= ActivityFeature_0.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyOpenActivitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyOpenActivitiesQuery.Id, IndexOrder = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "ActivityTypeName" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "ActivityTypeName" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5703,7 +5703,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllOpenActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_1.Id, Code = "All Open Activities",  QueryGroupCode = "ACTV", IndexOrder = 1, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_1.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllOpenActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_1.Id, NameTextCodeCode = ActivityTextCode_1.Code, Code = "All Open Activities",  QueryGroupCode = "ACTV", IndexOrder = 1, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_1.Id,FeatureUniqeCode= ActivityFeature_1.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllOpenActivitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenActivitiesQuery.Id, IndexOrder = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5724,7 +5724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query MyClosedActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_2.Id, Code = "My Closed Activities",  QueryGroupCode = "ACTV", IndexOrder = 2, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_2.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyClosedActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_2.Id, NameTextCodeCode = ActivityTextCode_2.Code, Code = "My Closed Activities",  QueryGroupCode = "ACTV", IndexOrder = 2, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_2.Id,FeatureUniqeCode= ActivityFeature_2.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyClosedActivitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyClosedActivitiesQuery.Id, IndexOrder = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "ActivityTypeName" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "ActivityTypeName" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5741,7 +5741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllClosedActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_3.Id, Code = "All Closed Activities",  QueryGroupCode = "ACTV", IndexOrder = 3, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_3.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllClosedActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_3.Id, NameTextCodeCode = ActivityTextCode_3.Code, Code = "All Closed Activities",  QueryGroupCode = "ACTV", IndexOrder = 3, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_3.Id,FeatureUniqeCode= ActivityFeature_3.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllClosedActivitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosedActivitiesQuery.Id, IndexOrder = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5762,7 +5762,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_4.Id, Code = "All Activities",  QueryGroupCode = "ACTV", IndexOrder = 4, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_4.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_4.Id, NameTextCodeCode = ActivityTextCode_4.Code, Code = "All Activities",  QueryGroupCode = "ACTV", IndexOrder = 4, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_4.Id,FeatureUniqeCode= ActivityFeature_4.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllActivitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllActivitiesQuery.Id, IndexOrder = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5780,7 +5780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query MeetingsSummaryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_5.Id, Code = "Meetings Summary",  QueryGroupCode = "ACTV", IndexOrder = 5, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_5.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query MeetingsSummaryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_5.Id, NameTextCodeCode = ActivityTextCode_5.Code, Code = "Meetings Summary",  QueryGroupCode = "ACTV", IndexOrder = 5, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_5.Id,FeatureUniqeCode= ActivityFeature_5.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MeetingsSummaryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeetingsSummaryQuery.Id, IndexOrder = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "StartDateTime" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "StartDateTime" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5799,7 +5799,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CancelledActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_6.Id, Code = "Cancelled Activities",  QueryGroupCode = "ACTV", IndexOrder = 6, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_6.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CancelledActivitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActivityTextCode_6.Id, NameTextCodeCode = ActivityTextCode_6.Code, Code = "Cancelled Activities",  QueryGroupCode = "ACTV", IndexOrder = 6, Tenant = 0, ObjectTableId = ActivityObjectTable.Id, QuerySection = "Activity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActivityFeature_6.Id,FeatureUniqeCode= ActivityFeature_6.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledActivitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledActivitiesQuery.Id, IndexOrder = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5830,15 +5830,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen ActivityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Activity.HeaderScreen", Name = "Header Screen", ObjectTableId = ActivityObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ActivityActivityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = ActivityHeaderScreenScreen0.Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ActivityActivityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = ActivityHeaderScreenScreen0.Id,ScreenCode = ActivityHeaderScreenScreen0.Code, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ActivityActivityHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "ActivityStatusName").FirstOrDefault().Id, ScreenId = ActivityHeaderScreenScreen0.Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "ActivityStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ActivityActivityHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "ActivityStatusName").FirstOrDefault().Id, ScreenId = ActivityHeaderScreenScreen0.Id,ScreenCode = ActivityHeaderScreenScreen0.Code, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "ActivityStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ActivityActivityHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "PriorityName").FirstOrDefault().Id, ScreenId = ActivityHeaderScreenScreen0.Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "PriorityName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ActivityActivityHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "PriorityName").FirstOrDefault().Id, ScreenId = ActivityHeaderScreenScreen0.Id,ScreenCode = ActivityHeaderScreenScreen0.Code, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "PriorityName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ActivityActivityHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "DueDate").FirstOrDefault().Id, ScreenId = ActivityHeaderScreenScreen0.Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "DueDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ActivityActivityHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "DueDate").FirstOrDefault().Id, ScreenId = ActivityHeaderScreenScreen0.Id,ScreenCode = ActivityHeaderScreenScreen0.Code, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "DueDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ActivityObjectTable.HeaderScreenId = ActivityHeaderScreenScreen0.Id;
+		    ActivityObjectTable.HeaderScreenCode = ActivityHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -5859,9 +5861,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMActivity/Components/EditTabs/ActivityGeneralTabComponent", FeatureId = ActivityGeneralFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.ActivityTabs.ActivityGeneralTabControl", ObjectTableId = ActivityObjectTable.Id, TabNameTextCodeId = ActivityGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMActivity/Components/EditTabs/ActivityGeneralTabComponent", FeatureId = ActivityGeneralFeature_TH0.Id,FeatureUniqeCode = ActivityGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.ActivityTabs.ActivityGeneralTabControl", ObjectTableId = ActivityObjectTable.Id, TabNameTextCodeId = ActivityGeneralTextCode_TH0.Id, TabNameTextCodeCode = ActivityGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACVN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ActivityEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ActivityObjectTable.Id, TabNameTextCodeId = ActivityEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACVN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ActivityEventsFeature_TH1.Id,FeatureUniqeCode = ActivityEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ActivityObjectTable.Id, TabNameTextCodeId = ActivityEventsTextCode_TH1.Id, TabNameTextCodeCode = ActivityEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -6080,6 +6082,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = ActivityFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = ActivityFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -6097,6 +6100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ActivityMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6114,6 +6118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  ActivityFeature_MB10.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ActivityFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ActivityMenuButton11 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6131,6 +6136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  ActivityFeature_MB11.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ActivityFeature_MB11.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ActivityMenuButton12 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6148,6 +6154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  ActivityFeature_MB12.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ActivityFeature_MB12.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

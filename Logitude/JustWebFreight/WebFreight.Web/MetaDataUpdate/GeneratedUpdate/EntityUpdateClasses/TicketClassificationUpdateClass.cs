@@ -623,7 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketClassificationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketClassificationTextCode_0.Id, Code = "All Ticket Classifications",  QueryGroupCode = "TCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketClassificationObjectTable.Id, QuerySection = "TicketClassification", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketClassificationFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTicketClassificationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketClassificationTextCode_0.Id, NameTextCodeCode = TicketClassificationTextCode_0.Code, Code = "All Ticket Classifications",  QueryGroupCode = "TCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketClassificationObjectTable.Id, QuerySection = "TicketClassification", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketClassificationFeature_0.Id,FeatureUniqeCode= TicketClassificationFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTicketClassificationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketClassificationsQuery.Id, IndexOrder = 0, ObjectFieldId = TicketClassificationObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketClassificationObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketClassificationObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketClassificationObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -641,9 +641,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TicketClassificationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketClassification.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketClassificationObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TicketClassificationTicketClassificationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketClassificationObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketClassificationHeaderScreenScreen0.Id, ObjectFieldCode = TicketClassificationObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketClassificationTicketClassificationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketClassificationObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TicketClassificationHeaderScreenScreen0.Id,ScreenCode = TicketClassificationHeaderScreenScreen0.Code, ObjectFieldCode = TicketClassificationObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TicketClassificationObjectTable.HeaderScreenId = TicketClassificationHeaderScreenScreen0.Id;
+		    TicketClassificationObjectTable.HeaderScreenCode = TicketClassificationHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -664,9 +666,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TCGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketClassificationGeneralFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.TicketClassification.TicketClassificationGeneralTabControl", ObjectTableId = TicketClassificationObjectTable.Id, TabNameTextCodeId = TicketClassificationGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TCGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketClassificationGeneralFeature_TH0.Id,FeatureUniqeCode = TicketClassificationGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.CRM.Views.Tabs.TicketClassification.TicketClassificationGeneralTabControl", ObjectTableId = TicketClassificationObjectTable.Id, TabNameTextCodeId = TicketClassificationGeneralTextCode_TH0.Id, TabNameTextCodeCode = TicketClassificationGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketClassificationEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TicketClassificationObjectTable.Id, TabNameTextCodeId = TicketClassificationEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketClassificationEventsFeature_TH1.Id,FeatureUniqeCode = TicketClassificationEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TicketClassificationObjectTable.Id, TabNameTextCodeId = TicketClassificationEventsTextCode_TH1.Id, TabNameTextCodeCode = TicketClassificationEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

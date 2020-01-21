@@ -52,6 +52,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                    DefaultTemplateId = report.DefaultTemplateId,
                                    DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                   FeatureUniqeCode = report.FeatureUniqeCode,
             };
 
             ReportModificationRepository modificationRep = new ReportModificationRepository(tenant);
@@ -91,6 +92,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                                                DefaultTemplateId =a.DefaultTemplateId,
                                                DefaultMessageTemplateId = a.DefaultMessageTemplateId,
+                                               FeatureUniqeCode = a.FeatureUniqeCode,
                                            };
             return reports;
         }
@@ -119,6 +121,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                              DefaultTemplateId = a.DefaultTemplateId,
                              DefaultMessageTemplateId = a.DefaultMessageTemplateId,
+                             FeatureUniqeCode = a.FeatureUniqeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -144,6 +147,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                                 DefaultTemplateId = report.DefaultTemplateId,
                                                 DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                                FeatureUniqeCode = report.FeatureUniqeCode,
                                             };
             return result;
         }
@@ -173,6 +177,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -219,6 +225,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -258,6 +266,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+
                                        }).ToList();
 
           

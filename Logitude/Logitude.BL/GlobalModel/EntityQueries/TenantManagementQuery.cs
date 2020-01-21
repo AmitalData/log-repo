@@ -169,6 +169,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                                      MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                                      TotalPrice = a.TotalPrice,
+                                                     SupportDomain = a.SupportDomain,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -341,6 +342,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                                   MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                                   TotalPrice = a.TotalPrice,
+                                                  SupportDomain = a.SupportDomain,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -513,6 +515,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                         MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                         TotalPrice = a.TotalPrice,
+                        SupportDomain = a.SupportDomain,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -972,6 +975,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                              MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                              TotalPrice = a.TotalPrice,
+                                             SupportDomain = a.SupportDomain,
                                          }).FirstOrDefault();
 
             return tenant;

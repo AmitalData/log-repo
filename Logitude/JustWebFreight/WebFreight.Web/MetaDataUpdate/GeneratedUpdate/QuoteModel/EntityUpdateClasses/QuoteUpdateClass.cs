@@ -13370,7 +13370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CreatedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_0.Id, Code = "Created Quotes",  QueryGroupCode = "QUOT", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CreatedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_0.Id, NameTextCodeCode = QuoteTextCode_0.Code, Code = "Created Quotes",  QueryGroupCode = "QUOT", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_0.Id,FeatureUniqeCode= QuoteFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CreatedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13401,7 +13401,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query DraftQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_1.Id, Code = "Draft Quotes",  QueryGroupCode = "QUOT", IndexOrder = 1, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DraftQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_1.Id, NameTextCodeCode = QuoteTextCode_1.Code, Code = "Draft Quotes",  QueryGroupCode = "QUOT", IndexOrder = 1, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_1.Id,FeatureUniqeCode= QuoteFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DraftQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13432,7 +13432,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query SentQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_2.Id, Code = "Sent Quotes",  QueryGroupCode = "QUOT", IndexOrder = 2, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query SentQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_2.Id, NameTextCodeCode = QuoteTextCode_2.Code, Code = "Sent Quotes",  QueryGroupCode = "QUOT", IndexOrder = 2, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_2.Id,FeatureUniqeCode= QuoteFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn SentQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13463,7 +13463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query ExpiredQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_3.Id, Code = "Expired Quotes",  QueryGroupCode = "QUOT", IndexOrder = 3, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ExpiredQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_3.Id, NameTextCodeCode = QuoteTextCode_3.Code, Code = "Expired Quotes",  QueryGroupCode = "QUOT", IndexOrder = 3, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_3.Id,FeatureUniqeCode= QuoteFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ExpiredQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13496,7 +13496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_4.Id, Code = "Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 4, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_4.Id, NameTextCodeCode = QuoteTextCode_4.Code, Code = "Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 4, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_4.Id,FeatureUniqeCode= QuoteFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn FollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13524,7 +13524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query AcceptedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_5.Id, Code = "Accepted Quotes",  QueryGroupCode = "QUOT", IndexOrder = 5, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_5.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AcceptedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_5.Id, NameTextCodeCode = QuoteTextCode_5.Code, Code = "Accepted Quotes",  QueryGroupCode = "QUOT", IndexOrder = 5, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_5.Id,FeatureUniqeCode= QuoteFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AcceptedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13555,7 +13555,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query AcceptedWithoutShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_6.Id, Code = "Accepted Without Shipments",  QueryGroupCode = "QUOT", IndexOrder = 6, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AcceptedWithoutShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_6.Id, NameTextCodeCode = QuoteTextCode_6.Code, Code = "Accepted Without Shipments",  QueryGroupCode = "QUOT", IndexOrder = 6, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_6.Id,FeatureUniqeCode= QuoteFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AcceptedWithoutShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13586,7 +13586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query AllQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_7.Id, Code = "All Quotes",  QueryGroupCode = "QUOT", IndexOrder = 7, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_7.Id, DefaultSortName = "OpenDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_7.Id, NameTextCodeCode = QuoteTextCode_7.Code, Code = "All Quotes",  QueryGroupCode = "QUOT", IndexOrder = 7, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_7.Id,FeatureUniqeCode= QuoteFeature_7.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13614,7 +13614,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query CancelledQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_8.Id, Code = "Cancelled Quotes",  QueryGroupCode = "QUOT", IndexOrder = 8, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CancelledQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_8.Id, NameTextCodeCode = QuoteTextCode_8.Code, Code = "Cancelled Quotes",  QueryGroupCode = "QUOT", IndexOrder = 8, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_8.Id,FeatureUniqeCode= QuoteFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13647,7 +13647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_9.Id, Code = "All Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 9, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_9.Id, NameTextCodeCode = QuoteTextCode_9.Code, Code = "All Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 9, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_9.Id,FeatureUniqeCode= QuoteFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13680,7 +13680,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_10.Id, Code = "My Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 10, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_10.Id, NameTextCodeCode = QuoteTextCode_10.Code, Code = "My Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 10, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_10.Id,FeatureUniqeCode= QuoteFeature_10.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13713,7 +13713,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query MyQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_11.Id, Code = "My Quotes",  QueryGroupCode = "QUOT", IndexOrder = 11, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_11.Id, NameTextCodeCode = QuoteTextCode_11.Code, Code = "My Quotes",  QueryGroupCode = "QUOT", IndexOrder = 11, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_11.Id,FeatureUniqeCode= QuoteFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13744,7 +13744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query OpenQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_12.Id, Code = "Open Quotes",  QueryGroupCode = "QUOT", IndexOrder = 12, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_12.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_12.Id, NameTextCodeCode = QuoteTextCode_12.Code, Code = "Open Quotes",  QueryGroupCode = "QUOT", IndexOrder = 12, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_12.Id,FeatureUniqeCode= QuoteFeature_12.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -13785,51 +13785,53 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Quote.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField QuoteQuoteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen QuoteHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Quote.HeaderScreen", Name = "Header Screen", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField QuoteQuoteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "QuoteTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "LastUsageDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "LastUsageDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "LastUsageDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "LastUsageDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "SalesmanName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "SalesmanName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "SalesmanName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "SalesmanName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteQuoteHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteQuoteHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().Id, ScreenId = QuoteHeaderScreenScreen1.Id,ScreenCode = QuoteHeaderScreenScreen1.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    QuoteObjectTable.HeaderScreenId = QuoteHeaderScreenScreen1.Id;
+		    QuoteObjectTable.HeaderScreenCode = QuoteHeaderScreenScreen1.Code;
+
 	   		  
 	      
 
 	         Screen QuoteNewQuoteScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewQuote", Name = "New Quote", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField QuoteNewQuoteScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteNewQuoteScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteNewQuoteScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ConsigneeReference2").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ConsigneeReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteNewQuoteScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ConsigneeReference2").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "ConsigneeReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteNewQuoteScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteNewQuoteScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteNewQuoteScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteNewQuoteScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = QuoteNewQuoteScreen2.Id,ScreenCode = QuoteNewQuoteScreen2.Code, ObjectFieldCode = QuoteObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -13886,27 +13888,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Overview/OverviewTabComponent", FeatureId = QuoteOverviewFeature_TH0.Id, ControlPath = "Simplog.QuoteLib.Views.OverView.OverViewTabControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteOverviewTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Overview/OverviewTabComponent", FeatureId = QuoteOverviewFeature_TH0.Id,FeatureUniqeCode = QuoteOverviewFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.OverView.OverViewTabControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteOverviewTextCode_TH0.Id, TabNameTextCodeCode = QuoteOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTOR",HtmlComponentName = "OrdersabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Orders/OrdersTabComponent", FeatureId = QuoteDetailsFeature_TH1.Id, ControlPath = "Simplog.QuoteLib.Views.Orders.OrdersControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDetailsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTOR",HtmlComponentName = "OrdersabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Orders/OrdersTabComponent", FeatureId = QuoteDetailsFeature_TH1.Id,FeatureUniqeCode = QuoteDetailsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Orders.OrdersControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDetailsTextCode_TH1.Id, TabNameTextCodeCode = QuoteDetailsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Partners/PartnersTabComponent", FeatureId = QuotePartnersFeature_TH2.Id, ControlPath = "Simplog.QuoteLib.Views.Partners.PartnersControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuotePartnersTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Partners/PartnersTabComponent", FeatureId = QuotePartnersFeature_TH2.Id,FeatureUniqeCode = QuotePartnersFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Partners.PartnersControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuotePartnersTextCode_TH2.Id, TabNameTextCodeCode = QuotePartnersTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Packages/PackagesTabComponent", FeatureId = QuotePackagesFeature_TH3.Id, ControlPath = "Simplog.QuoteLib.Views.Packages.PackagesControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuotePackagesTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Packages/PackagesTabComponent", FeatureId = QuotePackagesFeature_TH3.Id,FeatureUniqeCode = QuotePackagesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Packages.PackagesControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuotePackagesTextCode_TH3.Id, TabNameTextCodeCode = QuotePackagesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Routings/RoutingsTabComponent", FeatureId = QuoteRoutingsFeature_TH4.Id, ControlPath = "Simplog.QuoteLib.Views.Routings.RoutingsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteRoutingsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Routings/RoutingsTabComponent", FeatureId = QuoteRoutingsFeature_TH4.Id,FeatureUniqeCode = QuoteRoutingsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Routings.RoutingsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteRoutingsTextCode_TH4.Id, TabNameTextCodeCode = QuoteRoutingsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCH",HtmlComponentName = "ChargesTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteCharges/Components/ChargesTabComponent", FeatureId = QuoteChargesFeature_TH5.Id, ControlPath = "Simplog.QuoteLib.Views.Charges.ChargesUserControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteChargesTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCH",HtmlComponentName = "ChargesTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteCharges/Components/ChargesTabComponent", FeatureId = QuoteChargesFeature_TH5.Id,FeatureUniqeCode = QuoteChargesFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Charges.ChargesUserControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteChargesTextCode_TH5.Id, TabNameTextCodeCode = QuoteChargesTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTDO",HtmlComponentName = "QuoteDocsOutTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/DocsOut/QuoteDocsOutTabComponent", FeatureId = QuoteDocsOutFeature_TH6.Id, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentOutsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDocsOutTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTDO",HtmlComponentName = "QuoteDocsOutTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/DocsOut/QuoteDocsOutTabComponent", FeatureId = QuoteDocsOutFeature_TH6.Id,FeatureUniqeCode = QuoteDocsOutFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentOutsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDocsOutTextCode_TH6.Id, TabNameTextCodeCode = QuoteDocsOutTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTDI",HtmlComponentName = "QuoteDocsInTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/DocsIn/QuoteDocsInTabComponent", FeatureId = QuoteDocsInFeature_TH7.Id, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentInsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDocsInTextCode_TH7.Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTDI",HtmlComponentName = "QuoteDocsInTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/DocsIn/QuoteDocsInTabComponent", FeatureId = QuoteDocsInFeature_TH7.Id,FeatureUniqeCode = QuoteDocsInFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentInsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteDocsInTextCode_TH7.Id, TabNameTextCodeCode = QuoteDocsInTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteEventsFeature_TH8.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteEventsTextCode_TH8.Id, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteEventsFeature_TH8.Id,FeatureUniqeCode = QuoteEventsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteEventsTextCode_TH8.Id, TabNameTextCodeCode = QuoteEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteCommunicationsFeature_TH9.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteCommunicationsTextCode_TH9.Id, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteCommunicationsFeature_TH9.Id,FeatureUniqeCode = QuoteCommunicationsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteCommunicationsTextCode_TH9.Id, TabNameTextCodeCode = QuoteCommunicationsTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCE",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Connections/ConnectionsTabComponent", FeatureId = QuoteConnectedEntitiesFeature_TH10.Id, ControlPath = "Simplog.QuoteLib.Views.Shipments.ShipmentsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteConnectedEntitiesTextCode_TH10.Id, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QTCE",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./QuoteModules/QuoteTabs/Components/Connections/ConnectionsTabComponent", FeatureId = QuoteConnectedEntitiesFeature_TH10.Id,FeatureUniqeCode = QuoteConnectedEntitiesFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Shipments.ShipmentsControl", ObjectTableId = QuoteObjectTable.Id, TabNameTextCodeId = QuoteConnectedEntitiesTextCode_TH10.Id, TabNameTextCodeCode = QuoteConnectedEntitiesTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -14495,6 +14497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14512,6 +14515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB1.Id,
 						Style = "RedButtonStyle",
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14529,6 +14533,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB2.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14546,6 +14551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = QuoteFeature_MB3.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = QuoteFeature_MB3.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -14563,6 +14569,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton QuoteMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14580,6 +14587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB40.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB40.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14597,6 +14605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB41.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB41.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14614,6 +14623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB42.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB42.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton43 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14631,6 +14641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton44 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14648,6 +14659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB43.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB43.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton45 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14665,6 +14677,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB44.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  QuoteFeature_MB44.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton46 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14682,6 +14695,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton47 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14699,6 +14713,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB45.Id,
 						Style = null,
 						LocalDefaultText = "Convert to LCL",
+						FeatureUniqeCode=  QuoteFeature_MB45.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton QuoteMenuButton48 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -14716,6 +14731,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB46.Id,
 						Style = null,
 						LocalDefaultText = "Convert to FCL",
+						FeatureUniqeCode=  QuoteFeature_MB46.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

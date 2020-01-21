@@ -8,14 +8,14 @@
                     </td>
                     <td>
                         <!--<ComboBox [ItemsSource]="ObjectFields" [Binding]="'FullNameTextCodeDefaultText'" [SelectedValue]="SelectedObjectFieldId" [SelectedValuePath]="'Id'" (SelectedItemChanged)="onSelectedItemChanged($event)"></ComboBox>-->
-                        <LogLov [ObjectFieldName]="'SelectedObjectFieldId'"
+                        <LogLov [ObjectFieldName]="'SelectedObjectFieldCode'"
                                 [QueryFilterItems]="FieldsLovQueryFilters"
                                 [ObjectTableName]="'ObjectField'"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'ObjectField'"
                                 [NoValidation]="true"
                                 [IsFreeText]="true"
-                                [SelectedValue]="DataContext.SelectedObjectFieldId"
+                                [SelectedValue]="DataContext.SelectedObjectFieldCode"
                                 [HideColumns]="true"
                                 [HideLastColumn]="true"
                                 [DisplayMemberPath]="'FieldName'"

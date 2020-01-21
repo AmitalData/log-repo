@@ -5,7 +5,31 @@
         </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="IsTenantZero" style="height:2px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:3px;">
+                        <RadioButton [Name]="'NewBIReport'" [IsChecked]="IsNewBIReport" (Checked)="SetNewBIReport(true)"></RadioButton>
+                    </td>
+                    <td style="width:40px;">
+                        <label style="margin-left: 7px;">New</label>
+                    </td>
+                    <td style="width:3px;">
+                        <RadioButton [Name]="'CopyBIReport'" [IsChecked]="!IsNewBIReport" (Checked)="SetNewBIReport(false)"></RadioButton>
+                    </td>
+                    <td style="width:50px;">
+                        <label style="margin-left: 7px;">{{CopyFromTitle}}</label>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsNewBIReport">
         <td>
             <table>
 
@@ -81,32 +105,138 @@
 
                 <!-- DWQueryId -->
                 <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td *ngIf="IsNewQuery" style="width: 57px;">
+                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
+                                </td>
+                                <td *ngIf="!IsNewQuery" s style="width: 57px;">
+                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>-->
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
         </td>
+    </tr>
+
+    <tr *ngIf="!IsNewBIReport">
         <td>
             <table>
-                <tr>
-                    <td *ngIf="IsNewQuery" style="width: 57px;">
-                        <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
+
+                <!-- Name -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td *ngIf="!IsNewQuery" s style="width: 57px;">
-                        <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+
+                    <td style="width:200px;">
+                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                     </td>
                     <td>
                         <div></div>
                     </td>
                 </tr>
-            </table>
-        </td>
-        <td>
-            <div></div>
-        </td>
-    </tr>-->
 
-                <tr>
-                    <td colspan="3">
+                <!-- BIReportFolderId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'BIReportFolderId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'BIReportFolderId'"
+                                [SelectedValue]="BIReportFolderId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'BIReportFolder'" [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td colspan="2">
                         <div></div>
+                    </td>
+                </tr>
+
+                <!-- Tenant -->
+                <tr *ngIf="IsTenantZero"  class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
+                    </td>
+
+                    <td style="width:200px;">
+                        <LogTextBox [ObjectFieldName]="'Tenant'" [Text]="Tenant" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="OnTenantFieldChangeEvent($event)" [InputType]="'integer'" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td colspan="2">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Tenant -->
+                <!--<tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'Tenant'"
+                                [SelectedValue]="BIReportTenant"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Tenant'"
+                                [SelectedValuePath]="BIReportTenant"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>-->
+
+                <!-- Grid -->
+                <tr>
+                    <td colspan="4">
+                        <div class="FillParent">
+                            <div class="ScrollViewer">
+                                <div class="ScrollContent">
+                                    <table>
+                                        <tr>
+                                            <td style="height: 100%;">
+                                                <div style="height: 100%; width: 100%; position: relative;">
+
+
+                                                    <logitude-grid [rows]="items"
+                                                                   [dataSource]="DataSource"
+                                                                   [SearchFieldchangeevent]="TenantFieldChangeEvent"
+                                                                   [columns]="columns"
+                                                                   [autoLoad]="true"
+                                                                   (rowSelectedEvent)="onRowSelected($event)"
+                                                                   [IsCustomTemplate]="true">
+                                                    </logitude-grid>
+
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
 

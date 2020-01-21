@@ -933,13 +933,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen ReconciliationReconciliationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Reconciliation.ReconciliationHeaderScreen", Name = "ReconciliationHeaderScreen", ObjectTableId = ReconciliationObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReconciliationObjectFields.Where(d => d.FieldName == "Number").FirstOrDefault().Id, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id, ObjectFieldCode = ReconciliationObjectFields.Where(d => d.FieldName == "Number").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReconciliationObjectFields.Where(d => d.FieldName == "Number").FirstOrDefault().Id, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = ReconciliationObjectFields.Where(d => d.FieldName == "Number").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReconciliationObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id, ObjectFieldCode = ReconciliationObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReconciliationObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = ReconciliationObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ReconciliationObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id, ObjectFieldCode = ReconciliationObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ReconciliationObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = ReconciliationObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ReconciliationObjectTable.HeaderScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id;
+		    ReconciliationObjectTable.HeaderScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -960,9 +962,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RCDT",HtmlComponentName = "ReconciliationDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent", FeatureId = ReconciliationDetailsFeature_TH0.Id, ControlPath = "ReconciliationDetailsTabComponent", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = ReconciliationDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RCDT",HtmlComponentName = "ReconciliationDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent", FeatureId = ReconciliationDetailsFeature_TH0.Id,FeatureUniqeCode = ReconciliationDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "ReconciliationDetailsTabComponent", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = ReconciliationDetailsTextCode_TH0.Id, TabNameTextCodeCode = ReconciliationDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "REEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReconciliationEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = ReconciliationEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "REEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReconciliationEventsFeature_TH1.Id,FeatureUniqeCode = ReconciliationEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = ReconciliationEventsTextCode_TH1.Id, TabNameTextCodeCode = ReconciliationEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1072,6 +1074,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = ReconciliationFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = " ביטול התאמה",
+						FeatureUniqeCode = ReconciliationFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

@@ -128,7 +128,7 @@ export class ObjectFieldsSearchComponent {
 
 
     SaveChanges() {
-        this.CurrentSession.CurrentWindow.Close(this.FieldSelectedItem.Id);
+        this.CurrentSession.CurrentWindow.Close(this.FieldSelectedItem.FieldCode);
     }
 
     CancelButtonClicked() {

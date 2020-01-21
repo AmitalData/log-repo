@@ -32,6 +32,7 @@ using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
@@ -1346,7 +1347,15 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
-
+                case "SHRR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipperReturnsDataProvider));
+                        ShipperReturnsDataProvider reportDataProvider = (ShipperReturnsDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "ShipperReturns", Name = "ShipperReturnsDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
 
                 case "ATRE":
                     {
@@ -1358,7 +1367,24 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "FLBM":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(FlightBookingsManifestDataProvider));
+                        FlightBookingsManifestDataProvider reportDataProvider = (FlightBookingsManifestDataProvider)serializer.Deserialize(memorystream);                        
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "FlightBookingsManifest", Name = "FlightBookingsManifestDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
 
+
+                case "RCRF":
+                    { 
+                        XmlSerializer serializer = new XmlSerializer(typeof(RacingQuoteDataProvider));
+                        RacingQuoteDataProvider reportDataProvider = (RacingQuoteDataProvider)serializer.Deserialize(memorystream);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "RacingQuote", Name = "RacingQuoteDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
             }
             return urlImage;
         }
@@ -1404,9 +1430,13 @@ namespace WebFreight.Web.Helpers
             }
 
             report.AutoLocalizeReportOnRun = true;
-            report.ReportCacheMode = StiReportCacheMode.On;
-            report.RenderedPages.CacheMode = true;
-            report.RenderedPages.CanUseCacheMode = true;
+
+            if (LogitudeSettings.LogitudeURL != "http://localhost:9996")
+            {
+                report.ReportCacheMode = StiReportCacheMode.On;
+                report.RenderedPages.CacheMode = true;
+                report.RenderedPages.CanUseCacheMode = true;
+            }
             //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
             report.Render(false);
 
@@ -1514,7 +1544,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = logitudeReportsWebService.LoadShipmentsStocksData(filters, reportFliter.tenant);
                         break;
                     }
-
+                case "SHRR":
+                    {
+                        ShipperReturnsManager myDataManager = new ShipperReturnsManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                 case "UPTR":
                     {
                         dataProvider = logitudeReportsWebService.LoadUsersByTenantData(filters, reportFliter.tenant);
@@ -1862,13 +1897,25 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "FLBM":
+                    {
+                        FlightBookingsManifestManager myDataManager = new FlightBookingsManifestManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+
+                case "RCRF":
+                    {
+                        RacingQuoteManager myDataManager = new RacingQuoteManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+
                     #endregion
             }
             return dataProvider;
         }
-
-    
-
+        
         private bool IsHaveReport(string reportCode)
         {
             if (string.IsNullOrEmpty(reportCode))

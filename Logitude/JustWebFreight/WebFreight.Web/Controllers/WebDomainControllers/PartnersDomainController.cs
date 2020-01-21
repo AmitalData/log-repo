@@ -1469,7 +1469,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
             VendorService myPartnerService = new VendorService(objectContext, args.Tenant);
 
-            if (args.Vendor.Addresses.Count == 0)
+            if (args.Vendor.Addresses != null && args.Vendor.Addresses.Count == 0)
             {
                 if (args.Address != null)
                 {
@@ -1477,7 +1477,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
 
-            if (args.Vendor.Contacts.Count == 0)
+            if (args.Vendor.Contacts != null && args.Vendor.Contacts.Count == 0)
             {
                 if (args.Contact != null)
                 {
@@ -1487,12 +1487,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             myPartnerService.Create(args.Vendor);
 
-            if (args.Vendor.Addresses.Count > 0)
+            if (args.Vendor.Addresses != null && args.Vendor.Addresses.Count > 0)
             {
                 args.AddressId = args.Vendor.Addresses.FirstOrDefault().Id;
             }
 
-            if (args.Vendor.Contacts.Count > 0)
+            if (args.Vendor.Contacts != null &&  args.Vendor.Contacts.Count > 0)
             {
                 args.ContactId = args.Vendor.Contacts.FirstOrDefault().Id;
             }

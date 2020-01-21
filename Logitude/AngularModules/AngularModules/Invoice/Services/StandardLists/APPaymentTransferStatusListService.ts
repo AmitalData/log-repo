@@ -16,40 +16,42 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {APPaymentTransferStatusList} from '../../EntityLists/APPaymentTransferStatusList';
 
 @Injectable()
 
 export class APPaymentTransferStatusListService {
-    private _http: Http;
-    private _apiUrl: string;
-    public static CachedData: Array<APPaymentTransferStatusList> = [];
+	private _http: Http;
+    private _apiUrl: string;   
+	public static CachedData: Array<APPaymentTransferStatusList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/APPaymenttransferstatusviews';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/appaymenttransferstatusviews';  
     }
 
     getSingle(code: string) {
-        var callTime = new Date();
+	    var callTime = new Date();
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
                 headers: authHeader
             }).map(response => {
                 var list = response.json();
-
+                    
                 var entity: APPaymentTransferStatusList;
-                if (list) {
-                    entity = this.MapJsonToEntityList(list);
-                }
+				if(list)
+				{
+                   entity = this.MapJsonToEntityList(list);
+                }   
                 var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPaymentTransferStatus", "GetSingleList", 'code=' + code);
+                serviceResponse = new ServiceResponse(); 
+                serviceResponse.Result = entity;  
+				serviceResponse.CallTime = callTime;
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPaymentTransferStatus", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -60,31 +62,32 @@ export class APPaymentTransferStatusListService {
 
     getAll() {
 
-        var callTime = new Date();
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getall', {
+	   var callTime = new Date();
+	   var authHeader = new Headers();
+       authHeader.append('Token', SessionInfo.Token);
+       return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getall', {
                 headers: authHeader
             }).map(response => {
 
-                var allLists = response.json();
-                var _mappedListsArray: Array<APPaymentTransferStatusList> = [];
-                if (allLists) {
-                    for (var key in allLists) {
+              var allLists = response.json();
+              var _mappedListsArray: Array< APPaymentTransferStatusList> = [];
+		      if(allLists)
+			  {
+				for (var key in  allLists) {
+				
+				   var entity: APPaymentTransferStatusList;
+                   entity = this.MapJsonToEntityList(allLists[key]);
+				   _mappedListsArray.push(entity);
 
-                        var entity: APPaymentTransferStatusList;
-                        entity = this.MapJsonToEntityList(allLists[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
+				 }
+               }
                 var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = _mappedListsArray;
-
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPaymentTransferStatus", "GetAll", "");
+                serviceResponse = new ServiceResponse(); 
+                serviceResponse.Result = _mappedListsArray;  
+				serviceResponse.CallTime = callTime;
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPaymentTransferStatus", "GetAll", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -93,10 +96,10 @@ export class APPaymentTransferStatusListService {
         );
     }
 
-
+	
     getByFilters(filters: ApiQueryFilters) {
 
-        var callTime = new Date();
+	   var callTime = new Date();       
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -109,10 +112,11 @@ export class APPaymentTransferStatusListService {
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
             }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
+            if (!ignoreFilter)
+                {
+					propValue = encodeURIComponent(propValue);
+					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+				}
 
             if (propName == "AdditionalFilters" && propValue.length > 0)
                 addtionalFiltersValues = JSON.stringify(propValue);
@@ -126,41 +130,42 @@ export class APPaymentTransferStatusListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-
-
-        return Observable.defer(() => {
+        
+		
+	   return Observable.defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array<APPaymentTransferStatusList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
+                var _mappedListsArray: Array< APPaymentTransferStatusList> = [];
+				if(serviceResponse.Result)
+				{
+                for (var key in serviceResponse.Result) {
+				
+				   var entity: APPaymentTransferStatusList;
+                   entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+				   _mappedListsArray.push(entity);
 
-                        var entity: APPaymentTransferStatusList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
+				 }
+                }   
 
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPaymentTransferStatus", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-
-
+                serviceResponse.Result = _mappedListsArray;      
+		        serviceResponse.CallTime = callTime;
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPaymentTransferStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 				
+				            
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });
+        });        
     }
 
     getSingleFromCache(code: string) {
 
-        var callTime = new Date();
-        if (!SessionLocator.UseCachedData) {
+	   var callTime = new Date(); 	    
+		 if (!SessionLocator.UseCachedData) {
             return this.getSingle(code);
         }
 
@@ -172,14 +177,15 @@ export class APPaymentTransferStatusListService {
             return Observable.defer(() => {
 
                 var filteredData = APPaymentTransferStatusListService.CachedData.filter(a => a.Code === code)[0];
-                serviceResponse.Result = filteredData;
+				serviceResponse.CallTime = callTime;
+				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
 
             });
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("APPaymentTransferStatus").map(cachedJson => {
+            return CachedDataManager.GetClosedTableData("APPaymentTransferStatus").map(cachedJson=> {
 
                 var _mappedListsArray: Array<APPaymentTransferStatusList> = [];
                 if (cachedJson) {
@@ -195,10 +201,10 @@ export class APPaymentTransferStatusListService {
                 APPaymentTransferStatusListService.CachedData = _mappedListsArray;
 
                 var filteredData = APPaymentTransferStatusListService.CachedData.filter(a => a.Code === code)[0];
-                serviceResponse.Result = filteredData;
-
-
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "APPaymentTransferStatus", "GetSingleListFromCache", 'code=' + code);
+				serviceResponse.Result = filteredData; 
+				serviceResponse.CallTime = callTime;
+			     
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "APPaymentTransferStatus", "GetSingleListFromCache", 'code=' + code); 
 
                 return serviceResponse;
 
@@ -208,10 +214,10 @@ export class APPaymentTransferStatusListService {
 
     }
 
-    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
+    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
 
-        var callTime = new Date();
-        if (!SessionLocator.UseCachedData) {
+	     var callTime = new Date(); 	           
+		 if (!SessionLocator.UseCachedData) {
             return this.getByFilters(filters);
         }
 
@@ -230,20 +236,23 @@ export class APPaymentTransferStatusListService {
         if (APPaymentTransferStatusListService.CachedData.length > 0) {
 
             return Observable.defer(() => {
-                if (filters.GetAll) {
-                    serviceResponse.Result = APPaymentTransferStatusListService.CachedData;
-                }
-                else {
-                    var filteredData = InfraGenericFilter.GetFilteredArray(APPaymentTransferStatusListService.CachedData, filters);
-                    serviceResponse.Result = filteredData;
-                }
+                if(filters.GetAll)
+				{
+					serviceResponse.Result = APPaymentTransferStatusListService.CachedData; 
+				}
+				else
+				{
+					var filteredData = InfraGenericFilter.GetFilteredArray(APPaymentTransferStatusListService.CachedData, filters);
+					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
+				}
                 return Observable.of(serviceResponse);
 
             });
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("APPaymentTransferStatus").map(cachedJson => {
+            return CachedDataManager.GetClosedTableData("APPaymentTransferStatus").map(cachedJson=> {
 
                 var _mappedListsArray: Array<APPaymentTransferStatusList> = [];
                 if (cachedJson) {
@@ -259,37 +268,40 @@ export class APPaymentTransferStatusListService {
 
 
                 APPaymentTransferStatusListService.CachedData = _mappedListsArray;
-                if (filters.GetAll) {
-                    serviceResponse.Result = _mappedListsArray;
-                }
-                else {
+                if(filters.GetAll)
+				{
+					serviceResponse.Result = _mappedListsArray; 
+				}
+				else
+				{
+							
+					_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-                    _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-
-
-
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "APPaymentTransferStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-
-                    serviceResponse.Result = _mappedListsArray;
-                }
+							      
+			   
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "APPaymentTransferStatus", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 	
+					serviceResponse.Result = _mappedListsArray; 
+					serviceResponse.CallTime = callTime;
+				}
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);
 
-        }
+        }		 
     }
+	
+	    MapJsonToEntityList(jsonList: any) {
+       
+            var entityList: APPaymentTransferStatusList;
+            entityList = new APPaymentTransferStatusList();
+            var jsonListKeys = Object.keys(jsonList);
 
-    MapJsonToEntityList(jsonList: any) {
-
-        var entityList: APPaymentTransferStatusList;
-        entityList = new APPaymentTransferStatusList();
-        var jsonListKeys = Object.keys(jsonList);
-
-        for (var key in jsonListKeys) {
-            var property = jsonListKeys[key];
-            entityList[property] = jsonList[property];
-        }
-
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+                entityList[property] = jsonList[property];
+            }
+			
 
         return entityList;
     }

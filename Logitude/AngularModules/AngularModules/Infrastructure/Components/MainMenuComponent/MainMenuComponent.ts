@@ -63,9 +63,9 @@ export class MainMenuComponent {
 
 
             else {
-                if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
+                if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
                     isAddingItem = true;
-                }
+                } 
             }
          
             if (isAddingItem) {
@@ -289,7 +289,7 @@ export class MainMenuComponent {
                     }
 
                     case "General.MH.TariffModule": {
-                        myComponentPath = "./TariffModule/Components/Workspaces/TariffModuleWorkspaceComponent";
+                        myComponentPath = "./TariffModule/Components/Workspaces/TariffWorkspaceComponent";
                         break;
                     }
 
@@ -532,7 +532,18 @@ export class MainMenuComponent {
                         
                     case "General.MH.Tasks": {
                         ServiceLocator.SendTotangoUserActivity("Tasks", "Main View");
-                        myComponentPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent";
+                        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+                            SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.CurrentSession.DestroyMenuReferences();
+                                    this.CurrentSession.DestroyListComponentReferences();
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                            //myComponentPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent";
+                        });
                         break;
                     }
 

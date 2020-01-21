@@ -660,6 +660,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     IsShowAddFromLibraryLink: boolean;
+    IsShowAddReportFromLibraryLink: boolean = false;
     HasExcelExportButton: boolean;
 
     LinkAddDocumentFromLibraryClcik() {
@@ -688,6 +689,21 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
 
+    LinkAddReportFromLibraryClick() {
+        var windowTitle = "Add Report From Library";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 750;
+        logWindow.Height = 600;
+        logWindow.Title = windowTitle;
+        var windowArgs: any = {};
+        windowArgs.IsCopyFromLibrary = true;
+        windowArgs.FolderId = this.listArgs.BIReportFolderId;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+        logWindow.ComponentLoaded.subscribe(s => {
+            //
+        });
+    }
 
 
     IsShowAddQuoteTemplateFromLibraryLink: boolean;
@@ -761,6 +777,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             else {
                 this.IsShowAddFromLibraryLink = false;
+            }
+
+        }
+
+        if (this.ObjectTable.Name == "BIReport") {
+            if (FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopyFromLibrary")) {
+                if (SessionLocator.Tenant != 0) {
+                    this.IsShowAddReportFromLibraryLink = true;
+                }
             }
 
         }
@@ -916,20 +941,20 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     GetQueries() {
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
 
-        this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGranted(x.FeatureId) && x.SystemLevel == true);
+        this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) && x.SystemLevel == true);
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
             this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
@@ -2561,6 +2586,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         var windowArgs: any = {};
                         windowArgs.IsNew = true;
                         logWindow.WindowArgs = windowArgs;
+                        break;
+                    }
+                case "InterestReport":
+                    {
+                        logWindow.Width = 400;
+                        logWindow.Height = 200;
                         break;
                     }
             }

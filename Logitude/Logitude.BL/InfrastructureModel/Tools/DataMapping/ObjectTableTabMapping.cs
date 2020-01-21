@@ -14,6 +14,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTableTab.Tenant = objectTableTabPM.Tenant;
             objectTableTab.Code = objectTableTabPM.Code;
             objectTableTab.FeatureId = objectTableTabPM.FeatureId;
+            objectTableTab.TabNameTextCodeCode = objectTableTabPM.TabNameTextCodeCode;
+            objectTableTab.FeatureUniqeCode = objectTableTabPM.FeatureUniqeCode;
+
         }
     }
 }

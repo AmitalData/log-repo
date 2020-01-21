@@ -41,6 +41,13 @@ public void GenerateList(string xmlFilePath,string outputFilePath)
 	 listnamespacestring = GetListNameSpace(outputFilePath);
     }
 var entity = FromListFile(xmlFilePath);
+         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 WriteListMethod(entity);
 SaveListOutput(outputFilePath);
 }

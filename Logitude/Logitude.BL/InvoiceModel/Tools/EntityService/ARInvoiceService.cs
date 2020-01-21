@@ -915,6 +915,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void InitializeComponent()
         {
+            if (entityPM.IsInvoiceNumberManuallySet)
+            {
+                entityPM.InvoiceNumber = MethodHelper.Trim(entityPM.InvoiceNumber);
+            }
+
             // DR: Draft
             // CN: Connected
             // NT: Not Connected
@@ -2883,6 +2888,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
                 InterestValueDate = (DateTime)dateForInterest,
                 Tenant = entityPM.Tenant,
+                CurrencyId = entityPM.InvoiceCurrencyId,
                 ChangeSetOp = ChangeSetOperation.Insert,
             };
             return InterestTransactionVatLine;
@@ -2890,6 +2896,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
         {
+            dateForInterest = invoiceLine.DateForInterest == null ? DateTime.Now : invoiceLine.DateForInterest;
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "1",
@@ -2900,6 +2907,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 InterestValueDate = (DateTime)dateForInterest,//(DateTime)invoiceLine.DateForInterest == null? DateTime.Now : (DateTime)invoiceLine.DateForInterest ,
                 Tenant = invoiceLine.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
+                CurrencyId = invoiceLine.ForiegnCurrencyId,
             };
             return interestTransaction;
         }

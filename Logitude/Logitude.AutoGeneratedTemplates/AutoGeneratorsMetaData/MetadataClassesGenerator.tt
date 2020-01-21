@@ -207,7 +207,7 @@ namespace <#= UpdateClassnamespacestring #>
 					&& p.Name != "HasCompactSearch"  && p.Name != "ApplyDefaultValues"  && p.Name != "HasCustomValidator" && p.Name != "ApplyOnPropertyChangedCode" && p.Name != "HasApiHelper" && p.Name != "SortingByDirection"
 					  && p.Name != "DescriptionTextCodeId" && p.Name != "DownloadToExcelFeatureCode"
 					  && p.Name != "Code1"  && p.Name != "Name1" && p.Name != "Code2"  && p.Name != "Name2"
-					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "NoDefaultFeatures")
+					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "HeaderScreenCode" && p.Name != "NoDefaultFeatures" && p.Name != "IsMetadataOnlyTable")
                 {
 				  #>
 				    <#= p.Name #> =  <#= p.Value #>,
@@ -526,7 +526,11 @@ foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
 	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
 	string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
 	string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
-    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs."))
+		 string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	    	 
+    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs.") &&(IsMetadataOnlyTable == "false"))
     {
 	 #>
 
@@ -570,7 +574,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 		noObjectField = (field.Attribute(XName.Get("NoMetaDataField")).Value.ToLower() == "true");
     }
 
-	if(field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" || noObjectField || isCustomField)
+	if( noObjectField || isCustomField)//field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" ||
     {
 		return;
     }
@@ -926,11 +930,12 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 			FeatureCode = FeatureCodeAtt.Value.ToString();
 
 	    string featureClassName = "null";
+		string featureCodeClassName = "null";
         
         if (MenuButtonType.Trim('"') != "dropdownbutton")
         {
                         featureClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id";
-                        
+                        featureCodeClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".FeatureUniqeCode";
 
         }
         else
@@ -952,6 +957,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						FeatureId = <#=featureClassName #>,
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
+						FeatureUniqeCode = <#=featureCodeClassName #>,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 <#+
 	   var MenuItems = MButtonAtt.Elements("MenuItem");
@@ -987,9 +993,12 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 			ItemTextCodeCode = ItemTextCodeAtt.Value.ToString().Trim('"');
 
 			string itemfeatureClassName = "";
+		    string itemfeatureCodeClassName = "";
+
                 var isActive = "true";
 			if(MenuButtonType.Trim('"') != "separator")
                 {itemfeatureClassName = "FeatureId=  " + AddedMenuButtonsFeatures[EventCode.Trim('"') +ItemFeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id,";
+				itemfeatureCodeClassName = "FeatureUniqeCode=  " + AddedMenuButtonsFeatures[EventCode.Trim('"') +ItemFeatureCode.Trim('"')+ TblName.Trim('"')] + ".FeatureUniqeCode,";
                 }
                 else
                 {
@@ -1013,6 +1022,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						<#= itemfeatureClassName #>
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
+						<#=itemfeatureCodeClassName#>
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   <#+
              i++; 
@@ -1059,7 +1069,7 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 
            #> 
 
-			  Query <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = <#= TblName.Trim('"') #>TextCode_<#= index #>.Id, Code = <#= Code #>, <#+
+			  Query <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = <#= TblName.Trim('"') #>TextCode_<#= index #>.Id, NameTextCodeCode = <#= TblName.Trim('"') #>TextCode_<#= index #>.Code, Code = <#= Code #>, <#+
     if (!string.IsNullOrEmpty(SpotlightDataTemplate) && SpotlightDataTemplate != "&quot;&quot;" && SpotlightDataTemplate != "\"\"")
     {
 			  #> SpotlightDataTemplate = <#= SpotlightDataTemplate #>, <#+ } 
@@ -1069,7 +1079,7 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 			  <#+ } if (!string.IsNullOrEmpty(EditWizardComponentPath) && EditWizardComponentPath != "&quot;&quot;")
     {
 			  #> EditWizardComponentPath = <#= EditWizardComponentPath #>,
-			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #>, Perspective = <#= Perspective #> }, queriesRepository, tenantQueries);
+			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id,FeatureUniqeCode= <#= TblName.Trim('"') #>Feature_<#= index #>.FeatureUniqeCode, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #>, Perspective = <#= Perspective #> }, queriesRepository, tenantQueries);
 	<#+
 	    int i = 0;
 	    foreach(XElement Column in QueryAtt.Elements("QueryColumns").FirstOrDefault().Elements("QueryColumn"))
@@ -1163,6 +1173,8 @@ private void WriteAddScreenMethod(XElement entity,XElement ScreenAtt,string TblN
 		#>
 	
 		    <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectTable.HeaderScreenId = <#= screenClassName #>.Id;
+		    <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectTable.HeaderScreenCode = <#= screenClassName #>.Code;
+
 	   		<#+
         }
 }
@@ -1179,7 +1191,7 @@ private void WriteAddScreenFieldMethod(XElement entity,XElement ScreenField,int 
 
 #>
 
-            ScreenField <#= TblName.Trim('"').Replace(" ","").Replace(".","") #><#= ScreenName.Trim('"').Replace(" ","").Replace(".","") #>ScreenField<#= index #> = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = <#= Column #>, Row = <#= Row #>, ObjectFieldId = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().Id, ScreenId = <#= screenClassName #>.Id, ObjectFieldCode = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField <#= TblName.Trim('"').Replace(" ","").Replace(".","") #><#= ScreenName.Trim('"').Replace(" ","").Replace(".","") #>ScreenField<#= index #> = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = <#= Column #>, Row = <#= Row #>, ObjectFieldId = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().Id, ScreenId = <#= screenClassName #>.Id,ScreenCode = <#= screenClassName #>.Code, ObjectFieldCode = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          <#+
 }
 
@@ -1220,7 +1232,7 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName,int i
 	  
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id,FeatureUniqeCode = <#= featureInstanceName #>.FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, TabNameTextCodeCode = <#= textCodeInstanceName #>.Code, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 
@@ -1411,7 +1423,7 @@ namespace <#= UpdateClassnamespacestring #>
 			TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			tenantAdvancedFilters = advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldCode, a => a);
 			tenantScreens = screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-			tenantScreenFields = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenId + d.ObjectFieldCode);
+			tenantScreenFields = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldCode);
 			TenantObjectTableTabs = objectTableTabsRepository.GetObjectTableTabsByTenant(0).ToDictionary(d => d.Code, a => a);
 			tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			tenantMenuButtons = menuButtonRepository.GetMenuButtonsByTenant(0).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
@@ -1793,6 +1805,8 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	 
 	 var path= Host.ResolvePath(file);
      XElement entity = XDocument.Load(path).Root; 
+ 
+	    
 	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
 	 string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
 	if(tableName.Contains("."))
@@ -1810,6 +1824,13 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
 	 string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
 	string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
+			string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	    	if(IsMetadataOnlyTable == "true")
+	    	{
+                continue;
+	    	}
     if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs."))
     {
     #>

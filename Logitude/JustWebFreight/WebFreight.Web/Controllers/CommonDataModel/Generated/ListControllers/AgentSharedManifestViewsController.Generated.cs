@@ -41,8 +41,6 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.BL.CommonDataModel.CustomFilters;
-
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
@@ -59,6 +57,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("AgentSharedManifest", "READ", authToken.Tenant);
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				AgentSharedManifestRepository  agentSharedManifestRepository = new AgentSharedManifestRepository(MyContext);
@@ -96,6 +95,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("AgentSharedManifest", "READ", authToken.Tenant);
 
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
@@ -105,9 +105,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AgentSharedManifestQuery agentSharedManifestQuery = new AgentSharedManifestQuery(agentSharedManifestRepository);
 			    IQueryable<AgentSharedManifestList> entityLists = agentSharedManifestQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.CreateDate);
+				List<AgentSharedManifestList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-								
-				return Request.CreateResponse(HttpStatusCode.OK, entityLists);
+										
+				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
             catch (Exception ex)
             {
@@ -125,9 +126,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = tenant;
-				
+				                
+				SecurityUtility.CheckContactFeature("AgentSharedManifest", "READ", authToken.Tenant);
+	
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "AgentSharedManifest",
@@ -171,7 +172,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -199,7 +201,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                         {
@@ -207,7 +210,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         }
                     }
                 }
-
 
 
                 GenericFilter genericFilter = new GenericFilter();
@@ -223,11 +225,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-                AgentSharedManifestCustomFilter customfilters = new AgentSharedManifestCustomFilter(tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-                
-
+				
                 entityPocos = genericFilter.GetFilteredQuery<AgentSharedManifest>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<AgentSharedManifestList> entityLists = agentSharedManifestQuery.GetIQueryableEntityList(entityPocos);
@@ -317,8 +315,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
+			   List<AgentSharedManifestList> listResult = entityLists.ToList();
 
-               response.Result = entityLists;
+               response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
                

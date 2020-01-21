@@ -1076,7 +1076,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllMessagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MessagingStockTextCode_0.Id, Code = "All Messaging Stocks",  QueryGroupCode = "AWMS", IndexOrder = 0, Tenant = 0, ObjectTableId = MessagingStockObjectTable.Id, QuerySection = "MessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MessagingStockFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMessagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MessagingStockTextCode_0.Id, NameTextCodeCode = MessagingStockTextCode_0.Code, Code = "All Messaging Stocks",  QueryGroupCode = "AWMS", IndexOrder = 0, Tenant = 0, ObjectTableId = MessagingStockObjectTable.Id, QuerySection = "MessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MessagingStockFeature_0.Id,FeatureUniqeCode= MessagingStockFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllMessagingStocksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id, IndexOrder = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "TenantNumber" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "TenantNumber" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1106,15 +1106,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen MessagingStockHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MessagingStock.HeaderScreen", Name = "Header Screen", ObjectTableId = MessagingStockObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MessagingStockMessagingStockHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MessagingStockMessagingStockHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Amount").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Amount").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MessagingStockMessagingStockHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Amount").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Amount").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MessagingStockMessagingStockHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    MessagingStockObjectTable.HeaderScreenId = MessagingStockHeaderScreenScreen0.Id;
+		    MessagingStockObjectTable.HeaderScreenCode = MessagingStockHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -1135,9 +1137,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MSGN",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/MessagingStock/StockGeneralTabComponent", FeatureId = MessagingStockGeneralFeature_TH0.Id, ControlPath = "Simplog.ShipmentLib.Views.MessagingStock.MessagingStockGeneralTabControl", ObjectTableId = MessagingStockObjectTable.Id, TabNameTextCodeId = MessagingStockGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MSGN",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/MessagingStock/StockGeneralTabComponent", FeatureId = MessagingStockGeneralFeature_TH0.Id,FeatureUniqeCode = MessagingStockGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MessagingStock.MessagingStockGeneralTabControl", ObjectTableId = MessagingStockObjectTable.Id, TabNameTextCodeId = MessagingStockGeneralTextCode_TH0.Id, TabNameTextCodeCode = MessagingStockGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MessagingStockEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MessagingStockObjectTable.Id, TabNameTextCodeId = MessagingStockEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MessagingStockEventsFeature_TH1.Id,FeatureUniqeCode = MessagingStockEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MessagingStockObjectTable.Id, TabNameTextCodeId = MessagingStockEventsTextCode_TH1.Id, TabNameTextCodeCode = MessagingStockEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1232,6 +1234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton MessagingStockMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1249,6 +1252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MessagingStockFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  MessagingStockFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

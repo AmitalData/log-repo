@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string interestreportid)
+        public HttpResponseMessage GetSingle(string interestreportid, string interesttransactionid)
         {
 		  try
             {
@@ -59,12 +59,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("InterestReportLine", "READ", authToken.Tenant);
-	                
+                
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 InterestReportLineQueryService interestReportLineQuery = new InterestReportLineQueryService(MyContext);
 				interestReportLineQuery.InitializeSettings();
-                InterestReportLinePM interestReportLinePM = interestReportLineQuery.GetSingle(interestreportid,true,false);
+                InterestReportLinePM interestReportLinePM = interestReportLineQuery.GetSingle(interestreportid, interesttransactionid,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
@@ -92,9 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("InterestReportLine", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("InterestReportLine", entityPM.Tenant, authToken.Tenant);
-	                    
+                    
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         InterestReportLineUpdateService service = new InterestReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -140,9 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("InterestReportLine", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("InterestReportLine", entityPM.Tenant, authToken.Tenant);
-	
+
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         InterestReportLineUpdateService service = new InterestReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

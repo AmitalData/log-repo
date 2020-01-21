@@ -10,8 +10,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int Tenant { get; set; }
         public string PackageCode { get; set; }
         public string FeatureId { get; set; }
+        public string FeatureUniqeCode { get; set; }
 
-        [ForeignKey("FeatureId")]
+
+        //[ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
 
         [ForeignKey("PackageCode")]

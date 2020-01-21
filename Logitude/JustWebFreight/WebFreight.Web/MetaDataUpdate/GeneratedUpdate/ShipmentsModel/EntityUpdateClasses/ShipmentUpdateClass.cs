@@ -1606,7 +1606,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						RecordType =  "Shipment",
+					  						RecordType =  "Master",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2592,10 +2592,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						RecordType =  "Master",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ProfitInLocalCurrency",
@@ -15229,10 +15230,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						RecordType =  "Master",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EstimateProfitInProfitCurrency",
@@ -15296,10 +15298,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						RecordType =  "Master",
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ProfitInProfitCurrency",
@@ -38751,63 +38754,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsDepositionRequired",
-					  						OldFieldName =  "IsDepositionRequired",
-					  						ObjectTableName =  "Shipment",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsDepositionRequired",
-					  						ListPropertyPath =  "IsDepositionRequired",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsDepositionRequired",
-					  						DefaultText =  "Is Deposition Required ",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "OrderGrossWeightEdited",
 					  						OldFieldName =  "OrderGrossWeightEdited",
 					  						ObjectTableName =  "Shipment",
@@ -40098,6 +40044,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "HousesNumbers",
+					  						OldFieldName =  "HousesNumbers",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "HousesNumbers",
+					  						ListPropertyPath =  "HousesNumbers",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "HousesNumbers",
+					  						DefaultText =  "Houses Numbers",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -40191,7 +40196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_0.Id, Code = "Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 0, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_0.Id, NameTextCodeCode = ShipmentTextCode_0.Code, Code = "Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 0, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_0.Id,FeatureUniqeCode= ShipmentFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40222,7 +40227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query MastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_1.Id, Code = "Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 1, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_1.Id, NameTextCodeCode = ShipmentTextCode_1.Code, Code = "Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 1, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_1.Id,FeatureUniqeCode= ShipmentFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40253,7 +40258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query OpenReceivablesShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_2.Id, Code = "Open Receivables Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 2, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_2.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenReceivablesShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_2.Id, NameTextCodeCode = ShipmentTextCode_2.Code, Code = "Open Receivables Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 2, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_2.Id,FeatureUniqeCode= ShipmentFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenReceivablesShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenReceivablesShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40284,7 +40289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query OpenPayablesMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_3.Id, Code = "Open Payables Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 3, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_3.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenPayablesMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_3.Id, NameTextCodeCode = ShipmentTextCode_3.Code, Code = "Open Payables Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 3, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_3.Id,FeatureUniqeCode= ShipmentFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenPayablesMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPayablesMastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40315,8 +40320,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ExpectedDeparturesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_4.Id, Code = "Expected Departures",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 4, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_4.Id, DefaultSortName = "MainCarriageETD", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ExpectedDeparturesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_4.Id, NameTextCodeCode = ShipmentTextCode_4.Code, Code = "Expected Departures",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
+			   QueryGroupCode = "SHIP", IndexOrder = 4, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_4.Id,FeatureUniqeCode= ShipmentFeature_4.FeatureUniqeCode, DefaultSortName = "MainCarriageETD", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ExpectedDeparturesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpectedDeparturesQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FWBStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "FWBStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40351,8 +40356,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AirlinesUpdatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_5.Id, Code = "Airlines Updates",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 5, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_5.Id, DefaultSortName = "CarrierLastStatusDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AirlinesUpdatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_5.Id, NameTextCodeCode = ShipmentTextCode_5.Code, Code = "Airlines Updates",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
+			   QueryGroupCode = "SHIP", IndexOrder = 5, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_5.Id,FeatureUniqeCode= ShipmentFeature_5.FeatureUniqeCode, DefaultSortName = "CarrierLastStatusDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AirlinesUpdatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesUpdatesQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CarrierLastStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "CarrierLastStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40387,7 +40392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_6.Id, Code = "All Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 6, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_6.Id, NameTextCodeCode = ShipmentTextCode_6.Code, Code = "All Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 6, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_6.Id,FeatureUniqeCode= ShipmentFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40420,7 +40425,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_7.Id, Code = "My Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 7, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_7.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_7.Id, NameTextCodeCode = ShipmentTextCode_7.Code, Code = "My Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 7, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_7.Id,FeatureUniqeCode= ShipmentFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40453,7 +40458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_8.Id, Code = "All Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 8, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_8.Id, NameTextCodeCode = ShipmentTextCode_8.Code, Code = "All Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 8, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_8.Id,FeatureUniqeCode= ShipmentFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40484,7 +40489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_9.Id, Code = "All Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 9, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_9.Id, NameTextCodeCode = ShipmentTextCode_9.Code, Code = "All Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 9, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_9.Id,FeatureUniqeCode= ShipmentFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40515,7 +40520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ImportShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_10.Id, Code = "ImportShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 10, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ImportShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_10.Id, NameTextCodeCode = ShipmentTextCode_10.Code, Code = "ImportShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 10, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_10.Id,FeatureUniqeCode= ShipmentFeature_10.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ImportShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40546,7 +40551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CancelledShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_11.Id, Code = "Cancelled Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 11, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CancelledShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_11.Id, NameTextCodeCode = ShipmentTextCode_11.Code, Code = "Cancelled Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 11, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_11.Id,FeatureUniqeCode= ShipmentFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40577,8 +40582,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query SentFSRQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_12.Id, Code = "SentFSR",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 12, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_12.Id, DefaultSortName = "LastFSRStatusRequestDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query SentFSRQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_12.Id, NameTextCodeCode = ShipmentTextCode_12.Code, Code = "SentFSR",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
+			   QueryGroupCode = "SHIP", IndexOrder = 12, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_12.Id,FeatureUniqeCode= ShipmentFeature_12.FeatureUniqeCode, DefaultSortName = "LastFSRStatusRequestDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn SentFSRQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentFSRQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40599,7 +40604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CustomerShipmentActualDataQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_13.Id, Code = "CustomerShipmentActualData",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 13, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_13.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomerShipmentActualDataQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_13.Id, NameTextCodeCode = ShipmentTextCode_13.Code, Code = "CustomerShipmentActualData",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 13, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_13.Id,FeatureUniqeCode= ShipmentFeature_13.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CustomerShipmentActualDataQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerShipmentActualDataQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40632,7 +40637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CreditLimitBlockedShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_14.Id, Code = "CreditLimitBlockedShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 14, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_14.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CreditLimitBlockedShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_14.Id, NameTextCodeCode = ShipmentTextCode_14.Code, Code = "CreditLimitBlockedShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 14, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_14.Id,FeatureUniqeCode= ShipmentFeature_14.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CreditLimitBlockedShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreditLimitBlockedShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40663,7 +40668,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ExpDepNotTransmittedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_15.Id, Code = "ExpDepNotTransmitted",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 15, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_15.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ExpDepNotTransmittedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_15.Id, NameTextCodeCode = ShipmentTextCode_15.Code, Code = "ExpDepNotTransmitted",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 15, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_15.Id,FeatureUniqeCode= ShipmentFeature_15.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ExpDepNotTransmittedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpDepNotTransmittedQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40694,7 +40699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ShippingInstructionsLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_16.Id, Code = "ShippingInstructionsLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 16, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_16.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ShippingInstructionsLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_16.Id, NameTextCodeCode = ShipmentTextCode_16.Code, Code = "ShippingInstructionsLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 16, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_16.Id,FeatureUniqeCode= ShipmentFeature_16.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ShippingInstructionsLast7DaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippingInstructionsLast7DaysQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRASIStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRASIStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40723,7 +40728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ContainerStatusLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_17.Id, Code = "ContainerStatusLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 17, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_17.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ContainerStatusLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_17.Id, NameTextCodeCode = ShipmentTextCode_17.Code, Code = "ContainerStatusLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 17, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_17.Id,FeatureUniqeCode= ShipmentFeature_17.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ContainerStatusLast7DaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40750,8 +40755,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query EBookingInProgressQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_18.Id, Code = "EBookingInProgress",  EditWizardName = "SimulatorBookingComponent",
-			   QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query EBookingInProgressQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_18.Id, NameTextCodeCode = ShipmentTextCode_18.Code, Code = "EBookingInProgress",  EditWizardName = "SimulatorBookingComponent",
+			   QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id,FeatureUniqeCode= ShipmentFeature_18.FeatureUniqeCode, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn EBookingInProgressQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingTransStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingTransStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -40790,155 +40795,159 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen ShipmentHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Shipment.HeaderScreen", Name = "Header Screen", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentShipmentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IncotermCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "House").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "House").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "House").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "House").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ConsigneeName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ConsigneeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ConsigneeName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ConsigneeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen0.Id,ScreenCode = ShipmentHeaderScreenScreen0.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ShipmentObjectTable.HeaderScreenId = ShipmentHeaderScreenScreen0.Id;
+		    ShipmentObjectTable.HeaderScreenCode = ShipmentHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen ShipmentShippingDeclarationAdditionalFieldsScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShippingDeclarationAdditionalScreen", Name = "Shipping Declaration Additional Fields", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentShippingDeclarationAdditionalScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRADocumentTypeCode").FirstOrDefault().Id, ScreenId = ShipmentShippingDeclarationAdditionalFieldsScreen1.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRADocumentTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShippingDeclarationAdditionalScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRADocumentTypeCode").FirstOrDefault().Id, ScreenId = ShipmentShippingDeclarationAdditionalFieldsScreen1.Id,ScreenCode = ShipmentShippingDeclarationAdditionalFieldsScreen1.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRADocumentTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShippingDeclarationAdditionalScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRADocumentQTY").FirstOrDefault().Id, ScreenId = ShipmentShippingDeclarationAdditionalFieldsScreen1.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRADocumentQTY").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShippingDeclarationAdditionalScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRADocumentQTY").FirstOrDefault().Id, ScreenId = ShipmentShippingDeclarationAdditionalFieldsScreen1.Id,ScreenCode = ShipmentShippingDeclarationAdditionalFieldsScreen1.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRADocumentQTY").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShippingDeclarationAdditionalScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SIHasAttachList").FirstOrDefault().Id, ScreenId = ShipmentShippingDeclarationAdditionalFieldsScreen1.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "SIHasAttachList").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShippingDeclarationAdditionalScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SIHasAttachList").FirstOrDefault().Id, ScreenId = ShipmentShippingDeclarationAdditionalFieldsScreen1.Id,ScreenCode = ShipmentShippingDeclarationAdditionalFieldsScreen1.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "SIHasAttachList").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShippingDeclarationAdditionalScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRAInstructions").FirstOrDefault().Id, ScreenId = ShipmentShippingDeclarationAdditionalFieldsScreen1.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRAInstructions").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShippingDeclarationAdditionalScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRAInstructions").FirstOrDefault().Id, ScreenId = ShipmentShippingDeclarationAdditionalFieldsScreen1.Id,ScreenCode = ShipmentShippingDeclarationAdditionalFieldsScreen1.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "INTTRAInstructions").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen ShipmentNewShipmentScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewShipment", Name = "New Shipment", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentNewShipmentScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentNewShipmentScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id,ScreenCode = ShipmentNewShipmentScreen2.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentNewShipmentScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AgentReference1").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AgentReference1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentNewShipmentScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AgentReference1").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id,ScreenCode = ShipmentNewShipmentScreen2.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AgentReference1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentNewShipmentScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AgentReference2").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AgentReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentNewShipmentScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AgentReference2").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id,ScreenCode = ShipmentNewShipmentScreen2.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AgentReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentNewShipmentScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentNewShipmentScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id,ScreenCode = ShipmentNewShipmentScreen2.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentNewShipmentScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentNewShipmentScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = ShipmentNewShipmentScreen2.Id,ScreenCode = ShipmentNewShipmentScreen2.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen ShipmentGeneralTabScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Shipment.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 9, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "House").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "House").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "House").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "House").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "HAWBDate").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "HAWBDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "HAWBDate").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "HAWBDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AMSBL").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AMSBL").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AMSBL").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AMSBL").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IncotermId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IncotermId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IncotermId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IncotermId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MoveTypeId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MoveTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MoveTypeId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MoveTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FreightPrepaidCollectId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "FreightPrepaidCollectId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FreightPrepaidCollectId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "FreightPrepaidCollectId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "OtherPrepaidCollectId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "OtherPrepaidCollectId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "OtherPrepaidCollectId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "OtherPrepaidCollectId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AccountManagerUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AccountManagerUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AccountManagerUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AccountManagerUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField14 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SpecialServicesTypeId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "SpecialServicesTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField14 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SpecialServicesTypeId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "SpecialServicesTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField15 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField15 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField16 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField16 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id,ScreenCode = ShipmentGeneralTabScreenScreen3.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen ShipmentCustomerAddEditScreenScreen4 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Shipment.CustomerAddEditScreen", Name = "Customer Add Edit Screen", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperId").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperId").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id,ScreenCode = ShipmentCustomerAddEditScreenScreen4.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperReference1").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperReference1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperReference1").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id,ScreenCode = ShipmentCustomerAddEditScreenScreen4.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperReference1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperAddressId").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperAddressId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperAddressId").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id,ScreenCode = ShipmentCustomerAddEditScreenScreen4.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperAddressId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id,ScreenCode = ShipmentCustomerAddEditScreenScreen4.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperReference2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperContactId").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperContactId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentCustomerAddEditScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipperContactId").FirstOrDefault().Id, ScreenId = ShipmentCustomerAddEditScreenScreen4.Id,ScreenCode = ShipmentCustomerAddEditScreenScreen4.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipperContactId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen ShipmentHeaderScreenScreen5 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Master.HeaderScreen", Name = "Header Screen", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentTypeViewField").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "PPCC").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "PPCC").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "PPCC").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "PPCC").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FlightDate").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "FlightDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FlightDate").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "FlightDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AgentName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AgentName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AgentName").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AgentName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().Id, ScreenId = ShipmentHeaderScreenScreen5.Id,ScreenCode = ShipmentHeaderScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "IsAccountingClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ShipmentObjectTable.HeaderScreenId = ShipmentHeaderScreenScreen5.Id;
+		    ShipmentObjectTable.HeaderScreenCode = ShipmentHeaderScreenScreen5.Code;
+
 	   		  
 	      
 
 	         Screen ShipmentGeneralTabScreenScreen6 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Master.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentMasterGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FreightPrepaidCollectId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "FreightPrepaidCollectId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FreightPrepaidCollectId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "FreightPrepaidCollectId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "OtherPrepaidCollectId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "OtherPrepaidCollectId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "OtherPrepaidCollectId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "OtherPrepaidCollectId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MoveTypeId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MoveTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MoveTypeId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "MoveTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AMSBL").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AMSBL").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AMSBL").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "AMSBL").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id,ScreenCode = ShipmentGeneralTabScreenScreen6.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -41027,45 +41036,45 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Overview/OverviewTabComponent", FeatureId = ShipmentOverviewFeature_TH0.Id, ControlPath = "Simplog.ShipmentLib.Views.ShipmentOverview.ShipmentOverviewControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOverviewTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Overview/OverviewTabComponent", FeatureId = ShipmentOverviewFeature_TH0.Id,FeatureUniqeCode = ShipmentOverviewFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentOverview.ShipmentOverviewControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOverviewTextCode_TH0.Id, TabNameTextCodeCode = ShipmentOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id,FeatureUniqeCode = ShipmentGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, TabNameTextCodeCode = ShipmentGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id,FeatureUniqeCode = ShipmentGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, TabNameTextCodeCode = ShipmentGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCT",HtmlComponentName = "CustomsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Customs/CustomsTabComponent", FeatureId = ShipmentCustomsFeature_TH3.Id, ControlPath = "Simplog.ShipmentLib.Views.Customs.CustomsTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsTextCode_TH3.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCT",HtmlComponentName = "CustomsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Customs/CustomsTabComponent", FeatureId = ShipmentCustomsFeature_TH3.Id,FeatureUniqeCode = ShipmentCustomsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Customs.CustomsTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsTextCode_TH3.Id, TabNameTextCodeCode = ShipmentCustomsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOR",HtmlComponentName = "OrdersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Orders/OrdersTabComponent", FeatureId = ShipmentOrdersFeature_TH4.Id, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOrdersTextCode_TH4.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOR",HtmlComponentName = "OrdersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Orders/OrdersTabComponent", FeatureId = ShipmentOrdersFeature_TH4.Id,FeatureUniqeCode = ShipmentOrdersFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOrdersTextCode_TH4.Id, TabNameTextCodeCode = ShipmentOrdersTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Partners/PartnersTabComponent", FeatureId = ShipmentPartnersFeature_TH5.Id, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPartnersTextCode_TH5.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Partners/PartnersTabComponent", FeatureId = ShipmentPartnersFeature_TH5.Id,FeatureUniqeCode = ShipmentPartnersFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPartnersTextCode_TH5.Id, TabNameTextCodeCode = ShipmentPartnersTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCO",HtmlComponentName = "ShipmentsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Shipments/ShipmentsTabComponent", FeatureId = ShipmentShipmentsFeature_TH6.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentShipmentsTextCode_TH6.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCO",HtmlComponentName = "ShipmentsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Shipments/ShipmentsTabComponent", FeatureId = ShipmentShipmentsFeature_TH6.Id,FeatureUniqeCode = ShipmentShipmentsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentShipmentsTextCode_TH6.Id, TabNameTextCodeCode = ShipmentShipmentsTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentPackages/Components/Packages/PackagesTabComponent", FeatureId = ShipmentPackagesFeature_TH7.Id, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPackagesTextCode_TH7.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentPackages/Components/Packages/PackagesTabComponent", FeatureId = ShipmentPackagesFeature_TH7.Id,FeatureUniqeCode = ShipmentPackagesFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPackagesTextCode_TH7.Id, TabNameTextCodeCode = ShipmentPackagesTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentRouting/Components/Routings/RoutingsTabComponent", FeatureId = ShipmentRoutingsFeature_TH8.Id, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentRoutingsTextCode_TH8.Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentRouting/Components/Routings/RoutingsTabComponent", FeatureId = ShipmentRoutingsFeature_TH8.Id,FeatureUniqeCode = ShipmentRoutingsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentRoutingsTextCode_TH8.Id, TabNameTextCodeCode = ShipmentRoutingsTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPY",HtmlComponentName = "PayablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent", FeatureId = ShipmentPayablesFeature_TH9.Id, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPayablesTextCode_TH9.Id, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPY",HtmlComponentName = "PayablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent", FeatureId = ShipmentPayablesFeature_TH9.Id,FeatureUniqeCode = ShipmentPayablesFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPayablesTextCode_TH9.Id, TabNameTextCodeCode = ShipmentPayablesTextCode_TH9.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRE",HtmlComponentName = "ReceivablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Receivables/ReceivablesTabComponent", FeatureId = ShipmentReceivablesFeature_TH10.Id, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentReceivablesTextCode_TH10.Id, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRE",HtmlComponentName = "ReceivablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Receivables/ReceivablesTabComponent", FeatureId = ShipmentReceivablesFeature_TH10.Id,FeatureUniqeCode = ShipmentReceivablesFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentReceivablesTextCode_TH10.Id, TabNameTextCodeCode = ShipmentReceivablesTextCode_TH10.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDO",HtmlComponentName = "ShipmentDocsOutTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsOut/ShipmentDocsOutTabComponent", FeatureId = ShipmentDocsOutFeature_TH11.Id, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocOutControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsOutTextCode_TH11.Id, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDO",HtmlComponentName = "ShipmentDocsOutTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsOut/ShipmentDocsOutTabComponent", FeatureId = ShipmentDocsOutFeature_TH11.Id,FeatureUniqeCode = ShipmentDocsOutFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocOutControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsOutTextCode_TH11.Id, TabNameTextCodeCode = ShipmentDocsOutTextCode_TH11.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDI",HtmlComponentName = "ShipmentDocsInTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsIn/ShipmentDocsInTabComponent", FeatureId = ShipmentDocsInFeature_TH12.Id, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocInControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsInTextCode_TH12.Id, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDI",HtmlComponentName = "ShipmentDocsInTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsIn/ShipmentDocsInTabComponent", FeatureId = ShipmentDocsInFeature_TH12.Id,FeatureUniqeCode = ShipmentDocsInFeature_TH12.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocInControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsInTextCode_TH12.Id, TabNameTextCodeCode = ShipmentDocsInTextCode_TH12.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCN",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Connections/ConnectionsTabComponent", FeatureId = ShipmentConnectedEntitiesFeature_TH13.Id, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentConnectedEntitiesTextCode_TH13.Id, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCN",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Connections/ConnectionsTabComponent", FeatureId = ShipmentConnectedEntitiesFeature_TH13.Id,FeatureUniqeCode = ShipmentConnectedEntitiesFeature_TH13.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentConnectedEntitiesTextCode_TH13.Id, TabNameTextCodeCode = ShipmentConnectedEntitiesTextCode_TH13.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentCommunicationFeature_TH14.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCommunicationTextCode_TH14.Id, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentCommunicationFeature_TH14.Id,FeatureUniqeCode = ShipmentCommunicationFeature_TH14.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCommunicationTextCode_TH14.Id, TabNameTextCodeCode = ShipmentCommunicationTextCode_TH14.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHAU",HtmlComponentName = "ShipmentAuditTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", FeatureId = ShipmentAuditFeature_TH15.Id, ControlPath = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentAuditTextCode_TH15.Id, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHAU",HtmlComponentName = "ShipmentAuditTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", FeatureId = ShipmentAuditFeature_TH15.Id,FeatureUniqeCode = ShipmentAuditFeature_TH15.FeatureUniqeCode, ControlPath = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentAuditTextCode_TH15.Id, TabNameTextCodeCode = ShipmentAuditTextCode_TH15.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentEventsFeature_TH16.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentEventsTextCode_TH16.Id, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentEventsFeature_TH16.Id,FeatureUniqeCode = ShipmentEventsFeature_TH16.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentEventsTextCode_TH16.Id, TabNameTextCodeCode = ShipmentEventsTextCode_TH16.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHMS",HtmlComponentName = "MasterTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Master/MasterTabComponent", FeatureId = ShipmentMasterFeature_TH17.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterTab.MasterTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentMasterTextCode_TH17.Id, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHMS",HtmlComponentName = "MasterTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Master/MasterTabComponent", FeatureId = ShipmentMasterFeature_TH17.Id,FeatureUniqeCode = ShipmentMasterFeature_TH17.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterTab.MasterTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentMasterTextCode_TH17.Id, TabNameTextCodeCode = ShipmentMasterTextCode_TH17.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHFF",HtmlComponentName = "FreightFilesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/FreightFiles/FreightFilesTabComponent", FeatureId = ShipmentFreightFilesFeature_TH18.Id, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.FreightFilesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentFreightFilesTextCode_TH18.Id, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHFF",HtmlComponentName = "FreightFilesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/FreightFiles/FreightFilesTabComponent", FeatureId = ShipmentFreightFilesFeature_TH18.Id,FeatureUniqeCode = ShipmentFreightFilesFeature_TH18.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.FreightFilesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentFreightFilesTextCode_TH18.Id, TabNameTextCodeCode = ShipmentFreightFilesTextCode_TH18.Code, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCF",HtmlComponentName = "CustomsFileTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/CustomsFile/CustomsFileTabComponent", FeatureId = ShipmentCustomsFileFeature_TH19.Id, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.CustomsFileTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsFileTextCode_TH19.Id, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCF",HtmlComponentName = "CustomsFileTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/CustomsFile/CustomsFileTabComponent", FeatureId = ShipmentCustomsFileFeature_TH19.Id,FeatureUniqeCode = ShipmentCustomsFileFeature_TH19.FeatureUniqeCode, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.CustomsFileTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsFileTextCode_TH19.Id, TabNameTextCodeCode = ShipmentCustomsFileTextCode_TH19.Code, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -43272,6 +43281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ShipmentMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43289,6 +43299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43306,6 +43317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43323,6 +43335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB02.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton03 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43340,6 +43353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB03.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB03.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton04 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43357,6 +43371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton05 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43374,6 +43389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB04.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB04.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton06 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43391,6 +43407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB05.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB05.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton07 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43408,6 +43425,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB06.Id,
 						Style = null,
 						LocalDefaultText = "Convert to LCL",
+						FeatureUniqeCode=  ShipmentFeature_MB06.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton08 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43425,6 +43443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB07.Id,
 						Style = null,
 						LocalDefaultText = "Convert to FCL",
+						FeatureUniqeCode=  ShipmentFeature_MB07.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton09 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43442,6 +43461,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB08.Id,
 						Style = null,
 						LocalDefaultText = "Convert Shipment Direction",
+						FeatureUniqeCode=  ShipmentFeature_MB08.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton010 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43459,6 +43479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB09.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB09.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton011 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43476,6 +43497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton012 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43493,6 +43515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB010.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB010.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton013 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43510,6 +43533,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton014 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43527,6 +43551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB011.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB011.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton015 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43544,6 +43569,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB012.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB012.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton016 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43561,6 +43587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB013.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB013.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton017 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43578,6 +43605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB014.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB014.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton018 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43595,6 +43623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB015.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB015.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton ShipmentMenuButton019 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -43612,6 +43641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  ShipmentFeature_MB016.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  ShipmentFeature_MB016.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

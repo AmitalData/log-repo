@@ -21,6 +21,7 @@ export class ObjectTableList {
 		AutoCompleteSearchWindow: boolean;
 		IsClosed: boolean;
 		HeaderScreenId: string;
+		HeaderScreenCode: string;
 		HasCounter: boolean;
 		HasCustomValidator: boolean;
 		EnableEditFromLOV: boolean;

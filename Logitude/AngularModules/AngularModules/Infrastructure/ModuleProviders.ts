@@ -79,6 +79,7 @@ import { BIReportFolderListService } from './Services/StandardLists/BIReportFold
 import { BIReportListService } from './Services/StandardLists/BIReportListService';
 import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
 import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
+import { BIReportExtendedListService } from './Services/ExtendedLists/BIReportExtendedListService';
 import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysListService';
 
 import { ToggleListService } from './Services/StandardLists/ToggleListService';
@@ -170,7 +171,8 @@ export class ModuleProviders {
             case "ErrorLogPMFileLoggerService": { myResult = new ErrorLogPMFileLoggerService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }  
             case "BusinessProcessQueuePMService": { myResult = new BusinessProcessQueuePMService(); break; }  
-            case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }  
+            case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
+            case "BIReportExtendedListService": { myResult = new BIReportExtendedListService(); break; }  
             case "BusinessRolePMService": { myResult = new BusinessRolePMService(); break; }  
             case "TeamListService": { myResult = new TeamListService(); break; }   
             case "TeamPMService": { myResult = new TeamPMService(); break; }   

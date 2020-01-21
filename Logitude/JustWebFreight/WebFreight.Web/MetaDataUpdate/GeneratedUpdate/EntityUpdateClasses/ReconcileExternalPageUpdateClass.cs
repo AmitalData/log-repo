@@ -1370,11 +1370,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReconcileExternalPage.ReconcileExternalPageHeaderScreen", Name = "ReconcileExternalPageHeaderScreen", ObjectTableId = ReconcileExternalPageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().Id, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id, ObjectFieldCode = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().Id, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id,ScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code, ObjectFieldCode = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "PageNo").FirstOrDefault().Id, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id, ObjectFieldCode = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "PageNo").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ReconcileExternalPageReconcileExternalPageReconcileExternalPageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "PageNo").FirstOrDefault().Id, ScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id,ScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code, ObjectFieldCode = ReconcileExternalPageObjectFields.Where(d => d.FieldName == "PageNo").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ReconcileExternalPageObjectTable.HeaderScreenId = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Id;
+		    ReconcileExternalPageObjectTable.HeaderScreenCode = ReconcileExternalPageReconcileExternalPageHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -1391,7 +1393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERVT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReconcileExternalPageEventsFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconcileExternalPageObjectTable.Id, TabNameTextCodeId = ReconcileExternalPageEventsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERVT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReconcileExternalPageEventsFeature_TH0.Id,FeatureUniqeCode = ReconcileExternalPageEventsFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconcileExternalPageObjectTable.Id, TabNameTextCodeId = ReconcileExternalPageEventsTextCode_TH0.Id, TabNameTextCodeCode = ReconcileExternalPageEventsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

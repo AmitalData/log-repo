@@ -18,6 +18,8 @@ namespace Logitude.Accounting.Data.EntityLists
        [Key]
        [DataMember]
        public string InterestReportId  { get; set; }
+
+       [Key]
        [DataMember]
        public string InterestTransactionId  { get; set; }
    }

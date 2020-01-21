@@ -189,5 +189,21 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
+
+        public Customer CustomerCustomDataMapping(string code, int Tenant)
+        {
+            try
+            {
+
+                CustomerQueryService customerQueryService = new CustomerQueryService(Tenant);
+                var ChargeType = customerQueryService.GetCustomerById(code, Tenant);
+                return ChargeType;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

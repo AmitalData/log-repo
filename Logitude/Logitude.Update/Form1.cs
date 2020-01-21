@@ -82,6 +82,9 @@ using System.Web;
 using Logitude.Server.Tools.Resolvers;
 using Logitude.BL.Resolvers;
 using WebFreight.Web.AccountingModel;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Update
 {
@@ -3868,7 +3871,7 @@ User/Pass",
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            
+
             timer1.Enabled = true;
             timer1.Start();
 
@@ -3910,9 +3913,9 @@ User/Pass",
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
-            
+
             SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Green); // timer
-            SetControlPropertyValue(UpdateLogosLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss")); 
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
 
         private static string fileName;
@@ -3974,13 +3977,13 @@ User/Pass",
             batchTaskTester.Show();
         }
 
-       
+
 
         private void button48_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(() => UpdateRules());
             thread.IsBackground = true;
-            thread.Start();            
+            thread.Start();
         }
 
         private void UpdateRules()
@@ -4003,7 +4006,113 @@ User/Pass",
             SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Green); // timer
             SetControlPropertyValue(UpdateRulesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
-         
+
+        private void button47_Click(object sender, EventArgs e)
+        {
+            SetControlPropertyValue(CopyReportButtonLable, "Text", "Updating...");
+            SetControlPropertyValue(CopyReportButtonLable, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            timer1.Enabled = true;
+            timer1.Start();
+
+            this.FillTenantManagementSupportDomain();
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(CopyReportButtonLable, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(CopyReportButtonLable, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+
+        private void FillTenantManagementSupportDomain()
+        {
+            List<TenantMailBox> tenantsToCreatMailBox = new List<TenantMailBox>();
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                IQueryable<TenantManagement> allTenants = tenantManagementRepository.GetAllTenants();
+                allTenants = allTenants.Where(d => d.SupportActivated && !string.IsNullOrEmpty(d.SupportEmail));
+
+                foreach (TenantManagement tenantManagement in allTenants)
+                {
+                    string[] splittedEmail = tenantManagement.SupportEmail.Split('@');
+
+                    if (splittedEmail.Length > 0)
+                    {
+                        tenantsToCreatMailBox.Add(new TenantMailBox() { Tenant = tenantManagement.Id, Mail = splittedEmail[0] });
+                        tenantManagement.SupportDomain = splittedEmail[1];
+                    }
+                }
+
+                tenantManagementRepository.SubmitChanges();
+                scope.Complete();
+            }
+
+            if (tenantsToCreatMailBox.Count > 0)
+            {
+                UserRepository userRepository;
+                SupportMailboxRepository mailboxRepository;
+                foreach (TenantMailBox mail in tenantsToCreatMailBox)
+                {
+                    userRepository = new UserRepository(mail.Tenant);
+                    mailboxRepository = new SupportMailboxRepository(mail.Tenant);
+
+                    string userEmail = "system@tenant" + mail.Tenant + ".com";
+                    User user = userRepository.GetSingleUserByEmail(userEmail, mail.Tenant);
+
+                    bool exists = mailboxRepository.CheckIfDefaultMailBoxCreated(mail.Tenant);
+
+                    if (!exists)
+                    {
+                        SupportMailbox supportMailbox = new SupportMailbox()
+                        {
+                            Id = IdCounter.GetNumber("SupportMailbox", mail.Tenant),
+                            Tenant = mail.Tenant,
+                            CreateDate = TenantServerConfigration.GetCurrentDateTime(mail.Tenant),
+                            UpdateDate = TenantServerConfigration.GetCurrentDateTime(mail.Tenant),
+                            IsDefault = true,
+                            Inactive = false,
+                            Mailbox = mail.Mail,
+                            CreatedByUserId = user.Id,
+                            UpdatedByUserId = user.Id,
+                        };
+
+                        mailboxRepository.Add(supportMailbox);
+                        mailboxRepository.SubmitChanges();
+                    }
+                }
+            }
+
+            FillTicketSupportMailBox(tenantsToCreatMailBox);
+        }
+
+        private void FillTicketSupportMailBox(List<TenantMailBox> tenantsToCreatMailBox)
+        {
+            SupportMailboxRepository mailboxRepository;
+            TicketRepository ticketRepository;
+            IQueryable<Ticket> allTickets;
+            foreach (TenantMailBox tenant in tenantsToCreatMailBox)
+            {
+                ticketRepository = new TicketRepository(tenant.Tenant);
+                allTickets = ticketRepository.GetAll(tenant.Tenant);
+                mailboxRepository = new SupportMailboxRepository(tenant.Tenant);
+                var mailbox = mailboxRepository.GetDefaultMailBox(tenant.Tenant);
+                foreach (Ticket ticket in allTickets)
+                {
+                    ticket.SupportMailboxId = mailbox.Id;
+                    ticketRepository.Update(ticket);
+                }
+                ticketRepository.SubmitChanges();
+            }
+        }
+    }
+
+    public class TenantMailBox
+    {
+        public int Tenant { get; set; }
+        public string Mail { get; set; }
     }
 
     public class MyFeature

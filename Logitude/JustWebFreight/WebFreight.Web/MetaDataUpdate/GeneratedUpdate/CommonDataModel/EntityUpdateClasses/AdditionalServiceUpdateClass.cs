@@ -329,7 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAdditionalServicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AdditionalServiceTextCode_0.Id, Code = "All Additional Services",  QueryGroupCode = "ADSV", IndexOrder = 0, Tenant = 0, ObjectTableId = AdditionalServiceObjectTable.Id, QuerySection = "AdditionalService", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AdditionalServiceFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAdditionalServicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AdditionalServiceTextCode_0.Id, NameTextCodeCode = AdditionalServiceTextCode_0.Code, Code = "All Additional Services",  QueryGroupCode = "ADSV", IndexOrder = 0, Tenant = 0, ObjectTableId = AdditionalServiceObjectTable.Id, QuerySection = "AdditionalService", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AdditionalServiceFeature_0.Id,FeatureUniqeCode= AdditionalServiceFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllAdditionalServicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalServicesQuery.Id, IndexOrder = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == AdditionalServiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == AdditionalServiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -347,17 +347,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AdditionalServiceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AdditionalService.HeaderScreen", Name = "Header Screen", ObjectTableId = AdditionalServiceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AdditionalServiceAdditionalServiceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AdditionalServiceHeaderScreenScreen0.Id, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AdditionalServiceAdditionalServiceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AdditionalServiceHeaderScreenScreen0.Id,ScreenCode = AdditionalServiceHeaderScreenScreen0.Code, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AdditionalServiceObjectTable.HeaderScreenId = AdditionalServiceHeaderScreenScreen0.Id;
+		    AdditionalServiceObjectTable.HeaderScreenCode = AdditionalServiceHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen AdditionalServiceGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AdditionalService.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AdditionalServiceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AdditionalServiceAdditionalServiceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AdditionalServiceGeneralTabScreenScreen1.Id, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AdditionalServiceAdditionalServiceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AdditionalServiceGeneralTabScreenScreen1.Id,ScreenCode = AdditionalServiceGeneralTabScreenScreen1.Code, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AdditionalServiceAdditionalServiceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = AdditionalServiceGeneralTabScreenScreen1.Id, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AdditionalServiceAdditionalServiceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = AdditionalServiceGeneralTabScreenScreen1.Id,ScreenCode = AdditionalServiceGeneralTabScreenScreen1.Code, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -378,9 +380,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AVGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AdditionalServiceGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AdditionalServiceObjectTable.Id, TabNameTextCodeId = AdditionalServiceGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AVGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AdditionalServiceGeneralFeature_TH0.Id,FeatureUniqeCode = AdditionalServiceGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AdditionalServiceObjectTable.Id, TabNameTextCodeId = AdditionalServiceGeneralTextCode_TH0.Id, TabNameTextCodeCode = AdditionalServiceGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AVEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AdditionalServiceEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AdditionalServiceObjectTable.Id, TabNameTextCodeId = AdditionalServiceEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AVEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AdditionalServiceEventsFeature_TH1.Id,FeatureUniqeCode = AdditionalServiceEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AdditionalServiceObjectTable.Id, TabNameTextCodeId = AdditionalServiceEventsTextCode_TH1.Id, TabNameTextCodeCode = AdditionalServiceEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

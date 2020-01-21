@@ -331,6 +331,7 @@
     <Compile Include="EntityQueryServices\SLAEscalationQueryService.cs" />
     <Compile Include="EntityQueryServices\SLAEscalationRecepientQueryService.cs" />
     <Compile Include="EntityQueryServices\SLAHeaderQueryService.cs" />
+    <Compile Include="EntityQueryServices\SupportMailboxQueryService.cs" />
     <Compile Include="EntityQueryServices\TicketEscalationQueryService.cs" />
     <Compile Include="EntityQueryServices\TicketQueryService.cs" />
     <Compile Include="EntityUpdateServices\ActivityEmailRecipientUpdateService.cs" />
@@ -391,6 +392,7 @@
     <Compile Include="EntityUpdateServices\Generated\TicketTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TimeUnitUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\OccasionContactSearchresult.cs" />
     <Compile Include="EntityUpdateServices\OccasionInviteeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionUpdateService.cs" />
@@ -407,6 +409,7 @@
     <Compile Include="EntityUpdateServices\SLAHeaderUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SLALineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\StageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SupportMailboxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TicketClassificationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TicketEscalationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TicketSeverityUpdateService.cs" />

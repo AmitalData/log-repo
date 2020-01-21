@@ -42,7 +42,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        MenuButtonGroupId = a.MenuButtonGroupId,
                        ParentMenuButtonId = a.ParentMenuButtonId,
                        Tenant = a.Tenant,
-                       LabelTextCodeCode = a.TextCode.Code,
+                       LabelTextCodeCode = a.LabelTextCodeCode,
                        FeatureId = a.FeatureId,
                        MenuButtonType = a.MenuButtonType,
                        DropDownControl = a.DropDownControl,
@@ -50,6 +50,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        ControlPath=a.ControlPath,
                        HtmlComponentPath =a.HtmlComponentPath,
                        Width =a.Width,
+                       FeatureUniqeCode = a.FeatureUniqeCode,
                    };
         }
 
@@ -68,7 +69,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        MenuButtonGroupId = a.MenuButtonGroupId,
                        ParentMenuButtonId = a.ParentMenuButtonId,
                        Tenant = a.Tenant,
-                       LabelTextCodeCode = a.TextCode.Code,
+                       LabelTextCodeCode = a.LabelTextCodeCode,
                        FeatureId = a.FeatureId,
                        MenuButtonType = a.MenuButtonType,
                        DropDownControl = a.DropDownControl,
@@ -76,6 +77,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        ControlPath = a.ControlPath,
                        Width = a.Width,
                        HtmlComponentPath = a.HtmlComponentPath,
+                       FeatureUniqeCode = a.FeatureUniqeCode,
                    };
         }
     }

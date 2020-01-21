@@ -103,6 +103,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 {
                     allowedCount = 40;
                 }
+                else if (ObjectTable.Name == "Quote") allowedCount = 20;
 
                 if (count < allowedCount)
                 {
@@ -178,6 +179,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         {
                             Id = IdCounter.GetNumber("ObjectFieldValidation", theEntityPm.Tenant).ToString(),
                             ObjectFieldId = theEntityPm.Id,
+                            ObjectFieldCode = theEntityPm.FieldCode,
                             Tenant = fieldValidation.Tenant,
                             ValidationExpression = fieldValidation.ValidationExpression,
                             ErrorMessage = fieldValidation.ErrorMessage,
@@ -188,6 +190,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                         fieldValidation.Id = newFieldValidation.Id;
                         fieldValidation.ObjectFieldId = newFieldValidation.ObjectFieldId;
+                        fieldValidation.ObjectFieldCode = newFieldValidation.ObjectFieldCode;
                         objectFieldValidationRepository.Add(newFieldValidation);
                     }
                 }
@@ -214,6 +217,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         {
                             Id = IdCounter.GetNumber("ObjectFieldValidation", theEntityPm.Tenant).ToString(),
                             ObjectFieldId = theEntityPm.Id,
+                            ObjectFieldCode = theEntityPm.FieldCode,
                             Tenant = fieldValidation.Tenant,
                             ValidationExpression = fieldValidation.ValidationExpression,
                             ErrorMessage = fieldValidation.ErrorMessage,
@@ -224,6 +228,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                         fieldValidation.Id = newFieldValidation.Id;
                         fieldValidation.ObjectFieldId = newFieldValidation.ObjectFieldId;
+                        fieldValidation.ObjectFieldCode = newFieldValidation.ObjectFieldCode;
                         objectFieldValidationRepository.Add(newFieldValidation);
                     }
                 }
@@ -323,12 +328,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             int currentTenant = authToken.Tenant;
 
 
-            ObjectFieldModification mod = entityRepository.GetObjectFieldModificationByObjectField(theEntityPm.Id, currentTenant);
+            ObjectFieldModification mod = entityRepository.GetObjectFieldModificationByObjectField(theEntityPm.FieldCode, currentTenant);
             if ((theEntityPm.IsRequiered != this.Poco.IsRequiered) || (theEntityPm.MinLength != this.Poco.MinLength) || (theEntityPm.MaxLength != this.Poco.MaxLength))
             {
                 if (mod == null && this.Poco.Tenant == 0)
                 {
-                    mod = new ObjectFieldModification() { Id = IdCounter.GetNumber("ObjectFieldModification", theEntityPm.Tenant), ObjectFieldId = this.Poco.Id, IsRequired = theEntityPm.IsRequiered, MaxLength = theEntityPm.MaxLength, MinLength = theEntityPm.MinLength, Tenant = currentTenant, UpdateDateGMT = DateTime.UtcNow };
+                    mod = new ObjectFieldModification() { Id = IdCounter.GetNumber("ObjectFieldModification", theEntityPm.Tenant), ObjectFieldId = this.Poco.Id, ObjectFieldCode = this.Poco.FieldCode, IsRequired = theEntityPm.IsRequiered, MaxLength = theEntityPm.MaxLength, MinLength = theEntityPm.MinLength, Tenant = currentTenant, UpdateDateGMT = DateTime.UtcNow };
                     this.ObjectContext.ObjectFieldModifications.Add(mod);
                 }
             }
@@ -477,7 +482,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             int currentTenant = authToken.Tenant;
 
-            ObjectFieldModification mod = entityRepository.GetObjectFieldModificationByObjectField(theEntityPm.Id, currentTenant);
+            ObjectFieldModification mod = entityRepository.GetObjectFieldModificationByObjectField(theEntityPm.FieldCode, currentTenant);
             if ((theEntityPm.IsRequiered != this.Poco.IsRequiered) || (theEntityPm.MinLength != this.Poco.MinLength) || (theEntityPm.MaxLength != this.Poco.MaxLength))
             {
                 if (mod == null && this.Poco.Tenant == 0)
@@ -487,6 +492,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     {
                         Id = IdCounter.GetNumber("ObjectFieldModification", theEntityPm.Tenant),
                         ObjectFieldId = this.Poco.Id,
+                        ObjectFieldCode = this.Poco.FieldCode,
                         IsRequired = theEntityPm.IsRequiered,
                         MaxLength = theEntityPm.MaxLength,
                         MinLength = theEntityPm.MinLength,

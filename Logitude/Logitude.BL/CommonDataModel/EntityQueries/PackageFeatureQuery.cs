@@ -41,6 +41,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         PackageCode = a.PackageCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).FirstOrDefault();
         }
 
@@ -54,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         PackageCode = a.PackageCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     });
         }
 
@@ -67,6 +69,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         PackageCode = a.PackageCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
     }

@@ -576,7 +576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllSprintsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SprintTextCode_0.Id, Code = "All Sprints",  QueryGroupCode = "8b58", IndexOrder = 0, Tenant = 0, ObjectTableId = SprintObjectTable.Id, QuerySection = "Sprint", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SprintFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllSprintsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SprintTextCode_0.Id, NameTextCodeCode = SprintTextCode_0.Code, Code = "All Sprints",  QueryGroupCode = "8b58", IndexOrder = 0, Tenant = 0, ObjectTableId = SprintObjectTable.Id, QuerySection = "Sprint", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SprintFeature_0.Id,FeatureUniqeCode= SprintFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllSprintsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id, IndexOrder = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -596,21 +596,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen SprintGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Sprint.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = SprintObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField SprintGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SprintGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SprintGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SprintGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "IsCompleted").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "IsCompleted").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "IsCompleted").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "IsCompleted").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen SprintSprintHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Sprint.HeaderScreen", Name = "SprintHeaderScreen", ObjectTableId = SprintObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField SprintSprintHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintSprintHeaderScreenScreen1.Id, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintSprintHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintSprintHeaderScreenScreen1.Id,ScreenCode = SprintSprintHeaderScreenScreen1.Code, ObjectFieldCode = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    SprintObjectTable.HeaderScreenId = SprintSprintHeaderScreenScreen1.Id;
+		    SprintObjectTable.HeaderScreenCode = SprintSprintHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -631,9 +633,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GESP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SprintGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = SprintGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GESP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SprintGeneralFeature_TH0.Id,FeatureUniqeCode = SprintGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = SprintGeneralTextCode_TH0.Id, TabNameTextCodeCode = SprintGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVSP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SprintEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = SprintEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVSP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SprintEventsFeature_TH1.Id,FeatureUniqeCode = SprintEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = SprintEventsTextCode_TH1.Id, TabNameTextCodeCode = SprintEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

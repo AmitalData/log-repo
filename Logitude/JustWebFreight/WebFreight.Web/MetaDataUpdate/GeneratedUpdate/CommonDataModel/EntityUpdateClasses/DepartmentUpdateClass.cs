@@ -510,7 +510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DepartmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DepartmentTextCode_0.Id, Code = "Departments",  QueryGroupCode = "DEPT", IndexOrder = 0, Tenant = 0, ObjectTableId = DepartmentObjectTable.Id, QuerySection = "Department", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DepartmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DepartmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DepartmentTextCode_0.Id, NameTextCodeCode = DepartmentTextCode_0.Code, Code = "Departments",  QueryGroupCode = "DEPT", IndexOrder = 0, Tenant = 0, ObjectTableId = DepartmentObjectTable.Id, QuerySection = "Department", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DepartmentFeature_0.Id,FeatureUniqeCode= DepartmentFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DepartmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepartmentsQuery.Id, IndexOrder = 0, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DepartmentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DepartmentObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -530,21 +530,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen DepartmentGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Department.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DepartmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = DepartmentGeneralTabScreenScreen0.Id, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DepartmentDepartmentGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = DepartmentGeneralTabScreenScreen0.Id, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DepartmentDepartmentGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = DepartmentGeneralTabScreenScreen0.Id, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DepartmentDepartmentGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DepartmentDepartmentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = DepartmentGeneralTabScreenScreen0.Id, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DepartmentDepartmentGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = DepartmentGeneralTabScreenScreen0.Id,ScreenCode = DepartmentGeneralTabScreenScreen0.Code, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen DepartmentHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Department.HeaderScreen", Name = "Header Screen", ObjectTableId = DepartmentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField DepartmentDepartmentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = DepartmentHeaderScreenScreen1.Id, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DepartmentDepartmentHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = DepartmentHeaderScreenScreen1.Id,ScreenCode = DepartmentHeaderScreenScreen1.Code, ObjectFieldCode = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    DepartmentObjectTable.HeaderScreenId = DepartmentHeaderScreenScreen1.Id;
+		    DepartmentObjectTable.HeaderScreenCode = DepartmentHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -561,7 +563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DepartmentGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = DepartmentObjectTable.Id, TabNameTextCodeId = DepartmentGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DepartmentGeneralFeature_TH0.Id,FeatureUniqeCode = DepartmentGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = DepartmentObjectTable.Id, TabNameTextCodeId = DepartmentGeneralTextCode_TH0.Id, TabNameTextCodeCode = DepartmentGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

@@ -18,6 +18,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public DateTime? TranslateDate { get; set; }
         public string TranslatedByUserId { get; set; }
         public DateTime? UpdateDateGMT { get; set; }
+        public string TextCodeCode { get; set; }
 
         [ForeignKey("TranslatedByUserId")]
         public virtual User TranslatedByUser { get; set; }

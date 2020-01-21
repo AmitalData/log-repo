@@ -21,7 +21,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<InterestReportList> GetIqueryableList(IQueryable<InterestReport> iQueryable)
         {
-		IQueryable<InterestReportList> query = (from a in iQueryable
+
+
+        IQueryable<InterestReportList> query = (from a in iQueryable
                                             select new InterestReportList()
 											{
                      
@@ -33,7 +35,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          CreatedByUserId = a.CreatedByUserId,
 					
-					                          UpdateDate = a.UpdateDate,
+					                          UpdateDateTime = a.UpdateDateTime,
 					
 					                          UpdatedByUserId = a.UpdatedByUserId,
 					
@@ -56,21 +58,38 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          GLAccountInterestCreditLimit = a.GLAccountInterestCreditLimit,
 					
 					                          InterestReportStatusCode = a.InterestReportStatusCode,
-					
-		                    	            });
+
+                                              CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
+
+                                              UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
+
+                                              InterestReportStatusName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.EnglishName,
+
+                                              InterestReportStatusLocalName = a.InterestReportStatuse==null ? null :a.InterestReportStatuse.LocalName,
+
+                                              GLAccountDisplayNumber = a.GLAccount == null ? null : a.GLAccount.DisplayNumber,
+
+                                              ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
+
+                                              GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
+
+                                            });
             return query;
 		}
 
 		private IQueryable<InterestReport> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<InterestReport> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 				private IQueryable<InterestReport> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InterestReport> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
-		
-			}
+
+
+
+
+    }
 
 
 }

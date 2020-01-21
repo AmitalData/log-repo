@@ -98,11 +98,14 @@ namespace MetaDataGenerator
 
 
 			allFields = fieldsRep.GetObjectFieldsByTenant(0).Where(f => f.ObjectTableId == table.Id).Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable").ToList();
-			allTextCodes = textCodesRep.GetTextCodesByTenantAndObjectTable(0, table.Name).ToList();
+            if (table.Name != "Master")
+                allTextCodes = textCodesRep.GetTextCodesByTenantAndObjectTable(0, table.Name).ToList();
+            else
+                allTextCodes = textCodesRep.GetTextCodesByTenant(0).ToList();
 
 
 
-			allQueries = queryRep.GetQueriesByTenant(0).ToList();
+            allQueries = queryRep.GetQueriesByTenant(0).ToList();
 			allQueryColumns = queryColumnRep.GetQueryColumnsByTenant(0).ToList();
 			allQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenant(0).ToList();
 
@@ -526,18 +529,31 @@ namespace MetaDataGenerator
             {
                 tableName = table.Name.Split('.')[1];
             }
-            doc.Save("../../GeneratedFiles/New/" + tableName + ".lxml");
+            //doc.Save("../../GeneratedFiles/New/" + tableName + ".lxml");
+
+            WriteGeneratedXmlToFile(doc, "../../GeneratedFiles/New/" + tableName + ".lxml");
 
             #endregion
 
             return true;
         }
+        private void WriteGeneratedXmlToFile(XmlDocument doc,string filePath)
+        {
+            //string dirPath = "../../GeneratedFiles/New/" + tableName + ".lxml";
+            FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+            XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
+            XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
+
+            doc.Save(xmlWriter);
+            xmlWriter.Close();
+            xmlWriter.Dispose();
+        }
 
         private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields, bool updateLXML = false)
         {
 			string tableName = table.Name;
-			if (table.Name.ToLower() == "master")
-				tableName = "Shipment";
+			//if (table.Name.ToLower() == "master")
+			//	tableName = "Shipment";
 
 			string modelName = "CommonDataModel";
             string qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + tableName);
@@ -590,10 +606,10 @@ namespace MetaDataGenerator
             System.Type tableListClass = System.Type.GetType(qListName);
 
 
-            if (tableClass == null && tableName != "General")// && tablePMClass == null)
-            {
-                return false;
-            }
+            //if (tableClass == null && tableName != "General" && tableName != "Master")// && tablePMClass == null)
+            //{
+            //    return false;
+            //}
 
             PropertyInfo[] pocoProperties = { };
             PropertyInfo[] pmClassProperties = { };
@@ -899,7 +915,9 @@ namespace MetaDataGenerator
                 }
             }
             else
-                throw new Exception("Couldn't find the POCO class for " + table.Name);
+            {
+                //throw new Exception("Couldn't find the POCO class for " + table.Name); 
+            }
 
             return entityPropertiesInfo;
         }

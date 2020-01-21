@@ -105,7 +105,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderByDescending(d => d.LineNumber);
+                                query2 = query2.OrderByDescending(d => d.Id);
                                 break;
                             }
                     }
@@ -114,7 +114,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderByDescending(d => d.LineNumber);
+                query2 = query2.OrderByDescending(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{

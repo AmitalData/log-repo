@@ -191,6 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreatedByUserId",
@@ -256,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreatedByUserName",
@@ -322,6 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreateDate",
@@ -388,6 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Subject",
@@ -452,6 +456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DoneDate",
@@ -519,6 +524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InOut",
@@ -582,6 +588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CC",
@@ -646,6 +653,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DocumentOutId",
@@ -710,6 +718,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DocumentInId",
@@ -776,6 +785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "To",
@@ -840,6 +850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CommunicationStatusTypeCode",
@@ -905,6 +916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CommunicationStatusTypeName",
@@ -969,6 +981,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CommunicationLogTypeCode",
@@ -1034,6 +1047,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CommunicationLogTypeName",
@@ -1100,6 +1114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Retries",
@@ -1163,6 +1178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BCC",
@@ -1227,6 +1243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ObjectTableId",
@@ -1292,6 +1309,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ObjectTableName",
@@ -1358,6 +1376,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "From",
@@ -1423,6 +1442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LastStatusDate",
@@ -1489,6 +1509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EntityReference",
@@ -1551,8 +1572,72 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
+					  						ObjectTableName =  "CommunicationLog",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CommunicationLog",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Id",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Id",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1614,6 +1699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreateDateUTC",
@@ -1678,6 +1764,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DoneDateUTC",
@@ -1742,6 +1829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LastStatusDateUTC",
@@ -1806,6 +1894,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "NextTryDateTimeUTC",
@@ -1870,6 +1959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "NextTryDateTime",
@@ -1934,6 +2024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "QueueName",
@@ -1998,6 +2089,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Priority",
@@ -2062,6 +2154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TenantName",
@@ -2126,9 +2219,75 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AWBNumber",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "CommunicationLog",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CommunicationLog",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						Code =  "Tenant",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Tenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2190,6 +2349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Email Delivery Error",
@@ -2254,6 +2414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LogSettings",
@@ -2286,7 +2447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TodayCommunicationLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationLogTextCode_0.Id, Code = "Today Communication Logs",  QueryGroupCode = "COLG", IndexOrder = 0, Tenant = 0, ObjectTableId = CommunicationLogObjectTable.Id, QuerySection = "CommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationLogFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TodayCommunicationLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationLogTextCode_0.Id, NameTextCodeCode = CommunicationLogTextCode_0.Code, Code = "Today Communication Logs",  QueryGroupCode = "COLG", IndexOrder = 0, Tenant = 0, ObjectTableId = CommunicationLogObjectTable.Id, QuerySection = "CommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationLogFeature_0.Id,FeatureUniqeCode= CommunicationLogFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn TodayCommunicationLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayCommunicationLogsQuery.Id, IndexOrder = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2315,7 +2476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query AllCommunicationLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationLogTextCode_1.Id, Code = "All Communication Logs",  QueryGroupCode = "COLG", IndexOrder = 1, Tenant = 0, ObjectTableId = CommunicationLogObjectTable.Id, QuerySection = "CommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationLogFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCommunicationLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationLogTextCode_1.Id, NameTextCodeCode = CommunicationLogTextCode_1.Code, Code = "All Communication Logs",  QueryGroupCode = "COLG", IndexOrder = 1, Tenant = 0, ObjectTableId = CommunicationLogObjectTable.Id, QuerySection = "CommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationLogFeature_1.Id,FeatureUniqeCode= CommunicationLogFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCommunicationLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommunicationLogsQuery.Id, IndexOrder = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2351,47 +2512,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CommunicationLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CommunicationLog.HeaderScreen", Name = "Header Screen", ObjectTableId = CommunicationLogObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "To").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "To").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "To").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "To").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationStatusTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationStatusTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationStatusTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationStatusTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogHeaderScreenScreen0.Id,ScreenCode = CommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CommunicationLogObjectTable.HeaderScreenId = CommunicationLogHeaderScreenScreen0.Id;
+		    CommunicationLogObjectTable.HeaderScreenCode = CommunicationLogHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen CommunicationLogGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CommunicationLog.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CommunicationLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "To").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "To").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "To").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "To").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CC").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CC").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CC").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CC").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "BCC").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "BCC").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "BCC").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "BCC").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "Retries").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "Retries").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "Retries").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "Retries").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "InOut").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "InOut").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "InOut").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "InOut").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationStatusTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationStatusTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationStatusTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationStatusTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CommunicationLogTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "TenantName").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "TenantName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "TenantName").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "TenantName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "LogSettings").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "LogSettings").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommunicationLogCommunicationLogGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "LogSettings").FirstOrDefault().Id, ScreenId = CommunicationLogGeneralTabScreenScreen1.Id,ScreenCode = CommunicationLogGeneralTabScreenScreen1.Code, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "LogSettings").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2424,15 +2587,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommunicationLogGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommunicationLogGeneralFeature_TH0.Id,FeatureUniqeCode = CommunicationLogGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogGeneralTextCode_TH0.Id, TabNameTextCodeCode = CommunicationLogGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGMB",HtmlComponentName = "CommunicationLogMessageBodyComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogMessageBodyComponent", FeatureId = CommunicationLogMessageBodyFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogMessageBodyControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogMessageBodyTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGMB",HtmlComponentName = "CommunicationLogMessageBodyComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogMessageBodyComponent", FeatureId = CommunicationLogMessageBodyFeature_TH1.Id,FeatureUniqeCode = CommunicationLogMessageBodyFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogMessageBodyControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogMessageBodyTextCode_TH1.Id, TabNameTextCodeCode = CommunicationLogMessageBodyTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGER",HtmlComponentName = "CommunicationLogErrorComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogErrorComponent", FeatureId = CommunicationLogErrorFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogErrorControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogErrorTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGER",HtmlComponentName = "CommunicationLogErrorComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogErrorComponent", FeatureId = CommunicationLogErrorFeature_TH2.Id,FeatureUniqeCode = CommunicationLogErrorFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogErrorControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogErrorTextCode_TH2.Id, TabNameTextCodeCode = CommunicationLogErrorTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGSP",HtmlComponentName = "CommunicationLogStepsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogStepsComponent", FeatureId = CommunicationLogStepsFeature_TH3.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogStepsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogStepsTextCode_TH3.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGSP",HtmlComponentName = "CommunicationLogStepsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogStepsComponent", FeatureId = CommunicationLogStepsFeature_TH3.Id,FeatureUniqeCode = CommunicationLogStepsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogStepsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogStepsTextCode_TH3.Id, TabNameTextCodeCode = CommunicationLogStepsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommunicationLogEventsFeature_TH4.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogEventsTextCode_TH4.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommunicationLogEventsFeature_TH4.Id,FeatureUniqeCode = CommunicationLogEventsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogEventsTextCode_TH4.Id, TabNameTextCodeCode = CommunicationLogEventsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2544,6 +2707,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = CommunicationLogFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = CommunicationLogFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -2561,6 +2725,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton CommunicationLogMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2578,6 +2743,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CommunicationLogFeature_MB10.Id,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode=  CommunicationLogFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

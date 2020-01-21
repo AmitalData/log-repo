@@ -28,5 +28,7 @@
         public bool IsHiddenFromView { get; set; }
         public bool IsNewFromTenantZeroOnly { get; set; }
         public string EditWizardComponentPath { get; set; }
+        public string NameTextCodeCode { get; set; }
+        public string FeatureUniqeCode { get; set; }
     }
 }

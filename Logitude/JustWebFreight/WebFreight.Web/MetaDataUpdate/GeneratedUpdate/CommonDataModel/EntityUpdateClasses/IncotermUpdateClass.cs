@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -196,6 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -260,6 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -324,6 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
@@ -386,6 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
@@ -453,6 +457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Freight",
@@ -520,6 +525,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "OtherCharges",
@@ -584,6 +590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AddedManually",
@@ -648,6 +655,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -710,6 +718,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -773,6 +782,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -834,6 +844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -861,7 +872,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query IncotermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IncotermTextCode_0.Id, Code = "Incoterms",  QueryGroupCode = "INCO", IndexOrder = 0, Tenant = 0, ObjectTableId = IncotermObjectTable.Id, QuerySection = "Incoterm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IncotermFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query IncotermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IncotermTextCode_0.Id, NameTextCodeCode = IncotermTextCode_0.Code, Code = "Incoterms",  QueryGroupCode = "INCO", IndexOrder = 0, Tenant = 0, ObjectTableId = IncotermObjectTable.Id, QuerySection = "Incoterm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IncotermFeature_0.Id,FeatureUniqeCode= IncotermFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn IncotermsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id, IndexOrder = 0, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == IncotermObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == IncotermObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -889,29 +900,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen IncotermGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Incoterm.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = IncotermObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField IncotermIncotermGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IncotermIncotermGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IncotermIncotermGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IncotermIncotermGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Freight").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Freight").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Freight").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Freight").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IncotermIncotermGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IncotermIncotermGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "OtherCharges").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "OtherCharges").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "OtherCharges").FirstOrDefault().Id, ScreenId = IncotermGeneralTabScreenScreen0.Id,ScreenCode = IncotermGeneralTabScreenScreen0.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "OtherCharges").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen IncotermHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Incoterm.HeaderScreen", Name = "Header Screen", ObjectTableId = IncotermObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField IncotermIncotermHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IncotermHeaderScreenScreen1.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IncotermIncotermHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IncotermHeaderScreenScreen1.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IncotermIncotermHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = IncotermHeaderScreenScreen1.Id, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IncotermIncotermHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IncotermObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = IncotermHeaderScreenScreen1.Id,ScreenCode = IncotermHeaderScreenScreen1.Code, ObjectFieldCode = IncotermObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    IncotermObjectTable.HeaderScreenId = IncotermHeaderScreenScreen1.Id;
+		    IncotermObjectTable.HeaderScreenCode = IncotermHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -932,9 +945,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ITGC",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = IncotermGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = IncotermObjectTable.Id, TabNameTextCodeId = IncotermGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ITGC",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = IncotermGeneralFeature_TH0.Id,FeatureUniqeCode = IncotermGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = IncotermObjectTable.Id, TabNameTextCodeId = IncotermGeneralTextCode_TH0.Id, TabNameTextCodeCode = IncotermGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ITEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = IncotermEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = IncotermObjectTable.Id, TabNameTextCodeId = IncotermEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ITEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = IncotermEventsFeature_TH1.Id,FeatureUniqeCode = IncotermEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = IncotermObjectTable.Id, TabNameTextCodeId = IncotermEventsTextCode_TH1.Id, TabNameTextCodeCode = IncotermEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

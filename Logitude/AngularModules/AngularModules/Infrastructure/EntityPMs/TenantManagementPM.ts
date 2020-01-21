@@ -785,6 +785,11 @@ export class TenantManagementPM {
     public set TotalPrice(newValue: number) { if (this.totalPrice != newValue) { this.totalPrice = newValue; this.MarkAsDirty("TotalPrice"); } }
        
 	 
+    private supportDomain: string;
+    public get SupportDomain() { return this.supportDomain; }
+    public set SupportDomain(newValue: string) { if (this.supportDomain != newValue) { this.supportDomain = newValue; this.MarkAsDirty("SupportDomain"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

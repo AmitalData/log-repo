@@ -174,7 +174,12 @@ export class QueryPM {
     private spotlightModeActivated: boolean;
     public get SpotlightModeActivated() { return this.spotlightModeActivated; }
     public set SpotlightModeActivated(newValue: boolean) { this.spotlightModeActivated = newValue; }
-       
+
+    private featureUniqeCode: string;
+    public get FeatureUniqeCode() { return this.featureUniqeCode; }
+    public set FeatureUniqeCode(newValue: string) { this.featureUniqeCode = newValue; }
+
+    
     private sharedUserQueries: SharedUserQueryPM[];
     get SharedUserQueries() {
         if (this.sharedUserQueries == null) {

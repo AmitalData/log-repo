@@ -1,0 +1,3 @@
+
+ALTER TABLE RuleConditionFields
+DROP CONSTRAINT  FK_RuleConditionFieldsObjectField;

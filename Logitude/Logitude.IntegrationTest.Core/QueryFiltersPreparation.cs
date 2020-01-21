@@ -36,6 +36,15 @@ namespace Logitude.IntegrationTest.Core
             filters.Filter1Value = searchKey;
             return filters;
         }
+        public static ApiQueryFilters QueryfilterByCode(string searchKey)
+        {
+            ApiQueryFilters filters = new ApiQueryFilters();
+            filters.Filter1Name = "Code";
+            filters.Filter1Operator = "Equals";
+            filters.PageSize = 23;
+            filters.Filter1Value = searchKey;
+            return filters;
+        }
 
         private static string CreateParametersUrl(ApiQueryFilters filters)
         {

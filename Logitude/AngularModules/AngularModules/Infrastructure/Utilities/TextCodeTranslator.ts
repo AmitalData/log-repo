@@ -59,12 +59,12 @@ export class TextCodeTranslator {
                 }
             }
 
-            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
             if (codeTranslation) {
                 translation = codeTranslation.TranslatedText;
             }
             else {
-                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id)[0];
+                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code)[0];
                 if (languageTranslation) {
                     translation = languageTranslation.TranslatedText;
                 }
@@ -88,12 +88,12 @@ export class TextCodeTranslator {
 
                 }
 
-                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === translationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
                 if (codeTranslation) {
                     translation = codeTranslation.TranslatedText;
                 }
                 else {
-                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === translationObject.Id)[0];
+                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code)[0];
                     if (languageTranslation) {
                         translation = languageTranslation.TranslatedText;
                     }
@@ -179,12 +179,12 @@ export class TextCodeTranslator {
         if (cachedTranslationObject) {
             //translation = cachedTranslationObject.DefaultText;
             translation = cachedTranslationObject.DefaultTextPlural;
-            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
             if (codeTranslation) {
                 translation = codeTranslation.TranslatedTextPlural;
             }
             else {
-                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id)[0];
+                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code)[0];
                 if (languageTranslation) {
                     translation = languageTranslation.TranslatedText;
                 }
@@ -196,12 +196,12 @@ export class TextCodeTranslator {
             if (translationObject) {
                 translation = translationObject.DefaultTextPlural;
 
-                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === translationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
                 if (codeTranslation) {
                     translation = codeTranslation.TranslatedTextPlural;
                 }
                 else {
-                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === translationObject.Id)[0];
+                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code)[0];
                     if (languageTranslation) {
                         translation = languageTranslation.TranslatedText;
                     }

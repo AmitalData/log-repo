@@ -371,7 +371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ImporterTypeForClaimQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ImporterTypeForClaimTextCode_0.Id, Code = "ImporterTypeForClaim",  QueryGroupCode = "4b8d", IndexOrder = 0, Tenant = 0, ObjectTableId = ImporterTypeForClaimObjectTable.Id, QuerySection = "Customs.ImporterTypeForClaim", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ImporterTypeForClaimFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ImporterTypeForClaimQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ImporterTypeForClaimTextCode_0.Id, Code = "ImporterTypeForClaim",  QueryGroupCode = "4b8d", IndexOrder = 0, Tenant = 0, ObjectTableId = ImporterTypeForClaimObjectTable.Id, QuerySection = "Customs.ImporterTypeForClaim", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ImporterTypeForClaimFeature_0.Id,FeatureUniqeCode= ImporterTypeForClaimFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ImporterTypeForClaimQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id, IndexOrder = 0, ObjectFieldId = ImporterTypeForClaimObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ImporterTypeForClaimObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 

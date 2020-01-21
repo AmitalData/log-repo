@@ -120,6 +120,11 @@ export class ReportPM {
     public set DefaultMessageTemplateId(newValue: string) { if (this.defaultMessageTemplateId != newValue) { this.defaultMessageTemplateId = newValue; this.MarkAsDirty("DefaultMessageTemplateId"); } }
        
 	 
+    private featureUniqeCode: string;
+    public get FeatureUniqeCode() { return this.featureUniqeCode; }
+    public set FeatureUniqeCode(newValue: string) { if (this.featureUniqeCode != newValue) { this.featureUniqeCode = newValue; this.MarkAsDirty("FeatureUniqeCode"); } }
+       
+	 
 
     public OldEntityPM: ReportPM;
 		

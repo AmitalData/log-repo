@@ -3415,7 +3415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CLOSECOURIERMASTERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_1.Id, Code = "CLOSECOURIERMASTERS",  QueryGroupCode = "dcc9", IndexOrder = 1, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_1.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query CLOSECOURIERMASTERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_1.Id, Code = "CLOSECOURIERMASTERS",  QueryGroupCode = "dcc9", IndexOrder = 1, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureUniqeCode = CourierMasterFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CLOSECOURIERMASTERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -3440,12 +3440,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter CLOSECOURIERMASTERSQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0", QueryId = CLOSECOURIERMASTERSQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
-  
-	      
 
-			  Query ALLCOURIERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_2.Id, Code = "ALLCOURIERS",  QueryGroupCode = "dcc9", IndexOrder = 2, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_2.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
-	
-			 QueryColumn ALLCOURIERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+
+            Query ALLCOURIERSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierMasterTextCode_0.Id, Code = "ALLCOURIERS", QueryGroupCode = "dcc9", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierMasterObjectTable.Id, QuerySection = "Customs.CourierMaster", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierMasterFeature_0.Id, FeatureUniqeCode = CourierMasterFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+
+            QueryColumn ALLCOURIERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn ALLCOURIERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id, IndexOrder = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IntegratorName" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 

@@ -26,8 +26,8 @@ import { filter } from 'rxjs/operators';
     templateUrl: './LogGridComponent.html',
     //directives: [CORE_DIRECTIVES, ObjectFieldTemplate, ListHeaderTemplateComponent, ListTemplateComponent],
     providers: [PubSubService1],
-    //pipes: [TextCodeTranslationPipe], 
-    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked','MyScrollTop', 'MySelectedRowIndex','SortServerProp','ReloadData'],
+    //pipes: [TextCodeTranslationPipe],
+    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'CheckboxProp'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -37,6 +37,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     public IsCheckBoxEnabled: boolean = true;
     Disabled: boolean = false;
     ReloadData: boolean = false;
+    CheckboxProp: string;
     public PassAdditionalDataToTemplates: boolean = false;
     public RowBackGroundColor: string = "";
     public HighLightSelectedRow: boolean = true;
@@ -64,6 +65,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     @Output() RowOverEvent = new EventEmitter();
     @Output() RowOutEvent = new EventEmitter();
     @Output() RowUnselected = new EventEmitter();
+    @Output() RemovedListItemsEvent = new EventEmitter();
+
     public BackFromEdit: EventEmitter<any> = new EventEmitter();
     public CustomBackFromEdit: EventEmitter<any> = new EventEmitter();
     public LogGridId: string = null;
@@ -129,6 +132,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     EnableMultiSelection: boolean = false;
     @Output() SortInvoked = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+    private removedItemsTemp: any[] = [];
+    private addedItems: any[] = [];
+
     constructor(private _elementRef: ElementRef, private _renderer: Renderer, private cd: ChangeDetectorRef) {
         //setTimeout(() => this.cd.markForCheck(), 10); 
         if (this.CurrentSession == null) {
@@ -1071,7 +1077,12 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             });
         });
         if (this.CheckBoxFilterChanged) {
+
+         
             this.CheckBoxFilterChanged.subscribe((res) => {
+
+               
+
                 this.UseFilteredRecordsCheckBox = res.UseFilteredCheckBox;
                 if (this.rows) {
                     this.rows.forEach((item, key) => {
@@ -1132,7 +1143,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         }
 
         if (this.FireCheckBoxChecked) {
+            
             this.FireCheckBoxChecked.subscribe((res) => {
+              
                 this.OnCheckBoxChecked(res.rowData, res.IsChecked, res.RowIndex, true,res.ById);
                 this.updateDisplayList();
             });
@@ -1547,14 +1560,30 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                         'width:': this.TotalWidth + 'px',
                         'max-width:': this.TotalWidth + 'px',
                     };
+                    var IsAddedToTheList: boolean = false;
+
                     //if (row.rowData) {
                     if (this.IsAllRecordsChecked == true) {
                         //if (this.rows.filter(a => a.rowIndex == value.rowIndex).length > 0) {
-                        if (this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked != null) {
-                            row.rowData.IsChecked = this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked;// == false ? false : true;
+                        if (!AppTool.IsNullOrEmpty(this.CheckboxProp)) {
+                            if (this.removedItemsTemp.filter(p => p[this.CheckboxProp]==row.rowData[this.CheckboxProp])[0] != null) {
+                                row.rowData.IsChecked = false;
+                                IsAddedToTheList = true;
+                            }
+
+                            if (this.addedItems.filter(p => p[this.CheckboxProp] == row.rowData[this.CheckboxProp])[0] != null) {
+                                row.rowData.IsChecked = true;
+                                IsAddedToTheList = true;
+                            }
+
                         }
-                        else {
-                            row.rowData.IsChecked = true;
+                         if (!IsAddedToTheList){
+                            if (this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked != null) {
+                                row.rowData.IsChecked = this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked;// == false ? false : true;
+                            }
+                            else {
+                                row.rowData.IsChecked = true;
+                            }
                         }
                         //var Row = this.rows.filter(a => a.rowIndex === row.rowIndex)[0];
                         //if (Row) {
@@ -1576,9 +1605,23 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                     //}
                     else {
                         //if (this.rows.filter(a => a.rowIndex == value.rowIndex).length > 0) {
-                        row.rowData.IsChecked = this.controller.cachedData[row.rowIndex] ? this.controller.cachedData[row.rowIndex].IsChecked : null;// == true ? true : false;
-                        if (row.rowData.IsChecked == true) {
-                            console.log("Grid Display True");
+
+                        if (!AppTool.IsNullOrEmpty(this.CheckboxProp)) {
+                            if (this.removedItemsTemp.filter(p => p[this.CheckboxProp] == row.rowData[this.CheckboxProp])[0] != null) {
+                                row.rowData.IsChecked = false;
+                                IsAddedToTheList = true;
+                            }
+
+                            if (this.addedItems.filter(p => p[this.CheckboxProp] == row.rowData[this.CheckboxProp])[0] != null) {
+                                row.rowData.IsChecked = true;
+                                IsAddedToTheList = true;
+                            }
+                        }
+                         if (!IsAddedToTheList) {
+                            row.rowData.IsChecked = this.controller.cachedData[row.rowIndex] ? this.controller.cachedData[row.rowIndex].IsChecked : null;// == true ? true : false;
+                            if (row.rowData.IsChecked == true) {
+                                console.log("Grid Display True");
+                            }
                         }
                         //var Row = this.rows.filter(a => a.rowIndex === value.rowIndex)[0];
                         //if (Row) {
@@ -2307,6 +2350,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
     }
 
+
     private selectedRow: any;
     get SelectedRow() { return this.selectedRow; }
     set SelectedRow(newValue: any) {
@@ -2351,6 +2395,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     set IsAllRecordsChecked(newValue: boolean) {
         if (this.isAllRecordsChecked != newValue) {
             this.isAllRecordsChecked = newValue;
+            this.removedItemsTemp = [];
+            this.addedItems = [];
+            
             if (this.rows) {
                 //console.log(this.controller.cachedData.length);
                 var keys: string[] = Object.keys(this.controller.cachedData);
@@ -2364,7 +2411,15 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                     var Row = this.rows.filter(a => a.rowIndex === item.rowIndex)[0];
                     if (Row) {
                         Row.rowData.IsChecked = newValue;
+
+                        if (!this.addedItems.includes(Row[this.CheckboxProp])) {
+                            this.addedItems.push(Row);
+                        }
+
                     }
+
+                   
+
                     //if (newValue == true && !item.rowData.IsChecked) {
                     //    this.OnCheckBoxChecked(item.rowData, newValue, item.rowIndex);
                     //}
@@ -2391,6 +2446,33 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     MustFilterRowIndexes: any[] = [];
     MustIgnoreRowIndexes: any[] = [];
     OnCheckBoxChecked(rowData, IsChecked, RowIndex, FromOutSide: boolean = false, ById: boolean = false) {
+        if (!AppTool.IsNullOrEmpty(this.CheckboxProp)) {
+            if (IsChecked) {
+                if (this.removedItemsTemp.filter(p => p[this.CheckboxProp] == rowData[this.CheckboxProp])[0] != null) {
+                    let index = this.removedItemsTemp.findIndex(d => d[this.CheckboxProp] == rowData[this.CheckboxProp]);
+                    this.removedItemsTemp.splice(index, 1);
+                    this.RemovedListItemsEvent.emit(this.removedItemsTemp);
+
+                }
+                if (this.addedItems.filter(p => p[this.CheckboxProp] == rowData[this.CheckboxProp])[0] == null) {
+                    this.addedItems.push(rowData);
+                }
+
+            }
+            else {
+                if (this.removedItemsTemp.filter(p => p[this.CheckboxProp] == rowData[this.CheckboxProp])[0] == null) {
+                    this.removedItemsTemp.push(rowData);
+                    this.RemovedListItemsEvent.emit(this.removedItemsTemp);
+
+                }
+                if (this.addedItems.filter(p => p[this.CheckboxProp] == rowData[this.CheckboxProp])[0] != null) {
+                    let index = this.addedItems.findIndex(d => d == rowData[this.CheckboxProp]);
+                    this.addedItems.splice(index, 1);
+                }
+            }
+        }
+
+
         if (ById == true) {
             var temp = this.controller.cachedData;//
             let result = [];

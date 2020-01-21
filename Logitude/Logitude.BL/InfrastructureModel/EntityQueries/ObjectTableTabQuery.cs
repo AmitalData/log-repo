@@ -40,11 +40,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     TabNameTextCodeId = a.TabNameTextCodeId,
                                                     Tenant = a.Tenant,
                                                     ObjectTableName = a.ObjectTable.Name,
-                                                    TabNameTextCodeCode = a.TabNameTextCode.Code,
+                                                    TabNameTextCodeCode = a.TabNameTextCodeCode,
                                                     Code = a.Code,
                                                     FeatureId = a.FeatureId,
                                                     HtmlComponentName = a.HtmlComponentName,
                                                     HtmlComponentUrl = a.HtmlComponentUrl,
+                                                    FeatureUniqeCode = a.FeatureUniqeCode
                                                    
                                                 };
             return tabs;
@@ -64,9 +65,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     TabNameTextCodeId = a.TabNameTextCodeId,
                                                     Tenant = a.Tenant,
                                                     ObjectTableName = a.ObjectTable.Name,
-                                                    TabNameTextCodeCode = a.TabNameTextCode.Code,
+                                                    TabNameTextCodeCode = a.TabNameTextCodeCode,
                                                     Code = a.Code,
                                                     FeatureId = a.FeatureId,
+                                                    FeatureUniqeCode = a.FeatureUniqeCode
                                                 };
             return tabs;
         }

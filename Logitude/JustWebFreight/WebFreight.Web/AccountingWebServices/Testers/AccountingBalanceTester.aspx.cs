@@ -86,7 +86,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonGetSystem1000_Click,
             _ButtonLoadSystem1000_Click,
             _ButtonYearTransferCancel_Click,
-            _ButtonExternalReconcile_click
+            _ButtonExternalReconcile_click,
+            _ButtonCardIndexNew_Click
         }
 
         //DateTime _MyDate;
@@ -2332,7 +2333,73 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 email
                 /*authToken.Email*/), new string[0]);
         }
-    }
+
+        private CardIndexReportParams UpdateDefaultCardIndexNew(CardIndexReportParams myLedgerTransactionBalanceFilter)
+        {
+            _MyLastAction.Value = MyLastAction._ButtonLedgerTransactionBalance_Click.ToString();
+            myLedgerTransactionBalanceFilter = new CardIndexReportParams()
+            {
+                Tenant = 62,
+                From = DateTime.Now.AddMonths(-1),
+                To = DateTime.Now,
+                CurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(1),
+                DateTypeCode = "1",
+                GLAccountId = "1-1533",
+
+                SearchFields = "",
+                PageStartAtRecordIndex = 0,
+                PageSize = 20000,
+                Category1Id = "",
+                Category2Id = "",
+                Category3Id = "",
+                Category4Id = "",
+                Category5Id = "",
+                ChartOfAccountsId = "1-186",
+                AccountTypeCode = "",
+                IsReconciled=null,
+
+            };
+            var SerializeObjectByteParam = LogitudeXmlSerializer.SerializeObject<CardIndexReportParams>(myLedgerTransactionBalanceFilter);
+            _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam);
+            return myLedgerTransactionBalanceFilter;
+        }
+        protected void _ButtonCardIndexNew_Click(object sender, EventArgs e)
+        {
+
+
+            CardIndexReportParams myCardIndexReportParams = null;
+
+            if (GetMyLastAction() != MyLastAction._ButtonLedgerTransactionBalance_Click)
+            {
+                myCardIndexReportParams = UpdateDefaultCardIndexNew(myCardIndexReportParams) as CardIndexReportParams;
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+            {
+                myCardIndexReportParams = UpdateDefaultCardIndexNew(myCardIndexReportParams) as CardIndexReportParams;
+                return;
+            }
+            myCardIndexReportParams =
+                LogitudeXmlSerializer.DeserializeObject<CardIndexReportParams>(_TextBoxParam.Text);
+
+            _MyLastAction.Value = MyLastAction._ButtonLedgerTransactionBalance_Click.ToString();
+            var accountingContext = AccountingContext.GetContext(myCardIndexReportParams.Tenant);
+            var CardIndexReportService = new CardIndexReportService(accountingContext, myCardIndexReportParams);
+            CardIndexReportService.Run();
+
+            //_LabelResult.Text = "ledgerTransactionBalance" +ledgerTransactionBalanceService.Response.StartBalanceLocal + " " + ledgerTransactionBalanceService.Response.EndBalanceLocal;
+
+
+            var SerializeObjectByteParam2 = LogitudeXmlSerializer.SerializeObject<CardIndexReportParams>(myCardIndexReportParams);
+
+            _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam2);
+
+            var SerializeObjectJson = LogitudeXmlSerializer.SerializeObjectToJosnString<List<LedgerTransactionBalanceResponse>>(CardIndexReportService.CardIndexs);
+            ///ReloadGrid(SerializeObjectByte);
+            _LabelLog.Text = SerializeObjectJson;//LogMessagingUtil.Instance.ToString();
+
+        }
+        }
 
     public class ReconcileParam
     {

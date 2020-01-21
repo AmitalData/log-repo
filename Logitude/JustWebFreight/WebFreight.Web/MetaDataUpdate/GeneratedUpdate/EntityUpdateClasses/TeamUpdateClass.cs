@@ -913,7 +913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTeamsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TeamTextCode_0.Id, Code = "All Teams",  QueryGroupCode = "72bf", IndexOrder = 0, Tenant = 0, ObjectTableId = TeamObjectTable.Id, QuerySection = "Team", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TeamFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTeamsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TeamTextCode_0.Id, NameTextCodeCode = TeamTextCode_0.Code, Code = "All Teams",  QueryGroupCode = "72bf", IndexOrder = 0, Tenant = 0, ObjectTableId = TeamObjectTable.Id, QuerySection = "Team", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TeamFeature_0.Id,FeatureUniqeCode= TeamFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTeamsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id, IndexOrder = 0, ObjectFieldId = TeamObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TeamObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TeamObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TeamObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -935,9 +935,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TeamTeamHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Team.HeaderScreen", Name = "TeamHeaderScreen", ObjectTableId = TeamObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TeamTeamHeaderScreenScreen0.Id, ObjectFieldCode = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TeamTeamHeaderScreenScreen0.Id,ScreenCode = TeamTeamHeaderScreenScreen0.Code, ObjectFieldCode = TeamObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TeamObjectTable.HeaderScreenId = TeamTeamHeaderScreenScreen0.Id;
+		    TeamObjectTable.HeaderScreenCode = TeamTeamHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -958,9 +960,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TEGE",HtmlComponentName = "TeamGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Team/TeamGeneralTabComponent", FeatureId = TeamGeneralFeature_TH0.Id, ControlPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Team/TeamGeneralTabComponent", ObjectTableId = TeamObjectTable.Id, TabNameTextCodeId = TeamGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TEGE",HtmlComponentName = "TeamGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Team/TeamGeneralTabComponent", FeatureId = TeamGeneralFeature_TH0.Id,FeatureUniqeCode = TeamGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Team/TeamGeneralTabComponent", ObjectTableId = TeamObjectTable.Id, TabNameTextCodeId = TeamGeneralTextCode_TH0.Id, TabNameTextCodeCode = TeamGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TeamEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TeamObjectTable.Id, TabNameTextCodeId = TeamEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TeamEventsFeature_TH1.Id,FeatureUniqeCode = TeamEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TeamObjectTable.Id, TabNameTextCodeId = TeamEventsTextCode_TH1.Id, TabNameTextCodeCode = TeamEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

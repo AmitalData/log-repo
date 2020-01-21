@@ -49,6 +49,13 @@ public void GenerateEntityListQueryService(string xmlFilePath,string outputFileP
     }
 
 var entity = FromEntityListQueryServiceFile(xmlFilePath);
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
  if( entity.NoObjectTable.GetType() == typeof(string))
 	{
 		if(entity.NoObjectTable == "true")

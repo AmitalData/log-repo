@@ -473,7 +473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query SeizureMethodTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SeizureMethodTypeTextCode_0.Id, Code = "SeizureMethodType",  QueryGroupCode = "3174", IndexOrder = 0, Tenant = 0, ObjectTableId = SeizureMethodTypeObjectTable.Id, QuerySection = "Customs.SeizureMethodType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SeizureMethodTypeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query SeizureMethodTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SeizureMethodTypeTextCode_0.Id, Code = "SeizureMethodType",  QueryGroupCode = "3174", IndexOrder = 0, Tenant = 0, ObjectTableId = SeizureMethodTypeObjectTable.Id, QuerySection = "Customs.SeizureMethodType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SeizureMethodTypeFeature_0.Id,FeatureUniqeCode= SeizureMethodTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn SeizureMethodTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id, IndexOrder = 0, ObjectFieldId = SeizureMethodTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SeizureMethodTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 

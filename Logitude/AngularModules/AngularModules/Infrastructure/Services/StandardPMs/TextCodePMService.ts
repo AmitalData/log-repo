@@ -62,6 +62,35 @@ export class TextCodePMService {
          
     }
 
+    getByCode(code: string, tenant: number) {
+
+        console.log('--------------------------------------> calling getSingleEntityPM:');
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingleByCode?' + 'code=' + code + "&tenant=" + tenant, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+
+                //               var entity: TextCodePM;
+                //if(pm)
+                //{
+                //                entity = this.MapJsonToEntityPM(pm);
+                //               }
+                return pm;
+            });
+        }
+
+        );
+
+
+
+
+    }
+
 	 insert(entityPM: TextCodePM) {
         console.log('--------------------------------------> calling updateEntityPM:');
         return Observable.defer(() => {
