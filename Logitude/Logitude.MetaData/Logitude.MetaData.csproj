@@ -182,6 +182,8 @@
     <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\InfrastructureModel\RuleUpdateHistory.lxml" />
+  
     <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardExternalCodeByCurrency.lxml">
