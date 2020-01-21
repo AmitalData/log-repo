@@ -131,7 +131,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //         myfilterAgrs.AdditionalFilters.push(filter);
             //     });
             // }
-            this.QueryValueChanged({ QueryCode: this.SelectedQueryCode, Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
+            this.QueryValueChanged({ QueryCode: this.SelectedQueryCode,Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
             //this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
         });
     }
@@ -177,6 +177,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 this.MethodName = this.MethodName.split('.')[1];
             }
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
+            this.SelectedQueryId = this.SelectedQuery.Id;
+
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
                 this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
             }
@@ -1072,6 +1074,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 this.MethodName = this.MethodName.split('.')[1];
             }
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
+            this.SelectedQueryId = this.SelectedQuery.Id;
+
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
                 this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
             }
@@ -1224,6 +1228,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //var userId = JSON.parse(sessionStorage.getItem("userData")).Id;
         //this.GetQueryColumns(queryId, this.UserId);
         this.SelectedQueryCode =  Args.QueryCode;
+        //this.SelectedQueryId = Args.QueryId;
 
         this.dataSource = {
             pageSize: 30,
