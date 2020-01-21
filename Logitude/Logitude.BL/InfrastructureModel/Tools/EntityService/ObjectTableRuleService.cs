@@ -239,7 +239,24 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ruleUpdateHistory.RuleCode = theEntityPm.RuleCode;
             if (isNewEntity)
             {
-                ruleUpdateHistory.EventName = "Rule Added";
+                if (theEntityPm.IsCreatedFromSystemRule)
+                {
+                   ObjectTableRule systemRule = entityRepository.GetSingleObjectTableRuleByCode(theEntityPm.RuleCode, 0);
+                    if(systemRule != null)
+                    {
+                        if (systemRule.InActive != this.entityPM.InActive)
+                        {
+                            ruleUpdateHistory.EventName = (this.entityPM.InActive == true ? "Rule set as Inactive" : "Rule set as Active");
+                        }
+                        else
+                            ruleUpdateHistory.EventName = "Rule Updated";
+                    }
+                    else
+                        ruleUpdateHistory.EventName = "Rule Added";
+                }
+                else
+
+                    ruleUpdateHistory.EventName = "Rule Added";
             }
             else
             {
