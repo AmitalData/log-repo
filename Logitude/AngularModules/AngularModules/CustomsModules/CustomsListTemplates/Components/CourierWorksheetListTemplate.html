@@ -298,6 +298,6 @@
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'LastMileStatusCode' " style="text-align:right;">
-        <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['LastMileStatusDate']}}">{{_CourierWorksheet.LastMileStatusCode}}</span>
+        <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['LastMileStatusDate'] | DateTimePipe:'DT'}}">{{_CourierWorksheet.LastMileStatusCode}}</span>
     </div>
 </div>
