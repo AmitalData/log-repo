@@ -630,11 +630,6 @@
   <EventTypes />
   <AdditionalTextCodes>
     <TextCode
-      Code="&quot;CustomerAccountManagerByProduct&quot;"
-      DefaultText="&quot;Customer Account Manager By Product&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;ChargesExternalAccountsByProduct&quot;"
       DefaultText="&quot;Charges External Accounts By Product&quot;"
       TextCodeTypeCode="&quot;T&quot;"

@@ -219,9 +219,9 @@ namespace WebFreight.Web.MetaDataUpdate
                                 updateClass.LoadUpdateTenantZero(context);
                                 updateClass.LoadOtherFields(context);
                                 updateClass.LoadTranslationHeaders();
-                                updateClass.loadQueries();
+                                //updateClass.loadQueries();
                                 updateClass.loadScreens();
-                                updateClass.LoadObjectTableTabs();
+                                //updateClass.LoadObjectTableTabs();
                                 updateClass.LoadObjectTableHelperControls();
                                 updateClass.LoadEntityStatus();
                                 updateClass.LoadEventTypes();
@@ -257,9 +257,9 @@ namespace WebFreight.Web.MetaDataUpdate
                                 updateClass.LoadMeasurements();
                                 updateClass.LoadCreditCardTypes();
                                 updateClass.LoadMoveTypes();
-                                updateClass.loadQueries();
+                                //updateClass.loadQueries();
                                 updateClass.loadScreens();
-                                updateClass.LoadObjectTableTabs();
+                               // updateClass.LoadObjectTableTabs();
                                 updateClass.LoadObjectTableHelperControls();
                                 updateClass.LoadEntityStatus();
                                 updateClass.LoadEventTypes();
@@ -558,9 +558,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadMeasurements();
                             updateClass.LoadCreditCardTypes();
                             updateClass.LoadMoveTypes();
-                            updateClass.loadQueries();
+                            //updateClass.loadQueries();
                             updateClass.loadScreens();
-                            updateClass.LoadObjectTableTabs();
+                            //updateClass.LoadObjectTableTabs();
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadEntityStatus();
                             updateClass.LoadEventTypes();

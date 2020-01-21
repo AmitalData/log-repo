@@ -1489,6 +1489,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	         Screen ShipmentComputedFieldsShipmentComputedFieldsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentComputedFields.HeaderScreen", Name = "ShipmentComputedFieldsHeaderScreen", ObjectTableId = ShipmentComputedFieldsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    ShipmentComputedFieldsObjectTable.HeaderScreenId = ShipmentComputedFieldsShipmentComputedFieldsHeaderScreenScreen0.Id;
+		    ShipmentComputedFieldsObjectTable.HeaderScreenCode = ShipmentComputedFieldsShipmentComputedFieldsHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

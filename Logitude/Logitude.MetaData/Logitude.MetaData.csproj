@@ -641,7 +641,9 @@
     <None Include="EntityFiles\QuoteModel\QuoteSaleCharge.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSetting.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteStage.lxml" />
-    <None Include="EntityFiles\QuoteModel\QuoteTemplate.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplate.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSection.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSetting.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateTableDesign.lxml" />

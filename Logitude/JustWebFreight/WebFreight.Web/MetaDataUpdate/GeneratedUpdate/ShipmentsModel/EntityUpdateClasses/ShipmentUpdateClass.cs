@@ -40154,11 +40154,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 
 			   TextCode ShipmentTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllMasters", DefaultText = @"All Masters",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ShipmentFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLMASTERS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.AllMasters", NameTextCodeDefaultText = "All Masters", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShipmentFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLMASTERS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AllMasters", NameTextCodeDefaultText = "All Masters", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
 			   TextCode ShipmentTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ImportShipments", DefaultText = @"Import Shipments",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ShipmentFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IMPORTSHIPMETNS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ImportShipments", NameTextCodeDefaultText = "Import Shipments", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShipmentFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IMPORTSHIPMETNS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ImportShipments", NameTextCodeDefaultText = "Import Shipments", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
 			   TextCode ShipmentTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CancelledShipments", DefaultText = @"Cancelled Shipments",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

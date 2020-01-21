@@ -25424,8 +25424,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 		   Feature MasterFeature_ALLTRANSPORTMODES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTRANSPORTMODES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.AllTransportModes", NameTextCodeDefaultText = @"AllTransportModes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature MasterFeature_FOLLOWUPS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FOLLOWUPS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = MasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.FollowUps", NameTextCodeDefaultText = @"Follow Ups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
 		   Feature MasterFeature_NEWMASTER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWMASTER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.NewMaster", NameTextCodeDefaultText = @"New Master" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
