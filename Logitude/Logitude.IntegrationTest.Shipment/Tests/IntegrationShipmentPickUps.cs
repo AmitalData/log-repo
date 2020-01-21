@@ -9,18 +9,15 @@ namespace Logitude.IntegrationTest.Shipment.Tests
 {
    public class IntegrationShipmentPickUps
     {
-        public List<ShipmentPickUpPM> shipmentPickUpPM;
-        public IntegrationShipmentPickUps() {
-            this.shipmentPickUpPM  = new List<ShipmentPickUpPM>();
-        }
-
-        public List<ShipmentPickUpPM> ShipmentPickUps()
+       
+        public static List<ShipmentPickUpPM> ShipmentPickUps()
         {
+            List<ShipmentPickUpPM> shipmentPickUpPM = new List<ShipmentPickUpPM>();
             shipmentPickUpPM.Add(ShipmentPickUpItem("PICK", "PORT", "PORT",ShipmentVariables.PortJFKId,ShipmentVariables.PortLHRId,ShipmentVariables.ShipperExport1, ShipmentVariables.TruckerId));
             return shipmentPickUpPM;
         }
 
-        public  ShipmentPickUpPM ShipmentPickUpItem(string PickUpDeliveryTypeCode,string PickUpDeliveryFromTypeCode, string PickUpDeliveryToTypeCode, string FromPortId, string ToPortId, string FromPartnerCardId, string CarrierId)
+        public static ShipmentPickUpPM ShipmentPickUpItem(string PickUpDeliveryTypeCode,string PickUpDeliveryFromTypeCode, string PickUpDeliveryToTypeCode, string FromPortId, string ToPortId, string FromPartnerCardId, string CarrierId)
         {
             ShipmentPickUpPM ShipmentPickUpItem = new ShipmentPickUpPM();
             ShipmentPickUpItem.PickUpDeliveryTypeCode = PickUpDeliveryTypeCode;
@@ -30,12 +27,12 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             ShipmentPickUpItem.ToPortId = ToPortId;
             ShipmentPickUpItem.FromPartnerCardId = FromPartnerCardId;
             ShipmentPickUpItem.CarrierId = CarrierId;
-            ShipmentPickUpItem.ShipmentPickUpDeliveryPackages = this.ShipmentPickUpDeliveryPackage();
+            ShipmentPickUpItem.ShipmentPickUpDeliveryPackages =ShipmentPickUpDeliveryPackage();
             return ShipmentPickUpItem;
 
         }
 
-        public List<ShipmentPickUpDeliveryPackagePM> ShipmentPickUpDeliveryPackage()
+        public static List<ShipmentPickUpDeliveryPackagePM> ShipmentPickUpDeliveryPackage()
         {
             List<ShipmentPickUpDeliveryPackagePM> ShipmentPickUpDeliveryPackage = new List<ShipmentPickUpDeliveryPackagePM>();
              ShipmentPickUpDeliveryPackage.Add(PickUpPackageItem(1,10,10,10,10));
@@ -44,7 +41,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             return ShipmentPickUpDeliveryPackage;
         }
 
-        public  ShipmentPickUpDeliveryPackagePM PickUpPackageItem(int quantity, double? length, double? width, double? height, double? weight)
+        public static  ShipmentPickUpDeliveryPackagePM PickUpPackageItem(int quantity, double? length, double? width, double? height, double? weight)
         {
             ShipmentPickUpDeliveryPackagePM PickUpPackageItem = new ShipmentPickUpDeliveryPackagePM();
 

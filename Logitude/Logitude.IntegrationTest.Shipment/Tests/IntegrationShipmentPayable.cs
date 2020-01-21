@@ -9,7 +9,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
 {
     class IntegrationShipmentPayable
     {
-
+     
         public static List<ShipmentPayablePM> ShipmentPayables()
         {
             List<ShipmentPayablePM> shipmentpayablePM = new List<ShipmentPayablePM>();

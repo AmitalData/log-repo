@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.IntegrationTest.Shipment.Tests
 {
-    class IntegrationShipmentReceivable
+    public class IntegrationShipmentReceivable
     {
-
+    
         public static List<ShipmentReceivablePM> ShipmentReceivables()
         {
             List<ShipmentReceivablePM> shipmentReceivablePM = new List<ShipmentReceivablePM>();
