@@ -6,6 +6,7 @@ using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebFreight.Web.Helpers.APIHelpers;
@@ -50,7 +51,7 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentVariables.PaymentTermCashId = await GetPaymentTermId("Cash");
             ShipmentVariables.VATTypeZeroId = await GetVATTypeId("ZERO");
             ShipmentVariables.QuoteStageQTDRId = await GetQuoteStageId("QTDR");
-            ShipmentVariables.VendorId = await GetVendorId("Vendor 1");
+            ShipmentVariables.VendorId = await GetVendorId("Vendortest razan");
             ShipmentVariables.AgentId = await GetAgentId("Agent 1");
             ShipmentVariables.CustomerId = await GetCustomerId("Customer 1");
             ShipmentVariables.CustomAgentId = await GetCustomsAgentId("custom agent 1");
@@ -525,6 +526,7 @@ namespace Logitude.IntegrationTest.Shipment
             vendorPM.CityName = "AKD";
             vendorPM.PartnerTypeId = "VD";
             vendorPM.CountryId = ShipmentVariables.CountryUSId;
+            vendorPM.Addresses.Add(addressPM()); 
             return vendorPM;
         }
         public static async Task<string> GetAgentId(string agentName)
@@ -646,6 +648,25 @@ namespace Logitude.IntegrationTest.Shipment
             HttpResponseMessage response = await RestClientService.PostAsync(partnerServicePM, "PartnersDomain");
             partnerServicePM = RestClientService.ParseResponse<PartnerServicePM>(response);
             return partnerServicePM;
+        }
+        public static List<AddressPM> Addresses()
+        {
+            List<AddressPM> addresses = new List<AddressPM>();
+            addresses.Add(addressPM());
+            return addresses;
+        }
+        public static AddressPM addressPM()
+        {
+            AddressPM address = new AddressPM();
+            address.Tenant= IntegrationTestLoginParameters.Tenant;
+            address.AddressTypeId = "M";
+            address.Description = "Main Address";
+            address.Name = "Address1";
+            address.City = "Address1";
+            address.CountryId = ShipmentVariables.CountryGBId;
+            address.IsCreatedWithPartner = true;
+
+            return address;
         }
         public static PartnerServicePM CreatePartnerServicePM(string partnerTypeId, string partnerName, string partnerCode=null)
         {
