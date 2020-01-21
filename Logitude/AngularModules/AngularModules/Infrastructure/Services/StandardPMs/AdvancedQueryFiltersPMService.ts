@@ -47,12 +47,12 @@ export class AdvancedQueryFiltersPMService {
        
     }
 
-    getadvancedqueryfiltersbytenantByQuery(tenant: number, userid: string, queryId: string) {
+    getadvancedqueryfiltersbytenantByQuery(tenant: number, userid: string, queryCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantandquery?' + 'tenant=' + tenant + '&loggedcontactid=' + userid + '&queryId=' + queryId, {
+            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantandquery?' + 'tenant=' + tenant + '&loggedcontactid=' + userid + '&queryCode=' + queryCode, {
                 headers: authHeader
             }).map(response => {
                 var pms = response.json();
@@ -62,14 +62,14 @@ export class AdvancedQueryFiltersPMService {
         });
     }
 
-    getuseradvancedqueryfilterbytenantobjecttablequery(tenant: number, objecttableCode:string,queryid:string, userid: string) {
+    getuseradvancedqueryfilterbytenantobjecttablequery(tenant: number, objecttableCode:string,queryCode:string, userid: string) {
 
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&objecttableCode=' + objecttableCode + '&queryid=' + queryid + '&loggedcontactid=' + userid, {
+            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&objecttableCode=' + objecttableCode + '&queryCode=' + queryCode + '&loggedcontactid=' + userid, {
                 headers: authHeader
             }).map(response => {
                 var pms = response.json();

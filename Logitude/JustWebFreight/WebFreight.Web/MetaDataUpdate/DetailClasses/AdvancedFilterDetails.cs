@@ -5,6 +5,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
     {
         public int Tenant { get; set; }
         public string QueryId { get; set; }
+        public string QueryCode { get; set; }
         public string ObjectFieldId { get; set; }
         public bool IsPredefined { get; set; }
         public string PredefinedValue { get; set; }

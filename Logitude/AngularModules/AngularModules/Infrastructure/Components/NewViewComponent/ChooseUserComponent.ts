@@ -34,6 +34,7 @@ export class ChooseUserComponent {
             newItem.Id = item.Id;
             newItem.UserId = item.UserId;
             newItem.QueryId = item.QueryId;            
+            newItem.QueryCode = item.QueryCode;            
 
             this.savedList.push(newItem);
         });               
