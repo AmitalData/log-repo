@@ -2764,13 +2764,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.Partner", DefaultText = "Partner",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Main", DefaultText = "Main",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   //TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Main", DefaultText = "Main",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   //TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "TH",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Docs Out", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   //TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "TH",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Docs Out", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   //TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

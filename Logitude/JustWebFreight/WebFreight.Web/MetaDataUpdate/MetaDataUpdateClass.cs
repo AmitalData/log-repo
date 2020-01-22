@@ -62778,10 +62778,10 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable objectTable = ObjectContext.ObjectTables.Where(f => f.Name == "ShipmentPickUpDelivery" && f.Tenant == 0).FirstOrDefault();
 
             #region Tabs Headers
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Main", DefaultText = "Main", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Main", DefaultText = "Main", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Buttons & Actions
