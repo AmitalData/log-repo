@@ -44,14 +44,14 @@ export class DownloadManager {
        
     }
 
-    public static DownloadExternalPage(id: string, securityId: string = null) {
+    public static DownloadExternalPage(id: string,tenant : number, securityId: string = null) {
 
         var url: string = !AppTool.IsNullOrEmpty(securityId) ? "securityId=" + securityId : "id=" + id;
         if (!AppTool.IsNullOrEmpty(id) && !AppTool.IsNullOrEmpty(securityId)) {
             url += ("~" + id);
         }
         //var token = ServiceHelper.GetLDocumentDownloadToken();
-        var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + securityId;
+        var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + securityId + "&tenant=" + tenant;
         var win = window.open(link, '_blank');
         win.focus();
 
