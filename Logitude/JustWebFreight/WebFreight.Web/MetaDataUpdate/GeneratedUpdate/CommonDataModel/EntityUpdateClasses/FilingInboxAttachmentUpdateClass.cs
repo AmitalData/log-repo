@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Filing Inbox Attachment",
-			      				    Code =  "ca59",
+			      				    Code =  "5101",
 			      				    Name =  "FilingInboxAttachment",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -345,15 +345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable FilingInboxAttachmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FilingInboxAttachment" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode FilingInboxAttachmentTextCode_FilingInboxAttachment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FilingInboxAttachment", DefaultText = "Filing Inbox Attachment",LocalDefaultText = null, ObjectTableId = FilingInboxAttachmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 
