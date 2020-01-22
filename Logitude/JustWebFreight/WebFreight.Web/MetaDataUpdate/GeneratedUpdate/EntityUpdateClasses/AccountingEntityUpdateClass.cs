@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Accounting Entity",
-			      				    Code =  "2369",
+			      				    Code =  "3c06",
 			      				    Name =  "AccountingEntity Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
@@ -131,6 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
