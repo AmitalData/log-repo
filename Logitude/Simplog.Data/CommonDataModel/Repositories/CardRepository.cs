@@ -195,8 +195,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
 
@@ -213,11 +212,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         {
                             entity = (Card)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
-                    else
-                    {
-                        entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus") where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
-                    }
+                    
+                 
                 }
                 else
                 {
@@ -234,9 +230,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 string entityName = "Card" + code + tenant + partnerTypeId;
                 Card entity;
                 if (getFromCache)
-                {
-                    if (HttpContext.Current != null)
-                    {
+                {                  
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
 
@@ -256,18 +250,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         else
                         {
                             entity = (Card)CacheManager.CacheWrapper.Get(entityName);
-                        }
-                    }
-
-                    else
-                    {
-                        entity = (from d in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus")
-                                  where
-                                  d.Tenant == tenant
-                                  && d.Code == code
-                                  && d.PartnerTypeId == partnerTypeId
-                                  select d).FirstOrDefault();
-                    }
+                        }                    
+                 
                 }
 
                 else
@@ -294,8 +278,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
 
@@ -312,11 +295,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         {
                             entity = (Card)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
-                    else
-                    {
-                        entity = (from record in context.Cards where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
-                    }
+                    
+                  
                 }
                 else
                 {
@@ -334,8 +314,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -352,14 +331,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         {
                             entity = (Card)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
-                    else
-                    {
-                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                        entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
-                                  where record.Id == id && record.Tenant == tenant
-                                  select record).FirstOrDefault();
-                    }
+                    
+
                 }
                 else
                 {
@@ -381,8 +354,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                          
@@ -399,13 +371,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         {
                             entity = (Card)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
-                    else
-                    {
-                        entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
-                                  where record.Id == id && record.Tenant == tenant
-                                  select record).FirstOrDefault();
-                    }
+                    
+         
                 }
                 else
                 {
@@ -427,8 +394,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 string entityName = "Card_CachedId" + code + tenant;
 
 
-                if (HttpContext.Current != null)
-                {
+              
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
 
@@ -445,14 +411,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entityId = (string)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
+                
 
-                    entityId = (from a in context.Cards
-                                where a.Tenant == tenant && a.Code == code
-                                select a.Id).FirstOrDefault();
-                }
             }
 
             return entityId;
