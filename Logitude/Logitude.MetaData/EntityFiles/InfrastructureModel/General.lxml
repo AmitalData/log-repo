@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c1bb&quot;"
+  Code="&quot;fcd9&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -98,11 +98,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;General&quot;"
-      DefaultText="&quot;General&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="true" />
     <TextCode
       Code="&quot;General.M.FieldWarning&quot;"
       DefaultText="&quot;%FieldName Field is not filled&quot;"
@@ -4452,6 +4447,11 @@
       Code="&quot;Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired&quot;"
       DefaultText="&quot;At least one GLAccount Interest Periods record is required&quot;"
       LocalDefaultText="&quot;חובה להזין לפחות רשומה אחת של תקופת ריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.UsedSpace&quot;"
+      DefaultText="&quot;Used Space&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

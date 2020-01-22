@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Agent Shared Document",
-			      				    Code =  "9a09",
+			      				    Code =  "cb96",
 			      				    Name =  "AgentSharedDocument",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -485,15 +485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AgentSharedDocumentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AgentSharedDocument" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AgentSharedDocumentTextCode_AgentSharedDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedDocument", DefaultText = "Agent Shared Document",LocalDefaultText = null, ObjectTableId = AgentSharedDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "c1bb",
+			      				    Code =  "fcd9",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -152,8 +152,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen GeneralGeneralHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "General.HeaderScreen", Name = "GeneralHeaderScreen", ObjectTableId = GeneralObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    GeneralObjectTable.HeaderScreenId = GeneralGeneralHeaderScreenScreen0.Id;
-		    GeneralObjectTable.HeaderScreenCode = GeneralGeneralHeaderScreenScreen0.Code;
-
 	   		  
 
 	    }
@@ -2162,6 +2160,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralOFieldInterestCalculationStartDateismandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FieldInterestCalculationStartDateismandatory", DefaultText = "Field Interest Calculation Start Date is mandatory",LocalDefaultText = @"שדה תאריך הוא חובה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "At least one GLAccount Interest Periods record is required",LocalDefaultText = @"חובה להזין לפחות רשומה אחת של תקופת ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOUsedSpace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.UsedSpace", DefaultText = "Used Space",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

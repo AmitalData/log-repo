@@ -295,6 +295,16 @@
       DefaultText="&quot;Follow Up&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.AddTemplates&quot;"
+      DefaultText="&quot;Adding Templates&quot;"
+      TextCodeTypeCode="&quot;H&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocsOut.AddYourOwnTemplates&quot;"
+      DefaultText="&quot;You can add your own templates for sending e-mails in addition to the pre-installed templates&quot;"
+      TextCodeTypeCode="&quot;H&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

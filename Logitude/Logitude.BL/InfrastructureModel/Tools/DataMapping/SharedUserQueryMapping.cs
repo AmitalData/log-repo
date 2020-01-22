@@ -19,6 +19,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             
             entityPOCO.UserId = entityPM.UserId;
             entityPOCO.QueryId = entityPM.QueryId;
+            entityPOCO.QueryCode = entityPM.QueryCode;
+
         }
     }
 }

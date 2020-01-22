@@ -4407,6 +4407,16 @@
       DefaultText="&quot;Table name does not exist&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocumentType.O.Templates&quot;"
+      DefaultText="&quot;Document Templates&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;DocumentType.O.HTMLTemplates&quot;"
+      DefaultText="&quot;Email Message Templates&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -1722,7 +1722,42 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<TariffLinesContainersPricePM> containersPrices;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("TariffLineTariffLinesContainersPrice", "Id","TariffLineId")]
+	   [DataMember]
+	   public virtual List<TariffLinesContainersPricePM> ContainersPrices  
+	   {
+	        get
+             {
+                 if (containersPrices == null)
+                 {
+                     containersPrices = new List<TariffLinesContainersPricePM>();
+                 }
+                 return containersPrices;
+              }
+             set { containersPrices = value; }
+	    }
+		   
+	   private List<TariffLinesContainersPricePM>  deletedContainersPrices;
+	   public virtual List<TariffLinesContainersPricePM> DeletedContainersPrices  
+	   {
+	        get
+             {
+                 if ( deletedContainersPrices == null)
+                 {
+                      deletedContainersPrices = new List<TariffLinesContainersPricePM>();
+                 }
+                 return  deletedContainersPrices;
+              }
+             set {  deletedContainersPrices = value; }
+	    }
+	     }
    
 }
 	 

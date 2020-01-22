@@ -2067,5 +2067,7 @@ namespace Simplog.Data.InfrastructureModel
         {
             get { throw new NotImplementedException(); }
         }
+
+        public IDbSet<RuleUpdateHistory> RuleUpdateHistories => throw new NotImplementedException();
     }
 }

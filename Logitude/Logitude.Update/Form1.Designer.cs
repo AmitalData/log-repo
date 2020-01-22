@@ -202,6 +202,7 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(16, 17);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(184, 24);
@@ -360,27 +361,27 @@
             this.internationalSiteToolStripMenuItem,
             this.createDecToolStripMenuItem});
             this.sandBoxToolStripMenuItem.Name = "sandBoxToolStripMenuItem";
-            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.sandBoxToolStripMenuItem.Text = "SandBox";
             // 
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -391,11 +392,12 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
             // 
+            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -403,28 +405,28 @@
             // toolStripMenuItemExportTofil
             // 
             this.toolStripMenuItemExportTofil.Name = "toolStripMenuItemExportTofil";
-            this.toolStripMenuItemExportTofil.Size = new System.Drawing.Size(200, 22);
+            this.toolStripMenuItemExportTofil.Size = new System.Drawing.Size(199, 22);
             this.toolStripMenuItemExportTofil.Text = "SaveTextCodeToDisk";
             this.toolStripMenuItemExportTofil.Click += new System.EventHandler(this.toolStripMenuItemExportTofil_Click);
             // 
             // loadTextCodeFromDiskToolStripMenuItem
             // 
             this.loadTextCodeFromDiskToolStripMenuItem.Name = "loadTextCodeFromDiskToolStripMenuItem";
-            this.loadTextCodeFromDiskToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.loadTextCodeFromDiskToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.loadTextCodeFromDiskToolStripMenuItem.Text = "LoadTextCodeFromDisk";
             this.loadTextCodeFromDiskToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodeFromDiskToolStripMenuItem_Click);
             // 
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
@@ -463,7 +465,7 @@
             this.exportToolStripMenuItem,
             this.importToolStripMenuItem1});
             this.expImpToolStripMenuItem.Name = "expImpToolStripMenuItem";
-            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.expImpToolStripMenuItem.Text = "Exp/Imp";
             // 
             // exportToolStripMenuItem
@@ -478,14 +480,14 @@
             // expPackagesToolStripMenuItem
             // 
             this.expPackagesToolStripMenuItem.Name = "expPackagesToolStripMenuItem";
-            this.expPackagesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.expPackagesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.expPackagesToolStripMenuItem.Text = "Exp.Packages";
             this.expPackagesToolStripMenuItem.Click += new System.EventHandler(this.expPackagesToolStripMenuItem_Click);
             // 
             // expRolesToolStripMenuItem
             // 
             this.expRolesToolStripMenuItem.Name = "expRolesToolStripMenuItem";
-            this.expRolesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.expRolesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.expRolesToolStripMenuItem.Text = "Exp.Roles";
             this.expRolesToolStripMenuItem.Click += new System.EventHandler(this.expRolesToolStripMenuItem_Click);
             // 
@@ -519,11 +521,12 @@
             this.rTLToolStripMenuItem,
             this.lTRToolStripMenuItem});
             this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
-            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
             // 
             // tenantTxtBox
             // 
+            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -547,13 +550,13 @@
             this.batchTaskExecutionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.executeToolStripMenuItem});
             this.batchTaskExecutionToolStripMenuItem.Name = "batchTaskExecutionToolStripMenuItem";
-            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
+            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
             this.batchTaskExecutionToolStripMenuItem.Text = "Batch Task Execution";
             // 
             // executeToolStripMenuItem
             // 
             this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
-            this.executeToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.executeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.executeToolStripMenuItem.Text = "Execute";
             this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
             // 

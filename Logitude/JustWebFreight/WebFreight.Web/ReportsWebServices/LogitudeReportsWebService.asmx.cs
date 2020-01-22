@@ -7134,7 +7134,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     StatisticsByAgentReport record = new StatisticsByAgentReport();
 
-                    record.AgentId = shipment.AgentId;
+                    record.AgentId = shipment.AgentComputed;
                     record.AgentName = shipment.AgentName;
 
                     record.TransportMode = shipment.TransportModeName;

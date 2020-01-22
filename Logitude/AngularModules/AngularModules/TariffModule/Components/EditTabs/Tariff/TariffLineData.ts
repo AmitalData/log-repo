@@ -5,7 +5,7 @@ import { PortList } from '../../../../Common/EntityLists/PortList';
 import { VersionTabComponent } from './VersionTabComponent';
 import { SurchargeVersionTabComponent } from './SurchargeVersionTabComponent';
 import { OceanFCLVersionTabComponent } from './OceanFCLVersionTabComponent';
-import { CurrencyPM } from '../../../../Common/EntityPMs/CurrencyPM';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 
 export class AirCostTariffLineData extends BaseComponent {
     public EntityPM: TariffLinePM;
@@ -1320,9 +1320,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
     
-    currency: CurrencyPM;
+    currency: CurrencyList;
     get Currency() { return this.currency; }
-    set Currency(value: CurrencyPM) {
+    set Currency(value: CurrencyList) {
         if (this.currency != value) {
             this.currency = value;
         }

@@ -141,7 +141,7 @@ export class CustomsClosedTablesListTemplate {
 
                 SelectedQuery = allQueries[0];
            
-                listArgs.QueryCode = SelectedQuery.Code;
+                listArgs.QueryCode = SelectedQuery.UniqueCode;
                 listArgs.ObjectTableName = objectTablePM.Name;
 
                 

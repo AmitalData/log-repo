@@ -1858,6 +1858,42 @@
     <Compile Include="Migrations\202001021342315_AddTariffLinesContainersPricesTable.Designer.cs">
       <DependentUpon>202001021342315_AddTariffLinesContainersPricesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.cs" />
+    <Compile Include="Migrations\202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.Designer.cs">
+      <DependentUpon>202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.cs" />
+    <Compile Include="Migrations\202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.Designer.cs">
+      <DependentUpon>202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.cs" />
+    <Compile Include="Migrations\202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.Designer.cs">
+      <DependentUpon>202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.cs" />
+    <Compile Include="Migrations\202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.Designer.cs">
+      <DependentUpon>202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001201213182_Add_Field_UniqueCode_To_Query.cs" />
+    <Compile Include="Migrations\202001201213182_Add_Field_UniqueCode_To_Query.Designer.cs">
+      <DependentUpon>202001201213182_Add_Field_UniqueCode_To_Query.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs" />
+    <Compile Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.Designer.cs">
+      <DependentUpon>202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001201315200_Mutaz_AlterCoulmnUniqeCode.cs" />
+    <Compile Include="Migrations\202001201315200_Mutaz_AlterCoulmnUniqeCode.Designer.cs">
+      <DependentUpon>202001201315200_Mutaz_AlterCoulmnUniqeCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001201324071_Mutaz_Alter_QueryCode.cs" />
+    <Compile Include="Migrations\202001201324071_Mutaz_Alter_QueryCode.Designer.cs">
+      <DependentUpon>202001201324071_Mutaz_Alter_QueryCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001201424190_Mutaz_Alter_UniqueQueryCode.cs" />
+    <Compile Include="Migrations\202001201424190_Mutaz_Alter_UniqueQueryCode.Designer.cs">
+      <DependentUpon>202001201424190_Mutaz_Alter_UniqueQueryCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs" />
     <Compile Include="Migrations\202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.Designer.cs">
       <DependentUpon>202001021013528_WesamAddObjectFieldCodeToObjectFieldModificationsTable.cs</DependentUpon>
@@ -1902,7 +1938,6 @@
     <Compile Include="Migrations\202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.Designer.cs">
       <DependentUpon>202001081032543_AddSearchFieldsToSLAHeadersAndSupportMailBoxes_Maheera.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.cs" />
     <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.Designer.cs">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
@@ -1915,12 +1950,14 @@
     <Compile Include="Migrations\202001051029247_Mutaz_Add_Index_To_IntersertTransaction.Designer.cs">
       <DependentUpon>202001051029247_Mutaz_Add_Index_To_IntersertTransaction.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.cs" />
     <Compile Include="Migrations\202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.Designer.cs">
       <DependentUpon>202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202001151002313_RuleUpdateHistory_table.cs" />
+    <Compile Include="Migrations\202001151002313_RuleUpdateHistory_table.Designer.cs">
+      <DependentUpon>202001151002313_RuleUpdateHistory_table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3325,9 +3362,6 @@
     <EmbeddedResource Include="Migrations\201912181430591_Add_Table_InterestReportLinesByDate.resx">
       <DependentUpon>201912181430591_Add_Table_InterestReportLinesByDate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912221319308_AddSupportMailboxTable.resx">
-      <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912181235125_RenameAirlineAreaToCarrierArea_Samar.resx">
       <DependentUpon>201912181235125_RenameAirlineAreaToCarrierArea_Samar.cs</DependentUpon>
     </EmbeddedResource>
@@ -3394,11 +3428,9 @@
     <EmbeddedResource Include="Migrations\201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.resx">
       <DependentUpon>201912310817544_WesamAddObjectFieldCodeToObjectFieldValidationTable.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.resx">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201912301359345_DropRelationMenuTablesWithFeature_Rabaia.resx">
       <DependentUpon>201912301359345_DropRelationMenuTablesWithFeature_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -3435,6 +3467,9 @@
     <EmbeddedResource Include="Migrations\202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.resx">
       <DependentUpon>202001021114407_WesamAddRuleObjectCodeTonAirlineMessagingRulesTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.resx">
+      <DependentUpon>202001080836004_Mutaz_Add_Field_QueryCode_To_AdvanceQuery_And_Delete_ForienKey.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.resx">
       <DependentUpon>202001081453090_Add_Field_ScreenCode_To_ScreenFields_And_Remove_ForiegnKey.cs</DependentUpon>
     </EmbeddedResource>
@@ -3456,7 +3491,6 @@
     <EmbeddedResource Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.resx">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -3466,11 +3500,40 @@
     <EmbeddedResource Include="Migrations\202001051029247_Mutaz_Add_Index_To_IntersertTransaction.resx">
       <DependentUpon>202001051029247_Mutaz_Add_Index_To_IntersertTransaction.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.resx">
       <DependentUpon>202001141713244_AbedChangeLengthRecipientValueoNAutomationResultEmailRecipient.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001151002313_RuleUpdateHistory_table.resx">
+      <DependentUpon>202001151002313_RuleUpdateHistory_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.resx">
+      <DependentUpon>202001080940020_Mutaz_Add_Field_QueryCode_To_QueryCoulmns_And_Delete_ForienKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201213182_Add_Field_UniqueCode_To_Query.resx">
+      <DependentUpon>202001201213182_Add_Field_UniqueCode_To_Query.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.resx">
+      <DependentUpon>202001201255314_Mutaz_AlterCoulmn_QueryCode_In_All_Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201315200_Mutaz_AlterCoulmnUniqeCode.resx">
+      <DependentUpon>202001201315200_Mutaz_AlterCoulmnUniqeCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201424190_Mutaz_Alter_UniqueQueryCode.resx">
+      <DependentUpon>202001201424190_Mutaz_Alter_UniqueQueryCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001201324071_Mutaz_Alter_QueryCode.resx">
+      <DependentUpon>202001201324071_Mutaz_Alter_QueryCode.cs</DependentUpon>
+    </EmbeddedResource>
 
+    <EmbeddedResource Include="Migrations\202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.resx">
+      <DependentUpon>202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.resx">
+      <DependentUpon>202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+
+    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

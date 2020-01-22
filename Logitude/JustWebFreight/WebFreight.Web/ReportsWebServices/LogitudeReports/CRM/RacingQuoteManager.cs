@@ -120,7 +120,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             List<QuoteClosingReason> quoteClosingReasons = (from d in myQuoteContext.QuoteClosingReasons  select d).ToList();
            // List<QuoteCustomerType> quotecustomerTypes = (from d in myQuoteContext.QuoteCustomerTypes select d).ToList();
             List<QuoteType> quoteTypes = (from d in myQuoteContext.QuoteTypes select d).ToList();
-
+            List<string> FromAddressIds = allQuotes.Where(p => p.TransportModeId == "I" && p.DirectionId == "D").Select(p => p.FromPartnerAddressId).ToList();
+            List<string> ToAddressIds = allQuotes.Where(p => p.TransportModeId == "I" && p.DirectionId == "D").Select(p => p.ToPartnerAddressId).ToList();
+            List<Address> allFromAddress = (from d in myCommonContext.Addresses where d.Tenant == tenant && FromAddressIds.Contains(d.Id) select d).ToList();
+            List<Address> allToAddress = (from d in myCommonContext.Addresses where d.Tenant == tenant && ToAddressIds.Contains(d.Id) select d).ToList();
 
             List<PortPM> allPorts = new List<PortPM>();
 
@@ -184,8 +187,40 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 myRecord.SentDate = item.SentDate;
                 myRecord.Stage = item.Stage.Name;
                 myRecord.StartDate = item.StartDate;
+       
+                if (item.TransportModeId == "I" && item.DirectionId == "D")
+                {
+                    if (!string.IsNullOrEmpty(item.FromPartnerAddressId))
+                    {
+                        Address address = allFromAddress.Where(p => p.Id == item.FromPartnerAddressId).FirstOrDefault();
+                        if (address != null)
+                        {
+                            Country fromCountry = CountryRepository.GetSingleCountry(address.CountryId, tenant, true);
+                            if (fromCountry != null)
+                            {
+                                myRecord.FromPortCountry = fromCountry.EnglishName;
+                                myRecord.From = address.City;
+                            }
+                        }
+                    }
 
-                if (item.FromPort != null)
+
+                    if (!string.IsNullOrEmpty(item.ToPartnerAddressId))
+                    {
+                        Address address = allToAddress.Where(p => p.Id == item.ToPartnerAddressId).FirstOrDefault();
+                        if (address != null)
+                        {
+                            Country fromCountry = CountryRepository.GetSingleCountry(address.CountryId, tenant, true);
+                            if (fromCountry != null)
+                            {
+                                myRecord.ToPortCountry = fromCountry.EnglishName;
+                                myRecord.To = address.City;
+
+                            }
+                        }
+                    }
+                }
+                    if (item.FromPort != null)
                 {
                     Country fromCountry = CountryRepository.GetSingleCountry(item.FromPort.CountryId, tenant, true);
                     if (fromCountry != null)
