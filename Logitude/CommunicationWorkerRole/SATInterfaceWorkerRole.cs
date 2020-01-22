@@ -873,7 +873,7 @@ namespace CommunicationWorkerRole
 				//ObjectTableId = arObjectTable.Id,
 				//EntityNumber = invoice.InvoiceNumber,
 				EntityId = invoice.MainEntityId,
-				ObjectTableId = entityObjectTable.Id,
+				//ObjectTableId = entityObjectTable.Id,
 				EntityNumber = invoice.MainEntityReference,
 
 				ChildEntityId = invoice.Id,
@@ -881,6 +881,10 @@ namespace CommunicationWorkerRole
 				ChildEntityReference = invoice.InvoiceNumber,
 
 			};
+			if (!invoice.IsConsolidationInvoice)
+			{
+				extDocPM.ObjectTableId = entityObjectTable.Id;
+			}
 
 			documentsService.Create(extDocPM, fileData, systemUser.Id, false);
 

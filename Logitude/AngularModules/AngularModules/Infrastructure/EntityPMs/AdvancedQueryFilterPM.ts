@@ -14,7 +14,7 @@ export class AdvancedQueryFilterPM {
     private queryId: string;
     public get QueryId() { return this.queryId; }
     public set QueryId(newValue: string) { this.queryId = newValue; }
-       
+ 
 	 
     private objectFieldId: string;
     public get ObjectFieldId() { return this.objectFieldId; }

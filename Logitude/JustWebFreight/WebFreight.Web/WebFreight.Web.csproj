@@ -1737,6 +1737,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\PriceStepViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\QueueMessageMoreDetailsViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\RatesTableViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\RuleUpdateHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SchedulerProcedureViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SharedLogisticsSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TaskSchedulerHistoryViewsController.Generated.cs" />
@@ -1908,12 +1909,10 @@
     <Compile Include="Controllers\SystemLogsModel\Extended\FileLoggerController.cs" />
     <Compile Include="Controllers\SystemLogsModel\PerformanceLogsController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Extended\TariffVersionExtendedController.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffLinesContainersPriceViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffController.Generated.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffLinesContainersPriceController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffSettingController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
@@ -2306,6 +2305,7 @@
     <Compile Include="DataProviders\PickUpDeliveryLine.Shared.cs" />
     <Compile Include="DataProviders\RevenueExpenseDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentAssemblyLine.Shared.cs" />
+    <Compile Include="DataProviders\RacingQuoteDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipperReturnsDataProvider.cs" />
     <Compile Include="DataProviders\UnicargoExportDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentDetailsDataProvider.Shared.cs" />
@@ -2345,6 +2345,7 @@
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerOpenFilesAmountController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
+    <Compile Include="ExternalAPIs\V1\GLAccountMoreDataController.cs" />
     <Compile Include="ExternalAPIs\V1\MasterController.cs" />
     <Compile Include="ExternalAPIs\V1\JournalController.cs" />
     <Compile Include="ExternalAPIs\V1\PODBlobInfoController.cs" />
@@ -2368,6 +2369,7 @@
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
+    <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
@@ -2849,6 +2851,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueueMessageMoreDetailsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RatesTableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RuleUpdateHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerLogsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerProcedureUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SharedLogisticsInvitationStatusUpdateClass.cs" />
@@ -4474,6 +4477,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\UserIDNumberRequestWcfService.svc" />
     <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
     <Content Include="WcfApi\DepositionRequestWcfService.svc" />
     <Content Include="WcfApi\DocumentInWcfService.svc" />
@@ -5295,6 +5299,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
@@ -5988,6 +5993,9 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\UserIDNumberRequestWcfService.svc.cs">
+      <DependentUpon>UserIDNumberRequestWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\DeclarationApprovalRequestWcfService.svc.cs">
       <DependentUpon>DeclarationApprovalRequestWcfService.svc</DependentUpon>
     </Compile>
@@ -6040,6 +6048,7 @@
     <Compile Include="WcfApi\ICustomerAdditionalServiceDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerCompetitorDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerDWWcfService.cs" />
+    <Compile Include="WcfApi\IUserIDNumberRequestWcfService.cs" />
     <Compile Include="WcfApi\IDeclarationApprovalRequestWcfService.cs" />
     <Compile Include="WcfApi\IDepositionRequestWcfService.cs" />
     <Compile Include="WcfApi\IDocumentInWcfService.cs" />

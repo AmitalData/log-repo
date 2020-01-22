@@ -8,8 +8,7 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-
-
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 
 @Component({
     moduleId: module.id,
@@ -51,6 +50,21 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
         this.Listen();
         this.CheckCurrancyEnabledProperty();
+        this.GetBCNTMeasurementId();
+    }
+
+    private BCNTmeasurementId: string;
+    private GetBCNTMeasurementId() {
+        if (this.EntityPM.TypeCode == "OFS") {
+            var commonDomainService: CommonDomainService = new CommonDomainService();
+            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe(res => {
+                if (!res.HasError) {
+                    if (res.Result) {
+                        this.BCNTmeasurementId = res.Result;
+                    }
+                }
+            });
+        }
     }
 
     SetUIProperties() {
@@ -118,14 +132,22 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     SetDefaultUOM(index: number) {
-        this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe(res => {
-            if (!res.HasError) {
-                if (res.Result) {
-                    var ChargesType: ChargesTypeList = res.Result;
-                    this[this.UOMProps[index]] = ChargesType.MeasurementId;
+        if (this.EntityPM.TypeCode != "OFS") {
+            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe(res => {
+                if (!res.HasError) {
+                    if (res.Result) {
+                        var ChargesType: ChargesTypeList = res.Result;
+                        this[this.UOMProps[index]] = ChargesType.MeasurementId;
+                    }
                 }
+            });
+        }
+
+        else {
+            if (!AppTool.IsNullOrEmpty(this.BCNTmeasurementId)) {
+                this[this.UOMProps[index]] = this.BCNTmeasurementId;
             }
-        });
+        }
     }
 
     get Surcharge1Id() {

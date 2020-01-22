@@ -152,8 +152,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen GeneralGeneralHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "General.HeaderScreen", Name = "GeneralHeaderScreen", ObjectTableId = GeneralObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    GeneralObjectTable.HeaderScreenId = GeneralGeneralHeaderScreenScreen0.Id;
-		    GeneralObjectTable.HeaderScreenCode = GeneralGeneralHeaderScreenScreen0.Code;
-
 	   		  
 
 	    }
@@ -620,6 +618,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   		   //--------------> Additional TextCodes <--------------\\
 
  		   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode GeneralTextCode_General = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMFieldWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.FieldWarning", DefaultText = "%FieldName Field is not filled",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

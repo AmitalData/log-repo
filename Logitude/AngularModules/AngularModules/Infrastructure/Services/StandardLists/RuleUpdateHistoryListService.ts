@@ -8,26 +8,26 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {TariffLinesContainersPriceList} from '../../EntityLists/TariffLinesContainersPriceList';
+import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import {InfraGenericFilter} from '../../Utilities/InfraGenericFilter';
+import {CachedDataManager} from '../../Utilities/CachedDataManager';
+import {ServiceHelper} from '../../Utilities/ServiceHelper';
+import {SessionLocator} from '../../Utilities/SessionLocator';
+import {SessionInfo} from '../../Utilities/SessionInfo';
+import {LocalStorageManager} from '../../Utilities/LocalStorageManager';
+import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
+import {RuleUpdateHistoryList} from '../../EntityLists/RuleUpdateHistoryList';
 
 @Injectable()
 
-export class TariffLinesContainersPriceListService {
+export class RuleUpdateHistoryListService {
 	private _http: Http;
     private _apiUrl: string;   
-	public static CachedData: Array<TariffLinesContainersPriceList> = [];
+	public static CachedData: Array<RuleUpdateHistoryList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tarifflinescontainerspriceviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ruleupdatehistoryviews';  
     }
 
     getSingle(id: string) {
@@ -40,7 +40,7 @@ export class TariffLinesContainersPriceListService {
 
                 var list = response.json();
                     
-                var entity: TariffLinesContainersPriceList;
+                var entity: RuleUpdateHistoryList;
 				if(list)
 				{
                    entity = this.MapJsonToEntityList(list);
@@ -51,7 +51,7 @@ export class TariffLinesContainersPriceListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffLinesContainersPrice", "GetSingleList", 'id=' + id); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "RuleUpdateHistory", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -67,11 +67,11 @@ export class TariffLinesContainersPriceListService {
             return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
-              var _mappedListsArray: Array< TariffLinesContainersPriceList> = [];
+              var _mappedListsArray: Array< RuleUpdateHistoryList> = [];
 		      if(allLists)
 			  {
 				for (var key in  allLists) {				
-				   var entity: TariffLinesContainersPriceList;
+				   var entity: RuleUpdateHistoryList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
 				 }
@@ -82,7 +82,7 @@ export class TariffLinesContainersPriceListService {
                 serviceResponse.Result = _mappedListsArray;
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffLinesContainersPrice", "GetAllLists", ""); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "RuleUpdateHistory", "GetAllLists", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -132,12 +132,12 @@ export class TariffLinesContainersPriceListService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array< TariffLinesContainersPriceList> = [];
+                var _mappedListsArray: Array< RuleUpdateHistoryList> = [];
 				if(serviceResponse.Result)
 				{
                 for (var key in serviceResponse.Result) {
 				
-				   var entity: TariffLinesContainersPriceList;
+				   var entity: RuleUpdateHistoryList;
                    entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
 				   _mappedListsArray.push(entity);
 
@@ -147,7 +147,7 @@ export class TariffLinesContainersPriceListService {
                 serviceResponse.Result = _mappedListsArray;       
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffLinesContainersPrice", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "RuleUpdateHistory", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -157,8 +157,8 @@ export class TariffLinesContainersPriceListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: TariffLinesContainersPriceList;
-            entityList = new TariffLinesContainersPriceList();
+            var entityList: RuleUpdateHistoryList;
+            entityList = new RuleUpdateHistoryList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

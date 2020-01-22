@@ -114,7 +114,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool IsFCLEntity;
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
         HybridPartnerPM CurrentHybridPartner;
-        
+
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             this.entityPM = entityPM;
@@ -182,7 +182,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private List<AWBOCIPM> aWBOCIPMChangeSet;
         private List<ShipmentCommodityPM> shipmentCommoditiesChangeSet;
         private List<ShipmentAssemblyPM> shipmentAssembliesChangeSet;
-       
+
         public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet)
         {
             this.shipmentPackagesChangeSet = shipmentPackagesChangeSet;
@@ -499,7 +499,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentFollowUpsCollection();
                     UpdateShipmentComputedFields();
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
-                
+
 
                     this.ComputeAgentComputed(entityPM, entityPoco);
                     entityRepository.Update(entityPoco);
@@ -586,7 +586,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (departedStatus != null)
                 {
                     EntityStatus entityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPM.StatusId, entityPM.Tenant, true);
-                    if (entityStatus != null && entityStatus.StatusWeight>= departedStatus.StatusWeight) ChangeCrossDockReleaseStatus("CREA", "RELE");
+                    if (entityStatus != null && entityStatus.StatusWeight >= departedStatus.StatusWeight) ChangeCrossDockReleaseStatus("CREA", "RELE");
                 }
             }
         }
@@ -2545,14 +2545,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return status;
         }
 
-        private void RunAutomation(string type , ShipmentChangeTracking shipmentChangeTracking = null)
+        private void RunAutomation(string type, ShipmentChangeTracking shipmentChangeTracking = null)
         {
             if (entityPM != null)
             {
                 DateTime? dateBefore = DateTime.Now;
                 string tableName = entityPM.ShipmentLevelCode == "C" ? "Master" : entityPM.ShipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
                 EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
-                if (entityPM.ShipmentLevelCode != "H" && entityMasterData!=null) entityChangeHelper.ExternalEntity = this.entityPM;
+                if (entityPM.ShipmentLevelCode != "H" && entityMasterData != null) entityChangeHelper.ExternalEntity = this.entityPM;
                 if (type == "OnCreate")
                 {
                     bool isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
@@ -2581,19 +2581,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             List<NotifyPropertyChangeValues> changedProperties = shipmentChangeTracking.NotifyPropertyChangeValuesLists.Where(d => fields.Split(',').Contains(d.PropertyName)).ToList();
                             //if (changedProperties.Count > 0)
                             //{
-                                shipmentChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(changedProperties);
-                                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                                List<ShipmentPM> housesList = shipmentQuery.GetShipmentPMsByMasterIdAndTenantForAutomation(entityPM.Id, tenant);
-                                foreach (ShipmentPM oldHousePM in housesList)
-                                {
-                                    oldHousePM.StatusId = shipmentChangeTracking.ChangeTrackingPM.StatusId;
-                                    dateBefore = DateTime.Now;
-                                    ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
-                                    var changeHelper = new EntityChangeHelper();
-                                    changeHelper.ExternalEntity = this.entityPM;
-                                    changeHelper.AddEntityChange(shipmentPm, oldHousePM, "OnUpdate", shipmentChangeTracking.EntityChangeFieldXml, "Shipment", dateBefore);
-                                }
-                           // }
+                            shipmentChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(changedProperties);
+                            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                            List<ShipmentPM> housesList = shipmentQuery.GetShipmentPMsByMasterIdAndTenantForAutomation(entityPM.Id, tenant);
+                            foreach (ShipmentPM oldHousePM in housesList)
+                            {
+                                oldHousePM.StatusId = shipmentChangeTracking.ChangeTrackingPM.StatusId;
+                                dateBefore = DateTime.Now;
+                                ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
+                                var changeHelper = new EntityChangeHelper();
+                                changeHelper.ExternalEntity = this.entityPM;
+                                changeHelper.AddEntityChange(shipmentPm, oldHousePM, "OnUpdate", shipmentChangeTracking.EntityChangeFieldXml, "Shipment", dateBefore);
+                            }
+                            // }
                         }
                     }
                     #endregion
@@ -2601,14 +2601,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private ShipmentChangeTracking BuildShipmentChangeTracking ()
+        private ShipmentChangeTracking BuildShipmentChangeTracking()
         {
-            ShipmentChangeTracking shipmentChangeTracking = new ShipmentChangeTracking() { ChangeTrackingPM = new ShipmentPM()};
+            ShipmentChangeTracking shipmentChangeTracking = new ShipmentChangeTracking() { ChangeTrackingPM = new ShipmentPM() };
             ShipmentQuery query = new ShipmentQuery(tenant);
             query.MapShipmentToShipmentPMForAutomation(shipmentChangeTracking.ChangeTrackingPM, this.entityPoco, null, this.entityMasterData);
             shipmentChangeTracking.ChangeTrackingPM.StatusId = entityPM.OldStatusValue;
             if (entityPM.ShipmentLevelCode == "H") shipmentChangeTracking.ChangeTrackingPM.StatusId = entityPM.StatusId;
-            shipmentChangeTracking.NotifyPropertyChangeValuesLists= ShipmentMapping.BuildChangedProperties(entityPM, shipmentChangeTracking.ChangeTrackingPM);
+            shipmentChangeTracking.NotifyPropertyChangeValuesLists = ShipmentMapping.BuildChangedProperties(entityPM, shipmentChangeTracking.ChangeTrackingPM);
             shipmentChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(shipmentChangeTracking.NotifyPropertyChangeValuesLists);
 
             return shipmentChangeTracking;
@@ -2619,6 +2619,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void InitializeComponent()
         {
+            entityPM.House = MethodHelper.Trim(entityPM.House);
+
             entityPM.CalculateProfit = false;
             entityPM.CalculatePayables = false;
             entityPM.CalculateReceivables = false;
@@ -3156,7 +3158,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                     if (true)
                     {
-
+                        shipmentAdditionalCloudData.IsUserIDNumberRequired = entityPM.IsUserIDNumberRequired;
+                        shipmentAdditionalCloudData.UserIdNumberXMLData = entityPM.UserIdNumberXMLData;
+                        //shipmentAdditionalCloudData.UserIdNumberUpdateDate = entityPM.UserIdNumberUpdateDate;
+                        //shipmentAdditionalCloudData.UserIdNumber = entityPM.UserIdNumber;
                     }
                     shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
                     //shipmentAdditionalCloudDataRepository.SubmitChanges();
@@ -3202,7 +3207,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
                     this.InitializeMAWBStack();
-                } 
+                }
                 this.InitializeNumberOfInsidePackages();
                 this.InitializeAccountManager();
                 this.InitializeCarrierPrefix();
@@ -7393,7 +7398,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
     {
         public ShipmentPM ChangeTrackingPM { get; set; }
         public string EntityChangeFieldXml { get; set; }
-        public List<NotifyPropertyChangeValues>  NotifyPropertyChangeValuesLists { get; set; }
+        public List<NotifyPropertyChangeValues> NotifyPropertyChangeValuesLists { get; set; }
     }
 
 

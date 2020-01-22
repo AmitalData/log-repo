@@ -2245,6 +2245,7 @@ namespace WebFreight.Web.InfrastructureModel
                     TenantLevel = q.TenantLevel,
                     QuerySection = q.QuerySection,
                     OriginalQueryId = q.Id,
+                    OriginalQueryCode = q.OriginalQueryCode,
                     IndexOrder = q.IndexOrder,
                     DisplayCount = q.DisplayCount,
                     NameTextCodeId = textCode.Id,
@@ -2264,7 +2265,7 @@ namespace WebFreight.Web.InfrastructureModel
         {
             foreach (QueryColumnPM q in tenantZeroQueryColumns)
             {
-                QueryPM usedQuery = currentTenantQueries.Where(d => d.Code == q.QueryCode && d.Tenant == theTenant && d.ObjectTableName == q.QueryObjectTableName).FirstOrDefault();
+                QueryPM usedQuery = currentTenantQueries.Where(d => d.UniqueCode == q.QueryCode && d.Tenant == theTenant && d.ObjectTableName == q.QueryObjectTableName).FirstOrDefault();
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == q.QueryObjectTableName).FirstOrDefault();
                 ObjectField usedObjectField = currentTenantObjectFields.Where(d => d.FieldName == q.ObjectFieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
                 QueryColumn newQuery = new QueryColumn()
@@ -2273,6 +2274,7 @@ namespace WebFreight.Web.InfrastructureModel
                     IndexOrder = q.IndexOrder,
                     ObjectFieldId = usedObjectField.Id,
                     QueryId = usedQuery.Id,
+                    QueryCode = usedQuery.UniqueCode,
                     Tenant = theTenant,
                     ColumnWidth = q.ColumnWidth,
                     ObjectFieldCode = usedObjectField.FieldCode,
@@ -2286,7 +2288,7 @@ namespace WebFreight.Web.InfrastructureModel
         {
             foreach (AdvancedQueryFilterPM q in tenantZeroAdvancedQueryFilters)
             {
-                QueryPM usedQuery = currentTenantQueries.Where(d => d.Code == q.QueryCode && d.Tenant == theTenant && d.ObjectTableName == q.QueryObjectTableName).FirstOrDefault();
+                QueryPM usedQuery = currentTenantQueries.Where(d => d.UniqueCode == q.QueryCode && d.Tenant == theTenant && d.ObjectTableName == q.QueryObjectTableName).FirstOrDefault();
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == q.QueryObjectTableName).FirstOrDefault();
                 ObjectField usedObjectField = currentTenantObjectFields.Where(d => d.FieldName == q.ObjectFieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
                 AdvancedQueryFilter newQuery = new AdvancedQueryFilter()
@@ -2294,6 +2296,7 @@ namespace WebFreight.Web.InfrastructureModel
                     IndexOrder = q.IndexOrder,
                     ObjectFieldId = usedObjectField.Id,
                     QueryId = usedQuery.Id,
+                    QueryCode = usedQuery.UniqueCode,
                     Tenant = theTenant,
                     Id = IdCounter.GetNumber("AdvancedQueryFilter", theTenant).ToString(),
                     IsPredefined = q.IsPredefined,

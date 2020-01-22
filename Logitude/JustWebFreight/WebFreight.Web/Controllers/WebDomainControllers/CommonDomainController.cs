@@ -286,12 +286,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-
-
-
-
+        
         public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId, string countryname)
         {
             try
@@ -423,9 +418,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-
+        
         public HttpResponseMessage GetPortCopyToCurrentTenant(string entityId)
         {
             try
@@ -2558,6 +2551,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 OccasionQueryService occasionQuery = new OccasionQueryService(context);
                 List<OccasionPM> result = occasionQuery.GetContactOccasions(tenant, context, contactId);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetMeasurementIdByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Measurement", "READ", tenant);
+
+                MeasurementRepository myRepository = new MeasurementRepository(tenant);
+                string myId = myRepository.GetMeasurementIdbyCode(code, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myId);
             }
 
             catch (Exception ex)

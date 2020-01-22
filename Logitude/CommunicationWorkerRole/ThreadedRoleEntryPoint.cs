@@ -520,7 +520,7 @@ namespace CommunicationWorkerRole
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
             var temp = SpecialBatchCode.Split(',');
-            if (temp.Length > 0)
+            if (temp.Length > 1)
             {
                 var BatchCode = temp[0].ToLower();
                 var IsActivate = temp[1].ToLower();
@@ -533,6 +533,8 @@ namespace CommunicationWorkerRole
                     BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
                 }
             }
+            
+
             return BatchServicesDefinitionsTemp;
         }
 
