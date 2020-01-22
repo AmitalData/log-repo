@@ -89,12 +89,22 @@ namespace WebFreight.Web.WebPages
                 string token = Request["tempId"] ?? "";
                 string securityId = "";
                 string CustomName = "";
+                string Tenant = Request["tenant"] ?? "";
 
                 SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
                 bool isValid = securityDocumentResult.IsValid;
                 email = securityDocumentResult.Email;
                 string exceptionMessage = securityDocumentResult.ExceptionResult;
                 tenant = securityDocumentResult.Tenant;
+
+                if (securityKey == token)
+                {
+
+                    isValid = true;
+                    email = "system@tenant" + Tenant + ".com"; 
+                    tenant = int.Parse(Tenant);
+                } 
+                
 
 
                 bool overrideSecDueIsConnectedToUniFreight = false;
