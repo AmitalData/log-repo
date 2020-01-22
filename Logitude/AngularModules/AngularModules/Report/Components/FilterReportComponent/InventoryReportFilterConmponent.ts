@@ -96,7 +96,7 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "DaysInWarehouse";
             this.queryFilterItem.FieldValue = this.DaysInWarehouse;
-            this.queryFilterItem.Operator = this.SelectedItemDaysinWarehouseFilter.Name;
+            this.queryFilterItem.Operator = this.SelectedItemDaysinWarehouseFilter.Code;
             this.queryFilterItems.push(this.queryFilterItem);
         }
 
