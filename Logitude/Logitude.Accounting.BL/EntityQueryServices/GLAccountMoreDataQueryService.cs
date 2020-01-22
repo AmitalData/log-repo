@@ -88,6 +88,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return GetEntityPM(accountMoreData);
         }
 
-
+        public bool CheckIfGLAccountHasMoreDataRecord(string id, int tenant)
+        {
+           return (from a in context.GLAccountMoreDatas
+             where a.Tenant == tenant && a.AccountId==id
+             select a).Any();
+        }
     }
 }
