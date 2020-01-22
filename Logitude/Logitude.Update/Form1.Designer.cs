@@ -1556,7 +1556,7 @@
             this.btnUpdateTenantZeroNew.Name = "btnUpdateTenantZeroNew";
             this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 42);
             this.btnUpdateTenantZeroNew.TabIndex = 91;
-            this.btnUpdateTenantZeroNew.Text = "Update Tenant All Modules";
+            this.btnUpdateTenantZeroNew.Text = "Update All Modules Metadata";
             this.btnUpdateTenantZeroNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = false;
             this.btnUpdateTenantZeroNew.Click += new System.EventHandler(this.btnUpdateTenantZeroNew_Click);
