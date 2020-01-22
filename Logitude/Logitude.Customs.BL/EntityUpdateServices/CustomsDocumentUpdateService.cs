@@ -35,6 +35,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Server.Tools.Utils;
 using Logitude.Customs.BL.TraceEvents;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -84,12 +85,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICustomContext context = MainContext as CustomContext;
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
             CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
+            DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = null;
+            ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
+            var myDocumentsFilingService = new DocumentsFilingService(commonContext, entityPM.Tenant);
 
             foreach (CustomsDocumentMetaDataValuePM val in entityPM.CustomsDocumentMetaDataValues)
             {
                 if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == "87" && val.ChangeSetOp == ChangeSetOperation.Insert)
                 {
                     val.MetaDataValue = "True";
+                }
+                
+                if (string.IsNullOrWhiteSpace(val.MetaDataValue))
+                {
+                    MyDocumentMetaDataValues = myDocumentsFilingService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(entityPM.DocumentsFilingId, val.MetaDataTypeCode);
+                    if(MyDocumentMetaDataValues != null && !string.IsNullOrWhiteSpace(MyDocumentMetaDataValues.MetaDataValue))
+                    {
+                        val.MetaDataValue = MyDocumentMetaDataValues.MetaDataValue;
+                    }
                 }
             }
         }
@@ -177,7 +190,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     UpdateDeclarationCourierStatus(entityPM);
                 }
-                if(entityPM.DocumentTypeCode == "380" && string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                if(string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     UpdateDeclarationCourierStatus380(entityPM);
                 }
@@ -653,7 +666,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
                     {
-                        
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("No Available Sign Server, 2715 Request will not be sent !! " + myCustomsRequestsSheetServiceException.Message);
                     }
                     throw;
                 }
@@ -735,10 +748,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateDeclarationCourierStatus380(CustomsDocumentPM entityPM)
         {
-
-            if (entityPM.DocumentTypeCode == "380")
+            ICustomContext context = MainContext as CustomContext;
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
+            CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
+            if (docType.IsCourierManadatory)
+                //if (entityPM.DocumentTypeCode == "380")
             {
-                ICustomContext context = MainContext as CustomContext;
+                //ICustomContext context = MainContext as CustomContext;
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
                 {

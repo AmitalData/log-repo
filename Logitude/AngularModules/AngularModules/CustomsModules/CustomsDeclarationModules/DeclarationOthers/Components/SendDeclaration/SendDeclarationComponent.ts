@@ -71,11 +71,15 @@ export class SendDeclarationComponent implements OnDestroy {
     }
     Run(args: any) {
         this.EntityPM = args.EntityPM;
-        if (!this.EntityPM.IsCourierDeclaration) {
+         if (!this.EntityPM.IsCourierDeclaration) {
             this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Send");
         }
         else {
             this.ButtonText = "שלח הצהרה"; // TextCodeTranslator.Translate("Customs.Declaration.O.SendDeclaration");
+        }
+
+        if (this.EntityPM.IsAmendment == true) {
+            this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.TH.SendAmendmentDeclaration");
         }
         if (this._WorkWithService) {
             this._SendDeclarationService.Run(args);
@@ -172,6 +176,7 @@ export class SendDeclarationService implements OnDestroy {
         else {
             this.ButtonText = "שלח הצהרה"; // TextCodeTranslator.Translate("Customs.Declaration.O.SendDeclaration");
         }
+ 
         this.Listen();
     }
     Listen() {
@@ -292,10 +297,11 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     CheckRequiredFields() {
+       
         this.DeclarationService.GetRequiredFieldsForDeclaration(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             //List < CustomsRequiredFieldsErrorItem > errorsList = requiredFieldsErrors.RequiredFields;
             var errorsList = response.Result.RequiredFields;
-            if (errorsList.length == 0) {
+            if (errorsList.length == 0 || this.EntityPM.IsAmendment) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
                     this.InstructionSendToMehes();//this.ConfirmB4TaxationDateTimeCheck();
                     return;
@@ -746,7 +752,82 @@ export class SendDeclarationService implements OnDestroy {
         }
     }
     public OnSuccessSendMethod: (response: any) => void;
+
+    SendAmendmentDeclaration() {
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
+        var searchParams: GenericRequestParams = new GenericRequestParams();
+        searchParams.Tenant = SessionLocator.Tenant;
+        searchParams.AppicationId = this.EntityPM.Id;
+        searchParams.LoggingEnabled = true;
+        searchParams.LoggingEntityId = this.EntityPM.Id;
+        searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+        searchParams.LoggingObjectTableId = this.ObjectTable.Id;
+        searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+        searchParams.RequestName = "Amendment Declaration Request";
+        searchParams.ResponseName = "Amendment Declaration Response";
+        searchParams.RequestVIA = this.RequestVIA;
+        searchParams.ForcePersonalSign = this.ForcePersonalSign;
+
+        let myShowProgressBarParams: ShowProgressBarParams = null;
+
+        if (this.CourierWorksheetmode) {
+            myShowProgressBarParams = new ShowProgressBarParams();
+            myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
+                (response: any) => {
+
+                    let myResponseData = response;
+                    if (myResponseData) {
+                        if (myResponseData.HasException || !myResponseData.Succeeded) {
+                            //do not close Win !!
+
+                        } else {
+
+                            //if OK then  close Win !!
+                            this.OnSuccessSendMethod(this.ResponseData);
+                        }
+                    }
+                };
+        }
+        CustomMessageProgressComponent
+            .ShowProgressBar(searchParams.PBId,
+                "שליחת תיקון הצהרת יבוא", false
+                , myShowProgressBarParams)
+            .then((res) => {
+                this.ResponseData = res;
+                if (this.CourierWorksheetmode) {
+
+                } else {
+                    if (this.ResponseData && this.ResponseData.ContinueProcessInBackground) {
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                    }
+                    else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                    }
+                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+                    myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
+
+                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
+                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                }
+            }
+            ).catch((err) => {
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.ValidationErrors.push(err);
+                this.FillValidationErrors("Errors");
+            });
+
+        this.DeclarationService.PostSendDeclarationAmendment(searchParams).subscribe((response: ServiceResponse) => {
+            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+
+    }
     SendDeclaration() {
+
+        if (this.EntityPM.IsAmendment) {
+            this.SendAmendmentDeclaration();
+            return;
+        }
         this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
         var searchParams: GenericRequestParams = new GenericRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;

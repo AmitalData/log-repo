@@ -4284,6 +4284,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierManifestStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierManifestStatusCode  
+	   {
+	    
+	     get
+		{
+		   return courierManifestStatusCode;
+		 }
+		 set
+		 {
+		   if(courierManifestStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierManifestStatusCode",OldValue=courierManifestStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierManifestStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string courierPaymentStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierPaymentStatusCode  
+	   {
+	    
+	     get
+		{
+		   return courierPaymentStatusCode;
+		 }
+		 set
+		 {
+		   if(courierPaymentStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierPaymentStatusCode",OldValue=courierPaymentStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierPaymentStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPendingNotNull ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPendingNotNull  
+	   {
+	    
+	     get
+		{
+		   return isPendingNotNull;
+		 }
+		 set
+		 {
+		   if(isPendingNotNull != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPendingNotNull",OldValue=isPendingNotNull,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPendingNotNull=value;
+		   }
+			
+		 }
+	   }
+	  private bool amendmentDontDisplayInList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AmendmentDontDisplayInList  
+	   {
+	    
+	     get
+		{
+		   return amendmentDontDisplayInList;
+		 }
+		 set
+		 {
+		   if(amendmentDontDisplayInList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentDontDisplayInList",OldValue=amendmentDontDisplayInList,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   amendmentDontDisplayInList=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

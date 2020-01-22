@@ -279,6 +279,61 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetIdByDeclarationNumber(declarationNumber, tenant);
         }
 
+
+        public DeclarationPM GetDeclarationByfunctionalReferenceID(string declarationNumber, string functionalReferenceID,  int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationNumber)) return null;
+            if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
+
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(declarationNumber, functionalReferenceID);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+        }
+
+
+        public DeclarationPM GetDeclarationNotAmendmentDontDisplayInList(string id, string amendmentOriginalDeclartation, int tenant)
+        {
+  
+            var declaration = repository.GetDeclarationNotAmendmentDontDisplayInList(id, amendmentOriginalDeclartation,  tenant);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+        }
+
+
+        public DeclarationPM GetAcceptDeclarationAmendment(string id, int tenant)
+        {
+
+            var declaration = repository.GetAcceptDeclarationAmendment(id, tenant);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+
+        }
+
+
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
@@ -1605,7 +1660,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmendmentRequestNumber = item.AmendmentRequestNumber,
                     DeclarationVersionId = item.VersionId,
                     AmendmentStatus=item.AmendmentStatus,
-
+                    AmendmentOriginalDeclartation =item.AmendmentOriginalDeclartation,
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
                 if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;

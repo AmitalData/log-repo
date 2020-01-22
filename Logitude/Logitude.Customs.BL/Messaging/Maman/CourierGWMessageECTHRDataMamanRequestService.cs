@@ -159,7 +159,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     distributorName = card.EnglishName;
                 }
             }
-
+            string aw8 = null;
+            if (!string.IsNullOrWhiteSpace(myCourierMasterPM.ShortHAWB) && CInt(myCourierMasterPM.ShortHAWB)!=0)
+            {
+                aw8 = CInt(myCourierMasterPM.ShortHAWB).ToString();
+            }
             var courierHawbMamanModel = new GWMessageECTHRData()
             {
                 BaldarCode = defBaldarCodeValue,//"לקחת מדיפולט קוד משלח בלדר",
@@ -168,7 +172,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 AirlineAwbPref = myCourierMasterPM.AirlinePrefix??"",//יש לשלוח את Airline PRFIX)- 114
 
                 Master = CInt(myCourierMasterPM.MAWB),
-                Awb8 = CInt(myCourierMasterPM.ShortHAWB),
+                Awb8 = aw8,
                 HawbExtnd = myCourierMasterPM.HAWB??"",
                 AirlineCode = customsAirline.AirlineCode??"",
                 FltNo = CInt(myCourierMasterPM.FlightNumber),
@@ -267,7 +271,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         
         public int Master { get; set; }
-        public int Awb8 { get; set; }
+        public /*int*/ string Awb8 { get; set; }
 
         public string HawbExtnd { get; set; }
         public string AirlineCode { get; set; }

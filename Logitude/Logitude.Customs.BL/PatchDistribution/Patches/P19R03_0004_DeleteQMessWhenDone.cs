@@ -71,7 +71,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
             END;
         END IF;
     END IF;
-END ");
+END ;");
         }
     }
 }

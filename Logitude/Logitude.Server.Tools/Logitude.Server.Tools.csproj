@@ -227,6 +227,7 @@
       <DependentUpon>GenericResponse.xsd</DependentUpon>
     </Compile>
     <Compile Include="Contracts\GenericResponseObj.NetPart.cs" />
+    <Compile Include="Contracts\ICustomsSendManifestService.cs" />
     <Compile Include="Contracts\ICustomsCloseCourierMasterService.cs" />
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
     <Compile Include="Counters\CodeCounter.cs" />

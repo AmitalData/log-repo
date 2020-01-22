@@ -364,6 +364,29 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+        public HttpResponseMessage GetAcceptDeclarationAmendment(string declarationId)
+        {
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+                DeclarationQueryService queryService = new DeclarationQueryService(customContext);
+                 var declaration = queryService.GetAcceptDeclarationAmendment(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, declaration);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)
         {
 
@@ -377,7 +400,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 string error="";
                 DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService();
 
-                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , out error);
+                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , requestParams.AppicationId ,out error);
 
                 XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
  
@@ -414,7 +437,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
- 
+
+        public HttpResponseMessage PostSendDeclarationAmendment(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData;
+                var messagingService = new DF_MSG2892_ImportDeclarationAmendmentMessagingService();
+                responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+
 
         public HttpResponseMessage PostSendManifest(MANIFESTRequestRequestParams requestParamsData)
         {

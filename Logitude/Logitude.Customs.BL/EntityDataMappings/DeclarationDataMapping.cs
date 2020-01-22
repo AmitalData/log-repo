@@ -92,6 +92,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionReasonName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AcceptanceStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentStatusName);
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
             Card customerCard = CardRepository.GetSingleCard(entityPOCO.CustomerId, entityPOCO.Tenant, true);
@@ -109,6 +110,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.TransportModeName = transportMode.Name;
                
             }
+
+
+            AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(entityPOCO.Tenant);
+            AmendmentStatus amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus);
+            if (amendmentStatus != null)
+            {
+                entityPM.AmendmentStatusName = amendmentStatus.Name;
+
+            }
+
 
             if (!string.IsNullOrEmpty(entityPOCO.DepartmentId))
             {
@@ -369,6 +380,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.CourierMasterId = courierMasterPM.Id;
                     entityPM.MAWBCourierMaster = courierMasterPM.MAWB;
                 }
+                bool fastWithoutCache_NotNeedName = true;
+                if (fastWithoutCache_NotNeedName)
+                {
+                    var repoDeclarationCourierStatus = new DeclarationCourierStatusRepository(entityPOCO.Tenant);
+                    var pocoDeclarationCourierStatus = repoDeclarationCourierStatus
+                        .GetDeclarationsByIds(new List<string>() { entityPOCO.Id }, entityPOCO.Tenant)
+                        .FirstOrDefault();
+                    if (pocoDeclarationCourierStatus !=null)
+                    {
+                        entityPM.CourierManifestStatusCode = pocoDeclarationCourierStatus.CourierManifestStatusCode;
+                        entityPM.CourierPaymentStatusCode = pocoDeclarationCourierStatus.CourierPaymentStatusCode;
+
+                    }
+                }
+                
             }
 
             if (entityPOCO.AcceptanceStatusCode != null)

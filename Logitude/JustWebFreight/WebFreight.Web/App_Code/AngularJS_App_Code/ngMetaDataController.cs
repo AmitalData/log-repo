@@ -612,6 +612,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 UserRepository userRepository = new UserRepository(tenant);
                 UserQuery query = new UserQuery(userRepository);
                 loggeduser = query.GetSingleUserPMByEmail(useremail, globalContact.GlobalTenantId, false);
+                if (globalContact.GlobalTenantId==0 && LogitudeSettings.IsCostomsDeploy &&  loggeduser==null)// in custom allowed sysdamin login to the tenant 
+                {
+                    loggeduser = query.GetSingleUserPMByEmail(useremail, tenant, false);
+                }
             }
 
             return loggeduser;

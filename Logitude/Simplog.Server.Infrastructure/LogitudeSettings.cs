@@ -145,6 +145,9 @@ namespace Simplog.Server.Infrastructure
         public static Action<string, bool, string, DateTime> HandleLogMe { get; set; }
         public static string ProductInfo { get; set; }
 
+        public static string ProductMessage { get; set; }
+        
+
 
         public static string SMSServiceUserId { get; set; }
         public static string SMSServiceAuthToken { get; set; }

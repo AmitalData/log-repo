@@ -2135,6 +2135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralOWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Warning", DefaultText = "Warning",LocalDefaultText = @"אזהרה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
             TextCode GeneralTextCode_GeneralMCTablesPendingByKeyword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.PendingByKeyword", DefaultText = "Pending By Keywords", LocalDefaultText = @"מילות מפתח לקודי עיכוב", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMCTablesAutonomyKeyword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.AutonomyKeyword", DefaultText = "Autonomy By Keywords", LocalDefaultText = @"מילות מפתח להצהרת אוטונומיה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHOccasions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Occasions", DefaultText = "Occasions",LocalDefaultText = @"Occasions", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

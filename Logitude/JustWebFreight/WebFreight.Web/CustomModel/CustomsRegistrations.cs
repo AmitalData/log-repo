@@ -2,6 +2,7 @@
 using Logitude.Customs.BL.EntityQueryServiceExt;
 using Logitude.Customs.BL.Tasks;
 using Logitude.Customs.BL.Validators;
+using Logitude.Customs.CustomsMessaging.Tasks;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Contracts;
@@ -28,9 +29,11 @@ namespace WebFreight.Web.CustomModel
             ContainerAccessor.Container.RegisterType<ICreateUD2LTService, Logitude.CustomsMessaging.MessagingServices.CreateUD2LTService>("CreateUD2LTService", new InjectionFactory(c => new Logitude.CustomsMessaging.MessagingServices.CreateUD2LTService()));
 
 
+
             ContainerAccessor.Container.RegisterType<ICustomsCloseCourierMasterService, CloseCourierMasterService>("CloseCourierMasterService", new InjectionFactory(c => new CloseCourierMasterService()));
-            
-             
+            ContainerAccessor.Container.RegisterType<ICustomsSendManifestService, SendManifestService>("SendManifestService", new InjectionFactory(c => new SendManifestService()));
+
+
 
         }
     }

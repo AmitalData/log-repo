@@ -52,6 +52,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Logitude.Update\bin\Debug\UnifreightIIG.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClosedTable\CustomsDeploymentStage.cs" />
@@ -64,6 +68,11 @@
     <Compile Include="Contracts\IIIGClosedTable.cs" />
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SealCompletenesPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SealTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SealUpdateReasonTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\PhysicalCheckPMRequest.cs" />
     <Compile Include="EntityPMs\CityPM.cs" />
     <Compile Include="EntityPMs\ClaimsRelatedEntityPM.cs" />
     <Compile Include="EntityPMs\ClientAddressPM.cs" />
@@ -186,6 +195,7 @@
     <Compile Include="EntityPMs\Generated\CustomMetaDataTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsAddressTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsAirlinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsAutonomyKeywordPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBookPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBookTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBranchPM.Generated.cs" />

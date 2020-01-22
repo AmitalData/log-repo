@@ -76,6 +76,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IntegratorCode).HasColumnName("IntegratorCode").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsReadyForInvoice).HasColumnName("IsReadyForInvoice");
+
+            this.Property(t => t.NoOfCourierHawb).HasColumnName("NoOfCourierHawb").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.IsAutomaticManifestSent).HasColumnName("IsAutomaticManifestSent");
         }
     }
 }

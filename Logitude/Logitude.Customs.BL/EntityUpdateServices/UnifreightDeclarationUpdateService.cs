@@ -961,6 +961,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 myCFIDATA_DATA.CasualImporterEmail = _DirtyDeclarationPM.CasualImporterEmail;
                 myCFIDATA_DATA.CasualImportelTel = _DirtyDeclarationPM.CasualImporterTel;
                 myCFIDATA_DATA.CasualImporterContact = _DirtyDeclarationPM.CasualImporterContact;
+                if(_DirtyDeclarationPM.TotalInvoiceAmountInUSD != null)
+                {
+                    myCFIDATA_DATA.VALUE_IN_USD = _DirtyDeclarationPM.TotalInvoiceAmountInUSD.ToString();
+                }
 
                 if (_DirtyDeclarationPM.Consignments != null && _DirtyDeclarationPM.Consignments.Count() > 0)
                 {
@@ -994,6 +998,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myCFIDATA_DATA.MAWB = courierMasterPM.MAWB;
                     myCFIDATA_DATA.HAWB = courierMasterPM.HAWB;
                 }
+                
                 myCFIDATA_DATAList.Add(myCFIDATA_DATA);
                 _CFIDATA.CFIDATA_DATA = myCFIDATA_DATAList.ToArray();
             }
@@ -2259,6 +2264,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
             _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList(3);
             _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList();
+            if(_CCUFILEMPM.ALLPRATMEHESLIST.Length > 1024) _CCUFILEMPM.ALLPRATMEHESLIST = _CCUFILEMPM.ALLPRATMEHESLIST.Substring(0, 1024);
 
 
             CreateCCUTRANSPVAL();

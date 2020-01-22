@@ -23,6 +23,7 @@ using WebFreight.Web.Security;
 
 namespace AmitalCustomsWindowsService
 {
+    //TEST !!
     static class Program
     {
         /// <summary>

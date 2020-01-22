@@ -104,7 +104,7 @@ export class CourierWorksheetComponent extends BaseComponent
     public columns: any[] = null;
 
     IsActionButtonsEnabled: boolean = false;
-    IsLoaded: boolean = false;
+    IsInit: boolean = false;
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
     IsILOVLEnabled: boolean = false;
@@ -147,6 +147,7 @@ export class CourierWorksheetComponent extends BaseComponent
         //  this.PseventRowSelectEventSubscribe.unSubscribe();
     }
     ngOnInit() {
+        this.IsInit = true;
         this.BuildColumns();
         this._CourierWorksheetSharedDataService.CurrentMessage
             .subscribe(message => {
@@ -154,6 +155,12 @@ export class CourierWorksheetComponent extends BaseComponent
                     this.RefreshButtonClicked();
                 }
             });
+
+        //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
+        //    setTimeout(() => {
+        //        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        //    }, 300);
+        //}
     }
 
     TabFilterClick(item) {
@@ -193,31 +200,37 @@ export class CourierWorksheetComponent extends BaseComponent
                 if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
                 break;
         }
+        if (item.Code != "HOLD") {
+            this.RefreshButtonClicked();
+        } else {
+            this.GetPending();
+        }
 
-        this.RefreshButtonClicked();
     }
 
     SetWindowArgs(windowArgs) {
         this.entityPM = windowArgs.CurrentEntity;
+        this._SelectedTabFilter = this._TabFilterList[0];
+        this.CheckRequiredFields();
 
         if (windowArgs.TabMode != null) {
             switch (windowArgs.TabMode) {
                 case "Pending902":
                     {
-                        this._SelectedTabFilter = this._TabFilterList[6];
-                        this.TabFilterClick(this._TabFilterList[6]);
                         this.PendingFilter = "902";
-                        if (this._PendingCodes != null && this._PendingCodes.length > 0) this._SelectedPendingCodeFilter = this._PendingCodes.find(r => r.Key == this.PendingFilter);
-                        this.RefreshList();
+                        this._SelectedTabFilter = this._TabFilterList[6];
+                        ///this.TabFilterClick(this._TabFilterList[6]);
+                        //if (this._PendingCodes != null && this._PendingCodes.length > 0) this._SelectedPendingCodeFilter = this._PendingCodes.find(r => r.Key == this.PendingFilter);
+                        //this.RefreshList();
                         break;
                     }
                 case "Pending900":
                     {
-                        this._SelectedTabFilter = this._TabFilterList[6];
-                        this.TabFilterClick(this._TabFilterList[6]);
                         this.PendingFilter = "900";
-                        if (this._PendingCodes != null && this._PendingCodes.length > 0) this._SelectedPendingCodeFilter = this._PendingCodes.find(r => r.Key == this.PendingFilter);
-                        this.RefreshList();
+                        this._SelectedTabFilter = this._TabFilterList[6];
+                        //this.TabFilterClick(this._TabFilterList[6]);
+                        //if (this._PendingCodes != null && this._PendingCodes.length > 0) this._SelectedPendingCodeFilter = this._PendingCodes.find(r => r.Key == this.PendingFilter);
+                        //this.RefreshList();
                         break;
                     }
                 case "OpenDeclarations":
@@ -237,20 +250,21 @@ export class CourierWorksheetComponent extends BaseComponent
                 case "MissingClassification":
                     {
                         this._SelectedTabFilter = this._TabFilterList[2];
-                        this.TabFilterClick(this._TabFilterList[2]);
+                        //this.TabFilterClick(this._TabFilterList[2]);
                         break;
                     }
             }
         }
 
-        this.CheckRequiredFields();
+        
+        this.TabFilterClick(this._SelectedTabFilter);
     }
 
     CheckRequiredFields() {
         this._CourierMasterService.GetRequiredFieldsForCourierMasterIncludeManifest(this.entityPM.Id).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 this._ValidationErrors = this.GetRequiredErrorsList(response.Result.RequiredFields);
-                this.RefreshButtonClicked();
+                //this.RefreshButtonClicked();// do not interupt the server 
             }
         });
     }
@@ -580,7 +594,9 @@ export class CourierWorksheetComponent extends BaseComponent
     }
 
     RefreshList() {
-
+        //if (!this.IsInit) {
+        //    return;
+        //}
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
@@ -835,9 +851,11 @@ export class CourierWorksheetComponent extends BaseComponent
                 });
 
             });
-        if (this._SelectedTabFilter.Code == "HOLD") {
-            this.GetPending();
-        }
+
+        //if (this._SelectedTabFilter.Code == "HOLD") {
+        //    this.GetPending();
+        //}
+
     }
 
     RefreshMasterRequiredFields() {
@@ -1435,7 +1453,8 @@ export class CourierWorksheetComponent extends BaseComponent
                     else {
                         this.SelectedPendingCodeFilter = this._PendingCodes[0];
                     }
-                    this.RefreshList();
+                    //this.RefreshList();
+                    this.RefreshButtonClicked();
                 }
             });
     }

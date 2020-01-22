@@ -138,11 +138,17 @@
         opacity: 0;
         visibility: collapse;
     }
+
+
+    .TextTrimming {
+            vertical-align: top!important;
+    }
+
 </style>
 <table>
     <tr>
         <td>
-            <div class="TableHolder">
+            <div class="TableHolder"> 
                 <!--<div style="font-size: 28px;">under construction</div>-->
                 
                 <!-- No Amendment Message-->
@@ -163,10 +169,10 @@
                     </tr>
                 </table>
 
-                <table *ngIf="EntityPM && !IsNoAmendmentsMsgVisible">
+                <table *ngIf="EntityPM && !IsNoAmendmentsMsgVisible" >
 
                     <!--Disble Alert-->
-                    <tr *ngIf="IsDisplayOnly">
+                    <tr *ngIf="IsDisplayOnly" style="height: 28px;">
                         <td colspan="3">
                             <div style="width: 100%;text-align:center">
                                 <div class="DisbleBox">
@@ -197,20 +203,22 @@
 
                 <tr style="height: 28px;" >
                     <td colspan="1">
-                        <table  style="width: 50%;" *ngIf="this.EntityPM.IsAmendment">
-                            <tr>
+                        <table style="width: 50%;" *ngIf="this.EntityPM.IsAmendment">
+                            <tr style="height: 25px;">
                                 <td style="width:75px">
                                     <LogLabel [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
 
                                 </td>
-   
 
-                                <td style="width:70px">
-                                    {{AmendmentRequestNumber}}
+
+                                <td style="width:35px">
+                                    <LogTextBox [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRequestNumber"
+                                                [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
+
 
                                     <!--<LogTextBox [ObjectFieldName]="'AmendmentRequestNumber'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRequestNumber"
-        [HideColumns]="true" [DataContext]="DataContext"  ></LogTextBox>-->
+            [HideColumns]="true" [DataContext]="DataContext"  ></LogTextBox>-->
                                 </td>
 
                                 <!--<td style="width:7px"></td>-->
@@ -219,7 +227,8 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:75px">
-                                    {{AmendmentissueDate}}
+                                    <LogTextBox [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentissueDate"
+                                                [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
                                 </td>
 
                                 <!--<td style="width:7px"></td>-->
@@ -230,24 +239,25 @@
 
                                 </td>
                                 <td style="width:75px">
-                                    {{VersionId}}
+                                    <LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
+                                                [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
                                     <!--<LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
-        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
                                 </td>
                                 <td style="width:7px"></td>
 
                             </tr>
-                            <tr  style="height: 10px;"></tr>
-                            <tr style="height: 60px;">
+                            <tr style="height: 10px;"></tr>
+                            <tr style="height: 25px;">
 
                                 <td style="width:75px">
                                     <LogLabel [ObjectFieldName]="'AmendmentDeficitInitiated'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
 
                                 </td>
- 
+
                                 <td>
-                                    <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'" (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    <LogCheckBox [ObjectFieldName]="'AmendmentDeficitInitiated'"  (ValueChanged)="AmendmentDeficitInitiatedChecked($event)" [Checked]="DataContext.AmendmentDeficitInitiated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
                                 <!--<td style="width:7px"></td>-->
 
@@ -256,9 +266,9 @@
                                               [DataContext]="DataContext"></LogLabel>
 
                                 </td>
-                                <td>
+                                <td rowspan="3" style="vertical-align: top;padding-top: 2px;">
                                     <LogTextBox [ObjectFieldName]="'AmendDeficitInitiatedReasTo'" [ObjectTableName]="ObjectTableName" [Text]="AmendDeficitInitiatedReasTo"
-                                                [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
+                                                [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                 </td>
                                 <!--<td style="width:7px"></td>-->
 
@@ -267,7 +277,7 @@
                                               [DataContext]="DataContext"></LogLabel>
 
                                 </td>
-                                <td>
+                                <td rowspan="3">
                                     <LogTextBox [ObjectFieldName]="'AmendmentRemarks'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRemarks"
                                                 [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
 
@@ -276,7 +286,22 @@
 
 
                             </tr>
+                            <tr style="height: 25px;">
+                                <td style="width:75px"></td>
+                                <td></td>
+                                <td style="width:110px"></td>
+                                <td></td>
+                                <td style="width:110px"></td>
 
+                            </tr>
+                            <tr style="height: 25px;">
+                                <td style="width:75px"></td>
+                                <td></td>
+                                <td style="width:110px"></td>
+                                <td></td>
+                                <td style="width:110px"></td>
+
+                            </tr>
                         </table>
                     </td>
                 </tr>

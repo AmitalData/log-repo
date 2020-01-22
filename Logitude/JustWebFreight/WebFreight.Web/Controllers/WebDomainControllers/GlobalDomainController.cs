@@ -120,6 +120,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
+                            myResult.ProductMessage = LogitudeSettings.ProductMessage;
                         }
                     }
 
@@ -676,6 +677,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool SameUserLoginEnabled { get; set; }
         public string LayoutDirection { get; set; }
         public string ProductInfo { get; internal set; }
+
+        public string ProductMessage { get; internal set; }
+        
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }

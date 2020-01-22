@@ -461,6 +461,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DCAInDE_NG_5108_DecisionMessageMessagingService>
                 ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DF_MSG2892_ImportDeclarationAmendmentMessagingService>
+                ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {

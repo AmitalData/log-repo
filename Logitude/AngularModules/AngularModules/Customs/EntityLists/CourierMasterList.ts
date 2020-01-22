@@ -55,6 +55,8 @@ export class CourierMasterList {
 	CalcPendingCustoms: number;
 	CalcPending900: number;
 	CalcSuspendedDeclarations: number;
+	NoOfCourierHawb: string;
+	IsAutomaticManifestSent: boolean;
 	
 }
  

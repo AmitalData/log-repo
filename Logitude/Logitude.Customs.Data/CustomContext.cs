@@ -82,6 +82,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
 	
+            modelBuilder.Configurations.Add(new AmendmentTypeMap());
+	
             modelBuilder.Configurations.Add(new ApprovedProfessionMap());
 	
             modelBuilder.Configurations.Add(new AssigneeNotificationTypeMap());
@@ -245,6 +247,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CustomsAddressTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomsAirlineMap());
+	
+            modelBuilder.Configurations.Add(new CustomsAutonomyKeywordMap());
 	
             modelBuilder.Configurations.Add(new CustomsBookMap());
 	
@@ -549,6 +553,12 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ReturnConditionMap());
 	
             modelBuilder.Configurations.Add(new SalesTaxExemptionTypeMap());
+	
+            modelBuilder.Configurations.Add(new SealCompletenesMap());
+	
+            modelBuilder.Configurations.Add(new SealTypeMap());
+	
+            modelBuilder.Configurations.Add(new SealUpdateReasonTypeMap());
 	
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
 	
@@ -1160,6 +1170,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<AmendmentType> AmendmentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ApprovedProfession> ApprovedProfessions 
 	 {
 	      get; set;
@@ -1647,6 +1663,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsAirline> CustomsAirlines 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsAutonomyKeyword> CustomsAutonomyKeywords 
 	 {
 	      get; set;
 	 
@@ -2559,6 +2581,24 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealCompletenes> SealCompleteness 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealType> SealTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes 
 	 {
 	      get; set;
 	 

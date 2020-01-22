@@ -45,6 +45,8 @@ using Logitude.Server.Tools.Resolvers;
 using Logitude.Customs.BL.Validators;
 using System.Web.Hosting;
 using WebFreight.Web.Helpers.APIHelpers;
+using Logitude.Customs.BL.PatchDistribution;
+using Logitude.Customs.BL.PatchDistribution.Patches;
 
 namespace WebFreight.Web
 {
@@ -379,6 +381,78 @@ namespace WebFreight.Web
 
             LogitudeSettings.GetUserNameInject = AuthenticationUtil.ResolveUserIdentityName;
         }
+
+        private static void ProductInfoSetting()
+        {
+            try
+            {
+
+                bool useAppData = false;
+                if (useAppData)
+                {
+                    AppDataUtil.Init(HostingEnvironment.ApplicationPhysicalPath);
+                    var appDataUtil = new AppDataUtil();
+                    LogitudeSettings.ProductInfo = appDataUtil.GetProdInfo();
+
+                }
+                else
+                {
+                    var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
+                    LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
+                    var myP19R03_0000_PatchDist = new P19R03_0001_PatchDist();
+                    myP19R03_0000_PatchDist.Enshure_SeedDbMigrateTable();
+
+                    if (!LogitudeSettings.IsCostomsDeploy)
+                    {
+                        return;
+                    }
+
+                    bool supressAlertProductMessage = !String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings.Get("supressAlertProductMessage"));
+                    if (!supressAlertProductMessage)
+                    {
+                        var assemblyVersion = assemblyUtil.GetVersion(LogitudeSettings.ProductInfo);
+                        var patchDistributionMatch = new PatchDistributionMatch();
+                        var patchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
+                        if (patchDistributionMatchModel.MyAssemblyDBMigrationModel == null)
+                        {
+                            return;
+                        }
+                        if (patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB ||
+                            patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldSource)
+                        {
+
+                            LogitudeSettings.ProductMessage = patchDistributionMatchModel.Message;
+                            return;
+                        }
+                        if (patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OK_DBAndAssemblyREqual)
+                        {
+                            var _PatchDistributionManager = new PatchDistributionManager();
+                            var patchDistributionList = _PatchDistributionManager.GetPatchDistribution_MinorNotClosed(patchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, patchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+                            if (patchDistributionList.Count == 0)
+                            {
+                                return;
+                            }
+                            LogitudeSettings.ProductMessage = @"הגרסה המיגורית תקינה 
+אולם לא בוצעו עדכונים מינורים  ";
+
+
+                        }
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                Logger.LogMe("ProductInfoSetting:" + e.ToString(), false);
+            }
+            finally
+            {
+                Logger.LogMe(LogitudeSettings.ProductMessage, false, "ProductMessage");
+            }
+
+        }
+
 
         private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
         {

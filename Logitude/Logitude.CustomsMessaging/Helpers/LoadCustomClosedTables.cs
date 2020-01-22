@@ -946,6 +946,25 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             addedClosedTables.Add(hazardousSubstance);
 
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendmentType = closedSystemTables.Where(d => d.id == "1430").FirstOrDefault();
+            ObjectTable amendmentTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendmentType", 0, false);
+            InsertClosedTableRecord(amendmentType, amendmentTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(amendmentType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealReason = closedSystemTables.Where(d => d.id == "1459").FirstOrDefault();
+            ObjectTable sealReasonObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealUpdateReasonType", 0, false);
+            InsertClosedTableRecord(sealReason, sealReasonObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(sealReason);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealCompletenes = closedSystemTables.Where(d => d.id == "1273").FirstOrDefault();
+            ObjectTable sealCompletenesObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealCompletenes", 0, false);
+            InsertClosedTableRecord(sealCompletenes, sealCompletenesObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(sealCompletenes);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealType = closedSystemTables.Where(d => d.id == "1272").FirstOrDefault();
+            ObjectTable sealTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealType", 0, false);
+            InsertClosedTableRecord(sealType, sealTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(sealCompletenes);
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

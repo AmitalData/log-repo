@@ -1946,6 +1946,10 @@
     <Compile Include="Migrations\202001201313247_snapshotmigration.Designer.cs">
       <DependentUpon>202001201313247_snapshotmigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001221256270_lastbutnotleast.cs" />
+    <Compile Include="Migrations\202001221256270_lastbutnotleast.Designer.cs">
+      <DependentUpon>202001221256270_lastbutnotleast.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3528,6 +3532,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001201313247_snapshotmigration.resx">
       <DependentUpon>202001201313247_snapshotmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001221256270_lastbutnotleast.resx">
+      <DependentUpon>202001221256270_lastbutnotleast.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

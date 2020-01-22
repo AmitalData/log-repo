@@ -19,7 +19,8 @@ import { CustomerIndicationComponent } from './Components/CustomerIndicationComp
 import { RecallClientsForCutoms } from './Components/RecallClientsForCutoms';
 import { MorningMessageComponent } from './Components/MorningMessageComponent';
 import { CopyDeclarationComponent } from './Components/CopyDeclarationComponent';
-
+import { PhysicalCheckComponent } from './Components/PhysicalCheckComponent';
+ 
 export const Components =
     [
         CourierBOLQueryComponent,
@@ -42,8 +43,9 @@ export const Components =
         CustomerIndicationComponent,
         RecallClientsForCutoms,
         MorningMessageComponent,
-        CopyDeclarationComponent
-    ];
+        CopyDeclarationComponent,
+        PhysicalCheckComponent,
+     ];
 
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -73,6 +75,8 @@ export class ModuleDeclarations {
             case "RecallClientsForCutoms": { myResult = RecallClientsForCutoms; break; }
             case "MorningMessageComponent": { myResult = MorningMessageComponent; break; }
             case "CopyDeclarationComponent": { myResult = CopyDeclarationComponent; break; }
+            case "PhysicalCheckComponent": { myResult = PhysicalCheckComponent; break; }
+
 
         }
 

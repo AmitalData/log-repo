@@ -281,9 +281,9 @@ export class DeclarationExtendedListService {
 
                     var _mappedListsArray: Array<DeclarationList> = [];
                     if (list) {
-                        for (var key in list) {
+                        for (var key in list.Result) {
                             var entity: DeclarationList;
-                            entity = this.MapJsonToEntityList(list[key]);
+                            entity = this.MapJsonToEntityList(list.Result[key]);
                             _mappedListsArray.push(entity);
                         }
                     }

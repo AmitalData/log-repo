@@ -24,6 +24,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; }
 		 IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; }
 		 IDbSet<AmendmentStatus> AmendmentStatuses { get; }
+		 IDbSet<AmendmentType> AmendmentTypes { get; }
 		 IDbSet<ApprovedProfession> ApprovedProfessions { get; }
 		 IDbSet<AssigneeNotificationType> AssigneeNotificationTypes { get; }
 		 IDbSet<AttachmentType> AttachmentTypes { get; }
@@ -106,6 +107,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomMetaDataType> CustomMetaDataTypes { get; }
 		 IDbSet<CustomsAddressType> CustomsAddressTypes { get; }
 		 IDbSet<CustomsAirline> CustomsAirlines { get; }
+		 IDbSet<CustomsAutonomyKeyword> CustomsAutonomyKeywords { get; }
 		 IDbSet<CustomsBook> CustomsBooks { get; }
 		 IDbSet<CustomsBookType> CustomsBookTypes { get; }
 		 IDbSet<CustomsBranch> CustomsBranches { get; }
@@ -258,6 +260,9 @@ namespace Logitude.Customs.Data
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }
 		 IDbSet<ReturnCondition> ReturnConditions { get; }
 		 IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes { get; }
+		 IDbSet<SealCompletenes> SealCompleteness { get; }
+		 IDbSet<SealType> SealTypes { get; }
+		 IDbSet<SealUpdateReasonType> SealUpdateReasonTypes { get; }
 		 IDbSet<SeizureFactorType> SeizureFactorTypes { get; }
 		 IDbSet<SeizureMethodType> SeizureMethodTypes { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }

@@ -1084,6 +1084,26 @@ export class DeclarationPM {
     public set AmendmentStatusName(newValue: string) { if (this.amendmentStatusName != newValue) { this.amendmentStatusName = newValue; this.MarkAsDirty("AmendmentStatusName"); } }
        
 	 
+    private courierManifestStatusCode: string;
+    public get CourierManifestStatusCode() { return this.courierManifestStatusCode; }
+    public set CourierManifestStatusCode(newValue: string) { if (this.courierManifestStatusCode != newValue) { this.courierManifestStatusCode = newValue; this.MarkAsDirty("CourierManifestStatusCode"); } }
+       
+	 
+    private courierPaymentStatusCode: string;
+    public get CourierPaymentStatusCode() { return this.courierPaymentStatusCode; }
+    public set CourierPaymentStatusCode(newValue: string) { if (this.courierPaymentStatusCode != newValue) { this.courierPaymentStatusCode = newValue; this.MarkAsDirty("CourierPaymentStatusCode"); } }
+       
+	 
+    private isPendingNotNull: boolean;
+    public get IsPendingNotNull() { return this.isPendingNotNull; }
+    public set IsPendingNotNull(newValue: boolean) { if (this.isPendingNotNull != newValue) { this.isPendingNotNull = newValue; this.MarkAsDirty("IsPendingNotNull"); } }
+       
+	 
+    private amendmentDontDisplayInList: boolean;
+    public get AmendmentDontDisplayInList() { return this.amendmentDontDisplayInList; }
+    public set AmendmentDontDisplayInList(newValue: boolean) { if (this.amendmentDontDisplayInList != newValue) { this.amendmentDontDisplayInList = newValue; this.MarkAsDirty("AmendmentDontDisplayInList"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

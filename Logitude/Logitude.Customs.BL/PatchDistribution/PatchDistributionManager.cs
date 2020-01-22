@@ -45,7 +45,7 @@ namespace Logitude.Customs.BL.PatchDistribution
             return listOfDistributions;
 
         }
-        public List<PatchDistributionBase> GetPatchDistribution_Waiting2Exec(decimal MajorVersion, int currentClosedDbMinorVersion)
+        public List<PatchDistributionBase> GetPatchDistribution_MinorNotClosed(decimal MajorVersion, int currentClosedDbMinorVersion)
         {
             List<PatchDistributionBase> listOfDistributions = Check_PatchDistributionListAreValid();
             var listOfDistributionScripts =
@@ -64,14 +64,14 @@ namespace Logitude.Customs.BL.PatchDistribution
 
         }
 
-        public void Exec(decimal MajorVersion, int lastDbMinorVersion)
+        public void Exec(decimal MajorVersion, int lastDbMinorVersion,Action<string> actionShowMessage)
         {
 
-            var patchDistribution_Waiting2Exec = GetPatchDistribution_Waiting2Exec(MajorVersion, lastDbMinorVersion);
+            var patchDistribution_Waiting2Exec = GetPatchDistribution_MinorNotClosed(MajorVersion, lastDbMinorVersion);
 
             foreach (var minorPatch in patchDistribution_Waiting2Exec)
             {
-                int lastDbMigrateLine = GetLastDBMigartionLine(minorPatch);
+                int lastDbMigrateLine = GetLastDBMigartionLineThatNotExecuted(minorPatch);
 
                 var scripts = minorPatch
                 .GetSortedScripts()
@@ -80,13 +80,23 @@ namespace Logitude.Customs.BL.PatchDistribution
 
                 foreach (var script in scripts)
                 {
+                    if (!string.IsNullOrWhiteSpace(script.MessageBefore))
+                    {
+                        actionShowMessage(script.MessageBefore);
+                    }
+                    
                     ExecDBMigrationLine(minorPatch, script, scripts.Last() == script);
 
-                };
+                    if (!string.IsNullOrWhiteSpace(script.MessageAfter))
+                    {
+                        actionShowMessage(script.MessageAfter);
+                    }
+
+                }
             }
         }
 
-        private static int GetLastDBMigartionLine(PatchDistributionBase minorPatch)
+        private static int GetLastDBMigartionLineThatNotExecuted(PatchDistributionBase minorPatch)
         {
             int lastDbMigrateLine = 0;
             var myDBMigrationRepository = new DBMigrationRepository(0);
@@ -171,7 +181,7 @@ namespace Logitude.Customs.BL.PatchDistribution
 
 
 
-
+                    approveRemark = approveRemark ?? "";
 
 
                     dBMigrationLine = new DBMigrationLine()
@@ -179,8 +189,8 @@ namespace Logitude.Customs.BL.PatchDistribution
                         DBMigrationId = myDBMigration.Id,
                         CounterKey = script.ScriptCounter,
                         SqlScript = script.SqlScript.Substring(0, Math.Min(1024, script.SqlScript.Length)),
-                        ApprovedRemarks = approveRemark
-                    };
+                        ApprovedRemarks = approveRemark.Substring(0, Math.Min(approveRemark.Length, 256))
+                };
                     repoDBMigrationLine.Add(dBMigrationLine);
                     customContext.SaveChanges();
 
@@ -232,12 +242,12 @@ namespace Logitude.Customs.BL.PatchDistribution
                             throw new Exception($"אין סקריפט ?!?!" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter);
                         }
 
-                        if (scriptDTO.SqlScript.TrimEnd(" "[0]).EndsWith(";"))
-                        {
-                            throw new Exception($"נא להוריד את הפיסיק נקודה בסוף הסקיריפט" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter + Environment.NewLine
-                                +
-                                scriptDTO.SqlScript);
-                        }
+                        //if (scriptDTO.SqlScript.TrimEnd(" "[0]).EndsWith(";"))
+                        //{
+                        //    throw new Exception($"נא להוריד את הפיסיק נקודה בסוף הסקיריפט" + myPatchDistribution.GetType().AssemblyQualifiedName + " " + scriptDTO.ScriptCounter + Environment.NewLine
+                        //        +
+                        //        scriptDTO.SqlScript);
+                        //}
 
                         if (scriptDTO.ScriptCounter != seqScript)
                         {
@@ -280,7 +290,11 @@ namespace Logitude.Customs.BL.PatchDistribution
             string YY = parts[2];
             string YearRelease = parts[3];
 
-            string MinorVer = parts[4];
+            string MinorVer = "0";
+            if (parts.Length == 5)
+            {
+                MinorVer = parts[4];
+            }
 
             return new AssemblyDBMigrationModel()
             {

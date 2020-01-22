@@ -25,8 +25,9 @@ import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../Customs/EntityPMs/ConsignmentPM';
 import { EntityResourceService } from '../Services/EntityResourceService';
 import { EntityPMService } from '../Services/EntityPMService';
-import { CourierMasterService } from '../../Customs/Services/Others/CourierMasterService';
+import { CourierMasterPMService } from '../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { DeclarationWebService } from '../../Customs/Services/WebServices/DeclarationWebService';
 
 
 
@@ -456,24 +457,29 @@ export class AmitalGatewayUtil {
             //BackButtonLabel: "הצהרות ללא התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
             let isSaved: boolean = false;
             let BackButtonLabel = "תיק עמילות"
+
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
                 //myEditTab.SessionComponent.viewContainerRef
                 SessionLocator.SelectedSession.SessionLocation.viewContainerRef
                 //SessionLocator.AllSessions[1].SessionLocation.viewContainerRef
             )
                 .then(cmpRef => {
-                    //this.SelectionChanged(myDeclarationEditTab);
+                     //this.SelectionChanged(myDeclarationEditTab);
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({
-                        EntityId: unifreightMessage.LogitudeEntityNumber,//"1-103991"
-                        ObjectTableName: unifreightMessage.LogitudeEntity,//'Customs.Declaration'
-                        BackButtonLabel: BackButtonLabel
-                    });
+                    let myEditComponent: EditComponent = cmpRef.instance;
+                    let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
+                    this.getEntity(unifreightMessage.LogitudeEntityNumber).subscribe(data => {
+                        cmpRef.instance.Run({
+                            EntityId: (data && data.Result) ? data.Result.Id : unifreightMessage.LogitudeEntityNumber  , //unifreightMessage.LogitudeEntityNumber,//"1-103991"
+                            ObjectTableName: unifreightMessage.LogitudeEntity,//'Customs.Declaration'
+                            BackButtonLabel: BackButtonLabel
+                        });  
+                    })
+                
 
                     let lockMess = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LockedMessage");
                     let unifreightJumpTo = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.JumpTo");
                     console.log(lockMess);
-                    let myEditComponent: EditComponent = cmpRef.instance;
                     if (!AppTool.IsNullOrEmpty(lockMess)) {
 
 
@@ -482,7 +488,7 @@ export class AmitalGatewayUtil {
                         let sub = myEditComponent.OnFirstTimeAfterSingleDataLoaded.subscribe(
                             (token1) => {
                                 sub.unsubscribe();
-                                let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
+                                  myDeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
                                 if (AppTool.IsNullOrEmpty(myDeclarationEditComponentController)) {
                                     console.log("myDeclarationEditComponentController is null");
                                 } else {
@@ -609,6 +615,13 @@ export class AmitalGatewayUtil {
                     });
                 });
         }
+        static getEntity(LogitudeEntityNumber: string) {
+
+           var declarationWebService: DeclarationWebService = new DeclarationWebService();
+
+          return    declarationWebService.GetAcceptDeclarationAmendment(LogitudeEntityNumber)
+               
+        }
 
         private static ShowSupplierInvoiceSelectorByDecIdUnifreightCallBack(
             SupplierInvoiceSelector: string, CancelButtonClick: boolean) {
@@ -691,13 +704,12 @@ export class AmitalGatewayUtil {
             let isSaved: boolean = false;
             let BackButtonLabel = "תיק עמילות"
             var windowArgs: any = {};
-            let courierMasterService: CourierMasterService = new CourierMasterService();
+            let courierMasterService: CourierMasterPMService = new CourierMasterPMService();
 
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
                     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                        //entityPMService.getSingle("Customs.CourierMaster", selectedCourierMasterId).then((res: any) => {
-                        courierMasterService.getCourierMasterByDeclarationId(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
+                        courierMasterService.get(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
                                 if (myResponse.HasError) {
                                     console.log("Error while getting EntityPM", myResponse);
                                 }
