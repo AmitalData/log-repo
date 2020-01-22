@@ -1,5 +1,8 @@
 ﻿using Logitude.TariffModule.BL.EntityPMs;
+using Logitude.TariffModule.Data;
+using Logitude.TariffModule.Data.EntityKeys;
 using Logitude.TariffModule.Data.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,15 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             }
             
             return tariffLinePMs;
+        }
+
+        public override void GetComposition(EntityKeyFields entityKeys, TariffLinePM entityPM)
+        {
+            ITariffModuleContext context = MainContext as ITariffModuleContext;
+            TariffLineKeys tariffLineKeys = entityKeys as TariffLineKeys;
+            
+            TariffLinesContainersPriceQueryService tariffLinesContainersPriceQueryService = new TariffLinesContainersPriceQueryService(context);            
+            entityPM.ContainersPrices = tariffLinesContainersPriceQueryService.GetMulti(tariffLineKeys, true);
         }
     }
 }

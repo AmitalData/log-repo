@@ -138,6 +138,7 @@
     <Compile Include="EntityUpdateServices\Generated\TariffUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionAllInChargeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\TariffLinesContainersPriceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffSurchargesUpdateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffUpdateService.cs" />
