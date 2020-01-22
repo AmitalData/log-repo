@@ -15,6 +15,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
     {
         public List<TariffLinePM> GetTariffLinesByTariffAndVersion(string tariffId, int version, int tenant)
         {
+            TariffLinesContainersPriceQueryService tariffLinesContainersPriceQueryService = new TariffLinesContainersPriceQueryService(context);
+
             List<TariffLine> tariffLines = (from a in context.TariffLines
                                             where a.TariffId == tariffId && a.Version == version && a.Tenant == tenant
                                             select a).ToList();
@@ -25,6 +27,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 TariffLinePM entityPM = new TariffLinePM();
                 mapping.CustomPOCOToPM(entityPM, entityPOCO);
                 mapping.POCOToPM(entityPM, entityPOCO);
+
+                TariffLineKeys tariffLineKeys = new TariffLineKeys() { Id = entityPOCO.Id, };
+                entityPM.ContainersPrices = tariffLinesContainersPriceQueryService.GetMulti(tariffLineKeys, true);
                 tariffLinePMs.Add(entityPM);
             }
             

@@ -41,7 +41,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public TariffsLinesSource: ObservableCollection;
     public DataContext = this;
     public IsResourcesReady: boolean = false;
-    private TariffDomainService: TariffDomainService;
+    public TariffDomainService: TariffDomainService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
@@ -71,11 +71,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
-
-        if (this.IsDraftVersion) {
-            this.IsComparToChecked = true;
-        }
-
+        
         this.GetTariffSettings();
 
         var iChargesTypeListService = new ChargesTypeListService();
@@ -94,13 +90,13 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                         this.SetUIProperties();
                         this.SetSurchargesLabelsAndVisibility();
 
-                        if (this.CurrentVersion.IsDraft) {
-                            this.FillTariffLines(this.CurrentVersion.TariffLines);
-                        }
+                        //if (this.CurrentVersion.IsDraft) {
+                        //    this.FillTariffLines(this.CurrentVersion.TariffLines);
+                        //}
 
-                        else {
-                            this.LoadTariffLines("currentVersion");
-                        }
+                        //else {
+                        //    this.LoadTariffLines("currentVersion");
+                        //}
                     }
                 });
             }
@@ -202,8 +198,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 if (!response.HasError) {
                     this.compareTariffLines = response.Result;
 
-                    //this.DoCompare();
-                    this.BuildDeletedLines();
+                    this.DoCompare();
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -376,30 +371,27 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
         this.DoCompare();
-
     }
 
     private DoCompare() {
         this.DeletedTariffsLines = [];
-        if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
-            this.ComaredLines();
+        if (this.IsComparToChecked && this.ComparedToVersionPM != null && this.compareTariffLines != null) {
+
+            this.ItemsCollection.forEach((item: OceanFCLSurchargeTariffLineData) => {
+                item.IsNewEntity = false;
+                item.DoCompare();
+
+                var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+                if (line) {
+                    
+                }
+                else {
+                    item.IsNewEntity = true;
+                }
+            });
+
             this.BuildDeletedLines();
         }
-    }
-
-    ComaredLines() {
-        this.ItemsCollection.forEach((item: OceanFCLSurchargeTariffLineData) => {
-            item.IsNewEntity = false;
-            var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
-            if (line) {
-                item.ComparedEntity = line;
-                //item.SetCellsComparingText();
-            }
-
-            else {
-                item.IsNewEntity = true;
-            }
-        });
     }
     BuildDeletedLines() {
         var lines: TariffLinePM[];
@@ -410,15 +402,17 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             lines = this.loadedTariffLines;
         }
 
-        this.compareTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            var line = lines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
-            if (line == null) {
-                this.DeletedTariffsLines.push(new OceanFCLSurchargeTariffLineData(item, this));// Deleted 
-            }
-        });
+        if (this.compareTariffLines != null && lines != null) {
+            this.compareTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
+                var line = lines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+                if (line == null) {
+                    this.DeletedTariffsLines.push(new OceanFCLSurchargeTariffLineData(item, this));// Deleted 
+                }
+            });
+        }
     }
 
-    public isComparToChecked = false;
+    public isComparToChecked = this.IsDraftVersion;
     get IsComparToChecked() {
         return this.isComparToChecked;
     }
@@ -459,6 +453,14 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             if (!response.HasError) {
                 this.compareToVersions = response.Result;
                 this.BuildVersionsList();
+
+                if (this.CurrentVersion.IsDraft) {
+                    this.FillTariffLines(this.CurrentVersion.TariffLines);
+                }
+
+                else {
+                    this.LoadTariffLines("currentVersion");
+                }
             }
         });
     }
@@ -681,6 +683,18 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
             tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
             tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
+
+            item.ContainersPrices.forEach(containerItem => {
+                var containerPrice = new TariffLinesContainersPricePM(tariffLine);
+                containerPrice.SurchargeId = containerItem.SurchargeId;
+                containerPrice.Price1 = containerItem.Price1;
+                containerPrice.Price2 = containerItem.Price2;
+                containerPrice.Price3 = containerItem.Price3;
+                containerPrice.Price4 = containerItem.Price4;
+                containerPrice.Price5 = containerItem.Price5;
+                tariffLine.AddTariffLinesContainersPrice(containerPrice);
+            });
+
             copiedVersion.AddTariffLine(tariffLine);
         });
 
@@ -744,12 +758,12 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
     public IsEditEnabled: boolean = false;
-    public ComparedEntity: TariffLinePM;
     private initialIndex: number;
     public IsRowHover: boolean = false;
     public Row: any;
     public ContainerPricesItemsSource: ContainerPricesItem[] = [];
-    public ContainersItemsSourceView: ContainerPricesItem[] =[];
+    public ContainersItemsSourceView: ContainerPricesItem[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: TariffLinePM, public FatherComponent: OceanFCLSurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -757,7 +771,9 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.IsNewEntity = isNew;
         this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
+
         this.SetUIProperties();
+        this.LoadCompareContainerPrices();
         this.BuildContainerPricesItemsSource();
         this.ComputeSurchargePricesValues();
     }
@@ -979,6 +995,47 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         }
 
         this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isCurrencyRequired);
+    }
+
+    public compareContainerPrices: TariffLinesContainersPricePM[] = [];
+    private LoadCompareContainerPrices() {
+        if (this.FatherComponent.ComparedToVersionPM != null) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+
+            this.FatherComponent.TariffDomainService.GetTariffLineContainerPrices(this.FatherComponent.ComparedToVersionPM.Version, this.EntityPM.OriginPortId, this.EntityPM.DestinationPortId).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    this.compareContainerPrices = response.Result;
+
+                    this.DoCompare();
+                }
+
+                this.CurrentSession.StopBusyIndicator();
+            });
+        }
+    }
+
+    public DoCompare() {
+        if (this.FatherComponent.IsComparToChecked && this.FatherComponent.ComparedToVersionPM != null) {
+            this.CompareContainerPrices();
+        }
+    }
+
+    CompareContainerPrices() {
+        if (this.compareContainerPrices) {
+            this.ContainersItemsSourceView.forEach((item: ContainerPricesItem) => {
+                item.IsNewEntity = false;
+                var line = this.compareContainerPrices.filter(a => a.SurchargeId == item.SurchargeId)[0];
+
+                if (line) {
+                    item.ComparedEntity = line;
+                    item.SetCellsComparingText();
+                }
+
+                else {
+                    item.IsNewEntity = true;
+                }
+            });
+        }
     }
 
     get HasErrors() {
@@ -1346,6 +1403,8 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
         this.RowDetailsHeights = (this.ContainersItemsSourceView.length * 26) + 20 + 28;
         this.FatherComponent.ReloadDetails.emit("");
+
+        this.DoCompare();  
     }
 }
 
@@ -1355,7 +1414,8 @@ export class ContainerPricesItem extends BaseComponent {
     public TariffLinePM: TariffLinePM;
     public ObjectTableName: string = "TariffLinesContainersPrice";
     public IsNewEntity: boolean = false;
-
+    private DefaultColor = "blue";
+    public ComparedEntity: TariffLinesContainersPricePM;
     constructor(entity: TariffLinesContainersPricePM, public FatherComponent: OceanFCLSurchargeTariffLineData, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -1441,6 +1501,7 @@ export class ContainerPricesItem extends BaseComponent {
     set Price1(value: number) {
         if (this.EntityPM.Price1 != value) {
             this.EntityPM.Price1 = value;
+            this.ComparePrice(1);
         }
     }
 
@@ -1450,6 +1511,7 @@ export class ContainerPricesItem extends BaseComponent {
     set Price2(value: number) {
         if (this.EntityPM.Price2 != value) {
             this.EntityPM.Price2 = value;
+            this.ComparePrice(2);
         }
     }
 
@@ -1459,6 +1521,7 @@ export class ContainerPricesItem extends BaseComponent {
     set Price3(value: number) {
         if (this.EntityPM.Price3 != value) {
             this.EntityPM.Price3 = value;
+            this.ComparePrice(3);
         }
     }
 
@@ -1468,6 +1531,7 @@ export class ContainerPricesItem extends BaseComponent {
     set Price4(value: number) {
         if (this.EntityPM.Price4 != value) {
             this.EntityPM.Price4 = value;
+            this.ComparePrice(4);
         }
     }
 
@@ -1477,7 +1541,60 @@ export class ContainerPricesItem extends BaseComponent {
     set Price5(value: number) {
         if (this.EntityPM.Price5 != value) {
             this.EntityPM.Price5 = value;
+            this.ComparePrice(5);
         }
+    }
+    
+    public ComparingPrice1: number;
+    public ComparingPrice2: number;
+    public ComparingPrice3: number;
+    public ComparingPrice4: number;
+    public ComparingPrice5: number;
+
+    public Price1ComparingTextColor: string = null;
+    public Price2ComparingTextColor: string = null;
+    public Price3ComparingTextColor: string = null;
+    public Price4ComparingTextColor: string = null;
+    public Price5ComparingTextColor: string = null;
+
+    SetCellsComparingText() {
+        this.ComparePrice(1);
+        this.ComparePrice(2);
+        this.ComparePrice(3);
+        this.ComparePrice(4);
+        this.ComparePrice(5);
+    }
+    private ComparePrice(index: number) {
+        if (this.ComparedEntity != null) {
+            this['ComparingPrice' + index] = null;
+            this['Price' + index + 'ComparingTextColor'] = this.DefaultColor;
+
+            if (this.ComparedEntity['Price' + index] != null) {
+                var comparingValue = this['Price' + index] - this.ComparedEntity['Price' + index];
+
+                if (!AppTool.IsNullOrZero(comparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity['Price' + index])) {
+                    this['ComparingPrice' + index] = (comparingValue / this.ComparedEntity['Price' + index]) * 100;
+                    this['Price' + index + 'ComparingTextColor'] = this.ComputeWarningPercentageColor(this['ComparingPrice' + index]);
+                }
+            }
+        }
+    }
+    ComputeWarningPercentageColor(price: number) {
+        var color = "blue";
+
+        if (this.FatherComponent.DataContext.FatherComponent.WarningPercentage == null) {
+            color = "blue";
+        }
+
+        else {
+
+            var price_abs = Math.abs(price);
+            if (price_abs > this.FatherComponent.DataContext.FatherComponent.WarningPercentage) {
+                color = "red";
+            }
+        }
+
+        return color;
     }
 }
 

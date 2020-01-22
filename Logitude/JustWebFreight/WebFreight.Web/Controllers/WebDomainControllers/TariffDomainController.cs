@@ -3038,6 +3038,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetTariffLineContainerPrices(int version, string fromPortId, string toPortId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(authToken.Tenant);
+                TariffLinesContainersPriceQueryService tariffLinesContainersPriceQueryService = new TariffLinesContainersPriceQueryService(iContext);
+                List<TariffLinesContainersPricePM> myResult = tariffLinesContainersPriceQueryService.GetContainerPricesByVersionAndPorts(version, fromPortId, toPortId, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
 
     public class SurchargeLog

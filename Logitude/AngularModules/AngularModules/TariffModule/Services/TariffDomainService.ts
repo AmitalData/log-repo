@@ -295,7 +295,6 @@ export class TariffDomainService {
         });
     }
     
-
     PostUpdateSurcharge(filter: UpdateSurchargeArgs) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -327,6 +326,22 @@ export class TariffDomainService {
         });
     }
 
+    GetTariffLineContainerPrices(version: number, fromPortId: string, toPortId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetTariffLineContainerPrices?version=' + version + "&fromPortId=" + fromPortId + "&toPortId=" + toPortId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 
 export class TariffSummery {

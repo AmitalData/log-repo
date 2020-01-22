@@ -111,12 +111,13 @@
                                             <div class="SimpleGridViewHeader" style="background: none; border: none; border-bottom: 1px solid #85CBED;">
                                                 <table>
                                                     <tr>
-                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;"></td>
-                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;" *ngIf="Container1Visibility">{{Container1Label}}</td>
-                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;" *ngIf="Container2Visibility">{{Container2Label}}</td>
-                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;" *ngIf="Container3Visibility">{{Container3Label}}</td>
-                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;" *ngIf="Container4Visibility">{{Container4Label}}</td>
-                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;" *ngIf="Container5Visibility">{{Container5Label}}</td>                                                       
+                                                        <td style="width: 60px; min-width: 60px; max-width: 60px;"></td>
+                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">Surcharge</td>
+                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container1Visibility">{{Container1Label}}</td>
+                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container2Visibility">{{Container2Label}}</td>
+                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container3Visibility">{{Container3Label}}</td>
+                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container4Visibility">{{Container4Label}}</td>
+                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container5Visibility">{{Container5Label}}</td>
                                                         <td class="LastChild">
                                                             <div></div>
                                                         </td>
@@ -127,37 +128,113 @@
                                             <div class="SimpleGridViewBody">
                                                 <table>
                                                     <tr class="SimpleGridViewRow" *ngFor="let containerItem of item.ContainersItemsSourceView">
+                                                        <td class="CellDisabled" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                                            <label *ngIf="containerItem.IsNewEntity" style="width: 1px; color:red; font-size:10px; font-style:italic;">
+                                                                New
+                                                            </label>
+                                                        </td>
+
                                                         <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
                                                             {{containerItem.ChargeLabel}}
                                                         </td>
 
-                                                        <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;" *ngIf="Container1Visibility">
-                                                            {{containerItem.Price1 | NumbersPipe:'N3'}}
+                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;" *ngIf="Container1Visibility">
+                                                            <table>
+                                                                <tr>
+                                                                    <td [ngStyle]="{color: containerItem.Price1ComparingTextColor}" *ngIf="containerItem.ComparingPrice1" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                                        {{containerItem.ComparingPrice1| NumbersPipe:'N1'}} %
+                                                                    </td>
+
+                                                                    <td style="width: 2px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 1px;">
+                                                                        <span>{{containerItem.Price1 | NumbersPipe:'N3'}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
-                                                        <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;" *ngIf="Container2Visibility">
-                                                            {{containerItem.Price2 | NumbersPipe:'N3'}}
+                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;" *ngIf="Container2Visibility">
+                                                            <table>
+                                                                <tr>
+                                                                    <td [ngStyle]="{color: containerItem.Price2ComparingTextColor}" *ngIf="containerItem.ComparingPrice2" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                                        {{containerItem.ComparingPrice2| NumbersPipe:'N1'}} %
+                                                                    </td>
+
+                                                                    <td style="width: 2px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 1px;">
+                                                                        <span>{{containerItem.Price2 | NumbersPipe:'N3'}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
-                                                        <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;" *ngIf="Container3Visibility">
-                                                            {{containerItem.Price3 | NumbersPipe:'N3'}}
+                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;" *ngIf="Container3Visibility">
+                                                            <table>
+                                                                <tr>
+                                                                    <td [ngStyle]="{color: containerItem.Price3ComparingTextColor}" *ngIf="containerItem.ComparingPrice3" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                                        {{containerItem.ComparingPrice3| NumbersPipe:'N1'}} %
+                                                                    </td>
+
+                                                                    <td style="width: 2px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 1px;">
+                                                                        <span>{{containerItem.Price3 | NumbersPipe:'N3'}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
-                                                        <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;" *ngIf="Container4Visibility">
-                                                            {{containerItem.Price4 | NumbersPipe:'N3'}}
+                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;" *ngIf="Container4Visibility">
+                                                            <table>
+                                                                <tr>
+                                                                    <td [ngStyle]="{color: containerItem.Price4ComparingTextColor}" *ngIf="containerItem.ComparingPrice4" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                                        {{containerItem.ComparingPrice4| NumbersPipe:'N1'}} %
+                                                                    </td>
+
+                                                                    <td style="width: 2px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 1px;">
+                                                                        <span>{{containerItem.Price4 | NumbersPipe:'N3'}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
-                                                        <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;" *ngIf="Container5Visibility">
-                                                            {{containerItem.Price5 | NumbersPipe:'N3'}}
+                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;" *ngIf="Container5Visibility">
+                                                            <table>
+                                                                <tr>
+                                                                    <td [ngStyle]="{color: containerItem.Price5ComparingTextColor}" *ngIf="containerItem.ComparingPrice5" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                                        {{containerItem.ComparingPrice5| NumbersPipe:'N1'}} %
+                                                                    </td>
+
+                                                                    <td style="width: 2px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 1px;">
+                                                                        <span>{{containerItem.Price5 | NumbersPipe:'N3'}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
                                                         <td class="CellStretched">
-                                                           <div></div>
+                                                            <div></div>
                                                         </td>
                                                     </tr>
 
                                                     <tr>
-                                                        <td colspan="7">
+                                                        <td colspan="8">
                                                             <div></div>
                                                         </td>
                                                     </tr>
