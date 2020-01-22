@@ -861,6 +861,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 	
 	   
 	   
+	   
 	   	   SchedulerProcedureUpdateClass.FillSchedulerProcedure();
 	
 	   
