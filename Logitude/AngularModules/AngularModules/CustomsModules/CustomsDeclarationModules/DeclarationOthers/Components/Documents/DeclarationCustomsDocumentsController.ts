@@ -1,35 +1,35 @@
 declare var window;
 
-import {CustomsDocumentPM} from '../../../../../Customs/EntityPMs/CustomsDocumentPM';
-import {CustomsDocumentsTicketPM} from '../../../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
-import {CustomsDocumentPointerPM} from '../../../../../Customs/EntityPMs/CustomsDocumentPointerPM';
-import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
-import {DocumentsFilingPM} from '../../../../../Common/EntityPMs/DocumentsFilingPM';
-import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+import { CustomsDocumentPM } from '../../../../../Customs/EntityPMs/CustomsDocumentPM';
+import { CustomsDocumentsTicketPM } from '../../../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
+import { CustomsDocumentPointerPM } from '../../../../../Customs/EntityPMs/CustomsDocumentPointerPM';
+import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
+import { DocumentsFilingPM } from '../../../../../Common/EntityPMs/DocumentsFilingPM';
+import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
 import { ICustomsDocumentsController } from '../../../../CustomsDocuments/Components/ICustomsDocumentsController';
-import {SupplierInvoiceExtendedPMService}  from             '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
-import { CustomsDocumentsDefinitionExtendedService } from   '../../../../../Customs/Services/ExtendedPMs/CustomsDocumentsDefinitionExtendedService';
-import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { CustomsDocumentsDefinitionExtendedService } from '../../../../../Customs/Services/ExtendedPMs/CustomsDocumentsDefinitionExtendedService';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsDocumentTicketViewModel } from '../../../../CustomsDocuments/Components/CustomsDocumentTicketViewModel';
 import { RelatedEntityParams } from '../../../../CustomsDocuments/Components/CustomsDocumentsComponent';
-import {Observable}     from 'rxjs/Rx';
-import { map} from 'rxjs/operators';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-import {SupplierInvoiceItemPM} from         '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
-import {CustomsDocumentsDefinitionPM} from  '../../../../../Customs/EntityPMs/CustomsDocumentsDefinitionPM';
-import {AppTool, ArrayTool, DateTool} from '../../../../../Infrastructure/Tools';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Guid} from               '../../../../../Infrastructure/Utilities/Guid';
-import {Http, Headers} from '@angular/http';
-import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
-import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelper';
+import { Observable } from 'rxjs/Rx';
+import { map } from 'rxjs/operators';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import { SupplierInvoiceItemPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
+import { CustomsDocumentsDefinitionPM } from '../../../../../Customs/EntityPMs/CustomsDocumentsDefinitionPM';
+import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
+import { Http, Headers } from '@angular/http';
+import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceHelper } from '../../../../../Infrastructure/Utilities/ServiceHelper';
 import { ConnectedToItem } from '../../../../CustomsDocuments/Components/ConnectedToItem';
-import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import {EventEmitter} from '@angular/core';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { EventEmitter } from '@angular/core';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
-export class DeclarationCustomsDocumentsController implements ICustomsDocumentsController{
+export class DeclarationCustomsDocumentsController implements ICustomsDocumentsController {
     public loadedSupplierInvoices: SupplierInvoicePM[];
     private originalCustomsDocumentTicketViewModel: CustomsDocumentTicketViewModel[];
     private _GeneratedCustomsDocumentTicketViewModel: CustomsDocumentTicketViewModel[];
@@ -37,7 +37,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
 
     get GeneratedCustomsDocumentTicketViewModel() { return this._GeneratedCustomsDocumentTicketViewModel; }
     set GeneratedCustomsDocumentTicketViewModel(value: any) {
-//        console.log("DeclarationCustomsDocumentsController" + this._instanceKey);
+        //        console.log("DeclarationCustomsDocumentsController" + this._instanceKey);
         if (this._GeneratedCustomsDocumentTicketViewModel != value) {
             this._GeneratedCustomsDocumentTicketViewModel = value;
         }
@@ -52,9 +52,9 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     constructor(private declarationPM: DeclarationPM, private childEntity1Id: string, private ChildEntity1Code: string) {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
         this.http = ServiceHelper.Http;
-   
+
     }
-   
+
     GetAutoGeneratedTickets(customsDocumentsTicketViewModels: CustomsDocumentTicketViewModel[]) {
         this.originalCustomsDocumentTicketViewModel = [];
         this.GeneratedCustomsDocumentTicketViewModel = [];
@@ -64,61 +64,61 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         return Observable.defer(() => {
             return supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount(this.declarationPM.Id)
                 .map((resp: ServiceResponse) => {
-                this.loadedSupplierInvoices = resp.Result.SupplierInvoices;
-              
-                var count: number = resp.Result.Count;
-               
-                //this.originalCustomsDocumentTicketViewModel = [];
-                //this.GeneratedCustomsDocumentTicketViewModel = [];
-                customsDocumentsTicketViewModels.forEach((ticket) => {
-                    this.originalCustomsDocumentTicketViewModel.push(ticket);
-                });
+                    this.loadedSupplierInvoices = resp.Result.SupplierInvoices;
 
-                if (!this.ChildEntity1Code) {
-                    //**********************************Ticket 271********************************//
-                    var customsDocumentTicketViewModel_271: CustomsDocumentTicketViewModel = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '271')[0];
-                    if (!customsDocumentTicketViewModel_271) {
-                        var sum: number = 0;
-                        var isPackageCodeD5: boolean = false;
-                        for (var i = 0; i < this.declarationPM.Consignments.length; i++) {
-                            for (var j = 0; j < this.declarationPM.Consignments[i].ConsignmentPackages.length; j++) {
-                                sum = sum + this.declarationPM.Consignments[i].ConsignmentPackages[j].PackageQuantity;
-                                if (this.declarationPM.Consignments[i].ConsignmentPackages[j].PackageTypeCode == 'D5') {
-                                    isPackageCodeD5 = true;
+                    var count: number = resp.Result.Count;
+
+                    //this.originalCustomsDocumentTicketViewModel = [];
+                    //this.GeneratedCustomsDocumentTicketViewModel = [];
+                    customsDocumentsTicketViewModels.forEach((ticket) => {
+                        this.originalCustomsDocumentTicketViewModel.push(ticket);
+                    });
+
+                    if (!this.ChildEntity1Code) {
+                        //**********************************Ticket 271********************************//
+                        var customsDocumentTicketViewModel_271: CustomsDocumentTicketViewModel = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '271')[0];
+                        if (!customsDocumentTicketViewModel_271) {
+                            var sum: number = 0;
+                            var isPackageCodeD5: boolean = false;
+                            for (var i = 0; i < this.declarationPM.Consignments.length; i++) {
+                                for (var j = 0; j < this.declarationPM.Consignments[i].ConsignmentPackages.length; j++) {
+                                    sum = sum + this.declarationPM.Consignments[i].ConsignmentPackages[j].PackageQuantity;
+                                    if (this.declarationPM.Consignments[i].ConsignmentPackages[j].PackageTypeCode == 'D5') {
+                                        isPackageCodeD5 = true;
+                                    }
+                                }
+                            }
+
+                            if (sum != null || isPackageCodeD5) {
+                                if (sum > 1 || isPackageCodeD5) {
+                                    //
+                                    //
+                                    var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                                    entityParams.ParentEntityCode = 'Declaration';
+                                    entityParams.ParentEntityId = this.declarationPM.Id;
+
+
+                                    var consignmentPackageQuantityTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "271");
+
+                                    var metaData: { [Code: string]: any; } = {};
+                                    metaData["69"] = false;
+                                    var consignmentPackageQuantityViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(consignmentPackageQuantityTicket, null, true,
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                                    consignmentPackageQuantityViewModel.SetCustomDocumentMetaData(metaData);
+                                    this.GeneratedCustomsDocumentTicketViewModel.push(consignmentPackageQuantityViewModel);
+                                    this.originalCustomsDocumentTicketViewModel.push(consignmentPackageQuantityViewModel);
                                 }
                             }
                         }
 
-                        if (sum != null || isPackageCodeD5) {
-                            if (sum > 1 || isPackageCodeD5) {
-                                //
-                                //
-                                var entityParams: RelatedEntityParams = new RelatedEntityParams()
-                                entityParams.ParentEntityCode = 'Declaration';
-                                entityParams.ParentEntityId = this.declarationPM.Id;
+
+                        //********************************ticket 864********************************************//
+
+                        var customsDocumentTicketViewModel_864: CustomsDocumentTicketViewModel = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '864')[0];
+                        if (!customsDocumentTicketViewModel_864) {
+                            var firstInvoice = this.loadedSupplierInvoices.filter(d => d.SequenceNumeric == 1)[0];
 
 
-                                var consignmentPackageQuantityTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "271");
-
-                                var metaData: { [Code: string]: any; } = {};
-                                metaData["69"] = false;
-                                var consignmentPackageQuantityViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(consignmentPackageQuantityTicket, null, true,
-                                    this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                                consignmentPackageQuantityViewModel.SetCustomDocumentMetaData(metaData);
-                                this.GeneratedCustomsDocumentTicketViewModel.push(consignmentPackageQuantityViewModel);
-                                this.originalCustomsDocumentTicketViewModel.push(consignmentPackageQuantityViewModel);
-                            }
-                        }
-                    }
-                      
-
-                    //********************************ticket 864********************************************//
-
-                    var customsDocumentTicketViewModel_864: CustomsDocumentTicketViewModel = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '864')[0];
-                    if (!customsDocumentTicketViewModel_864) {
-                        var firstInvoice = this.loadedSupplierInvoices.filter(d => d.SequenceNumeric == 1)[0];
-                       
-                          
                             if (count > 0) {
 
                                 var entityParams: RelatedEntityParams = new RelatedEntityParams()
@@ -136,263 +136,263 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                 this.GeneratedCustomsDocumentTicketViewModel.push(invoiceViewModel);
                                 this.originalCustomsDocumentTicketViewModel.push(invoiceViewModel);
                             }
-                    }
+                        }
 
-                    //***************************** Supplier invoices region****************************************//
-                    this.loadedSupplierInvoices.forEach((supplierInvoice) => {
-                        var exists_380 = null;
-                        var exists_IL_70 = null;
-                        var exists_IL_130 = null;
-                        var exists_IL_138 = null;
-                        var exists_325 = null;
-                        var firstItem: SupplierInvoiceItemPM = null;
+                        //***************************** Supplier invoices region****************************************//
+                        this.loadedSupplierInvoices.forEach((supplierInvoice) => {
+                            var exists_380 = null;
+                            var exists_IL_70 = null;
+                            var exists_IL_130 = null;
+                            var exists_IL_138 = null;
+                            var exists_325 = null;
+                            var firstItem: SupplierInvoiceItemPM = null;
 
-                        this.originalCustomsDocumentTicketViewModel.forEach((ticketViewmodel) => {
-                            var ptrExists_380 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
-                            var ptr_IL_70 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
-                            var ptr_IL_130 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
-                            var ptr_IL_138 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
-                            var ptr_325 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
+                            this.originalCustomsDocumentTicketViewModel.forEach((ticketViewmodel) => {
+                                var ptrExists_380 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
+                                var ptr_IL_70 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
+                                var ptr_IL_130 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
+                                var ptr_IL_138 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
+                                var ptr_325 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
+
+                                if (!exists_380) {
+                                    exists_380 = (ptrExists_380 != null) && (ticketViewmodel.DocumentTypeCode == '380');
+                                }
+                                if (!exists_IL_70) {
+                                    exists_IL_70 = (ptr_IL_70 != null) && (ticketViewmodel.DocumentTypeCode == 'IL_70');
+                                }
+                                if (!exists_IL_130) {
+                                    exists_IL_130 = (ptr_IL_130 != null) && (ticketViewmodel.DocumentTypeCode == 'IL_130');
+                                }
+                                if (!exists_IL_138) {
+                                    exists_IL_138 = (ptr_IL_138 != null) && (ticketViewmodel.DocumentTypeCode == 'IL_138');
+                                }
+                                if (!exists_325) {
+                                    exists_325 = (ptr_325 != null) && (ticketViewmodel.DocumentTypeCode == '325');
+                                }
+                            });
 
                             if (!exists_380) {
-                                exists_380 = (ptrExists_380 != null) && (ticketViewmodel.DocumentTypeCode == '380');
+                                //if (supplierInvoice.AccountTypeCode == '380') {
+                                if (supplierInvoice.AccountTypeCode != '325' && supplierInvoice.AccountTypeCode != 'I01') {
+                                    var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                                    entityParams.ParentEntityCode = 'Declaration';
+                                    entityParams.ParentEntityId = this.declarationPM.Id;
+                                    entityParams.ChildEntity1Code = "SupplierInvoice";
+                                    entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
+
+                                    var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "380");
+                                    var metaData: { [Code: string]: any; } = {};
+                                    var issueDate: string = null;
+                                    if (supplierInvoice.IssueDate != null) {
+                                        var issueDateValue: Date = DateTool.GetDateParts(supplierInvoice.IssueDate).DateObject;
+                                        var day: string = AppTool.PadLeft(issueDateValue.getUTCDate() + "", 2, '0');
+                                        var month: string = AppTool.PadLeft(issueDateValue.getUTCMonth() + 1 + "", 2, '0');
+                                        var year: string = issueDateValue.getUTCFullYear() + "";
+
+                                        issueDate = day + "." + month + "." + year.substr(2, 2);
+                                    }
+                                    metaData["55"] = issueDate;
+                                    metaData["87"] = null;
+                                    metaData["39"] = supplierInvoice.InvoiceNumber;
+                                    metaData["3"] = supplierInvoice.IssueCountryCode;
+                                    var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                                    _380ViewModel.SetCustomDocumentMetaData(metaData);
+                                    this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                    this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                }
                             }
-                            if (!exists_IL_70) {
-                                exists_IL_70 = (ptr_IL_70 != null) && (ticketViewmodel.DocumentTypeCode == 'IL_70');
-                            }
-                            if (!exists_IL_130) {
-                                exists_IL_130 = (ptr_IL_130 != null) && (ticketViewmodel.DocumentTypeCode == 'IL_130');
-                            }
-                            if (!exists_IL_138) {
-                                exists_IL_138 = (ptr_IL_138 != null) && (ticketViewmodel.DocumentTypeCode == 'IL_138');
-                            }
+
                             if (!exists_325) {
-                                exists_325 = (ptr_325 != null) && (ticketViewmodel.DocumentTypeCode == '325');
+                                //if (supplierInvoice.AccountTypeCode == '380') {
+                                if (supplierInvoice.AccountTypeCode == '325') {
+                                    var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                                    entityParams.ParentEntityCode = 'Declaration';
+                                    entityParams.ParentEntityId = this.declarationPM.Id;
+                                    entityParams.ChildEntity1Code = "SupplierInvoice";
+                                    entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
+
+                                    var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "325");
+                                    var metaData: { [Code: string]: any; } = {};
+                                    var issueDate: string = null;
+                                    if (supplierInvoice.IssueDate != null) {
+                                        var issueDateValue: Date = DateTool.GetDateParts(supplierInvoice.IssueDate).DateObject;
+                                        var day: string = AppTool.PadLeft(issueDateValue.getUTCDate() + "", 2, '0');
+                                        var month: string = AppTool.PadLeft(issueDateValue.getUTCMonth() + 1 + "", 2, '0');
+                                        var year: string = issueDateValue.getUTCFullYear() + "";
+
+                                        issueDate = day + "." + month + "." + year.substr(2, 2);
+                                    }
+                                    metaData["55"] = issueDate;
+                                    metaData["87"] = null;
+                                    metaData["39"] = supplierInvoice.InvoiceNumber;
+                                    metaData["3"] = supplierInvoice.IssueCountryCode;
+                                    var _325ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                                    _325ViewModel.SetCustomDocumentMetaData(metaData);
+                                    this.GeneratedCustomsDocumentTicketViewModel.push(_325ViewModel);
+                                    this.originalCustomsDocumentTicketViewModel.push(_325ViewModel);
+                                }
                             }
+
+                            if (!exists_IL_138) {
+                                if (supplierInvoice.AccountTypeCode == "I01") {
+                                    var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                                    entityParams.ParentEntityCode = 'Declaration';
+                                    entityParams.ParentEntityId = this.declarationPM.Id;
+                                    entityParams.ChildEntity1Code = "SupplierInvoice";
+                                    entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
+                                    var invoiceTicketI01: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_138");
+                                    var _IL_138ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicketI01, null, true,
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                                    this.GeneratedCustomsDocumentTicketViewModel.push(_IL_138ViewModel);
+                                    this.originalCustomsDocumentTicketViewModel.push(_IL_138ViewModel);
+                                }
+                            }
+
+                            if (!exists_IL_70) {
+                                if (supplierInvoice.InsuranceAmount != null) {
+                                    var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                                    entityParams.ParentEntityCode = 'Declaration';
+                                    entityParams.ParentEntityId = this.declarationPM.Id;
+                                    entityParams.ChildEntity1Code = "SupplierInvoice";
+                                    entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
+                                    var invoiceInsuranceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_70");
+                                    var metaData: { [Code: string]: any; } = {};
+                                    metaData["87"] = null;
+                                    var _IL_70ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceInsuranceTicket, null, true,
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                                    _IL_70ViewModel.SetCustomDocumentMetaData(metaData);
+                                    this.GeneratedCustomsDocumentTicketViewModel.push(_IL_70ViewModel);
+                                    this.originalCustomsDocumentTicketViewModel.push(_IL_70ViewModel);
+
+                                }
+                            }
+
                         });
 
-                        if (!exists_380) {
-                            //if (supplierInvoice.AccountTypeCode == '380') {
-                            if (supplierInvoice.AccountTypeCode != '325' && supplierInvoice.AccountTypeCode != 'I01') {
-                                var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                        //****************************** declarationPM.TransferImporterId********************************//
+
+                        if (!AppTool.IsNullOrEmpty(this.declarationPM.TransferImporterId)) {
+                            var exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == 'IL_123')[0];
+                            if (!exists) {
+                                var entityParams: RelatedEntityParams = new RelatedEntityParams()
                                 entityParams.ParentEntityCode = 'Declaration';
                                 entityParams.ParentEntityId = this.declarationPM.Id;
-                                entityParams.ChildEntity1Code = "SupplierInvoice";
-                                entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
 
-                                var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "380");
+                                var transferImporterIdTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_123");
+
                                 var metaData: { [Code: string]: any; } = {};
-                                var issueDate: string = null;
-                                if (supplierInvoice.IssueDate != null) {
-                                    var issueDateValue: Date = DateTool.GetDateParts(supplierInvoice.IssueDate).DateObject;
-                                    var day: string = AppTool.PadLeft(issueDateValue.getUTCDate() + "", 2, '0');
-                                    var month: string = AppTool.PadLeft(issueDateValue.getUTCMonth() + 1 + "", 2, '0');
-                                    var year: string = issueDateValue.getUTCFullYear() + "";
-
-                                    issueDate = day + "." + month + "." + year.substr(2, 2);
-                                }
-                                metaData["55"] = issueDate;
-                                metaData["87"] = null;
-                                metaData["39"] = supplierInvoice.InvoiceNumber;
-                                metaData["3"] = supplierInvoice.IssueCountryCode;
-                                var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
+                                metaData["15"] = this.declarationPM.TransferImporterCode;
+                                metaData["17"] = this.declarationPM.ImporterCode;
+                                metaData["57"] = this.declarationPM.CreateDateTime;
+                                var transferImporterIdTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(transferImporterIdTicket, null, true,
                                     this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                                _380ViewModel.SetCustomDocumentMetaData(metaData);
-                                this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
-                                this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                transferImporterIdTicketViewModel.SetCustomDocumentMetaData(metaData);
+                                this.GeneratedCustomsDocumentTicketViewModel.push(transferImporterIdTicketViewModel);
+                                this.originalCustomsDocumentTicketViewModel.push(transferImporterIdTicketViewModel);
                             }
                         }
-
-                        if (!exists_325) {
-                            //if (supplierInvoice.AccountTypeCode == '380') {
-                            if (supplierInvoice.AccountTypeCode == '325') {
-                                var entityParams: RelatedEntityParams = new RelatedEntityParams();
-                                entityParams.ParentEntityCode = 'Declaration';
-                                entityParams.ParentEntityId = this.declarationPM.Id;
-                                entityParams.ChildEntity1Code = "SupplierInvoice";
-                                entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
-
-                                var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "325");
-                                var metaData: { [Code: string]: any; } = {};
-                                var issueDate: string = null;
-                                if (supplierInvoice.IssueDate != null) {
-                                    var issueDateValue: Date = DateTool.GetDateParts(supplierInvoice.IssueDate).DateObject;
-                                    var day: string = AppTool.PadLeft(issueDateValue.getUTCDate() + "", 2, '0');
-                                    var month: string = AppTool.PadLeft(issueDateValue.getUTCMonth() + 1 + "", 2, '0');
-                                    var year: string = issueDateValue.getUTCFullYear() + "";
-
-                                    issueDate = day + "." + month + "." + year.substr(2, 2);
-                                }
-                                metaData["55"] = issueDate;
-                                metaData["87"] = null;
-                                metaData["39"] = supplierInvoice.InvoiceNumber;
-                                metaData["3"] = supplierInvoice.IssueCountryCode;
-                                var _325ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
-                                    this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                                _325ViewModel.SetCustomDocumentMetaData(metaData);
-                                this.GeneratedCustomsDocumentTicketViewModel.push(_325ViewModel);
-                                this.originalCustomsDocumentTicketViewModel.push(_325ViewModel);
-                            }
-                        }
-
-                        if (!exists_IL_138) {
-                            if (supplierInvoice.AccountTypeCode == "I01") {
-                                var entityParams: RelatedEntityParams = new RelatedEntityParams();
-                                entityParams.ParentEntityCode = 'Declaration';
-                                entityParams.ParentEntityId = this.declarationPM.Id;
-                                entityParams.ChildEntity1Code = "SupplierInvoice";
-                                entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
-                                var invoiceTicketI01: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_138");
-                                var _IL_138ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicketI01, null, true,
-                                    this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                                this.GeneratedCustomsDocumentTicketViewModel.push(_IL_138ViewModel);
-                                this.originalCustomsDocumentTicketViewModel.push(_IL_138ViewModel);
-                            }
-                        }
-
-                        if (!exists_IL_70) {
-                            if (supplierInvoice.InsuranceAmount != null) {
-                                var entityParams: RelatedEntityParams = new RelatedEntityParams();
-                                entityParams.ParentEntityCode = 'Declaration';
-                                entityParams.ParentEntityId = this.declarationPM.Id;
-                                entityParams.ChildEntity1Code = "SupplierInvoice";
-                                entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
-                                var invoiceInsuranceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_70");
-                                var metaData: { [Code: string]: any; } = {};
-                                metaData["87"] = null;
-                                var _IL_70ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceInsuranceTicket, null, true,
-                                    this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                                _IL_70ViewModel.SetCustomDocumentMetaData(metaData);
-                                this.GeneratedCustomsDocumentTicketViewModel.push(_IL_70ViewModel);
-                                this.originalCustomsDocumentTicketViewModel.push(_IL_70ViewModel);
-
-                            }
-                        }
-
-                    });
-
-                    //****************************** declarationPM.TransferImporterId********************************//
-
-                    if (!AppTool.IsNullOrEmpty(this.declarationPM.TransferImporterId)) {
-                        var exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == 'IL_123')[0];
-                        if (!exists) {
+                        //*********************************************************************************************************//
+                        var IL_81exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == 'IL_81')[0];
+                        if (!IL_81exists) {
                             var entityParams: RelatedEntityParams = new RelatedEntityParams()
                             entityParams.ParentEntityCode = 'Declaration';
                             entityParams.ParentEntityId = this.declarationPM.Id;
 
-                            var transferImporterIdTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_123");
-
+                            var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_81");
                             var metaData: { [Code: string]: any; } = {};
-                            metaData["15"] = this.declarationPM.TransferImporterCode;
-                            metaData["17"] = this.declarationPM.ImporterCode;
-                            metaData["57"] = this.declarationPM.CreateDateTime;
-                            var transferImporterIdTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(transferImporterIdTicket, null, true,
+                            var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
                                 this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                            transferImporterIdTicketViewModel.SetCustomDocumentMetaData(metaData);
-                            this.GeneratedCustomsDocumentTicketViewModel.push(transferImporterIdTicketViewModel);
-                            this.originalCustomsDocumentTicketViewModel.push(transferImporterIdTicketViewModel);
+                            otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
+                            this.GeneratedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                            this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+
                         }
+                        //*******************************
                     }
-                    //*********************************************************************************************************//
-                    var IL_81exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == 'IL_81')[0];
-                    if (!IL_81exists) {
-                        var entityParams: RelatedEntityParams = new RelatedEntityParams()
-                        entityParams.ParentEntityCode = 'Declaration';
-                        entityParams.ParentEntityId = this.declarationPM.Id;
+                    else if (this.ChildEntity1Code == "SupplierInvoice") {
 
-                        var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_81");
-                        var metaData: { [Code: string]: any; } = {};
-                        var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
-                            this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                        otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
-                        this.GeneratedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
-                        this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
-                       
-                    }
-                    //*******************************
-                }
-                else if (this.ChildEntity1Code == "SupplierInvoice") {
+                        var supplierInvoice: SupplierInvoicePM = this.loadedSupplierInvoices.filter(d => d.InvoiceCounterKey + "" == this.childEntity1Id)[0];
+                        if (supplierInvoice) {
+                            var exists_380 = false;
+                            var exists_IL_70 = false;
 
-                    var supplierInvoice: SupplierInvoicePM = this.loadedSupplierInvoices.filter(d => d.InvoiceCounterKey + "" == this.childEntity1Id)[0];
-                    if (supplierInvoice) {
-                        var exists_380 = false;
-                        var exists_IL_70 = false;
-
-                        this.originalCustomsDocumentTicketViewModel.forEach((ticketViewmodel) => {
-                            var ptr_380 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
-                            var ptr_IL_70 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
-                            if (!exists_380) {
-                                exists_380 = (ptr_380 != null) && (ticketViewmodel.DocumentTypeCode == '380');
-                            }
-                            if (!exists_IL_70) {
-                                exists_IL_70 = (ptr_IL_70 != null) && (ticketViewmodel.DocumentTypeCode == 'IL_70');
-                            }
-                        });
-                        if (!exists_380) {
-                            if (supplierInvoice.AccountTypeCode == '380') {
-                                var entityParams: RelatedEntityParams = new RelatedEntityParams();
-                                entityParams.ParentEntityCode = 'Declaration';
-                                entityParams.ParentEntityId = this.declarationPM.Id;
-                                entityParams.ChildEntity1Code = "SupplierInvoice";
-                                entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
-
-                                var invoiceTicket380: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "380");
-                                var metaData: { [Code: string]: any; } = {};
-                                var issueDate: string = null;
-                                if (supplierInvoice.IssueDate != null) {
-                                    var issueDateValue: Date = DateTool.GetDateParts(supplierInvoice.IssueDate).DateObject;
-                                    var day: string = AppTool.PadLeft(issueDateValue.getUTCDate() + "", 2, '0');
-                                    var month: string = AppTool.PadLeft(issueDateValue.getUTCMonth() + 1 + "", 2, '0');
-                                    var year: string = issueDateValue.getUTCFullYear() + "";
-
-                                    issueDate = day + "." + month + "." + year.substr(2, 2);
+                            this.originalCustomsDocumentTicketViewModel.forEach((ticketViewmodel) => {
+                                var ptr_380 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
+                                var ptr_IL_70 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
+                                if (!exists_380) {
+                                    exists_380 = (ptr_380 != null) && (ticketViewmodel.DocumentTypeCode == '380');
                                 }
-                                metaData["55"] = issueDate;
-                                metaData["87"] = null;
-                                metaData["39"] = supplierInvoice.InvoiceNumber;
-                                metaData["3"] = supplierInvoice.IssueCountryCode;
-                                var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket380, null, true,
-                                    this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                                _380ViewModel.SetCustomDocumentMetaData(metaData);
-                                this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
-                                this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                if (!exists_IL_70) {
+                                    exists_IL_70 = (ptr_IL_70 != null) && (ticketViewmodel.DocumentTypeCode == 'IL_70');
+                                }
+                            });
+                            if (!exists_380) {
+                                if (supplierInvoice.AccountTypeCode == '380') {
+                                    var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                                    entityParams.ParentEntityCode = 'Declaration';
+                                    entityParams.ParentEntityId = this.declarationPM.Id;
+                                    entityParams.ChildEntity1Code = "SupplierInvoice";
+                                    entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
+
+                                    var invoiceTicket380: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "380");
+                                    var metaData: { [Code: string]: any; } = {};
+                                    var issueDate: string = null;
+                                    if (supplierInvoice.IssueDate != null) {
+                                        var issueDateValue: Date = DateTool.GetDateParts(supplierInvoice.IssueDate).DateObject;
+                                        var day: string = AppTool.PadLeft(issueDateValue.getUTCDate() + "", 2, '0');
+                                        var month: string = AppTool.PadLeft(issueDateValue.getUTCMonth() + 1 + "", 2, '0');
+                                        var year: string = issueDateValue.getUTCFullYear() + "";
+
+                                        issueDate = day + "." + month + "." + year.substr(2, 2);
+                                    }
+                                    metaData["55"] = issueDate;
+                                    metaData["87"] = null;
+                                    metaData["39"] = supplierInvoice.InvoiceNumber;
+                                    metaData["3"] = supplierInvoice.IssueCountryCode;
+                                    var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket380, null, true,
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                                    _380ViewModel.SetCustomDocumentMetaData(metaData);
+                                    this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                    this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                }
                             }
+
+                            if (!exists_IL_70) {
+                                if (supplierInvoice.InsuranceAmount != null) {
+                                    var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                                    entityParams.ParentEntityCode = 'Declaration';
+                                    entityParams.ParentEntityId = this.declarationPM.Id;
+                                    entityParams.ChildEntity1Code = "SupplierInvoice";
+                                    entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
+                                    var invoiceInsuranceTicketIL_70: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_70");
+                                    var metaData: { [Code: string]: any; } = {};
+                                    metaData["87"] = null;
+                                    var _IL_70ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceInsuranceTicketIL_70, null, true,
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                                    _IL_70ViewModel.SetCustomDocumentMetaData(metaData);
+                                    this.GeneratedCustomsDocumentTicketViewModel.push(_IL_70ViewModel);
+                                    this.originalCustomsDocumentTicketViewModel.push(_IL_70ViewModel);
+
+                                }
+                            }
+
                         }
 
-                        if (!exists_IL_70) {
-                            if (supplierInvoice.InsuranceAmount != null) {
-                                var entityParams: RelatedEntityParams = new RelatedEntityParams();
-                                entityParams.ParentEntityCode = 'Declaration';
-                                entityParams.ParentEntityId = this.declarationPM.Id;
-                                entityParams.ChildEntity1Code = "SupplierInvoice";
-                                entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
-                                var invoiceInsuranceTicketIL_70: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_70");
-                                var metaData: { [Code: string]: any; } = {};
-                                metaData["87"] = null;
-                                var _IL_70ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceInsuranceTicketIL_70, null, true,
-                                    this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                                _IL_70ViewModel.SetCustomDocumentMetaData(metaData);
-                                this.GeneratedCustomsDocumentTicketViewModel.push(_IL_70ViewModel);
-                                this.originalCustomsDocumentTicketViewModel.push(_IL_70ViewModel);
 
-                            }
-                        }
 
                     }
+                    //return this.GeneratedCustomsDocumentTicketViewModel;
 
-
-              
-                }
-                //return this.GeneratedCustomsDocumentTicketViewModel;
-
-                let createTicketsToEachSupplierInvoice: boolean = false; ///39629  //CALL#309883 לא נפתח טיקט לכל ח-ן ספק +CALL#309868;310765, 311721
-                if (createTicketsToEachSupplierInvoice) {
-                    this.CreateTicketsToEachSupplierInvoice();
-                }
-                return Observable.of(this.GeneratedCustomsDocumentTicketViewModel);
+                    let createTicketsToEachSupplierInvoice: boolean = false; ///39629  //CALL#309883 לא נפתח טיקט לכל ח-ן ספק +CALL#309868;310765, 311721
+                    if (createTicketsToEachSupplierInvoice) {
+                        this.CreateTicketsToEachSupplierInvoice();
+                    }
+                    return Observable.of(this.GeneratedCustomsDocumentTicketViewModel);
                 });
-            });
-        
+        });
+
     }
 
     CreateTicketsToEachSupplierInvoice() {///39629  //CALL#309883 לא נפתח טיקט לכל ח-ן ספק +CALL#309868;310765, 311721
@@ -436,9 +436,9 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
             this.originalCustomsDocumentTicketViewModel.push(_IL_138ViewModel);
         }
     }
-    Add380(supplierInvoice:SupplierInvoicePM) {
+    Add380(supplierInvoice: SupplierInvoicePM) {
         //if (supplierInvoice.AccountTypeCode == '380') {
-          if ( supplierInvoice.AccountTypeCode != 'I01') {
+        if (supplierInvoice.AccountTypeCode != 'I01') {
             var entityParams: RelatedEntityParams = new RelatedEntityParams();
             entityParams.ParentEntityCode = 'Declaration';
             entityParams.ParentEntityId = this.declarationPM.Id;
@@ -486,7 +486,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         newCustomsDocumentPM.Child2EntityId = relatedEntityParams.ChildEntity2Id;
         newCustomsDocumentPM.Child3EntityId = relatedEntityParams.ChildEntity3Id;
         newCustomsDocumentPM.DocumentTypeCode = documentTypeCode;
-        
+
         newTicket.AddCustomsDocumentPointer(newCustomsDocumentPM);
         return newTicket;
 
@@ -496,91 +496,92 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     DisplayOnlyCheck() {
 
         var rresponse: ServiceResponse = new ServiceResponse();
-        
+        debugger;
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        return Observable.defer(() => {
-            return declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.declarationPM).map((response: ServiceResponse) => {
+        this.declarationExtendedListService.GetDeclarationAmendmentsById(this.declarationPM.Id).map
+            (data => {
+                //var message = "";
+                //if (data.Result == null || data.Result.length <= 0) return;
 
-                this.declarationExtendedListService.GetDeclarationAmendmentsById(this.declarationPM.Id).subscribe
-                    (data => {
-                        if (data.Result == null || data.Result.length <= 0) return;
-
-                        data.Result = data.Result.sort((obj1, obj2) => {
-                            if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
-                                return 1;
-                            }
-
-                            if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
-                                return -1;
-                            }
-
-                            return 0;
-                        });
-
-                        data.Result.forEach((item) => {
-                            if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "2" || item.AmendmentStatus == "4" ) {
-
-                                var rresponse: ServiceResponse = new ServiceResponse();
-                                rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName };
-                                return rresponse;
-                             }
-
-                        });
-                      //  return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
-
-                   
-
-                var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
-                var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
-                var displayOnlyMessage = null;
-                if (this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode) {
-                    let displayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
-                    var rresponse: ServiceResponse = new ServiceResponse();
-                    rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: displayOnlyMessage };
-                    return rresponse;
-                }
-                //else if (this.declarationPM.StorageStatusCode) {
-                //    let displayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.declarationPM.StorageStatusName;
-                //    var rresponse: ServiceResponse = new ServiceResponse();
-                //    rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
-                //    return rresponse;
-                //}
-                
-                else if (isDisplayOnly) {
-                    displayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-                    var rresponse: ServiceResponse = new ServiceResponse();
-                    rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
-                    return rresponse;
-                }
-                else if (this.declarationPM.StorageStatusCode) {
-                    let displayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.declarationPM.StorageStatusName;
-                    var rresponse: ServiceResponse = new ServiceResponse();
-                    rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
-                    return rresponse;
-                }
-                //else {
-                //    let message =  this.InitDisplayOnlyMessage();
-                //    if (message != "") {
-                //        var rresponse: ServiceResponse = new ServiceResponse();
-                //        rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
-                //        return rresponse;
+                //data.Result = data.Result.sort((obj1, obj2) => {
+                //    if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                //        return 1;
                 //    }
-                //}
-                var rresponse:ServiceResponse = new ServiceResponse();
-                rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
-                return rresponse;
- }
-                );
-           
-            });
-        });
+
+                //    if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                //        return -1;
+                //    }
+
+                //    return 0;
+                //});
+
+                //data.Result.forEach((item) => {
+                //    if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
+                //        message= TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                //    }
+
+                //});
+
+                //return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                return Observable.defer(() => {
+                    return declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.declarationPM).map((response: ServiceResponse) => {
+
+                        //debugger;
+                        //if (message!="") {
+                        //    var rresponse: ServiceResponse = new ServiceResponse();
+                        //    rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + message };
+                        //    return rresponse;
+                        //}
+
+
+                        var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
+                        var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
+                        var displayOnlyMessage = null;
+                        if (this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode) {
+                            let displayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+                            var rresponse: ServiceResponse = new ServiceResponse();
+                            rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: displayOnlyMessage };
+                            return rresponse;
+                        }
+                        //else if (this.declarationPM.StorageStatusCode) {
+                        //    let displayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.declarationPM.StorageStatusName;
+                        //    var rresponse: ServiceResponse = new ServiceResponse();
+                        //    rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
+                        //    return rresponse;
+                        //}
+
+                        else if (isDisplayOnly) {
+                            displayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                            var rresponse: ServiceResponse = new ServiceResponse();
+                            rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
+                            return rresponse;
+                        }
+                        else if (this.declarationPM.StorageStatusCode) {
+                            let displayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.declarationPM.StorageStatusName;
+                            var rresponse: ServiceResponse = new ServiceResponse();
+                            rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
+                            return rresponse;
+                        }
+
+                        var rresponse: ServiceResponse = new ServiceResponse();
+                        rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
+                        return rresponse;
+                    });
+                });
+
+            }
+
+
+            );
+
+
     }
 
 
     InitDisplayOnlyMessage() {
         if (this.declarationPM.IsAmendment && (this.declarationPM.AmendmentStatus == "2" || this.declarationPM.AmendmentStatus == null)) {
             return TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.declarationPM.AmendmentStatusName;
-         }
+        }
         else if (this.declarationPM.IsAmendment == false) {
             this.declarationExtendedListService.GetDeclarationAmendmentsById(this.declarationPM.Id).subscribe
                 (data => {
@@ -600,12 +601,12 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
 
                     data.Result.forEach((item) => {
                         if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
-                           return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
-                         }
+                            return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                        }
 
                     });
-                 return  TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
- 
+                    return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+
                 }
 
 
@@ -642,7 +643,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     }
 
     GetParentAndChildrenEntityCodesAndIds() {
-        return { ParentEntityCode: 'Declaration', ParentEntityId: this.declarationPM.Id, Child1EntityCode:this.ChildEntity1Code, Child1EntityId: this.childEntity1Id }
+        return { ParentEntityCode: 'Declaration', ParentEntityId: this.declarationPM.Id, Child1EntityCode: this.ChildEntity1Code, Child1EntityId: this.childEntity1Id }
     }
 
     FillConnectedToItems() {
@@ -682,7 +683,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         }
 
         let connectedDocumentPointer;
- 
+
         switch (customsDocumentPointerPM.Child1EntityCode) {
             case "SupplierInvoice":
                 if (customsDocumentPointerPM.Child2EntityCode == "SupplierInvoiceItem") {
@@ -710,7 +711,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                 };
                 break;
         }
-        
+
         return connectedDocumentPointer;
     }
 
@@ -791,7 +792,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     }
                 });
             }
-            
+
             if (docTypecodes.indexOf(item.DocumentTypeCode) > -1) {
                 if (this.declarationPM.Consignments.length > 0) {
                     var cargoIdentifireMetaData: { [Code: string]: any; } = {};
@@ -813,7 +814,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                 }
             }
         };
-       
+
     }
 
     GetSecondChildVisibility() {
@@ -842,7 +843,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
             });
         });
 
-      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
     }
 
     SelectionInvoicesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM) {
@@ -967,11 +968,11 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         else {
             return true;
         }
-        
+
     }
 
-    
-    
+
+
 
     public GetCustomsInterfaceSettingsDocumentTypes(entityPM: any) {
         var myCustomsDocumentsDefinitionExtendedService: CustomsDocumentsDefinitionExtendedService = new CustomsDocumentsDefinitionExtendedService();
@@ -998,30 +999,30 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     this._CustomsDocumentsDefinitionList.forEach(item => {
 
                         var vm: CustomsDocumentTicketViewModel =
-                        this.GeneratedCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == item.DocumentTypeCode)[0];
-                      
-                      if (!vm) {
+                            this.GeneratedCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == item.DocumentTypeCode)[0];
 
-                        var entityParams: RelatedEntityParams = new RelatedEntityParams();
-                        entityParams.ParentEntityCode = 'Declaration';
-                        entityParams.ParentEntityId = this.declarationPM.Id;
-                        //entityParams.ChildEntity1Code = "SupplierInvoice";
-                        //entityParams.ChildEntity1Id = firstInvoice != null ? firstInvoice.InvoiceCounterKey + "" : null;
+                        if (!vm) {
 
-                        var theTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, item.DocumentTypeCode);
+                            var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                            entityParams.ParentEntityCode = 'Declaration';
+                            entityParams.ParentEntityId = this.declarationPM.Id;
+                            //entityParams.ChildEntity1Code = "SupplierInvoice";
+                            //entityParams.ChildEntity1Id = firstInvoice != null ? firstInvoice.InvoiceCounterKey + "" : null;
 
-                        theTicket.IsSendMandatory = item.Mandatory;// according to design
+                            var theTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, item.DocumentTypeCode);
 
-                        var metaData: { [Code: string]: any; } = {};
-                        var theViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(theTicket, null, true,
-                          this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                        theViewModel.FromCompanyDocumentType2Add = true;
-                        theViewModel.SetCustomDocumentMetaData(metaData);
-                        this.GeneratedCustomsDocumentTicketViewModel.push(theViewModel);
-                        this.originalCustomsDocumentTicketViewModel.push(theViewModel);
-                      } else {
-                        vm.FromCompanyDocumentType2Add = true;
-                      }
+                            theTicket.IsSendMandatory = item.Mandatory;// according to design
+
+                            var metaData: { [Code: string]: any; } = {};
+                            var theViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(theTicket, null, true,
+                                this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                            theViewModel.FromCompanyDocumentType2Add = true;
+                            theViewModel.SetCustomDocumentMetaData(metaData);
+                            this.GeneratedCustomsDocumentTicketViewModel.push(theViewModel);
+                            this.originalCustomsDocumentTicketViewModel.push(theViewModel);
+                        } else {
+                            vm.FromCompanyDocumentType2Add = true;
+                        }
                     });
                 }
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -1034,9 +1035,9 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
             });
     }
 
-  public GetRefreshFrom() {
-    return "e";
-  }
+    public GetRefreshFrom() {
+        return "e";
+    }
 
     public SelectionCompleted: EventEmitter<any> = new EventEmitter();
     public GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any> = new EventEmitter();
@@ -1044,6 +1045,6 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any) {
 
     }
-    
+
 }
 
