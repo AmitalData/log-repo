@@ -629,11 +629,6 @@
     NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;ChargesExternalAccountsByProduct&quot;"
-      DefaultText="&quot;Charges External Accounts By Product&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
