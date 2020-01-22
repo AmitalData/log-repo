@@ -15,7 +15,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class QuoteSalesTotalPM {
+export class QuoteTemplateSectionTypePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -25,18 +25,18 @@ export class QuoteSalesTotalPM {
       }
  	 
     
-    private currencyCode: string;
-    public get CurrencyCode() { return this.currencyCode; }
-    public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
-    private amount: number;
-    public get Amount() { return this.amount; }
-    public set Amount(newValue: number) { if (this.amount != newValue) { this.amount = newValue; this.MarkAsDirty("Amount"); } }
+    private name: string;
+    public get Name() { return this.name; }
+    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
 
-    public OldEntityPM: QuoteSalesTotalPM;
+    public OldEntityPM: QuoteTemplateSectionTypePM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -44,11 +44,11 @@ export class QuoteSalesTotalPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteSalesTotal");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplateSectionType");
            
         }
     }
-    private MyClone: QuoteSalesTotalPM;
+    private MyClone: QuoteTemplateSectionTypePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
