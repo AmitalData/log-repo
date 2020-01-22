@@ -305,7 +305,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
         //if (myResult.Result) { 
         //var securityId = myResult.Result.SecurityId;
-        DownloadManager.DownloadPage(null, this.TermsOfUseDocumentId);
+        DownloadManager.DownloadExternalPage(null, this.TermsOfUseDocumentId);
         //  }
         //});
 
