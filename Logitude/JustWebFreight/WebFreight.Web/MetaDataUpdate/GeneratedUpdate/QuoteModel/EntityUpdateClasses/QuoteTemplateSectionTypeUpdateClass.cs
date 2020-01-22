@@ -72,9 +72,9 @@ using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
 
-namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
-   public class TemperatureUnitUpdateClass
+   public class QuoteTemplateSectionTypeUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -82,24 +82,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "TemperatureUnit",
+	             				    ObjectTableName =  "QuoteTemplateSectionType",
 			      				    IsNew =  false,
-			      				    DBTableName =  "TemperatureUnits",
-			      				    OldDBTableName =  "TemperatureUnits",
-			      				    ObjectTableSingular =  "Temperature Unit",
-			      				    ObjectTablePlural =  "Temperature Units",
+			      				    DBTableName =  "QuoteTemplateSectionTypes",
+			      				    OldDBTableName =  "QuoteTemplateSectionTypes",
+			      				    ObjectTableSingular =  "Quote Template Section Type",
+			      				    ObjectTablePlural =  "Quote Template Section Types",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Name",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
-			      				    CacheOnClient =  true,
+			      				    IsClosed =  false,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
@@ -115,22 +114,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Temperature Unit",
-			      				    Code =  "589a",
-			      				    Name =  "TemperatureUnit",
-			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "Name",
+			      				    DefaultText =  "Quote Template Section Type",
+			      				    Code =  "f305",
+			      				    Name =  "QuoteTemplateSectionType",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Common",
+			      				    ClientModuleName =  "Quote",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
-			      				    IsLookUp =  true,
+			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    SearchFields =  "TemperatureUnit,TemperatureUnits,,Code,",
+			      				    SearchFields =  "QuoteTemplateSectionType,QuoteTemplateSectionTypes,,Code,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -143,10 +140,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "Code",
 					  						OldFieldName =  "Code",
-					  						ObjectTableName =  "TemperatureUnit",
+					  						ObjectTableName =  "QuoteTemplateSectionType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  60,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -157,7 +154,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -184,8 +180,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -207,13 +201,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "Name",
 					  						OldFieldName =  "Name",
-					  						ObjectTableName =  "TemperatureUnit",
+					  						ObjectTableName =  "QuoteTemplateSectionType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  60,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -221,16 +215,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
+					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  1,
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -239,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInEntityVariables =  true,
 					  						Code =  "Name",
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
@@ -248,8 +241,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -265,67 +256,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
-					  						ObjectTableName =  "TemperatureUnit",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  1000,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Contains",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "SearchFields",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -335,15 +265,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable TemperatureUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TemperatureUnit" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TemperatureUnitObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TemperatureUnit").ToList();
+		   ObjectTable QuoteTemplateSectionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTemplateSectionType" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> QuoteTemplateSectionTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteTemplateSectionType").ToList();
 		       
 	      
 
-	         Screen TemperatureUnitTemperatureUnitHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TemperatureUnit.HeaderScreen", Name = "TemperatureUnitHeaderScreen", ObjectTableId = TemperatureUnitObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen QuoteTemplateSectionTypeQuoteTemplateSectionTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteTemplateSectionType.HeaderScreen", Name = "QuoteTemplateSectionTypeHeaderScreen", ObjectTableId = QuoteTemplateSectionTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    TemperatureUnitObjectTable.HeaderScreenId = TemperatureUnitTemperatureUnitHeaderScreenScreen0.Id;
-		    TemperatureUnitObjectTable.HeaderScreenCode = TemperatureUnitTemperatureUnitHeaderScreenScreen0.Code;
+		    QuoteTemplateSectionTypeObjectTable.HeaderScreenId = QuoteTemplateSectionTypeQuoteTemplateSectionTypeHeaderScreenScreen0.Id;
+		    QuoteTemplateSectionTypeObjectTable.HeaderScreenCode = QuoteTemplateSectionTypeQuoteTemplateSectionTypeHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -354,13 +284,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable QuoteTemplateSectionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTemplateSectionType" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature QuoteTemplateSectionTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = QuoteTemplateSectionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplateSectionType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature QuoteTemplateSectionTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = QuoteTemplateSectionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplateSectionType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature QuoteTemplateSectionTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = QuoteTemplateSectionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplateSectionType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature QuoteTemplateSectionTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = QuoteTemplateSectionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplateSectionType.Features.PackageFeature", NameTextCodeDefaultText = "QuoteTemplateSectionType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable TemperatureUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TemperatureUnit" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable QuoteTemplateSectionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTemplateSectionType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -374,7 +310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = TemperatureUnitObjectTable.Id,
+                ObjectTableId = QuoteTemplateSectionTypeObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -392,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = TemperatureUnitObjectTable.Id,
+                ObjectTableId = QuoteTemplateSectionTypeObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -408,18 +344,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    
 }
 
-
-	    public void FillTemperatureUnit()
-        { 
-            var repo = new TemperatureUnitRepository(0);
-            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
-            new FillCloseTables().FillCloseTable<
-                                TemperatureUnit,
-                                Logitude.BL.CommonDataModel.TemperatureUnitDetails,
-                                TemperatureUnitRepository>(repo, dic);
-        }
-
-	    
+    
 
    }
     

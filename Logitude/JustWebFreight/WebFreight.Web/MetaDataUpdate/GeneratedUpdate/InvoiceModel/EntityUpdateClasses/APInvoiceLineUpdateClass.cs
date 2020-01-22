@@ -1734,6 +1734,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
+		   ObjectTable APInvoiceLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APInvoiceLine" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> APInvoiceLineObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APInvoiceLine").ToList();
+		       
+	      
+
+	         Screen APInvoiceLineAPInvoiceLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoiceLine.HeaderScreen", Name = "APInvoiceLineHeaderScreen", ObjectTableId = APInvoiceLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    APInvoiceLineObjectTable.HeaderScreenId = APInvoiceLineAPInvoiceLineHeaderScreenScreen0.Id;
+		    APInvoiceLineObjectTable.HeaderScreenCode = APInvoiceLineAPInvoiceLineHeaderScreenScreen0.Code;
+
+	   		  
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)

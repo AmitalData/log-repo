@@ -72,9 +72,9 @@ using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
 
-namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
-   public class TemperatureUnitUpdateClass
+   public class DescriptionOfGoodsUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -82,21 +82,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "TemperatureUnit",
+	             				    ObjectTableName =  "DescriptionOfGoods",
 			      				    IsNew =  false,
-			      				    DBTableName =  "TemperatureUnits",
-			      				    OldDBTableName =  "TemperatureUnits",
-			      				    ObjectTableSingular =  "Temperature Unit",
-			      				    ObjectTablePlural =  "Temperature Units",
+			      				    DBTableName =  "DescriptionOfGoods",
+			      				    OldDBTableName =  "DescriptionOfGoods",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Name",
-			      				    KeyPropertyPath =  "Code",
+			      				    LookUp2 =  "DescriptionOfGood",
+			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
 			      				    CacheOnClient =  true,
@@ -115,13 +114,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Temperature Unit",
-			      				    Code =  "589a",
-			      				    Name =  "TemperatureUnit",
-			      				    CloseTableCode =  "Code",
+			      				    Code =  "867c",
+			      				    Name =  "DescriptionOfGoods",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Common",
+			      				    ClientModuleName =  "Infrastructure",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -130,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsTabsHidden =  false,
-			      				    SearchFields =  "TemperatureUnit,TemperatureUnits,,Code,",
+			      				    SearchFields =  "DescriptionOfGood,DescriptionOfGoods,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -141,73 +138,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
-					  						ObjectTableName =  "TemperatureUnit",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  3,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Code",
-					  						ListPropertyPath =  "Code",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "Code",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "Code",
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "Name",
 					  						OldFieldName =  "Name",
-					  						ObjectTableName =  "TemperatureUnit",
+					  						ObjectTableName =  "DescriptionOfGoods",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
@@ -227,10 +160,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  1,
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -269,49 +202,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
-					  						ObjectTableName =  "TemperatureUnit",
+					 						FieldName =  "DescriptionOfGood",
+					  						OldFieldName =  "DescriptionOfGood",
+					  						ObjectTableName =  "DescriptionOfGoods",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  1000,
+					  						MaxLength =  500,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Contains",
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						DisplayInLookUpIndex =  0,
+					  						DisplayInSearchWindowList =  true,
+					  						PMPropertyPath =  "DescriptionOfGood",
+					  						ListPropertyPath =  "DescriptionOfGood",
+					  						DisplayInLookUpIndex =  1,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowListIndex =  1,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "SearchFields",
+					  						Code =  "DescriptionOfGood",
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  1,
 					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
+					  						FullFieldLable =  "DescriptionOfGood",
+					  						DefaultText =  "Description of Goods",
+					  						ListFieldLable =  "DescriptionOfGoodListLable",
+					  						ListLableDefaultText =  "Description of Goods",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -322,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						HelpTextCode =  "DescriptionOfGood",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -335,15 +271,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable TemperatureUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TemperatureUnit" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TemperatureUnitObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TemperatureUnit").ToList();
+		   ObjectTable DescriptionOfGoodsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DescriptionOfGoods" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> DescriptionOfGoodsObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DescriptionOfGoods").ToList();
 		       
 	      
 
-	         Screen TemperatureUnitTemperatureUnitHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TemperatureUnit.HeaderScreen", Name = "TemperatureUnitHeaderScreen", ObjectTableId = TemperatureUnitObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen DescriptionOfGoodsDescriptionOfGoodsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DescriptionOfGoods.HeaderScreen", Name = "DescriptionOfGoodsHeaderScreen", ObjectTableId = DescriptionOfGoodsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    TemperatureUnitObjectTable.HeaderScreenId = TemperatureUnitTemperatureUnitHeaderScreenScreen0.Id;
-		    TemperatureUnitObjectTable.HeaderScreenCode = TemperatureUnitTemperatureUnitHeaderScreenScreen0.Code;
+		    DescriptionOfGoodsObjectTable.HeaderScreenId = DescriptionOfGoodsDescriptionOfGoodsHeaderScreenScreen0.Id;
+		    DescriptionOfGoodsObjectTable.HeaderScreenCode = DescriptionOfGoodsDescriptionOfGoodsHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -360,7 +296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable TemperatureUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TemperatureUnit" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable DescriptionOfGoodsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DescriptionOfGoods" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -374,7 +310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = TemperatureUnitObjectTable.Id,
+                ObjectTableId = DescriptionOfGoodsObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -392,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = TemperatureUnitObjectTable.Id,
+                ObjectTableId = DescriptionOfGoodsObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -408,18 +344,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    
 }
 
-
-	    public void FillTemperatureUnit()
-        { 
-            var repo = new TemperatureUnitRepository(0);
-            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
-            new FillCloseTables().FillCloseTable<
-                                TemperatureUnit,
-                                Logitude.BL.CommonDataModel.TemperatureUnitDetails,
-                                TemperatureUnitRepository>(repo, dic);
-        }
-
-	    
+    
 
    }
     
