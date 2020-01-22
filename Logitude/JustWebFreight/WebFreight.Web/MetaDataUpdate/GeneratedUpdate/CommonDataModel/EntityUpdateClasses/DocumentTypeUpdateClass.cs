@@ -2376,6 +2376,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode DocumentTypeTextCode_DocumentTypeMTableNameDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.M.TableNameDoesNotExist", DefaultText = "Table name does not exist",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode DocumentTypeTextCode_DocumentTypeOTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.Templates", DefaultText = "Document Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTextCode_DocumentTypeOHTMLTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.HTMLTemplates", DefaultText = "Email Message Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

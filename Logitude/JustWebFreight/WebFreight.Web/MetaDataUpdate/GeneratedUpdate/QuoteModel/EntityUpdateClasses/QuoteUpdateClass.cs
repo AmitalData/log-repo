@@ -15211,6 +15211,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
  		   TextCode QuoteTextCode_QuoteMValueEditedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.ValueEditedByUser", DefaultText = "Value Edited by User, Double Click to Reset Calculated value",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode QuoteTextCode_QuoteSChargesProfitInSaleCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Charges.ProfitInSaleCurrency", DefaultText = "Profit In Sale Currency",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSSaleTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.SaleTotalAmount", DefaultText = "Sale",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSCostTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.CostTotalAmount", DefaultText = "Cost",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

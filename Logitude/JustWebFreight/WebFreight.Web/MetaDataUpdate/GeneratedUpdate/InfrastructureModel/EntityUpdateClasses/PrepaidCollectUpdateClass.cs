@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Prepaid Collect",
-			      				    Code =  "3d84",
+			      				    Code =  "4d08",
 			      				    Name =  "PrepaidCollect",
 			      				    CloseTableCode =  "Id",
 			      				    CloseTableName =  "Name",
@@ -470,7 +470,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable PrepaidCollectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PrepaidCollect" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode PrepaidCollectTextCode_PrepaidCollectHPrepaidCollectHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PrepaidCollect.H.PrepaidCollectHelpText", DefaultText = "Default payment method for freight and other charges, in direct and consolidation (Master) shipments, for export and import. P-Prepaid: by sender at origin. C-Collect: by receiver at destination.",LocalDefaultText = null, ObjectTableId = PrepaidCollectObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
