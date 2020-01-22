@@ -59,7 +59,7 @@
                                                                         </td>
 
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
-                                                                            {{item.EntityNumber}}
+                                                                            <span class="hyperlink" (click)="ViewEntity(item)">{{item.EntityNumber}}</span>  
                                                                         </td>
 
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
@@ -72,7 +72,7 @@
 
                                                                         <td class="CellTools">
                                                                             <div>
-                                                                                <span class="hyperlink" (click)="ViewEntity(item)">View</span>
+                                                                                <!--<span class="hyperlink" (click)="ViewEntity(item)">View</span>-->
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -140,7 +140,8 @@
                                                                         </td>
 
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
-                                                                            {{item.EntityNumber}}
+                                                                      
+                                                                            <span class="hyperlink" (click)="ViewEntity(item)">{{item.EntityNumber}}</span>  
                                                                         </td>
 
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
@@ -153,7 +154,7 @@
 
                                                                         <td class="CellTools">
                                                                             <div style="padding-left:5px;">
-                                                                                <span class="hyperlink" (click)="ViewEntity(item)">View</span>
+                                                                                <!--<span class="hyperlink" (click)="ViewEntity(item)">View</span>-->
                                                                             </div>
                                                                         </td>
                                                                     </tr>
