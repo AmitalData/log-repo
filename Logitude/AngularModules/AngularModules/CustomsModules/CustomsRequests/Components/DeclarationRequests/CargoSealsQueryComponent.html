@@ -1,0 +1,193 @@
+<!-- SpecialActivityRequestComponent view  -->
+<style type="text/css">
+    .NotesTextArea {
+        padding: 2px;
+        padding-left: 4px;
+        text-indent: 0px;
+        font-size: 14px;
+        color: black;
+        text-align: right;
+        border: 1px solid gray;
+        border-radius: 3px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -webkit-box-shadow: 0px 0px 5px 3px #C8C8C8;
+        -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
+        box-shadow: 0px 0px 5px 3px #C8C8C8;
+    }
+</style>
+
+<div>
+
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent]="false">
+
+        <!-- Request -->
+        <div class="class-request-content">
+            <table style="width: 860px;height: 560px; padding-top: 10px;">
+
+                <!-- Request Fields -->
+                <tr class="FormFieldRow" style="vertical-align: top">
+                    <td>
+                        <table>
+
+                            <tr class="FormFieldRow" style="height:1px">
+                                <td style="width: 90px;">
+                                    <LogLabel [TextCode]="'Customs.Declaration.F.CustomFileNo'"
+                                              [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="'Customs.Declaration'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                (LostFocus)="CustomFileNoTextChanged($event)"
+                                                [Text]="CustomFileNo"></LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.CargoTypeCode'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogLov [ObjectFieldName]="'CargoIdentifierTypeCode'"
+                                            [SelectedValue]="CargoIdentifierTypeCode"
+                                            [ObjectTableName]="'Customs.Consignment'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.SealUpdateReasonType'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ManifestNumber'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierKey1"></LogTextBox>
+                                </td>
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.SecondCargoID'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'SecondCargoID'"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierKey2"></LogTextBox>
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ThirdCargoID'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierKey3"></LogTextBox>
+                                </td>
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ThirdCargoID'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierKey3"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- IsRePackingApproval = 5-->
+                            <tr class="FormFieldRow" *ngIf="IsRePackingApproval">
+                                <!-- Repacking Site Number -->
+                                <td style="width: 130px;">
+                                    <LogLabel [ObjectFieldName]="'RepackingSiteNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SiteNumber'"></LogLabel>
+                                </td>
+                                <td style="width: 130px;">
+                                    <LogLov [ObjectFieldName]="'RepackingSiteNumber'"
+                                            [SelectedValue]="RepackingSiteNumber"
+                                            [ObjectTableName]="'Customs.SiteLookup'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.SiteLookup'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Approval Date -->
+                                <td style="width: 140px;">
+                                    <LogLabel [ObjectFieldName]="'ApprovalDate'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApprovalDate'"> </LogLabel>
+                                </td>
+                                <td style="width: 160px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ApprovalDate'" [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Approval Name -->
+                                <td style="width: 130px;">
+                                    <LogLabel [ObjectFieldName]="'ApprovalName'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApprovalName'"></LogLabel>
+                                </td>
+                                <td style="width: 130px;">
+                                    <LogTextBox [ObjectFieldName]="'ApprovalName'" [Text]="ApprovalName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                        </table>
+                    </td>
+                <tr> <td><div></div></td> </tr>
+            </table>
+
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content" style="width: 500px;height: 50px;">
+            <table style="width: 500px;height: 50px;padding-top: 10px;">
+
+                <tr style="height: 46px;">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 130px;">
+                                    <LogLabel [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.CustomAnswer'"></LogLabel>
+                                </td>
+                                <td style="width: 130px;">
+                                    <LogTextBox [ObjectFieldName]="'ResponseMessage'" [DataContext]="DataContext"> </LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr> <td><div></div></td> </tr>
+            </table>
+        </div>
+
+    </custom-message-wrapper>
+</div>
