@@ -46,8 +46,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
-            this.entityPM.Id = IdCounter.GetNumber("Query", tenant).ToString();
-            this.entityPM.Code = this.entityPM.Id;
+             theEntityPm.Code = this.entityPM.Id;
+             theEntityPm.UniqueCode = this.entityPM.ObjectTableName + '.' + this.entityPM.Code;
+
             this.Poco = new Query();
             this.Poco.Id = this.entityPM.Id;
             
@@ -183,12 +184,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             itemPM.Id = IdCounter.GetNumber("SharedUserQuery", tenant).ToString();
             itemPM.QueryId = this.entityPM.Id;
+            itemPM.QueryCode = this.entityPM.UniqueCode;
+
             itemPM.Tenant = tenant;           
 
             SharedUserQuery itemPoco = new SharedUserQuery()
             {
                 Id = itemPM.Id,
                 QueryId = itemPM.QueryId,
+                QueryCode = itemPM.QueryCode,
                 Tenant = tenant
             };
 

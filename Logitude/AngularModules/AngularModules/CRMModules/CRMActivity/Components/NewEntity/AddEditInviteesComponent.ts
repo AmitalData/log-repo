@@ -179,7 +179,7 @@ export class AddEditInviteesComponent extends BaseComponent {
         this.filterAgrs = new ApiQueryFilters();
         this.myPartnerId = this.SelectedPartnerItem.PartnerId;
         console.log(this.myPartnerId);
-        this.onQueryChangeEvent.emit({ QueryId: "", Filters: this.filterAgrs });
+        this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
     }
 
     columns: any;

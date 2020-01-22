@@ -1747,7 +1747,7 @@
     IsPackagable="false"
     IndexOrder="1"
     FeatureCode="&quot;SETTINGS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Settings&quot;"
+    FeatureTextCodeCode="&quot;QuoteTemplate.Features.Settings&quot;"
     FeatureDefaultText="&quot;Settings&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />

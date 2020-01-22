@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tenant&quot;"
-  Code="&quot;35b5&quot;"
+  Code="&quot;a122&quot;"
   Name="&quot;Tenant&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -10270,6 +10270,16 @@
       Code="&quot;Tenant.O.Others&quot;"
       DefaultText="&quot;Others&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tenant.H.PrepaidCollectHelpText&quot;"
+      DefaultText="&quot;Default payment method for freight and other charges, in direct and consolidation (Master) shipments, for export and import. P-Prepaid: by sender at origin. C-Collect: by receiver at destination.&quot;"
+      TextCodeTypeCode="&quot;H&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tenant.H.DefaultUnitsHelpText&quot;"
+      DefaultText="&quot;The default unit of measurement for the weight, volume and dimension entries.&quot;"
+      TextCodeTypeCode="&quot;H&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />

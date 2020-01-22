@@ -342,6 +342,7 @@
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Team\TeamNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Workspaces\TasksWorkspaceComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureComputingPartner\Components\EditTranslationComputingPartners.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentsFiling\DocumentsFilingGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\ChooseEntityComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\FilingInboxWorkspaceComponent.html" />
@@ -966,6 +967,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Workspaces\TasksWorkspaceComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
@@ -1014,6 +1016,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\RuleUpdateHistoryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerLogsList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerProcedureList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\ToggleList.ts" />
@@ -1031,6 +1034,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\RuleUpdateHistoryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SchedulerLogsPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedUserQueryPM.ts" />
@@ -1062,6 +1066,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\PriceStepListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\RuleUpdateHistoryListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerLogsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerProcedureListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ToggleListService.ts" />

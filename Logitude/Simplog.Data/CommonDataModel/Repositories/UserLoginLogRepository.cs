@@ -44,8 +44,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             UserLoginLog entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+              
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = (from record in context.UserLoginLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
@@ -62,11 +61,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         entity = (UserLoginLog)CacheManager.CacheWrapper.Get(entityName);
                     }
 
-                }
-                else
-                {
-                    entity = (from record in context.UserLoginLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                }
+                
+             
             }
             else
             {
