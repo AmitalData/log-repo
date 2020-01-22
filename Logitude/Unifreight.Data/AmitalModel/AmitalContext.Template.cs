@@ -24,14 +24,16 @@ namespace Unifreight.Data.AmitalModel
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.AMITAL_DB; }
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        
+        public static DbModelBuilder GetBuilder()//protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            DbModelBuilder modelBuilder = new DbModelBuilder(DbModelBuilderVersion.V4_1);
 
             #region YCULPROCESS
 
             modelBuilder.Entity<YCULPROCESS>()
-                .HasKey(p => new { p.ENTNAME, p.PRIMARYNUM })
-                .ToTable("YCULPROCESS", "AMITESTM");
+                    .HasKey(p => new { p.ENTNAME, p.PRIMARYNUM })
+                    .ToTable("YCULPROCESS", "AMITESTM");
             // Properties:
             modelBuilder.Entity<YCULPROCESS>()
                 .Property(p => p.ENTNAME)
@@ -5594,7 +5596,7 @@ namespace Unifreight.Data.AmitalModel
 
 
             #endregion
-            base.OnModelCreating(modelBuilder);
+            return modelBuilder;///base.OnModelCreating(modelBuilder);
         }
 
 
