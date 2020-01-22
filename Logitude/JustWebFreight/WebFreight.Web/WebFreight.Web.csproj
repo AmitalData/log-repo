@@ -1737,6 +1737,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\PriceStepViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\QueueMessageMoreDetailsViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\RatesTableViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\RuleUpdateHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SchedulerProcedureViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SharedLogisticsSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TaskSchedulerHistoryViewsController.Generated.cs" />
@@ -1908,12 +1909,10 @@
     <Compile Include="Controllers\SystemLogsModel\Extended\FileLoggerController.cs" />
     <Compile Include="Controllers\SystemLogsModel\PerformanceLogsController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Extended\TariffVersionExtendedController.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffLinesContainersPriceViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffController.Generated.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffLinesContainersPriceController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffSettingController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
@@ -2346,6 +2345,7 @@
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerOpenFilesAmountController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
+    <Compile Include="ExternalAPIs\V1\GLAccountMoreDataController.cs" />
     <Compile Include="ExternalAPIs\V1\MasterController.cs" />
     <Compile Include="ExternalAPIs\V1\JournalController.cs" />
     <Compile Include="ExternalAPIs\V1\PODBlobInfoController.cs" />
@@ -2851,6 +2851,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueueMessageMoreDetailsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RatesTableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RuleUpdateHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerLogsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerProcedureUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SharedLogisticsInvitationStatusUpdateClass.cs" />

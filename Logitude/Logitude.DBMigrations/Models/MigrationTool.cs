@@ -90,7 +90,8 @@ namespace Logitude.DBMigrations.Models
 
                 if (dxmlFiles.Length > 0)
                 {
-                    return dxmlFiles;//.Where(d => d.ToLower().Contains(@"Logitude.CRM.MetaData\DBTables\Activity.dxml".ToLower())).ToArray();
+                    return SortDXMLFiles(dxmlFiles);
+                    //return dxmlFiles.Where(d => d.ToLower().Contains(@"DBMigrationsHistory.dxml".ToLower())).ToArray();
                 }
                 else
                 {
@@ -121,19 +122,46 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
 
-                DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition);
-
-                string tableScript = databaseMigrations.GetScript();
-                string tableRelationsScript = databaseMigrations.GetRelationsScript();
-
-                if (!String.IsNullOrEmpty(tableScript))
+                if(dxmlTable.DXMLFileName.ToLower() == "DBMigrationsHistory.dxml".ToLower())
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
+                    string[] dbTypes = new string[] { "Global", "Main", "SystemLogs" };
+
+                    foreach (var dbType in dbTypes)
+                    {
+                        dxmlTable.TableDefinition.DBType = dbType;
+
+                        DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition);
+
+                        string tableScript = databaseMigrations.GetScript();
+                        string tableRelationsScript = databaseMigrations.GetRelationsScript();
+
+                        if (!String.IsNullOrEmpty(tableScript))
+                        {
+                            generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
+                        }
+
+                        if (!String.IsNullOrEmpty(tableRelationsScript))
+                        {
+                            relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
+                        }
+                    }
                 }
-
-                if (!String.IsNullOrEmpty(tableRelationsScript))
+                else
                 {
-                    relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
+                    DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition);
+
+                    string tableScript = databaseMigrations.GetScript();
+                    string tableRelationsScript = databaseMigrations.GetRelationsScript();
+
+                    if (!String.IsNullOrEmpty(tableScript))
+                    {
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
+                    }
+
+                    if (!String.IsNullOrEmpty(tableRelationsScript))
+                    {
+                        relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
+                    }
                 }
             }
 
@@ -1077,6 +1105,22 @@ namespace Logitude.DBMigrations.Models
                 stringBuilder.Append(h.ToString("x2").ToLower());
             }
             return stringBuilder.ToString();
+        }
+
+        private string[] SortDXMLFiles(string[] dxmlFiles)
+        {
+            List<string> dxmlFilesList = dxmlFiles.ToList();
+            string dbMigrationsHistoryDxmlFile = dxmlFilesList.Where(d => d.ToLower().Contains("DBMigrationsHistory.dxml".ToLower())).FirstOrDefault();
+
+            if(dbMigrationsHistoryDxmlFile != null)
+            {
+                int indexOfDBMigrationsHistoryDxmlFile = dxmlFilesList.FindIndex(d => d.ToLower().Contains("DBMigrationsHistory.dxml".ToLower()));
+                dxmlFilesList.RemoveAt(indexOfDBMigrationsHistoryDxmlFile);
+                dxmlFilesList.Insert(0, dbMigrationsHistoryDxmlFile);
+                return dxmlFilesList.ToArray();
+            }
+
+            return dxmlFiles;
         }
 
         private void ExitTool(string message)

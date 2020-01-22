@@ -184,7 +184,8 @@ namespace Logitude.Update
             globalStopwatch = null;
             generalLabel = null;
             timer1.Start();
-
+            if (name == "UpdateTenantZeroNew")
+                UpdateRules();
             if (name == "accounting" || name == "UpdateTenantZeroNew")
                 UpdateZipFiles();
 

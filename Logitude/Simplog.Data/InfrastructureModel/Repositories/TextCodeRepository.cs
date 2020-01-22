@@ -99,8 +99,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             if (tenant != 0)
             {
-                if (HttpContext.Current != null)
-                {
+               
                     if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -118,22 +117,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     {
                         currentTenantTextCodes = (List<TextCode>)CacheManager.CacheWrapper.Get(tenantListName);
                     }
-                }
-                else
-                {
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                        currentTenantTextCodes = (from a in context.TextCodes//.Include("ObjectTable")//.Include("SpellCheckedByUser")
-                                                  where a.Tenant == tenant && a.InActive == false
-                                                  select a).ToList();
-                        scope.Complete();
-                    }
-                }
+                
+          
             }
 
-            if (HttpContext.Current != null)
-            {
+           
                 if (CacheManager.CacheWrapper.Get(listName) == null)
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew,new TimeSpan(2,0,0)))
@@ -153,20 +141,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     zeroTenantTextCodes = (List<TextCode>)CacheManager.CacheWrapper.Get(listName);
                 }
-            }
-            else
-            {
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
-                    zeroTenantTextCodes = (from a in context.TextCodes//.Include("ObjectTable")//.Include("SpellCheckedByUser")
-                                           where a.Tenant == 0 && a.InActive == false
-                                           select a).ToList();
-
-                    scope.Complete();
-                }
-
-            }
+            
+           
 
             result = zeroTenantTextCodes.Concat(currentTenantTextCodes).ToList();
 

@@ -32,6 +32,9 @@ namespace Logitude.DBMigrations.Models
         [XmlAttribute()]
         public int Scale { get; set; }
 
+        [XmlAttribute()]
+        public bool Identity { get; set; }
+
         [XmlElement]
         public ConstraintsDefinition Constraints { get; set; }
     }

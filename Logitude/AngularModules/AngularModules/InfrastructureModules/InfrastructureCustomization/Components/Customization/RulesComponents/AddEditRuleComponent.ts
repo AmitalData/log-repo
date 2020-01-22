@@ -180,6 +180,7 @@ export class AddEditRuleComponent extends BaseComponent {
         this.IsCopyFromSystemRule = true;
         let tenantLevelRule: ObjectTableRulePM = new ObjectTableRulePM();
         tenantLevelRule.RuleTypeCode = systemLevelRule.RuleTypeCode;
+        tenantLevelRule.IsCreatedFromSystemRule = true;
         tenantLevelRule.RuleCode = systemLevelRule.RuleCode;
         tenantLevelRule.RuleNotificationTypeCode = systemLevelRule.RuleNotificationTypeCode;
         tenantLevelRule.TriggerTypeCode = systemLevelRule.TriggerTypeCode;

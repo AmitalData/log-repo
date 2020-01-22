@@ -114,9 +114,9 @@
                                                                     <td style="width: 130px; min-width: 130px; max-width: 130px; color : #6E7172;">{{'Shipment.F.ShipmentNumber' | TextCodeTranslationPipe}}</td>
                                                                     <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'ShipmentPayable.F.Quantity' | TextCodeTranslationPipe}}</td>
                                                                     <td style="width: 50px; min-width: 50px; max-width: 50px; color : #6E7172;">{{'ShipmentPayable.F.MeasurementId.Short' | TextCodeTranslationPipe}}</td>
-                                                                    <td style="width: 50px; min-width: 50px; max-width: 50px; color : #6E7172;">{{'ShipmentPayable.CH.CurrencyIdListFieldLable' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 50px; min-width: 50px; max-width: 50px; color : #6E7172;">{{'ShipmentPayable.CH.CurrencyIdListLable' | TextCodeTranslationPipe}}</td>
                                                                     <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'ShipmentPayable.F.UnitPrice' | TextCodeTranslationPipe}}</td>
-                                                                    <td style="width: 110px; min-width: 110px; max-width: 110px; color : #6E7172;">{{'ShipmentPayable.F.Amount.Short' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 110px; min-width: 110px; max-width: 110px; color : #6E7172;">{{'ShipmentPayable.F.TotalAmount.Short' | TextCodeTranslationPipe}}</td>
                                                                     <td style="width: 150px; min-width: 150px; max-width: 150px; color : #6E7172;">{{ExpectedAmountLocalHeader}}</td>
                                                                     <td style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                         <div></div>
@@ -313,7 +313,7 @@
                                     </log-column>
 
                                     <!-- CurrencyCode -->
-                                    <log-column [width]="'50'" [header]="'ShipmentPayable.CH.CurrencyIdListFieldLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'CurrencyCode'">
+                                    <log-column [width]="'50'" [header]="'ShipmentPayable.CH.CurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'CurrencyCode'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
                                             {{item.CurrencyCode}}
                                         </log-cell-template>
@@ -348,7 +348,7 @@
                                     </log-column>
 
                                     <!-- ExpectedAmount -->
-                                    <log-column [width]="'115'" [header]="'ShipmentPayable.F.Amount.Short' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'ExpectedAmount'">
+                                    <log-column [width]="'115'" [header]="'ShipmentPayable.F.TotalAmount.Short' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'ExpectedAmount'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsTotalAmountEnabled">
 
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.ExpectedAmount | NumbersPipe:'N2'">

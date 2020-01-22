@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Agent Shared Document&quot;"
-  Code="&quot;9a09&quot;"
+  Code="&quot;cb96&quot;"
   Name="&quot;AgentSharedDocument&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -912,13 +912,7 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;AgentSharedDocument&quot;"
-      DefaultText="&quot;Agent Shared Document&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures>
     <Feature
       Code="&quot;DOCSSHAREDVIAEMAIL&quot;"

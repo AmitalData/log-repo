@@ -55,8 +55,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Country entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -83,13 +82,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         {
                             entity = (Country)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
-                    else
-                    {
-                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                        Country country = (from record in context.Countries.Include("GlobalZone") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                        entity = country;
-                    }
+                    
+               
                 }
                 else
                 {
@@ -111,8 +105,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Country entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                    
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                           
@@ -139,13 +132,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         {
                             entity = (Country)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
-                    else
-                    {
-                      
-                        Country country = (from record in context.Countries.Include("GlobalZone") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                        entity = country;
-                    }
+                    
+              
                 }
                 else
                 {
@@ -167,8 +155,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Country entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             var countries = from a in context.Countries.Include("GlobalZone")
@@ -194,12 +181,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         {
                             entity = (Country)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
-                    else
-                    {
-                        Country country = (from record in context.Countries.Include("GlobalZone") where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
-                        entity = country;
-                    }
+                    
+                 
                 }
                 else
                 {

@@ -191,7 +191,7 @@ export class SendToContactsComponent implements OnInit {
         this.myPartnerId = this.SelectedPartnerItem.PartnerId;
 
 
-        this.onQueryChangeEvent.emit({ QueryId: "", Filters: this.filterAgrs });
+        this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
 
 
     }

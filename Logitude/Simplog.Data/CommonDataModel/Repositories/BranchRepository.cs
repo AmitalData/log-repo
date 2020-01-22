@@ -116,8 +116,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             Branch entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+               
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -139,12 +138,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (Branch)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                    entity = (from record in context.Branches where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                }
+                
+             
             }
             else
             {
