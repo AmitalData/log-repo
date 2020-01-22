@@ -57,14 +57,12 @@
 
 
 
-<table style="height:60px;width:550px;">
+<table style="height:60px;width:600px;">
 
     <tr style="height:25px">
         <td style="width:5px;"><div style="width:5px;"></div></td>
         <td colspan="10"><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
     </tr>
-
-
 
     <tr style="height:30px">
         <td style="width:5px;"><div style="width:5px;"></div></td>
@@ -87,10 +85,7 @@
 
             </div>
         </td>
-        <!--<td style="width:270px"><LogLov (SelectedItemChanged)="WarehouseValueChange($event)" style="width:230px" [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseRelease'" [DataContext]="warehouseReleasePM" [LookUpTableName]="'Warehouse'"></LogLov></td>-->
-
-
-
+       
         <td style="width:20px"><div style="width:30px"></div></td>
         <td style="width:70px;"><div style="width:70px;">Warehouse:</div></td>
 
@@ -126,6 +121,26 @@
 
             </div>
         </td>
+
+
+        <td style="width:20px"><div style="width:30px"></div></td>
+        <td style="width:120px;"><div style="width:120px;">Days in Warehouse:</div></td>
+
+        <td style="width:160px;">
+            <div style="width:160px;">
+
+                <ComboBox (SelectedItemChanged)="SelectedItemDaysinWarehouseFilter=$event" [SelectedItem]="SelectedItemDaysinWarehouseFilter" [ItemsSource]="DaysinWarehouseFilterItemSource" [Binding]="'Name'"></ComboBox>
+
+            </div>
+        </td>
+        <td style="width:10px"><div style="width:10px"></div></td>
+        <td style="width:100px;">
+            <div style="width:100px;">
+                <LogTextBox [ObjectFieldName]="'DaysInWarehouse'" [DataContext]="DataContext"></LogTextBox>
+            </div>
+         
+        </td>
+
 
 
         <td style="width:60px"><div style="width:60px"></div></td>
