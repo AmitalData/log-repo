@@ -1002,7 +1002,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         if (this.FatherComponent.ComparedToVersionPM != null) {
             this.CurrentSession.StartBusyIndicatorLoading();
 
-            this.FatherComponent.TariffDomainService.GetTariffLineContainerPrices(this.FatherComponent.ComparedToVersionPM.Version, this.EntityPM.OriginPortId, this.EntityPM.DestinationPortId).subscribe((response: ServiceResponse) => {
+            this.FatherComponent.TariffDomainService.GetTariffLineContainerPrices(this.TariffPM.Id, this.FatherComponent.ComparedToVersionPM.Version, this.EntityPM.OriginPortId, this.EntityPM.DestinationPortId).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     this.compareContainerPrices = response.Result;
 

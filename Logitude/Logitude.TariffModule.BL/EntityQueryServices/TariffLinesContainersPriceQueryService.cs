@@ -10,10 +10,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 {
     public partial class TariffLinesContainersPriceQueryService
     {
-        public List<TariffLinesContainersPricePM> GetContainerPricesByVersionAndPorts(int version, string fromPortId, string toPortId, int tenant)
+        public List<TariffLinesContainersPricePM> GetContainerPricesByVersionAndPorts(string tariffId, int version, string fromPortId, string toPortId, int tenant)
         {
             TariffLine tariffLine = (from a in context.TariffLines
-                                     where a.Version == version && a.Tenant == tenant && a.OriginPortId == fromPortId && a.DestinationPortId == toPortId
+                                     where a.Version == version && a.TariffId == tariffId && a.Tenant == tenant && a.OriginPortId == fromPortId && a.DestinationPortId == toPortId
                                      select a).FirstOrDefault();
 
             List<TariffLinesContainersPricePM> tariffLinesContainersPricePMs = new List<TariffLinesContainersPricePM>();
@@ -21,7 +21,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             if (tariffLine != null)
             {
                 List<TariffLinesContainersPrice> containerPrices = (from a in context.TariffLinesContainersPrices
-                                                                    where a.TariffLineId == tariffLine .Id && a.Tenant == tenant
+                                                                    where a.TariffLineId == tariffLine.Id && a.Tenant == tenant
                                                                     select a).ToList();
                                 
                 foreach (TariffLinesContainersPrice entityPOCO in containerPrices)

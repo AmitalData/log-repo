@@ -3039,7 +3039,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetTariffLineContainerPrices(int version, string fromPortId, string toPortId)
+        public HttpResponseMessage GetTariffLineContainerPrices(string tariffId, int version, string fromPortId, string toPortId)
         {
             try
             {
@@ -3047,9 +3047,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
+                fromPortId = this.FixFilter(fromPortId);
+                toPortId = this.FixFilter(toPortId);
+
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(authToken.Tenant);
                 TariffLinesContainersPriceQueryService tariffLinesContainersPriceQueryService = new TariffLinesContainersPriceQueryService(iContext);
-                List<TariffLinesContainersPricePM> myResult = tariffLinesContainersPriceQueryService.GetContainerPricesByVersionAndPorts(version, fromPortId, toPortId, authToken.Tenant);
+                List<TariffLinesContainersPricePM> myResult = tariffLinesContainersPriceQueryService.GetContainerPricesByVersionAndPorts(tariffId, version, fromPortId, toPortId, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

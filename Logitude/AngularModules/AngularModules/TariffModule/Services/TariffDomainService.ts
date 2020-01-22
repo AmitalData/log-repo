@@ -326,11 +326,11 @@ export class TariffDomainService {
         });
     }
 
-    GetTariffLineContainerPrices(version: number, fromPortId: string, toPortId: string) {
+    GetTariffLineContainerPrices(tariffId:string, version: number, fromPortId: string, toPortId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetTariffLineContainerPrices?version=' + version + "&fromPortId=" + fromPortId + "&toPortId=" + toPortId;
+        var url = this._apiUrl + "/GetTariffLineContainerPrices?tariffId=" + tariffId + "&version=" + version + "&fromPortId=" + fromPortId + "&toPortId=" + toPortId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
