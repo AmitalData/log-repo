@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "09de",
+			      				    Code =  "45d3",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -2780,7 +2780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "TH",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Docs Out", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
