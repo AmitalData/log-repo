@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "09de",
+			      				    Code =  "45d3",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -2683,6 +2683,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
+		   ObjectTable ShipmentPickUpDeliveryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPickUpDelivery" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> ShipmentPickUpDeliveryObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ShipmentPickUpDelivery").ToList();
+		       
+	      
+
+	         Screen ShipmentPickUpDeliveryShipmentPickUpDeliveryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentPickUpDelivery.HeaderScreen", Name = "ShipmentPickUpDeliveryHeaderScreen", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ShipmentPickUpDeliveryObjectTable.HeaderScreenId = ShipmentPickUpDeliveryShipmentPickUpDeliveryHeaderScreenScreen0.Id;
+		    ShipmentPickUpDeliveryObjectTable.HeaderScreenCode = ShipmentPickUpDeliveryShipmentPickUpDeliveryHeaderScreenScreen0.Code;
+
+	   		  
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
@@ -2764,13 +2776,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.Partner", DefaultText = "Partner",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   //TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Main", DefaultText = "Main",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Main", DefaultText = "Main",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   //TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   //TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "TH",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Docs Out", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   //TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

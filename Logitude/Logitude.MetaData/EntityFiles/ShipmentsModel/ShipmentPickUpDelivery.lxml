@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Pickup Delivery&quot;"
-  Code="&quot;09de&quot;"
+  Code="&quot;45d3&quot;"
   Name="&quot;ShipmentPickUpDelivery&quot;"
   GenerateDomainService="false"
   NoViewController="false"
@@ -3279,8 +3279,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ShipmentPickUpDelivery.TH.DocsOut&quot;"
-      DefaultText="&quot;TH&quot;"
-      TextCodeTypeCode="&quot;Docs Out&quot;"
+      DefaultText="&quot;Docs Out&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ShipmentPickUpDelivery.TH.DocsIn&quot;"
