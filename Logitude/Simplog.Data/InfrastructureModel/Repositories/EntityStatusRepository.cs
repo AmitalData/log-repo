@@ -69,8 +69,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 EntityStatus entity = null;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                  
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             IWebFreightContext context = WebFreightContext.GetContext(tenant);
@@ -102,16 +101,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                             entity = (EntityStatus)CacheManager.CacheWrapper.Get(entityName);
                             // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
-                    }
-                    else
-                    {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                        EntityStatus status = (from a in context.EntityStatus
-                                               where a.Tenant == tenant && a.Code == code
-                                               select a).FirstOrDefault();
-
-                        entity = status;
-                    }
+                    
+        
                 }
                 else
                 {
@@ -137,8 +128,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 EntityStatus entity = null;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             IWebFreightContext context = WebFreightContext.GetContext(tenant);
@@ -170,16 +160,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                             entity = (EntityStatus)CacheManager.CacheWrapper.Get(entityName);
                             // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
-                    }
-                    else
-                    {
-                       IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                        EntityStatus status = (from a in context.EntityStatus
-                                               where a.Tenant == tenant && a.Id == id
-                                               select a).FirstOrDefault();
-
-                        entity = status;
-                    }
+                    
+              
                 }
                 else
                 {
