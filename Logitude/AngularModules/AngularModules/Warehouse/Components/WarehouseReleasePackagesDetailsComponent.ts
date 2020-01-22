@@ -115,6 +115,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
     }
 
+    WarehouseEntryId: string = "";
     Start(args) {
 
         this.warehouseReleasePM = args.WarehouseReleasePM;
@@ -123,7 +124,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.IsFromFullWarehouseReleaseComponent = args.IsFromFullWarehouseReleaseComponent;
         this.ShipmentPM = args.ShipmentPM;
         this.ShowPackageSummary = args.ShowPackageSummary;
-
+        this.WarehouseEntryId = args.WarehouseEntryId;
         if (this.warehouseReleasePM) {
             this.WarehouseReleasePackagesLists = this.warehouseReleasePM.WarehouseReleasePackages;
         }
@@ -154,6 +155,9 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         this.AllWarehouseEntryPackagesLists = pmResponse.Result;
+                        if (this.AllWarehouseEntryPackagesLists && this.WarehouseEntryId) {
+                            this.AllWarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists.filter(d => d.WarehouseEntryId == this.WarehouseEntryId);
+                        }
                         this.OpenChoosePackage(packageType);
                     }
 
@@ -221,6 +225,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
         windowArgs.WarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists;
         windowArgs.ViewModelTrigger = this;
+        windowArgs.WarehouseEntryId = this.WarehouseEntryId;
         windowArgs.PackageType = packageType;
         var logWindow = new LogitudeWindow();
         if (this.IsFromFullWarehouseReleaseComponent) {

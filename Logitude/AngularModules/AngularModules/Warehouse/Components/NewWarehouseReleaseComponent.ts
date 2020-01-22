@@ -128,6 +128,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     }
     IsLCLEntity: boolean = true;
 
+    WarehouseEntryId: string = "";
     Start(args: any) {
 
         this.ShipmentPM = args.ShipmentPM;
@@ -160,6 +161,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
             }
 
+            this.WarehouseEntryId = args.WarehouseEntryId;
             this.FromPortId = args.FromPortId;
             this.ToPortId = args.ToPortId;
             this.warehouseReleasePM.CustomerId = args.CustomerId ? args.CustomerId : this.warehouseReleasePM.CustomerId;
@@ -437,7 +439,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                 .then(cmpRef => {
-                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM };
+                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM, WarehouseEntryId: this.WarehouseEntryId };
                     cmpRef.instance.SetWindowArgs(windowArgs);
                     this.warehouseReleasePackagesDetailsComponent = cmpRef.instance;
                 });
