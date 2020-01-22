@@ -485,7 +485,7 @@
                                                     </table>
                                                 </td>
 
-                                             
+
                                                 <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'StatusCode'" [ObjectTableName]="'ARPaymentCheque'"
@@ -561,7 +561,7 @@
 
                                                 </td>
 
-                                               
+
                                                 <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px;text-align:center;">
                                                     <div class="MediaFill"
@@ -651,7 +651,7 @@
                                     <!-- Is Reconciled -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <log-cell-template template="let item" [IgnoreMods]="true">
-                                            <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount > 0" (Checked)="item.IsChecked = $event"
+                                            <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0" (Checked)="item.IsChecked = $event"
                                                       [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly)"></CheckBox>
                                         </log-cell-template>
                                     </log-column>

@@ -66,12 +66,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
         private GLAccountMoreData GetSingleGLAccountMoreDataByGLAccountId(GLAccount account)
         {
             GLAccountMoreDataQueryService accountMoreDataQueryService = new GLAccountMoreDataQueryService(account.Tenant);
-            GLAccountMoreData accountMoreData = accountMoreDataQueryService.GetGLAccountMoreDataByAccountId(account.Id, account.Tenant);
-            if(accountMoreData == null)
+            bool exist= accountMoreDataQueryService.CheckIfGLAccountHasMoreData(account.Id, account.Tenant);
+            if (!exist)
             {
                 throw new Exception("GLAccount with number " + account.InternalNumber + " has no GLAccount more data record");
             }
-            else {
+            else
+            {
+                GLAccountMoreData accountMoreData = accountMoreDataQueryService.GetGLAccountMoreDataByAccountId(account.Id, account.Tenant);
                 accountMoreData.AccountId = null;
                 return accountMoreData;
             }
