@@ -837,6 +837,7 @@ namespace AmitalCustomsWindowsService.Tester
         private void TesterForm_Load(object sender, EventArgs e)
         {
             WebFreight.Web.CustomWebServices.Testers.Tester.GetSingleDeclarationPMByNumber();
+            AmitalContext.TestIt();
         }
 
         private void buildMamanBaldarSTBToolStripMenuItem_Click(object sender, EventArgs e)
