@@ -460,8 +460,8 @@ export class QuoteDashboardComponent extends BaseComponent {
                 }
 
                 this.selectedBusinessUnitFilter = this.BusinessUnitFilterList.filter(d => d.Code == defaultFilterCode)[0];
-                //this.GetSelectedBusinessUnitId();
-                //this.BuildUsersFilters(false);
+                this.GetSelectedBusinessUnitId();
+                this.BuildUsersFilters(false);
             }
         });
         this.LoadComponents();
