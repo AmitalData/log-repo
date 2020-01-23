@@ -49,7 +49,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     private apiUrl: string;
     private CurrentSession = SessionLocator.SelectedSession;
     private declarationExtendedListService = new DeclarationExtendedListService();
-    constructor(private declarationPM: DeclarationPM, private childEntity1Id: string, private ChildEntity1Code: string) {
+    constructor(private declarationPM: DeclarationPM, private childEntity1Id: string, private ChildEntity1Code: string ) {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
         this.http = ServiceHelper.Http;
 
@@ -496,85 +496,51 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     DisplayOnlyCheck() {
 
         var rresponse: ServiceResponse = new ServiceResponse();
-        debugger;
+
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        this.declarationExtendedListService.GetDeclarationAmendmentsById(this.declarationPM.Id).map
-            (data => {
-                //var message = "";
-                //if (data.Result == null || data.Result.length <= 0) return;
+        return Observable.defer(() => {
+            return declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.declarationPM).map((response: ServiceResponse) => {
+                var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
+                var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
+                var displayOnlyMessage = null;
+                if (this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode) {
+                    let displayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+                    var rresponse: ServiceResponse = new ServiceResponse();
+                    rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: displayOnlyMessage };
+                    return rresponse;
+                }
+                //else if (this.declarationPM.StorageStatusCode) {
+                //    let displayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.declarationPM.StorageStatusName;
+                //    var rresponse: ServiceResponse = new ServiceResponse();
+                //    rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
+                //    return rresponse;
+                //}
 
-                //data.Result = data.Result.sort((obj1, obj2) => {
-                //    if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
-                //        return 1;
-                //    }
-
-                //    if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
-                //        return -1;
-                //    }
-
-                //    return 0;
-                //});
-
-                //data.Result.forEach((item) => {
-                //    if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
-                //        message= TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
-                //    }
-
-                //});
-
-                //return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
-                return Observable.defer(() => {
-                    return declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.declarationPM).map((response: ServiceResponse) => {
-
-                        //debugger;
-                        //if (message!="") {
-                        //    var rresponse: ServiceResponse = new ServiceResponse();
-                        //    rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + message };
-                        //    return rresponse;
-                        //}
-
-
-                        var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
-                        var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
-                        var displayOnlyMessage = null;
-                        if (this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode) {
-                            let displayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
-                            var rresponse: ServiceResponse = new ServiceResponse();
-                            rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: displayOnlyMessage };
-                            return rresponse;
-                        }
-                        //else if (this.declarationPM.StorageStatusCode) {
-                        //    let displayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.declarationPM.StorageStatusName;
-                        //    var rresponse: ServiceResponse = new ServiceResponse();
-                        //    rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
-                        //    return rresponse;
-                        //}
-
-                        else if (isDisplayOnly) {
-                            displayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-                            var rresponse: ServiceResponse = new ServiceResponse();
-                            rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
-                            return rresponse;
-                        }
-                        else if (this.declarationPM.StorageStatusCode) {
-                            let displayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.declarationPM.StorageStatusName;
-                            var rresponse: ServiceResponse = new ServiceResponse();
-                            rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
-                            return rresponse;
-                        }
-
+                else if (isDisplayOnly) {
+                    displayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                    var rresponse: ServiceResponse = new ServiceResponse();
+                    rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
+                    return rresponse;
+                }
+                else if (this.declarationPM.StorageStatusCode) {
+                    let displayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.declarationPM.StorageStatusName;
+                    var rresponse: ServiceResponse = new ServiceResponse();
+                    rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
+                    return rresponse;
+                }
+                else {
+                    let message = this.InitDisplayOnlyMessage();
+                    if (message != "") {
                         var rresponse: ServiceResponse = new ServiceResponse();
-                        rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
+                        rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
                         return rresponse;
-                    });
-                });
-
-            }
-
-
-            );
-
-
+                    }
+                }
+                var rresponse: ServiceResponse = new ServiceResponse();
+                rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
+                return rresponse;
+            });
+        });
     }
 
 

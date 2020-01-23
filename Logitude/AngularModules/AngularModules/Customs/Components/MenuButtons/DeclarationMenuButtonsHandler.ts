@@ -350,7 +350,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = false;
                         }
                     }
-                    if (this.EntityPM.IsAmendment) {
+                    if (this.EntityPM.IsAmendment || this.EntityPM.AmendmentDontDisplayInList) {
                         parentButton = menuButtons.filter(x => x.EventCode == "Actions")[0];
                         if (parentButton.Id == button.ParentMenuButtonId)
                         button.IsDisabled = true;
