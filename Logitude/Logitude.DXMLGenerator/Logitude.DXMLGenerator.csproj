@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ColumnDefaultValue.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
     <Compile Include="Models\DBTable.cs" />
@@ -57,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ColumnsDefaultValues.csv" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExcludedTablesMap.txt" />
