@@ -2198,13 +2198,13 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-    Code="&quot;FlightBookingManifest&quot;"
-    FeatureTypeCode="&quot;AREA&quot;"
-    FeatureTextCodeCode="&quot;Report.Features.FlightBookingManifest&quot;"
-    FeatureDefaultText="&quot;Flight Bookings Manifest&quot;"
-    IsPackagable="true"
-    IsOld="false"
-    IsCoreFeature="false"
-    IsBusinessUnitEnabled="false" />
+      Code="&quot;FlightBookingManifest&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Report.Features.FlightBookingManifest&quot;"
+      FeatureDefaultText="&quot;Flight Bookings Manifest&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

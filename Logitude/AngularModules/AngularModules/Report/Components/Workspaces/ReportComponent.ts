@@ -111,6 +111,15 @@ export class ReportComponent {
                                     }
                                 }
 
+
+                                else if (item.Code == "RCRF") {
+                                    if (SessionLocator.Tenant == 1326 || FeatureLocator.IsPackage_DVMT()) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
                                 else {
                                     if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                         this.reportList.push(item);
