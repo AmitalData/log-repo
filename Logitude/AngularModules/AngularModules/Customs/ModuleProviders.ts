@@ -222,7 +222,7 @@ import { HazardousSubstanceListService } from './Services/StandardLists/Hazardou
 import { SealCompletenesListService } from './Services/StandardLists/SealCompletenesListService';
 import { SealTypeListService } from './Services/StandardLists/SealTypeListService';
 import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
-
+import { SealUpdateReasonTypeListService } from './Services/StandardLists/SealUpdateReasonTypeListService';
 
 
 //#endregion
@@ -579,6 +579,7 @@ export class ModuleProviders {
             case "SealCompletenesListService": { myResult = new SealCompletenesListService(); break; }
             case "SealTypeListService": { myResult = new SealTypeListService(); break; }
             case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
+            case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
              //#endregion                
 
             //#region StandardPMs
