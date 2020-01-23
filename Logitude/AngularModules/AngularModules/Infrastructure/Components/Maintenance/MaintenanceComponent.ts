@@ -717,7 +717,7 @@ export class MaintenanceComponent {
                     this.InterfaceManageentMethod(item);
                     break;
                 }
-                case "MCPA": { this.CustomsAutonomyKeywordMethod(item); break; }
+                ///case "MCPA": { this.CustomsAutonomyKeywordMethod(item); break; }
                 case "CSMN": {
                     let test = true;
                     let strict = true;
