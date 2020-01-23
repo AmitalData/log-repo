@@ -13,9 +13,9 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
-  <Screen Name="&quot;Customs.CustomsAutonomyKeywordHeaderScreen&quot;" ObjectTableName="&quot;Customs.CustomsAutonomyKeyword&quot;" NumberOfColumns="1" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true">
+  <Screen Name="&quot;Customs.CustomsAutonomyKeywordHeaderScrn&quot;" ObjectTableName="&quot;Customs.CustomsAutonomyKeyword&quot;" NumberOfColumns="1" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true">
     <ScreenFields>
-      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;KeywordtypeLocalName&quot;" ScreenName="Customs.CustomsAutonomyKeywordHeaderScreen" />
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;KeywordtypeLocalName&quot;" ScreenName="Customs.CustomsAutonomyKeywordHeaderScrn" />
     </ScreenFields>
   </Screen>
   <Tab TabName="&quot;General&quot;" TabLocalName="&quot;כללי&quot;" ObjectTableName="&quot;Customs.CustomsAutonomyKeyword&quot;" Code="&quot;CPAK&quot;" ControlPath="&quot; &quot;" TextCode="&quot;Customs.CustomsAutonomyKeyword.TH.General&quot;" IsPackagable="false" IndexOrder="0" HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/AutonomyKeyword/AutonomyKeywordComponent&quot;" HtmlComponentName="&quot;AutonomyKeywordComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
