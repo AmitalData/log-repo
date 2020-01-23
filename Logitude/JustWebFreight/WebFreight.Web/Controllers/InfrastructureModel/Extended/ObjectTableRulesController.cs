@@ -56,7 +56,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        ObjectTableRuleService service = new ObjectTableRuleService(MyContext, entityPM.Tenant);
+                        ObjectTableRuleService service = new ObjectTableRuleService(MyContext, authToken.Tenant);
                         service.Create(entityPM);
 
                         ClearRulesCache(entityPM);
@@ -93,7 +93,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        ObjectTableRuleService service = new ObjectTableRuleService(MyContext, entityPM.Tenant);
+                        ObjectTableRuleService service = new ObjectTableRuleService(MyContext, authToken.Tenant);
                         service.Update(entityPM, entityPM.RuleConditionFields);
 
                         ClearRulesCache(entityPM);

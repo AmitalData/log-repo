@@ -15,6 +15,7 @@ import {CachedDataManager} from '../../Utilities/CachedDataManager';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {SessionInfo} from '../../Utilities/SessionInfo';
+import {LocalStorageManager} from '../../Utilities/LocalStorageManager';
 import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
 import {DescriptionOfGoodsList} from '../../EntityLists/DescriptionOfGoodsList';
 
@@ -48,7 +49,7 @@ export class DescriptionOfGoodsListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
-				
+				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DescriptionOfGoods", "GetSingleList", 'id=' + id); 
 
@@ -84,7 +85,7 @@ export class DescriptionOfGoodsListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;  
-			
+				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DescriptionOfGoods", "GetAll", ""); 
 
@@ -151,7 +152,7 @@ export class DescriptionOfGoodsListService {
                 }   
 
                 serviceResponse.Result = _mappedListsArray;      
-		      
+		        serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DescriptionOfGoods", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  				
@@ -176,6 +177,7 @@ export class DescriptionOfGoodsListService {
             return Observable.defer(() => {
 
                 var filteredData = DescriptionOfGoodsListService.CachedData.filter(a => a.Id === id)[0];
+				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
 
@@ -200,7 +202,7 @@ export class DescriptionOfGoodsListService {
 
                 var filteredData = DescriptionOfGoodsListService.CachedData.filter(a => a.Id === id)[0];
 				serviceResponse.Result = filteredData; 
-				
+				serviceResponse.CallTime = callTime;
 			     
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "DescriptionOfGoods", "GetSingleListFromCache", 'id=' + id); 
 
@@ -242,6 +244,7 @@ export class DescriptionOfGoodsListService {
 				{
 					var filteredData = InfraGenericFilter.GetFilteredArray(DescriptionOfGoodsListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
 				}
                 return Observable.of(serviceResponse);
 
@@ -279,6 +282,7 @@ export class DescriptionOfGoodsListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "DescriptionOfGoods", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 					serviceResponse.Result = _mappedListsArray; 
+					serviceResponse.CallTime = callTime;
 				}
                 return serviceResponse;
 

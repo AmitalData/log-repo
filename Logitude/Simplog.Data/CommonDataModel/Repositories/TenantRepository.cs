@@ -40,8 +40,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             Tenant entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+             
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(id);
@@ -59,12 +58,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
-                    ICommonDataContext context = CommonDataContext.GetContext(id);
-                    entity = (from a in context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country") where a.Id == id select a).FirstOrDefault();
-                }
+                
+          
             }
             else 
             {
@@ -86,8 +81,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             Tenant entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+               
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                      
@@ -105,12 +99,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
-                    
-                    entity = (from a in context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country") where a.Id == id select a).FirstOrDefault();
-                }
+                
+           
             }
             else
             {

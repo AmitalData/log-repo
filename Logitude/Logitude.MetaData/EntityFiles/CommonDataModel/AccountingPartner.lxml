@@ -4450,7 +4450,7 @@
     TextCode="&quot;AccountingPartner.TH.General&quot;"
     IsPackagable="false"
     IndexOrder="0"
-    FeatureCode="&quot;GENERAL&quot;"
+    FeatureCode="&quot;AccountingPartner.TH.GENERAL&quot;"
     FeatureTextCodeCode="&quot;AccountingPartner.Features.General&quot;"
     FeatureDefaultText="&quot;General&quot;"
     IsSpellChecked="false"

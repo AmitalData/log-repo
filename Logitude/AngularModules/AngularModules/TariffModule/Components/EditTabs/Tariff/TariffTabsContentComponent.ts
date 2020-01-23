@@ -167,7 +167,7 @@ export class TariffTabsContentComponent implements OnDestroy {
     Run(args: any) {
         this.EntityPM = args['EntityPM'];
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
             this.EditTabTariffType = "SVR";
         }
 
@@ -177,6 +177,10 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         else if (this.EntityPM.TypeCode == "OFC") {
             this.EditTabTariffType = "CVR";
+        }
+
+        else if (this.EntityPM.TypeCode == "OFS") {
+            this.EditTabTariffType = "OVR";
         }
 
         this.BuildTabs();
@@ -391,11 +395,18 @@ class TariffDetailsTab {
                 break;
             }
 
-            case "CVR":
-                {
+            case "CVR":{
                     this.IsDraft = version.IsDraft;
                     this.VersionPM = version;
                     this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLVersionTabComponent";
+                    break;
+                }
+
+            case "OVR":
+                {
+                    this.IsDraft = version.IsDraft;
+                    this.VersionPM = version;
+                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLSurchargeVersionTabComponent";
                     break;
                 }
 
@@ -416,8 +427,6 @@ class TariffDetailsTab {
         }
     }
 }
-
-
 
 export class PagerService {
     getPager(totalItems: number, currentPage: number = 1, pageSize: number = 4) {

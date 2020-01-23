@@ -179,29 +179,14 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
-    <None Include="DBOthers\CommonDataModel\Procedures\UpdateAllTenantsCustomersActualDataProcedure.dxml" />
-    <None Include="DBOthers\CommonDataModel\Procedures\UpdateCustomerActualDataProcedure.dxml" />
-    <None Include="DBOthers\CommonDataModel\Procedures\UpdateTenantCustomersActualDataProcedure.dxml" />
-    <None Include="DBOthers\CommonDataModel\Views\CustomersDataView.dxml" />
-    <None Include="DBOthers\InvoiceModel\Views\AgingReportInvoiceDataView.dxml" />
-    <None Include="DBOthers\InvoiceModel\Views\APInvoiceAgingReportDataView.dxml" />
-    <None Include="DBOthers\QuoteModel\Views\QuoteFollowUpDataView.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\ComputeShipmentFirstApprovalDateProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdateConstituentShipmentProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdatePayablesDataProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdateReceivablesDataProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdateShipmentARInvoicesProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdateShipmentFinalArrivalDateProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdateShipmentOperationalDateProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdateShipmentProfitFunctionProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdateShipmentProfitProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\UpdateShipmentRegistryDateProcedure.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
     <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplateSectionType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\SharedLogistics.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\RuleUpdateHistory.lxml" />
     <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardExternalCodeByCurrency.lxml">
@@ -661,7 +646,9 @@
     <None Include="EntityFiles\QuoteModel\QuoteSaleCharge.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSetting.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteStage.lxml" />
-    <None Include="EntityFiles\QuoteModel\QuoteTemplate.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplate.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSection.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSetting.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateTableDesign.lxml" />

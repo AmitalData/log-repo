@@ -30,10 +30,7 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.warehouseEntryPMExtendedService = new WarehouseEntryPMExtendedService();
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.ShipmentId)) {
-
-            this.LoadData();
-        } else this.IsShowMessageNoConnectedEntity = true;
+        this.LoadData();
     }
 
     ngOnInit() {
@@ -47,26 +44,26 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
         this.ItemsSource = [];
         this.ReleaseItemsSource = [];
        
-       
-        this.warehouseEntryPMExtendedService.GetWarehouseConnectedEntitiesByEntityId(this.EntityPM.ShipmentId).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.ItemsSource = myResponse.Result;
-                   
-                    if (!this.ItemsSource || this.ItemsSource.length == 0) {
-                        
-                        this.IsShowMessageNoConnectedEntity = true;
-                    } else {
-                        if (this.EntityPM.ConnectedTo != null) {
-                            this.connectedTo =  this.EntityPM.ConnectedTo;
+        if (this.EntityPM.ShipmentId) {
+            this.warehouseEntryPMExtendedService.GetWarehouseConnectedEntitiesByEntityId(this.EntityPM.ShipmentId).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.ItemsSource = myResponse.Result;
+
+                        if (!this.ItemsSource || this.ItemsSource.length == 0) {
+
+                            this.IsShowMessageNoConnectedEntity = true;
+                        } else {
+                            if (this.EntityPM.ConnectedTo != null) {
+                                this.connectedTo = this.EntityPM.ConnectedTo;
+                            }
+                            this.IsShowMessageNoConnectedEntity = false;
                         }
-                        this.IsShowMessageNoConnectedEntity = false;
                     }
                 }
-            }
-            this.CurrentSession.StopBusyIndicator();
-        });
-
+                this.CurrentSession.StopBusyIndicator();
+            });
+        } else this.IsShowMessageNoConnectedEntity = true;
 
         //////////////////
         this.warehouseReleasePMExtendedService.GetWarehouseConnectedReleaseByEntityId(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -115,7 +112,33 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
         
     }
 
+    NewWarehouseReleaseButtonClicked() {
+        var windowArgs: any = {};
+       // windowArgs.ShipmentPM = this.EntityPM;
+        windowArgs.WarehouseId = this.EntityPM.WarehouseId;
+        windowArgs.CustomerId = this.EntityPM.CustomerId;
+        windowArgs.FromPortId = this.EntityPM.FromPortId;
+        windowArgs.ToPortId = this.EntityPM.ToPortId;
+        windowArgs.WarehouseEntryId = this.EntityPM.Id;
+       /// if (this.EntityPM.ShipmentId) {
+         //   windowArgs.ConnectedTo = "Shipment";
+           // windowArgs.ShipmentId = this.EntityPM.ShipmentId;
+       // }
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1030;
+        logWindow.Height = 620;
+        logWindow.Title = "New Cross Dock Release";
+ 
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Warehouse/Components/NewWarehouseReleaseComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
 
+            if ($event == "Refresh") {
+                this.LoadData();
+            }
+        });
+
+    }
 
     ViewReleaseClicked(item: any) {
 
@@ -130,6 +153,9 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
                 });
             });
     }
+
+
+
 
 }
 

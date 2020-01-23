@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr style="height: 1px;" *ngIf="!IsEditingEnabled">
         <td>
@@ -25,7 +25,7 @@
             <table *ngIf="IsResourcesReady">
                 <tr class="FormFieldRow">
                     <td style="width: 60px; text-indent: 10px;" >
-                        <div [style.text-align]="isRTL ? 'right' : 'left'" class="Label">{{'RatesTable.F.CurrencyCode.Short' | TextCodeTranslationPipe}}</div>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" class="Label">{{'RatesTable.F.ForeignCurrencyCode.Short' | TextCodeTranslationPipe}}</div>
                     </td>
 
                     <td>
@@ -35,7 +35,7 @@
 
                 <tr class="FormFieldRow">
                     <td style="text-indent: 10px;">
-                        <div [style.text-align]="isRTL ? 'right' : 'left'" class="Label">{{'RatesTable.F.Date.Short' | TextCodeTranslationPipe}}</div>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" class="Label">{{'RatesTable.F.ValueDate.Short' | TextCodeTranslationPipe}}</div>
                     </td>
 
                     <td>

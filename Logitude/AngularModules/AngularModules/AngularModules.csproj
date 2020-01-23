@@ -342,6 +342,7 @@
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Team\TeamNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Workspaces\TasksWorkspaceComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureComputingPartner\Components\EditTranslationComputingPartners.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentsFiling\DocumentsFilingGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\ChooseEntityComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\FilingInboxWorkspaceComponent.html" />
@@ -966,6 +967,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Workspaces\TasksWorkspaceComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
@@ -1014,6 +1016,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\RuleUpdateHistoryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerLogsList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerProcedureList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\ToggleList.ts" />
@@ -1031,6 +1034,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\RuleUpdateHistoryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SchedulerLogsPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedUserQueryPM.ts" />
@@ -1062,6 +1066,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\PriceStepListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\RuleUpdateHistoryListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerLogsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerProcedureListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ToggleListService.ts" />
@@ -2266,6 +2271,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\OceanFCLSurchargeVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.html" />
@@ -2275,6 +2281,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
+    <Content Include="TariffModule\Components\Helpers\TariffHelperComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
@@ -6663,9 +6670,11 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBSpecialHandlingCodePMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Args.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\OceanFCLSurchargeVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffLineData.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.ts" />
@@ -6675,6 +6684,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Helpers\TariffHelperComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.ts" />
@@ -6690,10 +6700,13 @@
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMInitServices\TariffPMInitService.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLineExpirationDatePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinePM.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinesContainersPricePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffSettingPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffTypePM.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionAllInChargePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionPM.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleProviders.ts" />
