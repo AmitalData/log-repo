@@ -140,14 +140,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             GenericRequestParams requestParams, 
             out string exceptionMessage)
         {
-            /*if (requestParams.TestCase != null)
-            {
-                var myFake1DF_NG_2754_MSG10004_ImportDeclarationResponse = new Fake1DF_NG_2754_MSG10004_ImportDeclarationResponse();
-                return myFake1DF_NG_2754_MSG10004_ImportDeclarationResponse
-                    .CallWS(customRequest, requestParams, out exceptionMessage);
-            }*/
-            exceptionMessage = null;
-            var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
+            BuildRequestContentHeaderB4Sign(customRequest);
+            var myFake1DF_NG_2754_MSG10004_ImportDeclarationResponse = new Fake1DF_NG_2754_MSG10004_ImportDeclarationResponse();
+            _ResponseHeader = myFake1DF_NG_2754_MSG10004_ImportDeclarationResponse
+                .CallWS(customRequest, requestParams, out exceptionMessage, out DF_NG_2754_MSG10004_ImportDeclarationResponse response);
+            return response;
           
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
             BuildRequestContentHeaderB4Sign(customRequest);
