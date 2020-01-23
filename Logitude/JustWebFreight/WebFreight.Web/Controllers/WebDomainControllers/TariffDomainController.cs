@@ -227,10 +227,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             data = this.ExportOceanFCLFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
 
-                        else if (tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC" || tariff.TypeCode == "OFS")
+                        else if (tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC")
                         {
                             data = this.ExportAirSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
+                        
+                        else if(tariff.TypeCode == "OFS")
+                        {
+                            data = this.ExportOceanFCLSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
+                        }                  
 
                         fileName = "Tariff-" + tariff.TariffNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
 
@@ -447,6 +452,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             ChargesType chargesType = null;
             Measurement measurement = null;
 
+            bool isCharge1Fixed = false;
+            bool isCharge2Fixed = false;
+            bool isCharge3Fixed = false;
+            bool isCharge4Fixed = false;
+            bool isCharge5Fixed = false;
+            bool isCharge6Fixed = false;
+            bool isCharge7Fixed = false;
+            bool isCharge8Fixed = false;
+            bool isCharge9Fixed = false;
+            bool isCharge10Fixed = false;
+
             if (!string.IsNullOrEmpty(tariff.Surcharge1Id))
             {
                 count = 1;
@@ -458,19 +474,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge1Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -485,19 +497,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge2Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -512,19 +520,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge3Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -539,19 +543,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge4Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -566,19 +566,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge5Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -593,19 +589,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge6Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -620,20 +612,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge7Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -648,19 +635,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge8Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -675,19 +658,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge9Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -702,19 +681,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        string firstColumnName = "Min " + chargesType.Code;
-                        if (tariff.TypeCode == "OFS")
-                        {
-                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
-                        }
-                        table.Columns.Add(firstColumnName);
+                        table.Columns.Add("Min " + chargesType.Code);
                     }
-                    string secondColumnName = chargesType.Code;
-                    if (tariff.TypeCode == "OFS")
+
+                    else
                     {
-                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                        isCharge10Fixed = true;
                     }
-                    table.Columns.Add(secondColumnName);
+
+                    table.Columns.Add(chargesType.Code);
                 }
             }
 
@@ -819,105 +794,185 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         int rowIndex = 4;
 
-                        if (item.Surcharge1MinPrice.HasValue)
+                        if (!isCharge1Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge1MinPrice ?? null;
+                            if (item.Surcharge1MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge1MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge1Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge1Price ?? null;
+                            row[rowIndex] = item.Surcharge1Price ?? null;
                         }
+                        rowIndex++;
 
-                        if (item.Surcharge2MinPrice.HasValue)
+                        if (!isCharge2Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge2MinPrice ?? null;
+                            if (item.Surcharge2MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge2MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge2Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge2Price ?? null;
+                            row[rowIndex] = item.Surcharge2Price ?? null;
                         }
+                        rowIndex++;
 
-                        if (item.Surcharge3MinPrice.HasValue)
+                        if (!isCharge3Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge3MinPrice ?? null;
+                            if (item.Surcharge3MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge3MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge3Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge3Price ?? null;
+                            row[rowIndex] = item.Surcharge3Price ?? null;
                         }
+                        rowIndex++;
 
-                        if (item.Surcharge4MinPrice.HasValue)
+                        if (!isCharge4Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge4MinPrice ?? null;
+                            if (item.Surcharge4MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge4MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge4Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge4Price ?? null;
+                            row[rowIndex] = item.Surcharge4Price ?? null;
                         }
+                        rowIndex++;
 
-                        if (item.Surcharge5MinPrice.HasValue)
+                        if (!isCharge5Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge5MinPrice ?? null;
+                            if (item.Surcharge5MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge5MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge5Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge5Price ?? null;
+                            row[rowIndex] = item.Surcharge5Price ?? null;
                         }
+                        rowIndex++;
 
-                        if (item.Surcharge6MinPrice.HasValue)
+                        if (!isCharge6Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge6MinPrice ?? null;
+                            if (item.Surcharge6MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge6MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge6Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge6Price ?? null;
+                            row[rowIndex] = item.Surcharge6Price ?? null;
                         }
+                        rowIndex++;
 
-                        if (item.Surcharge7MinPrice.HasValue)
+                        if (!isCharge7Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge7MinPrice ?? null;
+                            if (item.Surcharge7MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge7MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge7Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge7Price ?? null;
+                            row[rowIndex] = item.Surcharge7Price ?? null;
                         }
+                        rowIndex++;
 
-                        if (item.Surcharge8MinPrice.HasValue)
+                        if (!isCharge8Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge8MinPrice ?? null;
+                            if (item.Surcharge8MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge8MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge8Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge8Price ?? null;
+                            row[rowIndex] = item.Surcharge8Price ?? null;
                         }
+                        rowIndex++;
 
-                        if (item.Surcharge9MinPrice.HasValue)
+                        if (!isCharge9Fixed)
                         {
-                            row[rowIndex++] = item.Surcharge9MinPrice ?? null;
+                            if (item.Surcharge9MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge9MinPrice ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
                         if (item.Surcharge9Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge9Price ?? null;
+                            row[rowIndex] = item.Surcharge9Price ?? null;
+                        }
+                        rowIndex++;
+
+                        if (!isCharge10Fixed)
+                        {
+                            if (item.Surcharge10MinPrice.HasValue)
+                            {
+                                row[rowIndex++] = item.Surcharge10Price ?? null;
+                            }
+                            else
+                            {
+                                rowIndex++;
+                            }
                         }
 
-                        if (item.Surcharge10MinPrice.HasValue)
+                        if (item.Surcharge10Price.HasValue)
                         {
-                            row[rowIndex++] = item.Surcharge10Price ?? null;
+                            row[rowIndex] = item.Surcharge10Price ?? null;
                         }
-
-                        if (item.Surcharge10MinPrice.HasValue)
-                        {
-                            row[rowIndex++] = item.Surcharge10Price ?? null;
-                        }
+                        rowIndex++;
 
                         row[count + 4] = item.Notes ?? null;
 
@@ -1090,6 +1145,304 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.SaveAs(memory);
             return memory.ToArray();
+        }
+        private byte[] ExportOceanFCLSurchargesCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            tariffLines = tariffLines.Where(d => !d.IsFromAllOtherPorts && !d.IsToAllOtherPorts).ToList();
+            tariffLines = tariffLines.OrderBy(P => P.Index).ToList();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            IWorksheet sheet1 = workbook.Worksheets[0];
+
+            DataTable table = new DataTable();
+
+            #region header
+            table.Columns.Add("From");
+            table.Columns.Add("To");
+            table.Columns.Add("Currency");
+            table.Columns.Add("Start Date", typeof(DateTime));
+
+            List<ChargeContainerClass> chargeContainers = this.BuildChargeContainerClass(tariff, tenant);
+
+            bool isContainer1Exists = false;
+            bool isContainer2Exists = false;
+            bool isContainer3Exists = false;
+            bool isContainer4Exists = false;
+            bool isContainer5Exists = false;
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType1Id))
+            {
+                isContainer1Exists = true;
+            }
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType2Id))
+            {
+                isContainer2Exists = true;
+            }
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType3Id))
+            {
+                isContainer3Exists = true;
+            }
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType4Id))
+            {
+                isContainer4Exists = true;
+            }
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType5Id))
+            {
+                isContainer5Exists = true;
+            }
+
+            int count = chargeContainers.Count();
+            foreach(ChargeContainerClass item in chargeContainers)
+            {
+                table.Columns.Add(item.ChargeCode + "(" + item.ContainerCode + ")");
+            }
+
+            table.Columns.Add("Notes");
+            #endregion
+
+            #region range
+            string range = "A1:E1";
+            if (count == 1)
+            {
+                range = "A1:F1";
+            }
+            else if (count == 2)
+            {
+                range = "A1:G1";
+            }
+            else if (count == 3)
+            {
+                range = "A1:H1";
+            }
+            else if (count == 4)
+            {
+                range = "A1:I1";
+            }
+            else if (count == 5)
+            {
+                range = "A1:J1";
+            }
+            else if (count == 6)
+            {
+                range = "A1:K1";
+            }
+            else if (count == 7)
+            {
+                range = "A1:L1";
+            }
+            else if (count == 8)
+            {
+                range = "A1:M1";
+            }
+            else if (count == 9)
+            {
+                range = "A1:N1";
+            }
+            else if (count == 10)
+            {
+                range = "A1:O1";
+            }
+            else if (count == 11)
+            {
+                range = "A1:P1";
+            }
+            else if (count == 12)
+            {
+                range = "A1:Q1";
+            }
+            else if (count == 13)
+            {
+                range = "A1:R1";
+            }
+            else if (count == 14)
+            {
+                range = "A1:S1";
+            }
+            else if (count == 15)
+            {
+                range = "A1:T1";
+            }
+            else if (count == 16)
+            {
+                range = "A1:U1";
+            }
+            else if (count == 17)
+            {
+                range = "A1:V1";
+            }
+            else if (count == 18)
+            {
+                range = "A1:W1";
+            }
+            else if (count == 19)
+            {
+                range = "A1:X1";
+            }
+            else if (count == 20)
+            {
+                range = "A1:Y1";
+            }
+            #endregion
+
+            if (type == "Data")
+            {
+                if (tariffLines != null && tariffLines.Count > 0)
+                {
+                    foreach (var item in tariffLines)
+                    {
+                        DataRow row = table.NewRow();
+                        row[0] = item.OriginPortCode ?? null;
+                        row[1] = item.DestinationPortCode ?? null;
+                        row[2] = item.CurrencyCode ?? null;
+                        row[3] = item.StartDate ?? null;
+
+                        int rowIndex = 4;
+
+                        foreach(TariffLinesContainersPricePM containersPrice in item.ContainersPrices)
+                        {
+                            if (isContainer1Exists)
+                            {
+                                if (containersPrice.Price1.HasValue)
+                                {
+                                    row[rowIndex++] = containersPrice.Price1 ?? null;
+                                }
+                                else
+                                {
+                                    rowIndex++;
+                                }
+                            }
+
+                            if (isContainer2Exists)
+                            {
+                                if (containersPrice.Price2.HasValue)
+                                {
+                                    row[rowIndex++] = containersPrice.Price2 ?? null;
+                                }
+                                else
+                                {
+                                    rowIndex++;
+                                }
+                            }
+
+                            if (isContainer3Exists)
+                            {
+                                if (containersPrice.Price3.HasValue)
+                                {
+                                    row[rowIndex++] = containersPrice.Price3 ?? null;
+                                }
+                                else
+                                {
+                                    rowIndex++;
+                                }
+                            }
+
+                            if (isContainer4Exists)
+                            {
+                                if (containersPrice.Price4.HasValue)
+                                {
+                                    row[rowIndex++] = containersPrice.Price4 ?? null;
+                                }
+                                else
+                                {
+                                    rowIndex++;
+                                }
+                            }
+
+                            if (isContainer5Exists)
+                            {
+                                if (containersPrice.Price5.HasValue)
+                                {
+                                    row[rowIndex++] = containersPrice.Price5 ?? null;
+                                }
+                                else
+                                {
+                                    rowIndex++;
+                                }
+                            }
+                        }
+
+                        row[count + 4] = item.Notes ?? null;
+
+                        table.Rows.Add(row);
+                    }
+
+                    string dateRange = "C2:C" + (tariffLines.Count + 1);
+                    sheet1.Range[dateRange].ColumnWidth = 14;
+                    sheet1.Range[dateRange].NumberFormat = "dd/MM/yyyy";
+                }
+            }
+
+            sheet1.Range["A1"].EntireRow.CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range["A1"].EntireRow.CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range["A1"].EntireRow.CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            sheet1.ImportDataTable(table, true, 1, 1);
+            workbook.SaveAs(memory);
+            return memory.ToArray();
+        }
+        private List<ChargeContainerClass> BuildChargeContainerClass(TariffPM tariff, int tenant)
+        {
+            List<ChargeContainerClass> myResult = new List<ChargeContainerClass>();
+
+            PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
+            ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+
+            List<PropertyInfo> tariffProperties = tariff.GetType().GetProperties().ToList();
+
+            List<string> containersCodes = new List<string>();
+            List<string> chargesCodes = new List<string>();
+
+            for (int i = 1; i <= 5; i++)
+            {
+                object containerId = tariffProperties.FirstOrDefault(f => f.Name == ("ContainerType" + i + "Id")).GetValue(tariff);
+
+                if (containerId != null)
+                {
+                    PackageType packageType = packageTypeRepository.GetSinglePackageType(containerId.ToString(), tenant);
+                    if(packageType != null)
+                    {
+                        containersCodes.Add(packageType.Code);
+                    }
+                }
+            }
+
+            for (int i = 1; i <= 10; i++)
+            {
+                object chargeId = tariffProperties.FirstOrDefault(f => f.Name == ("Surcharge" + i + "Id")).GetValue(tariff);
+
+                if (chargeId != null)
+                {
+                    ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(chargeId.ToString(), tenant);
+                    if (chargesType != null)
+                    {
+                        chargesCodes.Add(chargesType.Code);
+                    }
+                }
+            }
+
+            for (int index_c = 0; index_c < chargesCodes.Count; index_c++)
+            {
+                for(int index_P = 0; index_P < containersCodes.Count; index_P++)
+                {
+                    myResult.Add(new ChargeContainerClass()
+                    {
+                        ChargeIndex = index_c + 1,
+                        ContainerIndex = index_P + 1,
+                        ChargeCode = chargesCodes[index_c],
+                        ContainerCode = containersCodes[index_P],
+                        //ChargeId = ,
+                        //ContainerId = ,
+                    });
+                }
+            }
+
+            return myResult;
         }
 
         public HttpResponseMessage GetApproveVersion(string tariffId, int version)
@@ -3320,5 +3673,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     {
         public string FromCode { get; set; }
         public string ToCode { get; set; }
+    }
+
+    public class ChargeContainerClass
+    {
+        public int ChargeIndex { get; set; }
+        public int ContainerIndex { get; set; }
+        public string ChargeCode { get; set; }
+        public string ContainerCode { get; set; }
+        public string ChargeId { get; set; }
+        public string ContainerId { get; set; }
     }
 }
