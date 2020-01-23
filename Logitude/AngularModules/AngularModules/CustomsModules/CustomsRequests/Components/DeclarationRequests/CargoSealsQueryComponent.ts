@@ -37,6 +37,8 @@ export class CargoSealsQueryComponent
 
     //public MorningMessageObservableList: ObservableCollection;
 
+    text: any;
+    IsRePackingApproval: any;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
