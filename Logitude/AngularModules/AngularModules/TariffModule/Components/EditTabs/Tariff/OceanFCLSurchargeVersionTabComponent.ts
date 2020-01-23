@@ -366,7 +366,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         this.ItemsCollection = [];
 
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            this.ItemsCollection.push(new OceanFCLSurchargeTariffLineData(item, this));
+            this.ItemsCollection.push(new OceanFCLSurchargeTariffLineData(false, item, this));
         });
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
@@ -379,7 +379,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
             this.ItemsCollection.forEach((item: OceanFCLSurchargeTariffLineData) => {
                 item.IsNewEntity = false;
-                item.DoCompare();
+                item.DoCompareContainerPrices(true);
 
                 var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
                 if (line) {
@@ -406,7 +406,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             this.compareTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
                 var line = lines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
                 if (line == null) {
-                    this.DeletedTariffsLines.push(new OceanFCLSurchargeTariffLineData(item, this));// Deleted 
+                    this.DeletedTariffsLines.push(new OceanFCLSurchargeTariffLineData(true, item, this));// Deleted 
                 }
             });
         }
@@ -443,7 +443,6 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             this.ComparedToVersionPM = this.compareToVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
             this.ComparingCalculations(true);
         }
-
     }
 
     private compareToVersions: TariffVersionPM[];
@@ -537,7 +536,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             }
         }
 
-        var itemComponent = new OceanFCLSurchargeTariffLineData(itemPM, this, true);
+        var itemComponent = new OceanFCLSurchargeTariffLineData(false, itemPM, this, true);
         logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
@@ -766,7 +765,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     public ContainerPricesItemsSource: ContainerPricesItem[] = [];
     public ContainersItemsSourceView: ContainerPricesItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(entity: TariffLinePM, public FatherComponent: OceanFCLSurchargeVersionTabComponent, isNew: boolean = false) {
+    constructor(isDeleted: boolean, entity: TariffLinePM, public FatherComponent: OceanFCLSurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.TariffPM = FatherComponent.EntityPM;
@@ -775,7 +774,11 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
 
         this.SetUIProperties();
-        this.LoadCompareContainerPrices();
+
+        if (!isDeleted) {
+            this.LoadCompareContainerPrices();
+        }
+
         this.BuildContainerPricesItemsSource();
         this.ComputeSurchargePricesValues();
     }
@@ -1008,21 +1011,21 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
                 if (!response.HasError) {
                     this.compareContainerPrices = response.Result;
 
-                    this.DoCompare();
+                    if (this.FatherComponent.IsComparToChecked && this.FatherComponent.ComparedToVersionPM != null) {
+                        this.DoCompareContainerPrices(false);
+                    }
                 }
 
                 this.CurrentSession.StopBusyIndicator();
             });
         }
     }
-
-    public DoCompare() {
-        if (this.FatherComponent.IsComparToChecked && this.FatherComponent.ComparedToVersionPM != null) {
-            this.CompareContainerPrices();
+    
+    DoCompareContainerPrices(load: boolean) {
+        if (load) {
+            this.LoadCompareContainerPrices();
         }
-    }
 
-    CompareContainerPrices() {
         if (this.compareContainerPrices) {
             this.ContainersItemsSourceView.forEach((item: ContainerPricesItem) => {
                 item.IsNewEntity = false;
@@ -1406,7 +1409,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.RowDetailsHeights = (this.ContainersItemsSourceView.length * 26) + 20 + 28;
         this.FatherComponent.ReloadDetails.emit("");
 
-        this.DoCompare();  
+        this.DoCompareContainerPrices(false);  
     }
 }
 
