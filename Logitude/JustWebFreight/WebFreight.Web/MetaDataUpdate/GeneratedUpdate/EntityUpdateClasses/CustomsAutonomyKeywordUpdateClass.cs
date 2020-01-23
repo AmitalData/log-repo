@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsCourier/Components/AutonomyKeyword/AutonomyKeywordComponent",
 			      				    NoTS =  false,
-			      				    ///NoDefaultFeatures =  false,
+			      				    //NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    Code1 =  "c5de",
@@ -372,11 +372,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsAutonomyKeyword.Customs.CustomsAutonomyKeywordHeaderScreen", Name = "Customs.CustomsAutonomyKeywordHeaderScreen", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsAutonomyKeyword.Customs.CustomsAutonomyKeywordHeaderScrn.HeaderScreen", Name = "Customs.CustomsAutonomyKeywordHeaderScrn", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName").FirstOrDefault().Id, ScreenId = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName").FirstOrDefault().Id, ScreenId = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
-		    CustomsAutonomyKeywordObjectTable.HeaderScreenId = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScreenScreen0.Id;
+		    CustomsAutonomyKeywordObjectTable.HeaderScreenId = CustomsAutonomyKeywordCustomsCustomsAutonomyKeywordHeaderScrnScreen0.Id;
 	   		  
 
 	    }
