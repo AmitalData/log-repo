@@ -1195,8 +1195,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM);
 
                             //54378
-                            string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
-                            if (!string.IsNullOrWhiteSpace(UseSend2UServer) && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
+                            //string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
+                            string SuppressUseSend2UServer8302 = ConfigurationManager.AppSettings["20200123.SuppressUseSend2UServer8302"] ?? "";
+                            if (string.IsNullOrWhiteSpace(SuppressUseSend2UServer8302)//!string.IsNullOrWhiteSpace(UseSend2UServer) 
+                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
                             {
                                 Send2UServer(mappedPM, loggedUserId, extDocPM.Id);
                             }
