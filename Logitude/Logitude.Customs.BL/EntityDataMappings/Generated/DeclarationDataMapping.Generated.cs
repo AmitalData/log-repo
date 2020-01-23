@@ -135,7 +135,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentRejectionReason, 
 	         IsAmendment, 
 	         AmendmentOriginalDeclartation, 
-	         AmendmentDontDisplayInList,
+	         AmendmentDontDisplayInList, 
+	         DeclarationType,
 	      }
 
 
@@ -320,7 +321,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierManifestStatusCode, 
 	         CourierPaymentStatusCode, 
 	         IsPendingNotNull, 
-	         AmendmentDontDisplayInList,
+	         AmendmentDontDisplayInList, 
+	         DeclarationType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -892,6 +894,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
             {
 				entityPOCO.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationType))
+            {
+				entityPOCO.DeclarationType = entityPM.DeclarationType;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1470,6 +1477,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AmendmentDontDisplayInList = entityPOCO.AmendmentDontDisplayInList;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationType))
+            {
+					entityPM.DeclarationType = entityPOCO.DeclarationType;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2039,6 +2051,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
             {
                 oldEntityPM.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationType))
+            {
+                oldEntityPM.DeclarationType = entityPM.DeclarationType;
             }
 			
 		}

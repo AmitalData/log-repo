@@ -346,6 +346,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string AmendmentOriginalDeclartation { get; set; }
         [Column("AmendmentDontDisplayInList")]
 	    public bool AmendmentDontDisplayInList { get; set; }
+        [Column("DeclarationType")]
+	    public string DeclarationType { get; set; }
     }
 }
 	 
