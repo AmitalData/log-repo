@@ -288,6 +288,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode DocsOutTextCode_DocsOutOFollowUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocsOut.O.FollowUp", DefaultText = "Follow Up",LocalDefaultText = null, ObjectTableId = DocsOutObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode DocsOutTextCode_DocsOutAddTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocsOut.AddTemplates", DefaultText = "Adding Templates",LocalDefaultText = null, ObjectTableId = DocsOutObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocsOutTextCode_DocsOutAddYourOwnTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocsOut.AddYourOwnTemplates", DefaultText = "You can add your own templates for sending e-mails in addition to the pre-installed templates",LocalDefaultText = null, ObjectTableId = DocsOutObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

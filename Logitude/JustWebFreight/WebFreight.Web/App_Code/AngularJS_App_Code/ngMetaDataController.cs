@@ -657,12 +657,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryid}/{objecttableid}/{userid}")]
-        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryid, string objecttableid, string userid)
+        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}")]
+        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid)
         {
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
-            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(tenant, userid, queryid);
+            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, queryCode);
 
             if (querycolumns != null && querycolumns.Count() > 0)
             {
@@ -670,7 +670,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
             else
             {
-                var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryIdAndUserAngular(0, null, queryid);
+                var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryCodeAndUserAngular(0, null, queryCode);
                 return querycolumns2.OrderBy(a => a.IndexOrder).ToList();
             }
         }

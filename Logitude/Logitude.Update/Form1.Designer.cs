@@ -112,7 +112,7 @@
             this.button42 = new System.Windows.Forms.Button();
             this.BuildZipFileslbl = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
-            this.ConvertXmalTemplateToHtmlButton = new System.Windows.Forms.Button();
+            this.UpdateAutomationMetadataButton = new System.Windows.Forms.Button();
             this.WarehouseButton = new System.Windows.Forms.Button();
             this.WarehouseLable = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -202,6 +202,7 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(16, 17);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(184, 24);
@@ -264,6 +265,7 @@
             // 
             // button5
             // 
+            this.button5.Enabled = false;
             this.button5.Location = new System.Drawing.Point(543, 71);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(184, 42);
@@ -951,15 +953,17 @@
             this.button27.UseVisualStyleBackColor = true;
             this.button27.Click += new System.EventHandler(this.button27_Click);
             // 
-            // ConvertXmalTemplateToHtmlButton
+            // UpdateAutomationMetadataButton
             // 
-            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 71);
-            this.ConvertXmalTemplateToHtmlButton.Name = "ConvertXmalTemplateToHtmlButton";
-            this.ConvertXmalTemplateToHtmlButton.Size = new System.Drawing.Size(184, 33);
-            this.ConvertXmalTemplateToHtmlButton.TabIndex = 42;
-            this.ConvertXmalTemplateToHtmlButton.Text = "Build document type templates html";
-            this.ConvertXmalTemplateToHtmlButton.UseVisualStyleBackColor = true;
-            this.ConvertXmalTemplateToHtmlButton.Click += new System.EventHandler(this.ConvertXmalTemplateToHtmlButton_Click);
+            this.UpdateAutomationMetadataButton.Location = new System.Drawing.Point(522, 71);
+            this.UpdateAutomationMetadataButton.Name = "UpdateAutomationMetadataButton";
+            this.UpdateAutomationMetadataButton.Size = new System.Drawing.Size(184, 33);
+            this.UpdateAutomationMetadataButton.TabIndex = 42;
+            this.UpdateAutomationMetadataButton.Text = "Update Automation Metadata";
+            this.UpdateAutomationMetadataButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.UpdateAutomationMetadataButton.UseVisualStyleBackColor = true;
+            this.UpdateAutomationMetadataButton.UseWaitCursor = true;
+            this.UpdateAutomationMetadataButton.Click += new System.EventHandler(this.UpdateAutomationMetadataButton_Click);
             // 
             // WarehouseButton
             // 
@@ -1545,13 +1549,15 @@
             // 
             // btnUpdateTenantZeroNew
             // 
-            this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 315);
+            this.btnUpdateTenantZeroNew.BackColor = System.Drawing.Color.Violet;
+            this.btnUpdateTenantZeroNew.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 297);
             this.btnUpdateTenantZeroNew.Name = "btnUpdateTenantZeroNew";
-            this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 24);
+            this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 42);
             this.btnUpdateTenantZeroNew.TabIndex = 91;
-            this.btnUpdateTenantZeroNew.Text = "Update Tenant 0 (Generated)";
+            this.btnUpdateTenantZeroNew.Text = "Update All Modules Metadata";
             this.btnUpdateTenantZeroNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = true;
+            this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = false;
             this.btnUpdateTenantZeroNew.Click += new System.EventHandler(this.btnUpdateTenantZeroNew_Click);
             // 
             // lblTenantNew
@@ -1669,7 +1675,7 @@
             this.tabPage2.Controls.Add(this.checkBox1);
             this.tabPage2.Controls.Add(this.ConvertXmalTemplateLable);
             this.tabPage2.Controls.Add(this.button27);
-            this.tabPage2.Controls.Add(this.ConvertXmalTemplateToHtmlButton);
+            this.tabPage2.Controls.Add(this.UpdateAutomationMetadataButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -1938,7 +1944,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label BuildZipFileslbl;
         private System.Windows.Forms.Button button27;
-        private System.Windows.Forms.Button ConvertXmalTemplateToHtmlButton;
+        private System.Windows.Forms.Button UpdateAutomationMetadataButton;
         private System.Windows.Forms.Button WarehouseButton;
         private System.Windows.Forms.Label WarehouseLable;
 

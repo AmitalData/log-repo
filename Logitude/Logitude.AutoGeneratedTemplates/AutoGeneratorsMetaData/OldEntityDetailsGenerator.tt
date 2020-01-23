@@ -180,6 +180,14 @@ void SaveDetailsClassOutput(string outputFileName)
         //          } 
         //      } 
         // }
+
+		string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	    	if(IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
 		
 		foreach(var field in entity.Elements("field"))  
 		 { 

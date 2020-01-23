@@ -41,7 +41,10 @@ namespace Logitude.DBMigrations.Models
             {
                 foreach (var relation in DXMLTable.Relations)
                 {
-                    tableRelationsScript += GetCreateRelationScript(relation);
+                    if (!relation.Ignore)
+                    {
+                        tableRelationsScript += GetCreateRelationScript(relation);
+                    }
                 }
             }
             else
@@ -52,13 +55,24 @@ namespace Logitude.DBMigrations.Models
                     {
                         tableRelationsScript += GetDropRelationScript(relation);
                     }
+                    else
+                    {
+                        RelationDefinition relationFromDxml = GetRelationFromDXMLTable(relation);
+                        if (relationFromDxml.Ignore)
+                        {
+                            tableRelationsScript += GetDropRelationScript(relation);
+                        }
+                    }
                 }
 
                 foreach (var relation in DXMLTable.Relations)
                 {
                     if (!IsRelationInCurrentTable(relation))
                     {
-                        tableRelationsScript += GetCreateRelationScript(relation);
+                        if (!relation.Ignore)
+                        {
+                            tableRelationsScript += GetCreateRelationScript(relation);
+                        }
                     }
                 }
             }
@@ -651,7 +665,7 @@ namespace Logitude.DBMigrations.Models
             alterPrimaryKeyScript += GetDropPrimaryKeyConstraintScript(primaryKeyConstraintName);
             if (IsTableHasPrimaryKeys(DXMLTable))
             {
-                alterPrimaryKeyScript += "\n";
+                alterPrimaryKeyScript += "\n\n";
                 alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName);
             }
             return alterPrimaryKeyScript;
@@ -730,5 +744,9 @@ namespace Logitude.DBMigrations.Models
         protected abstract bool IsRelationInCurrentTable(RelationDefinition relation);
 
         protected abstract bool IsRelationInDXMLTable(RelationDefinition relation);
+
+        protected abstract RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation);
+
+        protected abstract string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string script);
     }
 }

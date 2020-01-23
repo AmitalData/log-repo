@@ -28,8 +28,8 @@ namespace Simplog.Data.Helpers
        [DataMember]
        public string DataTypeCode { get; set; }
 
- 
 
-        
+        [DataMember]
+        public string ObjectFieldCode { get; set; }
     }
 }

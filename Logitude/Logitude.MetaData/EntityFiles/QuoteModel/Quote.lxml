@@ -23765,7 +23765,7 @@
     IsPackagable="true"
     QueryGroupName="&quot;Follow Ups&quot;"
     FeatureCode="&quot;FOLLOWUPS&quot;"
-    FeatureTextCodeCode="&quot;Master.Features.FollowUps&quot;"
+    FeatureTextCodeCode="&quot;Quote.Features.FollowUps&quot;"
     FeatureDefaultText="&quot;Follow Ups&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -27786,6 +27786,21 @@
       Code="&quot;Quote.M.ValueEditedByUser&quot;"
       DefaultText="&quot;Value Edited by User, Double Click to Reset Calculated value&quot;"
       TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Quote.S.Charges.ProfitInSaleCurrency&quot;"
+      DefaultText="&quot;Profit In Sale Currency&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Quote.S.SaleTotalAmount&quot;"
+      DefaultText="&quot;Sale&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Quote.S.CostTotalAmount&quot;"
+      DefaultText="&quot;Cost&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

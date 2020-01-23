@@ -39,7 +39,6 @@ using Logitude.BL.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.InfrastructureModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 { 

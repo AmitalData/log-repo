@@ -1895,7 +1895,7 @@
     ObjectTableName="&quot;APPayment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="40"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -7193,7 +7193,7 @@
         FeatureCode="&quot;SendToQBO&quot;"
         IsPackagable="false"
         TextCodeCode="&quot;APPayment.B.SendToQBO&quot;"
-        FeatureTextCodeCode="&quot;ARPayment.Features.SendToQBO&quot;"
+        FeatureTextCodeCode="&quot;APPayment.Features.SendToQBO&quot;"
         FeatureDefaultText="&quot;Send To QBO&quot;" />
     </MenuButton>
   </MenuButtons>

@@ -43,6 +43,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     }
                 }
             }
+
+            MapCalculatedFields(entityPM, entityPoco, entityMasterData);
         }
 
         private static void MapConcurrencyFields_Champ(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
@@ -56,11 +58,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
             entityPoco.GrossWeight = entityPM.GrossWeight;
-            entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG;
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
             entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
-            entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
-            entityPoco.ChargeableWeightInKG = GetWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
             entityPoco.PreCarriageATA = entityPM.PreCarriageATA;
             entityPoco.PreCarriageATD = entityPM.PreCarriageATD;
             entityPoco.PreCarriageETA = entityPM.PreCarriageETA;
@@ -149,8 +148,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
 
-            entityPoco.IsFSRSent = entityPM.IsFSRSent;
-            entityPoco.FNAReason = entityPM.FNAReason;
+
             entityPoco.LastSentByUserId = entityPM.LastSentByUserId;
             entityPoco.LastFSRStatusRequestDate = entityPM.LastFSRStatusRequestDate;
             entityPoco.CargonautFHLStatusCode = entityPM.CargonautFHLStatusCode;
@@ -191,9 +189,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.OnCarriageETA = GetConcurrencyFieldValue_Date(entityPM.OnCarriageETA_Original, entityPM.OnCarriageETA, entityPoco.OnCarriageETA);
             entityPoco.OnCarriageETD = GetConcurrencyFieldValue_Date(entityPM.OnCarriageETD_Original, entityPM.OnCarriageETD, entityPoco.OnCarriageETD);
             entityPoco.INTTRABookingStatusCode = GetConcurrencyFieldValue_String(entityPM.INTTRABookingStatusCode_Original, entityPM.INTTRABookingStatusCode, entityPoco.INTTRABookingStatusCode);
-            entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
-            entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
-            entityPoco.ChargeableWeightInKG = GetWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
 
             if (entityPM.ShipmentLevelCode != "H")
             {
@@ -234,6 +229,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.MainCarriageCarrierNumber = GetConcurrencyFieldValue_String(entityPM.MAN_CarrierNumber_Original, entityPM.MainCarriageCarrierNumber, entityMasterData.MainCarriageCarrierNumber);
                 }
             }
+        }
+        private static void MapCalculatedFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
+        {
+            entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
+            entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
+            entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
         }
 
         private static void CalculateFinalDestinationPort(ShipmentPM entityPM, ShipmentMasterData entityMasterData)
