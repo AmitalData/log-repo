@@ -21,17 +21,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CustomsAutonomyKeywordList> GetIqueryableList(IQueryable<CustomsAutonomyKeyword> iQueryable)
         {
-		IQueryable<CustomsAutonomyKeywordList> query = (from a in iQueryable
-                                            select new CustomsAutonomyKeywordList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          KeywordtypeCode = a.KeywordtypeCode,
-					
-		                    	            });
+
+			IQueryable<CustomsAutonomyKeywordList> query = (from a in iQueryable
+															select new CustomsAutonomyKeywordList()
+															{
+
+																Id = a.Id,
+
+																Tenant = a.Tenant,
+
+																KeywordtypeCode = a.KeywordtypeCode,
+																KeywordsList = a.KeywordsList,
+																KeywordtypeLocalName = a.KeywordtypeCode == "1" ? "עיר" : "טלפון"
+
+															});
             return query;
 		}
 
