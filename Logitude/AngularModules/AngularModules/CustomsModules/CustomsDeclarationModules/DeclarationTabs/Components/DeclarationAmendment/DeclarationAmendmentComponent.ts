@@ -68,7 +68,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
-                this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null);
+                this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList==false);
                 this.LoadDeclarationAmendmentsList();
                  this.BuildColumns();
 
