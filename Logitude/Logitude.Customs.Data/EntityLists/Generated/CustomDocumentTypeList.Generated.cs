@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string PointerLevelName  { get; set; }
        [DataMember]
        public bool IsCourierManadatory  { get; set; }
+       [DataMember]
+       public bool IsManadatory  { get; set; }
    }
 
 }

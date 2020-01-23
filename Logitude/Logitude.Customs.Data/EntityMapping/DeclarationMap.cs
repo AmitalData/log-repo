@@ -250,6 +250,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.AmendmentOriginalDeclartation).HasColumnName("AmendmentOriginalDeclartation").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.AmendmentDontDisplayInList).HasColumnName("AmendmentDontDisplayInList");
+
+            this.Property(t => t.DeclarationType).HasColumnName("DeclarationType").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

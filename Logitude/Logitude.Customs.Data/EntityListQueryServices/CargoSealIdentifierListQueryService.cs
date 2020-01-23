@@ -53,7 +53,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<CargoSealIdentifier> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CargoSealIdentifier> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 
