@@ -706,9 +706,11 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         args.Version = this.CurrentVersion;
         args.TariffCharges = this.tariffCharges;
         args.CarrierId = this.EntityPM.SellerId;
+        args.TypeCode = this.EntityPM.TypeCode;
+        args.FatherComponent = this;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1100;
+        logWindow.Width = 1300;
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surcharge Update";

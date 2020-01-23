@@ -2689,6 +2689,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 mySurchargesText = "";
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
+                                
                                 // Update
                                 if (myLine != null)
                                 {
@@ -2698,32 +2699,65 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     foreach (string charge in args.Surcharge)
                                     {
                                         string[] charge_array = charge.Split(',');
-                                        decimal? price = null;
-                                        decimal? minPrice = null;
 
-                                        if (this.FixFilter(charge_array[1]) != null)
+                                        if(tariff.TypeCode == "OFS")
                                         {
-                                            price = Convert.ToDecimal(charge_array[1]);
+                                            var arrayChargeType = "";
+
+                                            if (this.FixFilter(charge_array[1]) != null)
+                                            {
+                                                arrayChargeType = charge_array[1];
+                                            }
+
+                                            mySurchargesText += arrayChargeType + ", ";
+
+                                            string chargeId = null;
+                                            if (this.FixFilter(charge_array[0]) != null)
+                                            {
+                                                chargeId = charge_array[0];
+                                            }
+
+                                            TariffLinesContainersPricePM containersPricePM = myLine.ContainersPrices.Where(d => d.SurchargeId == chargeId).FirstOrDefault();
+                                            if (containersPricePM == null)
+                                            {
+                                                this.BuildContainersPrices(tariff, charge_array, myLine, true);
+                                            }
+
+                                            else
+                                            {
+                                                this.BuildContainersPrices(tariff, charge_array, myLine, false, containersPricePM);
+                                            }
                                         }
 
-                                        if (this.FixFilter(charge_array[2]) != null)
+                                        else
                                         {
-                                            minPrice = Convert.ToDecimal(charge_array[2]);
+                                            decimal? price = null;
+                                            decimal? minPrice = null;
+
+                                            if (this.FixFilter(charge_array[1]) != null)
+                                            {
+                                                price = Convert.ToDecimal(charge_array[1]);
+                                            }
+
+                                            if (this.FixFilter(charge_array[2]) != null)
+                                            {
+                                                minPrice = Convert.ToDecimal(charge_array[2]);
+                                            }
+
+                                            var arrayChargeType = "";
+                                            if (this.FixFilter(charge_array[4]) != null)
+                                            {
+                                                arrayChargeType = charge_array[4];
+                                            }
+
+                                            mySurchargesText += arrayChargeType + ", ";
+
+                                            PropertyInfo valuePropInfo1 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
+                                            PropertyInfo valuePropInfo2 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
+
+                                            valuePropInfo1.SetValue(myLine, price, null);
+                                            valuePropInfo2.SetValue(myLine, minPrice, null);
                                         }
-
-                                        var arrayChargeType = "";
-                                        if (this.FixFilter(charge_array[4]) != null)
-                                        {
-                                            arrayChargeType = charge_array[4];
-                                        }
-
-                                        mySurchargesText += arrayChargeType + ", ";
-
-                                        PropertyInfo valuePropInfo1 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
-                                        PropertyInfo valuePropInfo2 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
-
-                                        valuePropInfo1.SetValue(myLine, price, null);
-                                        valuePropInfo2.SetValue(myLine, minPrice, null);
                                     }
                                 }
                                 // New 
@@ -2744,29 +2778,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     foreach (string charge in args.Surcharge)
                                     {
                                         string[] charge_array = charge.Split(',');
-                                        decimal? price = null;
-                                        decimal? minPrice = null;
 
-                                        if (this.FixFilter(charge_array[1]) != null)
+                                        if (tariff.TypeCode == "OFS")
                                         {
-                                            price = Convert.ToDecimal(charge_array[1]);
+                                            var arrayChargeType = "";
+
+                                            if (this.FixFilter(charge_array[1]) != null)
+                                            {
+                                                arrayChargeType = charge_array[1];
+                                            }
+
+                                            mySurchargesText += arrayChargeType + ", ";
+
+                                            this.BuildContainersPrices(tariff, charge_array, tariffLine, true);
                                         }
 
-                                        if (this.FixFilter(charge_array[2]) != null)
+                                        else
                                         {
-                                            minPrice = Convert.ToDecimal(charge_array[2]);
-                                        }
-                                        var arrayChargeType = "";
-                                        if (this.FixFilter(charge_array[4]) != null)
-                                        {
-                                            arrayChargeType = charge_array[4];
-                                        }
+                                            decimal? price = null;
+                                            decimal? minPrice = null;
 
-                                        mySurchargesText += arrayChargeType + ", ";
-                                        PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
-                                        PropertyInfo valuePropInfo2 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
-                                        valuePropInfo1.SetValue(tariffLine, price, null);
-                                        valuePropInfo2.SetValue(tariffLine, minPrice, null);
+                                            if (this.FixFilter(charge_array[1]) != null)
+                                            {
+                                                price = Convert.ToDecimal(charge_array[1]);
+                                            }
+
+                                            if (this.FixFilter(charge_array[2]) != null)
+                                            {
+                                                minPrice = Convert.ToDecimal(charge_array[2]);
+                                            }
+                                            var arrayChargeType = "";
+                                            if (this.FixFilter(charge_array[4]) != null)
+                                            {
+                                                arrayChargeType = charge_array[4];
+                                            }
+
+                                            mySurchargesText += arrayChargeType + ", ";
+                                            PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
+                                            PropertyInfo valuePropInfo2 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
+                                            valuePropInfo1.SetValue(tariffLine, price, null);
+                                            valuePropInfo2.SetValue(tariffLine, minPrice, null);
+                                        }
                                     }
 
                                     iDraftVersion.TariffLines.Add(tariffLine);
@@ -2805,6 +2857,95 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private void BuildContainersPrices(TariffPM tariff, string[] charge_array, TariffLinePM tariffLine, bool isNew, TariffLinesContainersPricePM containersPricePM = null)
+        {
+            string chargeId = null;
+            decimal? price1 = null;
+            decimal? price2 = null;
+            decimal? price3 = null;
+            decimal? price4 = null;
+            decimal? price5 = null;
+
+            if (this.FixFilter(charge_array[0]) != null)
+            {
+                chargeId = charge_array[0];
+            }
+
+            if (this.FixFilter(charge_array[2]) != null)
+            {
+                price1 = Convert.ToDecimal(charge_array[2]);
+            }
+
+            if (this.FixFilter(charge_array[3]) != null)
+            {
+                price2 = Convert.ToDecimal(charge_array[3]);
+            }
+
+            if (this.FixFilter(charge_array[4]) != null)
+            {
+                price3 = Convert.ToDecimal(charge_array[4]);
+            }
+
+            if (this.FixFilter(charge_array[5]) != null)
+            {
+                price4 = Convert.ToDecimal(charge_array[5]);
+            }
+
+            if (this.FixFilter(charge_array[6]) != null)
+            {
+                price5 = Convert.ToDecimal(charge_array[6]);
+            }
+
+            if(isNew)
+            {
+                containersPricePM = new TariffLinesContainersPricePM()
+                {
+                    ChangeSetOp = ChangeSetOperation.Insert,                    
+                    Tenant = tariffLine.Tenant,
+                    TariffId = tariffLine.TariffId,
+                    SurchargeId = chargeId,
+                    Price1 = price1,
+                    Price2 = price2,
+                    Price3 = price3,
+                    Price4 = price4,
+                    Price5 = price5,
+                };
+
+                tariffLine.ContainersPrices.Add(containersPricePM);
+            }
+
+            else
+            {
+                containersPricePM.ChangeSetOp = ChangeSetOperation.Update;
+
+                if (!string.IsNullOrEmpty(tariff.ContainerType1Id))
+                {
+                    containersPricePM.Price1 = price1;
+                }
+
+                if (!string.IsNullOrEmpty(tariff.ContainerType2Id))
+                {
+                    containersPricePM.Price2 = price2;
+                }
+
+                if (!string.IsNullOrEmpty(tariff.ContainerType3Id))
+                {
+                    containersPricePM.Price3 = price3;
+                }
+
+                if (!string.IsNullOrEmpty(tariff.ContainerType4Id))
+                {
+                    containersPricePM.Price4 = price4;
+                }
+
+                if (!string.IsNullOrEmpty(tariff.ContainerType5Id))
+                {
+                    containersPricePM.Price5 = price5;
+                }
+            }
+        }
+
         private bool ValidateStartDate(TariffPM tariff, TariffVersionPM iDraftVersion, List<FromToClass> routs, DateTime startDate, ITariffModuleContext tariffContext)
         {
             bool isValid = true;
