@@ -214,8 +214,14 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
             entity.CreatedByPartner = entityPM.CreatedByPartner;
-            if(entityPM.BillToGLAccountId == null)
-            entityPM.BillToGLAccountId = GetBillToGLAccountId(entity.BillTo, entityPM.Tenant);
+            if (entityPM.BillToGLAccountId == null)
+            {
+                entity.BillToGLAccountId = GetBillToGLAccountId(entity.BillToId, entityPM.Tenant);
+            }
+            else
+            {
+                entity.BillToGLAccountId = entityPM.BillToGLAccountId;
+            }
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)
@@ -283,19 +289,28 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
         }
 
-        public static string GetBillToGLAccountId(Card billTo,int tenant)
+        public static string GetBillToGLAccountId(string billToId,int tenant)
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            GLAccountPM billToAccount = glAccountQuery.GetSingleGLAccountPM(billTo.Id, tenant);
+            CardPM card = GetCardById(billToId, tenant);
+            GLAccountPM billToAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             if(billToAccount != null)
             {
-                return billTo.Id;
+                return billToAccount.Id;
             }
             else
             {
                 return null;
             }
             
+        }
+
+        private static CardPM GetCardById(string id, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM card = cardQuery.GetSinglePM(id, tenant);
+            return card;
+
         }
     }
 }

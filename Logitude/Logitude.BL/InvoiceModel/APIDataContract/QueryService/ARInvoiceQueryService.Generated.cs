@@ -169,7 +169,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public ARInvoicePM ARInvoiceDataMappingAndValidatin(ARInvoice MyEntity,int Tenant,string ComputingPartnerName = "")
+		public ARInvoicePM ARInvoiceDataMappingAndValidatin(ARInvoice MyEntity,int Tenant, string ComputingPartnerName = "")
         {
 		    try
             {

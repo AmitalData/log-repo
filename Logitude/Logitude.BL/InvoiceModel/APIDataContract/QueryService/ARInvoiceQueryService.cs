@@ -329,7 +329,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.Tenant = MyEntity.Tenant;
                 temp.IsDraft = MyEntity.IsDraft;
                 temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
-            
+                if(MyEntity.BillToGLAccountId != null)
+                temp.BillToGLAccount = GetGLAccountNumberById(MyEntity.BillToGLAccountId, MyEntity.Tenant);
+
+
                 return temp;
             }
             catch (Exception ex)
@@ -358,7 +361,17 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-     
+        public string GetGLAccountNumberById(string id, int tenant )
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            Logitude.Accounting.Def.EntityPMs.GLAccountPM gLAccount = glAccountQuery.GetSingleGLAccountPM(id,tenant);
+            if (gLAccount != null)
+            {
+                return gLAccount.DisplayNumber;
+
+            }
+            else return null;
+        }
 
         public ARInvoice ARInvoiceCustomDataMapping(string Id, int Tenant)
         {
