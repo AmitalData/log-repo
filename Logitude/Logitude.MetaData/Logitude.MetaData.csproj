@@ -182,8 +182,11 @@
     <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplateSectionType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\SharedLogistics.lxml" />
     <None Include="EntityFiles\InfrastructureModel\RuleUpdateHistory.lxml" />
-  
     <None Include="EntityFiles\CommonDataModel\AgentSharedManifest.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
     <None Include="EntityFiles\CommonDataModel\CardExternalCodeByCurrency.lxml">
