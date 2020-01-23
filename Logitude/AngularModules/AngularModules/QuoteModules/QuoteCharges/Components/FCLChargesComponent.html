@@ -52,28 +52,28 @@
                                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="50" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
 
                                     <!-- Charges Type -->
-                                    <log-column [width]="'150'" [header]="'QuoteCharge.CH.ChargesTypeId' | TextCodeTranslationPipe">
+                                    <log-column [width]="'150'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             {{item.ChargesTypeCodeName}}
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Vendor -->
-                                    <log-column [width]="'120'" [header]="'QuoteCharge.CH.VendorId' | TextCodeTranslationPipe">
+                                    <log-column [width]="'120'" [header]="'QuoteCharge.CH.VendorIdListLable' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             {{item.VendorName}}
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Measurement Code -->
-                                    <log-column [width]="'50'" [header]="'QuoteCharge.CH.CostMeasurementId' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                    <log-column [width]="'50'" [header]="'QuoteCharge.CH.CostMeasurementIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                             {{item.CostMeasurementCode}}
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Currency Code -->
-                                    <log-column [width]="'40'" [header]="'QuoteCharge.CH.SaleCurrencyId' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                    <log-column [width]="'40'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                             {{item.CostCurrencyCode}}
                                         </log-cell-template>
@@ -765,7 +765,7 @@
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
                                                     <tr>
-                                                        <td>{{'QuoteCharge.CH.IsAllIn' | TextCodeTranslationPipe}}</td>
+                                                        <td>{{'QuoteCharge.CH.IsAllINListLable' | TextCodeTranslationPipe}}</td>
 
                                                         <td style="width:14px;">
                                                             <HelpIcon [IconSize]="14" [Header]="'QuoteCharge.F.IsAllIN' | TextCodeTranslationPipe" [Text]="'QuoteCharge.IsAllINHelpText' | TextCodeTranslationPipe"></HelpIcon>
@@ -905,7 +905,7 @@
                                                                     </tr>
 
                                                                     <tr style="height:22px;">
-                                                                        <td class="Label">{{'Quote.F.CostTotalAmount.Short' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Label">{{'Quote.F.CostTotalAmountInLocalCurrency.Short' | TextCodeTranslationPipe}}:</td>
 
                                                                         <td>
                                                                             <div></div>
@@ -921,7 +921,7 @@
                                                                     </tr>
 
                                                                     <tr style="height:22px;">
-                                                                        <td class="Label">{{'Quote.F.SaleTotalAmount.Short' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Label">{{'Quote.F.SaleTotalAmountInLocalCurrency.Short' | TextCodeTranslationPipe}}:</td>
 
                                                                         <td>
                                                                             <div></div>
