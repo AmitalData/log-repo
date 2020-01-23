@@ -13,19 +13,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         List<ChartingDataClass> result;
         public List<ChartingDataClass> FilterStageFunnelValues(IQueryable<Quote> dataSourceQuery)
         {
-            dataSourceQuery = dataSourceQuery.Where(d => d.StageId != null);
+            dataSourceQuery = dataSourceQuery.Where(d => d.StageId != null && d.Stage.Rank > 0);
 
-            //List<ChartingDataClass> myResult =
-            //  (from d in dataSourceQuery
-            //   group d by new { d.StageId, d.Stage.Name, d.Stage.Probability } into g
-            //   select new CRMChartingClass()
-            //   {
-            //       Id = g.Key.StageId,
-            //       LabelProperty = g.Key.Name,
-            //       DecimalProperty = filterCode == "CNT" ? g.Count() : g.Sum(s => s.NumberOfShipments).Value,
-            //       IntegerProperty = g.Key.Probability == null ? 0 : g.Key.Probability.Value,
-            //       GroupedId = g.Key.StageId,
-            //   }).ToList();
+            result = (from d in dataSourceQuery
+                      group d by new { d.StageId, d.Stage.Name, d.Stage.Rank } into g
+                      select new ChartingDataClass()
+                      {
+                          Id = g.Key.StageId,
+                          LabelProperty = g.Key.Name,
+                          DecimalProperty = g.Count(),
+                          IntegerProperty = g.Key.Rank,
+                          GroupedId = g.Key.StageId,
+                      }).ToList();
+
             return result;
         }
     }

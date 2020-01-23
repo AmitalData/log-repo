@@ -89,7 +89,7 @@ export class QuoteDashboardComponent extends BaseComponent {
     }
 
     RefreshTab() {
-        
+        this.LoadComponents();
     }
 
     RefreshButtonClicked() {
@@ -102,6 +102,7 @@ export class QuoteDashboardComponent extends BaseComponent {
             var days: number = parseInt(this.SelectedDateFilter.Code);
             this.ComputeDays();
         }
+        this.LoadComponents();
 
     }
     private BuildDateFilters() {
@@ -133,7 +134,6 @@ export class QuoteDashboardComponent extends BaseComponent {
                 ActivityDate.setFullYear(ActivityToDateString[0], ActivityToDateString[1] - 1, ActivityToDateString[2]);
                 this.toDate = DateTool.GetDateParts(ActivityDate).DateObject;
             }
-
 
         }
 
@@ -492,7 +492,7 @@ export class QuoteDashboardComponent extends BaseComponent {
                 }
 
                 else {
-                    this.PageChild_OQS.RefreshTab();
+                    this.PageChild_OQS.RefreshTab(this);
                 }
             }
 
@@ -506,7 +506,7 @@ export class QuoteDashboardComponent extends BaseComponent {
                 }
 
                 else {
-                    this.PageChild_QOC.RefreshTab();
+                    this.PageChild_QOC.RefreshTab(this);
                 }
             }
 
@@ -520,7 +520,7 @@ export class QuoteDashboardComponent extends BaseComponent {
                 }
 
                 else {
-                    this.PageChild_QCV.RefreshTab();
+                    this.PageChild_QCV.RefreshTab(this);
                 }
             }
             if (KPILocation != null) {
@@ -533,7 +533,7 @@ export class QuoteDashboardComponent extends BaseComponent {
                 }
 
                 else {
-                    this.PageChild_KPI.RefreshTab();
+                    this.PageChild_KPI.RefreshTab(this);
                 }
             }
             if (TFSLocation != null) {
@@ -546,7 +546,7 @@ export class QuoteDashboardComponent extends BaseComponent {
                 }
 
                 else {
-                    this.PageChild_TFS.RefreshTab();
+                    this.PageChild_TFS.RefreshTab(this);
                 }
             }
         }

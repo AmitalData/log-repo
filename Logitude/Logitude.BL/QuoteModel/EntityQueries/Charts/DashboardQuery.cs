@@ -77,7 +77,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
 
             if (chartCode == "OQS")
             {
-
+                StageFunnelQuery stageFunnelQuery = new StageFunnelQuery();
+                result = stageFunnelQuery.FilterStageFunnelValues(dataSourceQuery);
             }
             else if (chartCode == "QOC")
             {

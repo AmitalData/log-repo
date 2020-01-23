@@ -3614,6 +3614,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteDashboardArguments.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteDocumentVersionExtendedPMService.ts" />
+    <TypeScriptCompile Include="Quote\Services\QuoteDashboard\DashboardService.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteTemplateSectionPMService.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\VDKFilterComponent.ts" />

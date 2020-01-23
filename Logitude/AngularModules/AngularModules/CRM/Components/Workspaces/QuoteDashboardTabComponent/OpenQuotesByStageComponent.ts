@@ -6,6 +6,8 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
+import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
+import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDashboardArguments';
 declare var makeChart, FunnelClick, ResetItemFunnel;
 @Component({
     selector: 'open-quote-by-stage',
@@ -17,24 +19,35 @@ export class OpenQuotesByStageComponent implements OnInit {
 
     public SalesFunnelId: string = "SalesFunnelId_";
     private CurrentSession = SessionLocator.SelectedSession;
-    private quouteDomainService: QuoteDomainService;
- 
+    private dashboardService: DashboardService;
+    private funnelArgs: QuoteDashboardArguments;
+    
     constructor(private _entityResourceService: EntityResourceService) {
         this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
+    }
+
+    ngOnInit() {
+        this.funnelArgs = new QuoteDashboardArguments();
+        this.dashboardService = new DashboardService();
         this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+            this.FillFunnelArgs();
             this.LoadFunnelData();
         });
     }
 
-    ngOnInit() {
-        this.quouteDomainService = new QuoteDomainService(); 
+    FillFunnelArgs() {
+        this.funnelArgs.OwnerId = this.Wizard.OwnerId;
+        this.funnelArgs.BusinessUnitId = this.Wizard.BusinessUnitId;
+        this.funnelArgs.FromDate = this.Wizard.FromDate;
+        this.funnelArgs.ToDate = this.Wizard.ToDate;
+        this.funnelArgs.ChartCode = "OQS";
     }
 
     // Load Funnel Data
     public FunnelData: any;
     public FunnelDataFilterd = [];
     LoadFunnelData() {
-        this.quouteDomainService.GetStageFunnelData(this.Wizard.OwnerId, this.Wizard.BusinessUnitId, null).subscribe((myResult: any) => {
+        this.dashboardService.GetDashboardChartValues(this.funnelArgs).subscribe((myResult: any) => {
             this.FunnelData = myResult;
             this.FillFunnelData();
         });
@@ -117,11 +130,15 @@ export class OpenQuotesByStageComponent implements OnInit {
     private Wizard: QuoteDashboardComponent;
     InitTab(wizard: QuoteDashboardComponent) {
         this.Wizard = wizard;
+        this.FillFunnelArgs();
         this.LoadFunnelData();
         console.log("Init Tab");
     }
 
-    RefreshTab() {
+    RefreshTab(wizard: QuoteDashboardComponent) {
+        this.Wizard = wizard;
+        this.FillFunnelArgs();
+        this.LoadFunnelData();
         console.log("Refresh Tab");
     }
 }

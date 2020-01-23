@@ -16,7 +16,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class QuoteDashboardController : ApiController
     {
-        public HttpResponseMessage GetQuoteDashboardValues(QuoteDashboardArguments quoteDashboardArgs)
+        public HttpResponseMessage Post(QuoteDashboardArguments quoteDashboardArgs)
         {
             try
             {
