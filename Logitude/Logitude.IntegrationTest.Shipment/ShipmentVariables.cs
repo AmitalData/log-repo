@@ -8,6 +8,7 @@ namespace Logitude.IntegrationTest.Shipment
 {
     public class ShipmentVariables
     {
+        public static string ShipmentNumber { get; set; }
         public static string CurrencyEURId { get; set; }
         public static string IncotermLDEId { get; set; }
         public static string MeasurmentGRWTId { get; set; }
