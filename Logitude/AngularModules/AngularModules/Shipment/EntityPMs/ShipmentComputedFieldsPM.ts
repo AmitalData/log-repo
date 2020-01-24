@@ -214,7 +214,10 @@ export class ShipmentComputedFieldsPM {
     public get PickupTo() { return this.pickupTo; }
     public set PickupTo(newValue: string) { if (this.pickupTo != newValue) { this.pickupTo = newValue; this.MarkAsDirty("PickupTo"); } }
        
-	 
+    private operationallyClosedByUserName: string;
+    public get OperationallyClosedByUserName() { return this.operationallyClosedByUserName; }
+    public set operationallyClosedByUserName(newValue: string) { if (this.operationallyClosedByUserName != newValue) { this.operationallyClosedByUserName = newValue; this.MarkAsDirty("operationallyClosedByUserName"); } }
+
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		

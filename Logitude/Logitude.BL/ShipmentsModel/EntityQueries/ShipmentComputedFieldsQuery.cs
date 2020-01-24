@@ -112,6 +112,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  DeliveryTo = a.DeliveryTo,
                                                                  PickupFrom = a.PickupFrom,
                                                                  PickupTo = a.PickupTo,
+                                                                 OperationallyClosedByUserName = a.OperationallyClosedByUser.Contact.Name,
                                                              });
             return result;
         }
