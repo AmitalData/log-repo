@@ -2,6 +2,7 @@
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +14,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         List<ChartingDataClass> result;
         public List<ChartingDataClass> FilterStageFunnelValues(IQueryable<Quote> dataSourceQuery)
         {
-            dataSourceQuery = dataSourceQuery.Where(d => d.StageId != null && d.Stage.Rank > 0);
+            dataSourceQuery = dataSourceQuery.Include("Stage").Where(d => d.StageId != null && d.Stage.Rank > 0);
 
-            result = (from d in dataSourceQuery
+            result = (from d in dataSourceQuery.Include("Stage")
                       group d by new { d.StageId, d.Stage.Name, d.Stage.Rank } into g
+                      orderby g.Count() descending
                       select new ChartingDataClass()
                       {
                           Id = g.Key.StageId,

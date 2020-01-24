@@ -82,7 +82,7 @@ export class OpenQuotesByStageComponent implements OnInit {
         if (item != null) {
 
             var objectTableName = "Quote";
-            var queryCode = "Open Quotes";
+            var queryCode = "All Quotes";
             var displayTitle = this.FunnelData[item.index].LabelProperty + " Quotes";
             var backButtonTitle = TextCodeTranslator.Translate("General.MH.Quotes");
 
@@ -130,8 +130,6 @@ export class OpenQuotesByStageComponent implements OnInit {
     private Wizard: QuoteDashboardComponent;
     InitTab(wizard: QuoteDashboardComponent) {
         this.Wizard = wizard;
-        this.FillFunnelArgs();
-        this.LoadFunnelData();
         console.log("Init Tab");
     }
 
