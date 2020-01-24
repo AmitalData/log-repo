@@ -32,6 +32,7 @@ using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
@@ -1375,6 +1376,17 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
+
+                case "BSPR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(BluesnapPaymentsDataProvider));
+                        BluesnapPaymentsDataProvider reportDataProvider = (BluesnapPaymentsDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "BluesnapPayments", Name = "BluesnapPaymentsDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
             }
             return urlImage;
         }
@@ -1894,6 +1906,14 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "BSPR":
+                    {
+                        BluesnapPaymentsReportManager myDataManager = new BluesnapPaymentsReportManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+
+                 
                     #endregion
             }
             return dataProvider;

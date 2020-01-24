@@ -2027,6 +2027,7 @@
     <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
+    <Compile Include="DataProviders\BluesnapPaymentsDataProvider.cs" />
     <Compile Include="DataProviders\FlightBookingsManifestDataProvider.cs" />
     <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
