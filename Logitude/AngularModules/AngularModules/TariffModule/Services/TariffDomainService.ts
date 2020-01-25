@@ -44,23 +44,24 @@ export class TariffDomainService {
         });
     }
 
-    GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number, Weightcode: string, GrossWeight: number, GrossWeightCode: string, Volume: number, VolumeCode: string, currencyId: string, tariffType: string) {
+    GetAvailableAirlineFreightTariffs(args: TariffSearchArgs) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetAvailableAirlineFreightTariffs?FromPort=' + FromPort + "&ToPort=" + ToPort + "&BetweenDate=" + ServiceHelper.GetDateString(BetweenDate) + "&Weight=" + Weight + "&Weightcode=" + Weightcode + "&GrossWeight=" + GrossWeight + "&GrossWeightCode=" + GrossWeightCode + "&Volume=" + Volume + "&VolumeCode=" + VolumeCode + "&currencyId=" + currencyId + "&tariffType="+ tariffType;
-
+        authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-
-                var myJsonResult = response.json();
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myJsonResult;
-                return serviceResponse;
+            return this._http.post(this._apiUrl + "/PostAvailableAirlineFreightTariffs", JSON.stringify(args), {
+                headers: authHeader,
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });
-    }    
+        }
+        );
+    }
+
     GetCheckDatesValidty(FromPort: string, ToPort: string, ToDate: Date, TariffId:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -458,4 +459,24 @@ export class UpdateSurchargeArgs {
     To: string[] = [];
     Surcharge: string[] = [];
     StartDate: Date;
+}
+
+export class TariffSearchArgs {
+
+    OriginPortId: string;
+    DestinationPortId: string;
+    Date: string;
+    Weight : number;
+    WeightCode: string;
+    GrossWeight :number;
+    GrossWeightCode: string;
+    Volume : number;
+    VolumeUnitCode: string;
+    CurrencyId: string;
+    TariffType: string;
+    ContainerType1Id: string;
+    ContainerType2Id: string;
+    ContainerType3Id: string;
+    ContainerType4Id: string;
+    ContainerType5Id: string;
 }
