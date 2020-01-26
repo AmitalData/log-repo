@@ -568,7 +568,7 @@ namespace Logitude.DXMLGenerator.Models
 
             if(columnDefaultValue != null)
             {
-                return columnDefaultValue.DefaultValue.TrimStart('(').TrimEnd(')');
+                return columnDefaultValue.DefaultValue;
             }
 
             return null;
@@ -579,13 +579,13 @@ namespace Logitude.DXMLGenerator.Models
             Console.WriteLine("Reading Columns Default Values ...");
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string filePath = Path.Combine(projectDirectory, "ColumnsDefaultValues.csv");
+            string filePath = Path.Combine(projectDirectory, "DefaultValues.csv");
 
             List<ColumnDefaultValue> columnsDefaultValues = File.ReadAllLines(filePath).Select(l => new ColumnDefaultValue
             {
                 TableName = l.Split(',')[0],
                 ColumnName = l.Split(',')[1],
-                DefaultValue = l.Split(',')[2]
+                DefaultValue = l.Split(',')[2].ToLower().Contains("getdate()") ? "CurrentDate" : l.Split(',')[2].Replace("(", String.Empty).Replace(")", String.Empty)
             }).ToList();
 
             ColumnsDefaultValues = columnsDefaultValues;

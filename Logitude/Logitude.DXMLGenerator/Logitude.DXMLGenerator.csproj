@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ColumnsDefaultValues.csv" />
+    <None Include="DefaultValues.csv" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExcludedTablesMap.txt" />
