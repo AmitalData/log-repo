@@ -562,6 +562,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
             Boolean mandatoryFields = SendDeclarationMandatoryFields(_MyDeclarationPM);
 
+            bool mandatoryDoc = IsDocumentMissing(_MyDeclarationPM);
+
             var responseXML = new diamonsResponseXML();
             if(!ticketValidStatus)
             {
@@ -571,7 +573,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             {
                 responseXML.MAND_FIELDS = "T";
             }
-            if(responseXML != null)
+
+            if (!mandatoryDoc)
+            {
+                responseXML.MAND_DOC = "T";
+
+            }
+            if (responseXML != null)
             {
                 var xml = XmlGenericUtil<diamonsResponseXML>.SerializeObject(responseXML);
                 MyGenericResponseObj.ResponseXml = xml;
@@ -579,6 +587,36 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
         }
 
+
+        private bool IsDocumentMissing(DeclarationPM myDeclarationPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+       //     List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentStatusCode == "1").ToList();
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+
+            List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
+
+            foreach (var doc in documentTypePMs)
+            {
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code).ToList();
+            if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+            return true;
+            }
+ 
+            
+                //foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMList)
+                //{
+                //    CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
+                //    if (docType.IsManadatory)
+                //    {
+                       
+                //}
+         
+
+            return false;
+
+        }
         private bool SendDeclarationMandatoryFields(DeclarationPM myDeclarationPM)
         {
             Boolean sendDeclarationMandatory = true;
@@ -729,7 +767,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
         public string MISS_REFERENCE;
 
         public string MAND_FIELDS;
-    
+        public string MAND_DOC;
+
     }
 
 }
