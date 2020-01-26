@@ -124,6 +124,9 @@
     <Reference Include="Logitude.Customs.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.Customs.BL.dll</HintPath>
     </Reference>
+    <Reference Include="Logitude.XSD">
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -377,6 +380,7 @@
     <Compile Include="CommonDataModel\Tools\TraceEvents\CarrierAreaTracing.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\AccountingPartnerValidating.cs" />
+    <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityPMs\BluesnapTransactionPM.cs" />
     <Compile Include="GlobalModel\EntityQueries\BluesnapTransactionQuery.cs" />
@@ -527,6 +531,8 @@
     <Compile Include="InvoiceModel\Tools\TraceEvents\ARInvoiceStockTracing.cs" />
     <Compile Include="InvoiceModel\Tools\Validating\ARInvoiceStockValidating.cs" />
     <Compile Include="Helpers\ShipmentComputedFieldsHelper.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\DashboardQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />

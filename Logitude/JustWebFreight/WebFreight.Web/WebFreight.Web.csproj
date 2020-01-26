@@ -1965,6 +1965,7 @@
     <Compile Include="Controllers\WebDomainControllers\PartnersDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\GlobalDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuickbooksDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\QuoteDashboardController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ReportsDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ClockTimeGeneralDomainController.cs" />
