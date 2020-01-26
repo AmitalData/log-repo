@@ -39,7 +39,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private myChargesTypeListService: ChargesTypeListService;
     private dimenstionShipment: ShipmentPM;
     public IsPickedFromWizard: boolean = false;
-    private TariffType: string;
+    public TariffType: string;
     public FreightLabel: string;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
