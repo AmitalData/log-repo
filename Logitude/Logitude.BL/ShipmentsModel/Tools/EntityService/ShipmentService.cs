@@ -58,6 +58,8 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
 using System.Text.RegularExpressions;
+using Logitude.BL.ShipmentsModel.Tools.Behaviour;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -109,6 +111,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContactPM loggedContact;
         private ShipmentAssemblyRepository shipmentAssemblyRepository;
         List<ShipmentPM> housesList = new List<ShipmentPM>();
+        public ShipmentBehaviourMaker shipmentBehaviourMaker;
         public ShipmentComputedFields entityComputedFields;
         private bool IsLCLEntity;
         private bool IsFCLEntity;
@@ -142,7 +145,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.myAddressRepository = new AddressRepository(myCommonContext);
             this.myPortRepository = new PortRepository(myCommonContext);
             this.aWBOCIRepository = new AWBOCIRepository(objectContext);
-            this.shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(objectContext);
+            //this.shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(objectContext);
             this.documentsFilingRepository = new DocumentsFilingRepository(myCommonContext);
             this.shipmentCommodityRepository = new ShipmentCommodityRepository(objectContext);
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
@@ -228,6 +231,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.entityPM.ProrateReceivables = loggedTenant.ProrateMasterReceivables;
                 }
 
+                shipmentBehaviourMaker = new ShipmentBehaviourMaker(entityPM, objectContext, isNewEntity);
                 this.InitializeComponent();
 
                 //this.HandleBackToBack();
@@ -314,7 +318,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
-                UpdateShipmentComputedFields();
+                shipmentBehaviourMaker.HandleShipmentComputedFields();
+                entityComputedFields = UpdateShipmentComputedFieldsBehaviour.ShipmentComputedFields;
+                IntializeShipmentVarsFromComputedFields();
+                //UpdateShipmentComputedFields();
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
@@ -357,6 +364,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 scope.Complete();
             }
+        }
+
+        private void IntializeShipmentVarsFromComputedFields()
+        {
+            entityPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+            entityPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+            entityPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
         }
 
         string CustomerChanged = "false";
@@ -444,6 +458,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                     this.OldCustomerId = myOldCustomerId;
 
+                    shipmentBehaviourMaker = new ShipmentBehaviourMaker(entityPM, objectContext, isNewEntity);
                     this.InitializeComponent();
 
                     //this.HandleBackToBack();
@@ -497,7 +512,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
                     this.UpdateShipmentFollowUpsCollection();
-                    UpdateShipmentComputedFields();
+                    shipmentBehaviourMaker.HandleShipmentComputedFields();
+                    entityComputedFields = UpdateShipmentComputedFieldsBehaviour.ShipmentComputedFields;
+                    //UpdateShipmentComputedFields();
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
 
 
@@ -606,162 +623,162 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         #endregion
 
-        private void UpdateShipmentComputedFields()
-        {
-            if (entityComputedFields != null)
-            {
-                MapComputedFields(entityComputedFields, entityPM);
-                shipmentComputedFieldsRepository.Update(entityComputedFields);
-            }
+        //private void UpdateShipmentComputedFields()
+        //{
+        //    if (entityComputedFields != null)
+        //    {
+        //        MapComputedFields(entityComputedFields, entityPM);
+        //        shipmentComputedFieldsRepository.Update(entityComputedFields);
+        //    }
 
-            entityPM.IsShipmentComputedFieldChange = false;
+        //    entityPM.IsShipmentComputedFieldChange = false;
 
-        }
+        //}
 
-        private void MapComputedFields(ShipmentComputedFields entityComputedFields, ShipmentPM entityPM)
-        {
-            entityComputedFields.FirstPickupLocation = entityPM.FirstPickupLocation;
-            entityComputedFields.Commodity = entityPM.AWBCommodityItemNumber;
-            entityComputedFields.OperationallyClosedByUserId = entityPM.OperationalClosedByUserId;
-            entityComputedFields.NumberOfDeliveries = entityPM.ShipmentDeliveries != null ? entityPM.ShipmentDeliveries.Count() : 0;
-            entityComputedFields.ContainsDangerousGoods = entityPM.IsDangerous;
-            entityComputedFields.ImportDeclarationDate = entityPM.DeclarationDate;
-            entityComputedFields.ImportDeclarationNumber = entityPM.DeclarationNumber;
-            GetContainersNumbers();
-            GetOperationalClosedByUserName();
-            GetShipmentLastPickUpFields();
-            GetShipmentDeliveriesFields();
-            GetShipmentPickUpFields();
-        }
+        //private void MapComputedFields(ShipmentComputedFields entityComputedFields, ShipmentPM entityPM)
+        //{
+        //    entityComputedFields.FirstPickupLocation = entityPM.FirstPickupLocation;
+        //    entityComputedFields.Commodity = entityPM.AWBCommodityItemNumber;
+        //    entityComputedFields.OperationallyClosedByUserId = entityPM.OperationalClosedByUserId;
+        //    entityComputedFields.NumberOfDeliveries = entityPM.ShipmentDeliveries != null ? entityPM.ShipmentDeliveries.Count() : 0;
+        //    entityComputedFields.ContainsDangerousGoods = entityPM.IsDangerous;
+        //    entityComputedFields.ImportDeclarationDate = entityPM.DeclarationDate;
+        //    entityComputedFields.ImportDeclarationNumber = entityPM.DeclarationNumber;
+        //    GetContainersNumbers();
+        //    GetOperationalClosedByUserName();
+        //    GetShipmentLastPickUpFields();
+        //    GetShipmentDeliveriesFields();
+        //    GetShipmentPickUpFields();
+        //}
 
-        private void GetOperationalClosedByUserName()
-        {
-            if (!string.IsNullOrEmpty(entityPM.OperationalClosedByUserId))
-            {
-                ContactRepository contactRepository = new ContactRepository(tenant);
-                Contact contact = contactRepository.GetSingleContact(entityPM.OperationalClosedByUserId, tenant);
-                entityComputedFields.OperationallyClosedByUserName = contact != null ? contact.Name : "";
-            }
+        //private void GetOperationalClosedByUserName()
+        //{
+        //    if (!string.IsNullOrEmpty(entityPM.OperationalClosedByUserId))
+        //    {
+        //        ContactRepository contactRepository = new ContactRepository(tenant);
+        //        Contact contact = contactRepository.GetSingleContact(entityPM.OperationalClosedByUserId, tenant);
+        //        entityComputedFields.OperationallyClosedByUserName = contact != null ? contact.Name : "";
+        //    }
             
-        }
+        //}
 
-        private void GetContainersNumbers()
-        {
-            string myContainersNumbers = null;
+        //private void GetContainersNumbers()
+        //{
+        //    string myContainersNumbers = null;
 
-            if (entityPM.ShipmentPackages != null)
-            {
-                foreach (ShipmentPackagePM packagePM in entityPM.ShipmentPackages.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete))
-                {
-                    if (string.IsNullOrEmpty(myContainersNumbers))
-                    {
-                        myContainersNumbers = packagePM.ContainerNumber;
-                    }
-                    else
-                    {
-                        myContainersNumbers += ", " + packagePM.ContainerNumber;
-                    }
-                }
+        //    if (entityPM.ShipmentPackages != null)
+        //    {
+        //        foreach (ShipmentPackagePM packagePM in entityPM.ShipmentPackages.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete))
+        //        {
+        //            if (string.IsNullOrEmpty(myContainersNumbers))
+        //            {
+        //                myContainersNumbers = packagePM.ContainerNumber;
+        //            }
+        //            else
+        //            {
+        //                myContainersNumbers += ", " + packagePM.ContainerNumber;
+        //            }
+        //        }
 
-                if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
-                {
-                    myContainersNumbers = myContainersNumbers.Substring(0, 1000);
-                }
-            }
-            entityComputedFields.ContainersNumbers = myContainersNumbers;
-        }
+        //        if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
+        //        {
+        //            myContainersNumbers = myContainersNumbers.Substring(0, 1000);
+        //        }
+        //    }
+        //    entityComputedFields.ContainersNumbers = myContainersNumbers;
+        //}
 
-        private void GetShipmentLastPickUpFields()
-        {
-            ShipmentPickUpPM lastPickup = entityPM.ShipmentPickUps.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+        //private void GetShipmentLastPickUpFields()
+        //{
+        //    ShipmentPickUpPM lastPickup = entityPM.ShipmentPickUps.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-            if (lastPickup != null)
-            {
-                entityComputedFields.LastPickupATA = lastPickup.ATA;
-                entityComputedFields.LastPickupATD = lastPickup.ATD;
-                entityComputedFields.LastPickupETA = lastPickup.ETA;
-                entityComputedFields.LastPickupETD = lastPickup.ETD;
-            }
-        }
+        //    if (lastPickup != null)
+        //    {
+        //        entityComputedFields.LastPickupATA = lastPickup.ATA;
+        //        entityComputedFields.LastPickupATD = lastPickup.ATD;
+        //        entityComputedFields.LastPickupETA = lastPickup.ETA;
+        //        entityComputedFields.LastPickupETD = lastPickup.ETD;
+        //    }
+        //}
 
-        private void GetShipmentPickUpFields()
-        {
-            if (entityPM.ShipmentPickUps.Count() > 0)
-            {
-                ShipmentPickUpPM finalPickUp = entityPM.ShipmentPickUps.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+        //private void GetShipmentPickUpFields()
+        //{
+        //    if (entityPM.ShipmentPickUps.Count() > 0)
+        //    {
+        //        ShipmentPickUpPM finalPickUp = entityPM.ShipmentPickUps.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                if (finalPickUp.PickUpDeliveryToTypeCode == "PART") {
-                    entityComputedFields.PickupTo = GetPrtnerAddressCity(finalPickUp.ToAddressId);
-                }
-                else if (finalPickUp.PickUpDeliveryToTypeCode == "CASL") {
-                    entityComputedFields.PickupTo = finalPickUp.ToAddressCity;
-                }
-                else {
-                    entityComputedFields.PickupTo = GetPortName(finalPickUp.ToPortId);
-                }
+        //        if (finalPickUp.PickUpDeliveryToTypeCode == "PART") {
+        //            entityComputedFields.PickupTo = GetPrtnerAddressCity(finalPickUp.ToAddressId);
+        //        }
+        //        else if (finalPickUp.PickUpDeliveryToTypeCode == "CASL") {
+        //            entityComputedFields.PickupTo = finalPickUp.ToAddressCity;
+        //        }
+        //        else {
+        //            entityComputedFields.PickupTo = GetPortName(finalPickUp.ToPortId);
+        //        }
 
-                if (finalPickUp.PickUpDeliveryFromTypeCode == "PART") {
-                    entityComputedFields.PickupFrom = GetPrtnerAddressCity(finalPickUp.FromAddressId);
-                }
-                else if (finalPickUp.PickUpDeliveryFromTypeCode == "CASL") {
-                    entityComputedFields.PickupFrom = finalPickUp.FromAddressCity;
-                }
-                else {
-                    entityComputedFields.PickupFrom = GetPortName(finalPickUp.FromPortId);
-                }
-            }
-        }
+        //        if (finalPickUp.PickUpDeliveryFromTypeCode == "PART") {
+        //            entityComputedFields.PickupFrom = GetPrtnerAddressCity(finalPickUp.FromAddressId);
+        //        }
+        //        else if (finalPickUp.PickUpDeliveryFromTypeCode == "CASL") {
+        //            entityComputedFields.PickupFrom = finalPickUp.FromAddressCity;
+        //        }
+        //        else {
+        //            entityComputedFields.PickupFrom = GetPortName(finalPickUp.FromPortId);
+        //        }
+        //    }
+        //}
 
-        private void GetShipmentDeliveriesFields()
-        {
-            if (entityPM.ShipmentDeliveries.Count > 0)
-            {
-                ShipmentDeliveryPM finalDelivery = entityPM.ShipmentDeliveries.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+        //private void GetShipmentDeliveriesFields()
+        //{
+        //    if (entityPM.ShipmentDeliveries.Count > 0)
+        //    {
+        //        ShipmentDeliveryPM finalDelivery = entityPM.ShipmentDeliveries.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                if (finalDelivery.PickUpDeliveryToTypeCode == "PART"){
-                    entityComputedFields.DeliveryTo = GetPrtnerAddressCity(finalDelivery.ToAddressId);
-                    entityComputedFields.DeliveryToCity = entityComputedFields.DeliveryTo;
-                }
-                else if (finalDelivery.PickUpDeliveryToTypeCode == "CASL") {
-                    entityComputedFields.DeliveryTo = finalDelivery.ToAddressCity;
-                    entityComputedFields.DeliveryToCity = finalDelivery.ToAddressCity;
-                } else {
-                    entityComputedFields.DeliveryTo = GetPortName(finalDelivery.ToPortId);
-                    entityComputedFields.DeliveryToCity = entityComputedFields.DeliveryTo;
-                    entityComputedFields.DeliveryToPortId = finalDelivery.ToPortId;
-                }
+        //        if (finalDelivery.PickUpDeliveryToTypeCode == "PART"){
+        //            entityComputedFields.DeliveryTo = GetPrtnerAddressCity(finalDelivery.ToAddressId);
+        //            entityComputedFields.DeliveryToCity = entityComputedFields.DeliveryTo;
+        //        }
+        //        else if (finalDelivery.PickUpDeliveryToTypeCode == "CASL") {
+        //            entityComputedFields.DeliveryTo = finalDelivery.ToAddressCity;
+        //            entityComputedFields.DeliveryToCity = finalDelivery.ToAddressCity;
+        //        } else {
+        //            entityComputedFields.DeliveryTo = GetPortName(finalDelivery.ToPortId);
+        //            entityComputedFields.DeliveryToCity = entityComputedFields.DeliveryTo;
+        //            entityComputedFields.DeliveryToPortId = finalDelivery.ToPortId;
+        //        }
 
-                if (finalDelivery.PickUpDeliveryFromTypeCode == "PART") {
-                    entityComputedFields.DeliveryFrom = GetPrtnerAddressCity(finalDelivery.FromAddressId);
-                }
-                else if (finalDelivery.PickUpDeliveryFromTypeCode == "CASL"){
-                    entityComputedFields.DeliveryFrom = finalDelivery.FromAddressCity;
-                }
-                else {
-                    entityComputedFields.DeliveryFrom = GetPortName(finalDelivery.FromPortId);
-                }
-            }
-        }
+        //        if (finalDelivery.PickUpDeliveryFromTypeCode == "PART") {
+        //            entityComputedFields.DeliveryFrom = GetPrtnerAddressCity(finalDelivery.FromAddressId);
+        //        }
+        //        else if (finalDelivery.PickUpDeliveryFromTypeCode == "CASL"){
+        //            entityComputedFields.DeliveryFrom = finalDelivery.FromAddressCity;
+        //        }
+        //        else {
+        //            entityComputedFields.DeliveryFrom = GetPortName(finalDelivery.FromPortId);
+        //        }
+        //    }
+        //}
 
-        private string GetPortName(string portId)
-        {
-            Port port = null;
-            if (!string.IsNullOrEmpty(portId))
-            {
-                port = myPortRepository.GetSinglePort(portId, tenant);
-            }
-            return port.EnglishName;
-        }
+        //private string GetPortName(string portId)
+        //{
+        //    Port port = null;
+        //    if (!string.IsNullOrEmpty(portId))
+        //    {
+        //        port = myPortRepository.GetSinglePort(portId, tenant);
+        //    }
+        //    return port.EnglishName;
+        //}
 
-        private string GetPrtnerAddressCity(string addressId)
-        {
-            Address partnerAddress = null;
-            if (!string.IsNullOrEmpty(addressId))
-            {
-                partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);
-            }
-            return partnerAddress.City;
-        }
+        //private string GetPrtnerAddressCity(string addressId)
+        //{
+        //    Address partnerAddress = null;
+        //    if (!string.IsNullOrEmpty(addressId))
+        //    {
+        //        partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);
+        //    }
+        //    return partnerAddress.City;
+        //}
         
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
         {
@@ -2828,42 +2845,38 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                entityComputedFields = new ShipmentComputedFields();
-                entityComputedFields.Id = entityPM.Id;
-                entityComputedFields.Tenant = entityPM.Tenant;
+                //entityComputedFields = new ShipmentComputedFields();
+                //entityComputedFields.Id = entityPM.Id;
+                //entityComputedFields.Tenant = entityPM.Tenant;
 
-                if (entityPM.IsOperationalClosed)
-                {
-                    entityComputedFields.IsMissingDocuments = false;
-                    entityComputedFields.IsRequestedDocuments = false;
-                }
+                //if (entityPM.IsOperationalClosed)
+                //{
+                //    entityComputedFields.IsMissingDocuments = false;
+                //    entityComputedFields.IsRequestedDocuments = false;
+                //}
 
-                else
-                {
-                    entityComputedFields.IsMissingDocuments = true;
-                }
-
-
-
-                if (entityPM.IsShipmentComputedFieldChange)
-                {
-                    entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
-                }
-
-                if (entityPM.CustomsClearanceDate != null)
-                {
-                    entityComputedFields.IsDigitalSignRequired = false;
-                    entityComputedFields.IsDepositionRequired = false;
-                }
+                //else
+                //{
+                //    entityComputedFields.IsMissingDocuments = true;
+                //}
 
 
-                entityComputedFields.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
-                shipmentComputedFieldsRepository.Add(entityComputedFields);
+
+                //if (entityPM.IsShipmentComputedFieldChange)
+                //{
+                //    entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
+                //}
+
+                //if (entityPM.CustomsClearanceDate != null)
+                //{
+                //    entityComputedFields.IsDigitalSignRequired = false;
+                //    entityComputedFields.IsDepositionRequired = false;
+                //}
 
 
-                entityPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
-                entityPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
-                entityPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
+                //entityComputedFields.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
+                //shipmentComputedFieldsRepository.Add(entityComputedFields);
+                
 
                 shipmentAdditionalCloudData = new ShipmentAdditionalCloudData();
                 shipmentAdditionalCloudData.Id = entityPM.Id;
@@ -3145,55 +3158,55 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
 
-                if (entityComputedFields == null) entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
+                //if (entityComputedFields == null) entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
                 if (entityComputedFields != null)
                 {
-                    if (entityPM.IsShipmentComputedFieldChange)
-                    {
-                        entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
-                        entityComputedFields.IsRequestedDocuments = entityPM.IsRequestedDocuments;
-                        entityComputedFields.IsDigitalSignRequired = entityPM.IsDigitalSignRequired;
-                        entityComputedFields.IsMissingDocuments = entityPM.IsMissingDocuments;
-                        entityComputedFields.DocumentsSearchFields = entityPM.DocumentsSearchFields;
-                        entityComputedFields.MissingDocumentsCount = entityPM.MissingDocumentsCount;
-                        entityComputedFields.MissingDocumentsNames = entityPM.MissingDocumentsNames;
-                        entityComputedFields.RequestedDocumentsCount = entityPM.RequestedDocumentsCount;
-                        entityComputedFields.NumberOfHouses = entityPM.NumberOfHouses;
-                        entityComputedFields.ImporterDepositionRequestDetails = entityPM.ImporterDepositionRequestDetails;
-                    }
+                    //if (entityPM.IsShipmentComputedFieldChange)
+                    //{
+                    //    entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
+                    //    entityComputedFields.IsRequestedDocuments = entityPM.IsRequestedDocuments;
+                    //    entityComputedFields.IsDigitalSignRequired = entityPM.IsDigitalSignRequired;
+                    //    entityComputedFields.IsMissingDocuments = entityPM.IsMissingDocuments;
+                    //    entityComputedFields.DocumentsSearchFields = entityPM.DocumentsSearchFields;
+                    //    entityComputedFields.MissingDocumentsCount = entityPM.MissingDocumentsCount;
+                    //    entityComputedFields.MissingDocumentsNames = entityPM.MissingDocumentsNames;
+                    //    entityComputedFields.RequestedDocumentsCount = entityPM.RequestedDocumentsCount;
+                    //    entityComputedFields.NumberOfHouses = entityPM.NumberOfHouses;
+                    //    entityComputedFields.ImporterDepositionRequestDetails = entityPM.ImporterDepositionRequestDetails;
+                    //}
 
-                    if (entityPM.IsOperationalClosed)
-                    {
-                        entityComputedFields.IsMissingDocuments = false;
-                        entityComputedFields.IsRequestedDocuments = false;
-                        entityComputedFields.IsDigitalSignRequired = false;
-                        entityComputedFields.MissingDocumentsCount = 0;
-                        entityComputedFields.MissingDocumentsNames = "";
-                    }
+                    //if (entityPM.IsOperationalClosed)
+                    //{
+                    //    entityComputedFields.IsMissingDocuments = false;
+                    //    entityComputedFields.IsRequestedDocuments = false;
+                    //    entityComputedFields.IsDigitalSignRequired = false;
+                    //    entityComputedFields.MissingDocumentsCount = 0;
+                    //    entityComputedFields.MissingDocumentsNames = "";
+                    //}
 
-                    else
-                    {
-                        var OTId = objectTableRepository.GetObjectTableIdByName("Shipment");
-                        entityComputedFields.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
-                        entityComputedFields.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
-                        if (entityComputedFields.MissingDocumentsCount == 0)
-                        {
-                            entityComputedFields.IsMissingDocuments = false;
-                        }
+                    //else
+                    //{
+                    //    var OTId = objectTableRepository.GetObjectTableIdByName("Shipment");
+                    //    entityComputedFields.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
+                    //    entityComputedFields.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
+                    //    if (entityComputedFields.MissingDocumentsCount == 0)
+                    //    {
+                    //        entityComputedFields.IsMissingDocuments = false;
+                    //    }
 
-                        else
-                        {
-                            entityComputedFields.IsMissingDocuments = true;
-                        }
-                    }
+                    //    else
+                    //    {
+                    //        entityComputedFields.IsMissingDocuments = true;
+                    //    }
+                    //}
 
-                    if (entityPM.CustomsClearanceDate != null)
-                    {
-                        entityComputedFields.IsMissingDocuments = false;
-                        entityComputedFields.IsRequestedDocuments = false;
-                        entityComputedFields.IsDigitalSignRequired = false;
-                        entityComputedFields.IsDepositionRequired = false;
-                    }
+                    //if (entityPM.CustomsClearanceDate != null)
+                    //{
+                    //    entityComputedFields.IsMissingDocuments = false;
+                    //    entityComputedFields.IsRequestedDocuments = false;
+                    //    entityComputedFields.IsDigitalSignRequired = false;
+                    //    entityComputedFields.IsDepositionRequired = false;
+                    //}
 
                     entityPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                     entityPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
