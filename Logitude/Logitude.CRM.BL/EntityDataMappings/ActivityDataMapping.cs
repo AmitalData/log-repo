@@ -61,7 +61,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
 
             if (entityPM.IsHybrid)
             {
-                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.MeetingSummary);
+            //    this.CustomMappedPOCOProperties.Add(POCOPropertyNames.MeetingSummary);
             }
          
         }
