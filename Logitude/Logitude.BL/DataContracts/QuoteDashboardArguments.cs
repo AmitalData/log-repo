@@ -14,6 +14,9 @@ namespace Logitude.BL.DataContracts
         public string OwnerId { get; set; }
         public string BusinessUnitId { get; set; }
         public string ChartCode { get; set; }
-
+        public string TransportModeId { get; set; }
+        public string DirectionId { get; set; }
+        public bool IncludeOthersCountries { get; set; }
+        public int? TopCountries { get; set; }
     }
 }
