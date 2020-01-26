@@ -549,7 +549,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
             }
 
-            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
                 tariffLine.Surcharge2Price = item.Surcharge2Price;
                 tariffLine.Surcharge3Price = item.Surcharge3Price;
@@ -586,6 +586,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             }
 
             else if (this.EntityPM.TypeCode == "OFS") {
+                tariffLine.StartDate = item.StartDate;
+                tariffLine.CurrencyId = item.CurrencyId;
+                tariffLine.CurrencyCode = item.CurrencyCode;
+
                 item.ContainersPrices.forEach(containerItem => {
                     var containerPrice = new TariffLinesContainersPricePM(tariffLine);
                     containerPrice.SurchargeId = containerItem.SurchargeId;

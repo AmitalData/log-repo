@@ -86,17 +86,10 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                     if (!myResponse2.HasError) {
                         this.AllMeasurements = myResponse2.Result;
 
+                        this.SetSurchargesIds();
                         this.LoadCompareToVersions();
                         this.SetUIProperties();
                         this.SetSurchargesLabelsAndVisibility();
-
-                        //if (this.CurrentVersion.IsDraft) {
-                        //    this.FillTariffLines(this.CurrentVersion.TariffLines);
-                        //}
-
-                        //else {
-                        //    this.LoadTariffLines("currentVersion");
-                        //}
                     }
                 });
             }
@@ -108,6 +101,29 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 this.SetContainersLabelsAndVisibility();
             }
         });
+    }
+
+    public Surcharge1Id: string;
+    public Surcharge2Id: string;
+    public Surcharge3Id: string;
+    public Surcharge4Id: string;
+    public Surcharge5Id: string;
+    public Surcharge6Id: string;
+    public Surcharge7Id: string;
+    public Surcharge8Id: string;
+    public Surcharge9Id: string;
+    public Surcharge10Id: string; 
+    private SetSurchargesIds() {
+        this.Surcharge1Id = this.EntityPM.Surcharge1Id;
+        this.Surcharge2Id = this.EntityPM.Surcharge2Id;
+        this.Surcharge3Id = this.EntityPM.Surcharge3Id;
+        this.Surcharge4Id = this.EntityPM.Surcharge4Id;
+        this.Surcharge5Id = this.EntityPM.Surcharge5Id;
+        this.Surcharge6Id = this.EntityPM.Surcharge6Id;
+        this.Surcharge7Id = this.EntityPM.Surcharge7Id;
+        this.Surcharge8Id = this.EntityPM.Surcharge8Id;
+        this.Surcharge9Id = this.EntityPM.Surcharge9Id;
+        this.Surcharge10Id = this.EntityPM.Surcharge10Id;
     }
 
     private SaveCompletedEvent: any = null;
@@ -1384,7 +1400,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
         if (list.length < 10) {
             for (var i = list.length; i < 10; i++) {
-                var chargeId: string = this.TariffPM['Surcharge' + (i + 1) + 'Id'];
+                var chargeId: string = this.FatherComponent['Surcharge' + (i + 1) + 'Id'];
 
                 if (!AppTool.IsNullOrEmpty(chargeId)) {
                     var item: TariffLinesContainersPricePM = new TariffLinesContainersPricePM(null);
@@ -1415,7 +1431,6 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
 export class ContainerPricesItem extends BaseComponent {
     public EntityPM: TariffLinesContainersPricePM;
-    public TariffPM: TariffPM;
     public TariffLinePM: TariffLinePM;
     public ObjectTableName: string = "TariffLinesContainersPrice";
     public IsNewEntity: boolean = false;
@@ -1424,7 +1439,6 @@ export class ContainerPricesItem extends BaseComponent {
     constructor(entity: TariffLinesContainersPricePM, public FatherComponent: OceanFCLSurchargeTariffLineData, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
-        this.TariffPM = FatherComponent.TariffPM;
         this.TariffLinePM = FatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         
@@ -1448,43 +1462,43 @@ export class ContainerPricesItem extends BaseComponent {
     public ChargeLabel: string;
     private FillChargeLabels() {
         var index: number = 0;
-        if (this.SurchargeId == this.TariffPM.Surcharge1Id) {
+        if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge1Id) {
             index = 1;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge2Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge2Id) {
             index = 2;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge3Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge3Id) {
             index = 3;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge4Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge4Id) {
             index = 4;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge5Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge5Id) {
             index = 5;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge6Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge6Id) {
             index = 6;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge7Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge7Id) {
             index = 7;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge8Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge8Id) {
             index = 8;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge9Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge9Id) {
             index = 9;
         }
 
-        else if (this.SurchargeId == this.TariffPM.Surcharge10Id) {
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge10Id) {
             index = 10;
         }
 
