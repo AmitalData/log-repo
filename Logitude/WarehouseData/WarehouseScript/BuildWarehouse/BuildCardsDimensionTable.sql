@@ -49,7 +49,7 @@
 	left join dw_CustomerSizes  on dw_Customers.CustomerSizeId=dw_CustomerSizes.Id
 	left join dw_Industries  on dw_Customers.IndustryId=dw_Industries.Id
 
-	left join dw_Addresses  on dw_Partners.Id = dw_Addresses.Id
+	left join dw_Addresses  on dw_Partners.Id = dw_Addresses.CardId
     left join dw_States  on dw_Addresses.StateId = dw_States.Id
 	inner join dw_PartnerTypes  on dw_Partners.PartnerTypeId=dw_PartnerTypes.Id
 	inner JOIN dw_DWHSettings ON dw_Partners.Tenant = dw_DWHSettings.Tenant
