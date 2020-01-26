@@ -2107,7 +2107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMHInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Invoices", DefaultText = "Invoices",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOPaymentBankAccountCurrencyDifferent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentBankAccountCurrencyDifferent", DefaultText = "Payment currency is different from bank account currency",LocalDefaultText = @"מטבע התשלום שונה ממטבע חשבון הבנק הנבחר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOPaymentBankAccountCurrencyDifferent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentBankAccountCurrencyDifferent", DefaultText = "Journal currency is different from account currency",LocalDefaultText = @"מטבע שורת הפקודה שונה ממטבע חשבון  הנבחר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHDepositions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Depositions", DefaultText = "Depositions",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
