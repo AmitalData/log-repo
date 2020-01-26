@@ -237,7 +237,7 @@ export class CostWorkspaceComponent implements OnInit {
                 var listArgs = new ListComponentArgs();
                 listArgs.QueryCode = "Ocean.LCL.Surcharges.Cost";
                 listArgs.ObjectTableName = "Tariff";
-                listArgs.DisplayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
+                listArgs.DisplayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost") + " Surcharges Cost";
                 listArgs.BackButtonTitle = "Tariff";
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
