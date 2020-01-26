@@ -11,5 +11,13 @@ namespace WebFreight.Web.DataProviders
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public string ShopperId { get; set; }
+        public bool ShowAllRecurringTenants { get; set; }
+        public List<BlusnapTransactionsList> BlusnapTransactionsList { get; set; }
+    }
+
+    public class BlusnapTransactionsList
+    {
+
+
     }
 }

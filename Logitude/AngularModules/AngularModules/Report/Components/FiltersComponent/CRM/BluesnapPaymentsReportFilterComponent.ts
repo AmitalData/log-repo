@@ -8,7 +8,7 @@ import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './ShipperReturnsReportFilterComponent.html',
+    templateUrl: './BluesnapPaymentsReportFilterComponent.html',
 })
 
 export class BluesnapPaymentsReportFilterComponent extends BaseComponent {
@@ -31,6 +31,7 @@ export class BluesnapPaymentsReportFilterComponent extends BaseComponent {
 
     public FromDate: Date;
     public ToDate: Date;
+    public ShowAllRecurringTenants: boolean;
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
 
@@ -66,6 +67,13 @@ export class BluesnapPaymentsReportFilterComponent extends BaseComponent {
             this.queryFilterItem.FieldName = "ToDate";
             this.queryFilterItem.FieldValue = this.ToDate;
             this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ShowAllRecurringTenants";
+            this.queryFilterItem.FieldValue = this.ShowAllRecurringTenants;
+            this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
             var reportFliter = new ReportFliter();

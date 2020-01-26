@@ -1,3 +1,4 @@
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -30,6 +31,7 @@
                                 </td>
 
                                 <td style="width:70px;">To:</td>
+
                                 <td style="width:170px;">
                                     <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
                                 </td>
@@ -41,6 +43,21 @@
 
                                 <td style="width:80px;">
                                     <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td class="Label" style="width:130px">Show all recurring tenants</td>
+
+                                <td style="width:15px">
+                                    <CheckBox [IsChecked]="ShowAllRecurringTenants" (Checked)="ShowAllRecurringTenants = $event"></CheckBox>
                                 </td>
 
                                 <td>
