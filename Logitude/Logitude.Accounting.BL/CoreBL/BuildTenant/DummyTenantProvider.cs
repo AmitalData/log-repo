@@ -72,7 +72,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             int count = 0;
             for (int MM = 1; MM <= 12; MM++)
             {
-                if (!JournalValidator.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), new DateTime(forYear, MM, 1)))
+                if (!JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), new DateTime(forYear, MM, 1)))
                 {
                     continue;
                 }
