@@ -11096,9 +11096,9 @@ namespace WebFreight.Web.ReportsWebServices
                 DateTypeCode = _dateTypeCode,
                 //CallBack = xxxx,
             };
-            var ledgerTransactionCardIndexService = new LedgerTransactionCardIndexService(accountingContext, myLedgerTransactionCardIndexFilter);
-            ledgerTransactionCardIndexService.Run();
-            List<LedgerTransactionList> transactions = ledgerTransactionCardIndexService.Response.MyLedgerTransactionList;
+            //var ledgerTransactionCardIndexService = new LedgerTransactionCardIndexService(accountingContext, myLedgerTransactionCardIndexFilter);
+            //ledgerTransactionCardIndexService.Run();
+            //List<LedgerTransactionList> transactions = ledgerTransactionCardIndexService.Response.MyLedgerTransactionList;
 
             // Load Balance
             LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
@@ -11118,6 +11118,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
             ledgerTransactionBalanceService.Run();
+            List<LedgerTransactionList> transactions = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
 
             var balanceCallBack = new LedgerTransactionBalanceFilterCallBack()
             {
