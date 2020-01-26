@@ -2,6 +2,7 @@
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,12 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
 
             }
+        }
+
+        protected override void UpdateComposition(TariffLinePM entityPM)
+        {
+            TariffLinesContainersPriceUpdateService tariffLinesContainersPriceUpdateService = new TariffLinesContainersPriceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            tariffLinesContainersPriceUpdateService.UpdateMulti(entityPM.ContainersPrices, entityPM.DeletedContainersPrices, entityPM, false);
         }
     }
 }

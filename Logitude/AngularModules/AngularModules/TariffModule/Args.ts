@@ -5,4 +5,6 @@ export class UpdateTariffArgs {
     Version: TariffVersionPM;
     TariffCharges: CodeNameClass[];
     CarrierId: string;
+    TypeCode: string;
+    FatherComponent: any;
 }
