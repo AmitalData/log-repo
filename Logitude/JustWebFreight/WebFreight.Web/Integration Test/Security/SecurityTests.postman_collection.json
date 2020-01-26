@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3c8d9665-96b8-40d6-99c6-eb7b5e96f7bd",
+		"_postman_id": "2be8ec1e-8e80-410d-af2d-346f7fa16b2c",
 		"name": "SecurityTests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1270,9 +1270,9 @@
 						"id": "7b463e6b-ac84-4ef8-805f-91a9fff49a07",
 						"exec": [
 							"pm.test(\"GetAPInvoiceIdFromNotMyTenant Fail\", function () {",
-							"   pm.response.to.have.status(400);",
+							"   pm.response.to.have.status(200);",
 							"   ",
-							"   pm.expect(pm.response.json().ErrorMessage).to.include(\"Object reference not set to an instance of an object.\");",
+							"   pm.expect(pm.response.text()).to.eql(\"null\");",
 							"});",
 							"     ",
 							"",
@@ -1996,5 +1996,6 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
