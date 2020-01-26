@@ -23,6 +23,23 @@ namespace Logitude.IntegrationTest.Shipment
             Assert.AreEqual(entityPM.Id, shipmentPM.Id);
         }
 
+        [TestMethod]
+        public async Task<ShipmentPM> GetShipment(string id)
+        {
+            HttpResponseMessage response = await RestClientService.GetAsync("Shipment/GetSingle?id=" + ShipmentVariables.ShipmentId);
+            ShipmentPM shipment = RestClientService.ParseResponse<ShipmentPM>(response);
+            return shipment;
+        }
+
+        public double EvaluateSumOfReceivables(ShipmentReceivablePM[] shipmentReceivables)
+        {
+            //double 
+            foreach(ShipmentReceivablePM shipment in shipmentReceivables)
+            {
+
+            }
+            return 1;
+        }
         private ShipmentPM CreateShipment()
         {
             ShipmentPM shipmentPM = new ShipmentPM();
@@ -56,26 +73,18 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.ValueOfGoodsCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
             shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-
-
             shipmentPM.PackagesQuantity = 5;
             shipmentPM.GrossWeight = 100;
             shipmentPM.ChargeableWeight = 100;
             shipmentPM.NumberOfPackages = 5;
-
             shipmentPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
-
-           
             shipmentPM.ShipmentReceivables = IntegrationShipmentReceivable.ShipmentReceivables();
             shipmentPM.ShipmentPayables = IntegrationShipmentPayable.ShipmentPayables();
-            
             shipmentPM.ShipmentPickUps = IntegrationShipmentPickUps.ShipmentPickUps();
             shipmentPM.ShipmentDeliveries = IntegrationShipmentDeliveries.shipmentDelivey();
 
             return shipmentPM;
         }
         
-
-      
     }
 }
