@@ -50,6 +50,8 @@
     <Compile Include="Models\ConstraintsDefinition.cs" />
     <Compile Include="Models\DBTable.cs" />
     <Compile Include="Models\DXMLFilesGenerator.cs" />
+    <Compile Include="Models\Index.cs" />
+    <Compile Include="Models\IndexDefinition.cs" />
     <Compile Include="Models\RelationDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
     <Compile Include="Program.cs" />
@@ -57,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Indexes.csv" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExcludedTablesMap.txt" />

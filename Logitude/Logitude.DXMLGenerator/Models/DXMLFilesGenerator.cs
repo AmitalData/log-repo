@@ -23,11 +23,14 @@ namespace Logitude.DXMLGenerator.Models
         private int GeneratedPathsCounter = 0;
         private string ErrorsData = "";
 
+        private List<Index> Indexes;
+
         public DXMLFilesGenerator(string connectionString, string errorsFileName)
         {
             ConnectionString = connectionString;
             ErrorsFileName = errorsFileName;
             BuildExcludedTablesList();
+            ReadIndexes();
         }
 
         public void GenerateDXMLFiles()
@@ -199,7 +202,8 @@ namespace Logitude.DXMLGenerator.Models
                     Schema = table.Schema,
                     DBType = GetDatabaseType(table.DBName),
                     Columns = columnsDefinitions,
-                    Relations = GetTableRelations(table.Name)
+                    Relations = GetTableRelations(table.Name),
+                    Indexes = GetTableIndexes(table.Name)
                 };
             }
             catch (Exception)
@@ -546,6 +550,39 @@ namespace Logitude.DXMLGenerator.Models
             }
 
             return processedRelations;
+        }
+
+        private void ReadIndexes()
+        {
+            Console.WriteLine("Reading Indexes ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, "Indexes.csv");
+            
+            List<Index> indexes = File.ReadAllLines(filePath).Select(l => new Index
+            {
+                TableName = l.Split(',')[0],
+                Columns = l.Split(',')[1].Replace("; ", ","),
+                IncludedColumns = (String.IsNullOrEmpty(l.Split(',')[2]) || l.Split(',')[2] == "NULL") ? null : l.Split(',')[2].Replace("; ", ",")
+            }).ToList();
+
+            Indexes = indexes;
+        }
+
+        private List<IndexDefinition> GetTableIndexes(string tableName)
+        {
+            if(Indexes.Where(i => i.TableName.ToLower() == tableName.ToLower()).Any())
+            {
+                List<IndexDefinition> indexDefinitions = Indexes.Where(i => i.TableName.ToLower() == tableName.ToLower()).Select(i => new IndexDefinition
+                {
+                    Columns = i.Columns,
+                    Include = i.IncludedColumns
+                }).ToList();
+
+                return indexDefinitions;
+            }
+
+            return new List<IndexDefinition>();
         }
 
         private void ExportErrorsData()
