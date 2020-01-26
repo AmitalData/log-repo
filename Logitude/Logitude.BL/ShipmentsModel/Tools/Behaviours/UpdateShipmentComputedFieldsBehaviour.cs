@@ -319,22 +319,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
         private string GetPortName(string portId)
         {
-            Port port = null;
+            string portName = "";
             if (!string.IsNullOrEmpty(portId))
             {
-                port = portRepository.GetSinglePort(portId, tenant);
+                Port port = portRepository.GetSinglePort(portId, tenant);
+                portName = port != null ? port.EnglishName : "";
             }
-            return port.EnglishName;
+            return portName;
         }
 
         private string GetPrtnerAddressCity(string addressId)
         {
-            Address partnerAddress = null;
+            string partnerAddressCity = "";
             if (!string.IsNullOrEmpty(addressId))
             {
-                partnerAddress = addressRepository.GetSingleAddress(addressId, tenant);
+                Address partnerAddress = addressRepository.GetSingleAddress(addressId, tenant);
+                partnerAddressCity = partnerAddress != null ? partnerAddress.City : "";
             }
-            return partnerAddress.City;
+            return partnerAddressCity;
         }
         private void GetOperationalClosedByUserName()
         {
