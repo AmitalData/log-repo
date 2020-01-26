@@ -224,8 +224,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             myResponse.Result.forEach((item) => {
                 item.LineNumber = i;
                 i++;
-                debugger;
-                  if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
+                   if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
                  this.CanOpenNewAmendment = false;
                  this.amendmentObslist.Insert(item);
             });
