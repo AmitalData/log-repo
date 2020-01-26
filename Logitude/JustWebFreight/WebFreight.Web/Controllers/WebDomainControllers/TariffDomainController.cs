@@ -91,7 +91,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort, string ToPort, string BetweenDate, double Weight, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId, string tariffType)
+        //public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort, string ToPort, string BetweenDate, double Weight, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId, string tariffType)
+        [ActionName("PostAvailableAirlineFreightTariffs")]
+        public HttpResponseMessage PostAvailableAirlineFreightTariffs(TariffSearchArgs args)
         {
             try
             {
@@ -102,17 +104,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
-                DateTime? BetweenDateOBJ = DateHelper.GetDate(BetweenDate);
-                if (BetweenDateOBJ == null)
-                {
-                    BetweenDateOBJ = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
-                }
-
-
-
+                
                 TariffQueryService tariffQueryService = new TariffQueryService(tenant);
+                DateTime? betweenDate = DateHelper.GetDate(args.Date);
+                if (betweenDate == null)
+                {
+                    betweenDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                }
+                args.BetweenDate = betweenDate;
 
-                List<TariffSearchSummary> myResult = tariffQueryService.GetTariffSearchSummary(FromPort, ToPort, BetweenDateOBJ, Weight, tenant, Weightcode, GrossWeight, GrossWeightCode, Volume, VolumeCode, currencyId, tariffType);
+                List<TariffSearchSummary> myResult = tariffQueryService.GetTariffSearchSummary(args, tenant);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
