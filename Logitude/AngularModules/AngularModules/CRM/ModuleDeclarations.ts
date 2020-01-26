@@ -20,6 +20,12 @@ import {TicketClassificationMaintenanceComponent} from './Components/Workspaces/
 import {AddEditClassificationComponent} from './Components/Workspaces/AddEditClassificationComponent'; 
 import {ByFirstResolveTicketComponent} from './Components/Workspaces/TicketDashboardTabComponents/ByFirstResolveTicketComponent';
 import { OccasionWorkspaceComponent } from './Components/Workspaces/OccasionWorkspaceComponent';
+import { QuoteDashboardComponent } from './Components/Workspaces/QuoteDashboardTabComponent/QuoteDashboardComponent';
+import { OpenQuotesByStageComponent } from './Components/Workspaces/QuoteDashboardTabComponent/OpenQuotesByStageComponent';
+import { QuotesByCountryComponent } from './Components/Workspaces/QuoteDashboardTabComponent/QuotesByCountryComponent';
+import { QuotesConversionComponent } from './Components/Workspaces/QuoteDashboardTabComponent/QuotesConversionComponent';
+import { SentQuotesKPIComponent } from './Components/Workspaces/QuoteDashboardTabComponent/SentQuotesKPIComponent';
+import { TopFiveSalesmanProfitComponent } from './Components/Workspaces/QuoteDashboardTabComponent/TopFiveSalesmanProfitComponent';
 
 // Helpers
 import {TicketHelperComponent} from './Components/Helpers/TicketHelperComponent';
@@ -62,6 +68,12 @@ export const Components =
         AddEditClassificationComponent,
         ByFirstResolveTicketComponent,
         OccasionWorkspaceComponent,
+        QuoteDashboardComponent,
+        OpenQuotesByStageComponent,
+        QuotesByCountryComponent,
+        QuotesConversionComponent,
+        SentQuotesKPIComponent,
+        TopFiveSalesmanProfitComponent,
     ];
 export const ControlsComponents =
     [
@@ -94,8 +106,14 @@ export class ModuleDeclarations {
             case "AddEditClassificationComponent": { myResult = AddEditClassificationComponent; break; }
             case "ByFirstResolveTicketComponent": { myResult = ByFirstResolveTicketComponent; break; }    
             case "ByInProgressComponent": { myResult = ByInProgressComponent; break; } 
-            case "CompanyPerformanceComponent": { myResult = CompanyPerformanceComponent; break; } 
-
+            case "CompanyPerformanceComponent": { myResult = CompanyPerformanceComponent; break; }
+            case "QuoteDashboardComponent": { myResult = QuoteDashboardComponent; break; }
+            case "OpenQuotesByStageComponent": { myResult = OpenQuotesByStageComponent; break; } 
+            case "QuotesByCountryComponent": { myResult = QuotesByCountryComponent; break; }
+            case "QuotesConversionComponent": { myResult = QuotesConversionComponent; break; } 
+            case "SentQuotesKPIComponent": { myResult = SentQuotesKPIComponent; break; } 
+            case "TopFiveSalesmanProfitComponent": { myResult = TopFiveSalesmanProfitComponent; break; } 
+                
             // Helpers
             case "TicketHelperComponent": { myResult = TicketHelperComponent; break; }      
             case "OpportunityHelperComponent": { myResult = OpportunityHelperComponent; break; }      

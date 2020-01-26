@@ -2663,38 +2663,38 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     logWindow.Height = 500;
 
                     switch (QueryCodeOriginal) {
-                        case "Air Freight Cost Tariffs": {
+                        case "Tariff.Air Freight Cost Tariffs": {
                             logWindow.Title = "New Air Freight Cost";
                             windowArgs.TypeCode = "AFC";
                             break;
                         }
 
-                        case "Air Surcharges Cost Tariffs": {
+                        case "Tariff.Air Surcharges Cost Tariffs": {
                             logWindow.Title = "New Air Surcharges Cost";
                             windowArgs.TypeCode = "ASC";
                             break;
                         }
 
-                        case "Ocean LCL Freight Cost": {
+                        case "Tariff.Ocean LCL Freight Cost": {
                             logWindow.Title = "New Ocean LCL Freight Cost";
                             windowArgs.TypeCode = "OLC";
                             break;
                         }
 
-                        case "Ocean.LCL.Surcharges.Cost": {
-                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.Ocean.LCL.Surcharges.Cost");
+                        case "Tariff.Ocean.LCL.Surcharges.Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.Ocean.LCL.Surcharges.Cost") + " Surcharges Cost";
                             windowArgs.TypeCode = "OSC";
                             break;
                         }
                             
-                        case "Ocean FCL Freight Cost": {
-                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLFreightCost");
+                        case "Tariff.Ocean FCL Freight Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLFreightCost") + " Freight Cost";
                             windowArgs.TypeCode = "OFC";
                             break;
                         }
 
-                        case "Ocean FCL Surcharges Cost": {
-                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost");
+                        case "Tariff.Ocean FCL Surcharges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost") + " Surcharges Cost";
                             windowArgs.TypeCode = "OFS";
                             break;
                         }

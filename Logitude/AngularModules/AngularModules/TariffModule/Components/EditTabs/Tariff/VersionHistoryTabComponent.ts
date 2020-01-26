@@ -22,6 +22,7 @@ import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/Ta
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
+import { TariffLinesContainersPricePM } from '../../../EntityPMs/TariffLinesContainersPricePM';
 
 @Component({
     moduleId: module.id,
@@ -435,10 +436,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
     private FillLines() {
         this.VersionLinesSource.Clear();
-        var itemsCollection: TariffLinePM[] = [];
+        var itemsCollection: VersionHistoryTariffLine[] = [];
 
         this.tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            itemsCollection.push(item);
+            itemsCollection.push(new VersionHistoryTariffLine(item, this.EntityPM));
         });
 
         this.VersionLinesSource.InsertCollection(itemsCollection);
@@ -548,7 +549,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
             }
 
-            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
                 tariffLine.Surcharge2Price = item.Surcharge2Price;
                 tariffLine.Surcharge3Price = item.Surcharge3Price;
@@ -581,7 +582,24 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge2Price = item.Surcharge2Price;
                 tariffLine.Surcharge3Price = item.Surcharge3Price;
                 tariffLine.Surcharge4Price = item.Surcharge4Price;
-                tariffLine.Surcharge5Price = item.Surcharge5Price;               
+                tariffLine.Surcharge5Price = item.Surcharge5Price;
+            }
+
+            else if (this.EntityPM.TypeCode == "OFS") {
+                tariffLine.StartDate = item.StartDate;
+                tariffLine.CurrencyId = item.CurrencyId;
+                tariffLine.CurrencyCode = item.CurrencyCode;
+
+                item.ContainersPrices.forEach(containerItem => {
+                    var containerPrice = new TariffLinesContainersPricePM(tariffLine);
+                    containerPrice.SurchargeId = containerItem.SurchargeId;
+                    containerPrice.Price1 = containerItem.Price1;
+                    containerPrice.Price2 = containerItem.Price2;
+                    containerPrice.Price3 = containerItem.Price3;
+                    containerPrice.Price4 = containerItem.Price4;
+                    containerPrice.Price5 = containerItem.Price5;
+                    tariffLine.AddTariffLinesContainersPrice(containerPrice);
+                });
             }
 
             copiedVersion.AddTariffLine(tariffLine);
@@ -610,5 +628,202 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 
             }
         });
+    }
+}
+
+export class VersionHistoryTariffLine {
+    public OriginPortCode: string;
+    public DestinationPortCode: string;
+    public Notes: string;
+    public ExpirationDate: Date;
+    public IsFromAllOtherPorts: boolean;
+    public IsToAllOtherPorts: boolean;
+    public CurrencyCode: string;
+    public StartDate: Date;
+
+    //AFC || OLC
+    public MinPrice: number;
+    public Step1Price: number;
+    public Step2Price: number;
+    public Step3Price: number;
+    public Step4Price: number;
+    public Step5Price: number;
+    public Step6Price: number;
+    public Step7Price: number;
+    public Step8Price: number;
+
+    //ASC || OSC || OFC
+    public Surcharge1MinPrice: number;
+    public Surcharge2MinPrice: number;
+    public Surcharge3MinPrice: number;
+    public Surcharge4MinPrice: number;
+    public Surcharge5MinPrice: number;
+    public Surcharge6MinPrice: number;
+    public Surcharge7MinPrice: number;
+    public Surcharge8MinPrice: number;
+    public Surcharge9MinPrice: number;
+    public Surcharge10MinPrice: number;
+    public Surcharge1Price: number;
+    public Surcharge2Price: number;
+    public Surcharge3Price: number;
+    public Surcharge4Price: number;
+    public Surcharge5Price: number;
+    public Surcharge6Price: number;
+    public Surcharge7Price: number;
+    public Surcharge8Price: number;
+    public Surcharge9Price: number;
+    public Surcharge10Price: number;
+
+    //OFS
+    public Surcharge1PriceValue: string;
+    public Surcharge2PriceValue: string;
+    public Surcharge3PriceValue: string;
+    public Surcharge4PriceValue: string;
+    public Surcharge5PriceValue: string;
+    public Surcharge6PriceValue: string;
+    public Surcharge7PriceValue: string;
+    public Surcharge8PriceValue: string;
+    public Surcharge9PriceValue: string;
+    public Surcharge10PriceValue: string;
+
+    private myTariffLine: TariffLinePM;
+    private myTariff: TariffPM;
+    constructor(tariffLine: TariffLinePM, tariff: TariffPM) {
+        this.myTariff = tariff;
+        this.myTariffLine = tariffLine;
+        this.AssignCommonData();
+
+        if (tariff.TypeCode == "AFC" || tariff.TypeCode == "OLC") {
+            this.AssignData_FreightCost();
+        }
+
+        else if (tariff.TypeCode == "OFC" || tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC") {
+            this.AssignData_AIRLCLSurchargeCost();
+        }
+
+        else if (tariff.TypeCode == "OFS") {
+            this.AssignData_OceanFCLSurchargeCost();
+        }
+    }
+
+    private AssignCommonData() {
+        this.OriginPortCode = this.myTariffLine.OriginPortCode;
+        this.DestinationPortCode = this.myTariffLine.DestinationPortCode;
+        this.Notes = this.myTariffLine.Notes;
+        this.ExpirationDate = this.myTariffLine.ExpirationDate;
+        this.IsFromAllOtherPorts = this.myTariffLine.IsFromAllOtherPorts;
+        this.IsToAllOtherPorts = this.myTariffLine.IsToAllOtherPorts;
+        this.CurrencyCode = this.myTariffLine.CurrencyCode;
+        this.StartDate = this.myTariffLine.StartDate;
+    }
+
+    private AssignData_FreightCost() {
+        this.MinPrice = this.myTariffLine.MinPrice;
+        this.Step1Price = this.myTariffLine.Step1Price;
+        this.Step2Price = this.myTariffLine.Step2Price;
+        this.Step3Price = this.myTariffLine.Step3Price;
+        this.Step4Price = this.myTariffLine.Step4Price;
+        this.Step5Price = this.myTariffLine.Step5Price;
+        this.Step6Price = this.myTariffLine.Step6Price;
+        this.Step7Price = this.myTariffLine.Step7Price;
+        this.Step8Price = this.myTariffLine.Step8Price;
+    }
+
+    private AssignData_AIRLCLSurchargeCost() {
+        this.Surcharge1MinPrice = this.myTariffLine.Surcharge1MinPrice;
+        this.Surcharge2MinPrice = this.myTariffLine.Surcharge2MinPrice;
+        this.Surcharge3MinPrice = this.myTariffLine.Surcharge3MinPrice;
+        this.Surcharge4MinPrice = this.myTariffLine.Surcharge4MinPrice;
+        this.Surcharge5MinPrice = this.myTariffLine.Surcharge5MinPrice;
+        this.Surcharge6MinPrice = this.myTariffLine.Surcharge6MinPrice;
+        this.Surcharge7MinPrice = this.myTariffLine.Surcharge7MinPrice;
+        this.Surcharge8MinPrice = this.myTariffLine.Surcharge8MinPrice;
+        this.Surcharge9MinPrice = this.myTariffLine.Surcharge9MinPrice;
+        this.Surcharge10MinPrice = this.myTariffLine.Surcharge10MinPrice;
+
+        this.Surcharge1Price = this.myTariffLine.Surcharge1Price;
+        this.Surcharge2Price = this.myTariffLine.Surcharge2Price;
+        this.Surcharge3Price = this.myTariffLine.Surcharge3Price;
+        this.Surcharge4Price = this.myTariffLine.Surcharge4Price;
+        this.Surcharge5Price = this.myTariffLine.Surcharge5Price;
+        this.Surcharge6Price = this.myTariffLine.Surcharge6Price;
+        this.Surcharge7Price = this.myTariffLine.Surcharge7Price;
+        this.Surcharge8Price = this.myTariffLine.Surcharge8Price;
+        this.Surcharge9Price = this.myTariffLine.Surcharge9Price;
+        this.Surcharge10Price = this.myTariffLine.Surcharge10Price;
+    }
+
+    private AssignData_OceanFCLSurchargeCost() {
+        this.Surcharge1PriceValue = this.ComputePriceValue(this.myTariff.Surcharge1Id);
+        this.Surcharge2PriceValue = this.ComputePriceValue(this.myTariff.Surcharge2Id);
+        this.Surcharge3PriceValue = this.ComputePriceValue(this.myTariff.Surcharge3Id);
+        this.Surcharge4PriceValue = this.ComputePriceValue(this.myTariff.Surcharge4Id);
+        this.Surcharge5PriceValue = this.ComputePriceValue(this.myTariff.Surcharge5Id);
+        this.Surcharge6PriceValue = this.ComputePriceValue(this.myTariff.Surcharge6Id);
+        this.Surcharge7PriceValue = this.ComputePriceValue(this.myTariff.Surcharge7Id);
+        this.Surcharge8PriceValue = this.ComputePriceValue(this.myTariff.Surcharge8Id);
+        this.Surcharge9PriceValue = this.ComputePriceValue(this.myTariff.Surcharge9Id);
+        this.Surcharge10PriceValue = this.ComputePriceValue(this.myTariff.Surcharge10Id);
+    }
+    private ComputePriceValue(ichargeTypeId): string {
+        var myValue: string = "";
+
+        if (!AppTool.IsNullOrEmpty(ichargeTypeId)) {
+            if (this.myTariffLine.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).length > 0) {
+                this.myTariffLine.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).forEach((item) => {
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType1Id)) {
+                        if (AppTool.IsNullOrZero(item.Price1)) {
+                            myValue = "-";
+                        }
+
+                        else {
+                            myValue = item.Price1.toString();
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType2Id)) {
+                        if (AppTool.IsNullOrZero(item.Price2)) {
+                            myValue = myValue + " / -";
+                        }
+
+                        else {
+                            myValue = myValue + " / " + item.Price2.toString();
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType3Id)) {
+                        if (AppTool.IsNullOrZero(item.Price3)) {
+                            myValue = myValue + " / -";
+                        }
+
+                        else {
+                            myValue = myValue + " / " + item.Price3.toString();
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType4Id)) {
+                        if (AppTool.IsNullOrZero(item.Price4)) {
+                            myValue = myValue + " / -";
+                        }
+
+                        else {
+                            myValue = myValue + " / " + item.Price4.toString();
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType5Id)) {
+                        if (AppTool.IsNullOrZero(item.Price5)) {
+                            myValue = myValue + " / -";
+                        }
+
+                        else {
+                            myValue = myValue + " / " + item.Price5.toString();
+                        }
+                    }
+                });
+            }
+        }
+
+        return myValue;
     }
 }
