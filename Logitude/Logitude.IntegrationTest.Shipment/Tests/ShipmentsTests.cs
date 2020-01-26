@@ -14,12 +14,13 @@ namespace Logitude.IntegrationTest.Shipment
     public class ShipmentsTests
     {
         [TestMethod]
-        public async Task GetSingleShipment()
+        public async Task PostShipment()
         {
             ShipmentPM entityPM = CreateShipment();
             HttpResponseMessage response = await RestClientService.PostAsync(entityPM, "shipment");
             ShipmentPM shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
-            //Assert.AreEqual(entityPM.Id, shipmentPM.Id);
+            ShipmentVariables.ShipmentId = shipmentPM.Id;
+            Assert.AreEqual(entityPM.Id, shipmentPM.Id);
         }
 
         private ShipmentPM CreateShipment()
