@@ -672,6 +672,7 @@ export class AdvanceSearchComponent implements OnInit {
     public EditViewClicked() {
         var windowArgs: any = {};
         windowArgs.queryCode = this.currentQuery.UniqueCode;
+        windowArgs.queryId = this.currentQuery.Id;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = false;
         windowArgs.QueryName = TextCodeTranslator.Translate(this.currentQuery.NameTextCodeCode);
