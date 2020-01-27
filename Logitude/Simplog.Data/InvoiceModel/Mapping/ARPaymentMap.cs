@@ -121,6 +121,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.IsExternalEntity).HasColumnName("IsExternalEntity");
             this.Property(t => t.FechaPago).HasColumnName("FechaPago");
             this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
+            this.Property(t => t.IsPaymentNumberManuallySet).HasColumnName("IsPaymentNumberManuallySet");
 
             // Relationships
             this.HasOptional(t => t.ARAccount).WithMany().HasForeignKey(d => d.ARAccountId);

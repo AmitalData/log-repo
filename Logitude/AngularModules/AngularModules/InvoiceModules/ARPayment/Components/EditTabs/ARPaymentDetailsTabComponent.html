@@ -41,9 +41,10 @@
                                 <tr>
                                     <td style="width:360px;">
                                         <table>
+
                                             <!-- BillToId -->
-                                            <tr class="customtrclass">
-                                                <td style="width:120px; height:25px; ">
+                                            <tr class="FormFieldRow">
+                                                <td style="width:120px;">
                                                     <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -65,8 +66,8 @@
                                             </tr>
 
                                             <!-- BillToAddressId -->
-                                            <tr class="customtrclass">
-                                                <td style="width:120px; height:25px; ">
+                                            <tr class="FormFieldRow">
+                                                <td>
                                                     <LogLabel [ObjectFieldName]="'BillToAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -87,8 +88,8 @@
                                             </tr>
 
                                             <!-- ARPaymentMethodId -->
-                                            <tr class="customtrclass">
-                                                <td style="width:120px; height:25px; ">
+                                            <tr class="FormFieldRow">
+                                                <td>
                                                     <LogLabel [ObjectFieldName]="'AccountingPaymentMethodId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -109,8 +110,8 @@
                                             </tr>
 
                                             <!-- AmountInPaymentCurrency -->
-                                            <tr class="customtrclass" *ngIf="VisibleIfCash">
-                                                <td style="width:120px; height:25px; ">
+                                            <tr class="FormFieldRow" *ngIf="VisibleIfCash">
+                                                <td>
                                                     <LogLabel [ObjectFieldName]="'AmountInPaymentCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -152,18 +153,22 @@
 
                                         </table>
                                     </td>
+
                                     <td style="width:100px;">
                                         <div></div>
                                     </td>
+
                                     <!-- Currency + Rate -->
                                     <td style="width:360px;">
                                         <table>
-                                            <tr class="customtrclass">
-                                                <td style="width:120px;height:25px;">
+
+                                            <!-- Currency -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width:120px;">
                                                     <LogLabel [ObjectFieldName]="'PaymentCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td style="height:25px;">
+                                                <td style="width:240px;">
                                                     <table>
                                                         <tr>
                                                             <td>
@@ -201,13 +206,49 @@
                                                 </td>
                                             </tr>
 
+                                            <!-- PaymentNo -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'PaymentNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogTextBox [ObjectFieldName]="'PaymentNo'" [Text]="PaymentNo" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="IsEntityNumberComboBoxVisible"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 5px;" *ngIf="IsEntityNumberComboBoxVisible">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:100px;" *ngIf="IsEntityNumberComboBoxVisible">
+                                                                <ComboBox [IsDisabled]="!IsEntityNumberComboBoxEnabled" [ItemsSource]="NumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedNumberFilter" (SelectedItemChanged)="SelectedNumberFilter = $event"></ComboBox>
+                                                            </td>
+                                                           
+                                                            <td style="width: 18px;">
+                                                                <div>
+                                                                    <!--<HelpIcon *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'" [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>-->
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 18px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
                                             <!-- RegisterDate -->
-                                            <tr class="customtrclass">
-                                                <td style="width:120px;height:25px;">
+                                            <tr class="FormFieldRow">
+                                                <td>
                                                     <LogLabel [ObjectFieldName]="'RegisterDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td style="width:240px;">
+                                                <td>
                                                     <LogDatePicker [ObjectFieldName]="'RegisterDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
 
@@ -217,12 +258,12 @@
                                             </tr>
 
                                             <!-- BranchId -->
-                                            <tr class="customtrclass">
-                                                <td style="width:120px;height:25px;">
+                                            <tr class="FormFieldRow">
+                                                <td>
                                                     <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td style="width:240px;">
+                                                <td>
                                                     <LogLov [ObjectFieldName]="'BranchId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
@@ -232,14 +273,6 @@
                                                 </td>
 
                                                 <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-
-
-                                            <tr *ngIf="VisibleIfCash">
-                                                <td colspan="3">
                                                     <div></div>
                                                 </td>
                                             </tr>

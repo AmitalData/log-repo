@@ -1958,6 +1958,14 @@
     <Compile Include="Migrations\202001151002313_RuleUpdateHistory_table.Designer.cs">
       <DependentUpon>202001151002313_RuleUpdateHistory_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.cs" />
+    <Compile Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.Designer.cs">
+      <DependentUpon>202001261238055_AddFieldIsPaymentNumberManuallySet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.cs" />
+    <Compile Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.Designer.cs">
+      <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3524,16 +3532,18 @@
     <EmbeddedResource Include="Migrations\202001201324071_Mutaz_Alter_QueryCode.resx">
       <DependentUpon>202001201324071_Mutaz_Alter_QueryCode.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.resx">
       <DependentUpon>202001081000568_Mutaz_Add_Field_OriginalQueryCode_To_Query_And_Delete_ForienKey.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.resx">
       <DependentUpon>202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.cs</DependentUpon>
     </EmbeddedResource>
-
-    
+    <EmbeddedResource Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.resx">
+      <DependentUpon>202001261238055_AddFieldIsPaymentNumberManuallySet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.resx">
+      <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

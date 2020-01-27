@@ -120,6 +120,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        IsExternalEntity = a.IsExternalEntity,
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
+                                       IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
                                    }).FirstOrDefault();
 
 
@@ -293,6 +294,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        FechaPago = a.FechaPago,
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
+                                       IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -401,6 +403,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    IsFullAccounting = entity.IsFullAccounting,
                                                    FechaPago = entity.FechaPago,
                                                    CreatedByPartner = entity.CreatedByPartner,
+                                                   IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
                                                };
             return query2;
         }
@@ -486,6 +489,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             FechaPago = entity.FechaPago,
                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                             CreatedByPartner = entity.CreatedByPartner,
+                            IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
                         };
 
             return query;
@@ -572,6 +576,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             FechaPago = entity.FechaPago,
                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                             CreatedByPartner = entity.CreatedByPartner,
+                            IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
                         };
 
             return query;
@@ -644,6 +649,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          FechaPago = a.FechaPago,
                                          BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                          CreatedByPartner = a.CreatedByPartner,
+                                         IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
                                      }).FirstOrDefault();
 
             return payment;

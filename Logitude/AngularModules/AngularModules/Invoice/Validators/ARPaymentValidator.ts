@@ -125,6 +125,14 @@ export class ARPaymentValidator {
 
         }
 
+        if (!SessionLocator.AccountingSettingPM.AllowManualARPaymentNumber) {
+            if (entityPm.IsPaymentNumberManuallySet) {
+                if (AppTool.IsNullOrEmpty(entityPm.StatusCode) || entityPm.StatusCode == "DR") {
+                    validationResults.push("Accounting Settings dont allowe manual payment number");
+                }
+            }
+        }
+
         return validationResults;
     }
 
@@ -239,6 +247,14 @@ export class ARPaymentValidator {
                     errors.push(msg.replace("%FieldName", "Sello Pago"));
             }
 
+        }
+
+        if (!SessionLocator.AccountingSettingPM.AllowManualARPaymentNumber) {
+            if (entityPm.IsPaymentNumberManuallySet) {
+                if (AppTool.IsNullOrEmpty(entityPm.StatusCode) || entityPm.StatusCode == "DR") {
+                    errors.push("Accounting Settings dont allowe manual payment number");
+                }
+            }
         }
 
         var isValid = true;

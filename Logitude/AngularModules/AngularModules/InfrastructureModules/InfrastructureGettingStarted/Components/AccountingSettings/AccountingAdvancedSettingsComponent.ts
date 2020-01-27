@@ -54,6 +54,7 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
         this.myCloner.AddField('RegistryDateTypeCode');
         this.myCloner.AddField('EnableMultiCurrencyARPayments');
         this.myCloner.AddField('EnableNegativeOffsetARPayments');
+        this.myCloner.AddField('AllowManualARPaymentNumber');
         this.myCloner.AddEntity(this.EntityPM);
     }
 

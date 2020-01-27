@@ -152,6 +152,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetReTransfer = false;
             entityPM.SetReSendQBO = false;
             entity.CreatedByPartner = entityPM.CreatedByPartner;
+            entity.IsPaymentNumberManuallySet = entityPM.IsPaymentNumberManuallySet;
         }
         public static ContactPM GetLoggedContactPM(int tenant)
         {

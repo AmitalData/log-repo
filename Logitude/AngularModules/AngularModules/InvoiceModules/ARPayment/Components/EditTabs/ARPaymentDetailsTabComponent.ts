@@ -27,13 +27,11 @@ import {BankAccountPM} from '../../../../Accounting/EntityPMs/BankAccountPM';
 import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
 import {CashBookPM} from '../../../../Accounting/EntityPMs/CashBookPM';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {GetAccountingSystemWindowArgs} from '../../../../Common/Args';
-import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
 import {AccountingPaymentMethodList} from '../../../../Invoice/EntityLists/AccountingPaymentMethodList';
 import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
-import { Invoice } from '../../../../Customs/DataContract/ResponseData/ExportDeclarationDataResponseData';
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     moduleId: module.id,
@@ -96,6 +94,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ComputeRelativeRateDate();
         this.Listen();
         this.CheckARPaymentCashBook();
+        this.BuildEntityNumberFilters();
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
         }
@@ -173,6 +173,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.SetUIProperties_CreditCard();
         this.SetUIProperties_BankTransfer();
         this.GetRateIsEnabled();
+        this.SetUIProperties_ManuallySet();
 
         if (!this.IsScreenEnabled) {
             this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
@@ -1408,6 +1409,120 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.RequestedCommandCode = null;
+    }
+
+    public IsEntityNumberComboBoxVisible: boolean = false;
+    public IsEntityNumberComboBoxEnabled: boolean = false;
+    public NumberFilterList: CodeNameClass[] = [];
+    SetUIProperties_ManuallySet() {
+
+        var isEntityNumberComboBoxVisible = false;
+        var isEntityNumberComboBoxEnabled = false;
+
+        if (this.IsPaymentNumberManuallySet || SessionLocator.AccountingSettingPM.AllowManualInvoiceNumber) {
+            isEntityNumberComboBoxVisible = true;
+        }
+
+        if (this.IsScreenEnabled) {
+            if (isEntityNumberComboBoxVisible) {
+
+                if (this.IsPaymentNumberManuallySet) {
+                    isEntityNumberComboBoxEnabled = true;
+                }
+
+                else if (AppTool.IsNullOrEmpty(this.EntityPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PaymentNo)) {
+                    isEntityNumberComboBoxEnabled = true;
+                }                
+            }
+        }
+
+        this.IsEntityNumberComboBoxVisible = isEntityNumberComboBoxVisible;
+        this.IsEntityNumberComboBoxEnabled = isEntityNumberComboBoxEnabled;
+        this.SetUIProperties_PaymentNumber();
+    }
+
+    SetUIProperties_PaymentNumber() {
+        var isFieldEnabled = false;
+
+        if (this.IsScreenEnabled) {
+            if (this.IsPaymentNumberManuallySet) {
+                isFieldEnabled = true;
+            }
+        }
+
+        this.UIProperties.SetEnabled("PaymentNo", this.ObjectTableName, isFieldEnabled);
+    }
+
+    BuildEntityNumberFilters() {
+        this.NumberFilterList = [];
+        this.NumberFilterList.push(new CodeNameClass("CNR", "Counter"));
+        
+        if (this.IsEntityNumberComboBoxVisible) {
+            this.NumberFilterList.push(new CodeNameClass("MAS", "Manually Set"));
+        }
+
+        if (this.EntityPM.IsPaymentNumberManuallySet == true) {
+            this.selectedNumberFilter = this.NumberFilterList.filter(a => a.Code == "MAS")[0];
+        }
+
+        else {
+            this.selectedNumberFilter = this.NumberFilterList.filter(a => a.Code == "CNR")[0];
+        }
+    }
+
+    private selectedNumberFilter: CodeNameClass;
+    get SelectedNumberFilter() { return this.selectedNumberFilter; }
+    set SelectedNumberFilter(value: CodeNameClass) {
+        if (this.selectedNumberFilter != value) {
+            this.selectedNumberFilter = value;
+
+            this.EntityPM.PaymentNo = null;
+            this.EntityPM.IsPaymentNumberManuallySet = false;
+
+            if (value.Code == "MAS") {
+                this.IsPaymentNumberManuallySet = true;
+            }
+
+            this.SetUIProperties_PaymentNumber();
+        }
+    }
+
+    get IsPaymentNumberManuallySet() { return this.EntityPM.IsPaymentNumberManuallySet; }
+    set IsPaymentNumberManuallySet(value: boolean) {
+        if (this.EntityPM.IsPaymentNumberManuallySet != value) {
+
+            if (!value) {
+                this.PaymentNo = null;
+            }
+
+            else if (this.EntityPM.InvoiceNumber == this.EntityPM.Id) {
+                this.PaymentNo = null;
+            }
+
+            this.EntityPM.IsPaymentNumberManuallySet = value;
+            this.UIProperties.SetEnabled("PaymentNo", this.ObjectTableName, value);
+        }
+    }
+
+    get PaymentNo() {
+        if (this.IsPaymentNumberManuallySet) {
+            return this.EntityPM.PaymentNo;
+        }
+
+        else if (this.EntityPM.Id == this.EntityPM.PaymentNo) {
+            return null;
+        }
+
+        else {
+            return this.EntityPM.PaymentNo;
+        }
+    }
+    set PaymentNo(value: string) {
+        if (this.EntityPM.PaymentNo != value) {
+            if (this.IsPaymentNumberManuallySet) {
+                this.EntityPM.PaymentNo = value;
+            }
+        }
     }
 }
 export class ARPaymentInvoiceArgs extends BaseComponent {

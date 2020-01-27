@@ -35,8 +35,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class ARPaymentValidator
     {
-        public static void Validate(ARPaymentPM entityPM, CashBookPM cashBook = null)
+        public static void Validate(ARPaymentPM entityPM, IInvoiceContext objectContext, CashBookPM cashBook = null)
         {
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
+
+            AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings
+                                                     where d.Id == entityPM.Tenant
+                                                     select d).FirstOrDefault();
+
             int tenant = entityPM.Tenant;
             bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
             string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
@@ -52,12 +58,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             bool isNegativeAmountEnabled = false;
             if (paymentMethodCode == "FS")
             {
-                ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
-
-                AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings
-                                                         where d.Id == entityPM.Tenant
-                                                         select d).FirstOrDefault();
-
                 if (myAccountingSetting != null)
                 {
                     if (myAccountingSetting.EnableNegativeOffsetARPayments)
@@ -106,8 +106,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 if (string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef) && entityPM.ARPaymentChequeReplicas.Count ==0)
                 {
                     throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ChequeOrPaymentRef", tenant)));
-                }
-              
+                }              
             }
 
             if (paymentMethodCode == "CC")
@@ -172,6 +171,32 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException("Can't connect lines with zero Amount to Pay");
             }
 
+            if (entityPM.PaymentNo != null)
+            {
+                var isInvoiceNumberExists = objectContext.ARPayments.Where(d => d.Id != entityPM.Id && d.PaymentNo == entityPM.PaymentNo && d.Tenant == entityPM.Tenant).Any();
+                if (isInvoiceNumberExists)
+                {
+                    string msg = "Payment No " + entityPM.PaymentNo + " already exist in another payment";
+                    throw new ApplicationException(msg);
+                }
+            }
+
+            if (entityPM.IsPaymentNumberManuallySet && entityPM.PaymentNo == null)
+            {
+                throw new ApplicationException("You Should Set Payment No");
+            }
+
+            if (!myAccountingSetting.AllowManualInvoiceNumber)
+            {
+                if (entityPM.IsPaymentNumberManuallySet)
+                {
+                    if (entityPM.StatusCode == null || entityPM.StatusCode == "DR")
+                    {
+                        throw new ApplicationException("Accounting Settings dont allowe manual payment number");
+                    }
+                }
+            }
+
             ValidateAccountingSetting(entityPM);
             ValidateFullAccounting(entityPM.ARPaymentChequeReplicas, entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
         }
@@ -213,13 +238,30 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
         private static void ValidateAccountingSetting(ARPaymentPM entityPM)
         {
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
+            Tenant loggedTenant = (from a in myCommonContext.Tenants.Include("AccountingSetting")
+                                   where a.Id == entityPM.Tenant
+                                   select a).FirstOrDefault();
+
+            if (loggedTenant != null)
+            {
+                if (loggedTenant.AccountingSetting != null)
+                {
+                    if (!loggedTenant.AccountingSetting.AllowManualInvoiceNumber)
+                    {
+                        if (entityPM.IsPaymentNumberManuallySet)
+                        {
+                            if (entityPM.StatusCode == null || entityPM.StatusCode == "DR")
+                            {
+                                throw new ApplicationException("Accounting Settings dont allowe manual payment number");
+                            }
+                        }
+                    }
+                }
+            }
+
             if (entityPM.SetApproved)
             {
-                ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
-                Tenant loggedTenant = (from a in myCommonContext.Tenants.Include("AccountingSetting")
-                                       where a.Id == entityPM.Tenant
-                                       select a).FirstOrDefault();
-
                 IInvoiceContext myContext = InvoiceContext.GetContext(entityPM.Tenant);
 
                 if (loggedTenant != null)
