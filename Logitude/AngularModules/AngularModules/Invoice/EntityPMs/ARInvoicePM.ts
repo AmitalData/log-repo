@@ -608,9 +608,9 @@ export class ARInvoicePM {
     public set OperationalDate(newValue: Date) { if (this.operationalDate != newValue) { this.operationalDate = newValue; this.MarkAsDirty("OperationalDate"); } }
        
 	 
-    private dateForVATInterest: Date;
-    public get DateForVATInterest() { return this.dateForVATInterest; }
-    public set DateForVATInterest(newValue: Date) { if (this.dateForVATInterest != newValue) { this.dateForVATInterest = newValue; this.MarkAsDirty("DateForVATInterest"); } }
+    private dateForInterest: Date;
+    public get DateForInterest() { return this.dateForInterest; }
+    public set DateForInterest(newValue: Date) { if (this.dateForInterest != newValue) { this.dateForInterest = newValue; this.MarkAsDirty("DateForInterest"); } }
        
 	 
     private splitJournalByCurrency: boolean;
@@ -1012,6 +1012,9 @@ export class ARInvoicePM {
     public set IsFromConsolidationBatch(newValue: boolean) { if (this.isFromConsolidationBatch != newValue) { this.isFromConsolidationBatch = newValue; this.MarkAsDirty("IsFromConsolidationBatch"); } }
        
 	 
+
+	 
+
     private billToCity: string;
     public get BillToCity() { return this.billToCity; }
     public set BillToCity(newValue: string) { if (this.billToCity != newValue) { this.billToCity = newValue; this.MarkAsDirty("BillToCity"); } }
@@ -1030,6 +1033,7 @@ export class ARInvoicePM {
     private billToGLAccountId: string;
     public get BillToGLAccountId() { return this.billToGLAccountId; }
     public set BillToGLAccountId(newValue: string) { if (this.billToGLAccountId != newValue) { this.billToGLAccountId = newValue; this.MarkAsDirty("BillToGLAccountId"); } }
+
        
 	 
 
@@ -1056,4 +1060,4 @@ export class ARInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
