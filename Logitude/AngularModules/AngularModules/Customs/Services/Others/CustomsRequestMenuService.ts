@@ -109,7 +109,7 @@ export class CustomsRequestMenuService {
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomsBookQuery"), "CustomsBookQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomsBookQueryComponent', 850, 500, "8361"));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("CargoSealsQuery", "CargoSealsQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent', 850, 500, "6001"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("CargoSealsQuery", "CargoSealsQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent', 600, 400, "6001"));
         //TextCodeTranslator.Translate("Customs.General.O.CargoSealsQuery")
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", './CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 500, 400, ""));
 
