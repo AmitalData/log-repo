@@ -70,6 +70,7 @@ import {ParentVsChildTenantsComponent} from './Components/FilterReportComponent/
 import {UsersByTenantReportFilterComponent} from './Components/FiltersComponent/CRM/UsersByTenantReportFilterComponent';
 import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Operational/LicenseManagementFilterComponent';
 import { VehiclesFilterComponent } from './Components/FiltersComponent/Operational/VehiclesFilterComponent';
+import { BluesnapPaymentsReportFilterComponent } from './Components/FiltersComponent/CRM/BluesnapPaymentsReportFilterComponent';
 
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
@@ -151,6 +152,7 @@ export const Components =
         ShipperReturnsReportFilterComponent,
         FlightBookingsManifestFilterComponent,
         RacingQuotesComponent,
+        BluesnapPaymentsReportFilterComponent
     ];
 
 export class ModuleDeclarations {
@@ -225,7 +227,7 @@ export class ModuleDeclarations {
             case "ShipperReturnsReportFilterComponent": { myResult = ShipperReturnsReportFilterComponent; break; }
             case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; }
             case "RacingQuotesComponent": { myResult = RacingQuotesComponent; break; }
-                
+            case "BluesnapPaymentsReportFilterComponent": { myResult = BluesnapPaymentsReportFilterComponent; break; }
         }
 
         return myResult;

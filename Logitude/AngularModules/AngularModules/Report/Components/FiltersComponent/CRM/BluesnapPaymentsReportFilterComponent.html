@@ -1,0 +1,81 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:30px;">
+                    <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
+                </tr>
+
+                <tr style="height:30px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:40px;">From:</td>
+                                <td style="width:170px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:70px;">To:</td>
+
+                                <td style="width:170px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <!--run button-->
+                                <td style="width:30px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:80px;">
+                                    <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr style="height:10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td class="Label" style="width:140px">Show all recurring tenants</td>
+
+                                <td style="width:15px">
+                                    <CheckBox [IsChecked]="ShowAllRecurringTenants" (Checked)="ShowAllRecurringTenants = $event"></CheckBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>

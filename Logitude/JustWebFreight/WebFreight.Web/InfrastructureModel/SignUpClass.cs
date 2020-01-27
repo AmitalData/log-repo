@@ -1496,25 +1496,28 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (TextCode textCode in tenantZeroTextCodes)
             {
                 ObjectTable tenantZeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == textCode.ObjectTableId).FirstOrDefault();
-                ObjectTable currentTenantObjectTable = currentTenantObjectTables.Where(d => d.Name == tenantZeroObjectTable.Name).FirstOrDefault();
-
-                TextCode newTextCode = new TextCode()
+                if (tenantZeroObjectTable != null)
                 {
-                    Id = IdCounter.GetNumber("TextCode", theTenant).ToString(),
-                    ObjectTableId = currentTenantObjectTable.Id,
-                    TextCodeTypeCode = textCode.TextCodeTypeCode,
-                    Code = textCode.Code,
-                    DefaultText = textCode.DefaultText,
-                    DefaultTextPlural = textCode.DefaultTextPlural,
-                    Tenant = theTenant,
-                };
-                theTextCodeRepository.Add(newTextCode);
-                if (tenantZeroObjectTable.DescriptionTextCodeCode == textCode.Code)
-                {
-                    currentTenantObjectTable.DescriptionTextCodeId = newTextCode.Id;
-                    currentTenantObjectTable.DescriptionTextCodeCode = newTextCode.Code;
-                    theObjectTableRepository.Update(currentTenantObjectTable);
+                    ObjectTable currentTenantObjectTable = currentTenantObjectTables.Where(d => d.Name == tenantZeroObjectTable.Name).FirstOrDefault();
 
+                    TextCode newTextCode = new TextCode()
+                    {
+                        Id = IdCounter.GetNumber("TextCode", theTenant).ToString(),
+                        ObjectTableId = currentTenantObjectTable.Id,
+                        TextCodeTypeCode = textCode.TextCodeTypeCode,
+                        Code = textCode.Code,
+                        DefaultText = textCode.DefaultText,
+                        DefaultTextPlural = textCode.DefaultTextPlural,
+                        Tenant = theTenant,
+                    };
+                    theTextCodeRepository.Add(newTextCode);
+                    if (tenantZeroObjectTable.DescriptionTextCodeCode == textCode.Code)
+                    {
+                        currentTenantObjectTable.DescriptionTextCodeId = newTextCode.Id;
+                        currentTenantObjectTable.DescriptionTextCodeCode = newTextCode.Code;
+                        theObjectTableRepository.Update(currentTenantObjectTable);
+
+                    }
                 }
             }
             theTextCodeRepository.SubmitChanges();
@@ -1528,129 +1531,132 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ObjectFieldPM zeroObject in tenantZeroObjectFields)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == zeroObject.ObjectTableId).FirstOrDefault();
-                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-
-
-                ObjectTable zeroLookUpTable = null;
-                ObjectTable currentLookUpTable = null;
-                if (zeroObject.LookUpTableId != null)
+                if (zeroObjectTable != null)
                 {
-                    zeroLookUpTable = tenantZeroObjectTables.Where(d => d.Id == zeroObject.LookUpTableId).FirstOrDefault();
-                    currentLookUpTable = currentTenantObjectTables.Where(d => d.Name == zeroLookUpTable.Name).FirstOrDefault();
-                }
-                ObjectTable zeroMultiTable = null;
-                ObjectTable currentMultiTable = null;
-                if (zeroObject.MultiTableId != null)
-                {
-                    zeroMultiTable = tenantZeroObjectTables.Where(d => d.Id == zeroObject.MultiTableId).FirstOrDefault();
-                    currentMultiTable = currentTenantObjectTables.Where(d => d.Name == zeroMultiTable.Name).FirstOrDefault();
-                }
+                    ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
 
-                TextCode zeroShortTextCode = null;
-                TextCode currentShortTextCode = null;
-                if (zeroObject.ShortNameTextCodeCode != null)
-                {
-                    zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ShortNameTextCodeCode).FirstOrDefault();
-                    currentShortTextCode = currentTenantTextCodes[zeroShortTextCode.Code + theTenant + currentObjectTable.Id];
-                }
-
-                TextCode zerofullTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.FullNameTextCodeCode).FirstOrDefault();
-                TextCode currentfullTextCode = currentTenantTextCodes[zerofullTextCode.Code + theTenant + currentObjectTable.Id];
-
-                TextCode zeroListTextCode = null;
-                TextCode currentListTextCode = null;
-                if (zeroObject.ListTextCodeCode != null)
-                {
-                    zeroListTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ListTextCodeCode).FirstOrDefault();
-                    currentListTextCode = currentTenantTextCodes[zeroListTextCode.Code + theTenant + currentObjectTable.Id];
-                }
-
-                TextCode zeroHelpTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.HelpTextCodeCode).FirstOrDefault();
-                TextCode currentHelpTextCode = currentTenantTextCodes[zeroHelpTextCode.Code + theTenant + currentObjectTable.Id];
-
-
-                ObjectField newObjectField = new ObjectField()
-                {
-                    AutomaticField = zeroObject.AutomaticField,
-                    CanFilter = zeroObject.CanFilter,
-                    ConverterName = zeroObject.ConverterName,
-                    DataTemplateName = zeroObject.DataTemplateName,
-                    DataTypeCode = zeroObject.DataTypeCode,
-                    DependencyFilter1Type = zeroObject.DependencyFilter1Type,
-                    DependencyFilter1Value = zeroObject.DependencyFilter1Value,
-                    DependencyFilter2Type = zeroObject.DependencyFilter2Type,
-                    DependencyFilter2Value = zeroObject.DependencyFilter2Value,
-                    DigitsAfterPoint = zeroObject.DigitsAfterPoint,
-                    DisplayInEntityVariables = zeroObject.DisplayInEntityVariables,
-                    DisplayInList = zeroObject.DisplayInList,
-                    DisplayInLookUpIndex = zeroObject.DisplayInLookUpIndex,
-                    DisplayInSearchWindowFilters = zeroObject.DisplayInSearchWindowFilters,
-                    DisplayInSearchWindowFiltersIndex = zeroObject.DisplayInSearchWindowFiltersIndex,
-                    DisplayInSearchWindowList = zeroObject.DisplayInSearchWindowList,
-                    DisplayInSearchWindowListIndex = zeroObject.DisplayInSearchWindowListIndex,
-                    DisplayOnLookUp = zeroObject.DisplayOnLookUp,
-                    DisplayOnly = zeroObject.DisplayOnly,
-                    FieldName = zeroObject.FieldName,
-                    FullNameTextCodeId = currentfullTextCode.Id,
-                    HelpTextCodeId = currentHelpTextCode != null ? currentHelpTextCode.Id : null,
-                    ListTextCodeId = currentListTextCode != null ? currentListTextCode.Id : null,
-                    ObjectTableId = currentObjectTable.Id,
-                    ShortNameTextCodeId = currentShortTextCode != null ? currentShortTextCode.Id : null,
-                    Id = IdCounter.GetNumber("ObjectField", theTenant).ToString(),
-                    IsCustom = zeroObject.IsCustom,
-                    IsCustomFilter = zeroObject.IsCustomFilter,
-                    IsMulti = zeroObject.IsMulti,
-                    IsRequiered = zeroObject.IsRequiered,
-                    IsRestrictable = zeroObject.IsRestrictable,
-                    IsTimeFrameFilter = zeroObject.IsTimeFrameFilter,
-                    ListPropertyPath = zeroObject.ListPropertyPath,
-                    LookUpControlName = zeroObject.LookUpControlName,
-                    LookUpTableId = currentLookUpTable != null ? currentLookUpTable.Id : null,
-                    MaxLength = zeroObject.MaxLength,
-                    MinLength = zeroObject.MinLength,
-                    MultiLine = zeroObject.MultiLine,
-                    MultiTableId = currentMultiTable != null ? currentMultiTable.Id : null,
-                    Operator = zeroObject.Operator,
-                    PMPropertyPath = zeroObject.PMPropertyPath,
-                    SystemMaxLength = zeroObject.SystemMaxLength,
-                    SystemRequired = zeroObject.SystemRequired,
-                    Tenant = theTenant,
-                    TextCase = zeroObject.TextCase,
-                    UniqueField = zeroObject.UniqueField,
-                    ValidForQuerySection1 = zeroObject.ValidForQuerySection1,
-                    ValidForQuerySection2 = zeroObject.ValidForQuerySection2,
-                    SearchFields = zeroObject.SearchFields,
-                    ColumnHeaderTemplateName = zeroObject.ColumnHeaderTemplateName,
-                    DisplayInLookupColumnSize = zeroObject.DisplayInLookupColumnSize,
-                    HasTemplate = zeroObject.HasTemplate,
-                    HtmlHeaderComponentUrl = zeroObject.HtmlHeaderComponentUrl,
-                    HtmlListComponentUrl = zeroObject.HtmlListComponentUrl,
-                    HtmlHeaderComponentName = zeroObject.HtmlHeaderComponentName,
-                    HtmlListComponentName = zeroObject.HtmlListComponentName,
-                    FullNameTextCodeCode = currentfullTextCode.Code,
-                    HelpTextCodeCode = currentHelpTextCode != null ? currentHelpTextCode.Code : null,
-                    ListTextCodeCode = currentListTextCode != null ? currentListTextCode.Code : null,
-                    ShortNameTextCodeCode = currentShortTextCode != null ? currentShortTextCode.Code : null,
-                };
-
-                theObjectFieldsRepository.Add(newObjectField);
-
-                foreach (ObjectFieldValidationPM validation in zeroObject.ObjectFieldValidations)
-                {
-                    ObjectFieldValidation newValidation = new ObjectFieldValidation()
+                    ObjectTable zeroLookUpTable = null;
+                    ObjectTable currentLookUpTable = null;
+                    if (zeroObject.LookUpTableId != null)
                     {
-                        Condition = validation.Condition,
-                        ErrorMessage = validation.ErrorMessage,
-                        Id = IdCounter.GetNumber("ObjectFieldValidation", theTenant).ToString(),
-                        ObjectFieldId = newObjectField.Id,
+                        zeroLookUpTable = tenantZeroObjectTables.Where(d => d.Id == zeroObject.LookUpTableId).FirstOrDefault();
+                        currentLookUpTable = currentTenantObjectTables.Where(d => d.Name == zeroLookUpTable.Name).FirstOrDefault();
+                    }
+                    ObjectTable zeroMultiTable = null;
+                    ObjectTable currentMultiTable = null;
+                    if (zeroObject.MultiTableId != null)
+                    {
+                        zeroMultiTable = tenantZeroObjectTables.Where(d => d.Id == zeroObject.MultiTableId).FirstOrDefault();
+                        currentMultiTable = currentTenantObjectTables.Where(d => d.Name == zeroMultiTable.Name).FirstOrDefault();
+                    }
+
+
+                    TextCode zeroShortTextCode = null;
+                    TextCode currentShortTextCode = null;
+                    if (zeroObject.ShortNameTextCodeCode != null)
+                    {
+                        zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ShortNameTextCodeCode).FirstOrDefault();
+                        currentShortTextCode = currentTenantTextCodes[zeroShortTextCode.Code + theTenant + currentObjectTable.Id];
+                    }
+
+                    TextCode zerofullTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.FullNameTextCodeCode).FirstOrDefault();
+                    TextCode currentfullTextCode = currentTenantTextCodes[zerofullTextCode.Code + theTenant + currentObjectTable.Id];
+
+                    TextCode zeroListTextCode = null;
+                    TextCode currentListTextCode = null;
+                    if (zeroObject.ListTextCodeCode != null)
+                    {
+                        zeroListTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.ListTextCodeCode).FirstOrDefault();
+                        currentListTextCode = currentTenantTextCodes[zeroListTextCode.Code + theTenant + currentObjectTable.Id];
+                    }
+
+                    TextCode zeroHelpTextCode = tenantZeroTextCodes.Where(d => d.Code == zeroObject.HelpTextCodeCode).FirstOrDefault();
+                    TextCode currentHelpTextCode = currentTenantTextCodes[zeroHelpTextCode.Code + theTenant + currentObjectTable.Id];
+
+
+                    ObjectField newObjectField = new ObjectField()
+                    {
+                        AutomaticField = zeroObject.AutomaticField,
+                        CanFilter = zeroObject.CanFilter,
+                        ConverterName = zeroObject.ConverterName,
+                        DataTemplateName = zeroObject.DataTemplateName,
+                        DataTypeCode = zeroObject.DataTypeCode,
+                        DependencyFilter1Type = zeroObject.DependencyFilter1Type,
+                        DependencyFilter1Value = zeroObject.DependencyFilter1Value,
+                        DependencyFilter2Type = zeroObject.DependencyFilter2Type,
+                        DependencyFilter2Value = zeroObject.DependencyFilter2Value,
+                        DigitsAfterPoint = zeroObject.DigitsAfterPoint,
+                        DisplayInEntityVariables = zeroObject.DisplayInEntityVariables,
+                        DisplayInList = zeroObject.DisplayInList,
+                        DisplayInLookUpIndex = zeroObject.DisplayInLookUpIndex,
+                        DisplayInSearchWindowFilters = zeroObject.DisplayInSearchWindowFilters,
+                        DisplayInSearchWindowFiltersIndex = zeroObject.DisplayInSearchWindowFiltersIndex,
+                        DisplayInSearchWindowList = zeroObject.DisplayInSearchWindowList,
+                        DisplayInSearchWindowListIndex = zeroObject.DisplayInSearchWindowListIndex,
+                        DisplayOnLookUp = zeroObject.DisplayOnLookUp,
+                        DisplayOnly = zeroObject.DisplayOnly,
+                        FieldName = zeroObject.FieldName,
+                        FullNameTextCodeId = currentfullTextCode.Id,
+                        HelpTextCodeId = currentHelpTextCode != null ? currentHelpTextCode.Id : null,
+                        ListTextCodeId = currentListTextCode != null ? currentListTextCode.Id : null,
+                        ObjectTableId = currentObjectTable.Id,
+                        ShortNameTextCodeId = currentShortTextCode != null ? currentShortTextCode.Id : null,
+                        Id = IdCounter.GetNumber("ObjectField", theTenant).ToString(),
+                        IsCustom = zeroObject.IsCustom,
+                        IsCustomFilter = zeroObject.IsCustomFilter,
+                        IsMulti = zeroObject.IsMulti,
+                        IsRequiered = zeroObject.IsRequiered,
+                        IsRestrictable = zeroObject.IsRestrictable,
+                        IsTimeFrameFilter = zeroObject.IsTimeFrameFilter,
+                        ListPropertyPath = zeroObject.ListPropertyPath,
+                        LookUpControlName = zeroObject.LookUpControlName,
+                        LookUpTableId = currentLookUpTable != null ? currentLookUpTable.Id : null,
+                        MaxLength = zeroObject.MaxLength,
+                        MinLength = zeroObject.MinLength,
+                        MultiLine = zeroObject.MultiLine,
+                        MultiTableId = currentMultiTable != null ? currentMultiTable.Id : null,
+                        Operator = zeroObject.Operator,
+                        PMPropertyPath = zeroObject.PMPropertyPath,
+                        SystemMaxLength = zeroObject.SystemMaxLength,
+                        SystemRequired = zeroObject.SystemRequired,
                         Tenant = theTenant,
-                        ValidationOrder = validation.ValidationOrder,
-                        ValidationExpression = validation.ValidationExpression,
-                        Code = validation.Code,
-                        ObjectFieldCode = newObjectField.FieldCode,
+                        TextCase = zeroObject.TextCase,
+                        UniqueField = zeroObject.UniqueField,
+                        ValidForQuerySection1 = zeroObject.ValidForQuerySection1,
+                        ValidForQuerySection2 = zeroObject.ValidForQuerySection2,
+                        SearchFields = zeroObject.SearchFields,
+                        ColumnHeaderTemplateName = zeroObject.ColumnHeaderTemplateName,
+                        DisplayInLookupColumnSize = zeroObject.DisplayInLookupColumnSize,
+                        HasTemplate = zeroObject.HasTemplate,
+                        HtmlHeaderComponentUrl = zeroObject.HtmlHeaderComponentUrl,
+                        HtmlListComponentUrl = zeroObject.HtmlListComponentUrl,
+                        HtmlHeaderComponentName = zeroObject.HtmlHeaderComponentName,
+                        HtmlListComponentName = zeroObject.HtmlListComponentName,
+                        FullNameTextCodeCode = currentfullTextCode.Code,
+                        HelpTextCodeCode = currentHelpTextCode != null ? currentHelpTextCode.Code : null,
+                        ListTextCodeCode = currentListTextCode != null ? currentListTextCode.Code : null,
+                        ShortNameTextCodeCode = currentShortTextCode != null ? currentShortTextCode.Code : null,
                     };
-                    theObjectFieldValidationRepository.Add(newValidation);
+
+                    theObjectFieldsRepository.Add(newObjectField);
+
+                    foreach (ObjectFieldValidationPM validation in zeroObject.ObjectFieldValidations)
+                    {
+                        ObjectFieldValidation newValidation = new ObjectFieldValidation()
+                        {
+                            Condition = validation.Condition,
+                            ErrorMessage = validation.ErrorMessage,
+                            Id = IdCounter.GetNumber("ObjectFieldValidation", theTenant).ToString(),
+                            ObjectFieldId = newObjectField.Id,
+                            Tenant = theTenant,
+                            ValidationOrder = validation.ValidationOrder,
+                            ValidationExpression = validation.ValidationExpression,
+                            Code = validation.Code,
+                            ObjectFieldCode = newObjectField.FieldCode,
+                        };
+                        theObjectFieldValidationRepository.Add(newValidation);
+                    }
                 }
 
             }
@@ -1682,18 +1688,21 @@ namespace WebFreight.Web.InfrastructureModel
                 TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == feature.NameTextCodeCode).FirstOrDefault();
                 TextCode featureText = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == feature.ObjectTableId).FirstOrDefault();
-                ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-
-                Feature newFeature = new Feature()
+                if (zeroObjectTable != null)
                 {
-                    Tenant = theTenant,
-                    Code = feature.Code,
-                    NameTextCodeId = featureText.Id,
-                    NameTextCodeCode = featureText.Code,
-                    ObjectTableId = featureObjectTable.Id,
-                    Id = IdCounter.GetNumber("Feature", theTenant).ToString(),
-                };
-                theFeatureRepository.Add(newFeature);
+                    ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                    Feature newFeature = new Feature()
+                    {
+                        Tenant = theTenant,
+                        Code = feature.Code,
+                        NameTextCodeId = featureText.Id,
+                        NameTextCodeCode = featureText.Code,
+                        ObjectTableId = featureObjectTable.Id,
+                        Id = IdCounter.GetNumber("Feature", theTenant).ToString(),
+                    };
+                    theFeatureRepository.Add(newFeature);
+                }
             }
             theFeatureRepository.SubmitChanges();
         }
@@ -1706,18 +1715,21 @@ namespace WebFreight.Web.InfrastructureModel
                 Role zeroRole = tenantZeroRoles.Where(d => d.Id == roleFeature.RoleId).FirstOrDefault();
                 Feature zeroFeature = tenantZeroFeatures.Where(d => d.Id == roleFeature.FeatureId).FirstOrDefault();
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == zeroFeature.ObjectTableId).FirstOrDefault();
-                ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-
-                Role role = currentTenantRoles.Where(d => d.Name == zeroRole.Name).FirstOrDefault();
-                Feature feature = currentTenantFeatures.Where(d => d.Code == zeroFeature.Code && d.ObjectTableId == featureObjectTable.Id).FirstOrDefault();
-                RoleFeature newRoleFeature = new RoleFeature()
+                if (zeroObjectTable != null)
                 {
-                    Tenant = theTenant,
-                    FeatureId = feature.Id,
-                    RoleId = role.Id,
-                    Id = IdCounter.GetNumber("RoleFeature", theTenant).ToString(),
-                };
-                theRoleFeatureRepository.Add(newRoleFeature);
+                    ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                    Role role = currentTenantRoles.Where(d => d.Name == zeroRole.Name).FirstOrDefault();
+                    Feature feature = currentTenantFeatures.Where(d => d.Code == zeroFeature.Code && d.ObjectTableId == featureObjectTable.Id).FirstOrDefault();
+                    RoleFeature newRoleFeature = new RoleFeature()
+                    {
+                        Tenant = theTenant,
+                        FeatureId = feature.Id,
+                        RoleId = role.Id,
+                        Id = IdCounter.GetNumber("RoleFeature", theTenant).ToString(),
+                    };
+                    theRoleFeatureRepository.Add(newRoleFeature);
+                }
             }
             theRoleFeatureRepository.SubmitChanges();
         }
@@ -1976,16 +1988,19 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (Counter counter in tenantZeroCounters)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == counter.ObjectTableId).FirstOrDefault();
-                //ObjectTable currentObjectTable = CurrentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-                Counter newCounterPM = new Counter()
+                if (zeroObjectTable != null)
                 {
-                    Tenant = theTenant,
-                    ObjectTableId = zeroObjectTable.Id,
-                    Code = counter.Code,
-                    Name = counter.Name,
-                    Id = IdCounter.GetNumber("Counter", theTenant).ToString(),
-                };
-                theCounterRepository.Add(newCounterPM);
+                    //ObjectTable currentObjectTable = CurrentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+                    Counter newCounterPM = new Counter()
+                    {
+                        Tenant = theTenant,
+                        ObjectTableId = zeroObjectTable.Id,
+                        Code = counter.Code,
+                        Name = counter.Name,
+                        Id = IdCounter.GetNumber("Counter", theTenant).ToString(),
+                    };
+                    theCounterRepository.Add(newCounterPM);
+                }
             }
             theCounterRepository.SubmitChanges();
         }
@@ -2019,18 +2034,20 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (TenantSettingPM setting in settings)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == setting.ObjectTableId).FirstOrDefault();
-
-                TenantSetting newTenantSetting = new TenantSetting()
+                if (zeroObjectTable != null)
                 {
-                    Tenant = theTenant,
-                    ObjectTableId = zeroObjectTable.Id,
-                    SettingCode = setting.SettingCode,
-                    SettingValue = setting.SettingValue,
-                    Id = IdCounter.GetNumber("TenantSetting", theTenant).ToString(),
-                    Size = setting.Size,
-                    Prefix = setting.Prefix,
-                };
-                theTenantSettingRepository.Add(newTenantSetting);
+                    TenantSetting newTenantSetting = new TenantSetting()
+                    {
+                        Tenant = theTenant,
+                        ObjectTableId = zeroObjectTable.Id,
+                        SettingCode = setting.SettingCode,
+                        SettingValue = setting.SettingValue,
+                        Id = IdCounter.GetNumber("TenantSetting", theTenant).ToString(),
+                        Size = setting.Size,
+                        Prefix = setting.Prefix,
+                    };
+                    theTenantSettingRepository.Add(newTenantSetting);
+                }
             }
             theTenantSettingRepository.SubmitChanges();
         }
@@ -2042,24 +2059,27 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ObjectTableTabPM tab in objectTableTabs)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == tab.ObjectTableId).FirstOrDefault();
-                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-
-                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == tab.TabNameTextCodeCode).FirstOrDefault();
-                TextCode text = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
-
-                ObjectTableTab newTab = new ObjectTableTab()
+                if (zeroObjectTable != null)
                 {
-                    Tenant = theTenant,
-                    Code = tab.Code,
-                    ObjectTableId = currentObjectTable.Id,
-                    TabNameTextCodeId = text.Id,
-                    TabNameTextCodeCode = text.Code,
-                    IndexOrder = tab.IndexOrder,
-                    ControlPath = tab.ControlPath,
-                    Id = IdCounter.GetNumber("ObjectTableTab", theTenant).ToString(),
+                    ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
-                };
-                theObjectTableTabRepository.Add(newTab);
+                    TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Code == tab.TabNameTextCodeCode).FirstOrDefault();
+                    TextCode text = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
+
+                    ObjectTableTab newTab = new ObjectTableTab()
+                    {
+                        Tenant = theTenant,
+                        Code = tab.Code,
+                        ObjectTableId = currentObjectTable.Id,
+                        TabNameTextCodeId = text.Id,
+                        TabNameTextCodeCode = text.Code,
+                        IndexOrder = tab.IndexOrder,
+                        ControlPath = tab.ControlPath,
+                        Id = IdCounter.GetNumber("ObjectTableTab", theTenant).ToString(),
+
+                    };
+                    theObjectTableTabRepository.Add(newTab);
+                }
             }
             theObjectTableTabRepository.SubmitChanges();
         }
@@ -2072,18 +2092,21 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ObjectTableHelperControlPM helper in objectTableTabs)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == helper.ObjectTableId).FirstOrDefault();
-                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-
-                ObjectTableHelperControl newTab = new ObjectTableHelperControl()
+                if (zeroObjectTable != null)
                 {
-                    Tenant = theTenant,
-                    Code = helper.Code,
-                    ObjectTableId = currentObjectTable.Id,
-                    Id = IdCounter.GetNumber("ObjectTableHelperControl", theTenant).ToString(),
-                    ControlPath = helper.ControlPath,
+                    ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
-                };
-                theObjectTableHelperControlRepository.Add(newTab);
+                    ObjectTableHelperControl newTab = new ObjectTableHelperControl()
+                    {
+                        Tenant = theTenant,
+                        Code = helper.Code,
+                        ObjectTableId = currentObjectTable.Id,
+                        Id = IdCounter.GetNumber("ObjectTableHelperControl", theTenant).ToString(),
+                        ControlPath = helper.ControlPath,
+
+                    };
+                    theObjectTableHelperControlRepository.Add(newTab);
+                }
             }
             theObjectTableHelperControlRepository.SubmitChanges();
         }
@@ -2093,21 +2116,24 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ScreenPM screen in tenantZeroScreens)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == screen.ObjectTableId).FirstOrDefault();
-                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-
-                Screen newScreen = new Screen()
+                if (zeroObjectTable != null)
                 {
-                    Id = IdCounter.GetNumber("Screen", theTenant).ToString(),
-                    Tenant = theTenant,
-                    Code = screen.Code,
-                    NumberOfColumns = screen.NumberOfColumns,
-                    NumberOfRows = screen.NumberOfRows,
-                    ObjectTableId = currentObjectTable.Id,
-                    IsReadOnly = screen.IsReadOnly,
-                    Name = screen.Name,
-                };
+                    ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
 
-                theScreensRepository.Add(newScreen);
+                    Screen newScreen = new Screen()
+                    {
+                        Id = IdCounter.GetNumber("Screen", theTenant).ToString(),
+                        Tenant = theTenant,
+                        Code = screen.Code,
+                        NumberOfColumns = screen.NumberOfColumns,
+                        NumberOfRows = screen.NumberOfRows,
+                        ObjectTableId = currentObjectTable.Id,
+                        IsReadOnly = screen.IsReadOnly,
+                        Name = screen.Name,
+                    };
+
+                    theScreensRepository.Add(newScreen);
+                }
             }
 
             theScreensRepository.SubmitChanges();
@@ -2165,38 +2191,41 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ObjectTableRule rule in tenantZeroObjectTableRules)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == rule.ObjectTableId).FirstOrDefault();
-                ObjectTable objectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-
-                ObjectField triggerfield = null;
-                if (rule.TriggerFieldCode != null)
+                if (zeroObjectTable != null)
                 {
-                    ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.FieldCode == rule.TriggerFieldCode).FirstOrDefault();
-                    triggerfield = currentTenantObjectFields.Where(d => d.FieldName == zeroObjectField.FieldName && d.ObjectTableId == objectTable.Id).FirstOrDefault();
+                    ObjectTable objectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                    ObjectField triggerfield = null;
+                    if (rule.TriggerFieldCode != null)
+                    {
+                        ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.FieldCode == rule.TriggerFieldCode).FirstOrDefault();
+                        triggerfield = currentTenantObjectFields.Where(d => d.FieldName == zeroObjectField.FieldName && d.ObjectTableId == objectTable.Id).FirstOrDefault();
+                    }
+
+                    ObjectTableRule newRule = new ObjectTableRule()
+                    {
+                        Id = IdCounter.GetNumber("ObjectTableRule", theTenant).ToString(),
+                        Tenant = theTenant,
+                        Condition = rule.Condition,
+                        InActive = rule.InActive,
+                        Name = rule.Name,
+                        ObjectTableId = objectTable.Id,
+                        OutputMessage = rule.OutputMessage,
+                        RuleCode = rule.RuleCode,
+                        RuleTypeCode = rule.RuleTypeCode,
+                        SystemLevel = rule.SystemLevel,
+                        ActiveForNew = rule.ActiveForNew,
+                        ActiveForUpdate = rule.ActiveForUpdate,
+                        TriggerFieldId = triggerfield != null ? triggerfield.Id : null,
+                        TriggerFieldCode = triggerfield != null ? triggerfield.FieldCode : null,
+                        TriggerTypeCode = rule.TriggerTypeCode,
+                        RuleNotificationTypeCode = rule.RuleNotificationTypeCode,
+
+                    };
+                    theObjectTableRuleRepository.Add(newRule);
                 }
-
-                ObjectTableRule newRule = new ObjectTableRule()
-                {
-                    Id = IdCounter.GetNumber("ObjectTableRule", theTenant).ToString(),
-                    Tenant = theTenant,
-                    Condition = rule.Condition,
-                    InActive = rule.InActive,
-                    Name = rule.Name,
-                    ObjectTableId = objectTable.Id,
-                    OutputMessage = rule.OutputMessage,
-                    RuleCode = rule.RuleCode,
-                    RuleTypeCode = rule.RuleTypeCode,
-                    SystemLevel = rule.SystemLevel,
-                    ActiveForNew = rule.ActiveForNew,
-                    ActiveForUpdate = rule.ActiveForUpdate,
-                    TriggerFieldId = triggerfield != null ? triggerfield.Id : null,
-                    TriggerFieldCode = triggerfield != null ? triggerfield.FieldCode : null,
-                    TriggerTypeCode = rule.TriggerTypeCode,
-                    RuleNotificationTypeCode = rule.RuleNotificationTypeCode,
-
-                };
-                theObjectTableRuleRepository.Add(newRule);
+                theObjectTableRuleRepository.SubmitChanges();
             }
-            theObjectTableRuleRepository.SubmitChanges();
         }
 
         public static void AddObjectTableRuleFields(int theTenant, ObjectTableRuleFieldRepository theObjectTableRuleFieldRepository, List<ObjectTableRule> tenantZeroObjectTableRules, List<ObjectTableRule> currentTenantObjectTableRules, List<ObjectFieldPM> tenantZeroObjectFields, List<ObjectField> currentTenantObjectFields)
@@ -2234,29 +2263,32 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (QueryPM q in tenantZeroQueries)
             {
                 ObjectTable objecdtTable = currentTenantObjectTables.Where(d => d.Name == q.ObjectTableName && d.Tenant == theTenant).FirstOrDefault();
-                TextCode textCode = currentTenantTextCodes.Where(d => d.Code == q.NameTextCodeCode && d.ObjectTableId == objecdtTable.Id).FirstOrDefault();
-                Query newQuery = new Query()
+                if (objecdtTable != null)
                 {
-                    Id = IdCounter.GetNumber("Query", theTenant).ToString(),
-                    Code = q.Code,
-                    ObjectTableId = objecdtTable.Id,
-                    Tenant = theTenant,
-                    SystemLevel = q.SystemLevel,
-                    TenantLevel = q.TenantLevel,
-                    QuerySection = q.QuerySection,
-                    OriginalQueryId = q.Id,
-                    OriginalQueryCode = q.OriginalQueryCode,
-                    IndexOrder = q.IndexOrder,
-                    DisplayCount = q.DisplayCount,
-                    NameTextCodeId = textCode.Id,
-                    NameTextCodeCode = textCode.Code,
-                    QueryGroupCode = q.QueryGroupCode,
-                    IsAddNewEntityEnabled = q.IsAddNewEntityEnabled,
-                    DefaultSortDirection = q.DefaultSortDirection,
-                    DefaultSortColumn = q.DefaultSortColumn,
+                    TextCode textCode = currentTenantTextCodes.Where(d => d.Code == q.NameTextCodeCode && d.ObjectTableId == objecdtTable.Id).FirstOrDefault();
+                    Query newQuery = new Query()
+                    {
+                        Id = IdCounter.GetNumber("Query", theTenant).ToString(),
+                        Code = q.Code,
+                        ObjectTableId = objecdtTable.Id,
+                        Tenant = theTenant,
+                        SystemLevel = q.SystemLevel,
+                        TenantLevel = q.TenantLevel,
+                        QuerySection = q.QuerySection,
+                        OriginalQueryId = q.Id,
+                        OriginalQueryCode = q.OriginalQueryCode,
+                        IndexOrder = q.IndexOrder,
+                        DisplayCount = q.DisplayCount,
+                        NameTextCodeId = textCode.Id,
+                        NameTextCodeCode = textCode.Code,
+                        QueryGroupCode = q.QueryGroupCode,
+                        IsAddNewEntityEnabled = q.IsAddNewEntityEnabled,
+                        DefaultSortDirection = q.DefaultSortDirection,
+                        DefaultSortColumn = q.DefaultSortColumn,
 
-                };
-                theQueryRepository.Add(newQuery);
+                    };
+                    theQueryRepository.Add(newQuery);
+                }
             }
             theQueryRepository.SubmitChanges();
         }
@@ -2267,19 +2299,22 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 QueryPM usedQuery = currentTenantQueries.Where(d => d.UniqueCode == q.QueryCode && d.Tenant == theTenant && d.ObjectTableName == q.QueryObjectTableName).FirstOrDefault();
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == q.QueryObjectTableName).FirstOrDefault();
-                ObjectField usedObjectField = currentTenantObjectFields.Where(d => d.FieldName == q.ObjectFieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
-                QueryColumn newQuery = new QueryColumn()
+                if (currentObjectTable != null)
                 {
-                    Id = IdCounter.GetNumber("QueryColumn", theTenant).ToString(),
-                    IndexOrder = q.IndexOrder,
-                    ObjectFieldId = usedObjectField.Id,
-                    QueryId = usedQuery.Id,
-                    QueryCode = usedQuery.UniqueCode,
-                    Tenant = theTenant,
-                    ColumnWidth = q.ColumnWidth,
-                    ObjectFieldCode = usedObjectField.FieldCode,
-                };
-                theQueryColumnRepository.Add(newQuery);
+                    ObjectField usedObjectField = currentTenantObjectFields.Where(d => d.FieldName == q.ObjectFieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
+                    QueryColumn newQuery = new QueryColumn()
+                    {
+                        Id = IdCounter.GetNumber("QueryColumn", theTenant).ToString(),
+                        IndexOrder = q.IndexOrder,
+                        ObjectFieldId = usedObjectField.Id,
+                        QueryId = usedQuery.Id,
+                        QueryCode = usedQuery.UniqueCode,
+                        Tenant = theTenant,
+                        ColumnWidth = q.ColumnWidth,
+                        ObjectFieldCode = usedObjectField.FieldCode,
+                    };
+                    theQueryColumnRepository.Add(newQuery);
+                }
             }
             theQueryColumnRepository.SubmitChanges();
         }
@@ -2290,23 +2325,26 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 QueryPM usedQuery = currentTenantQueries.Where(d => d.UniqueCode == q.QueryCode && d.Tenant == theTenant && d.ObjectTableName == q.QueryObjectTableName).FirstOrDefault();
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == q.QueryObjectTableName).FirstOrDefault();
-                ObjectField usedObjectField = currentTenantObjectFields.Where(d => d.FieldName == q.ObjectFieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
-                AdvancedQueryFilter newQuery = new AdvancedQueryFilter()
+                if (currentObjectTable != null)
                 {
-                    IndexOrder = q.IndexOrder,
-                    ObjectFieldId = usedObjectField.Id,
-                    QueryId = usedQuery.Id,
-                    QueryCode = usedQuery.UniqueCode,
-                    Tenant = theTenant,
-                    Id = IdCounter.GetNumber("AdvancedQueryFilter", theTenant).ToString(),
-                    IsPredefined = q.IsPredefined,
-                    Operator = q.Operator,
-                    PredefinedValue = q.PredefinedValue,
-                    PredefinedValue2 = q.PredefinedValue2,
-                    ObjectFieldCode = usedObjectField.Code,
+                    ObjectField usedObjectField = currentTenantObjectFields.Where(d => d.FieldName == q.ObjectFieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
+                    AdvancedQueryFilter newQuery = new AdvancedQueryFilter()
+                    {
+                        IndexOrder = q.IndexOrder,
+                        ObjectFieldId = usedObjectField.Id,
+                        QueryId = usedQuery.Id,
+                        QueryCode = usedQuery.UniqueCode,
+                        Tenant = theTenant,
+                        Id = IdCounter.GetNumber("AdvancedQueryFilter", theTenant).ToString(),
+                        IsPredefined = q.IsPredefined,
+                        Operator = q.Operator,
+                        PredefinedValue = q.PredefinedValue,
+                        PredefinedValue2 = q.PredefinedValue2,
+                        ObjectFieldCode = usedObjectField.Code,
 
-                };
-                theAdvancedQueryFilterRepository.Add(newQuery);
+                    };
+                    theAdvancedQueryFilterRepository.Add(newQuery);
+                }
             }
             theAdvancedQueryFilterRepository.SubmitChanges();
         }
@@ -2359,78 +2397,80 @@ namespace WebFreight.Web.InfrastructureModel
                 AutomationHelper automationHelper = new AutomationHelper();
                 List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
 
-                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers )|| automationDocumentTypeIds.Contains(docType.Id))
+                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id))
                 {
                     ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == docType.ObjectTableId).FirstOrDefault();
-
-                    List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
-                    DocumentType newDocType = new DocumentType()
+                    if (tenantZeroObject != null)
                     {
-                        Id = IdCounter.GetNumber("DocumentType", theTenant).ToString(),
-                        Code = docType.Code,
-                        Name = docType.Name,
-                        IsOcean = docType.IsOcean,
-                        IsAir = docType.IsAir,
-                        IsInland = docType.IsInland,
-                        IsDocIn = docType.IsDocIn,
-                        IsDocOut = false,
-                        FollowUpTypeId = docType.FollowUpTypeId,
-                        Tenant = theTenant,
-                        ObjectTableId = tenantZeroObject != null ? tenantZeroObject.Id : "",
-                        SearchFields = docType.SearchFields,
-                        IsMaster = docType.IsMaster,
-                        IsDirect = docType.IsDirect,
-                        IsHouse = docType.IsHouse,
-                        TemplateFormatCode = docType.TemplateFormatCode,
-                        IsEnabledForCustomers = true,
-                        IsCopiedAtSignup = true,
-                        CountryCode = docType.CountryCode,
-                        Subject = docType.Subject,
-                        Notes = docType.Notes,
-                        OrderBy = docType.OrderBy,
-                        DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
-                        //IsAgentView = docType.IsAgentView,
-                        //IsCustomerView = docType.IsCustomerView,
-                        IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
-                        PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
-                    };
-                    foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
-                    {
-                        if (!copy.InActive)
+                        List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
+                        DocumentType newDocType = new DocumentType()
                         {
-                            DocumentTypeCopy newCopy = new DocumentTypeCopy()
-                            {
-                                Id = IdCounter.GetNumber("DocumentTypeCopy", theTenant).ToString(),
-                                Code = copy.Code,
-                                Name = copy.Name,
-                                Tenant = theTenant,
-                                IndexOrder = copy.IndexOrder,
-                                IsSelectedByDefault = copy.IsSelectedByDefault,
-                                DocumentTypeId = newDocType.Id,
-                            };
-                            theDocumentTypeCopyRepository.Add(newCopy);
-                        }
-                    }
-                    foreach (DocumentTypeCustomField customField in zeroCustomFields)
-                    {
-                        DocumentTypeCustomField newCustomField = new DocumentTypeCustomField()
-                        {
-                            DocumentTypeId = newDocType.Id,
-                            DefaultValue = customField.DefaultValue,
-                            FieldCode = customField.FieldCode,
-                            FieldDataTypeCode = customField.FieldDataTypeCode,
-                            Id = IdCounter.GetNumber("DocumentTypeCustomField", theTenant).ToString(),
-                            InActive = customField.InActive,
-                            IndexOrder = customField.IndexOrder,
-                            IsRequired = customField.IsRequired,
-                            MultiLine = customField.MultiLine,
-                            Name = customField.Name,
+                            Id = IdCounter.GetNumber("DocumentType", theTenant).ToString(),
+                            Code = docType.Code,
+                            Name = docType.Name,
+                            IsOcean = docType.IsOcean,
+                            IsAir = docType.IsAir,
+                            IsInland = docType.IsInland,
+                            IsDocIn = docType.IsDocIn,
+                            IsDocOut = false,
+                            FollowUpTypeId = docType.FollowUpTypeId,
                             Tenant = theTenant,
+                            ObjectTableId = tenantZeroObject != null ? tenantZeroObject.Id : "",
+                            SearchFields = docType.SearchFields,
+                            IsMaster = docType.IsMaster,
+                            IsDirect = docType.IsDirect,
+                            IsHouse = docType.IsHouse,
+                            TemplateFormatCode = docType.TemplateFormatCode,
+                            IsEnabledForCustomers = true,
+                            IsCopiedAtSignup = true,
+                            CountryCode = docType.CountryCode,
+                            Subject = docType.Subject,
+                            Notes = docType.Notes,
+                            OrderBy = docType.OrderBy,
+                            DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
+                            //IsAgentView = docType.IsAgentView,
+                            //IsCustomerView = docType.IsCustomerView,
+                            IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
+                            PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
                         };
-                        theDocumentTypeCustomFieldRepository.Add(newCustomField);
-                    }
+                        foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
+                        {
+                            if (!copy.InActive)
+                            {
+                                DocumentTypeCopy newCopy = new DocumentTypeCopy()
+                                {
+                                    Id = IdCounter.GetNumber("DocumentTypeCopy", theTenant).ToString(),
+                                    Code = copy.Code,
+                                    Name = copy.Name,
+                                    Tenant = theTenant,
+                                    IndexOrder = copy.IndexOrder,
+                                    IsSelectedByDefault = copy.IsSelectedByDefault,
+                                    DocumentTypeId = newDocType.Id,
+                                };
+                                theDocumentTypeCopyRepository.Add(newCopy);
+                            }
+                        }
+                        foreach (DocumentTypeCustomField customField in zeroCustomFields)
+                        {
+                            DocumentTypeCustomField newCustomField = new DocumentTypeCustomField()
+                            {
+                                DocumentTypeId = newDocType.Id,
+                                DefaultValue = customField.DefaultValue,
+                                FieldCode = customField.FieldCode,
+                                FieldDataTypeCode = customField.FieldDataTypeCode,
+                                Id = IdCounter.GetNumber("DocumentTypeCustomField", theTenant).ToString(),
+                                InActive = customField.InActive,
+                                IndexOrder = customField.IndexOrder,
+                                IsRequired = customField.IsRequired,
+                                MultiLine = customField.MultiLine,
+                                Name = customField.Name,
+                                Tenant = theTenant,
+                            };
+                            theDocumentTypeCustomFieldRepository.Add(newCustomField);
+                        }
 
-                    theDocumentTypeRepository.Add(newDocType);
+                        theDocumentTypeRepository.Add(newDocType);
+                    }
                 }
             }
             theDocumentTypeRepository.SubmitChanges();
@@ -2586,28 +2626,30 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (EventTypePM eventType in tenantZeroEventTypes)
             {
                 ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == eventType.ObjectTableId).FirstOrDefault();
-
-                EventType newEventType = new EventType()
+                if (tenantZeroObject != null)
                 {
-                    Id = IdCounter.GetNumber("EventType", theTenant).ToString(),
-                    Tenant = theTenant,
-                    AddedManually = eventType.AddedManually,
-                    Code = eventType.Code,
-                    EnglishName = eventType.EnglishName,
-                    EntityStatusId = currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault() != null ? currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault().Id : null,
-                    FollowUpEnglishName = eventType.FollowUpEnglishName,
-                    FollowUpLocalName = eventType.FollowUpLocalName,
-                    ManualActivatedFollowUp = eventType.ManualActivatedFollowUp,
-                    IsFollowUp = eventType.IsFollowUp,
-                    IsManualEntry = eventType.IsManualEntry,
-                    ObjectTableId = tenantZeroObject.Id,
-                    LocalName = eventType.LocalName,
-                    ShortView = eventType.ShortView,
-                    SearchFields = eventType.SearchFields,
-                    IsCustomerView = eventType.IsCustomerView,
-                };
+                    EventType newEventType = new EventType()
+                    {
+                        Id = IdCounter.GetNumber("EventType", theTenant).ToString(),
+                        Tenant = theTenant,
+                        AddedManually = eventType.AddedManually,
+                        Code = eventType.Code,
+                        EnglishName = eventType.EnglishName,
+                        EntityStatusId = currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault() != null ? currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault().Id : null,
+                        FollowUpEnglishName = eventType.FollowUpEnglishName,
+                        FollowUpLocalName = eventType.FollowUpLocalName,
+                        ManualActivatedFollowUp = eventType.ManualActivatedFollowUp,
+                        IsFollowUp = eventType.IsFollowUp,
+                        IsManualEntry = eventType.IsManualEntry,
+                        ObjectTableId = tenantZeroObject.Id,
+                        LocalName = eventType.LocalName,
+                        ShortView = eventType.ShortView,
+                        SearchFields = eventType.SearchFields,
+                        IsCustomerView = eventType.IsCustomerView,
+                    };
 
-                theEventTypeRepository.Add(newEventType);
+                    theEventTypeRepository.Add(newEventType);
+                }
             }
 
             theEventTypeRepository.SubmitChanges();
