@@ -2590,7 +2590,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\SpecialServicesTypeQuery.cs" />
     <Compile Include="ShipmentsModel\Testing\General.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
-    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourMaker.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
