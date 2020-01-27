@@ -121,7 +121,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות תקופות חשבונאיות",
 			      				    DefaultText =  "Accounting Period",
-			      				    Code =  "f311",
+
+			      				    Code =  "1956",
+
 			      				    Name =  "AccountingPeriod Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -664,6 +666,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelOpenMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelOpenMonth", DefaultText = "Can’t cancel opened month, There are transactions that already registered for this month",LocalDefaultText = @"לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantOpenInvoiceMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantOpenInvoiceMonth", DefaultText = "Invoice month cannot be opened, The accounting month must first be opened",LocalDefaultText = @"לא ניתן לפתוח חודש חשבונית , יש לפתוח ראשית את החודש החשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelInvoiceClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelInvoiceClosedMonth", DefaultText = "Cannot open an invoice's closed month which is less than accounting period's closed month.",LocalDefaultText = @"לא ניתן לפתוח חודש חשבונית לתקופה קודמת לחודש חשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    
