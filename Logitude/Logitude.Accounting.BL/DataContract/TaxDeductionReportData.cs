@@ -16,7 +16,7 @@ namespace Logitude.Accounting.BL.DataContract
         public string SettingDeductionFileNumber { get; set; }
         public string TenantVatNumber { get; set; }
         public string Phone {get; set;}
-      public int? TaxYear { get; set; }
+        public int? TaxYear { get; set; }
         public List<ByMonthList> ByMonthList { get; set; }
         public List<ByVendorList> ByVendorList { get; set; }
         public List<TotalForCompany> TotalForCompany { get; set; }
@@ -34,12 +34,12 @@ namespace Logitude.Accounting.BL.DataContract
     public class DBVendorsList
     {
         public DateTime? RigesterDate { get; set; }
-       public string VendorId { get; set; }
+        public string VendorId { get; set; }
         public string GlAccountId { get; set; }
-        public double? AmountInLocalCurrency { get; set; }                     
-       public decimal? TaxDeductionLocalAmount { get; set; }                   
-       public string DeductionFileTypeCode { get; set; }
-      public decimal? EndYearBalance { get; set; }
+        public double? AmountInLocalCurrency { get; set; }
+        public decimal? TaxDeductionLocalAmount { get; set; }
+        public string DeductionFileTypeCode { get; set; }
+        public decimal? EndYearBalance { get; set; }
     }
 
     public class ByMonthList

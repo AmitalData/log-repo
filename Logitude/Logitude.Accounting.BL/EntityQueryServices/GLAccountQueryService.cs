@@ -667,27 +667,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             // 4- Get GlAccounts by list of glaccountids from step 3
             // 5- GetAddresses by card ids from step 3 with filter of main address.
             taxDeduction.ByVendorList = new List<ByVendorList>();
-            List<APPayment> payments = (from a in invoicecontext.APPayments
-                                     
-                                        where a.RegisterDate.Value.Year == reportYear && a.Tenant == tenant && a.StatusCode == "AD"
-                                        
+            List<APPayment> payments = (from a in invoicecontext.APPayments                                     
+                                        where a.RegisterDate.Value.Year == reportYear && a.Tenant == tenant && a.StatusCode == "AD"                                     
                                         select a).ToList();
            
 
           
 
             List<string> vendorIds = payments.Select(d => d.VendorId).ToList();
-            List<CardList> vendors = (from a in commoncontext.Cards
-
-                                      join d in commoncontext.Addresses on a.Id equals d.CardId
-                                      join dt in commoncontext.AddressTypes on d.AddressTypeId equals dt.Id
-
-                                      where d.AddressTypeId == "M" && vendorIds.Contains(a.Id) && a.CountryCode == "IL"
+            List<CardList> vendors = (from a in commoncontext.Cards where
+                                       vendorIds.Contains(a.Id) && a.CountryCode == "IL"
                                       select new CardList()
                                       {
                                           Id = a.Id,
                                           CityName = a.CityName,
-                                          MainAddressId = d.Name,
+                                         
                                           GLAccountId = a.GLAccountId,
                                           IsAutonomy = a.IsAutonomy,
                                           IsInternationalPartner = a.IsInternationalPartner,
