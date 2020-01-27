@@ -543,6 +543,9 @@
     <TextCode Code="&quot;GLAccount.O.ExternalTransaction&quot;" DefaultText="&quot;External Transaction&quot;" LocalDefaultText="&quot;תנועות חיצוניות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;GLAccount.O.Customer&quot;" DefaultText="&quot;Customer&quot;" LocalDefaultText="&quot;לקוחות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;GLAccount.O.Vendor&quot;" DefaultText="&quot;Vendor&quot;" LocalDefaultText="&quot;ספקים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.DebtorsOnly&quot;" DefaultText="&quot;Debtors only&quot;" LocalDefaultText="&quot;רק בעלי חוב&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLaccount.O.DebtAbove&quot;" DefaultText="&quot;Debt Above&quot;" LocalDefaultText="&quot;חוב מעל&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.Balance&quot;" DefaultText="&quot;Balance&quot;" LocalDefaultText="&quot;יתרה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
