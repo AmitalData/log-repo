@@ -38,9 +38,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             FilterOwner(quoteDashboardArgs.OwnerId);
             FilterBusinessUnit(quoteDashboardArgs.BusinessUnitId);
             FilterCreateDate(quoteDashboardArgs.FromDate, quoteDashboardArgs.ToDate);
+
+            if (quoteDashboardArgs.ChartCode == "QOC")
+            {
+                FilterDirectionAndTransportMode(quoteDashboardArgs.DirectionId, quoteDashboardArgs.TransportModeId);
+            }
+
             return dataSourceQuery;
         }
-
+        
         private void FilterCreateDate(DateTime? fromDate, DateTime? toDate)
         {
             if (fromDate != null && toDate != null)
@@ -66,6 +72,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             }
         }
 
+        private void FilterDirectionAndTransportMode(string directionId, string transportModeId)
+        {
+            if (!string.IsNullOrEmpty(directionId) && directionId != "All")
+            {
+                dataSourceQuery = dataSourceQuery.Where(d => d.DirectionId == directionId);
+            }
+
+            if (!string.IsNullOrEmpty(transportModeId) && transportModeId != "All")
+            {
+                dataSourceQuery = dataSourceQuery.Where(d => d.TransportModeId == transportModeId);
+            }
+        }
+
         public List<ChartingDataClass> GetChartValues(QuoteDashboardArguments quoteDashboardArgs)
         {            
             string chartCode = quoteDashboardArgs.ChartCode;
@@ -82,7 +101,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             else if (chartCode == "QOC")
             {
                 QuotesByCountryQuery myQuery = new QuotesByCountryQuery();
-                result = myQuery.FilterQuotesByCountry(dataSourceQuery);
+                result = myQuery.FilterQuotesByCountry(dataSourceQuery, quoteDashboardArgs.IncludeOthersCountries, quoteDashboardArgs.TopCountries);
             }
 
             else if (chartCode == "QCV")

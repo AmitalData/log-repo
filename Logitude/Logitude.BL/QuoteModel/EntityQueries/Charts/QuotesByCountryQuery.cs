@@ -11,23 +11,73 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
     public class QuotesByCountryQuery
     {
         List<ChartingDataClass> myResult;
-        public List<ChartingDataClass> FilterQuotesByCountry(IQueryable<Quote> dataSourceQuery)
+        public List<ChartingDataClass> FilterQuotesByCountry(IQueryable<Quote> dataSourceQuery, bool incluseOtherCoutnries, int? top)
         {
-            dataSourceQuery = dataSourceQuery.Where(d => d.StageId != null && d.Stage.Rank > 0);
+            //List<ChartingDataClass> resultList = null;
+            //List<ChartingDataClass> othersResultList = null;
 
-            myResult = (from d in dataSourceQuery
-                      group d by new { d.StageId, d.Stage.Name, d.Stage.Rank } into g
-                      orderby g.Count() descending
-                      select new ChartingDataClass()
-                      {
-                          Id = g.Key.StageId,
-                          LabelProperty = g.Key.Name,
-                          DecimalProperty = g.Count(),
-                          IntegerProperty = g.Key.Rank,
-                          GroupedId = g.Key.StageId,
-                      }).ToList();
+            if (top < 0)
+            {
+                top = 0;
+            }
 
+            //resultList = (from s in dataSourceQuery
+            //              group s by new
+            //              {
+            //                  s.CountryForStatisticsCode,
+            //                  s.CountryForStatisticsName
+
+            //              } into m
+            //              select new ChartingDataClass()
+            //              {
+            //                  CountryCode = m.Key.CountryForStatisticsCode,
+            //                  CountryName = m.Key.CountryForStatisticsName,                  
+            //                  Total = m.Count(),
+            //              }).OrderByDescending(d => d.total).Take(top).ToList();
+
+            //if (incluseOtherCoutnries)
+            //{
+            //    List<ChartingDataClass> allCountriesResult = (from s in dataSourceQuery
+            //                                                  group s by new
+            //                                               {
+            //                                                   s.CountryForStatisticsCode,
+            //                                                   s.CountryForStatisticsName
+
+            //                                               } into m
+            //                                               select new ChartingDataClass()
+            //                                               {
+            //                                                   CountryCode = m.Key.CountryForStatisticsCode,
+            //                                                   CountryName = m.Key.CountryForStatisticsName,                                                  
+            //                                                   Total = m.Count(),                                                
+            //                                               }).ToList();
+                                
+            //    othersResultList = (from a in allCountriesResult
+            //                        where !(from r in resultList where r.CountryCode == a.CountryCode select r).Any()
+            //                        select a).ToList();
+
+            //    foreach (ChartingDataClass d in othersResultList)
+            //    {
+            //        d.CountryCode = "Others";
+            //        d.CountryName = "Others";
+            //    }
+
+            //    myResult = resultList.Union(othersResultList).OrderByDescending(d => d.Total).ToList();
+            //}
+
+            //else
+            //{
+            //    myResult = resultList.ToList();
+            //}
+            
             return myResult;
         }
     }
+}
+
+public class QuotesByCountry
+{
+    public string Id { get; set; }
+
+
+
 }

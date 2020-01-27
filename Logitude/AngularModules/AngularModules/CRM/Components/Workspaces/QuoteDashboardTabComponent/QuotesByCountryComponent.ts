@@ -3,7 +3,10 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
 import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDashboardArguments';
-import { DirectionTransportFilter } from '../../../../Infrastructure/DataContracts/Dashboard/DirectionTransportFilter';
+import { GroupByClass } from '../../../../Infrastructure/DataContracts/Dashboard/GroupByClass';
+import { List } from '../../../../Infrastructure/DataContracts/Dashboard/List';
+import { FunctionsCRM } from '../../../../Infrastructure/DataContracts/Dashboard/FunctionsCRM';
+declare var makePieChart;
 
 @Component({
     selector: 'quotes-by-country',
@@ -59,73 +62,50 @@ export class QuotesByCountryComponent implements OnInit {
 
     public CountriesData: any;
     private LoadDashboardData() {
-        //var directtionTransportFilter: DirectionTransportFilter = this.GetCurrentDirectionTransmodeFilterItemCountries();
-
         this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
             this.CountriesData = myResult;
-            this.FillDashboardData();
+            var countriesFilterdList: List<GroupByClass> = FunctionsCRM.getCountriesFilterdList(this.CountriesData, 0, this.TopCountries, this.IncludeOthersCountries);
+
+            this.FillDashboardData(countriesFilterdList);
         });
     }
 
+    private CurrentCountriesChart: any;
     public NoCountries: boolean = false;
-    FillDashboardData() {
-        //var fullData = [];
-        //var pieChartLabels = [];
-        //var pieChartData = [];
+    FillDashboardData(data: List<GroupByClass>) {
+        var fullData = [];
+        var pieChartLabels = [];
+        var pieChartData = [];
 
-        //data.getAll() != null ? data.getAll().forEach(element => {
-        //    if (element.YField != 0) {
-        //        fullData.push({ label: element.XField, data: element.YField })
-        //        pieChartLabels.push(element.XField);
-        //        pieChartData.push(element.YField);
-        //    }
-        //}) : null;
+        data.getAll() != null ? data.getAll().forEach(element => {
+            if (element.YField != 0) {
+                fullData.push({ label: element.XField, data: element.YField })
+                pieChartLabels.push(element.XField);
+                pieChartData.push(element.YField);
+            }
+        }) : null;
         
-        //var flagEmpty = true;
-        //pieChartData.forEach(p => {
-        //    if (p != "0")
-        //        flagEmpty = false;
-        //});
+        var flagEmpty = true;
+        pieChartData.forEach(p => {
+            if (p != "0")
+                flagEmpty = false;
+        });
 
-        //if (this.CurrentCountriesChart != null) {
-        //    this.CurrentCountriesChart.clear();
-        //    this.CurrentCountriesChart = null;
-        //}
-        //if (!flagEmpty) {
+        if (this.CurrentCountriesChart != null) {
+            this.CurrentCountriesChart.clear();
+            this.CurrentCountriesChart = null;
+        }
+        if (!flagEmpty) {
 
-        //    this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId);
+            this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId);
+            this.NoCountries = false;
+        }
 
-        //    this.NoCountries = false;
-
-        //}
-
-        //else {
-        //    this.NoCountries = true;
-        //}
+        else {
+            this.NoCountries = true;
+        }
     }
-
-    //private GetCurrentDirectionTransmodeFilterItemCountries() {
-    //    var transmodeId: string = "";
-    //    var directionId: string = "";
-
-    //    if (this.SelectedDirectionFilter == "All") {
-    //        directionId = "";
-    //    }
-    //    else {
-    //        directionId = this.SelectedDirectionFilter;
-    //    }
-
-    //    if (this.SelectedTransportFilter == "All") {
-    //        transmodeId = "";
-    //    }
-    //    else {
-    //        transmodeId = this.SelectedTransportFilter;
-    //    }
-
-    //    var filterItem: DirectionTransportFilter = new DirectionTransportFilter("", directionId, transmodeId);
-    //    return filterItem;
-    //}
-
+    
     private selectedTransportFilter: string = "All";
     get SelectedTransportFilter() { return this.selectedTransportFilter; }
     set SelectedTransportFilter(newValue: string) {
