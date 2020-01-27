@@ -18,6 +18,8 @@ namespace Logitude.DBMigrations.Models
         protected bool AlterPrimaryKeyConstraint = false;
         protected bool PrimaryKeyColumnAdded = false;
 
+        protected string DXMLFileName;
+        
         public string GetScript()
         {
             CurrentTable = GetCurrentTableDefinitionFromDB();
@@ -78,6 +80,39 @@ namespace Logitude.DBMigrations.Models
             }
 
             return tableRelationsScript;
+        }
+
+        public string GetIndexesScript()
+        {
+            string tableIndexesScript = "";
+
+            if (CurrentTable == null)
+            {
+                foreach (var index in DXMLTable.Indexes)
+                {
+                    tableIndexesScript += GetCreateIndexScript(index);
+                }
+            }
+            else
+            {
+                foreach (var index in CurrentTable.Indexes)
+                {
+                    if (!IsIndexInDXMLTable(index))
+                    {
+                        ExitDatabaseMigrations("Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File");
+                    }
+                }
+
+                foreach (var index in DXMLTable.Indexes)
+                {
+                    if (!IsIndexInCurrentTable(index))
+                    {
+                        tableIndexesScript += GetCreateIndexScript(index);
+                    }
+                }
+            }
+
+            return tableIndexesScript;
         }
 
         protected string GetColumnDefinitionDataType(string dataType)
@@ -558,7 +593,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_"))
+                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_"))
                     {
                         return name.Substring(0, maxLength);
                     }
@@ -592,6 +627,12 @@ namespace Logitude.DBMigrations.Models
                     relation.ReferencedTable = relation.ReferencedTable.ToLower();
                     relation.ReferencedColumn = relation.ReferencedColumn.ToLower();
                     relation.ForeignKeyConstraintName = String.IsNullOrEmpty(relation.ForeignKeyConstraintName) ? null : relation.ForeignKeyConstraintName.ToLower();
+                }
+
+                foreach(var index in table.Indexes)
+                {
+                    index.Columns = index.Columns.ToLower();
+                    index.Include = String.IsNullOrEmpty(index.Include) ? null : index.Include.ToLower();
                 }
 
                 return table;
@@ -659,6 +700,42 @@ namespace Logitude.DBMigrations.Models
             }
 
             return processedRelations;
+        }
+
+        protected List<IndexDefinition> HandlingCompositeIndexes(List<IndexDefinition> indexes)
+        {
+            List<string> processedIndexesNames = new List<string>();
+            List<IndexDefinition> processedIndexes = new List<IndexDefinition>();
+
+            foreach (var index in indexes)
+            {
+                if (!processedIndexesNames.Contains(index.Columns))
+                {
+                    string columns;
+
+                    List<IndexDefinition> indexesWithSameName = indexes.Where(i => i.IndexName == index.IndexName).OrderBy(i => i.KeyOrder).ToList();
+
+                    if (indexesWithSameName.Count() > 1)
+                    {
+                        columns = string.Join(",", indexesWithSameName.Select(i => i.Columns).ToArray());
+                    }
+                    else
+                    {
+                        columns = index.Columns;
+                    }
+
+                    IndexDefinition processedIndex = new IndexDefinition
+                    {
+                        Columns = columns,
+                        IndexName = index.IndexName
+                    };
+
+                    processedIndexes.Add(processedIndex);
+                    processedIndexesNames.Add(index.IndexName);
+                }
+            }
+
+            return processedIndexes;
         }
 
         protected string GetAlterTableScript()
@@ -769,6 +846,8 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract List<RelationDefinition> GetRelationsForDBTable(string tableName, bool usingParentTable);
 
+        protected abstract List<IndexDefinition> GetIndexesForDBTable(string tableName);
+
         protected abstract string GetCreateRelationScript(RelationDefinition relation);
 
         protected abstract string GetDropRelationScript(RelationDefinition relation);
@@ -827,10 +906,16 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract bool IsRelationInDXMLTable(RelationDefinition relation);
 
+        protected abstract bool IsIndexInCurrentTable(IndexDefinition index);
+
+        protected abstract bool IsIndexInDXMLTable(IndexDefinition index);
+
         protected abstract RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation);
 
         protected abstract string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string script);
 
         protected abstract string GetDefaultValueScript(bool nullable, string type, string defaultValue);
+        
+        protected abstract string GetCreateIndexScript(IndexDefinition index);
     }
 }

@@ -7,11 +7,12 @@ namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
-        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables)
+        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName)
         {
             ConnectionString = connectionString;
             DXMLTable = dxmlTable;
             DXMLTables = dxmlTables;
+            DXMLFileName = dxmlFileName;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -137,7 +138,8 @@ namespace Logitude.DBMigrations.Models
                 {
                     Name = tableName,
                     Columns = currentTableColumns,
-                    Relations = GetRelationsForDBTable(tableName, true)
+                    Relations = GetRelationsForDBTable(tableName, true),
+                    Indexes = GetIndexesForDBTable(tableName)
                 };
             }
             catch (Exception exception)
@@ -216,6 +218,56 @@ namespace Logitude.DBMigrations.Models
             }
 
             return relations;
+        }
+
+        protected override List<IndexDefinition> GetIndexesForDBTable(string tableName)
+        {
+            string queryString = @"SELECT COL_NAME(INDCOL.object_id, INDCOL.column_id) AS ColumnName, IND.name AS IndexName, INDCOL.key_ordinal AS KeyOrder " +
+                                  "FROM SYS.INDEXES AS IND " +
+                                  "INNER JOIN SYS.INDEX_COLUMNS AS INDCOL ON IND.object_id = INDCOL.object_id AND IND.index_id = INDCOL.index_id " +
+                                  "WHERE IND.is_primary_key = 0 AND IND.is_unique_constraint = 0 AND IND.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+
+            List<IndexDefinition> indexes = null;
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                indexes = new List<IndexDefinition>();
+
+                while (reader.Read())
+                {
+                    IndexDefinition index = new IndexDefinition
+                    {
+                        Columns = reader["ColumnName"].ToString(),
+                        IndexName = reader["IndexName"].ToString(),
+                        KeyOrder = Convert.ToInt32(reader["KeyOrder"].ToString())
+                    };
+                    indexes.Add(index);
+                }
+
+                reader.Close();
+                connection.Close();
+
+                indexes = HandlingCompositeIndexes(indexes);
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return indexes;
         }
 
         protected override string GetCreateTableScript()////
@@ -351,6 +403,16 @@ namespace Logitude.DBMigrations.Models
         protected override RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation)
         {
             return DXMLTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).First();
+        }
+
+        protected override bool IsIndexInCurrentTable(IndexDefinition index)
+        {
+            return CurrentTable.Indexes.Where(i => i.Columns.ToLower() == index.Columns.ToLower()).Any();
+        }
+
+        protected override bool IsIndexInDXMLTable(IndexDefinition index)
+        {
+            return DXMLTable.Indexes.Where(i => i.Columns.ToLower() == index.Columns.ToLower()).Any();
         }
 
         protected override bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnShortName, string dxmlColumnOldNames)
@@ -662,7 +724,7 @@ namespace Logitude.DBMigrations.Models
             else if (IsTableHasPrimaryKeys(DXMLTable))
             {
                 alterPrimaryKeyScript += "-- Add Primary Key Constraint\n";
-                string primaryKeyConstraintName = "PK_" + TableMigrations.DxmlTableName + "_" + GenerateRandomString();
+                string primaryKeyConstraintName = "PK_" + TableMigrations.DxmlTableName;
                 alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName); 
             }
             return alterPrimaryKeyScript;
@@ -761,6 +823,29 @@ namespace Logitude.DBMigrations.Models
             string dropDefaultWithHistoryScript = dropDefaultScript + GetInsertScriptForMigrationsHistory("Drop Default Value", TableMigrations.DxmlTableName, dropDefaultScript);
 
             return dropDefaultWithHistoryScript;
+        }
+
+        protected override string GetCreateIndexScript(IndexDefinition index)
+        {
+            string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
+            string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
+            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+            string createIndexScript = "-- Create Index On " + DXMLTable.Name + " table\n";
+            string indexName = "IX_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+            if (includeColumns != null)
+            {
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + indexName + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
+            }
+            else
+            {
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + indexName + " ON " + tableName + "(" + indexColumns + ")')";
+            }
+            
+            createIndexScript += ";\n\n";
+
+            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, createIndexScript);
+
+            return addIndexWithHistoryScript;
         }
     }
 }

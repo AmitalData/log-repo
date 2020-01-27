@@ -18,7 +18,14 @@ namespace Logitude.DBMigrations.Models
 
         public void Validate()
         {
-            string error = null;
+            string error;
+
+            error = ValidateDXMLFilesNames();
+            
+            if (!String.IsNullOrEmpty(error))
+            {
+                ExitTool(error);
+            }
 
             foreach (var dxmlTable in DXMLTables)
             {
@@ -35,6 +42,8 @@ namespace Logitude.DBMigrations.Models
                 error = ValidateForeignKeyColumnsDataType(dxmlTable);
                 if (error != null) break;
                 error = ValidatePrimaryKeys(dxmlTable);
+                if (error != null) break;
+                error = ValidateIndexesColumns(dxmlTable);
                 if (error != null) break;
             }
 
@@ -83,6 +92,21 @@ namespace Logitude.DBMigrations.Models
             {
                 return null;
             }
+        }
+
+        private string ValidateDXMLFilesNames()
+        {
+            string error = null;
+
+            List<string> duplicatedDxmlFiles = DXMLFiles.Select(d => Path.GetFileName(d)).ToList().GroupBy(d => d).SelectMany(g => g.Skip(1)).ToList();
+
+            if (duplicatedDxmlFiles.Any())
+            {
+                error = "Error: Duplicate DXML File Name " + duplicatedDxmlFiles.First();
+                return error;
+            }
+
+            return error;
         }
 
         private string ValidateReferencedTables(DXMLTable dxmlTable)
@@ -154,7 +178,7 @@ namespace Logitude.DBMigrations.Models
             List<string> dxmlTableColumnsNames = dxmlTable.TableDefinition.Columns.Select(c => c.Name).ToList();
 
             List<RelationDefinition> relationsWithWrongForeignKeyColumnName = dxmlTable.TableDefinition.Relations
-                .Where(r => (!dxmlTableColumnsNames.Contains(r.ForeignKeyColumn) && !r.ReferencedColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',')
+                .Where(r => (!dxmlTableColumnsNames.Contains(r.ForeignKeyColumn) && !r.ForeignKeyColumn.Contains(",")) || (r.ForeignKeyColumn.Split(',')
                 .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && r.ForeignKeyColumn.Contains(","))).ToList();
 
             if (relationsWithWrongForeignKeyColumnName.Any())
@@ -250,6 +274,33 @@ namespace Logitude.DBMigrations.Models
             if (wrongPrimaryKeyColumns.Any())
             {
                 error = "Invalid DXML Syntax: Primary Key Column [" + wrongPrimaryKeyColumns.First().Name + "] Cannot Be Nullable In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateIndexesColumns(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> dxmlTableColumnsNames = dxmlTable.TableDefinition.Columns.Select(c => c.Name).ToList();
+            
+            List<IndexDefinition> indexesWithWrongColumnsNames = dxmlTable.TableDefinition.Indexes
+                .Where(i => (!dxmlTableColumnsNames.Contains(i.Columns) && !i.Columns.Contains(",")) || (i.Columns.Split(',')
+                .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && i.Columns.Contains(","))).ToList();
+
+            if (indexesWithWrongColumnsNames.Any())
+            {
+                error = "Invalid DXML Syntax: All Or Some Of Columns [" + indexesWithWrongColumnsNames.First().Columns + "] Not In The Table [" + dxmlTable.TableDefinition.Name + "] For Index In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            List<IndexDefinition> indexesWithWrongIncludeColumnsNames = dxmlTable.TableDefinition.Indexes
+                .Where(i => (i.Include != null && !dxmlTableColumnsNames.Contains(i.Include) && !i.Include.Contains(",")) || (i.Include != null && i.Include.Split(',')
+                .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && i.Include.Contains(","))).ToList();
+
+            if (indexesWithWrongIncludeColumnsNames.Any())
+            {
+                error = "Invalid DXML Syntax: All Or Some Of Included Columns [" + indexesWithWrongIncludeColumnsNames.First().Include + "] Not In The Table [" + dxmlTable.TableDefinition.Name + "] For Index In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;

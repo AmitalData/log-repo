@@ -130,14 +130,20 @@ namespace Logitude.DBMigrations.Models
                     {
                         dxmlTable.TableDefinition.DBType = dbType;
 
-                        DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition);
+                        DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition, dxmlTable.DXMLFileName);
 
                         string tableScript = databaseMigrations.GetScript();
                         string tableRelationsScript = databaseMigrations.GetRelationsScript();
+                        string tableIndexesScript = databaseMigrations.GetIndexesScript();
 
                         if (!String.IsNullOrEmpty(tableScript))
                         {
                             generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
+                        }
+
+                        if (!String.IsNullOrEmpty(tableIndexesScript))
+                        {
+                            generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
                         }
 
                         if (!String.IsNullOrEmpty(tableRelationsScript))
@@ -148,14 +154,20 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition);
+                    DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition, dxmlTable.DXMLFileName);
 
                     string tableScript = databaseMigrations.GetScript();
                     string tableRelationsScript = databaseMigrations.GetRelationsScript();
+                    string tableIndexesScript = databaseMigrations.GetIndexesScript();
 
                     if (!String.IsNullOrEmpty(tableScript))
                     {
                         generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
+                    }
+
+                    if (!String.IsNullOrEmpty(tableIndexesScript))
+                    {
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
                     }
 
                     if (!String.IsNullOrEmpty(tableRelationsScript))
@@ -404,17 +416,17 @@ namespace Logitude.DBMigrations.Models
             return generatedScript;
         }
 
-        private DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition)
+        private DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition, string dxmlFileName)
         {
             string connectonString = GetConnectionString(dxmlTableDefinition.DBType);
 
             if (DatabaseType.ToLower() == "oracle")
             {
-                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTables);
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTables, dxmlFileName);
                 return oracleDatabaseMigrations;
             }
 
-            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTables);
+            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTables, dxmlFileName);
             return sqlDatabaseMigrations;
         }
 

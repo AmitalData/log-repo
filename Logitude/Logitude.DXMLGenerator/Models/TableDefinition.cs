@@ -25,5 +25,8 @@ namespace Logitude.DXMLGenerator.Models
 
         [XmlElement("Relation")]
         public List<RelationDefinition> Relations { get; set; }
+
+        [XmlElement("Index")]
+        public List<IndexDefinition> Indexes { get; set; }
     }
 }
