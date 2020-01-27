@@ -68,6 +68,7 @@
     <Compile Include="Models\MigrationTypes.cs" />
     <Compile Include="Models\TableDefinition.cs" />
     <Compile Include="Models\TableMigrations.cs" />
+    <Compile Include="Models\UniqueConstraintDefinition.cs" />
     <Compile Include="Models\ViewDefinition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

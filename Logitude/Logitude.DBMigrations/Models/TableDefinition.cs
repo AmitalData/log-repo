@@ -34,5 +34,8 @@ namespace Logitude.DBMigrations.Models
 
         [XmlElement("Index")]
         public List<IndexDefinition> Indexes { get; set; }
+
+        [XmlElement("UniqueConstraint")]
+        public List<UniqueConstraintDefinition> UniqueConstraints { get; set; }
     }
 }

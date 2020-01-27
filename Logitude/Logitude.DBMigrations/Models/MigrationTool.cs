@@ -135,6 +135,7 @@ namespace Logitude.DBMigrations.Models
                         string tableScript = databaseMigrations.GetScript();
                         string tableRelationsScript = databaseMigrations.GetRelationsScript();
                         string tableIndexesScript = databaseMigrations.GetIndexesScript();
+                        string tableUniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
 
                         if (!String.IsNullOrEmpty(tableScript))
                         {
@@ -144,6 +145,11 @@ namespace Logitude.DBMigrations.Models
                         if (!String.IsNullOrEmpty(tableIndexesScript))
                         {
                             generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
+                        }
+
+                        if (!String.IsNullOrEmpty(tableUniqueConstraintsScript))
+                        {
+                            generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
                         }
 
                         if (!String.IsNullOrEmpty(tableRelationsScript))
@@ -159,6 +165,7 @@ namespace Logitude.DBMigrations.Models
                     string tableScript = databaseMigrations.GetScript();
                     string tableRelationsScript = databaseMigrations.GetRelationsScript();
                     string tableIndexesScript = databaseMigrations.GetIndexesScript();
+                    string tableUniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
 
                     if (!String.IsNullOrEmpty(tableScript))
                     {
@@ -168,6 +175,11 @@ namespace Logitude.DBMigrations.Models
                     if (!String.IsNullOrEmpty(tableIndexesScript))
                     {
                         generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
+                    }
+
+                    if (!String.IsNullOrEmpty(tableUniqueConstraintsScript))
+                    {
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
                     }
 
                     if (!String.IsNullOrEmpty(tableRelationsScript))

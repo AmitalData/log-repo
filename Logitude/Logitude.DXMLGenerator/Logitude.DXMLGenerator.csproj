@@ -55,16 +55,19 @@
     <Compile Include="Models\IndexDefinition.cs" />
     <Compile Include="Models\RelationDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
+    <Compile Include="Models\UniqueConstraint.cs" />
+    <Compile Include="Models\UniqueConstraintDefinition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="DefaultValues.csv" />
-    <None Include="Indexes.csv" />
+    <None Include="Data\DefaultValues.csv" />
+    <None Include="Data\UniqueConstraints.csv" />
+    <None Include="Data\Indexes.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ExcludedTablesMap.txt" />
+    <Content Include="Data\ExcludedTablesMap.txt" />
     <Content Include="Errors\GlobalErrors.txt" />
     <Content Include="Errors\MainErrors.txt" />
     <Content Include="Errors\SystemLogsErrors.txt" />
