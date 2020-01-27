@@ -7,8 +7,8 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.VatTypes", "PayablesExternalId", c => c.String(maxLength: 25, unicode: false));
-            AddColumn("dbo.VatTypes", "ReceivablesExternalId", c => c.String(maxLength: 25, unicode: false));
+           // AddColumn("dbo.VatTypes", "PayablesExternalId", c => c.String(maxLength: 25, unicode: false));
+           // AddColumn("dbo.VatTypes", "ReceivablesExternalId", c => c.String(maxLength: 25, unicode: false));
             Sql("update vattypes set ReceivablesExternalId=ExternalVATCard");
 
         }

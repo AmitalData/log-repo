@@ -92,6 +92,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, entity.Tenant);
                         mappingService.SetInvoiceLinesEntityId(entityPM, entity.Tenant);
                         mappingService.ValidateAccountingExternalEntityId(entity);
+                        mappingService.SetBillToGLAccountId(entityPM);
                         entityPM.IsExternalEntity = true;
                         entityPM.IsExternalAPI = true;
                         entityPM.Tenant = entity.Tenant;
@@ -261,7 +262,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(tenant);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, tenant);
-                      //  mappingService.UpdateCreditInvoice(entityPM, tenant);
+                        mappingService.SetBillToGLAccountId(entityPM);
+                        //  mappingService.UpdateCreditInvoice(entityPM, tenant);
                         entityPM.IsExternalAPI = true;
                         entityPM.IsExternalEntity = true;
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
