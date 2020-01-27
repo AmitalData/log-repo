@@ -401,20 +401,24 @@ namespace Logitude.DBMigrations.Models
 
         protected string GetCurrentColumnDefaultValue(ColumnDefinition currentTableColumn)
         {
-            if(String.IsNullOrEmpty(currentTableColumn.DefaultValue))
+            if (String.IsNullOrEmpty(currentTableColumn.DefaultValue))
             {
                 return null;
             }
-            if(currentTableColumn.DefaultValue.ToLower() == "sysdate" || currentTableColumn.DefaultValue.ToLower() == "getdate()")
+            if (currentTableColumn.DefaultValue.ToLower().Contains("getdate()") || currentTableColumn.DefaultValue.ToLower().Contains("sysdate"))
             {
                 return "CurrentDate".ToLower();
             }
-            if(currentTableColumn.DefaultValue.ToLower().Contains(".nextval") && currentTableColumn.Constraints.PrimaryKey)
+            if (currentTableColumn.DefaultValue.Contains("'"))
+            {
+                return "'" + currentTableColumn.DefaultValue.Split('\'')[1] + "'";
+            }
+            if (currentTableColumn.DefaultValue.ToLower().Contains(".nextval") && currentTableColumn.Constraints.PrimaryKey)
             {
                 return null;
             }
 
-            return currentTableColumn.DefaultValue;
+            return currentTableColumn.DefaultValue.Replace("(", String.Empty).Replace(")", String.Empty);
         }
 
         protected string GetDxmlColumnDefaultValue(ColumnDefinition dxmlTableColumn)
@@ -423,7 +427,7 @@ namespace Logitude.DBMigrations.Models
             {
                 return "0";
             }
-            if(String.IsNullOrEmpty(dxmlTableColumn.DefaultValue))
+            if (String.IsNullOrEmpty(dxmlTableColumn.DefaultValue))
             {
                 return null;
             }

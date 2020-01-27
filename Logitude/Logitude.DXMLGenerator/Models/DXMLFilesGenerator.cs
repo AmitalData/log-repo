@@ -23,7 +23,7 @@ namespace Logitude.DXMLGenerator.Models
         private int GeneratedPathsCounter = 0;
         private string ErrorsData = "";
 
-        private List<ColumnDefaultValue> ColumnsDefaultValues = new List<ColumnDefaultValue>();
+        private List<ColumnDefaultValue> ColumnsDefaultValues;
 
         public DXMLFilesGenerator(string connectionString, string errorsFileName)
         {
@@ -170,7 +170,7 @@ namespace Logitude.DXMLGenerator.Models
                             Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? Convert.ToInt32(reader["Size"].ToString()) : 0,
                             Precision = !String.IsNullOrEmpty(reader["Precision"].ToString()) ? Convert.ToInt32(reader["Precision"].ToString()) : 0,
                             Scale = !String.IsNullOrEmpty(reader["Scale"].ToString()) ? Convert.ToInt32(reader["Scale"].ToString()) : 0,
-                            DefaultValue = GetColumnDefinitionDefaultValue(table.Name, reader["ColumnName"].ToString(), (reader["Nullable"].ToString() == "YES"), GetColumnDefinitionDataType(reader["DataType"].ToString())),
+                            DefaultValue = GetColumnDefinitionDefaultValue(table.Name, reader["ColumnName"].ToString(), (reader["Nullable"].ToString() == "YES")),
                             Constraints = new ConstraintsDefinition
                             {
                                 Nullable = (reader["Nullable"].ToString() == "YES")
@@ -552,14 +552,9 @@ namespace Logitude.DXMLGenerator.Models
             return processedRelations;
         }
 
-        private string GetColumnDefinitionDefaultValue(string tableName, string columnName, bool nullable, string type)
+        private string GetColumnDefinitionDefaultValue(string tableName, string columnName, bool nullable)
         {
             if (nullable)
-            {
-                return null;
-            }
-
-            if(!nullable && type == "bit")
             {
                 return null;
             }
@@ -585,10 +580,28 @@ namespace Logitude.DXMLGenerator.Models
             {
                 TableName = l.Split(',')[0],
                 ColumnName = l.Split(',')[1],
-                DefaultValue = l.Split(',')[2].ToLower().Contains("getdate()") ? "CurrentDate" : l.Split(',')[2].Replace("(", String.Empty).Replace(")", String.Empty)
+                DefaultValue = FormatDefaultValue(l.Split(',')[2])
             }).ToList();
 
             ColumnsDefaultValues = columnsDefaultValues;
+        }
+
+        private string FormatDefaultValue(string defaultValue)
+        {
+            if (String.IsNullOrEmpty(defaultValue))
+            {
+                return null;
+            }
+            if (defaultValue.ToLower().Contains("getdate()"))
+            {
+                return "CurrentDate";
+            }
+            if (defaultValue.Contains("'"))
+            {
+                return "'" + defaultValue.Split('\'')[1] + "'";
+            }
+
+            return defaultValue.Replace("(", String.Empty).Replace(")", String.Empty);
         }
 
         private void ExportErrorsData()

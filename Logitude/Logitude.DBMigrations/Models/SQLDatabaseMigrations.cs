@@ -105,7 +105,7 @@ namespace Logitude.DBMigrations.Models
                             Size = GetColumnDefinitionSize(reader["Size"].ToString()),
                             Precision = String.IsNullOrEmpty(reader["Precision"].ToString()) ? 0 : Convert.ToInt32(reader["Precision"].ToString()),
                             Scale = String.IsNullOrEmpty(reader["Scale"].ToString()) ? 0 : Convert.ToInt32(reader["Scale"].ToString()),
-                            DefaultValue = String.IsNullOrEmpty(reader["DefaultValue"].ToString()) ? null : reader["DefaultValue"].ToString().TrimStart('(').TrimEnd(')'),
+                            DefaultValue = String.IsNullOrEmpty(reader["DefaultValue"].ToString()) ? null : reader["DefaultValue"].ToString(),
                             Constraints = new ConstraintsDefinition
                             {
                                 Nullable = (reader["Nullable"].ToString().ToLower() == "yes"),
