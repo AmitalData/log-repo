@@ -105,6 +105,7 @@
     </Compile>
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />

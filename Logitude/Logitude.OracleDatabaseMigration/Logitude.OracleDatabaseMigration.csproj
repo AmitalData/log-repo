@@ -480,6 +480,10 @@
     <Compile Include="Migrations\202001231129242_AddIsManadatory_DeclarationType.Designer.cs">
       <DependentUpon>202001231129242_AddIsManadatory_DeclarationType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001271324155_AddmigrationCargoSeal.cs" />
+    <Compile Include="Migrations\202001271324155_AddmigrationCargoSeal.Designer.cs">
+      <DependentUpon>202001271324155_AddmigrationCargoSeal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -830,6 +834,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001231129242_AddIsManadatory_DeclarationType.resx">
       <DependentUpon>202001231129242_AddIsManadatory_DeclarationType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271324155_AddmigrationCargoSeal.resx">
+      <DependentUpon>202001271324155_AddmigrationCargoSeal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
