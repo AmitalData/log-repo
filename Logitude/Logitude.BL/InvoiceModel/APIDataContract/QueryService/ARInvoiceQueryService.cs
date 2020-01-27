@@ -39,14 +39,20 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
         public void SetBillToGLAccountId(ARInvoicePM entity)
         {
-           IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-           Logitude.Accounting.Def.EntityPMs.GLAccountPM gLAccount = glAccountQuery.GetGLAccountByDisplayNumber(entity.BillToGLAccountId, entity.Tenant);
-            if(gLAccount!= null)
+            if (entity.BillToGLAccountId != null)
             {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                Logitude.Accounting.Def.EntityPMs.GLAccountPM gLAccount = glAccountQuery.GetGLAccountByInternalNumber(entity.BillToGLAccountId, entity.Tenant);
+                if (gLAccount != null)
+                {
 
-                entity.BillToGLAccountId = gLAccount.Id;
+                    entity.BillToGLAccountId = gLAccount.Id;
+                }
+                else
+                {
+                    throw new Exception("GLAccount with internal number " + entity.BillToGLAccountId + "does not exist");
+                }
             }
-
         }
 
         public ARInvoicePM UpdateCreditInvoice(ARInvoicePM invoice, int tenant)
