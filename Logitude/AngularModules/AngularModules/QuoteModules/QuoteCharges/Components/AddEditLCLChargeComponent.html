@@ -242,7 +242,15 @@
                                                 <div></div>
                                             </td>
 
-                                            <td *ngIf="DataContext.IsChargeBySteps" style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
+                                            <td style="width: 1px;" *ngIf="DataContext.IsChargeBySteps">
+                                                <button class="Button" (click)="SelectBreaksClicked()" [disabled]="!IsEditingEnabled">Select breaks</button>
+                                            </td>
+
+                                            <td style="width: 5px;" *ngIf="DataContext.IsChargeBySteps">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;" *ngIf="DataContext.IsChargeBySteps">
                                                 <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddStepClicked()" [disabled]="!IsEditingEnabled"></IconButton>
                                             </td>
                                         </tr>
@@ -250,6 +258,12 @@
                                 </td>
                             </tr>
                         </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 3px;">
+                    <td>
+                        <div></div>
                     </td>
                 </tr>
 
