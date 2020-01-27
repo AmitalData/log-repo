@@ -431,7 +431,7 @@ export class APPaymentMenuButtonsHandler {
 
                 if (fullAccountingSetting != null && glaccount != null) {
                     if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
-                        this.NameForPrintingCheques = glaccount.NameForPrintingCheques;
+                        this.NameForPrintingCheques = glaccount.NameForPrintingCheques != null ? glaccount.NameForPrintingCheques : (glaccount.LocalName != null ? glaccount.LocalName : glaccount.EnglishName);
                         this.OpenEditPaymentChequeScreen();
                     }
                     else {
