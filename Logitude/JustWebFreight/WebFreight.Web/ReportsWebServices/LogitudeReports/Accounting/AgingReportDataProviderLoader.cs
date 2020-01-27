@@ -50,9 +50,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.CustomerFilterValue = GetCustomerFilterTitle();
             dataProvider.AgingPeriods = BuildAgingPeriods(resultedPeriods);
 
-            CreateAndAppendTotalBalanceColumn(resultedPeriods, dataProvider);
+            //CreateAndAppendTotalBalanceColumn(resultedPeriods, dataProvider);
+
+            AddTotalBalancePeriods(resultedPeriods, dataProvider);
+            FilterCustomerPeriodsOnBalance(dataProvider);
 
             SetOrderForPeriods(resultedPeriods, dataProvider);
+
+
 
             SetPeriodsTotal(resultedPeriods, dataProvider);
 
@@ -62,6 +67,66 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return dataProvider;
         }
 
+
+        private void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData)
+        {
+            List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
+            foreach (var totalBalance in totalBalances)
+            {
+                if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total >= 0))
+                    RemoveCustomerPeriods(totalData, totalBalance);
+                else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= GetFilterValue<decimal>("BalanceFilterValue")))
+                    RemoveCustomerPeriods(totalData, totalBalance);
+            }
+        }
+
+        private void RemoveCustomerPeriods(AccountingAgingDataProvider totalData, AgingPeriod totalBalance)
+        {
+            var name = totalBalance.AccountLocalName != null ? totalBalance.AccountLocalName : totalBalance.AccountEnglishName;
+            List<AgingPeriod> items = totalData.AgingPeriods.Where(d => d.AccountName == name).ToList();
+            foreach (var item in items)
+                totalData.AgingPeriods.Remove(item);
+        }
+
+        private void AddTotalBalancePeriods( List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
+        {
+            Dictionary<PeriodMExtended, decimal> sums = new Dictionary<PeriodMExtended, decimal>();
+            foreach (var period in result)
+            {
+                sums.Add(period, 0);
+            }
+            foreach (var period in result)
+            {
+                sums[period] += period.Total;
+            }
+
+            foreach (var sumValue in sums)
+            {
+                var pname = showLocals ? "סה''כ יתרה" : "Total Balance";
+                var _balancePeriod = totalData.AgingPeriods.FirstOrDefault(d => d.AccountEnglishName == sumValue.Key.AccountEnglishName && d.PeriodName == pname);
+                if (_balancePeriod == null)
+                    totalData.AgingPeriods.Add(new AgingPeriod()
+                    {
+                        PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
+                        Total = sumValue.Value,
+                        AccountName = sumValue.Key.AccountLocalName != null ? sumValue.Key.AccountLocalName : sumValue.Key.AccountEnglishName,
+                        AccountLocalName = sumValue.Key.AccountLocalName,
+                        AccountEnglishName = sumValue.Key.AccountEnglishName,
+
+                    });
+                else
+                {
+                    _balancePeriod.Total += sumValue.Value;
+                }
+            }
+        }
+
+        private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
+        {
+            var balancePeriod = showLocals ? "סה''כ יתרה" : "Total Balance";
+            List<AgingPeriod> totalBalances = totalData.AgingPeriods.Where(d => d.PeriodName == balancePeriod).ToList();
+            return totalBalances;
+        }
         private void SetPeriodSummery(AccountingAgingDataProvider dataProvider)
         {
             if (dataProvider.AgingPeriods.Count > 0)
@@ -167,6 +232,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 record.PeriodName = item.PeriodName;
                 record.AccountName = item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName;
+                record.AccountEnglishName = item.AccountEnglishName;
+                record.AccountLocalName = item.AccountLocalName;
 
                 record.Total = item.Total;
 
