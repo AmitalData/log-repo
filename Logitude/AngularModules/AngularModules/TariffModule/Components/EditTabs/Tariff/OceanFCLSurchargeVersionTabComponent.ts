@@ -41,7 +41,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public TariffsLinesSource: ObservableCollection;
     public DataContext = this;
     public IsResourcesReady: boolean = false;
-    private TariffDomainService: TariffDomainService;
+    public TariffDomainService: TariffDomainService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
@@ -71,11 +71,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
-
-        if (this.IsDraftVersion) {
-            this.IsComparToChecked = true;
-        }
-
+        
         this.GetTariffSettings();
 
         var iChargesTypeListService = new ChargesTypeListService();
@@ -90,17 +86,10 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                     if (!myResponse2.HasError) {
                         this.AllMeasurements = myResponse2.Result;
 
+                        this.SetSurchargesIds();
                         this.LoadCompareToVersions();
                         this.SetUIProperties();
                         this.SetSurchargesLabelsAndVisibility();
-
-                        if (this.CurrentVersion.IsDraft) {
-                            this.FillTariffLines(this.CurrentVersion.TariffLines);
-                        }
-
-                        else {
-                            this.LoadTariffLines("currentVersion");
-                        }
                     }
                 });
             }
@@ -112,6 +101,29 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 this.SetContainersLabelsAndVisibility();
             }
         });
+    }
+
+    public Surcharge1Id: string;
+    public Surcharge2Id: string;
+    public Surcharge3Id: string;
+    public Surcharge4Id: string;
+    public Surcharge5Id: string;
+    public Surcharge6Id: string;
+    public Surcharge7Id: string;
+    public Surcharge8Id: string;
+    public Surcharge9Id: string;
+    public Surcharge10Id: string; 
+    private SetSurchargesIds() {
+        this.Surcharge1Id = this.EntityPM.Surcharge1Id;
+        this.Surcharge2Id = this.EntityPM.Surcharge2Id;
+        this.Surcharge3Id = this.EntityPM.Surcharge3Id;
+        this.Surcharge4Id = this.EntityPM.Surcharge4Id;
+        this.Surcharge5Id = this.EntityPM.Surcharge5Id;
+        this.Surcharge6Id = this.EntityPM.Surcharge6Id;
+        this.Surcharge7Id = this.EntityPM.Surcharge7Id;
+        this.Surcharge8Id = this.EntityPM.Surcharge8Id;
+        this.Surcharge9Id = this.EntityPM.Surcharge9Id;
+        this.Surcharge10Id = this.EntityPM.Surcharge10Id;
     }
 
     private SaveCompletedEvent: any = null;
@@ -202,8 +214,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 if (!response.HasError) {
                     this.compareTariffLines = response.Result;
 
-                    //this.DoCompare();
-                    this.BuildDeletedLines();
+                    this.DoCompare();
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -371,35 +382,32 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         this.ItemsCollection = [];
 
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            this.ItemsCollection.push(new OceanFCLSurchargeTariffLineData(item, this));
+            this.ItemsCollection.push(new OceanFCLSurchargeTariffLineData(false, item, this));
         });
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
         this.DoCompare();
-
     }
 
     private DoCompare() {
         this.DeletedTariffsLines = [];
-        if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
-            this.ComaredLines();
+        if (this.IsComparToChecked && this.ComparedToVersionPM != null && this.compareTariffLines != null) {
+
+            this.ItemsCollection.forEach((item: OceanFCLSurchargeTariffLineData) => {
+                item.IsNewEntity = false;
+                item.DoCompareContainerPrices(true);
+
+                var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+                if (line) {
+                    
+                }
+                else {
+                    item.IsNewEntity = true;
+                }
+            });
+
             this.BuildDeletedLines();
         }
-    }
-
-    ComaredLines() {
-        this.ItemsCollection.forEach((item: OceanFCLSurchargeTariffLineData) => {
-            item.IsNewEntity = false;
-            var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
-            if (line) {
-                item.ComparedEntity = line;
-                //item.SetCellsComparingText();
-            }
-
-            else {
-                item.IsNewEntity = true;
-            }
-        });
     }
     BuildDeletedLines() {
         var lines: TariffLinePM[];
@@ -410,15 +418,17 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             lines = this.loadedTariffLines;
         }
 
-        this.compareTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            var line = lines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
-            if (line == null) {
-                this.DeletedTariffsLines.push(new OceanFCLSurchargeTariffLineData(item, this));// Deleted 
-            }
-        });
+        if (this.compareTariffLines != null && lines != null) {
+            this.compareTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
+                var line = lines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+                if (line == null) {
+                    this.DeletedTariffsLines.push(new OceanFCLSurchargeTariffLineData(true, item, this));// Deleted 
+                }
+            });
+        }
     }
 
-    public isComparToChecked = false;
+    public isComparToChecked = this.IsDraftVersion;
     get IsComparToChecked() {
         return this.isComparToChecked;
     }
@@ -449,7 +459,6 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             this.ComparedToVersionPM = this.compareToVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
             this.ComparingCalculations(true);
         }
-
     }
 
     private compareToVersions: TariffVersionPM[];
@@ -459,6 +468,14 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             if (!response.HasError) {
                 this.compareToVersions = response.Result;
                 this.BuildVersionsList();
+
+                if (this.CurrentVersion.IsDraft) {
+                    this.FillTariffLines(this.CurrentVersion.TariffLines);
+                }
+
+                else {
+                    this.LoadTariffLines("currentVersion");
+                }
             }
         });
     }
@@ -535,7 +552,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             }
         }
 
-        var itemComponent = new OceanFCLSurchargeTariffLineData(itemPM, this, true);
+        var itemComponent = new OceanFCLSurchargeTariffLineData(false, itemPM, this, true);
         logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
@@ -681,6 +698,18 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
             tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
             tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
+
+            item.ContainersPrices.forEach(containerItem => {
+                var containerPrice = new TariffLinesContainersPricePM(tariffLine);
+                containerPrice.SurchargeId = containerItem.SurchargeId;
+                containerPrice.Price1 = containerItem.Price1;
+                containerPrice.Price2 = containerItem.Price2;
+                containerPrice.Price3 = containerItem.Price3;
+                containerPrice.Price4 = containerItem.Price4;
+                containerPrice.Price5 = containerItem.Price5;
+                tariffLine.AddTariffLinesContainersPrice(containerPrice);
+            });
+
             copiedVersion.AddTariffLine(tariffLine);
         });
 
@@ -692,9 +721,11 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         args.Version = this.CurrentVersion;
         args.TariffCharges = this.tariffCharges;
         args.CarrierId = this.EntityPM.SellerId;
+        args.TypeCode = this.EntityPM.TypeCode;
+        args.FatherComponent = this;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1100;
+        logWindow.Width = 1300;
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surcharge Update";
@@ -707,10 +738,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UpdateSurchargesComponent');
     }
-
-
-
-
+    
     public SelectedRow: OceanFCLSurchargeTariffLineData = null;
     OnRowSelected(itemComponent: OceanFCLSurchargeTariffLineData) {
         this.SelectedRow = itemComponent;
@@ -724,9 +752,9 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             if (item) {
                 item.Row = myRow;
 
-                //if (item.InsideItemsSource.length > 0) {
-                //    isExpandaple = true;
-                //}
+                if (item.ContainersItemsSourceView.length > 0) {
+                    isExpandaple = true;
+                }
             }
 
             myRow.SetExpandaple(isExpandaple);
@@ -747,20 +775,28 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
     public IsEditEnabled: boolean = false;
-    public ComparedEntity: TariffLinePM;
     private initialIndex: number;
     public IsRowHover: boolean = false;
     public Row: any;
     public ContainerPricesItemsSource: ContainerPricesItem[] = [];
-    constructor(entity: TariffLinePM, public FatherComponent: OceanFCLSurchargeVersionTabComponent, isNew: boolean = false) {
+    public ContainersItemsSourceView: ContainerPricesItem[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(isDeleted: boolean, entity: TariffLinePM, public FatherComponent: OceanFCLSurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.TariffPM = FatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
+
         this.SetUIProperties();
+
+        if (!isDeleted) {
+            this.LoadCompareContainerPrices();
+        }
+
         this.BuildContainerPricesItemsSource();
+        this.ComputeSurchargePricesValues();
     }
 
     private CheckIfLineHasError() {
@@ -982,6 +1018,47 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isCurrencyRequired);
     }
 
+    public compareContainerPrices: TariffLinesContainersPricePM[] = [];
+    private LoadCompareContainerPrices() {
+        if (this.FatherComponent.ComparedToVersionPM != null) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+
+            this.FatherComponent.TariffDomainService.GetTariffLineContainerPrices(this.TariffPM.Id, this.FatherComponent.ComparedToVersionPM.Version, this.EntityPM.OriginPortId, this.EntityPM.DestinationPortId).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    this.compareContainerPrices = response.Result;
+
+                    if (this.FatherComponent.IsComparToChecked && this.FatherComponent.ComparedToVersionPM != null) {
+                        this.DoCompareContainerPrices(false);
+                    }
+                }
+
+                this.CurrentSession.StopBusyIndicator();
+            });
+        }
+    }
+    
+    DoCompareContainerPrices(load: boolean) {
+        if (load) {
+            this.LoadCompareContainerPrices();
+        }
+
+        if (this.compareContainerPrices) {
+            this.ContainersItemsSourceView.forEach((item: ContainerPricesItem) => {
+                item.IsNewEntity = false;
+                var line = this.compareContainerPrices.filter(a => a.SurchargeId == item.SurchargeId)[0];
+
+                if (line) {
+                    item.ComparedEntity = line;
+                    item.SetCellsComparingText();
+                }
+
+                else {
+                    item.IsNewEntity = true;
+                }
+            });
+        }
+    }
+
     get HasErrors() {
         return this.EntityPM.HasErrors;
     }
@@ -1169,217 +1246,90 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Notes = value;
         }
     }
-
-    // Surcharge 1
-    get Surcharge1Price() {
-        return this.EntityPM.Surcharge1Price;
+   
+    ////////////////////////////
+    public Surcharge1PriceValue: string;
+    public Surcharge2PriceValue: string;
+    public Surcharge3PriceValue: string;
+    public Surcharge4PriceValue: string;
+    public Surcharge5PriceValue: string;
+    public Surcharge6PriceValue: string;
+    public Surcharge7PriceValue: string;
+    public Surcharge8PriceValue: string;
+    public Surcharge9PriceValue: string;
+    public Surcharge10PriceValue: string;
+    public ComputeSurchargePricesValues() {
+        this.Surcharge1PriceValue  = this.ComputePriceValue(this.TariffPM.Surcharge1Id);
+        this.Surcharge2PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge2Id);
+        this.Surcharge3PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge3Id);
+        this.Surcharge4PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge4Id);
+        this.Surcharge5PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge5Id);
+        this.Surcharge6PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge6Id);
+        this.Surcharge7PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge7Id);
+        this.Surcharge8PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge8Id);
+        this.Surcharge9PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge9Id);
+        this.Surcharge10PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge10Id);
     }
-    set Surcharge1Price(value: number) {
-        if (this.EntityPM.Surcharge1Price != value) {
-            this.EntityPM.Surcharge1Price = value;
-            this.CheckIfLineHasError();
-        }
-    }
+    private ComputePriceValue(ichargeTypeId): string {
+        var myValue: string = "";
 
-    get Surcharge1PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge1Price, "N3");
-        }
+        if (!AppTool.IsNullOrEmpty(ichargeTypeId)) {
+            if (this.EntityPM.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).length > 0) {
+                this.EntityPM.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).forEach((item) => {
+                    if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType1Id)) {
+                        if (AppTool.IsNullOrZero(item.Price1)) {
+                            myValue = "-";
+                        }
 
-        else {
-            return this.EntityPM.Surcharge1PriceText;
-        }
-    }
+                        else {
+                            myValue = item.Price1.toString();
+                        }                                                            
+                    }
 
-    // Surcharge 2
-    get Surcharge2Price() {
-        return this.EntityPM.Surcharge2Price;
-    }
-    set Surcharge2Price(value: number) {
-        if (this.EntityPM.Surcharge2Price != value) {
-            this.EntityPM.Surcharge2Price = value;
-            this.CheckIfLineHasError();
-        }
-    }
+                    if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType2Id)) {
+                        if (AppTool.IsNullOrZero(item.Price2)) {
+                            myValue = myValue + " / -";
+                        }
 
-    get Surcharge2PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge2Price, "N3");
-        }
+                        else {
+                            myValue = myValue + " / " + item.Price2.toString();
+                        }
+                    }
 
-        else {
-            return this.EntityPM.Surcharge2PriceText;
-        }
-    }
+                    if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType3Id)) {
+                        if (AppTool.IsNullOrZero(item.Price3)) {
+                            myValue = myValue + " / -";
+                        }
 
-    // Surcharge 3
-    get Surcharge3Price() {
-        return this.EntityPM.Surcharge3Price;
-    }
-    set Surcharge3Price(value: number) {
-        if (this.EntityPM.Surcharge3Price != value) {
-            this.EntityPM.Surcharge3Price = value;
-            this.CheckIfLineHasError();
+                        else {
+                            myValue = myValue + " / " + item.Price3.toString();
+                        }
+                    }
 
-        }
-    }
+                    if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType4Id)) {
+                        if (AppTool.IsNullOrZero(item.Price4)) {
+                            myValue = myValue + " / -";
+                        }
 
-    get Surcharge3PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge3Price, "N3");
-        }
+                        else {
+                            myValue = myValue + " / " + item.Price4.toString();
+                        }
+                    }
 
-        else {
-            return this.EntityPM.Surcharge3PriceText;
-        }
-    }
+                    if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType5Id)) {
+                        if (AppTool.IsNullOrZero(item.Price5)) {
+                            myValue = myValue + " / -";
+                        }
 
-    // Surcharge 4
-    get Surcharge4Price() {
-        return this.EntityPM.Surcharge4Price;
-    }
-    set Surcharge4Price(value: number) {
-        if (this.EntityPM.Surcharge4Price != value) {
-            this.EntityPM.Surcharge4Price = value;
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get Surcharge4PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge4Price, "N3");
+                        else {
+                            myValue = myValue + " / " + item.Price5.toString();
+                        }
+                    }
+                });
+            }
         }
 
-        else {
-            return this.EntityPM.Surcharge4PriceText;
-        }
-    }
-
-    // Surcharge 5
-    get Surcharge5Price() {
-        return this.EntityPM.Surcharge5Price;
-    }
-    set Surcharge5Price(value: number) {
-        if (this.EntityPM.Surcharge5Price != value) {
-            this.EntityPM.Surcharge5Price = value;
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get Surcharge5PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge5Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Surcharge5PriceText;
-        }
-    }
-
-    // Surcharge 6
-    get Surcharge6Price() {
-        return this.EntityPM.Surcharge6Price;
-    }
-    set Surcharge6Price(value: number) {
-        if (this.EntityPM.Surcharge6Price != value) {
-            this.EntityPM.Surcharge6Price = value;
-            this.CheckIfLineHasError();
-
-        }
-    }
-
-    get Surcharge6PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge6Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge6Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Surcharge6PriceText;
-        }
-    }
-
-    // Surcharge 7
-    get Surcharge7Price() {
-        return this.EntityPM.Surcharge7Price;
-    }
-    set Surcharge7Price(value: number) {
-        if (this.EntityPM.Surcharge7Price != value) {
-            this.EntityPM.Surcharge7Price = value;
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get Surcharge7PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge7Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge7Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Surcharge7PriceText;
-        }
-    }
-
-    // Surcharge 8
-    get Surcharge8Price() {
-        return this.EntityPM.Surcharge8Price;
-    }
-    set Surcharge8Price(value: number) {
-        if (this.EntityPM.Surcharge8Price != value) {
-            this.EntityPM.Surcharge8Price = value;
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get Surcharge8PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge8Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge8Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Surcharge8PriceText;
-        }
-    }
-
-    // Surcharge 9
-    get Surcharge9Price() {
-        return this.EntityPM.Surcharge9Price;
-    }
-    set Surcharge9Price(value: number) {
-        if (this.EntityPM.Surcharge9Price != value) {
-            this.EntityPM.Surcharge9Price = value;
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get Surcharge9PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge8Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge9Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Surcharge9PriceText;
-        }
-    }
-
-    // Surcharge 10
-    get Surcharge10Price() {
-        return this.EntityPM.Surcharge10Price;
-    }
-    set Surcharge10Price(value: number) {
-        if (this.EntityPM.Surcharge10Price != value) {
-            this.EntityPM.Surcharge10Price = value;
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get Surcharge10PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge10Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Surcharge10Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Surcharge10PriceText;
-        }
+        return myValue;
     }
 
     ////////////////////////////
@@ -1437,13 +1387,11 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             }
         }
     }
-
-
-
-
+    
     public RowDetailsHeights: number = 0;
     BuildContainerPricesItemsSource() {
         this.ContainerPricesItemsSource = [];
+        this.ContainersItemsSourceView = [];
 
         var list: TariffLinesContainersPricePM[] = [];
         this.EntityPM.ContainersPrices.forEach((item) => {
@@ -1452,7 +1400,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
         if (list.length < 10) {
             for (var i = list.length; i < 10; i++) {
-                var chargeId: string = this.TariffPM['Surcharge' + (i + 1) + 'Id'];
+                var chargeId: string = this.FatherComponent['Surcharge' + (i + 1) + 'Id'];
 
                 if (!AppTool.IsNullOrEmpty(chargeId)) {
                     var item: TariffLinesContainersPricePM = new TariffLinesContainersPricePM(null);
@@ -1466,32 +1414,31 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         }
 
         list.forEach(item => {
-            this.ContainerPricesItemsSource.push(new ContainerPricesItem(item, this));
+            var isNew: boolean = AppTool.IsNullOrEmpty(item.Id);
+            this.ContainerPricesItemsSource.push(new ContainerPricesItem(item, this, isNew));
         });
 
+        this.EntityPM.ContainersPrices.forEach(item => {
+            this.ContainersItemsSourceView.push(new ContainerPricesItem(item, this));
+        });
 
-        //this.ContainerPricesItemsSource = [];
+        this.RowDetailsHeights = (this.ContainersItemsSourceView.length * 26) + 20 + 28;
+        this.FatherComponent.ReloadDetails.emit("");
 
-        //this.EntityPM.conta.forEach(item => {
-        //    this.ContainerPricesItemsSource.push(new ContainerPricesItem(item, this));
-        //});
-
-        //this.RowDetailsHeights = (this.ContainerPricesItemsSource.length * 26) + 20 + 28;
-        //this.FatherComponent.ReloadDetails.emit("");
+        this.DoCompareContainerPrices(false);  
     }
 }
 
 export class ContainerPricesItem extends BaseComponent {
     public EntityPM: TariffLinesContainersPricePM;
-    public TariffPM: TariffPM;
     public TariffLinePM: TariffLinePM;
     public ObjectTableName: string = "TariffLinesContainersPrice";
     public IsNewEntity: boolean = false;
-
+    private DefaultColor = "blue";
+    public ComparedEntity: TariffLinesContainersPricePM;
     constructor(entity: TariffLinesContainersPricePM, public FatherComponent: OceanFCLSurchargeTariffLineData, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
-        this.TariffPM = FatherComponent.TariffPM;
         this.TariffLinePM = FatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         
@@ -1514,7 +1461,48 @@ export class ContainerPricesItem extends BaseComponent {
 
     public ChargeLabel: string;
     private FillChargeLabels() {
+        var index: number = 0;
+        if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge1Id) {
+            index = 1;
+        }
 
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge2Id) {
+            index = 2;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge3Id) {
+            index = 3;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge4Id) {
+            index = 4;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge5Id) {
+            index = 5;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge6Id) {
+            index = 6;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge7Id) {
+            index = 7;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge8Id) {
+            index = 8;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge9Id) {
+            index = 9;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge10Id) {
+            index = 10;
+        }
+
+        this.ChargeLabel = this.FatherComponent.DataContext.FatherComponent['Surcharge' + index + 'PriceLabel'];
     }
 
     get SurchargeId() {
@@ -1532,6 +1520,7 @@ export class ContainerPricesItem extends BaseComponent {
     set Price1(value: number) {
         if (this.EntityPM.Price1 != value) {
             this.EntityPM.Price1 = value;
+            this.ComparePrice(1);
         }
     }
 
@@ -1541,6 +1530,7 @@ export class ContainerPricesItem extends BaseComponent {
     set Price2(value: number) {
         if (this.EntityPM.Price2 != value) {
             this.EntityPM.Price2 = value;
+            this.ComparePrice(2);
         }
     }
 
@@ -1550,6 +1540,7 @@ export class ContainerPricesItem extends BaseComponent {
     set Price3(value: number) {
         if (this.EntityPM.Price3 != value) {
             this.EntityPM.Price3 = value;
+            this.ComparePrice(3);
         }
     }
 
@@ -1559,6 +1550,7 @@ export class ContainerPricesItem extends BaseComponent {
     set Price4(value: number) {
         if (this.EntityPM.Price4 != value) {
             this.EntityPM.Price4 = value;
+            this.ComparePrice(4);
         }
     }
 
@@ -1568,7 +1560,60 @@ export class ContainerPricesItem extends BaseComponent {
     set Price5(value: number) {
         if (this.EntityPM.Price5 != value) {
             this.EntityPM.Price5 = value;
+            this.ComparePrice(5);
         }
+    }
+    
+    public ComparingPrice1: number;
+    public ComparingPrice2: number;
+    public ComparingPrice3: number;
+    public ComparingPrice4: number;
+    public ComparingPrice5: number;
+
+    public Price1ComparingTextColor: string = null;
+    public Price2ComparingTextColor: string = null;
+    public Price3ComparingTextColor: string = null;
+    public Price4ComparingTextColor: string = null;
+    public Price5ComparingTextColor: string = null;
+
+    SetCellsComparingText() {
+        this.ComparePrice(1);
+        this.ComparePrice(2);
+        this.ComparePrice(3);
+        this.ComparePrice(4);
+        this.ComparePrice(5);
+    }
+    private ComparePrice(index: number) {
+        if (this.ComparedEntity != null) {
+            this['ComparingPrice' + index] = null;
+            this['Price' + index + 'ComparingTextColor'] = this.DefaultColor;
+
+            if (this.ComparedEntity['Price' + index] != null) {
+                var comparingValue = this['Price' + index] - this.ComparedEntity['Price' + index];
+
+                if (!AppTool.IsNullOrZero(comparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity['Price' + index])) {
+                    this['ComparingPrice' + index] = (comparingValue / this.ComparedEntity['Price' + index]) * 100;
+                    this['Price' + index + 'ComparingTextColor'] = this.ComputeWarningPercentageColor(this['ComparingPrice' + index]);
+                }
+            }
+        }
+    }
+    ComputeWarningPercentageColor(price: number) {
+        var color = "blue";
+
+        if (this.FatherComponent.DataContext.FatherComponent.WarningPercentage == null) {
+            color = "blue";
+        }
+
+        else {
+
+            var price_abs = Math.abs(price);
+            if (price_abs > this.FatherComponent.DataContext.FatherComponent.WarningPercentage) {
+                color = "red";
+            }
+        }
+
+        return color;
     }
 }
 

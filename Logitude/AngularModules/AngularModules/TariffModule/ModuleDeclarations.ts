@@ -22,7 +22,7 @@ import { ChoosePortComponent } from './Components/EditTabs/Tariff/ChoosePortComp
 import { AddEditAllInChargesComponent } from './Components/EditTabs/Tariff/AddEditAllInChargesComponent';
 import { OceanFCLVersionTabComponent } from './Components/EditTabs/Tariff/OceanFCLVersionTabComponent';
 import { OceanFCLSurchargeVersionTabComponent } from './Components/EditTabs/Tariff/OceanFCLSurchargeVersionTabComponent';
-
+import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffContainersComponent';
 
 export const Components =
     [
@@ -49,6 +49,7 @@ export const Components =
         TariffWorkspaceComponent,
         SettingsWorkspaceComponent,
         OceanFCLSurchargeVersionTabComponent,
+        AddTariffContainersComponent,
     ];
 
 export const ControlsComponents =
@@ -84,6 +85,7 @@ export class ModuleDeclarations {
             case "TariffWorkspaceComponent": { myResult = TariffWorkspaceComponent; break; }
             case "SettingsWorkspaceComponent": { myResult = SettingsWorkspaceComponent; break; }
             case "OceanFCLSurchargeVersionTabComponent": { myResult = OceanFCLSurchargeVersionTabComponent; break; }
+            case "AddTariffContainersComponent": { myResult = AddTariffContainersComponent; break; }
         }
 
         return myResult;

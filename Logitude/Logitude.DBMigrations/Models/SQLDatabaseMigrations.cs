@@ -241,12 +241,12 @@ namespace Logitude.DBMigrations.Models
 
         protected override bool IsTableRenamed()
         {
-            return TableMigrations.DxmlTableName != TableMigrations.CurrentTableName;
+            return TableMigrations.DxmlTableName.ToLower() != TableMigrations.CurrentTableName.ToLower();
         }
 
         protected override bool IsColumnRenamed(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            return currentTableColumn.Name != dxmlTableColumn.Name;
+            return currentTableColumn.Name.ToLower() != dxmlTableColumn.Name.ToLower();
         }
 
         protected override int FormatColumnSize(int size, string type)
@@ -334,33 +334,36 @@ namespace Logitude.DBMigrations.Models
 
         protected override bool IsRelationInDXMLTable(RelationDefinition relation)
         {
-            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).Any();
+            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).Any();
         }
 
         protected override RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation)
         {
-            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn == relation.ForeignKeyColumn && r.ReferencedTable == relation.ReferencedTable && r.ReferencedColumn == relation.ReferencedColumn).First();
+            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).First();
         }
 
         protected override bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnShortName, string dxmlColumnOldNames)
         {
+            dxmlColumnName = dxmlColumnName.ToLower();
+            dxmlColumnOldNames = dxmlColumnOldNames?.ToLower();
+
             bool isColumnInCurrentTable = false;
             if (dxmlColumnOldNames != null)
             {
                 if (!dxmlColumnOldNames.Contains(","))
                 {
-                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnOldNames).Any();
+                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnOldNames).Any();
                 }
                 else
                 {
                     List<string> oldNames = dxmlColumnOldNames.Split(',').ToList();
-                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name)).Any();
+                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name.ToLower())).Any();
                 }
             }
 
             if (!isColumnInCurrentTable)
             {
-                isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnName).Any();
+                isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnName).Any();
             }
 
             return isColumnInCurrentTable;
@@ -368,22 +371,25 @@ namespace Logitude.DBMigrations.Models
 
         protected override ColumnDefinition GetCurrentTableColumn(string dxmlColumnName, string dxmlColumnShortName, string dxmlColumnOldNames)
         {
+            dxmlColumnName = dxmlColumnName.ToLower();
+            dxmlColumnOldNames = dxmlColumnOldNames?.ToLower();
+
             string columnName = dxmlColumnOldNames;
             bool isColumnInCurrentTable = false;
             if (dxmlColumnOldNames != null)
             {
                 if (!dxmlColumnOldNames.Contains(','))
                 {
-                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnOldNames).Any();
+                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnOldNames).Any();
                 }
                 else
                 {
                     List<string> oldNames = dxmlColumnOldNames.Split(',').ToList();
-                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name)).Any();
+                    isColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name.ToLower())).Any();
                 }
             }
 
-            if (!isColumnInCurrentTable && CurrentTable.Columns.Where(c => c.Name == dxmlColumnName).Any())
+            if (!isColumnInCurrentTable && CurrentTable.Columns.Where(c => c.Name.ToLower() == dxmlColumnName).Any())
             {
                 columnName = dxmlColumnName;
                 isColumnInCurrentTable = true;
@@ -391,19 +397,19 @@ namespace Logitude.DBMigrations.Models
 
             if (!columnName.Contains(","))
             {
-                return CurrentTable.Columns.Where(c => c.Name == columnName).First();
+                return CurrentTable.Columns.Where(c => c.Name.ToLower() == columnName).First();
             }
             else
             {
                 List<string> names = columnName.Split(',').ToList();
-                return CurrentTable.Columns.Where(c => names.Contains(c.Name)).First();
+                return CurrentTable.Columns.Where(c => names.Contains(c.Name.ToLower())).First();
             }
         }
 
         protected override List<ColumnDefinition> GetDroppedColumns()
         {
-            List<string> dxmlTableColumnsNames = DXMLTable.Columns.Select(c => c.Name).ToList();
-            List<string> dxmlTableColumnsOldNames = DXMLTable.Columns.Where(c => c.OldNames != null).Select(c => c.OldNames).ToList();
+            List<string> dxmlTableColumnsNames = DXMLTable.Columns.Select(c => c.Name.ToLower()).ToList();
+            List<string> dxmlTableColumnsOldNames = DXMLTable.Columns.Where(c => c.OldNames != null).Select(c => c.OldNames.ToLower()).ToList();
             foreach (var name in dxmlTableColumnsOldNames)
             {
                 if (!name.Contains(","))
@@ -416,7 +422,7 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            List<ColumnDefinition> droppedColumns = CurrentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name) && !c.Name.StartsWith("Drop_")).ToList();
+            List<ColumnDefinition> droppedColumns = CurrentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name.ToLower()) && !c.Name.ToLower().StartsWith("drop_")).ToList();
             return droppedColumns;
         }
 
@@ -535,10 +541,10 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetAddPrimaryKeyScript(ColumnMigration columnMigration)////
         {
-            List<string> droppedColumnsNames = GetDroppedColumns().Select(c => c.Name).ToList();
-            if(CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name)).Any())
+            List<string> droppedColumnsNames = GetDroppedColumns().Select(c => c.Name.ToLower()).ToList();
+            if(CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name.ToLower())).Any())
             {
-                string primaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name)).Select(c => "[" + c.Name + "]").ToArray());
+                string primaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey && !droppedColumnsNames.Contains(c.Name.ToLower())).Select(c => "[" + c.Name + "]").ToArray());
                 string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
                 string addPrimaryKeyScript = "-- Add The Primary Key Constraint\n";
                 addPrimaryKeyScript += "EXEC('ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + primaryKeyColumns + ")')";

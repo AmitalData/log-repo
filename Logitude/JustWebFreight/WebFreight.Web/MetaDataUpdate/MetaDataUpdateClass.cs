@@ -60903,7 +60903,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #region TenantQuery
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.AllTenants", DefaultText = "All Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.InactiveTenants", DefaultText = "Inactive Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.TrialTenantManagements", DefaultText = "Trial Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.TrialTenantManagements", DefaultText = "Trial Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.PayingCustomers", DefaultText = "Paying Customers", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.NotRecuringTenants", DefaultText = "Not Recuring Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             #endregion
@@ -62778,10 +62778,10 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable objectTable = ObjectContext.ObjectTables.Where(f => f.Name == "ShipmentPickUpDelivery" && f.Tenant == 0).FirstOrDefault();
 
             #region Tabs Headers
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Main", DefaultText = "Main", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Main", DefaultText = "Main", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.Packages", DefaultText = "Packages", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Buttons & Actions

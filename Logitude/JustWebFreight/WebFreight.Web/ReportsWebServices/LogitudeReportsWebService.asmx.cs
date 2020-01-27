@@ -9848,9 +9848,12 @@ namespace WebFreight.Web.ReportsWebServices
         {
             InventoryDataProvider dataProvider = new InventoryDataProvider();
             #region Report Filters
-            string customerId = "";
-            string warehouseId = "";
-            string shipperConsigneeId = "";
+            string customerId = string.Empty;
+            string warehouseId = string.Empty;
+            string shipperConsigneeId = string.Empty;
+            int DaysInWarehouseValue =0;
+            string DaysInWarehouseOperatorFilterValue = string.Empty;
+
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
@@ -9868,10 +9871,16 @@ namespace WebFreight.Web.ReportsWebServices
             queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipperConsigneeId").FirstOrDefault();
             if (queryFilterItem != null && queryFilterItem.FieldValue != null) shipperConsigneeId = queryFilterItem.FieldValue.ToString();
 
-
+            //DaysInWarehouseValue
+            queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DaysInWarehouse").FirstOrDefault();
+            if (queryFilterItem != null)
+            {
+                if (queryFilterItem.FieldValue != null) DaysInWarehouseValue = queryFilterItem.FieldValue != null && !string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString()) ? Int32.Parse(queryFilterItem.FieldValue.ToString()) : 0;
+                DaysInWarehouseOperatorFilterValue = queryFilterItem.Operator;
+            }
 
             WarehouseEntryPackageQueryService warehouseEntryPackageQueryService = new WarehouseEntryPackageQueryService(tenant);
-            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(customerId, warehouseId, shipperConsigneeId, tenant);
+            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(new WarehouseEntryPackageArgs() { CustomerId = customerId , WarehouseId = warehouseId  ,ShipperConsigneesId = shipperConsigneeId  , Tenant = tenant ,DaysInWarehouseOperatorFilterValue = DaysInWarehouseOperatorFilterValue, DaysInWarehouseValue = DaysInWarehouseValue });
             dataProvider.WarehouseEntryPackageList = result;
             dataProvider.PartnerName = string.IsNullOrEmpty(customerId) ? "All" : "";
             dataProvider.Warehouse = string.IsNullOrEmpty(warehouseId) ? "All" : "";

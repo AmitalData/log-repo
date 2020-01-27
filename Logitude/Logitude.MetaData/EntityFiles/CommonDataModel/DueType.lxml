@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Due Type&quot;"
-  Code="&quot;e066&quot;"
+  Code="&quot;dd8a&quot;"
   Name="&quot;DueType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -342,12 +342,6 @@
       Name="&quot;Valuation&quot;" />
   </Records>
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;DueType&quot;"
-      DefaultText="&quot;Due Type&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

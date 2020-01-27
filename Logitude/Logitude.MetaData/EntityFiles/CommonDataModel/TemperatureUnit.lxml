@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Temperature Unit&quot;"
-  Code="&quot;b814&quot;"
+  Code="&quot;589a&quot;"
   Name="&quot;TemperatureUnit&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -330,12 +330,6 @@
       Name="&quot;Fahrenheit&quot;" />
   </Records>
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;TemperatureUnit&quot;"
-      DefaultText="&quot;Temperature Unit&quot;"
-      TextCodeTypeCode="&quot;T&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

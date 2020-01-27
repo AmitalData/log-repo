@@ -623,6 +623,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	         Screen RuleUpdateHistoryRuleUpdateHistoryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RuleUpdateHistory.HeaderScreen", Name = "RuleUpdateHistoryHeaderScreen", ObjectTableId = RuleUpdateHistoryObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    RuleUpdateHistoryObjectTable.HeaderScreenId = RuleUpdateHistoryRuleUpdateHistoryHeaderScreenScreen0.Id;
+		    RuleUpdateHistoryObjectTable.HeaderScreenCode = RuleUpdateHistoryRuleUpdateHistoryHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

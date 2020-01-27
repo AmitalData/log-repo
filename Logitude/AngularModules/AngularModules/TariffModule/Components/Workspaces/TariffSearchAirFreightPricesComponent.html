@@ -123,12 +123,27 @@
                                         </tr>
                                         <tr style="height:15px">
                                             <td>
-                                                <div class="FillParent" style="padding-left:10px">
-                                                    <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert totals or </span>
-                                                    <Hyperlink (click)="FillDimensionsClicked()">Fill Dimensions</Hyperlink>
-                                                </div>
-                                            </td>
-                                            <td></td>
+                                                <table>
+                                                    <tr>
+                                                        <td *ngIf="TariffType == 'OLC'">
+                                                            <div class="FillParent" style="padding-left:10px">
+                                                                <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert totals or </span>
+                                                                <Hyperlink (click)="FillDimensionsClicked()">Fill Dimensions</Hyperlink>
+                                                            </div>
+                                                        </td>
+
+                                                        <td *ngIf="TariffType == 'OFC'">
+                                                            <div class="FillParent" style="padding-left:10px">
+                                                                <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert  </span>
+                                                                <Hyperlink (click)="FillContainersClicked()">Containers</Hyperlink>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>                                          
                                         </tr>
 
                                         <tr style="height:5px">
