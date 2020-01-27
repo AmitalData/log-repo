@@ -125,20 +125,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                  ShopperId = tenantmanagements.BluesnapAccount,
                                                                  AmountToPay = tenantmanagements.TotalPrice,
                                                                  Transactions = (from a in iQueryable_BluesnapTransactions
-                                                                                 join documents in iContext.Documents
-                                                                                 on new { Id = a.DocumentId }
-                                                                                 equals new { Id = documents.Id }
                                                                                  where a.Tenant == tenantmanagements.Id
                                                                                  select new BluesnapTransactionItem()
                                                                                  {
-                                                                                     FileInfo = new BlobFileInfo()
-                                                                                     {
-                                                                                         Tenant = tenant,
-                                                                                         FileName = documents == null ? null : documents.Id,
-                                                                                         FolderName = documents == null ? null : documents.Folder,
-                                                                                         Extension = documents == null ? null : documents.Extension,
-                                                                                         FileSize = documents == null ? null : documents.FileSize,
-                                                                                     },
+                                                                                     DocumentId = a.DocumentId,
                                                                                  }).ToList(),
                                                              });
         }
@@ -154,43 +144,74 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                 itemRecord.ShopperId = item.ShopperId;
                 itemRecord.AmountToPay = item.AmountToPay;
                 itemRecord.TransactionCount = item.Transactions != null ? item.Transactions.Count() : 0;
-                double? TotalPayments = 0;
+                double? totalPayments = 0;
                 foreach (var transaction in item.Transactions)
                 {
-                    var queryParameters = DeserializeDocumentBody(transaction.FileInfo);
+                    var queryParameters = DeserializeDocumentBody(transaction.DocumentId, item.Tenant);
                     if (queryParameters.Count > 0)
                     {
                         itemRecord.ContractCount = int.Parse(queryParameters["promoteContractsNum"]);
-                        TotalPayments += Double.Parse(queryParameters["invoiceAmountUSD"]);
+                        totalPayments += Double.Parse(queryParameters["invoiceAmountUSD"]);
                     }
-                   
                 }
-                itemRecord.TotalPayments = TotalPayments;
+                itemRecord.TotalPayments = totalPayments;
                 itemRecord.PaymentDifference = itemRecord.TotalPayments - itemRecord.AmountToPay;
-                itemRecord.Notes = itemRecord.PaymentDifference != 0 ? "payment missing " : "";
-                tenantTransactions.Add(itemRecord);
+
+                if(item.Tenant == 0)
+                {
+                    itemRecord.Notes = "unmatched transaction";
+                }
+                else
+                {
+                    itemRecord.Notes = itemRecord.PaymentDifference != 0 ? "payment missing " : "";
+                }
+
+                if(!this.showAllRecurringTenants &&  itemRecord.PaymentDifference != null && itemRecord.PaymentDifference != 0)
+                {
+                    tenantTransactions.Add(itemRecord);
+                }
+                if (this.showAllRecurringTenants)
+                {
+                    tenantTransactions.Add(itemRecord);
+                }
             }
 
             this.iDataProvider.BlusnapTransactionsList = tenantTransactions;
         }
 
-        private Dictionary<string, string> DeserializeDocumentBody(BlobFileInfo fileInfo)
+        private Dictionary<string, string> DeserializeDocumentBody(string documentId, int tenant)
         {
+            Dictionary<string, string> queryParameters = null;
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            byte[] fileData = storageservice.Read(fileInfo);
-            string Stringdetails = Encoding.UTF8.GetString(fileData);
-
-            Dictionary<string, string> queryParameters = new Dictionary<string, string>();
-            string[] querySegments = Stringdetails.Split('&');
-            foreach (string segment in querySegments)
+            byte[] fileData = null;
+            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            Document document = documentRepository.GetSingleDocument(tenant, documentId);
+            if (document != null)
             {
-                string[] parts = segment.Split('=');
-                if (parts.Length > 0)
+                BlobFileInfo fileInfo = new BlobFileInfo()
                 {
-                    string key = parts[0].Trim(new char[] { '?', ' ' });
-                    string val = parts[1].Trim();
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
 
-                    queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
+                fileData = storageservice.Read(fileInfo);
+
+                string Stringdetails = Encoding.UTF8.GetString(fileData);
+
+                queryParameters = new Dictionary<string, string>();
+                string[] querySegments = Stringdetails.Split('&');
+                foreach (string segment in querySegments)
+                {
+                    string[] parts = segment.Split('=');
+                    if (parts.Length > 0)
+                    {
+                        string key = parts[0].Trim(new char[] { '?', ' ' });
+                        string val = parts[1].Trim();
+                        queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
+                    }
                 }
             }
             return queryParameters;
@@ -207,6 +228,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
     }
     public class BluesnapTransactionItem
     {
-        public BlobFileInfo FileInfo { get; set; }
+        public string DocumentId { get; set; }
     }
 }
