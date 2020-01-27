@@ -50,9 +50,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             GetEntity();
             MapEntity();
             SaveEntity();
-
-            MapShipmentFields();
-            MapMasterHouses();
         }
 
         private void GetEntity()
@@ -84,6 +81,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             MapMasterHouses();
 
             shipmentPM.IsShipmentComputedFieldChange = false;
+            shipmentPM.IsDepositionRequired = entity.IsDepositionRequired;
+            shipmentPM.IsRequestedDocuments = entity.IsRequestedDocuments;
+            shipmentPM.IsDigitalSignRequired = entity.IsDigitalSignRequired;
         }
         private void SaveEntity()
         {
@@ -97,28 +97,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 shipmentComputedFieldsRepository.Update(entity);
             }
 
+
             shipmentComputedFieldsRepository.SubmitChanges();
         }
+
         private void MapFields()
         {
             entity.FirstPickupLocation = shipmentPM.FirstPickupLocation;
             entity.Commodity = shipmentPM.AWBCommodityItemNumber;
-            entity.NumberOfDeliveries = shipmentPM.ShipmentDeliveries != null ? shipmentPM.ShipmentDeliveries.Count() : 0;
             entity.ContainsDangerousGoods = shipmentPM.IsDangerous;
             entity.ImportDeclarationDate = shipmentPM.DeclarationDate;
             entity.ImportDeclarationNumber = shipmentPM.DeclarationNumber;
-
-            if (shipmentPM.IsShipmentComputedFieldChange)
-            {
-                entity.IsDepositionRequired = shipmentPM.IsDepositionRequired;
-            }
-
-            if (shipmentPM.CustomsClearanceDate != null)
-            {
-                entity.IsDigitalSignRequired = false;
-                entity.IsDepositionRequired = false;
-            }
-
+            entity.NumberOfDeliveries = shipmentPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
             entity.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
         }
         private void MapContainersNumbers()
@@ -315,7 +305,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 }
             }
 
-
             if (!string.IsNullOrEmpty(shipmentPM.OperationalClosedByUserId))
             {
                 Contact contact = contactRepository.GetSingleContact(shipmentPM.OperationalClosedByUserId, tenant);
@@ -350,14 +339,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             else if (shipmentPM.ShipmentLevelCode == "C")
             {
-                entity.NumberOfHouses = (from d in context.Shipments where d.ShipmentLevelCode == "H" && d.MasterShipmentDataId == shipmentPM.Id select d).Count();
+                entity.NumberOfHouses = shipmentPM.ShipmentConsoleShipments.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
             }
-        }
-        private void MapShipmentFields()
-        {
-            shipmentPM.IsDepositionRequired = entity.IsDepositionRequired;
-            shipmentPM.IsRequestedDocuments = entity.IsRequestedDocuments;
-            shipmentPM.IsDigitalSignRequired = entity.IsDigitalSignRequired;
         }
 
         private string GetPortName(string portId)

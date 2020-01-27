@@ -499,6 +499,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.CheckUpdatingMasterHouses();
                     this.UpdateCrossDockRelease();
 
+                    shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
+                    shipmentBehaviourFacade.Handle();
+
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
                     this.UpdateShipmentFollowUpsCollection();
 
@@ -510,10 +513,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-
-                    shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
-                    shipmentBehaviourFacade.Handle();
-
 
                     this.ApplyUpdatingMasterHouses();
 
