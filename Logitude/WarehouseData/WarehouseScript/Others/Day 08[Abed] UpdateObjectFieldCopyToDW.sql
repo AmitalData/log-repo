@@ -21,7 +21,7 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Port') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName='Code'  or FieldName='CombinedCode' or  FieldName='CountryId' or FieldName='StateId')
 
 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Address') and ( FieldName = 'StateId' or FieldName = 'CountryId' or FieldName='CardId' )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Address') and ( FieldName = 'StateId' or FieldName = 'CountryId' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Country') and (FieldName = 'EnglishName' or FieldName = 'Code')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'State') and (FieldName = 'EnglishName' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'PartnerType') and (FieldName = 'Name' )

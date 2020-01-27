@@ -191,7 +191,7 @@ namespace WebFreight.Web.WcfApi
                     {
                         entityPM.Id = entity.Id;
 
-                        if (entity.ActivityStatusCode != "C")
+                        if (entity.ActivityStatusCode != "C" || (entity.MeetingSummary != entityPM.MeetingSummary))
                         {
                             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
                             //entityPM.MeetingSummary = entity.MeetingSummary;
