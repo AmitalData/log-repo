@@ -38,9 +38,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             FilterOwner(quoteDashboardArgs.OwnerId);
             FilterBusinessUnit(quoteDashboardArgs.BusinessUnitId);
             FilterCreateDate(quoteDashboardArgs.FromDate, quoteDashboardArgs.ToDate);
+
+            if (quoteDashboardArgs.ChartCode == "QOC")
+            {
+                FilterDirectionAndTransportMode(quoteDashboardArgs.DirectionId, quoteDashboardArgs.TransportModeId);
+            }
+
             return dataSourceQuery;
         }
-
+        
         private void FilterCreateDate(DateTime? fromDate, DateTime? toDate)
         {
             if (fromDate != null && toDate != null)
@@ -48,8 +54,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                 dataSourceQuery = dataSourceQuery.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= fromDate && 
                                                              DbFunctions.TruncateTime(d.OpenDate) <= toDate);
             }
-        }
-        
+        }        
 
         private void FilterOwner(string ownerId)
         {
@@ -67,9 +72,21 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             }
         }
 
-        public List<ChartingDataClass> GetChartValues(QuoteDashboardArguments quoteDashboardArgs)
+        private void FilterDirectionAndTransportMode(string directionId, string transportModeId)
         {
-            
+            if (!string.IsNullOrEmpty(directionId) && directionId != "All")
+            {
+                dataSourceQuery = dataSourceQuery.Where(d => d.DirectionId == directionId);
+            }
+
+            if (!string.IsNullOrEmpty(transportModeId) && transportModeId != "All")
+            {
+                dataSourceQuery = dataSourceQuery.Where(d => d.TransportModeId == transportModeId);
+            }
+        }
+
+        public List<ChartingDataClass> GetChartValues(QuoteDashboardArguments quoteDashboardArgs)
+        {            
             string chartCode = quoteDashboardArgs.ChartCode;
             IQueryable<Quote> iQueryable = FilterBasicValues(quoteDashboardArgs);
 
@@ -80,22 +97,28 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                 StageFunnelQuery stageFunnelQuery = new StageFunnelQuery();
                 result = stageFunnelQuery.FilterStageFunnelValues(dataSourceQuery);
             }
+
             else if (chartCode == "QOC")
             {
-
+                QuotesByCountryQuery myQuery = new QuotesByCountryQuery();
+                result = myQuery.FilterQuotesByCountry(dataSourceQuery, quoteDashboardArgs.IncludeOthersCountries, quoteDashboardArgs.TopCountries);
             }
+
             else if (chartCode == "QCV")
             {
 
             }
+
             else if (chartCode == "TFS")
             {
 
             }
+
             else if (chartCode == "KPI")
             {
 
             }
+
             return result;
         }
     }

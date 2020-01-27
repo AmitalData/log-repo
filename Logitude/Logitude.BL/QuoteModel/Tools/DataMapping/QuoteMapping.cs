@@ -195,6 +195,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.Field18 = entityPM.Field18 != null ? entityPM.Field18.Value : null;
             entityPoco.Field19 = entityPM.Field19 != null ? entityPM.Field19.Value : null;
             entityPoco.Field20 = entityPM.Field20 != null ? entityPM.Field20.Value : null;
+            entityPoco.CountryForStatisticsId = entityPM.CountryForStatisticsId;
 
             BuildSearchField(entityPM, entityPoco);
 

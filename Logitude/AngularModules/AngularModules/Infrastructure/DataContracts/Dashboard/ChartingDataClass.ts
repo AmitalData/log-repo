@@ -1,4 +1,4 @@
-﻿export class ChartingDataClass {
+export class ChartingDataClass {
 
     private id: string;
     private groupedId: string;
@@ -225,9 +225,21 @@
         this.timeProperty = value;
     }
 
+    private countryName: string;
+    public get CountryName() { return this.countryName; }
+    public set CountryName(value: string) {
+        this.countryName = value;
+    }
 
+    private countryId: string;
+    public get CountryId() { return this.countryId; }
+    public set CountryId(value: string) {
+        this.countryId = value;
+    }
 
-
-
-
+    private total: number;
+    public get Total() { return this.total; }
+    public set Total(value: number) {
+        this.total = value;
+    }
 }

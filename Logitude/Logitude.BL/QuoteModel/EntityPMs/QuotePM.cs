@@ -421,14 +421,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field20 { get; set; }
 
-
-
-
-
-
-
-
-
+        public string CountryForStatisticsId { get; set; }
 
         private List<QuoteChargePM> quoteCharges;
         [Include]

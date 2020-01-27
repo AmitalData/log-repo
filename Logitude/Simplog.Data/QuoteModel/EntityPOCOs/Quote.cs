@@ -178,17 +178,13 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string NotifyAddressId { get; set; }
         public string NotifyContactId { get; set; }
         public int? NumberOfFollowUps { get; set; }
-
-
+        
         public string QuoteHTMLDocumentId { get; set; }
-
-
+        
         public virtual Card NotifyCard { get; set; }
         public virtual Contact NotifyContact { get; set; }
         public virtual Address NotifyAddress { get; set; }
-
-
-
+        
         public string Field11 { get; set; }
         public string Field12 { get; set; }
         public string Field13 { get; set; }
@@ -200,6 +196,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string Field19 { get; set; }
         public string Field20 { get; set; }
 
+        public string CountryForStatisticsId { get; set; }
 
         [ForeignKey("AgentId")]
         public virtual Card AgentCard { get; set; }
@@ -354,11 +351,11 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public bool GrossWeightEdited { get; set; }
         public bool ChargeableWeightEdited { get; set; }
-
-
+        
         [ForeignKey("QuoteHTMLDocumentId")]
         public virtual Document QuoteHTMLDocument { get; set; }
 
-
+        [ForeignKey("CountryForStatisticsId")]
+        public virtual Country CountryForStatistics { get; set; }
     }
 }

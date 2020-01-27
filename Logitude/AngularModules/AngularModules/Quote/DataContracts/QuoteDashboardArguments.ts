@@ -4,4 +4,8 @@ export class QuoteDashboardArguments {
     public OwnerId: string;
     public BusinessUnitId: string;
     public ChartCode: string;
+    public TransportModeId: string;
+    public DirectionId: string;
+    public IncludeOthersCountries: boolean;
+    public TopCountries: number;
 }
