@@ -115,6 +115,39 @@ namespace Logitude.DBMigrations.Models
             return tableIndexesScript;
         }
 
+        public string GetUniqueConstraintsScript()
+        {
+            string tableUniqueConstraintsScript = "";
+            
+            if (CurrentTable == null)
+            {
+                foreach (var uniqueConstraint in DXMLTable.UniqueConstraints)
+                {
+                    tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
+                }
+            }
+            else
+            {
+                foreach (var uniqueConstraint in CurrentTable.UniqueConstraints)
+                {
+                    if (!IsUniqueConstraintInDXMLTable(uniqueConstraint))
+                    {
+                        tableUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
+                    }
+                }
+
+                foreach (var uniqueConstraint in DXMLTable.UniqueConstraints)
+                {
+                    if (!IsUniqueConstraintInCurrentTable(uniqueConstraint))
+                    {
+                        tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
+                    }
+                }
+            }
+
+            return tableUniqueConstraintsScript;
+        }
+
         protected string GetColumnDefinitionDataType(string dataType)
         {
             string formattedDataType = FormatDataTypeString(dataType).ToLower();
@@ -593,7 +626,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_"))
+                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_"))
                     {
                         return name.Substring(0, maxLength);
                     }
@@ -633,6 +666,11 @@ namespace Logitude.DBMigrations.Models
                 {
                     index.Columns = index.Columns.ToLower();
                     index.Include = String.IsNullOrEmpty(index.Include) ? null : index.Include.ToLower();
+                }
+
+                foreach (var uniqueConstraint in table.UniqueConstraints)
+                {
+                    uniqueConstraint.Columns = uniqueConstraint.Columns.ToLower();
                 }
 
                 return table;
@@ -709,7 +747,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach (var index in indexes)
             {
-                if (!processedIndexesNames.Contains(index.Columns))
+                if (!processedIndexesNames.Contains(index.IndexName))
                 {
                     string columns;
 
@@ -736,6 +774,42 @@ namespace Logitude.DBMigrations.Models
             }
 
             return processedIndexes;
+        }
+
+        protected List<UniqueConstraintDefinition> HandlingCompositeUniqueConstraints(List<UniqueConstraintDefinition> uniqueConstraints)
+        {
+            List<string> processedConstraintsNames = new List<string>();
+            List<UniqueConstraintDefinition> processedConstraints = new List<UniqueConstraintDefinition>();
+            
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                if (!processedConstraintsNames.Contains(uniqueConstraint.ConstraintName))
+                {
+                    string columns;
+
+                    List<UniqueConstraintDefinition> uniqueConstraintsWithSameName = uniqueConstraints.Where(u => u.ConstraintName == uniqueConstraint.ConstraintName).OrderBy(i => i.KeyOrder).ToList();
+
+                    if (uniqueConstraintsWithSameName.Count() > 1)
+                    {
+                        columns = string.Join(",", uniqueConstraintsWithSameName.Select(u => u.Columns).ToArray());
+                    }
+                    else
+                    {
+                        columns = uniqueConstraint.Columns;
+                    }
+
+                    UniqueConstraintDefinition processedConstraint = new UniqueConstraintDefinition
+                    {
+                        Columns = columns,
+                        ConstraintName = uniqueConstraint.ConstraintName
+                    };
+
+                    processedConstraints.Add(processedConstraint);
+                    processedConstraintsNames.Add(uniqueConstraint.ConstraintName);
+                }
+            }
+
+            return processedConstraints;
         }
 
         protected string GetAlterTableScript()
@@ -848,6 +922,8 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract List<IndexDefinition> GetIndexesForDBTable(string tableName);
 
+        protected abstract List<UniqueConstraintDefinition> GetUniqueConstraintsForDBTable(string tableName);
+
         protected abstract string GetCreateRelationScript(RelationDefinition relation);
 
         protected abstract string GetDropRelationScript(RelationDefinition relation);
@@ -910,6 +986,10 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract bool IsIndexInDXMLTable(IndexDefinition index);
 
+        protected abstract bool IsUniqueConstraintInCurrentTable(UniqueConstraintDefinition uniqueConstraint);
+
+        protected abstract bool IsUniqueConstraintInDXMLTable(UniqueConstraintDefinition uniqueConstraint);
+
         protected abstract RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation);
 
         protected abstract string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string script);
@@ -917,5 +997,9 @@ namespace Logitude.DBMigrations.Models
         protected abstract string GetDefaultValueScript(bool nullable, string type, string defaultValue);
         
         protected abstract string GetCreateIndexScript(IndexDefinition index);
+
+        protected abstract string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint);
+
+        protected abstract string GetDropUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint);
     }
 }

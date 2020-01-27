@@ -45,6 +45,8 @@ namespace Logitude.DBMigrations.Models
                 if (error != null) break;
                 error = ValidateIndexesColumns(dxmlTable);
                 if (error != null) break;
+                error = ValidateUniqueConstraintsColumns(dxmlTable);
+                if (error != null) break;
             }
 
             if (!String.IsNullOrEmpty(error))
@@ -301,6 +303,24 @@ namespace Logitude.DBMigrations.Models
             if (indexesWithWrongIncludeColumnsNames.Any())
             {
                 error = "Invalid DXML Syntax: All Or Some Of Included Columns [" + indexesWithWrongIncludeColumnsNames.First().Include + "] Not In The Table [" + dxmlTable.TableDefinition.Name + "] For Index In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateUniqueConstraintsColumns(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> dxmlTableColumnsNames = dxmlTable.TableDefinition.Columns.Select(c => c.Name).ToList();
+
+            List<UniqueConstraintDefinition> uniqueConstraintsWithWrongColumnsNames = dxmlTable.TableDefinition.UniqueConstraints
+                .Where(u => (!dxmlTableColumnsNames.Contains(u.Columns) && !u.Columns.Contains(",")) || (u.Columns.Split(',')
+                .Where(cc => dxmlTableColumnsNames.All(c => c != cc)).Any() && u.Columns.Contains(","))).ToList();
+
+            if (uniqueConstraintsWithWrongColumnsNames.Any())
+            {
+                error = "Invalid DXML Syntax: All Or Some Of Columns [" + uniqueConstraintsWithWrongColumnsNames.First().Columns + "] Not In The Table [" + dxmlTable.TableDefinition.Name + "] For Unique Constraint In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;

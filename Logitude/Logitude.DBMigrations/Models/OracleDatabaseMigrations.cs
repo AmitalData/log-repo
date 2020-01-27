@@ -134,7 +134,8 @@ namespace Logitude.DBMigrations.Models
                     Name = tableName,
                     Columns = currentTableColumns,
                     Relations = GetRelationsForDBTable(tableName, true),
-                    Indexes = GetIndexesForDBTable(tableName)
+                    Indexes = GetIndexesForDBTable(tableName),
+                    UniqueConstraints = GetUniqueConstraintsForDBTable(tableName)
                 };
             }
             catch (Exception exception)
@@ -162,7 +163,7 @@ namespace Logitude.DBMigrations.Models
                                  "LEFT JOIN USER_CONS_COLUMNS COLS_R ON COLS_R.CONSTRAINT_NAME = CONS_P.R_CONSTRAINT_NAME " +
                                  "WHERE " + tableObject + ".TABLE_NAME = :tableName AND CONS_P.CONSTRAINT_TYPE = 'R' AND COLS_P.POSITION = COLS_R.POSITION";
 
-            List<RelationDefinition> relations = null;
+            List<RelationDefinition> relations = new List<RelationDefinition>();
 
             OracleDataReader reader = null;
             OracleConnection connection = new OracleConnection(ConnectionString);
@@ -173,8 +174,6 @@ namespace Logitude.DBMigrations.Models
             {
                 connection.Open();
                 reader = command.ExecuteReader();
-
-                relations = new List<RelationDefinition>();
 
                 while (reader.Read())
                 {
@@ -216,7 +215,7 @@ namespace Logitude.DBMigrations.Models
                                  "INNER JOIN USER_IND_COLUMNS IND_COL ON IND.INDEX_NAME = IND_COL.INDEX_NAME " +
                                  "WHERE IND.UNIQUENESS = 'NONUNIQUE' AND IND.TABLE_NAME = :tableName";
 
-            List<IndexDefinition> indexes = null;
+            List<IndexDefinition> indexes = new List<IndexDefinition>();
 
             OracleDataReader reader = null;
             OracleConnection connection = new OracleConnection(ConnectionString);
@@ -227,8 +226,6 @@ namespace Logitude.DBMigrations.Models
             {
                 connection.Open();
                 reader = command.ExecuteReader();
-
-                indexes = new List<IndexDefinition>();
 
                 while (reader.Read())
                 {
@@ -257,6 +254,53 @@ namespace Logitude.DBMigrations.Models
             }
 
             return indexes;
+        }
+
+        protected override List<UniqueConstraintDefinition> GetUniqueConstraintsForDBTable(string tableName)
+        {
+            string queryString = "SELECT CONCOL.COLUMN_NAME AS \"ColumnName\", CON.CONSTRAINT_NAME AS \"ConstraintName\", CONCOL.POSITION AS \"KeyOrder\" FROM USER_CONSTRAINTS CON " +
+                                 "INNER JOIN USER_CONS_COLUMNS CONCOL ON CON.CONSTRAINT_NAME = CONCOL.CONSTRAINT_NAME " +
+                                 "WHERE CON.CONSTRAINT_TYPE = 'U' AND CON.TABLE_NAME = :tableName";
+
+            List<UniqueConstraintDefinition> uniqueConstraints = new List<UniqueConstraintDefinition>();
+            
+            OracleDataReader reader = null;
+            OracleConnection connection = new OracleConnection(ConnectionString);
+            OracleCommand command = new OracleCommand(queryString, connection);
+            command.Parameters.Add(new OracleParameter("tableName", tableName.ToUpper()));
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    UniqueConstraintDefinition uniqueConstraint = new UniqueConstraintDefinition
+                    {
+                        Columns = reader["ColumnName"].ToString(),
+                        ConstraintName = reader["ConstraintName"].ToString(),
+                        KeyOrder = Convert.ToInt32(reader["KeyOrder"].ToString())
+                    };
+                    uniqueConstraints.Add(uniqueConstraint);
+                }
+
+                reader.Close();
+                connection.Close();
+
+                uniqueConstraints = HandlingCompositeUniqueConstraints(uniqueConstraints);
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return uniqueConstraints;
         }
 
         protected override string GetCreateTableScript()
@@ -412,6 +456,17 @@ namespace Logitude.DBMigrations.Models
         protected override bool IsIndexInDXMLTable(IndexDefinition index)
         {
             return DXMLTable.Indexes.Where(i => (!i.Columns.Contains(",") ? FormatNameLength(i.Columns, DXMLTable.Columns.Where(c => c.Name == i.Columns).First().ShortName) : string.Join(",", i.Columns.Split(',').Select(ic => FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName)).ToArray())) == index.Columns).Any();
+        }
+
+        protected override bool IsUniqueConstraintInCurrentTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            string uniqueConstraintColumns = !uniqueConstraint.Columns.Contains(",") ? FormatNameLength(uniqueConstraint.Columns, DXMLTable.Columns.Where(c => c.Name == uniqueConstraint.Columns).First().ShortName) : string.Join(",", uniqueConstraint.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray()).ToLower();
+            return CurrentTable.UniqueConstraints.Where(u => u.Columns == uniqueConstraintColumns).Any();
+        }
+
+        protected override bool IsUniqueConstraintInDXMLTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            return DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == uniqueConstraint.Columns).Any();
         }
 
         protected override bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnShortName, string dxmlColumnOldNames)
@@ -864,15 +919,42 @@ namespace Logitude.DBMigrations.Models
         {
             string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
             string indexColumns = (!index.Columns.Contains(",") ? "\"" + index.Columns + "\"" : string.Join(",", index.Columns.Split(',').Select(c => "\"" + c + "\"").ToArray())).ToUpper();
-            string createIndexScript = "-- Create Index On " + tableName + " table\n";
+            string createIndexScript = "-- Create Index On " + tableName + " Table\n";
             string indexName = FormatNameLength("IX_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
 
-            createIndexScript += "CREATE INDEX " + indexName + " ON " + "\"" + tableName + "\"" + "(" + indexColumns + ")";
+            createIndexScript += "CREATE INDEX " + "\"" + indexName + "\"" + " ON " + "\"" + tableName + "\"" + "(" + indexColumns + ")";
             createIndexScript += ";\n\n";
 
             string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, createIndexScript);
 
             return addIndexWithHistoryScript;
+        }
+
+        protected override string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
+        {
+            string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
+            string uniqueConstraintColumns = (!uniqueConstraint.Columns.Contains(",") ? "\"" + uniqueConstraint.Columns + "\"" : string.Join(",", uniqueConstraint.Columns.Split(',').Select(c => "\"" + c + "\"").ToArray())).ToUpper();
+            string createUniqueConstraintScript = "-- Create Unique Constraint On " + tableName + " Table\n";
+            string uniqueConstraintName = FormatNameLength("UQ_" + (!uniqueConstraintColumns.Contains(",") ? uniqueConstraintColumns : string.Join("_", uniqueConstraintColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
+
+            createUniqueConstraintScript += "ALTER TABLE \"" + tableName + "\" ADD CONSTRAINT \"" + uniqueConstraintName + "\" UNIQUE(" + uniqueConstraintColumns + ")";
+            createUniqueConstraintScript += ";\n\n";
+
+            string createUniqueConstraintWithHistoryScript = createUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Create Unique Constraint", tableName, createUniqueConstraintScript);
+
+            return createUniqueConstraintWithHistoryScript;
+        }
+
+        protected override string GetDropUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
+        {
+            string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
+            string dropUniqueConstraintScript = "-- Drop Unique Constraint " + uniqueConstraint.ConstraintName + " From Table " + tableName + "\n";
+            dropUniqueConstraintScript += "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + uniqueConstraint.ConstraintName + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" DROP CONSTRAINT \"" + uniqueConstraint.ConstraintName + "\"'; END IF; END";
+            dropUniqueConstraintScript += ";\n\n";
+
+            string dropUniqueConstraintWithHistoryScript = dropUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Drop Unique Constraint", tableName, dropUniqueConstraintScript);
+
+            return dropUniqueConstraintWithHistoryScript;
         }
     }
 }
