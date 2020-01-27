@@ -1012,6 +1012,9 @@ export class ARInvoicePM {
     public set IsFromConsolidationBatch(newValue: boolean) { if (this.isFromConsolidationBatch != newValue) { this.isFromConsolidationBatch = newValue; this.MarkAsDirty("IsFromConsolidationBatch"); } }
        
 	 
+
+	 
+
     private billToCity: string;
     public get BillToCity() { return this.billToCity; }
     public set BillToCity(newValue: string) { if (this.billToCity != newValue) { this.billToCity = newValue; this.MarkAsDirty("BillToCity"); } }
@@ -1025,6 +1028,12 @@ export class ARInvoicePM {
     private createdByPartner: string;
     public get CreatedByPartner() { return this.createdByPartner; }
     public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
+       
+	 
+    private billToGLAccountId: string;
+    public get BillToGLAccountId() { return this.billToGLAccountId; }
+    public set BillToGLAccountId(newValue: string) { if (this.billToGLAccountId != newValue) { this.billToGLAccountId = newValue; this.MarkAsDirty("BillToGLAccountId"); } }
+
        
 	 
 
@@ -1051,4 +1060,4 @@ export class ARInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
