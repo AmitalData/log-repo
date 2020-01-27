@@ -425,10 +425,11 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     timerToken: any;
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+        if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
             {
-                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                this.DisplayOnlyMessage = this.DeclarationPM.AmendmentMessage;
+                if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
+                this.IsDisplayMessage = true;
             }
         }
 
@@ -449,10 +450,10 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.DeclarationPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
                 {
-                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                    this.DisplayOnlyMessage = this.DeclarationPM.AmendmentMessage;
+                    if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
                 }
             }
 

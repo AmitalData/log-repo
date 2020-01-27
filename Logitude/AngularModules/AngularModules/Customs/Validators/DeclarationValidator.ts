@@ -483,15 +483,15 @@ export class DeclarationValidator {
     //<--- Yuval Chalup 18.11.2014 TASK-4240
     //Checks for opening Declaration view as 'Display Only'
     public DeclarationViewDisplayOnlyChecks() {
-        var error = "";
-        error= this.IsAmendment();
+        //var error = "";
+        //error= this.IsAmendment();
         this.PaymentDateCheck();
         this.ConstraintsInProgressCheck();
         this.FuturePaymentDoneCheck();
         //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
         this.CheckIsConvertedDeclaration(); // Mirit 02/12/15 Task 18508
         this.CheckIsCloseDeclaration();
-        return error;
+       // return error;
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
 

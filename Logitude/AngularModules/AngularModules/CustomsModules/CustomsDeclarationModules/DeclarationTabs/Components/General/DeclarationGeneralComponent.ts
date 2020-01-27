@@ -1163,7 +1163,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
          this.DrawMe = true;
         this.IsDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
          if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
-            {
+             {
+             this.IsDisplayMessage = true;
+
                 this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                 if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
             }
@@ -1188,6 +1190,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
                 {
+                this.IsDisplayMessage = true;
+
                     this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                     if (this.EntityPM.IsAmendmentDisplayOnly)   this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
                 }

@@ -110,13 +110,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.IsAmendment==true && entityPOCO.AmendmentStatus!="2" && entityPOCO.AmendmentStatus != null)
             {
-                entityPM.AmendmentMessage ="לתצוגה בלבד - " +  TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant) + ' ' + entityPM.AmendmentStatusName;
+                entityPM.AmendmentMessage ="לתצוגה בלבד - " +  TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant,true) + ' ' + entityPM.AmendmentStatusName;
                 entityPM.IsAmendmentDisplayOnly = true;
             }
 
             else if (entityPOCO.IsAmendment == true && entityPOCO.AmendmentStatus == "2" )
                 {
-                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant) + ' ' + entityPM.AmendmentStatusName;
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
 
                 }
 
@@ -127,11 +127,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 var declaration = declarations.FirstOrDefault(x => new string[] { "1", "2", "3", "4", "6" }.Contains(x.AmendmentStatus));
                 if (declaration!= null)
                 {
-                    entityPM.AmendmentMessage= TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant) + ' ' + entityPM.AmendmentStatusName;
+                    entityPM.AmendmentMessage= TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
                 }
                 else
                 {
-                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant);
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
                 }
                }
 

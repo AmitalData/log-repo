@@ -978,6 +978,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
             {
+                this.IsDisplayMessage = true;
                 this.ErrorMessage = this.EntityPM.AmendmentMessage;
                 if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
             }
@@ -1024,6 +1025,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var declarationDisplayOnly2 = displayOnlyCheckResult.IsDisplayOnly ? true : false;
             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
                 {
+                this.IsDisplayMessage = true;
+
                     this.ErrorMessage = this.EntityPM.AmendmentMessage;
                     if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
                 }

@@ -681,6 +681,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
             {
+            this.IsDisplayMessage = true;
+
                 this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                 if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
             }
@@ -707,6 +709,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
                 {
+                this.IsDisplayMessage = true;
+
                     this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                     if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
                 }
