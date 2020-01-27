@@ -3857,8 +3857,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (glaccount.IsVATExempt == true && line.VatPercentage != 0)
                 ShowErrorMessage("ARInvoice.O.CanNotCreditExempt", tenant);
-            else if (glaccount.IsVATExempt != true && line.VatPercentage == 0)
-                ShowErrorMessage("ARInvoice.O.CanNotCreditCardIsNotExempt", tenant);
+            //else if (glaccount.IsVATExempt != true && line.VatPercentage == 0)
+            //    ShowErrorMessage("ARInvoice.O.CanNotCreditCardIsNotExempt", tenant);
 
         }
 
