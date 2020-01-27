@@ -216,7 +216,7 @@ export class ShipmentComputedFieldsPM {
        
     private operationallyClosedByUserName: string;
     public get OperationallyClosedByUserName() { return this.operationallyClosedByUserName; }
-    public set operationallyClosedByUserName(newValue: string) { if (this.operationallyClosedByUserName != newValue) { this.operationallyClosedByUserName = newValue; this.MarkAsDirty("operationallyClosedByUserName"); } }
+    public set OperationallyClosedByUserName(newValue: string) { if (this.operationallyClosedByUserName != newValue) { this.operationallyClosedByUserName = newValue; this.MarkAsDirty("operationallyClosedByUserName"); } }
 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
@@ -241,4 +241,4 @@ export class ShipmentComputedFieldsPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
