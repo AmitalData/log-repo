@@ -3388,7 +3388,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.resx">
       <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
-
+    </EmbeddedResource>
     <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.cs" />
     <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.Designer.cs">
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
