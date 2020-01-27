@@ -587,6 +587,13 @@ namespace CommunicationWorkerRole
 						byte[] xmlfile = encoding.GetBytes(resultadoConsulta.Xml);
 						CreateSATPaymentDocument(payment, xmlfile, true);
 
+						waitingCommLog.CommunicationStatusTypeCode = "D";
+						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+						communicationLogRep.Update(waitingCommLog);
+						communicationLogRep.SubmitChanges();
 						EventTracer.CreateTraceEvent(new EventTracerArgs()
 						{
 							EntityId = waitingCommLog.EntityId,
