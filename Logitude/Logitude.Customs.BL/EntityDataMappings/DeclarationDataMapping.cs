@@ -124,15 +124,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
                {
                 var declarations = declarationQuery.GetDeclarationAmendmentsById(entityPOCO.Tenant, entityPOCO.Id);
 
-                var declaration = declarations.FirstOrDefault(x => new string[] { "1", "2", "3", "4", "6" }.Contains(x.AmendmentStatus));
+                var declaration = declarations.LastOrDefault(x => new string[] { "1", "2", "3", "4", "6" }.Contains(x.AmendmentStatus));
                 if (declaration!= null)
                 {
                     entityPM.AmendmentMessage= TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
                 }
-                else
-                {
-                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
-                }
+                //else
+                //{
+                //    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
+                //}
                }
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
