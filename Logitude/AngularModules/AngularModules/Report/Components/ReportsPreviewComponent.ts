@@ -55,7 +55,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
+    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = false;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -77,7 +77,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.ReportsTemplateLists = reportTemplateLists;
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
-        this.ReportsRunUsingWR = true;
+        //this.ReportsRunUsingWR = true;
         this.RunComponent();
     }
 
@@ -368,7 +368,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
-        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
+       // filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
         if (isUsedWorkerRoleAlalways) {
             this.StartBusyIndicator("Generating...");

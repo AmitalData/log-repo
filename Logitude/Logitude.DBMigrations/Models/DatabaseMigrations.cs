@@ -275,6 +275,7 @@ namespace Logitude.DBMigrations.Models
                 Size = currentTableColumn.Size,
                 Precision = currentTableColumn.Precision,
                 Scale = currentTableColumn.Scale,
+                DefaultValue = currentTableColumn.DefaultValue,
                 Constraints = currentTableColumn.Constraints
             };
             ColumnMigrationDefinition newColumn = dxmlTableColumn == null ? null : new ColumnMigrationDefinition
@@ -285,6 +286,7 @@ namespace Logitude.DBMigrations.Models
                 Size = dxmlTableColumn.Size,
                 Precision = dxmlTableColumn.Precision,
                 Scale = dxmlTableColumn.Scale,
+                DefaultValue = dxmlTableColumn.DefaultValue,
                 Constraints = dxmlTableColumn.Constraints
             };
             ColumnMigration columnMigration = new ColumnMigration
@@ -362,9 +364,79 @@ namespace Logitude.DBMigrations.Models
 
             BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
 
+            BuildAlterDefaultMigration(currentTableColumn, dxmlTableColumn);
+
             BuildRenameMigration(currentTableColumn, dxmlTableColumn);
 
             BuildAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
+        }
+
+        protected void BuildAlterDefaultMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            currentTableColumn.DefaultValue = GetCurrentColumnDefaultValue(currentTableColumn);
+            dxmlTableColumn.DefaultValue = GetDxmlColumnDefaultValue(dxmlTableColumn);
+
+            if (currentTableColumn.DefaultValue != dxmlTableColumn.DefaultValue)
+            {
+                if (currentTableColumn.DefaultValue == null)
+                {
+                    ColumnMigration addDefaultMigration = GetColumnMigration(MigrationTypes.ADDDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(addDefaultMigration);
+                }
+                else if (dxmlTableColumn.DefaultValue == null)
+                {
+                    ColumnMigration dropDefaultMigration = GetColumnMigration(MigrationTypes.DROPDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(dropDefaultMigration);
+                }
+                else
+                {
+                    ColumnMigration dropDefaultMigration = GetColumnMigration(MigrationTypes.DROPDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(dropDefaultMigration);
+
+                    ColumnMigration addDefaultMigration = GetColumnMigration(MigrationTypes.ADDDEFAULT, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(addDefaultMigration);
+                }
+            }
+        }
+
+        protected string GetCurrentColumnDefaultValue(ColumnDefinition currentTableColumn)
+        {
+            if (String.IsNullOrEmpty(currentTableColumn.DefaultValue))
+            {
+                return null;
+            }
+            if (currentTableColumn.DefaultValue.ToLower().Contains("getdate()") || currentTableColumn.DefaultValue.ToLower().Contains("sysdate"))
+            {
+                return "CurrentDate".ToLower();
+            }
+            if (currentTableColumn.DefaultValue.Contains("'"))
+            {
+                return "'" + currentTableColumn.DefaultValue.Split('\'')[1] + "'";
+            }
+            if (currentTableColumn.DefaultValue.ToLower().Contains(".nextval") && currentTableColumn.Constraints.PrimaryKey)
+            {
+                return null;
+            }
+
+            return currentTableColumn.DefaultValue.Replace("(", String.Empty).Replace(")", String.Empty);
+        }
+
+        protected string GetDxmlColumnDefaultValue(ColumnDefinition dxmlTableColumn)
+        {
+            if (!dxmlTableColumn.Constraints.Nullable && String.IsNullOrEmpty(dxmlTableColumn.DefaultValue) && dxmlTableColumn.Type == "bit")
+            {
+                return "0";
+            }
+            if (String.IsNullOrEmpty(dxmlTableColumn.DefaultValue))
+            {
+                return null;
+            }
+            if (dxmlTableColumn.DefaultValue.ToLower() == "CurrentDate".ToLower())
+            {
+                return "CurrentDate".ToLower();
+            }
+
+            return dxmlTableColumn.DefaultValue;
         }
 
         protected void BuildAlterPrecisionAndScaleMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
@@ -652,6 +724,12 @@ namespace Logitude.DBMigrations.Models
                 case MigrationTypes.ALTERPRECISIONANDSCALE:
                     alterColumnScript = GetAlterPrecisionAndScaleScript(columnMigration);
                     return alterColumnScript;
+                case MigrationTypes.ADDDEFAULT:
+                    alterColumnScript = GetAddDefaultScript(columnMigration);
+                    return alterColumnScript;
+                case MigrationTypes.DROPDEFAULT:
+                    alterColumnScript = GetDropDefaultScript(columnMigration);
+                    return alterColumnScript;
                 default:
                     return alterColumnScript;
             }
@@ -723,6 +801,10 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration);
 
+        protected abstract string GetAddDefaultScript(ColumnMigration columnMigration);
+
+        protected abstract string GetDropDefaultScript(ColumnMigration columnMigration);
+
         protected abstract string GetPrimaryKeyConstraintScript();
 
         protected abstract string GetDropPrimaryKeyConstraintScript(string primaryKeyConstraintName);
@@ -748,5 +830,7 @@ namespace Logitude.DBMigrations.Models
         protected abstract RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation);
 
         protected abstract string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string script);
+
+        protected abstract string GetDefaultValueScript(bool nullable, string type, string defaultValue);
     }
 }
