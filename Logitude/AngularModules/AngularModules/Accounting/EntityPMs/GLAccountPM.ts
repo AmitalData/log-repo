@@ -583,8 +583,11 @@ export class GLAccountPM {
     private minimumInterestInvoiceBilling: number;
     public get MinimumInterestInvoiceBilling() { return this.minimumInterestInvoiceBilling; }
     public set MinimumInterestInvoiceBilling(newValue: number) { if (this.minimumInterestInvoiceBilling != newValue) { this.minimumInterestInvoiceBilling = newValue; this.MarkAsDirty("MinimumInterestInvoiceBilling"); } }
-       
-	 
+    
+    private nameForPrintingCheques: string;
+    public get NameForPrintingCheques() { return this.nameForPrintingCheques; }
+    public set NameForPrintingCheques(newValue: string) { if (this.nameForPrintingCheques != newValue) { this.nameForPrintingCheques = newValue; this.MarkAsDirty("NameForPrintingCheques"); } }
+ 
      
 	private gLAccountInterestPeriods: GLAccountInterestPeriodPM[];
     get  GLAccountInterestPeriods() {

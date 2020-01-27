@@ -56,18 +56,17 @@
 
                             <!-- DisplayNumber -->
                             <!-- <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'DisplayNumber'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
+        <td>
+            <LogLabel [ObjectFieldName]="'DisplayNumber'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'DisplayNumber'" [InputType]="'text'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr> -->
-
+        <td>
+            <LogTextBox [ObjectFieldName]="'DisplayNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+        </td>
+        <td><div></div></td>
+    </tr> -->
                             <!-- LocalName -->
                             <tr class="FormFieldRow">
                                 <td>
@@ -77,6 +76,19 @@
 
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext" [Text]="LocalName"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <!-- NameForPrintingCheques -->
+                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'NameForPrintingCheques'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'NameForPrintingCheques'" [InputType]="'ntext'" [DataContext]="DataContext" [Text]="NameForPrintingCheques"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td><div></div></td>

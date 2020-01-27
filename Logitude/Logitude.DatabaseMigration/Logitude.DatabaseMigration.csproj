@@ -1958,6 +1958,11 @@
     <Compile Include="Migrations\202001151002313_RuleUpdateHistory_table.Designer.cs">
       <DependentUpon>202001151002313_RuleUpdateHistory_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001181129036_GLAccountNameForPrinting\chequesMigration.cs" />
+    <Compile Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.cs" />
+    <Compile Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.Designer.cs">
+      <DependentUpon>202001181132561_GLAccountNameForPrintingChequesMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3549,10 +3554,16 @@
       <DependentUpon>202001120813564_Mutaz_Add_Field_QueryCode_To_SharedUserQuery_And_Remove_ForeignKey.cs</DependentUpon>
     </EmbeddedResource>
 
+    
+    <EmbeddedResource Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.resx">
+      <DependentUpon>202001181132561_GLAccountNameForPrintingChequesMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
 
     <EmbeddedResource Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.resx">
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </EmbeddedResource>
+
 
   </ItemGroup>
   <ItemGroup>
