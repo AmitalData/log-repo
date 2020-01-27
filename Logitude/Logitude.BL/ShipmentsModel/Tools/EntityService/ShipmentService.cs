@@ -640,7 +640,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 ContactRepository contactRepository = new ContactRepository(tenant);
                 Contact contact = contactRepository.GetSingleContact(entityPM.OperationalClosedByUserId, tenant);
-                entityComputedFields.OperationallyClosedByUserName = contact != null ? contact.Name : "";
+                entityComputedFields.OperationallyClosedByUserName = contact != null ? contact.EnglishName : "";
             }
             
         }
@@ -688,26 +688,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (entityPM.ShipmentPickUps.Count() > 0)
             {
-                ShipmentPickUpPM finalPickUp = entityPM.ShipmentPickUps.OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                ShipmentPickUpPM firstPickUp = entityPM.ShipmentPickUps.OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                if (finalPickUp.PickUpDeliveryToTypeCode == "PART") {
-                    entityComputedFields.PickupTo = GetPrtnerAddressCity(finalPickUp.ToAddressId);
+                if (firstPickUp.PickUpDeliveryToTypeCode == "PART") {
+                    entityComputedFields.PickupTo = GetPrtnerAddressCity(firstPickUp.ToAddressId);
                 }
-                else if (finalPickUp.PickUpDeliveryToTypeCode == "CASL") {
-                    entityComputedFields.PickupTo = finalPickUp.ToAddressCity;
+                else if (firstPickUp.PickUpDeliveryToTypeCode == "CASL") {
+                    entityComputedFields.PickupTo = firstPickUp.ToAddressCity;
                 }
                 else {
-                    entityComputedFields.PickupTo = GetPortName(finalPickUp.ToPortId);
+                    entityComputedFields.PickupTo = GetPortName(firstPickUp.ToPortId);
                 }
 
-                if (finalPickUp.PickUpDeliveryFromTypeCode == "PART") {
-                    entityComputedFields.PickupFrom = GetPrtnerAddressCity(finalPickUp.FromAddressId);
+                if (firstPickUp.PickUpDeliveryFromTypeCode == "PART") {
+                    entityComputedFields.PickupFrom = GetPrtnerAddressCity(firstPickUp.FromAddressId);
                 }
-                else if (finalPickUp.PickUpDeliveryFromTypeCode == "CASL") {
-                    entityComputedFields.PickupFrom = finalPickUp.FromAddressCity;
+                else if (firstPickUp.PickUpDeliveryFromTypeCode == "CASL") {
+                    entityComputedFields.PickupFrom = firstPickUp.FromAddressCity;
                 }
                 else {
-                    entityComputedFields.PickupFrom = GetPortName(finalPickUp.FromPortId);
+                    entityComputedFields.PickupFrom = GetPortName(firstPickUp.FromPortId);
                 }
             }
         }
@@ -745,22 +745,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private string GetPortName(string portId)
         {
-            Port port = null;
+            string portName = "";
             if (!string.IsNullOrEmpty(portId))
             {
-                port = myPortRepository.GetSinglePort(portId, tenant);
+                Port port = myPortRepository.GetSinglePort(portId, tenant);
+                portName = port.EnglishName;
             }
-            return port.EnglishName;
+            return portName;
         }
 
         private string GetPrtnerAddressCity(string addressId)
         {
-            Address partnerAddress = null;
+            string partnerAddressCity = "";
             if (!string.IsNullOrEmpty(addressId))
             {
-                partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);
+                Address partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);
+                partnerAddressCity = partnerAddress.City;
             }
-            return partnerAddress.City;
+            return partnerAddressCity;
         }
         
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
