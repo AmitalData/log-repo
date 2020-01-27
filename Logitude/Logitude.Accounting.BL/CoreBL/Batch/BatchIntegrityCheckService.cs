@@ -184,7 +184,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 emailParams = new EmailCommunicationParams()
                 {
                     From = "admin@fnarsoft.com",
-                    To = "eyal@amital.co.il;yaronc@amital.co.il;ohad@amital.co.il;itzik@amital.co.il",
+                    To = "eyal@amital.co.il;yaronc@amital.co.il;ohad@amital.co.il",
                     Subject = error,
                     EmailBody = emailbody,
                     Tenant = tenant,
