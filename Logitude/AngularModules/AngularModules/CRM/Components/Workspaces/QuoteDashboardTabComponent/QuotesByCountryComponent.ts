@@ -3,10 +3,11 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
 import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDashboardArguments';
-import { GroupByClass } from '../../../../Infrastructure/DataContracts/Dashboard/GroupByClass';
-import { List } from '../../../../Infrastructure/DataContracts/Dashboard/List';
-import { FunctionsCRM } from '../../../../Infrastructure/DataContracts/Dashboard/FunctionsCRM';
-declare var makePieChart;
+import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ListComponentArgs } from '../../../../Infrastructure/Args';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+declare var makeAmBarChart, PieClick, makePieChart, ResetItemPie: any;
 
 @Component({
     selector: 'quotes-by-country',
@@ -22,7 +23,7 @@ export class QuotesByCountryComponent implements OnInit {
     private dashboardService: DashboardService;
 
     constructor(private _entityResourceService: EntityResourceService) {
-        this.CountriesDashboardId = this.CountriesDashboardId + this.CurrentSession.GetChartId();
+        this.CountriesDashboardId = "CountriesDashboardId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");    
         this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");    
     }
 
@@ -60,44 +61,47 @@ export class QuotesByCountryComponent implements OnInit {
         this.dashboardArgs.TopCountries = this.TopCountries;
     }
 
-    public CountriesData: any;
+    public CountriesData: ChartingDataClass[];
     private LoadDashboardData() {
         this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
             this.CountriesData = myResult;
-            var countriesFilterdList: List<GroupByClass> = FunctionsCRM.getCountriesFilterdList(this.CountriesData, 0, this.TopCountries, this.IncludeOthersCountries);
-
-            this.FillDashboardData(countriesFilterdList);
+            this.FillDashboardData(this.CountriesData);
         });
     }
 
+    public quotesList: Array<any> = [];
     private CurrentCountriesChart: any;
     public NoCountries: boolean = false;
-    FillDashboardData(data: List<GroupByClass>) {
-        var fullData = [];
-        var pieChartLabels = [];
-        var pieChartData = [];
-
-        data.getAll() != null ? data.getAll().forEach(element => {
-            if (element.YField != 0) {
-                fullData.push({ label: element.XField, data: element.YField })
-                pieChartLabels.push(element.XField);
-                pieChartData.push(element.YField);
+    FillDashboardData(data: ChartingDataClass[]) {
+        try {
+            if (this.CurrentCountriesChart != null) {
+                this.CurrentCountriesChart.clear();
+                this.CurrentCountriesChart = null;
             }
-        }) : null;
-        
-        var flagEmpty = true;
-        pieChartData.forEach(p => {
-            if (p != "0")
-                flagEmpty = false;
-        });
-
-        if (this.CurrentCountriesChart != null) {
-            this.CurrentCountriesChart.clear();
-            this.CurrentCountriesChart = null;
         }
-        if (!flagEmpty) {
+        catch (er) { }
 
-            this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId);
+        if (data != null && data.length > 0) {
+            var pieChartLabels = [];
+            var pieChartData = [];
+            var fullData = [];
+            this.quotesList = data;
+            data.forEach(element => {
+                fullData.push({ label: element.CountryName, data: element.Total })
+                pieChartLabels.push(element.CountryName);
+                pieChartData.push(element.Total);
+
+            });
+            var flagEmpty = true;
+            pieChartData.forEach(p => {
+                if (p != "0")
+                    flagEmpty = false;
+            });
+            if (!flagEmpty) {
+
+                this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId);
+            }
+
             this.NoCountries = false;
         }
 
@@ -158,5 +162,40 @@ export class QuotesByCountryComponent implements OnInit {
 
         this.FillDashboardArgs();
         this.LoadDashboardData();
+    }
+    
+    ItemClicked() {
+        if (PieClick() != null) {
+            this.OnDashboardItemClick(PieClick());
+            ResetItemPie();
+        }
+    }
+    OnDashboardItemClick(e) {
+        var item = this.quotesList[e.index];
+        var myQueryCode: string = "All Quotes";
+        var myTableName: string = "Quote";
+        var filterAgrs: ApiQueryFilters = new ApiQueryFilters();
+
+        filterAgrs.addAdditionalFilter("CountryForStatisticsId", item.CountryId, null, null, "Equals", false, false, false, "String");
+        filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
+        filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
+        filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
+        //filterAgrs.addAdditionalFilter("BusinessUnitId", this.Wizard., null, null, "Equals", true, false, false, "string");
+
+        var listArgs = new ListComponentArgs();
+        listArgs.Filters = filterAgrs;
+        listArgs.QueryCode = myQueryCode;
+        listArgs.ObjectTableName = myTableName;
+        listArgs.DisplayTitle = "Quotes";
+        listArgs.BackButtonTitle = "CRM";
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadDashboardData());
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run(listArgs);
+                this.CurrentSession.AddMenuReference(cmpRef);
+            });
+
     }
 }

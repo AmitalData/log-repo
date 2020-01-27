@@ -1838,17 +1838,17 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             //Export
             else if (entityPM.DirectionId == "E")
             {
-                bool Assigned = false;
+                bool assigned = false;
                 if (entityPM.IncludeDelivery)
                 {
                     if (!string.IsNullOrEmpty(entityPM.ToAddressCountryId))
                     {
                         entityPM.CountryForStatisticsId = entityPM.ToAddressCountryId;
-                        Assigned = true;
+                        assigned = true;
                     }
                 }
 
-                if (!Assigned)
+                if (!assigned)
                 {
                     PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, toPortId, true);
                     if (port != null)
