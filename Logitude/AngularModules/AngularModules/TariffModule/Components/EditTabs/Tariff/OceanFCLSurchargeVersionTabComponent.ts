@@ -71,7 +71,11 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
-        
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
         this.GetTariffSettings();
 
         var iChargesTypeListService = new ChargesTypeListService();
@@ -163,6 +167,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
                     this.SetSurchargesLabelsAndVisibility();
                     this.SetContainersLabelsAndVisibility();
+                    this.SetSurchargesIds();
                 }
 
                 else {
@@ -428,7 +433,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         }
     }
 
-    public isComparToChecked = this.IsDraftVersion;
+    public isComparToChecked = false;
     get IsComparToChecked() {
         return this.isComparToChecked;
     }
@@ -517,19 +522,21 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     }
 
     ComparingCalculations(load: boolean) {
-        if (load) {
-            this.LoadTariffLines("compareVersion");
-        }
-
-        else {
-            if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
-                this.FillTariffLines(this.CurrentVersion.TariffLines);
+        //if (this.IsComparToChecked && this.SelectedVersion != null) {
+            if (load) {
+                this.LoadTariffLines("compareVersion");
             }
 
             else {
-                this.FillTariffLines(this.loadedTariffLines);
+                if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
+                    this.FillTariffLines(this.CurrentVersion.TariffLines);
+                }
+
+                else {
+                    this.FillTariffLines(this.loadedTariffLines);
+                }
             }
-        }
+        //}
     }
 
     AddTariffLine() {
@@ -1018,14 +1025,14 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isCurrencyRequired);
     }
 
-    public compareContainerPrices: TariffLinesContainersPricePM[] = [];
+    public compareContainerPricesList: TariffLinesContainersPricePM[] = [];
     private LoadCompareContainerPrices() {
         if (this.FatherComponent.ComparedToVersionPM != null) {
             this.CurrentSession.StartBusyIndicatorLoading();
 
             this.FatherComponent.TariffDomainService.GetTariffLineContainerPrices(this.TariffPM.Id, this.FatherComponent.ComparedToVersionPM.Version, this.EntityPM.OriginPortId, this.EntityPM.DestinationPortId).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
-                    this.compareContainerPrices = response.Result;
+                    this.compareContainerPricesList = response.Result;
 
                     if (this.FatherComponent.IsComparToChecked && this.FatherComponent.ComparedToVersionPM != null) {
                         this.DoCompareContainerPrices(false);
@@ -1042,10 +1049,10 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             this.LoadCompareContainerPrices();
         }
 
-        if (this.compareContainerPrices) {
+        if (this.compareContainerPricesList != null && this.compareContainerPricesList.length > 0) {
             this.ContainersItemsSourceView.forEach((item: ContainerPricesItem) => {
                 item.IsNewEntity = false;
-                var line = this.compareContainerPrices.filter(a => a.SurchargeId == item.SurchargeId)[0];
+                var line = this.compareContainerPricesList.filter(a => a.SurchargeId == item.SurchargeId)[0];
 
                 if (line) {
                     item.ComparedEntity = line;
@@ -1419,7 +1426,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         });
 
         this.EntityPM.ContainersPrices.forEach(item => {
-            this.ContainersItemsSourceView.push(new ContainerPricesItem(item, this));
+            this.ContainersItemsSourceView.push(new ContainerPricesItem(item, this, false));
         });
 
         this.RowDetailsHeights = (this.ContainersItemsSourceView.length * 26) + 20 + 28;
