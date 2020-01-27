@@ -320,7 +320,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierManifestStatusCode, 
 	         CourierPaymentStatusCode, 
 	         IsPendingNotNull, 
-	         AmendmentDontDisplayInList,
+	         AmendmentDontDisplayInList, 
+	         AmendmentMessage, 
+	         IsAmendmentDisplayOnly,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

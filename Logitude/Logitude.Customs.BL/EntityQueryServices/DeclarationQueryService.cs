@@ -1669,7 +1669,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 declarationLists.Add(declarationList);
             }
 
-            return declarationLists;
+            return declarationLists.OrderBy(x=>x.AmendmentissueDate).ToList();
         }
 
     }
