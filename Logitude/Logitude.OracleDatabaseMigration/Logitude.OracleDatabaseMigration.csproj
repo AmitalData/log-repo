@@ -472,6 +472,10 @@
     <Compile Include="Migrations\202001191511517_AddSealReasonTable.Designer.cs">
       <DependentUpon>202001191511517_AddSealReasonTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001211530095_AddLastMileStatusNameField.cs" />
+    <Compile Include="Migrations\202001211530095_AddLastMileStatusNameField.Designer.cs">
+      <DependentUpon>202001211530095_AddLastMileStatusNameField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -816,6 +820,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001191511517_AddSealReasonTable.resx">
       <DependentUpon>202001191511517_AddSealReasonTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001211530095_AddLastMileStatusNameField.resx">
+      <DependentUpon>202001211530095_AddLastMileStatusNameField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

@@ -43,7 +43,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastMileStatusRemarks, 
 	         StorageSiteStatusCode, 
 	         StorageSiteErrorText, 
-	         CourierPendingReasonList,
+	         CourierPendingReasonList, 
+	         LastMileStatusName,
 	      }
 
 
@@ -103,7 +104,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageSiteStatusCode, 
 	         StorageSiteErrorText, 
 	         StorageSiteStatusName, 
-	         CourierPendingReasonList,
+	         CourierPendingReasonList, 
+	         LastMileStatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -215,6 +217,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierPendingReasonList))
             {
 				entityPOCO.CourierPendingReasonList = entityPM.CourierPendingReasonList;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusName))
+            {
+				entityPOCO.LastMileStatusName = entityPM.LastMileStatusName;
 			}
 			}
 
@@ -331,6 +338,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CourierPendingReasonList = entityPOCO.CourierPendingReasonList;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileStatusName))
+            {
+					entityPM.LastMileStatusName = entityPOCO.LastMileStatusName;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -440,6 +452,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierPendingReasonList))
             {
                 oldEntityPM.CourierPendingReasonList = entityPM.CourierPendingReasonList;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileStatusName))
+            {
+                oldEntityPM.LastMileStatusName = entityPM.LastMileStatusName;
             }
 			
 		}

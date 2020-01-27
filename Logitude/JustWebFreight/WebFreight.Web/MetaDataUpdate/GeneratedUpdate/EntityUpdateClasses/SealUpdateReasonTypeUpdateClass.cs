@@ -496,7 +496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn SealUpdateReasonQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id, IndexOrder = 0, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SealUpdateReasonQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id, IndexOrder = 1, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id, IndexOrder = 1, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn SealUpdateReasonQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id, IndexOrder = 2, ObjectFieldId = SealUpdateReasonTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SealUpdateReasonTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
