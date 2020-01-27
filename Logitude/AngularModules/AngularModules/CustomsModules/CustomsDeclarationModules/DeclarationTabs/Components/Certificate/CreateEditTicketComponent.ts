@@ -19,6 +19,12 @@ import { CardList } from '../../../../../Common/EntityLists/CardList';
 import { ConfirmationTypeList } from '../../../../../Customs/EntityLists/ConfirmationTypeList';
 
 import { ConfirmationTypeListService } from '../../../../../Customs/Services/StandardLists/ConfirmationTypeListService';
+import { CustomsDocumentsTicketPM } from '../../../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
+import { RelatedEntityParams } from '../../../../CustomsDocuments/Components/CustomsDocumentsComponent';
+import { CustomsDocumentPointerPM } from '../../../../../Customs/EntityPMs/CustomsDocumentPointerPM';
+import { CustomsDocumentsTicketsExtendedService } from '../../../../../Customs/Services/ExtendedPMs/CustomsDocumentsTicketsExtendedService';
+import { CustomsDocumentsTicketPMService } from '../../../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
+import { DocumentsFilingPMService } from '../../../../../Common/Services/StandardPMs/DocumentsFilingPMService';
 @Component({
     moduleId: module.id,
     templateUrl: './CreateEditTicketComponent.html',
@@ -44,7 +50,11 @@ export class CreateEditTicketComponent extends BaseComponent {
     _CardListService: CardListService = new CardListService();
     _ConfirmationTypeListService: ConfirmationTypeListService = new ConfirmationTypeListService();
     public ValidationErrorsList: string[] = [];
-
+    public CustomsDocumentsTicket: CustomsDocumentsTicketPM;
+    public documentsFilingPMService = new DocumentsFilingPMService();
+    public customsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+    documentFilingId: string;
+    documentTypeId: string;
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -56,6 +66,7 @@ export class CreateEditTicketComponent extends BaseComponent {
     ExemptionFilterSelectedValue: string = 'other';
     IsSearchIconVisibile: boolean;
     SetWindowArgs(args: any) {
+
         this.IsSearchIconVisibile = false;
         this.connectedItems = [];
         this.Items = [];
@@ -95,6 +106,8 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.oldResConfirmation = this.ticket.ResConfirmationTypeCode;
         this.Parent = args.Parent;
         this.ReqConfirmationTypeCode = this.ticket.ReqConfirmationTypeCode;
+
+
         if (!this.isNew) {
             this.FilterSelectedValue = this.ticket.AttachmentTypeCode;
      
@@ -315,6 +328,82 @@ export class CreateEditTicketComponent extends BaseComponent {
 
         }
     }
+
+
+ 
+
+    public GetGeneratedCustomTicketAndPointer(relatedEntityParams: RelatedEntityParams, documentTypeCode: string, documentsFilingId: string) {
+
+        if (documentsFilingId == "" || documentsFilingId == null)
+            return;
+
+        var newTicket: CustomsDocumentsTicketPM = new CustomsDocumentsTicketPM();
+        this.documentsFilingPMService.get(documentsFilingId).subscribe(data => {
+            if (data.Result == null) {
+
+                let msg = new MessageWindow();
+
+                msg.Width = 350;
+                msg.Show(`לאישור קושר מסמך שעדיין לא הוזרם להיבריד`);
+                return;
+            }
+             else {
+                newTicket.DocumentsFilingId = documentsFilingId;
+
+          
+        newTicket.DocumentTypeCode = documentTypeCode;
+        newTicket.Tenant = SessionLocator.Tenant;
+        newTicket.ConnectedInvoiceItemsSequences = relatedEntityParams.ChildEntity2Id;
+        newTicket.ConnectedInvoicesSequences = relatedEntityParams.ChildEntity1Id;
+         //newTicket.Id = "Generated: " + documentTypeCode;
+        var newCustomsDocumentPM: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(newTicket)
+
+        newCustomsDocumentPM.Tenant = SessionLocator.Tenant;
+        newCustomsDocumentPM.ParentEntityId = relatedEntityParams.ParentEntityId;
+        newCustomsDocumentPM.ParentEntityCode = relatedEntityParams.ParentEntityCode;
+        newCustomsDocumentPM.Child1EntityCode = relatedEntityParams.ChildEntity1Code;
+        newCustomsDocumentPM.Child2EntityCode = relatedEntityParams.ChildEntity2Code;
+        newCustomsDocumentPM.Child3EntityCode = relatedEntityParams.ChildEntity3Code;
+        newCustomsDocumentPM.Child1EntityId = relatedEntityParams.ChildEntity1Id;
+        newCustomsDocumentPM.Child2EntityId = relatedEntityParams.ChildEntity2Id;
+        newCustomsDocumentPM.Child3EntityId = relatedEntityParams.ChildEntity3Id;
+        newCustomsDocumentPM.DocumentTypeCode = documentTypeCode;
+
+        newTicket.AddCustomsDocumentPointer(newCustomsDocumentPM);
+                this.customsDocumentsTicketPMService.insert(newTicket).subscribe((myResp: ServiceResponse) => {
+                    if ( !myResp.HasError) {
+ 
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = myResp.ErrorsArray;
+                        }
+                        else {
+                            var messageWindow = new MessageWindow();
+                            messageWindow.Width = 400;
+                            messageWindow.Height = 200;
+                            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                            if (myResp.ErrorsArray && myResp.ErrorsArray.length > 0) {
+                                messageWindow.Show(myResp.ErrorsArray[0]);
+                            }
+                            else {
+                                messageWindow.Show("Server Error");
+                            }
+                            messageWindow.WindowClosed.subscribe((event: any) => {
+
+                                messageWindow.Close();
+
+                            });
+                        }
+                    }
+                });
+
+            }
+          });
+        //return newTicket;
+
+
+    }
+
 
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("no");
@@ -564,8 +653,18 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.multiCertificatesService.PutCertificateTickets(this.certificateTicke)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
+
+                    var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                    entityParams.ParentEntityCode = 'Declaration';
+                    entityParams.ParentEntityId = this.declarationId;
+
+                    this.GetGeneratedCustomTicketAndPointer(entityParams, this.documentTypeId, this.documentFilingId)
+
+
+
                     SessionLocator.SelectedSession.StopBusyIndicator();
                     SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+
                     //SessionLocator.SelectedSession.CloseCurrentWindow();
                 }
             });
@@ -630,6 +729,14 @@ export class CreateEditTicketComponent extends BaseComponent {
             UnifreightMessageM.GetStringValue(unifreightMessageM, "Response.ExternalCertificatCode");
         //  SERIAL_NO
 
+          this.documentFilingId 
+            = UnifreightMessageM.GetStringValue(unifreightMessageM, "Response.DocumentFilingId");
+
+          this.documentTypeId 
+            = UnifreightMessageM.GetStringValue(unifreightMessageM, "Response.DocumentTypeId");
+
+
+
         if (AppTool.IsNullOrEmpty(sExternalCertificatCode)) {
             console.log("sExternalCertificatCode is null - u did not choose any Certificate")
             return;
@@ -671,6 +778,7 @@ export class CreateEditTicketComponent extends BaseComponent {
                     return;
                 }
                 funcSetTicketAndOkClick();
+
                 //this.CertificateNumber = this.ticket.CertificateNumber = sCertificateNumber;
                 ////this.CertificateExemptionTypeCode =
                 //this.ResConfirmationTypeCode =this.ticket.ResConfirmationTypeCode = sResponseConfirmationTypeCode;
