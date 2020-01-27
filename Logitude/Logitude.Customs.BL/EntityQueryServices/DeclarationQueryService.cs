@@ -1638,7 +1638,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return isFreight;
         }
 
-        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id)
+        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById=false)
         {
  
             List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant , id);
@@ -1668,8 +1668,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
  
                 declarationLists.Add(declarationList);
             }
+            if(orderById)
+            {
+                return declarationLists.OrderBy(x => x.AmendmentRequestNumber).ToList();
 
-            return declarationLists.OrderBy(x=>x.AmendmentissueDate).ToList();
+
+            }
+            return declarationLists.OrderByDescending(x=>x.AmendmentissueDate).ToList();
         }
 
     }
