@@ -1966,6 +1966,10 @@
     <Compile Include="Migrations\202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.Designer.cs">
       <DependentUpon>202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs" />
+    <Compile Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.Designer.cs">
+      <DependentUpon>202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3543,6 +3547,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.resx">
       <DependentUpon>202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.resx">
+      <DependentUpon>202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
