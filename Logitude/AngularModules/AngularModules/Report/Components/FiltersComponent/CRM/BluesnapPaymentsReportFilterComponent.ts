@@ -27,6 +27,7 @@ export class BluesnapPaymentsReportFilterComponent extends BaseComponent {
         this.FromDate = DateTool.GetCurrentDateAsUtc();
         this.FromDate.setMonth(this.FromDate.getMonth() - 1);
         this.ToDate = DateTool.GetCurrentDateAsUtc();
+        this.ToDate.setDate(this.ToDate.getDate() - 1);
     }
 
     public FromDate: Date;
