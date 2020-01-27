@@ -292,6 +292,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
              req.Response = new UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response();
             req.Response.Declaration =  Getdeclaration(_DeclarationPM , _DeclarationPMOrg);
+ 
             req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
         };
             req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
@@ -364,7 +365,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
           var declarations=  declarationQueryService.GetDeclarationAmendmentsById(_DeclarationPMOrg.Tenant, _DeclarationPMOrg.Id);
 
-          return (Convert.ToInt32( declarations.Max(x => x.RequestFileNumber) )+ 1).ToString();
+          return (Convert.ToInt32( declarations.Max(x => x.AmendmentRequestNumber) )+ 1).ToString();
          }
 
         private ResponseAdditionalInformation[] AdditionalInformation()
