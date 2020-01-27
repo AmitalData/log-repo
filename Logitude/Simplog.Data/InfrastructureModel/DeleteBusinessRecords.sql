@@ -44,6 +44,13 @@ delete from MessagingStockUsageHistories where Tenant = @Tenant
 delete from ShipmentMasterDatas where Tenant = @Tenant
 delete from ShipmentComputedFields where Tenant = @Tenant
 delete from ShipmentAdditionalCloudDatas where Tenant = @Tenant
+
+--delete from WarehouseEntryPackagesReleases where Tenant = @Tenant
+--delete from WarehouseEntryPackages where Tenant = @Tenant
+--delete from WarehouseReleasePackages where Tenant = @Tenant
+--delete from WarehouseEntries where Tenant = @Tenant
+--delete from WarehouseReleases where Tenant = @Tenant
+
 delete from Shipments where Tenant = @Tenant
 
 delete from ARInvoiceLines where Tenant = @Tenant

@@ -34,7 +34,15 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                 this.RunCode();
 
                 // status will change to Done and update the done date time.
-                this.ChangeStatus("D");
+                if (!string.IsNullOrEmpty(BatchTaskExecution.ErrorLog))
+                {
+                    this.ChangeStatus("F");
+                }
+
+                else
+                {
+                    this.ChangeStatus("D");
+                }
             }
             catch (Exception ex)
             {

@@ -24,7 +24,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
     {
         public EraseTenantDataHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
-
         }
 
         public override void RunCode()
@@ -45,25 +44,25 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 case "B":
                     {
-                        procedureName = "dbo.usp_DeleteBusinessRecords";
+                        procedureName = "usp_DeleteBusinessRecords";
                         break;
                     }
 
                 case "P":
                     {
-                        procedureName = "dbo.usp_DeleteCustomerRecords";
+                        procedureName = "usp_DeleteCustomerRecords";
                         break;
                     }
 
                 case "T":
                     {
-                        procedureName = "dbo.usp_DeleteTicketsRecords";
+                        procedureName = "usp_DeleteTicketsRecords";
                         break;
                     }
 
                 case "C":
                     {
-                        procedureName = "dbo.usp_DeleteCRMRecords";
+                        procedureName = "usp_DeleteCRMRecords";
                         break;
                     }
             }
@@ -100,10 +99,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             "Message: " + ex.Errors[i].Message + "\n" +
                             "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
                             "Source: " + ex.Errors[i].Source + "\n" +
-                            "Procedure: " + ex.Errors[i].Procedure + "\n");
-
-                        this.UpdateErrorMessage(errorMessages.ToString(), batchTaskId, parameterArgs.EntityId);
+                            "Procedure: " + ex.Errors[i].Procedure + "\n");                        
                     }
+
+                    this.UpdateErrorMessage(errorMessages.ToString(), batchTaskId, parameterArgs.EntityId);
                 }
 
                 finally
@@ -116,14 +115,15 @@ namespace WebFreight.Web.Helpers.APIHelpers
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                BatchTaskExecutionRepository iRepository = new BatchTaskExecutionRepository(tenant);
-                BatchTaskExecution iBatchTaskExecution = iRepository.GetSingle(batchTaskExecutionId, tenant);
-                if (iBatchTaskExecution != null)
-                {
-                    iBatchTaskExecution.ErrorLog = errorMessage;
-                    iRepository.Update(iBatchTaskExecution);
-                    iRepository.SubmitChanges();
-                }
+                //BatchTaskExecutionRepository iRepository = new BatchTaskExecutionRepository(tenant);
+                //BatchTaskExecution iBatchTaskExecution = iRepository.GetSingle(batchTaskExecutionId, tenant);
+                //if (iBatchTaskExecution != null)
+                //{
+                //BatchTaskExecution.StatusCode = "F";
+                BatchTaskExecution.ErrorLog = errorMessage;
+                    //iRepository.Update(iBatchTaskExecution);
+                    //iRepository.SubmitChanges();
+                //}
 
                 scope.Complete();
             }
