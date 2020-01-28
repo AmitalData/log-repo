@@ -1,4 +1,4 @@
-﻿
+
 
 
 <style>
@@ -61,7 +61,10 @@
 
     <tr style="height:25px">
         <td style="width:5px;"><div style="width:5px;"></div></td>
-        <td colspan="10"><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
+        <td><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
+        <td colspan="4" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
     </tr>
 
     <tr style="height:30px">
@@ -129,14 +132,14 @@
         <td style="width:160px;">
             <div style="width:160px;">
 
-                <ComboBox (SelectedItemChanged)="SelectedItemDaysinWarehouseFilter=$event" [SelectedItem]="SelectedItemDaysinWarehouseFilter" [ItemsSource]="DaysinWarehouseFilterItemSource" [Binding]="'Name'"></ComboBox>
+                <ComboBox (SelectedItemChanged)="onSelectedItemDaysinWarehouseFilterChange($event)" [SelectedItem]="SelectedItemDaysinWarehouseFilter" [ItemsSource]="DaysinWarehouseFilterItemSource" [Binding]="'Name'"></ComboBox>
 
             </div>
         </td>
         <td style="width:10px"><div style="width:10px"></div></td>
-        <td style="width:100px;">
+        <td style="width:100px;" *ngIf="IsDaysInWarehouseRequired">
             <div style="width:100px;">
-                <LogTextBox [ObjectFieldName]="'DaysInWarehouse'" [DataContext]="DataContext"></LogTextBox>
+                <LogTextBox [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'DaysInWarehouse'" [DataContext]="DataContext" (ValueChanged)="onDaysInWarehouseChange($event)"></LogTextBox>
             </div>
          
         </td>
