@@ -518,7 +518,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (entityPM.SetApproved)
             {
                 if (entityPM.StatusCode != "AD")
-
                 {
                     entityPM.StatusCode = "AD";
                     entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);

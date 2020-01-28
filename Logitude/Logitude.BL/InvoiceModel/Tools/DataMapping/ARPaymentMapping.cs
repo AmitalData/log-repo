@@ -32,7 +32,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entityPM.OpenAmountInLocalCurrency = entityPM.AmountInLocalCurrency;
 
                     entity.Id = entityPM.Id;
-                    entity.PaymentNo = entityPM.PaymentNo;
                     entity.Tenant = entityPM.Tenant;
                     entity.CreatedByUserId = entityPM.CreatedByUserId;
                     entity.CreateDate = entityPM.CreateDate;                    
@@ -67,6 +66,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.CreditCardTypeId = entityPM.CreditCardTypeId;
                 entity.ChequeOrPaymentRef = entityPM.ChequeOrPaymentRef;
                 entity.CreateDate = entityPM.CreateDate;
+                entity.PaymentNo = entityPM.PaymentNo;
             }
             #endregion
 
