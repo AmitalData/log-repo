@@ -352,10 +352,21 @@ namespace Logitude.CustomsMessaging.RequestServices
                 Tenant = _DeclarationPM.Tenant,
                 EventTypeCode = "DCH",
                 UserId = _userId,
-                EntityId = _DeclarationPM.Id,
+                EntityId = _DeclarationPMOrg.Id,
                 ObjectTableName = "Customs.Declaration",
                 Notes = null
             });
+            var myUpdateEventContextTagModel = new EventContextTagModel()
+            {
+                CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                EventCode = "DCH",
+                EventRemarks = "Declaration Changed By Customs",
+                FUStatusRemarks = "בוצע תיקון הצהרה" +  _DeclarationPMOrg.DeclarationNumber,
+            };
+
+            _DeclarationPMOrg.CurrentContextTag = myUpdateEventContextTagModel;
+            declarationUpdateService.Update(_DeclarationPMOrg, true);
+
             declarationUpdateService.Update(_DeclarationPM, true);
         }
 
