@@ -260,19 +260,25 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
             else
             {
-                if(this.Poco.InActive != this.entityPM.InActive)
+                if (!IsDeletedEntity)
                 {
-                    ruleUpdateHistory.EventName = (this.entityPM.InActive == true ? "Rule set as Inactive" : "Rule set as Active");
+                    if (this.Poco.InActive != this.entityPM.InActive)
+                    {
+                        ruleUpdateHistory.EventName = (this.entityPM.InActive == true ? "Rule set as Inactive" : "Rule set as Active");
+                    }
+                    else
+                        ruleUpdateHistory.EventName = "Rule Updated";
                 }
                 else
-                    ruleUpdateHistory.EventName = "Rule Updated";
+                    ruleUpdateHistory.EventName = "Rule Restored";
             }
             ruleUpdateHistoryService.Create(ruleUpdateHistory);
         }
 
+        bool IsDeletedEntity = false;
         public void Delete(string ruleId)
         {
-
+            IsDeletedEntity = true;
             string ruleslistName = "objecttablerulestenant" + tenant;
             if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
             {
@@ -290,14 +296,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 CacheManager.CacheWrapper.Invalidate(objectRulesListName);
             }
 
-
+          
             this.isNewEntity = false;
-             
+               
             this.Poco = entityRepository.GetSingleObjectTableRule(ruleId, tenant);
             if(this.Poco.Tenant == 0)
             {
                 throw new Exception("You can not delete a system rule!");
             }
+
+            ObjectTableRuleQuery rulesQuery = new ObjectTableRuleQuery(entityRepository);
+            this.entityPM = rulesQuery.GetSinglePM(ruleId, tenant);
+            this.CreateRuleUpdateHistory(this.entityPM);
 
             ruleTypeRepository = new RuleTypeRepository(ObjectContext);
             ruleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
