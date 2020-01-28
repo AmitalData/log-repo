@@ -27,6 +27,8 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal? TotalTaxDeductionInLocalCurrency08 { get; set; }
         public decimal? TotalEndBalance  { get; set; }
         public int? VendorsCount { get; set; }
+        public List<TaxDeductionReportLine> deductionLines { get; set; }
+
 
     }
 
@@ -90,6 +92,16 @@ namespace Logitude.Accounting.BL.DataContract
         public string DeductionFileNumber { get; set; }
         public double? TotalPayments { get; set; }
         public decimal? TotalDeductions { get; set; }
+    }
+
+    public class TaxDeductionReportLine
+    {
+        public string VendorId { get; set; }
+        public int MonthOfRegisterDate { get; set; }
+        public double? AmountInLocalCurrency { get; set; }
+        public decimal? TaxDeductionLocalAmount { get; set; }
+        public int? TaxDeductionPercentage { get; set; }
+        public string DeductionType { get; set; }
     }
 }
 
