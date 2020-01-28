@@ -227,13 +227,13 @@
                                                                 <ComboBox [IsDisabled]="!IsEntityNumberComboBoxEnabled" [ItemsSource]="NumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedNumberFilter" (SelectedItemChanged)="SelectedNumberFilter = $event"></ComboBox>
                                                             </td>
                                                            
-                                                            <td style="width: 18px;">
+                                                            <td style="width: 18px;" *ngIf="IsEntityNumberComboBoxVisible">
                                                                 <div>
                                                                     <!--<HelpIcon *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'" [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>-->
                                                                 </div>
                                                             </td>
 
-                                                            <td style="width: 18px;">
+                                                            <td style="width: 18px;" *ngIf="IsEntityNumberComboBoxVisible">
                                                                 <div></div>
                                                             </td>
 

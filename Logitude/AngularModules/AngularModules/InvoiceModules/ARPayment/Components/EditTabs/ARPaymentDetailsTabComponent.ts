@@ -1419,7 +1419,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         var isEntityNumberComboBoxVisible = false;
         var isEntityNumberComboBoxEnabled = false;
 
-        if (this.IsPaymentNumberManuallySet || SessionLocator.AccountingSettingPM.AllowManualInvoiceNumber) {
+        if (this.IsPaymentNumberManuallySet || SessionLocator.AccountingSettingPM.AllowManualARPaymentNumber) {
             isEntityNumberComboBoxVisible = true;
         }
 
