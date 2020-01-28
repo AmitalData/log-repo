@@ -28,7 +28,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         Inactive, 
 	         PointerLevel, 
-	         AutoSetOriginalDocumentTrue,
+	         AutoSetOriginalDocumentTrue, 
+	         IsDiamondManadatory,
 	      }
 
 
@@ -42,7 +43,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         PointerLevel, 
 	         AutoSetOriginalDocumentTrue, 
-	         PointerLevelName,
+	         PointerLevelName, 
+	         IsDiamondManadatory,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -79,6 +81,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoSetOriginalDocumentTrue))
             {
 				entityPOCO.AutoSetOriginalDocumentTrue = entityPM.AutoSetOriginalDocumentTrue;
+			}
+			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
+            {
+				entityPOCO.IsDiamondManadatory = entityPM.IsDiamondManadatory;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -122,7 +130,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AutoSetOriginalDocumentTrue = entityPOCO.AutoSetOriginalDocumentTrue;
             }
 
-		}
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondManadatory))
+            {
+					entityPM.IsDiamondManadatory = entityPOCO.IsDiamondManadatory;
+            }
 
 		public void PMToOldPM(CustomDocumentTypePM entityPM, CustomDocumentTypePM oldEntityPM)
         {
@@ -156,6 +168,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoSetOriginalDocumentTrue))
             {
                 oldEntityPM.AutoSetOriginalDocumentTrue = entityPM.AutoSetOriginalDocumentTrue;
+            }
+			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
+            {
+                oldEntityPM.IsDiamondManadatory = entityPM.IsDiamondManadatory;
             }
 			
 		}
