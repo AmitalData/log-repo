@@ -43941,8 +43941,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentSNewShipmentOtherDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.OtherDetails", DefaultText = "Other Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentTipOrderDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Tip.OrderDetails", DefaultText = " These are the ordered quantities and dimensions. The actual package details are managed via the Packages tab.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode ShipmentTextCode_ShipmentBReceivablesGenerateFromQuoteReceivablesOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.GenerateFromQuoteReceivablesOnly", DefaultText = "Generate From Quote (Receivables only)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentBReceivablesGenerateFromQuoteReceivablesAndPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.GenerateFromQuoteReceivablesAndPayables", DefaultText = "Generate From Quote (Receivables and Payables)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);

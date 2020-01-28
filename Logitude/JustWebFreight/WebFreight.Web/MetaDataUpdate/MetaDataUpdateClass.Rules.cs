@@ -35,6 +35,7 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateMaintenanceTablesRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations, TenantRuleConditionFields);
             CreateTestRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations);
             CreateAccountingRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations, TenantRuleConditionFields);
+            CreatelosingReasonRules(TenantObjectTableRule, TenantObjectTableRuleFields, TenantObjectFieldValidations, TenantRuleConditionFields);
         }
 
         private void CreateTestRules(Dictionary<string, ObjectTableRule> TenantObjectTableRule, Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields, List<ObjectFieldValidation> TenantObjectFieldValidations)
@@ -1990,6 +1991,36 @@ namespace WebFreight.Web.MetaDataUpdate
 
 
             #endregion
+
+            ObjectContext.SaveChanges();
+        }
+
+        private void CreatelosingReasonRules(Dictionary<string, ObjectTableRule> TenantObjectTableRule, Dictionary<string, ObjectTableRuleField> TenantObjectTableRuleFields, List<ObjectFieldValidation> TenantObjectFieldValidations, Dictionary<string, RuleConditionField> TenantRuleConditionFields)
+        {
+            ObjectTable closingReasonTable = ObjectContext.ObjectTables.Where(f => f.Name == "OpportunityClosingReason" && f.Tenant == 0).FirstOrDefault();
+
+            ObjectField addedManuallyField = ObjectContext.ObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == closingReasonTable.Id).FirstOrDefault();
+            ObjectField closingReasonNameField = ObjectContext.ObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == closingReasonTable.Id).FirstOrDefault();
+            ObjectField closingReasonLocalNameField = ObjectContext.ObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == closingReasonTable.Id).FirstOrDefault();
+
+            ObjectTableRule blockNamesRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            {
+                RuleCode = "Closing_BlockNames",
+                Name = "Block Closing Reason Names",
+                ObjectTableId = closingReasonTable.Id,
+                Tenant = 0,
+                RuleTypeCode = "BLCK",
+                SystemLevel = true,
+                ActiveForNew = false,
+                ActiveForUpdate = true,
+                TriggerTypeCode = "COND",
+                RuleNotificationTypeCode = "ERR",
+            }, ObjectTableRuleRepository, TenantObjectTableRule);
+
+            RuleConditionField IsBlocked_CondField = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails() { ObjectFieldId = addedManuallyField.Id, ObjectFieldCode = addedManuallyField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, Operator = "Equals", Value = "False", Tenant = blockNamesRule.Tenant }, RuleConditionFieldRepository, TenantRuleConditionFields);
+
+            ObjectTableRuleField ClosingReasonNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonNameField.Id, ObjectFieldCode = closingReasonNameField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ClosingReasonLocalNameRuleField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = closingReasonLocalNameField.Id, ObjectFieldCode = closingReasonLocalNameField.FieldCode, ObjectTableRuleId = blockNamesRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
             ObjectContext.SaveChanges();
         }

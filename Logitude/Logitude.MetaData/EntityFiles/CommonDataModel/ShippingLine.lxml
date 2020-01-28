@@ -5399,13 +5399,7 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;ShippingLine.Tip.General&quot;"
-      DefaultText="&quot; - Shipping lines are listed  in this pane(%L) - To add a new shipping line to your company press the 'new' button(%L)- To import a shipping line to your company press the 'add' button(%L)  &quot;"
-      TextCodeTypeCode="&quot;TIP&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures>
     <Feature
       Code="&quot;NEWSHIPPINGLINE&quot;"

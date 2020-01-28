@@ -82828,7 +82828,6 @@
         ScreenName="Customer Add Edit Screen" />
     </ScreenFields>
   </Screen>
-  
   <Screen
     Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;Shipment&quot;"
@@ -88316,11 +88315,6 @@
       Code="&quot;Shipment.S.NewShipment.OtherDetails&quot;"
       DefaultText="&quot;Other Details&quot;"
       TextCodeTypeCode="&quot;S&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Shipment.Tip.OrderDetails&quot;"
-      DefaultText="&quot; These are the ordered quantities and dimensions. The actual package details are managed via the Packages tab.&quot;"
-      TextCodeTypeCode="&quot;TIP&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.B.Receivables.GenerateFromQuoteReceivablesOnly&quot;"

@@ -1871,8 +1871,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode PortTextCode_PortMTheCodeAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.M.TheCodeAlreadyExists", DefaultText = "The Code already exists",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PortTextCode_PortTipGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.Tip.General", DefaultText = " - Ports are listed  in this pane(%L) - To add a Port to your company press the 'add' button(%L)",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
    
 	    
 }
