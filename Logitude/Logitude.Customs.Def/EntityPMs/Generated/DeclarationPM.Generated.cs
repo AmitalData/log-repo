@@ -4353,6 +4353,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isDiamondDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDiamondDeclaration  
+	   {
+	    
+	     get
+		{
+		   return isDiamondDeclaration;
+		 }
+		 set
+		 {
+		   if(isDiamondDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDiamondDeclaration",OldValue=isDiamondDeclaration,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isDiamondDeclaration=value;
+		   }
+			
+		 }
+	   }
 	  private bool amendmentDontDisplayInList ;
 	  	  
        
@@ -4376,30 +4399,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string declarationType ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DeclarationType  
-	   {
-	    
-	     get
-		{
-		   return declarationType;
-		 }
-		 set
-		 {
-		   if(declarationType != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationType",OldValue=declarationType,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   declarationType=value;
-		   }
-			
-		 }
-	   }
-
 	  private string amendmentMessage ;
 	  	  
        
@@ -4446,7 +4445,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
    }
    
 }
