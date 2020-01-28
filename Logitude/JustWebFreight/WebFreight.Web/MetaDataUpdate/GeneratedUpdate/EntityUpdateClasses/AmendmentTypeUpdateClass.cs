@@ -262,7 +262,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedHelpLocalDefaultText =  false,
 					  						IsSpellCheckedShortLocalDefaultText =  false,
 					  						IsSpellCheckedListLocalDefaultText =  false,
-					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
