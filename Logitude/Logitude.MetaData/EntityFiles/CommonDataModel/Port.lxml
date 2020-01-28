@@ -3568,11 +3568,6 @@
       DefaultText="&quot;The Code already exists&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Port.Tip.General&quot;"
-      DefaultText="&quot; - Ports are listed  in this pane(%L) - To add a Port to your company press the 'add' button(%L)&quot;"
-      TextCodeTypeCode="&quot;TIP&quot;"
-      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

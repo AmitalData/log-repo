@@ -8215,13 +8215,7 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;Airline.Tip.General&quot;"
-      DefaultText="&quot; - Airlines are listed  in this pane(%L) - To add a new Airline to your company press the 'new' button(%L)- To import an Airline to your company press the 'add' button(%L)&quot;"
-      TextCodeTypeCode="&quot;TIP&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures>
     <Feature
       Code="&quot;CHAMP&quot;"
