@@ -120,20 +120,26 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     DisplayOnlyCheck() {
 
          var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
-            var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
-            this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            this.SetScreenFieldsEditability();
-
-            if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+        //declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
+        //    var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
+        //    this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                    debugger;
+                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
             }
+           //else if (this.IsDisplayOnly) {
+           //     this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+           // }
             else {
                 if (!this.EntityPM.AmendmentDeficitInitiated) this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
 
-            }
+            }            this.SetScreenFieldsEditability();
+
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
-        });
+       // });
 
     }
     SetScreenFieldsEditability() {

@@ -271,6 +271,7 @@
     <Compile Include="EntityDataMappings\BankDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoIdentifireTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoIdentityQualifierDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoSealDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoSealIdentifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoSplitRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoStatusDataMapping.cs" />
@@ -440,6 +441,7 @@
     <Compile Include="EntityDataMappings\Generated\BankDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoIdentifireTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoIdentityQualifierDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoSealDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoSealIdentifierDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoSplitRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoStatusDataMapping.Generated.cs" />
@@ -898,6 +900,7 @@
     <Compile Include="EntityQueryServices\Generated\AmendmentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoSealIdentifierQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoSealQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ConsignmentPackDangerQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsAutonomyKeywordQueryService.Generated.cs" />
@@ -1346,6 +1349,7 @@
     <Compile Include="EntityUpdateServices\Generated\AmendmentTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ApprovedProfessionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoSealIdentifierUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoSealUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoSplitRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClaimsRelatedEntitiesRefundUpdateService.Generated.cs" />

@@ -503,7 +503,18 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                 var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
                 var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
                 var displayOnlyMessage = null;
-                if (this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode) {
+                if (this.declarationPM.AmendmentMessage != null && this.declarationPM.AmendmentMessage != "") {
+                    {
+                        let displayOnlyMessage = this.declarationPM.AmendmentMessage;
+                        var rresponse: ServiceResponse = new ServiceResponse();
+                        let disOnly = false;
+                        if (this.declarationPM.IsAmendmentDisplayOnly) disOnly = this.declarationPM.IsAmendmentDisplayOnly;
+                        rresponse.Result = { IsDisplayOnly: disOnly, DisplayOnlyMessage: displayOnlyMessage };
+                        return rresponse;
+                    
+                    }
+                }
+              else  if (this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode) {
                     let displayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
                     var rresponse: ServiceResponse = new ServiceResponse();
                     rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: displayOnlyMessage };
@@ -528,14 +539,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
                     return rresponse;
                 }
-                else {
-                    let message = this.InitDisplayOnlyMessage();
-                    if (message != "") {
-                        var rresponse: ServiceResponse = new ServiceResponse();
-                        rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: displayOnlyMessage };
-                        return rresponse;
-                    }
-                }
+           
                 var rresponse: ServiceResponse = new ServiceResponse();
                 rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
                 return rresponse;
@@ -544,43 +548,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     }
 
 
-    InitDisplayOnlyMessage() {
-        if (this.declarationPM.IsAmendment && (this.declarationPM.AmendmentStatus == "2" || this.declarationPM.AmendmentStatus == null)) {
-            return TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.declarationPM.AmendmentStatusName;
-        }
-        else if (this.declarationPM.IsAmendment == false) {
-            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.declarationPM.Id).subscribe
-                (data => {
-                    if (data.Result == null || data.Result.length <= 0) return;
-
-                    data.Result = data.Result.sort((obj1, obj2) => {
-                        if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
-                            return 1;
-                        }
-
-                        if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
-                            return -1;
-                        }
-
-                        return 0;
-                    });
-
-                    data.Result.forEach((item) => {
-                        if (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6") {
-                            return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
-                        }
-
-                    });
-                    return TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
-
-                }
-
-
-                );
-
-        }
-    }
-
+ 
     CheckRequestsInProgress(documentsFilingId: string) {
         // Request sheets in progress check
         var authHeader = new Headers();

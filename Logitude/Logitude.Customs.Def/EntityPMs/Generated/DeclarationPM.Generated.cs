@@ -4399,6 +4399,54 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+
+	  private string amendmentMessage ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AmendmentMessage  
+	   {
+	    
+	     get
+		{
+		   return amendmentMessage;
+		 }
+		 set
+		 {
+		   if(amendmentMessage != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentMessage",OldValue=amendmentMessage,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   amendmentMessage=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAmendmentDisplayOnly ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAmendmentDisplayOnly  
+	   {
+	    
+	     get
+		{
+		   return isAmendmentDisplayOnly;
+		 }
+		 set
+		 {
+		   if(isAmendmentDisplayOnly != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAmendmentDisplayOnly",OldValue=isAmendmentDisplayOnly,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAmendmentDisplayOnly=value;
+		   }
+			
+		 }
+	   }
+
    }
    
 }

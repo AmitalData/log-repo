@@ -112,6 +112,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string keywordtypeLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string KeywordtypeLocalName  
+	   {
+	    
+	     get
+		{
+		   return keywordtypeLocalName;
+		 }
+		 set
+		 {
+		   if(keywordtypeLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="KeywordtypeLocalName",OldValue=keywordtypeLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   keywordtypeLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

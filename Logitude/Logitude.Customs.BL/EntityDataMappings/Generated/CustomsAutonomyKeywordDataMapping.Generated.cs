@@ -35,7 +35,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         KeywordtypeCode, 
-	         KeywordsList,
+	         KeywordsList, 
+	         KeywordtypeLocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

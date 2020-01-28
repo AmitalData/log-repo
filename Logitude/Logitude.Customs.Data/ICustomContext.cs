@@ -34,6 +34,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<Bank> Banks { get; }
 		 IDbSet<CargoIdentifireType> CargoIdentifireTypes { get; }
 		 IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers { get; }
+		 IDbSet<CargoSeal> CargoSeals { get; }
 		 IDbSet<CargoSealIdentifier> CargoSealIdentifiers { get; }
 		 IDbSet<CargoSplitRequestStatus> CargoSplitRequestStatuses { get; }
 		 IDbSet<CargoStatus> CargoStatuses { get; }
