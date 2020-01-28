@@ -460,17 +460,9 @@
     <Compile Include="Migrations\202001160629471_removeDWHSetting.Designer.cs">
       <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001191042122_AddAmendmentTypes.cs" />
-    <Compile Include="Migrations\202001191042122_AddAmendmentTypes.Designer.cs">
-      <DependentUpon>202001191042122_AddAmendmentTypes.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202001191215152_AddMigrationSealType.cs" />
     <Compile Include="Migrations\202001191215152_AddMigrationSealType.Designer.cs">
       <DependentUpon>202001191215152_AddMigrationSealType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001191511517_AddSealReasonTable.cs" />
-    <Compile Include="Migrations\202001191511517_AddSealReasonTable.Designer.cs">
-      <DependentUpon>202001191511517_AddSealReasonTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202001211530095_AddLastMileStatusNameField.cs" />
     <Compile Include="Migrations\202001211530095_AddLastMileStatusNameField.Designer.cs">
@@ -483,6 +475,10 @@
     <Compile Include="Migrations\202001271324155_AddmigrationCargoSeal.cs" />
     <Compile Include="Migrations\202001271324155_AddmigrationCargoSeal.Designer.cs">
       <DependentUpon>202001271324155_AddmigrationCargoSeal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001280927543_SealReasonAndAmendmentType.cs" />
+    <Compile Include="Migrations\202001280927543_SealReasonAndAmendmentType.Designer.cs">
+      <DependentUpon>202001280927543_SealReasonAndAmendmentType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -823,12 +819,6 @@
     <EmbeddedResource Include="Migrations\202001191215152_AddMigrationSealType.resx">
       <DependentUpon>202001191215152_AddMigrationSealType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001191042122_AddAmendmentTypes.resx">
-      <DependentUpon>202001191042122_AddAmendmentTypes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001191511517_AddSealReasonTable.resx">
-      <DependentUpon>202001191511517_AddSealReasonTable.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001211530095_AddLastMileStatusNameField.resx">
       <DependentUpon>202001211530095_AddLastMileStatusNameField.cs</DependentUpon>
     </EmbeddedResource>
@@ -837,6 +827,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001271324155_AddmigrationCargoSeal.resx">
       <DependentUpon>202001271324155_AddmigrationCargoSeal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001280927543_SealReasonAndAmendmentType.resx">
+      <DependentUpon>202001280927543_SealReasonAndAmendmentType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
