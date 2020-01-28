@@ -3063,6 +3063,7 @@
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx" />
+    <Content Include="Monitoring\SATCommunicationWaitingStatus.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
@@ -5224,6 +5225,13 @@
     </Compile>
     <Compile Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx.designer.cs">
       <DependentUpon>ReportExecutionRunTimeMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.cs">
+      <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.designer.cs">
+      <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\StorageBackup.aspx.cs">
       <DependentUpon>StorageBackup.aspx</DependentUpon>
