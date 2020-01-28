@@ -1114,6 +1114,16 @@ export class DeclarationPM {
     public set IsAmendmentDisplayOnly(newValue: boolean) { if (this.isAmendmentDisplayOnly != newValue) { this.isAmendmentDisplayOnly = newValue; this.MarkAsDirty("IsAmendmentDisplayOnly"); } }
        
 	 
+    private customFileAmendment: string;
+    public get CustomFileAmendment() { return this.customFileAmendment; }
+    public set CustomFileAmendment(newValue: string) { if (this.customFileAmendment != newValue) { this.customFileAmendment = newValue; this.MarkAsDirty("CustomFileAmendment"); } }
+       
+	 
+    private declarationNoAmendment: string;
+    public get DeclarationNoAmendment() { return this.declarationNoAmendment; }
+    public set DeclarationNoAmendment(newValue: string) { if (this.declarationNoAmendment != newValue) { this.declarationNoAmendment = newValue; this.MarkAsDirty("DeclarationNoAmendment"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

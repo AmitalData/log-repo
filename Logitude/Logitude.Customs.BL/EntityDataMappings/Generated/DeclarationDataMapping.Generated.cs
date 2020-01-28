@@ -322,7 +322,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsPendingNotNull, 
 	         AmendmentDontDisplayInList, 
 	         AmendmentMessage, 
-	         IsAmendmentDisplayOnly,
+	         IsAmendmentDisplayOnly, 
+	         CustomFileAmendment, 
+	         DeclarationNoAmendment,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
