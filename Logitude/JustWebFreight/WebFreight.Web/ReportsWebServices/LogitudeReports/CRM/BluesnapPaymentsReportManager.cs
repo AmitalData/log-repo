@@ -128,9 +128,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                                  where a.Tenant == tenantmanagements.Id
                                                                                  select new BluesnapTransactionItem()
                                                                                  {
+                                                                                     Tenant = a.Tenant,
                                                                                      DocumentId = a.DocumentId,
+                                                                                     TransactionDate = a.TransactionDate,
                                                                                  }).ToList(),
                                                              });
+
+
+            this.iQueryable_JoinTenantBluesnapTransaction = this.iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Transactions.Count > 0);
         }
 
         private void BuildReportData()
@@ -147,7 +152,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                 double? totalPayments = 0;
                 foreach (var transaction in item.Transactions)
                 {
-                    var queryParameters = DeserializeDocumentBody(transaction.DocumentId, item.Tenant);
+                    var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
                     if (queryParameters.Count > 0)
                     {
                         itemRecord.ContractCount = int.Parse(queryParameters["promoteContractsNum"]);
@@ -228,6 +233,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
     }
     public class BluesnapTransactionItem
     {
+        public int Tenant { get; set; }
         public string DocumentId { get; set; }
+        public DateTime? TransactionDate { get; set; }
     }
 }
