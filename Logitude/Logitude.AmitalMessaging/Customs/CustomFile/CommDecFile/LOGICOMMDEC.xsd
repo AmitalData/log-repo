@@ -53,6 +53,7 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsDocuments" />
         <xs:element minOccurs="0" maxOccurs="1" ref="TaxationDateTime" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CarrierPrefix" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IsAutonomy" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -297,4 +298,5 @@
   <xs:element name="SerialNum" type="xs:string" />
   <xs:element name="TaxationDateTime" type="xs:string" />
   <xs:element name="CarrierPrefix" type="xs:string" />
+  <xs:element name="IsAutonomy" type="xs:string" />
 </xs:schema>

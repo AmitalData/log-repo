@@ -38,6 +38,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
         private ICustomContext _context;
+        private LOGICUSTFILE _LOGICUSTFILE;
+        private LogitudeCustomsFile _AmitalCustomsFile;
 
         private AmitalContext amitalContext;
 
@@ -374,6 +376,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
 
+
+            this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
+            if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
+            {
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
+            }
+            else
+            {
+                this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
+                CalcIsAutonomy();
+                CalcProcedureCurrentCode();
+            }
+
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
 
@@ -426,6 +442,75 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
         }
 
+        private void CalcProcedureCurrentCode()
+        {
+            if (this._LogitudeCommDecFile.IsAutonomy == "yes")
+            {
+                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "5")
+                {
+                    if (this._MyDeclarationPM.TotalInvoiceAmountInUSD >= 1000)
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000005";
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000012";
+                    }
+                }
+                else
+                {
+                    if (this._MyDeclarationPM.TotalInvoiceAmountInUSD >= 1000)
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000505";
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000512";
+                    }
+                }
+            }
+            else
+            {
+                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "5")
+                {
+                    if (this._MyDeclarationPM.TotalInvoiceAmountInUSD >= 1000)
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000001";
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000007";
+                    }
+                }
+                else
+                {
+                    if (this._MyDeclarationPM.TotalInvoiceAmountInUSD >= 1000)
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000501";
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ProcedureCurrentCode = "4000507";
+                    }
+                }
+            }
+        }
+
+        private void CalcIsAutonomy()
+        {
+            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0,1) == "8")
+            {
+                this._LogitudeCommDecFile.IsAutonomy = "yes";
+            }
+            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+            {
+                CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
+                if(customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' }), ResolvedTenant()))
+                {
+                    this._LogitudeCommDecFile.IsAutonomy = "yes";
+                }
+            }
+        }
 
         private void CheckMasterToUpdate(string MoreParams)
         {
