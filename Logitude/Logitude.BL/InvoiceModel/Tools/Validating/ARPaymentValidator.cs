@@ -192,7 +192,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     if (entityPM.StatusCode == null || entityPM.StatusCode == "DR")
                     {
-                        throw new ApplicationException("Accounting Settings dont allowe manual payment number");
+                        throw new ApplicationException("Accounting Settings don't allow manual payment number");
                     }
                 }
             }
@@ -253,7 +253,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         {
                             if (entityPM.StatusCode == null || entityPM.StatusCode == "DR")
                             {
-                                throw new ApplicationException("Accounting Settings dont allowe manual payment number");
+                                throw new ApplicationException("Accounting Settings don't allow manual payment number");
                             }
                         }
                     }

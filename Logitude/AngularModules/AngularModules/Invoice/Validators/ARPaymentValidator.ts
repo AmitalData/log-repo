@@ -128,7 +128,7 @@ export class ARPaymentValidator {
         if (!SessionLocator.AccountingSettingPM.AllowManualARPaymentNumber) {
             if (entityPm.IsPaymentNumberManuallySet) {
                 if (AppTool.IsNullOrEmpty(entityPm.StatusCode) || entityPm.StatusCode == "DR") {
-                    validationResults.push("Accounting Settings dont allowe manual payment number");
+                    validationResults.push("Accounting Settings don't allow manual payment number");
                 }
             }
         }
@@ -252,7 +252,7 @@ export class ARPaymentValidator {
         if (!SessionLocator.AccountingSettingPM.AllowManualARPaymentNumber) {
             if (entityPm.IsPaymentNumberManuallySet) {
                 if (AppTool.IsNullOrEmpty(entityPm.StatusCode) || entityPm.StatusCode == "DR") {
-                    errors.push("Accounting Settings dont allowe manual payment number");
+                    errors.push("Accounting Settings don't allow manual payment number");
                 }
             }
         }
