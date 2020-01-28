@@ -292,6 +292,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
              req.Response = new UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response();
             req.Response.Declaration =  Getdeclaration(_DeclarationPM , _DeclarationPMOrg);
+ 
             req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
         };
             req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
@@ -351,10 +352,49 @@ namespace Logitude.CustomsMessaging.RequestServices
                 Tenant = _DeclarationPM.Tenant,
                 EventTypeCode = "DCH",
                 UserId = _userId,
-                EntityId = _DeclarationPM.Id,
+                EntityId = _DeclarationPMOrg.Id,
                 ObjectTableName = "Customs.Declaration",
                 Notes = null
             });
+
+
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = _DeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = "DCH",
+                notes =null,
+                CommunicationLoggingEntityReference = _DeclarationPM.DeclarationNumber,
+                EntityId = _DeclarationPMOrg.Id,
+                UserId = _userId,
+
+                CommunicationSubject = "FU Status DCH from logitude ",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = "CFIFILEM",
+                    primary_number = _DeclarationPMOrg.CustomFileNo,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = "DCH",
+                    status_DateTime = DateTime.Now,
+                    //status_place = "FRA",
+                    //status_save = "no_fail",
+                    comments = null,
+                }
+            };
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+            //var myUpdateEventContextTagModel = new EventContextTagModel()
+            //{
+            //    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+            //    EventCode = "DCH",
+            //    EventRemarks = "Declaration Changed By Customs",
+            //    FUStatusRemarks = "בוצע תיקון הצהרה" +  _DeclarationPMOrg.DeclarationNumber,
+            //};
+
+            //_DeclarationPMOrg.CurrentContextTag = myUpdateEventContextTagModel;
+            //declarationUpdateService.Update(_DeclarationPMOrg, true);
+
             declarationUpdateService.Update(_DeclarationPM, true);
         }
 
@@ -364,7 +404,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
           var declarations=  declarationQueryService.GetDeclarationAmendmentsById(_DeclarationPMOrg.Tenant, _DeclarationPMOrg.Id);
 
-          return (Convert.ToInt32( declarations.Max(x => x.RequestFileNumber) )+ 1).ToString();
+          return (Convert.ToInt32( declarations.Max(x => x.AmendmentRequestNumber) )+ 1).ToString();
          }
 
         private ResponseAdditionalInformation[] AdditionalInformation()

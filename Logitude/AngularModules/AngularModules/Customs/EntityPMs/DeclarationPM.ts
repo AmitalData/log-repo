@@ -1102,11 +1102,20 @@ export class DeclarationPM {
     private amendmentDontDisplayInList: boolean;
     public get AmendmentDontDisplayInList() { return this.amendmentDontDisplayInList; }
     public set AmendmentDontDisplayInList(newValue: boolean) { if (this.amendmentDontDisplayInList != newValue) { this.amendmentDontDisplayInList = newValue; this.MarkAsDirty("AmendmentDontDisplayInList"); } }
-       
-	 
+  
     private declarationType: string;
     public get DeclarationType() { return this.declarationType; }
     public set DeclarationType(newValue: string) { if (this.declarationType != newValue) { this.declarationType = newValue; this.MarkAsDirty("DeclarationType"); } }
+ 
+    private amendmentMessage: string;
+    public get AmendmentMessage() { return this.amendmentMessage; }
+    public set AmendmentMessage(newValue: string) { if (this.amendmentMessage != newValue) { this.amendmentMessage = newValue; this.MarkAsDirty("AmendmentMessage"); } }
+       
+	 
+    private isAmendmentDisplayOnly: boolean;
+    public get IsAmendmentDisplayOnly() { return this.isAmendmentDisplayOnly; }
+    public set IsAmendmentDisplayOnly(newValue: boolean) { if (this.isAmendmentDisplayOnly != newValue) { this.isAmendmentDisplayOnly = newValue; this.MarkAsDirty("IsAmendmentDisplayOnly"); } }
+ 
        
 	 
 
@@ -1133,4 +1142,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

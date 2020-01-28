@@ -65,10 +65,10 @@ export class DeclarationDisplayOnlyChecks {
 
 
         //other declaration checks
-      var moreDetails =  declarationValidator.DeclarationViewDisplayOnlyChecks();
+     declarationValidator.DeclarationViewDisplayOnlyChecks();
         if (declarationValidator.ValidationErrorMessageCodes.length > 0) {
             return Observable.defer(() => {
-                var message = TextCodeTranslator.Translate(declarationValidator.ValidationErrorMessageCodes[0]) + moreDetails;
+                var message = TextCodeTranslator.Translate(declarationValidator.ValidationErrorMessageCodes[0]);
                 serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
                 //for menu buttons
                 //this.timerToken = setTimeout(() => {
