@@ -102,6 +102,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
 	
+            modelBuilder.Configurations.Add(new CargoSealMap());
+	
+            modelBuilder.Configurations.Add(new CargoSealIdentifierMap());
+	
             modelBuilder.Configurations.Add(new CargoSplitRequestStatusMap());
 	
             modelBuilder.Configurations.Add(new CargoStatusMap());
@@ -1224,6 +1228,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoSeal> CargoSeals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoSealIdentifier> CargoSealIdentifiers 
 	 {
 	      get; set;
 	 

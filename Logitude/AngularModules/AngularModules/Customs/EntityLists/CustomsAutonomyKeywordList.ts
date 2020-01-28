@@ -12,6 +12,7 @@ export class CustomsAutonomyKeywordList {
 	Tenant: number;
 	KeywordtypeCode: string;
 	KeywordsList: string;
+	KeywordtypeLocalName: string;
 	
 }
  

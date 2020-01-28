@@ -102,6 +102,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
 
                 newDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                 newDeclarationCourierStatusPM.LastMileStatusCode = _LogitudeCourierStatus.LastMileStatus;
+                newDeclarationCourierStatusPM.LastMileStatusName = _LogitudeCourierStatus.LastMileStatusName;
                 newDeclarationCourierStatusPM.LastMileStatusDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCourierStatus.LastMileStatusDate, "_LogitudeCourierStatus.LastMileStatusDate");
                 newDeclarationCourierStatusPM.LastMileStatusRemarks = _LogitudeCourierStatus.LastMileStatusRemarks;
                 declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);

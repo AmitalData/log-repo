@@ -53,12 +53,14 @@ import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Service
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { QuantityTypeMessageService } from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 
 @Component({
     selector: 'SInvoiceClassificationTabContent',
     moduleId: module.id,
     templateUrl: './SInvoiceClassificationTabComponent.html',
+    providers: [DeclarationExtendedListService]
 })
 
 export class SInvoiceClassificationTabComponent
@@ -104,7 +106,8 @@ export class SInvoiceClassificationTabComponent
     //    logCell.IsEditMode = true;
     //}
     public CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
+    IsDisplayMessage: boolean;
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         //this.ConsimentPackages = new ObservableCollection([]);
         this.ItemsSource = new ObservableCollection([]);
@@ -182,8 +185,12 @@ export class SInvoiceClassificationTabComponent
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
                 return;
             }
+            else {
+            this.InitDisplayOnlyMessage();
+        }
 
         }
+        
     
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: any) => {
@@ -192,11 +199,58 @@ export class SInvoiceClassificationTabComponent
             if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
+            else {
+                this.InitDisplayOnlyMessage();
+            }
             
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
+
+
+    InitDisplayOnlyMessage() {
+        if (this.declarationPM.IsAmendment && (this.declarationPM.AmendmentStatus == "2" || this.declarationPM.AmendmentStatus == null)) {
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.declarationPM.AmendmentStatusName;
+            this.IsDisplayMessage = true;
+        }
+        else if (this.declarationPM.IsAmendment == false) {
+            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.declarationPM.Id).subscribe
+                (data => {
+                    if (data.Result == null || data.Result.length <= 0) return;
+
+                    data.Result = data.Result.sort((obj1, obj2) => {
+                        if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                            return 1;
+                        }
+
+                        if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
+                    var temp = false;
+
+                    data.Result.forEach((item) => {
+                        if ((temp == false) && (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "4"|| item.AmendmentStatus == "2")) {
+                            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                            this.IsDisplayMessage = true;
+                            temp = true;
+
+                         
+                        }
+
+                    });
+         
+                }
+
+
+                );
+
+        }
+    }
+
     SetTabArgs(args: any) {
         this.EntityPM = args.EntityPM;
         this.Tab = args.Tab;

@@ -68,7 +68,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
-                this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null);
+                this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList==false);
                 this.LoadDeclarationAmendmentsList();
                  this.BuildColumns();
 
@@ -224,8 +224,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             myResponse.Result.forEach((item) => {
                 item.LineNumber = i;
                 i++;
-                debugger;
-                  if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
+                   if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
                  this.CanOpenNewAmendment = false;
                  this.amendmentObslist.Insert(item);
             });

@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -20,6 +20,8 @@ import { CustomFileCreditRequestParams } from '../../DataContract/RequestParams/
 import { ExportDeclarationDataRequestParams } from '../../DataContract/RequestParams/ExportDeclarationDataRequestParams';
 import { StorageEntranceUnloadingRequestParams } from '../../DataContract/RequestParams/StorageEntranceUnloadingRequestParams';
 import {CargoSplitRequestParams} from '../../DataContract/RequestParams/CargoSplitRequestParams';
+import { CargoSealsRequestParams } from '../../DataContract/RequestParams/CargoSealsRequestParams';
+
 
 @Injectable()
 
@@ -406,5 +408,27 @@ export class DeclarationMessagesService {
         }
 
         );
+    }
+
+    PostSendCargoSealsRequest(entity: CargoSealsRequestParams) {
+
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendCargoSealsRequest/',
+                JSON.stringify(entity),
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+
+        });
     }
 }

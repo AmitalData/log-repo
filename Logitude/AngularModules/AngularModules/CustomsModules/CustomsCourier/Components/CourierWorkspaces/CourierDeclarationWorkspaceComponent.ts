@@ -66,6 +66,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                     this.isScreenLoaded = true;
                     this.CurrentSession.StopBusyIndicator();
                     this.BuildColumns();
+                    this.RefreshList();
                 }
             });
         });
@@ -80,6 +81,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
+        this.RefreshList();
     }
 
     public LoadAllScreenData() {
@@ -111,7 +113,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     LoadQueriesCounts() {
 
-        this.RefreshList();
+        //this.RefreshList();
         /*
         this._CourierMasterService.GetSummary().subscribe(myResult => {
             if (myResult != null) {

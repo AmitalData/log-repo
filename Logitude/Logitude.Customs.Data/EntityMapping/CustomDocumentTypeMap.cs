@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.AutoSetOriginalDocumentTrue).HasColumnName("AutoSetOriginalDocumentTrue");
 
             this.Property(t => t.IsCourierManadatory).HasColumnName("IsCourierManadatory");
+
+            this.Property(t => t.IsManadatory).HasColumnName("IsManadatory");
         }
     }
 }
