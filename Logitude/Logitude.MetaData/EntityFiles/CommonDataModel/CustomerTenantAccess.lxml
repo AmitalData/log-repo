@@ -909,7 +909,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
