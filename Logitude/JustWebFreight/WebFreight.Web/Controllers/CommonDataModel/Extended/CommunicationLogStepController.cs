@@ -69,11 +69,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         public HttpResponseMessage GetExportExcelByRequestId(
             string mainInterfaceCode, string requestId, int tenant)
         {
+            try
+            {
+                var qs = new CustomsRequestsSheetQueryService(tenant);
+                var crsPM = qs.GetSingle(requestId, false, false);
+                return GetExportExcelByLogId(
+                mainInterfaceCode, crsPM.RequestComminicationId, tenant);
 
-            var qs = new CustomsRequestsSheetQueryService(tenant);
-            var crsPM =qs.GetSingle(requestId, false, false);
-            return GetExportExcelByLogId(
-            mainInterfaceCode, crsPM.RequestComminicationId, tenant);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
             
         }
 
