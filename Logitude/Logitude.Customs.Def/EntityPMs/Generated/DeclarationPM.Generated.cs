@@ -3719,7 +3719,31 @@ namespace Logitude.Customs.Def.EntityPMs
 		   }
 			
 		 }
-	   }
+
+            private bool isDiamondDeclaration;
+
+
+        [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool IsDiamondDeclaration
+        {
+
+            get
+            {
+                return isDiamondDeclaration;
+            }
+            set
+            {
+                if (isDiamondDeclaration != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsDiamondDeclaration", OldValue = isDiamondDeclaration, NewValue = value, PropertyType = "bool" };
+                    NotifyPropertyChanged(values);
+                    isDiamondDeclaration = value;
+                }
+
+            }
+        }
+    }
    }
    
 }

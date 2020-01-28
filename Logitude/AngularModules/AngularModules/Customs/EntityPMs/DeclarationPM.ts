@@ -932,7 +932,14 @@ export class DeclarationPM {
     private courierMasterId: string;
     public get CourierMasterId() { return this.courierMasterId; }
     public set CourierMasterId(newValue: string) { if (this.courierMasterId != newValue) { this.courierMasterId = newValue; this.MarkAsDirty("CourierMasterId"); } }
-       
+
+
+    private isDiamondDeclaration: boolean;
+    public get IsDiamondDeclaration() { return this.isDiamondDeclaration; }
+    public set IsDiamondDeclaration(newValue: boolean) { if (this.isDiamondDeclaration != newValue) { this.isDiamondDeclaration = newValue; this.MarkAsDirty("IsDiamondDeclaration"); } }
+
+
+
 	 
 
     public OldEntityPM: DeclarationPM;

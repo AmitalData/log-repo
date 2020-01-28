@@ -104,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Customs.NewDeclarationControlCommand",
 			      				    LocalDefaultText =  "הצהרות יבוא",
 			      				    DefaultText =  "Declaration",
-			      				    Code =  "1ae3",
+			      				    Code =  "c340",
 			      				    Name =  "Customs.Declaration Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -10400,10 +10400,73 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+
+                FieldName = "IsDiamondDeclaration",
+                OldFieldName = "DeclarationType",
+                IsNew = true,
+                IsChecked = true,
+                IsDeleted = false,
+                ObjectTableName = "Customs.Declaration",
+                FieldsDataType = "Boolean",
+                MinLength = 0,
+                MaxLength = 1,
+                IsRequired = false,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 1,
+                DisplayInList = false,
+                IsCustomFilter = false,
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "IsDiamondDeclaration",
+                ListPropertyPath = "IsDiamondDeclaration",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                IsRestrictable = false,
+                DisplayInEntityVariables = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "IsDiamondDeclaration",
+                DefaultText = "Is Diamond Declaration",
+                FullLocalDefaultText = "הצהרת יהלומים",
+                IsMaxLength = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                HasTemplate = false,
+                IsCustom = false,
+                IsSpellCheckedFullFieldLable = false,
+                IsSpellCheckedHelpLocalDefaultText = false,
+                IsSpellCheckedShortLocalDefaultText = false,
+                IsSpellCheckedListLocalDefaultText = false,
+                EnableFullscreenTextBox = false,
+
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+        }
+
+        public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  	   
 	    }
 
