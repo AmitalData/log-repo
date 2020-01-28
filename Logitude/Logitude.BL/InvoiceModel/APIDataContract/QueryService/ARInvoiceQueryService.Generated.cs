@@ -158,7 +158,8 @@ using Simplog.Data.InvoiceModel;
 				   temp.Tenant = MyEntityPM.Tenant;
 				   temp.IsMultiCurrency = MyEntityPM.IsMultiCurrency;
 				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;
-				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;					
+				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
+				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -168,7 +169,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public ARInvoicePM ARInvoiceDataMappingAndValidatin(ARInvoice MyEntity,int Tenant,string ComputingPartnerName = "")
+		public ARInvoicePM ARInvoiceDataMappingAndValidatin(ARInvoice MyEntity,int Tenant, string ComputingPartnerName = "")
         {
 		    try
             {
@@ -334,7 +335,8 @@ using Simplog.Data.InvoiceModel;
 					temp.Tenant = MyEntity.Tenant;
 					temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
 					temp.CreditARInvoice = MyEntity.CreditARInvoice;
-					temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;					   
+					temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
+					temp.BillToGLAccountId = MyEntity.BillToGLAccount;					   
 					   return temp;
 		    }
             catch (Exception ex)

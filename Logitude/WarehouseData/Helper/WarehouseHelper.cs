@@ -1376,7 +1376,7 @@ namespace WarehouseData.Helper
             {
                 cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,Code,AutomaticLastUpdateDate)values('-1'," + tenant + ",'' ,'', GETDATE());";
             }
-            else if (table.DBTableName == "Addresses") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,CountryId,StateId ,AutomaticLastUpdateDate )values('-1'," + tenant + ",'-1' ,'-1' , GETDATE());";
+            else if (table.DBTableName == "Addresses") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,CountryId,StateId ,AddressTypeId,CardId,AutomaticLastUpdateDate )values('-1'," + tenant + ",'-1' ,'-1' ,'M',-1, GETDATE());";
 
             else if (table.DBTableName == "Contacts")
             {

@@ -15,6 +15,10 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using System.Linq;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -210,6 +214,14 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
             entity.CreatedByPartner = entityPM.CreatedByPartner;
+            if (entityPM.BillToGLAccountId == null)
+            {
+                entity.BillToGLAccountId = GetBillToGLAccountId(entity.BillToId, entityPM.Tenant);
+            }
+            else
+            {
+                entity.BillToGLAccountId = entityPM.BillToGLAccountId;
+            }
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)
@@ -274,6 +286,30 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ForeignCurrencyId = entityPM.ForeignCurrencyId;
             entity.ExchangeRate = entityPM.ExchangeRate;
             entity.PaymentAmount = entityPM.PaymentAmount;
+
+        }
+
+        public static string GetBillToGLAccountId(string billToId,int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            CardPM card = GetCardById(billToId, tenant);
+            GLAccountPM billToAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+            if(billToAccount != null)
+            {
+                return billToAccount.Id;
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
+
+        private static CardPM GetCardById(string id, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM card = cardQuery.GetSinglePM(id, tenant);
+            return card;
 
         }
     }
