@@ -1,5 +1,5 @@
 ﻿<!ELEMENT LOGICOMMDEC (LogitudeCommDecFile*)>
-<!ELEMENT LogitudeCommDecFile (CustomFileNo?, Id?, DeclarationOfficeCode?, FileState?, AgentId?, CustomerId?, TransportModeId?, CreatedByUserId?, ReferentUserId?, DepartmentId?, MAWB?, DealId?, HAWB?, ManifestNumber?, LoadingPortCode?, OriginCountryCode?, CargoDescription?, PackageTypeCode?, PackageMeasureQualifierCode?, PackageQuantity?, GrossMassMeasure?, VendorId?, ImporterId?, Tenant?, GrantDate?, ManifestDate?, ArrivalDateTime?, Mode?, EnglishName?, HebrewName?, ISLASTRELEASEFROMWAREHOUS?, EntryFile?, OriginCountryId?, WarehouseId?, TransferImporterId?, ImporterEntitlementTypeCode?, INVOICE*, PACKAGES*, agent_fee?, agent_fee_currency?, CustomsDocuments*, TaxationDateTime?, CarrierPrefix?)>
+<!ELEMENT LogitudeCommDecFile (CustomFileNo?, Id?, DeclarationOfficeCode?, FileState?, AgentId?, CustomerId?, TransportModeId?, CreatedByUserId?, ReferentUserId?, DepartmentId?, MAWB?, DealId?, HAWB?, ManifestNumber?, LoadingPortCode?, OriginCountryCode?, CargoDescription?, PackageTypeCode?, PackageMeasureQualifierCode?, PackageQuantity?, GrossMassMeasure?, VendorId?, ImporterId?, Tenant?, GrantDate?, ManifestDate?, ArrivalDateTime?, Mode?, EnglishName?, HebrewName?, ISLASTRELEASEFROMWAREHOUS?, EntryFile?, OriginCountryId?, WarehouseId?, TransferImporterId?, ImporterEntitlementTypeCode?, INVOICE*, PACKAGES*, agent_fee?, agent_fee_currency?, CustomsDocuments*, TaxationDateTime?, CarrierPrefix?, IsAutonomy?)>
 <!ELEMENT CustomFileNo (#PCDATA)>
 <!ELEMENT Id (#PCDATA)>
 <!ELEMENT DeclarationOfficeCode (#PCDATA)>
@@ -122,3 +122,4 @@
 <!ELEMENT SerialNum (#PCDATA)>
 <!ELEMENT TaxationDateTime (#PCDATA)>
 <!ELEMENT CarrierPrefix (#PCDATA)>
+<!ELEMENT IsAutonomy (#PCDATA)>
