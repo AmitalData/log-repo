@@ -51,7 +51,7 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
     ngOnInit() {
 
         this.DaysinWarehouseFilterItemSource = [];
-        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Empty", "Empty"));
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Empty", ""));
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Equals","Equal to"));
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("NotEquals", "Not Equal to"));
         this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("GreaterThan", "Greater than"));
