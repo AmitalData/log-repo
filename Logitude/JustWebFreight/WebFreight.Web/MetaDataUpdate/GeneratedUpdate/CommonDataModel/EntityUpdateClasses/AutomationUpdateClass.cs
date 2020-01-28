@@ -425,13 +425,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
+	    {
+			//--------------> Additional TextCodes <--------------\\
 
-    
+			ObjectTable AutomationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Automation" && d.Tenant == 0).FirstOrDefault();
 
-   }
+			TextCode AutomationTextCode_AutomationOEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Automation.TH.Events", DefaultText = "Events", LocalDefaultText = null, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+		}
+
+
+
+	}
     
 }
 	 
