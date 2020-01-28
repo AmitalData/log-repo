@@ -480,6 +480,10 @@
     <Compile Include="Migrations\202001280927543_SealReasonAndAmendmentType.Designer.cs">
       <DependentUpon>202001280927543_SealReasonAndAmendmentType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.cs" />
+    <Compile Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.Designer.cs">
+      <DependentUpon>202001281231348_ChangeIsDiamonDeclarationField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -830,6 +834,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001280927543_SealReasonAndAmendmentType.resx">
       <DependentUpon>202001280927543_SealReasonAndAmendmentType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.resx">
+      <DependentUpon>202001281231348_ChangeIsDiamonDeclarationField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
