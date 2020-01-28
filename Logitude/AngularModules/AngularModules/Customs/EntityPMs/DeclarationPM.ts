@@ -1119,6 +1119,21 @@ export class DeclarationPM {
     public set IsAmendmentDisplayOnly(newValue: boolean) { if (this.isAmendmentDisplayOnly != newValue) { this.isAmendmentDisplayOnly = newValue; this.MarkAsDirty("IsAmendmentDisplayOnly"); } }
        
 	 
+    private isMissMandatoryDiamond: boolean;
+    public get IsMissMandatoryDiamond() { return this.isMissMandatoryDiamond; }
+    public set IsMissMandatoryDiamond(newValue: boolean) { if (this.isMissMandatoryDiamond != newValue) { this.isMissMandatoryDiamond = newValue; this.MarkAsDirty("IsMissMandatoryDiamond"); } }
+       
+	 
+    private documentStatusDiamond: string;
+    public get DocumentStatusDiamond() { return this.documentStatusDiamond; }
+    public set DocumentStatusDiamond(newValue: string) { if (this.documentStatusDiamond != newValue) { this.documentStatusDiamond = newValue; this.MarkAsDirty("DocumentStatusDiamond"); } }
+       
+	 
+    private isSignDiamond: boolean;
+    public get IsSignDiamond() { return this.isSignDiamond; }
+    public set IsSignDiamond(newValue: boolean) { if (this.isSignDiamond != newValue) { this.isSignDiamond = newValue; this.MarkAsDirty("IsSignDiamond"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

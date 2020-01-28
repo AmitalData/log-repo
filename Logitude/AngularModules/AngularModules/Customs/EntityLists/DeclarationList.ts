@@ -159,6 +159,9 @@ export class DeclarationList {
 	AmendmentStatusName: string;
 	IsPendingNotNull: boolean;
 	AmendmentDontDisplayInList: boolean;
+	IsMissMandatoryDiamond: boolean;
+	DocumentStatusDiamond: string;
+	IsSignDiamond: boolean;
 	
 }
  
