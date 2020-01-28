@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         PointerLevel, 
 	         AutoSetOriginalDocumentTrue, 
-	         IsCourierManadatory,
+	         IsCourierManadatory, 
+	         IsManadatory,
 	      }
 
 
@@ -44,7 +45,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PointerLevel, 
 	         AutoSetOriginalDocumentTrue, 
 	         PointerLevelName, 
-	         IsCourierManadatory,
+	         IsCourierManadatory, 
+	         IsManadatory,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -86,6 +88,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCourierManadatory))
             {
 				entityPOCO.IsCourierManadatory = entityPM.IsCourierManadatory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsManadatory))
+            {
+				entityPOCO.IsManadatory = entityPM.IsManadatory;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -134,6 +141,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsCourierManadatory = entityPOCO.IsCourierManadatory;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsManadatory))
+            {
+					entityPM.IsManadatory = entityPOCO.IsManadatory;
+            }
+
 		}
 
 		public void PMToOldPM(CustomDocumentTypePM entityPM, CustomDocumentTypePM oldEntityPM)
@@ -173,6 +185,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCourierManadatory))
             {
                 oldEntityPM.IsCourierManadatory = entityPM.IsCourierManadatory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsManadatory))
+            {
+                oldEntityPM.IsManadatory = entityPM.IsManadatory;
             }
 			
 		}

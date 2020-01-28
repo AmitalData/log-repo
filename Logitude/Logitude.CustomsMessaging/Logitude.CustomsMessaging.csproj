@@ -202,6 +202,7 @@
     <Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
     <Compile Include="MessagingServices\MN_NG_9022_CourierBOLQueryMessagingService.cs" />
+    <Compile Include="MessagingServices\SE_6001_SealUpdateMessagingService.cs" />
     <Compile Include="MessagingServices\ST_MSG05_StorageEntranceUnloadingMassagingService.cs" />
     <Compile Include="MessagingServices\TPG_NG_8244_ClaimFileFilterParamMessagingService.cs" />
     <Compile Include="MessagingServices\TPG_NG_8305_Web05_GuaranteeFileFilterParamMessagingService.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
     <Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
     <Compile Include="RequestServices\MN_NG_9022_CourierBOLQueryRequestService.cs" />
+    <Compile Include="RequestServices\SE_6001_SealUpdateRequestService.cs" />
     <Compile Include="RequestServices\ST_MSG05_StorageEntranceUnloadingRequestService.cs" />
     <Compile Include="RequestServices\TPG_NG_8244_ClaimFileFilterParamRequestService.cs" />
     <Compile Include="RequestServices\TPG_NG_8305_Web05_GuaranteeFileFilterParamRequestService.cs" />
@@ -308,6 +310,7 @@
     <Compile Include="ResponseServices\GP_1035_GatepassFeedbackMessageResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG8374_CargoSplitResponseService.cs" />
     <Compile Include="ResponseServices\MN_NG_9023_CourierBOLFeedBackResponseService.cs" />
+    <Compile Include="ResponseServices\SE_6001_SealUpdateResponseService.cs" />
     <Compile Include="ResponseServices\ST_MSG05_StorageEntranceUnloadingResponseService.cs" />
     <Compile Include="ResponseServices\ST_NG_60_SpecialActivityExecutionReportResponseService.cs" />
     <Compile Include="ResponseServices\ST_NG_10_SpecialActivityResponseMessageResponseService.cs" />

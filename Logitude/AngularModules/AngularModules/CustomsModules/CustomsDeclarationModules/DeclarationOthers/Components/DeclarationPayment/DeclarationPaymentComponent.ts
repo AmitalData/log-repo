@@ -59,11 +59,13 @@ import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
 import { DeclarationCourierStatusList } from '../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 
 @Component({
     moduleId: module.id,
     templateUrl: './DeclarationPaymentComponent.html',
+    providers : [DeclarationExtendedListService]
 })
 
 export class DeclarationPaymentComponent extends BaseComponent implements OnInit {
@@ -97,7 +99,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _2LogBankList: boolean = false;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
-    constructor() {
+    IsDisplayMessage: boolean;
+    constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
         this.PaymentProtestsList = new ObservableCollection([]);
@@ -992,6 +995,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
         }
+        else {
+            this.InitDisplayOnlyMessage();
+        }
 
         //if is not display only => its not payed , so fill sign data
         if (!this.IsDisplayOnly)
@@ -1025,7 +1031,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
-
+            else {
+                this.InitDisplayOnlyMessage();
+            }
             //if is not display only => its not payed , so fill sign data
             if (!this.IsDisplayOnly)
                 this.FillSignData();
@@ -1050,6 +1058,53 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
     }
+
+
+    InitDisplayOnlyMessage() {
+        if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2")) {
+            this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.EntityPM.AmendmentStatusName;
+            this.IsDisplayMessage = true;
+        }
+        else if (this.EntityPM.IsAmendment == false) {
+            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.EntityPM.Id).subscribe
+                (data => {
+                    if (data.Result == null || data.Result.length <= 0) return;
+
+                    data.Result = data.Result.sort((obj1, obj2) => {
+                        if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
+                            return 1;
+                        }
+
+                        if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
+                    var temp = false;
+
+                     data.Result.forEach((item) => {
+                         if ((temp == false) && (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "4" || item.AmendmentStatus == "2")) {
+                            {
+                                this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
+                                this.IsDisplayMessage = true;
+                                 temp = true;
+
+                            }
+                        }
+
+                    });
+                    //this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
+                    //this.IsDisplayMessage = true;
+
+                }
+
+
+                );
+
+        }
+    }
+
 
     SetScreenFieldsEditability() {
         var enabled = !this.IsDisplayOnly;

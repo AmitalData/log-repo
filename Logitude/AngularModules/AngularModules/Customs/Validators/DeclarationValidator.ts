@@ -196,7 +196,7 @@ export class DeclarationValidator {
                 errorMessage = "Customs.Declaration.O.IsAmendment";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
-                    return   this._DeclarationPM.AmendmentStatusName;
+                    return ' - ' +  this._DeclarationPM.AmendmentStatusName;
                 }
             }
         }

@@ -69,6 +69,8 @@
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoSealIdentifierPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoSealPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SealCompletenesPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SealTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SealUpdateReasonTypePM.Generated.cs" />

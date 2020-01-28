@@ -17,6 +17,7 @@ export class CustomDocumentTypeList {
 	AutoSetOriginalDocumentTrue: boolean;
 	PointerLevelName: string;
 	IsCourierManadatory: boolean;
+	IsManadatory: boolean;
 	
 }
  

@@ -227,6 +227,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isManadatory ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsManadatory  
+	   {
+	    
+	     get
+		{
+		   return isManadatory;
+		 }
+		 set
+		 {
+		   if(isManadatory != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsManadatory",OldValue=isManadatory,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isManadatory=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -252,7 +252,7 @@
                                 {{ErrorMessage}}
                             </div>
                         </div>
-                        <div *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="float: right;display: inline-block;width: 665px;">
+                        <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="float: right;display: inline-block;width: 665px;">
                             <div class="DisbleBox">
                                 {{ErrorMessage}}
                             </div>

@@ -938,7 +938,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<SealCompletenes> SealCompletenes { get; set; }
 
         public IDbSet<SealType> SealType { get; set; }
+
+        public IDbSet<CargoSealIdentifier> CargoSealIdentifier { get; set; }
         #endregion
+
+        public IDbSet<CargoSeal> CargoSeal { get; set; }
 
         #region Webfreight Context
 
@@ -4102,6 +4106,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DeficitDecisionMap());
             modelBuilder.Configurations.Add(new SealCompletenesMap());
             modelBuilder.Configurations.Add(new SealTypeMap());
+            modelBuilder.Configurations.Add(new CargoSealIdentifierMap());
+            modelBuilder.Configurations.Add(new CargoSealMap());
 
             #endregion
 

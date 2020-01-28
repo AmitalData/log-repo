@@ -1104,6 +1104,11 @@ export class DeclarationPM {
     public set AmendmentDontDisplayInList(newValue: boolean) { if (this.amendmentDontDisplayInList != newValue) { this.amendmentDontDisplayInList = newValue; this.MarkAsDirty("AmendmentDontDisplayInList"); } }
        
 	 
+    private declarationType: string;
+    public get DeclarationType() { return this.declarationType; }
+    public set DeclarationType(newValue: string) { if (this.declarationType != newValue) { this.declarationType = newValue; this.MarkAsDirty("DeclarationType"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
