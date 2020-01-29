@@ -112,6 +112,7 @@
 --update Queries set OriginalQueryId =  (select q1.Id from Queries q1 where q1.UniqueCode = Queries.OriginalQueryCode)
 --update AdvancedQueryFilters set QueryId = (select Id from Queries where UniqueCode = AdvancedQueryFilters.QueryCode)
 --update QueryColumns set QueryId = (select Id from Queries where UniqueCode = QueryColumns.QueryCode)
+--update SharedUserQueries set QueryId = (select Id from Queries where UniqueCode = SharedUserQueries.QueryCode)
 
 ----TextCodes
 --update Queries set NameTextCodeId = (select Id from TextCodes where Code=Queries.NameTextCodeCode)
