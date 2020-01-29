@@ -1481,9 +1481,12 @@ namespace WebFreight.Web.Helpers
             }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SaveReportMdcFileOnStorgeUsingFileStream", null, null);
                 SaveReportMdcFileOnStorgeUsingMemoryStream(reportFliter, report);
             }
         }
+
+        
 
         private void ReadReportMdcFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter)
         {
@@ -1507,6 +1510,29 @@ namespace WebFreight.Web.Helpers
                     bufferNumber += 1;
                 }
                 fileStream.Close();
+            }
+        }
+
+        private void SaveReportMdcFileOnStorgeUsingMemoryStream(ReportFliter reportFliter, StiReport report)
+        {
+            MemoryStream stream = new MemoryStream();
+            report.SaveDocument(stream);
+            if (stream != null)
+            {
+                byte[] reportData = stream.ToArray();
+                if (reportData != null)
+                {
+                    if (string.IsNullOrEmpty(reportFliter.ReportKey) || !reportFliter.ReportsRunUsingWR)
+                    {
+                        reportFliter.ReportKey = Guid.NewGuid().ToString();
+                    }
+
+                    BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, reportFliter.tenant);
+                    fileInfo.FileSize = reportData.Length;
+
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    storageservice.Write(reportData, fileInfo);
+                }
             }
         }
 
