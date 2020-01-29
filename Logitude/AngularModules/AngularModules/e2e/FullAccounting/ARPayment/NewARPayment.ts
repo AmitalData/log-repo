@@ -37,7 +37,7 @@ export class NewARPayment {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_BranchId', 'Main Office');
-        this.Helper.WaitBusyIndicator();
+        //this.Helper.WaitBusyIndicator();
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARPayment_BranchId', 'Main Office');
         this.Helper.WaitBusyIndicator();
         // this.Helper.ItemsVisibility('row0');
