@@ -660,7 +660,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable AccountingPeriodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPeriod" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelOpenMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelOpenMonth", DefaultText = "Can’t cancel opened month, There are transactions that already registered for this month",LocalDefaultText = @"לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		  // TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelOpenMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelOpenMonth", DefaultText = "Can’t cancel opened month, There are transactions that already registered for this month",LocalDefaultText = @"לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelOpenMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelOpenMonth", DefaultText = "Can’t cancel opened month, There are transactions that already registered for this month",LocalDefaultText = @"לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
