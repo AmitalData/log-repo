@@ -253,7 +253,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
         protected void MapExternalOpenAmount()
         {
-            if (_JournalLine.ExternalOpenAmount.HasValue)
+            if (_JournalLine.ExternalReconcileNumber != null && _JournalLine.ExternalOpenAmount.HasValue)
             {
                 //if (_JournalLine.ExternalOpenAmount.GetValueOrDefault() == 0)
                 //{
