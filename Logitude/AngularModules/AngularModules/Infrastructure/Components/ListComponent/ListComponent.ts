@@ -958,14 +958,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = allQueries.filter(f => f.UniqueCode == this.ObjectTableName+'.'+this.QueryCode)[0];
+            this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+this.QueryCode))[0];
 
             this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = allQueries.filter(f => f.UniqueCode == this.ObjectTableName+'.'+this.QueryCode)[0];
+            this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+this.QueryCode))[0];
         }
 
         else {
@@ -1019,6 +1019,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
 
                 this.QueryColumns.forEach((value, key) => {
+                    var mutaztouch0 = value.ObjectFieldCode;
+                    var mutaztouch14 = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode);
+                    var mutazTouch = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0];
+
                     this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
                 });
 
