@@ -127,8 +127,6 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
     }
     
     GetBTE() {
-        this.ValidationErrorsList = [];
-
         var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
         batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
@@ -137,6 +135,8 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
                 
                 if (bteList.StatusCode == "D")
                 {
+                    this.ValidationErrorsList = [];
+
                     this.GetCounts();
 
                     switch (this.type) {
