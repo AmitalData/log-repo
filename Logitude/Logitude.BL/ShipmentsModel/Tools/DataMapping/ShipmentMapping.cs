@@ -2087,6 +2087,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment3AdditionalMAWBOBLBL);
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ProjectNumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AMSBL);
 
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
