@@ -2528,31 +2528,30 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
-        private string nameForPrintingCheques;
-       [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-       [DataMember]
-       public string NameForPrintingCheques
-        {
-
-            get
-            {
-                return nameForPrintingCheques;
-            }
-            set
-            {
-                if (nameForPrintingCheques != value)
-                {
-                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "NameForPrintingCheques", OldValue = nameForPrintingCheques, NewValue = value, PropertyType = "string" };
-                    NotifyPropertyChanged(values);
-                    nameForPrintingCheques = value;
-                }
-
-            }
-        }
-
-
-    }
-
+	  private string nameForPrintingCheques ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NameForPrintingCheques  
+	   {
+	    
+	     get
+		{
+		   return nameForPrintingCheques;
+		 }
+		 set
+		 {
+		   if(nameForPrintingCheques != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NameForPrintingCheques",OldValue=nameForPrintingCheques,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   nameForPrintingCheques=value;
+		   }
+			
+		 }
+	   }
+   }
+   
 }
 	 
