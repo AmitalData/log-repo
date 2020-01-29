@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsCourierManadatory  { get; set; }
        [DataMember]
-       public bool IsManadatory  { get; set; }
+       public bool IsDiamondManadatory  { get; set; }
    }
 
 }

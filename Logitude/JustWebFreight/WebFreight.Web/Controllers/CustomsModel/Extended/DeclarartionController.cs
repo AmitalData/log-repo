@@ -584,7 +584,7 @@ new XElement("FileStreamError",
             try {
                 DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
 
-                var declarations=  declarationQuery.GetDeclarationAmendmentsById(tenant , id);
+                var declarations=  declarationQuery.GetDeclarationAmendmentsById(tenant , id, true);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Count = declarations.Count();
