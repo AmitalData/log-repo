@@ -150,16 +150,6 @@ export class ShipmentComputedFieldsPM {
     public set NumberOfDeliveries(newValue: number) { if (this.numberOfDeliveries != newValue) { this.numberOfDeliveries = newValue; this.MarkAsDirty("NumberOfDeliveries"); } }
        
 	 
-    private importDeclarationDate: Date;
-    public get ImportDeclarationDate() { return this.importDeclarationDate; }
-    public set ImportDeclarationDate(newValue: Date) { if (this.importDeclarationDate != newValue) { this.importDeclarationDate = newValue; this.MarkAsDirty("ImportDeclarationDate"); } }
-       
-	 
-    private importDeclarationNumber: string;
-    public get ImportDeclarationNumber() { return this.importDeclarationNumber; }
-    public set ImportDeclarationNumber(newValue: string) { if (this.importDeclarationNumber != newValue) { this.importDeclarationNumber = newValue; this.MarkAsDirty("ImportDeclarationNumber"); } }
-       
-	 
     private lastPickupETA: Date;
     public get LastPickupETA() { return this.lastPickupETA; }
     public set LastPickupETA(newValue: Date) { if (this.lastPickupETA != newValue) { this.lastPickupETA = newValue; this.MarkAsDirty("LastPickupETA"); } }
@@ -179,22 +169,12 @@ export class ShipmentComputedFieldsPM {
     public get LastPickupATD() { return this.lastPickupATD; }
     public set LastPickupATD(newValue: Date) { if (this.lastPickupATD != newValue) { this.lastPickupATD = newValue; this.MarkAsDirty("LastPickupATD"); } }
        
-	 
-    private deliveryToCity: string;
-    public get DeliveryToCity() { return this.deliveryToCity; }
-    public set DeliveryToCity(newValue: string) { if (this.deliveryToCity != newValue) { this.deliveryToCity = newValue; this.MarkAsDirty("DeliveryToCity"); } }
-       
-	 
+
     private deliveryToPortId: string;
     public get DeliveryToPortId() { return this.deliveryToPortId; }
     public set DeliveryToPortId(newValue: string) { if (this.deliveryToPortId != newValue) { this.deliveryToPortId = newValue; this.MarkAsDirty("DeliveryToPortId"); } }
        
-	 
-    private containsDangerousGoods: boolean;
-    public get ContainsDangerousGoods() { return this.containsDangerousGoods; }
-    public set ContainsDangerousGoods(newValue: boolean) { if (this.containsDangerousGoods != newValue) { this.containsDangerousGoods = newValue; this.MarkAsDirty("ContainsDangerousGoods"); } }
-       
-	 
+	
     private deliveryFrom: string;
     public get DeliveryFrom() { return this.deliveryFrom; }
     public set DeliveryFrom(newValue: string) { if (this.deliveryFrom != newValue) { this.deliveryFrom = newValue; this.MarkAsDirty("DeliveryFrom"); } }

@@ -28,8 +28,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FirstPickupLocation).HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.OperationallyClosedByUserId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ImportDeclarationNumber).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.DeliveryToCity).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.DeliveryToPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DeliveryFrom).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.DeliveryTo).HasMaxLength(40).IsUnicode(false);
@@ -63,15 +61,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.OperationallyClosedByUserId).HasColumnName("OperationallyClosedByUserId");
             this.Property(t => t.NumberOfDeliveries).HasColumnName("NumberOfDeliveries");
-            this.Property(t => t.ImportDeclarationDate).HasColumnName("ImportDeclarationDate");
-            this.Property(t => t.ImportDeclarationNumber).HasColumnName("ImportDeclarationNumber");
             this.Property(t => t.LastPickupATA).HasColumnName("LastPickupATA");
             this.Property(t => t.LastPickupATD).HasColumnName("LastPickupATD");
             this.Property(t => t.LastPickupETA).HasColumnName("LastPickupETA");
             this.Property(t => t.LastPickupETD).HasColumnName("LastPickupETD");
-            this.Property(t => t.DeliveryToCity).HasColumnName("DeliveryToCity");
             this.Property(t => t.DeliveryToPortId).HasColumnName("DeliveryToPortId");
-            this.Property(t => t.ContainsDangerousGoods).HasColumnName("ContainsDangerousGoods");
             this.Property(t => t.DeliveryFrom).HasColumnName("DeliveryFrom");
             this.Property(t => t.DeliveryTo).HasColumnName("DeliveryTo");
             this.Property(t => t.PickupFrom).HasColumnName("PickupFrom");
