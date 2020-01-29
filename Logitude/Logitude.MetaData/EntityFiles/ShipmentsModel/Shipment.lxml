@@ -82889,6 +82889,16 @@
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;Customs Additional Fields&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;Shipment.CustomsAdditionalFields&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;Overview&quot;"
     ObjectTableName="&quot;Shipment&quot;"

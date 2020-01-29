@@ -40921,6 +40921,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
          
             ScreenField ShipmentMasterGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen5.Id,ScreenCode = ShipmentGeneralTabScreenScreen5.Code, ObjectFieldCode = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
+	      
+
+	         Screen ShipmentCustomsAdditionalFieldsScreen6 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Shipment.CustomsAdditionalFields", Name = "Customs Additional Fields", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
