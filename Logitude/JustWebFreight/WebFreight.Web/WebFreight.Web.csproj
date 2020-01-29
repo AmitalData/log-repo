@@ -2027,6 +2027,7 @@
     <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
+    <Compile Include="DataProviders\BluesnapPaymentsDataProvider.cs" />
     <Compile Include="DataProviders\FlightBookingsManifestDataProvider.cs" />
     <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
@@ -5305,6 +5306,7 @@
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />

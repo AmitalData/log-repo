@@ -139,7 +139,12 @@ export class NewGLAccountComponent extends BaseComponent {
             this.CD.detectChanges();
         }
     }
-
+    get NameForPrintingCheques() { return this.EntityPM.NameForPrintingCheques; }
+    set NameForPrintingCheques(value: string) {
+        if (this.EntityPM.NameForPrintingCheques != value) {
+            this.EntityPM.NameForPrintingCheques = value;
+        }
+    }
 
     get IsVATExempt() { return this.EntityPM.IsVATExempt }
     set IsVATExempt(value: boolean) {
@@ -159,7 +164,7 @@ export class NewGLAccountComponent extends BaseComponent {
         }
     }
 
-
+    IsVendor: boolean = false;
     IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
@@ -182,8 +187,8 @@ export class NewGLAccountComponent extends BaseComponent {
             // }
 
             //
-
-            if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
+            if (value == "4") { this.IsVendor = true;}
+           else if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
 
                 // disable fields
                 this.IsMultiCurrency = true;

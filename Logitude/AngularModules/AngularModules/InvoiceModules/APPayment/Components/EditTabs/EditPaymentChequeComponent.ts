@@ -22,7 +22,7 @@ export class EditPaymentChequeComponent extends BaseComponent{
 
 
     public EntityPM: PaymentChequePM = null;
- 
+    private NameForPrintingCheques: string;
     public LocalCurrencyId: string;
     public DataContext = this;
     public ObjectTableName: string = "PaymentCheque";
@@ -38,7 +38,7 @@ export class EditPaymentChequeComponent extends BaseComponent{
             this.ForeignAmount = args.ForeignAmount;
             this.ValueDate = args.ValueDate;
             this.BankAccountId = args.BankAccountId;
-          
+            this.PayToName = args.NameForPrintingCheques;
         }
     }
 

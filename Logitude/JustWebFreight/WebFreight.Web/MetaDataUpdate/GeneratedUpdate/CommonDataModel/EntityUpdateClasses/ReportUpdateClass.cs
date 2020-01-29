@@ -938,6 +938,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_FlightBookingManifest = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FlightBookingManifest", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.FlightBookingManifest", NameTextCodeDefaultText = @"Flight Bookings Manifest" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+		   Feature ReportFeature_BLUESNAPPAYMENTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BLUESNAPPAYMENTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.BLUESNAPPAYMENTREPORT", NameTextCodeDefaultText = @"Bluesnap Payments Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}

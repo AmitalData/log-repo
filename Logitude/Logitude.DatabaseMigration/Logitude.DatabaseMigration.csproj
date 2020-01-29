@@ -1670,10 +1670,6 @@
     <Compile Include="Migrations\201911211215537_objectfield_fieldcode_unique.Designer.cs">
       <DependentUpon>201911211215537_objectfield_fieldcode_unique.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909301350305_VatType_New_Fields.cs" />
-    <Compile Include="Migrations\201909301350305_VatType_New_Fields.Designer.cs">
-      <DependentUpon>201909301350305_VatType_New_Fields.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs" />
     <Compile Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.Designer.cs">
       <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
@@ -1946,6 +1942,10 @@
     <Compile Include="Migrations\202001161000397_AddToShipmentComputedFields_Samar.Designer.cs">
       <DependentUpon>202001161000397_AddToShipmentComputedFields_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909301350305_VatType_New_Fields.cs" />
+    <Compile Include="Migrations\201909301350305_VatType_New_Fields.Designer.cs">
+      <DependentUpon>201909301350305_VatType_New_Fields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202001051029247_Mutaz_Add_Index_To_IntersertTransaction.cs" />
     <Compile Include="Migrations\202001051029247_Mutaz_Add_Index_To_IntersertTransaction.Designer.cs">
       <DependentUpon>202001051029247_Mutaz_Add_Index_To_IntersertTransaction.cs</DependentUpon>
@@ -1969,6 +1969,11 @@
     <Compile Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs" />
     <Compile Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.Designer.cs">
       <DependentUpon>202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001181129036_GLAccountNameForPrinting\chequesMigration.cs" />
+    <Compile Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.cs" />
+    <Compile Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.Designer.cs">
+      <DependentUpon>202001181132561_GLAccountNameForPrintingChequesMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
@@ -3395,6 +3400,17 @@
     <EmbeddedResource Include="Migrations\201912231019459_AddTransportModeCodeToCarrierArea_Samar.resx">
       <DependentUpon>201912231019459_AddTransportModeCodeToCarrierArea_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.cs" />
+    <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.Designer.cs">
+      <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+
+    </EmbeddedResource>
+
+
+    
+
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -3551,6 +3567,18 @@
     <EmbeddedResource Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.resx">
       <DependentUpon>202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs</DependentUpon>
     </EmbeddedResource>
+
+    
+    <EmbeddedResource Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.resx">
+      <DependentUpon>202001181132561_GLAccountNameForPrintingChequesMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
+
+    <EmbeddedResource Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.resx">
+      <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

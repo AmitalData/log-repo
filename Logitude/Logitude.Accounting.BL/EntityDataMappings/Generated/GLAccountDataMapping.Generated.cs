@@ -75,7 +75,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterestCreditInvoice, 
 	         MinimumInterestInvoiceBilling, 
 	         InterestCreditLimit,
-	      }
+             NameForPrintingCheques,
+        }
 
 
 	      public enum PMPropertyNames
@@ -187,7 +188,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterestCreditInvoice, 
 	         MinimumInterestInvoiceBilling, 
 	         InterestCreditLimit,
-	      }
+             NameForPrintingCheques,
+        }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -454,8 +456,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.InterestCreditLimit = entityPM.InterestCreditLimit;
 			}
-			
-				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
+            {
+                entityPOCO.NameForPrintingCheques = entityPM.NameForPrintingCheques;
+            }
+            BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
 		public void POCOToPM(GLAccountPM entityPM, GLAccount entityPOCO)
@@ -725,10 +730,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.InterestCreditLimit = entityPOCO.InterestCreditLimit;
             }
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.NameForPrintingCheques))
+            {
+                entityPM.NameForPrintingCheques = entityPOCO.NameForPrintingCheques;
+            }
 
-		}
+        }
 
-		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
+        public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -991,8 +1000,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.InterestCreditLimit = entityPM.InterestCreditLimit;
             }
-			
-		}
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
+            {
+                oldEntityPM.NameForPrintingCheques = entityPM.NameForPrintingCheques;
+            }
+        }
 
 	    public void EncodeBase64NVARCHARFields(GLAccountPM entityPM)
         {

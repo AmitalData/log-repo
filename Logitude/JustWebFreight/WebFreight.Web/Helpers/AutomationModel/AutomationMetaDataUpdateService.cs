@@ -119,8 +119,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 foreach (EntityChange entityChange in entityChanges)
                 {
                     loopCount += 1;
-                    entityChange.ChangesAutomationFieldsXml = UpdateChangesAutomationFieldsXml(objectFieldLists, entityChange.ChangesAutomationFieldsXml);
-                    entityChange.AutomationConditionFieldsXml = UpdateAutomationConditionFieldsXml(objectFieldLists, entityChange.AutomationConditionFieldsXml);
+                    entityChange.ChangesAutomationFieldsXml = entityChange.ChangesAutomationFieldsXml!=null? UpdateChangesAutomationFieldsXml(objectFieldLists, entityChange.ChangesAutomationFieldsXml):null;
+                    entityChange.AutomationConditionFieldsXml = entityChange.AutomationConditionFieldsXml!=null? UpdateAutomationConditionFieldsXml(objectFieldLists, entityChange.AutomationConditionFieldsXml):null;
                     entityChangeRepository.Update(entityChange);
                     if (loopCount == 100)
                     {
@@ -184,11 +184,11 @@ namespace WebFreight.Web.Helpers.AutomationModel
             if (!string.IsNullOrEmpty(automationXML))
             {
                 automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automationXML);
-                automatedBackup.AautomationConditionLists = FillObjectFieldCodeOnAutomationConditionLists(objectFieldLists, automatedBackup.AautomationConditionLists);
-                automatedBackup.DelayAautomationConditionLists = FillObjectFieldCodeOnAutomationConditionLists(objectFieldLists, automatedBackup.DelayAautomationConditionLists);
-                automatedBackup.AutomationSetValueLists = FillObjectFieldCodeOnAutomationSetValueLists(objectFieldLists, automatedBackup.AutomationSetValueLists);
-                automatedBackup.AutomationSetSLAValue = FillObjectFieldCodeOnAutomationSetSLAValue(objectFieldLists, automatedBackup.AutomationSetSLAValue);
-                automatedBackup.AutomationFollowUp = FillObjectFieldCodeOnAutomationFollowUpValue(objectFieldLists, automatedBackup.AutomationFollowUp);
+                automatedBackup.AautomationConditionLists = automatedBackup.AautomationConditionLists!=null? FillObjectFieldCodeOnAutomationConditionLists(objectFieldLists, automatedBackup.AautomationConditionLists):null;
+                automatedBackup.DelayAautomationConditionLists = automatedBackup.DelayAautomationConditionLists!=null? FillObjectFieldCodeOnAutomationConditionLists(objectFieldLists, automatedBackup.DelayAautomationConditionLists):null;
+                automatedBackup.AutomationSetValueLists = automatedBackup.AutomationSetValueLists!=null? FillObjectFieldCodeOnAutomationSetValueLists(objectFieldLists, automatedBackup.AutomationSetValueLists):null;
+                automatedBackup.AutomationSetSLAValue = automatedBackup.AutomationSetSLAValue!=null? FillObjectFieldCodeOnAutomationSetSLAValue(objectFieldLists, automatedBackup.AutomationSetSLAValue):null;
+                automatedBackup.AutomationFollowUp = automatedBackup.AutomationFollowUp!=null? FillObjectFieldCodeOnAutomationFollowUpValue(objectFieldLists, automatedBackup.AutomationFollowUp):null;
             }
             return automatedBackup;
         }

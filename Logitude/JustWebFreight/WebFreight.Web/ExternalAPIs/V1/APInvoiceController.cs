@@ -130,10 +130,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (apinvoice.IsGeneralInvoice)
                         {
-                            if(!string.IsNullOrEmpty(apinvoice.EntityType) || !string.IsNullOrEmpty(apinvoice.EntityReference))
-                            {
-                                throw new ApplicationException("A General invoice can't be connected to Entity");
-                            }
+                            //if(!string.IsNullOrEmpty(apinvoice.EntityType) || !string.IsNullOrEmpty(apinvoice.EntityReference))
+                            //{
+                            //    throw new ApplicationException("A General invoice can't be connected to Entity");
+                            //}
                         }
 
                         else
