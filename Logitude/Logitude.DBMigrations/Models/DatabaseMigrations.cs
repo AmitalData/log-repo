@@ -19,6 +19,8 @@ namespace Logitude.DBMigrations.Models
         protected bool PrimaryKeyColumnAdded = false;
 
         protected string DXMLFileName;
+
+        protected string MissingIndexesWarnings = "";
         
         public string GetScript()
         {
@@ -99,7 +101,8 @@ namespace Logitude.DBMigrations.Models
                 {
                     if (!IsIndexInDXMLTable(index))
                     {
-                        ExitDatabaseMigrations("Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File");
+                        //ExitDatabaseMigrations("Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File");
+                        MissingIndexesWarnings += "Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File\n";
                     }
                 }
 
@@ -113,6 +116,11 @@ namespace Logitude.DBMigrations.Models
             }
 
             return tableIndexesScript;
+        }
+
+        public string GetMissingIndexesWarnings()
+        {
+            return MissingIndexesWarnings;
         }
 
         public string GetUniqueConstraintsScript()

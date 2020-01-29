@@ -223,14 +223,14 @@ namespace Logitude.DBMigrations.Models
         {
             string queryString = @"SELECT " +
                                   "STUFF(REPLACE(REPLACE(( " +
-                                  "SELECT c.name + CASE WHEN ic.is_descending_key = 1 THEN ' DESC' ELSE '' END AS [data()] " +
+                                  "SELECT c.name + CASE WHEN ic.is_descending_key = 1 THEN '' ELSE '' END AS [data()] " +
                                   "FROM sys.index_columns AS ic " +
                                   "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
                                   "WHERE ic.object_id = i.object_id AND ic.index_id = i.index_id AND ic.is_included_column = 0 " +
                                   "ORDER BY ic.key_ordinal " +
                                   "FOR XML PATH " +
                                   "), '<row>', ', '), '</row>', ''), 1, 2, '') AS [Columns], " +
-                                  "STUFF(REPLACE(REPLACE((" +
+                                  "STUFF(REPLACE(REPLACE(( " +
                                   "SELECT c.name AS [data()] " +
                                   "FROM sys.index_columns AS ic " +
                                   "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
@@ -238,14 +238,18 @@ namespace Logitude.DBMigrations.Models
                                   "ORDER BY ic.index_column_id " +
                                   "FOR XML PATH " +
                                   "), '<row>', ', '), '</row>', ''), 1, 2, '') AS [Include], " +
-	                              "i.name AS [IndexName] " +
+                                  "i.name AS [IndexName] " +
                                   "FROM sys.tables AS t " +
                                   "INNER JOIN sys.indexes AS i ON t.object_id = i.object_id " +
                                   "WHERE t.is_ms_shipped = 0 " +
                                   "AND i.type <> 0 " +
                                   "AND i.is_primary_key = 0 " +
                                   "AND i.is_unique_constraint = 0 " +
-                                  "AND i.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+                                  "AND i.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName) " +
+                                  "AND i.index_id IN( " +
+                                  "SELECT index_id FROM sys.index_columns WHERE index_column_id = 1 AND is_included_column = 0 AND object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName) AND column_id NOT IN( " +
+                                  "SELECT parent_column_id FROM sys.foreign_key_columns WHERE parent_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)) " +
+                                  ")";
 
             List<IndexDefinition> indexes = new List<IndexDefinition>();
 
@@ -290,7 +294,7 @@ namespace Logitude.DBMigrations.Models
         {
             string queryString = @"SELECT " +
                                   "STUFF(REPLACE(REPLACE(( " +
-                                  "SELECT c.name + CASE WHEN ic.is_descending_key = 1 THEN ' DESC' ELSE '' END AS [data()] " +
+                                  "SELECT c.name + CASE WHEN ic.is_descending_key = 1 THEN '' ELSE '' END AS [data()] " +
                                   "FROM sys.index_columns AS ic " +
                                   "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
                                   "WHERE ic.object_id = i.object_id AND ic.index_id = i.index_id AND ic.is_included_column = 0 " +
