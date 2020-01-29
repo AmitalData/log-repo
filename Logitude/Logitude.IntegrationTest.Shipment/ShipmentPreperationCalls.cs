@@ -42,7 +42,7 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentVariables.AirlineBAId = await GetAirlineId("BA");
             ShipmentVariables.ShippingLineMSCUId = await GetShippingLineId("MSCU");
             ShipmentVariables.ShippingLineMAEUId = await GetShippingLineId("MAEU");
-            ShipmentVariables.MoveTypeMTAId = await GetMoveTypeId("MCD", "A");
+            ShipmentVariables.MoveTypeMTAId = await GetMoveTypeId("MTA", "A");
             ShipmentVariables.MoveTypeMTOId = await GetMoveTypeId("MTO", "O");
             ShipmentVariables.VesselPTId = await GetVesselId("PT");
             ShipmentVariables.PackageTypePC1Id = await GetPackageTypeId("PC1", "O", true);
@@ -52,12 +52,12 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentVariables.PaymentTermCashId = await GetPaymentTermId("Cash");
             ShipmentVariables.VATTypeZeroId = await GetVATTypeId("ZERO");
             ShipmentVariables.QuoteStageQTDRId = await GetQuoteStageId("QTDR");
-            ShipmentVariables.VendorId = await GetVendorId("CHEGHH VER");
-            ShipmentVariables.AgentId = await GetAgentId("Agent PRyuoEST7");
-            ShipmentVariables.CustomerId = await GetCustomerId("RAZA88887");
-            ShipmentVariables.CustomAgentId = await GetCustomsAgentId("custom RAZAN agent 551");
-            ShipmentVariables.ShippingAgentId = await GetShippingAgentId("shipping agent ASDG1");
-            ShipmentVariables.WarehouseId = await GetWarehouseId("Warehouse FG1","WR2");
+            ShipmentVariables.VendorId = await GetVendorId("TestVendor");
+            ShipmentVariables.AgentId = await GetAgentId("TestAgentExport1");
+            ShipmentVariables.CustomerId = await GetCustomerId("TestShipperExport1");
+            ShipmentVariables.CustomAgentId = await GetCustomsAgentId("TestCustomAgentExport1");
+            ShipmentVariables.ShippingAgentId = await GetShippingAgentId("TestShippingAgentExport1");
+            ShipmentVariables.WarehouseId = await GetWarehouseId("TestWarehouseExport1", "WR2");
             ShipmentVariables.ShipperExport1 = await GetCustomerId("TstShipExport1");
 
 
