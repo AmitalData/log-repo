@@ -48,6 +48,7 @@ namespace Logitude.IntegrationTest.Shipment
         public static string ShippingAgentId { get; set; }
         public static string WarehouseId { get; set; }
         public static string TruckerId { get; set; }
+        public static string ShipperExport1 { get; set; }
         //public static string WarehouseId { get; set; }
         //public static string WarehouseId { get; set; }
         //public static string WarehouseId { get; set; }
