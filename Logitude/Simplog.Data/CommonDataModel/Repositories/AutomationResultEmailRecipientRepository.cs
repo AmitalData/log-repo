@@ -32,7 +32,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
+        public IQueryable<AutomationResultEmailRecipient> GetAutomationResultEmailRecipient()
+        {
+            return this.context.AutomationResultEmailRecipients;
+        }
 
         public List<AutomationResultEmailRecipient> GetAutomationResultEmailRecipientByAutomationId(string automationId, int tenant)
         {
