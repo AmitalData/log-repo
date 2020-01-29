@@ -139,7 +139,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
             if (this.InvoiceCurrencyId != SessionLocator.LocalCurrencyId) {
                 isInvoiceAmountHeaderVisible = true;
-                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountInvoice").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
+                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountListLable").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
             }
         }
 
