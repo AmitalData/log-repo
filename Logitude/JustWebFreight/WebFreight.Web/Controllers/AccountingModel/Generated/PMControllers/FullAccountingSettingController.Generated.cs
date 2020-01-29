@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("FullAccountingSetting", "READ", authToken.Tenant);
-	                
+                
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 FullAccountingSettingQueryService fullAccountingSettingQuery = new FullAccountingSettingQueryService(MyContext);
 				fullAccountingSettingQuery.InitializeSettings();
@@ -92,9 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("FullAccountingSetting", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("FullAccountingSetting", entityPM.Tenant, authToken.Tenant);
-	                    
+                    
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         FullAccountingSettingUpdateService service = new FullAccountingSettingUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -140,9 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("FullAccountingSetting", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("FullAccountingSetting", entityPM.Tenant, authToken.Tenant);
-	
+
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         FullAccountingSettingUpdateService service = new FullAccountingSettingUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

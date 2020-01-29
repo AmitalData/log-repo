@@ -1,0 +1,46 @@
+﻿Contacts,ComputedKey; Tenant
+Queries,Code; ObjectTableId; UserId; Tenant
+DocumentTypes,Tenant; Code
+MAWBStacks,Tenant; AirlineId; Number
+Measurements,Code; Tenant
+MessagingStockUsageHistories,EntityId; MessageType
+MenuButtonGroups,Name; Tenant
+VatTypes,Tenant; Code
+PaymentCheques,UniqueField; BankAccountId; Tenant
+MenuButtons,EventCode; MenuButtonGroupId; Tenant
+MenusTables,Code; Tenant
+Countries,Tenant; Code
+GLAccountCounters,Tenant; Prefix
+CountryCities,CountryId; Code; Tenant
+Shipments,Tenant; ComputedForwarderShipmentNumber
+ObjectFields,FieldName; ObjectTableId; Tenant
+Currencies,Tenant; Code
+ObjectTableHelperControls,Code; Tenant
+Quotes,Tenant; QuoteNumber
+EventTypes,Tenant; Code; ObjectTableId
+ObjectTableRuleFields,ObjectFieldId; ObjectTableRuleId; Tenant
+ObjectTableRules,RuleCode; Tenant
+ObjectTables,Name; Tenant
+ObjectTableTabs,Code; Tenant
+InterestTransactions,Tenant; InterestEntityTypeCode; EntityId; OriginalEntityLineNumber
+Features,Code; ObjectTableId; Tenant
+States,Tenant; Code; CountryId
+sysdiagrams,principal_id; name
+Cards,Tenant; Code; PartnerTypeId
+Ranks,Code; Tenant
+TariffLines,TariffId; Version; LineUniqueKeyText
+PackageTypes,Tenant; Code
+GLAccounts,DisplayNumber; Tenant
+TextCodes,Tenant; Code; ObjectTableId
+DBIdCounters,TableName
+InterestBasesTypes,Tenant; Code
+RoleFeatures,RoleId; FeatureId; Tenant
+Roles,Tenant; Code
+Persons,ID
+Ports,Tenant; Code; CountryId
+zzz_yymm,ID
+Screens,Tenant; Code; ObjectTableId
+Incoterms,Tenant; Code
+Industries,Code; Tenant
+GlobalContacts,Email; GlobalTenantId
+sysdiagrams,principal_id; name

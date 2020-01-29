@@ -139,7 +139,8 @@ namespace Logitude.DBMigrations.Models
                     Name = tableName,
                     Columns = currentTableColumns,
                     Relations = GetRelationsForDBTable(tableName, true),
-                    Indexes = GetIndexesForDBTable(tableName)
+                    Indexes = GetIndexesForDBTable(tableName),
+                    UniqueConstraints = GetUniqueConstraintsForDBTable(tableName)
                 };
             }
             catch (Exception exception)
@@ -171,7 +172,7 @@ namespace Logitude.DBMigrations.Models
                       "INNER JOIN SYS.OBJECTS SysObject ON SysObject.object_id = ForeignKeyColumns.constraint_object_id " +
                       "WHERE ForeignKeyColumns." + tableObjectId + " = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
 
-            List<RelationDefinition> relations = null;
+            List<RelationDefinition> relations = new List<RelationDefinition>();
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -182,8 +183,6 @@ namespace Logitude.DBMigrations.Models
             {
                 connection.Open();
                 reader = command.ExecuteReader();
-
-                relations = new List<RelationDefinition>();
 
                 while (reader.Read())
                 {
@@ -222,12 +221,33 @@ namespace Logitude.DBMigrations.Models
 
         protected override List<IndexDefinition> GetIndexesForDBTable(string tableName)
         {
-            string queryString = @"SELECT COL_NAME(INDCOL.object_id, INDCOL.column_id) AS ColumnName, IND.name AS IndexName, INDCOL.key_ordinal AS KeyOrder " +
-                                  "FROM SYS.INDEXES AS IND " +
-                                  "INNER JOIN SYS.INDEX_COLUMNS AS INDCOL ON IND.object_id = INDCOL.object_id AND IND.index_id = INDCOL.index_id " +
-                                  "WHERE IND.is_primary_key = 0 AND IND.is_unique_constraint = 0 AND IND.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+            string queryString = @"SELECT " +
+                                  "STUFF(REPLACE(REPLACE(( " +
+                                  "SELECT c.name + CASE WHEN ic.is_descending_key = 1 THEN ' DESC' ELSE '' END AS [data()] " +
+                                  "FROM sys.index_columns AS ic " +
+                                  "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
+                                  "WHERE ic.object_id = i.object_id AND ic.index_id = i.index_id AND ic.is_included_column = 0 " +
+                                  "ORDER BY ic.key_ordinal " +
+                                  "FOR XML PATH " +
+                                  "), '<row>', ', '), '</row>', ''), 1, 2, '') AS [Columns], " +
+                                  "STUFF(REPLACE(REPLACE((" +
+                                  "SELECT c.name AS [data()] " +
+                                  "FROM sys.index_columns AS ic " +
+                                  "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
+                                  "WHERE ic.object_id = i.object_id AND ic.index_id = i.index_id AND ic.is_included_column = 1 " +
+                                  "ORDER BY ic.index_column_id " +
+                                  "FOR XML PATH " +
+                                  "), '<row>', ', '), '</row>', ''), 1, 2, '') AS [Include], " +
+	                              "i.name AS [IndexName] " +
+                                  "FROM sys.tables AS t " +
+                                  "INNER JOIN sys.indexes AS i ON t.object_id = i.object_id " +
+                                  "WHERE t.is_ms_shipped = 0 " +
+                                  "AND i.type <> 0 " +
+                                  "AND i.is_primary_key = 0 " +
+                                  "AND i.is_unique_constraint = 0 " +
+                                  "AND i.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
 
-            List<IndexDefinition> indexes = null;
+            List<IndexDefinition> indexes = new List<IndexDefinition>();
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -239,23 +259,19 @@ namespace Logitude.DBMigrations.Models
                 connection.Open();
                 reader = command.ExecuteReader();
 
-                indexes = new List<IndexDefinition>();
-
                 while (reader.Read())
                 {
                     IndexDefinition index = new IndexDefinition
                     {
-                        Columns = reader["ColumnName"].ToString(),
-                        IndexName = reader["IndexName"].ToString(),
-                        KeyOrder = Convert.ToInt32(reader["KeyOrder"].ToString())
+                        Columns = reader["Columns"].ToString().Replace(", ", ","),
+                        Include = String.IsNullOrEmpty(reader["Include"].ToString()) ? null : reader["Include"].ToString().Replace(", ", ","),
+                        IndexName = reader["IndexName"].ToString()
                     };
                     indexes.Add(index);
                 }
 
                 reader.Close();
                 connection.Close();
-
-                indexes = HandlingCompositeIndexes(indexes);
             }
             catch (Exception exception)
             {
@@ -268,6 +284,64 @@ namespace Logitude.DBMigrations.Models
             }
 
             return indexes;
+        }
+
+        protected override List<UniqueConstraintDefinition> GetUniqueConstraintsForDBTable(string tableName)
+        {
+            string queryString = @"SELECT " +
+                                  "STUFF(REPLACE(REPLACE(( " +
+                                  "SELECT c.name + CASE WHEN ic.is_descending_key = 1 THEN ' DESC' ELSE '' END AS [data()] " +
+                                  "FROM sys.index_columns AS ic " +
+                                  "INNER JOIN sys.columns AS c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
+                                  "WHERE ic.object_id = i.object_id AND ic.index_id = i.index_id AND ic.is_included_column = 0 " +
+                                  "ORDER BY ic.key_ordinal " +
+                                  "FOR XML PATH " +
+                                  "), '<row>', ', '), '</row>', ''), 1, 2, '') AS [Columns], " +
+                                  "i.name AS [ConstraintName] " +
+                                  "FROM sys.tables AS t " +
+                                  "INNER JOIN sys.indexes AS i ON t.object_id = i.object_id " +
+                                  "WHERE t.is_ms_shipped = 0 " +
+                                  "AND i.type <> 0 " +
+                                  "AND i.is_primary_key = 0 " +
+                                  "AND i.is_unique_constraint = 1 " +
+                                  "AND i.object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+
+            List<UniqueConstraintDefinition> uniqueConstraints = new List<UniqueConstraintDefinition>();
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    UniqueConstraintDefinition uniqueConstraint = new UniqueConstraintDefinition
+                    {
+                        Columns = reader["Columns"].ToString().Replace(", ", ","),
+                        ConstraintName = reader["ConstraintName"].ToString()
+                    };
+                    uniqueConstraints.Add(uniqueConstraint);
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return uniqueConstraints;
         }
 
         protected override string GetCreateTableScript()////
@@ -413,6 +487,16 @@ namespace Logitude.DBMigrations.Models
         protected override bool IsIndexInDXMLTable(IndexDefinition index)
         {
             return DXMLTable.Indexes.Where(i => i.Columns.ToLower() == index.Columns.ToLower()).Any();
+        }
+
+        protected override bool IsUniqueConstraintInCurrentTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            return CurrentTable.UniqueConstraints.Where(u => u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any();
+        }
+
+        protected override bool IsUniqueConstraintInDXMLTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            return DXMLTable.UniqueConstraints.Where(u => u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any();
         }
 
         protected override bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnShortName, string dxmlColumnOldNames)
@@ -830,7 +914,7 @@ namespace Logitude.DBMigrations.Models
             string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
             string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
-            string createIndexScript = "-- Create Index On " + DXMLTable.Name + " table\n";
+            string createIndexScript = "-- Create Index On " + DXMLTable.Name + " Table\n";
             string indexName = "IX_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
             if (includeColumns != null)
             {
@@ -843,9 +927,36 @@ namespace Logitude.DBMigrations.Models
             
             createIndexScript += ";\n\n";
 
-            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, createIndexScript);
+            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", DXMLTable.Name, createIndexScript);
 
             return addIndexWithHistoryScript;
+        }
+
+        protected override string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
+        {
+            string uniqueConstraintColumns = !uniqueConstraint.Columns.Contains(",") ? "[" + uniqueConstraint.Columns + "]" : string.Join(",", uniqueConstraint.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
+            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+            string createUniqueConstraintScript = "-- Create Unique Constraint On " + DXMLTable.Name + " Table\n";
+            string uniqueConstraintName = "UQ_" + (!uniqueConstraintColumns.Contains(",") ? uniqueConstraintColumns : string.Join("_", uniqueConstraintColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+            createUniqueConstraintScript += "EXEC('ALTER TABLE " + tableName + " ADD CONSTRAINT " + uniqueConstraintName + " UNIQUE(" + uniqueConstraintColumns + ")')";
+
+            createUniqueConstraintScript += ";\n\n";
+
+            string addIndexWithHistoryScript = createUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Create Unique Constraint", DXMLTable.Name, createUniqueConstraintScript);
+
+            return addIndexWithHistoryScript;
+        }
+
+        protected override string GetDropUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
+        {
+            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+            string dropUniqueConstraintScript = "-- Drop Unique Constraint " + uniqueConstraint.ConstraintName + " From Table " + DXMLTable.Name + "\n";
+            dropUniqueConstraintScript += "EXEC('IF (OBJECT_ID(''" + DXMLTable.Schema + "." + uniqueConstraint.ConstraintName + "'', ''UQ'') IS NOT NULL) BEGIN ALTER TABLE " + tableName + " DROP CONSTRAINT " + uniqueConstraint.ConstraintName + " END" + "')";
+            dropUniqueConstraintScript += ";\n\n";
+
+            string dropUniqueConstraintWithHistoryScript = dropUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Drop Unique Constraint", DXMLTable.Name, dropUniqueConstraintScript);
+
+            return dropUniqueConstraintWithHistoryScript;
         }
     }
 }

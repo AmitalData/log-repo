@@ -23,9 +23,6 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(false);
          
-
-
-
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -139,7 +136,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Field18).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field19).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field20).HasMaxLength(250).IsUnicode(true);
-
+            this.Property(t => t.CountryForStatisticsId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Quotes");
@@ -314,7 +311,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Field18).HasColumnName("Field18");
             this.Property(t => t.Field19).HasColumnName("Field19");
             this.Property(t => t.Field20).HasColumnName("Field20");
-
+            this.Property(t => t.CountryForStatisticsId).HasColumnName("CountryForStatisticsId");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
@@ -368,8 +365,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.NotifyContact).WithMany().HasForeignKey(d => d.NotifyContactId);
 
             this.HasOptional(t => t.QuoteHTMLDocument).WithMany().HasForeignKey(d => d.QuoteHTMLDocumentId);
-            
-
+            this.HasOptional(t => t.CountryForStatistics).WithMany().HasForeignKey(d => d.CountryForStatisticsId);
         }
     }
 }

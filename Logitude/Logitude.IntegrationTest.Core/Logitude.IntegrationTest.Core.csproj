@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryFiltersPreparation.cs" />
     <Compile Include="RestClientService.cs" />
+    <Compile Include="UsersList.cs" />
     <Compile Include="VariablesGenerater.cs" />
   </ItemGroup>
   <ItemGroup>

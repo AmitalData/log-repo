@@ -16,8 +16,10 @@ namespace Logitude.DBMigrations.Models
         [XmlAttribute()]
         public bool Nullable { get; set; }
 
+        [XmlAttribute()]
         public string PrimaryKeyConstraintName { get; set; }
 
+        [XmlAttribute()]
         public string DefaultConstraintName { get; set; }
     }
 }
