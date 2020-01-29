@@ -1614,7 +1614,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable EventTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "EventType" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode EventTypeTextCode_EventTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.O.TableDescription", DefaultText = "Maintain event types for the activities you want Logitude to log, specify event types for follow-up and those that can be entered manually.",LocalDefaultText = null, ObjectTableId = EventTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

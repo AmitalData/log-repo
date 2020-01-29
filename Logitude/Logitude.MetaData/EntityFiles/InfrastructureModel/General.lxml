@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;fcd9&quot;"
+  Code="&quot;2487&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4453,6 +4453,11 @@
       Code="&quot;General.O.UsedSpace&quot;"
       DefaultText="&quot;Used Space&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ContainersFU&quot;"
+      DefaultText="&quot;ContainersFU&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

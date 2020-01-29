@@ -44717,7 +44717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentOPLRejectedTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLRejectedTax", DefaultText = "Rejected Tax",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentOPLTotalTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLTotalTax ", DefaultText = "Total Tax",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentOPLTotalTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLTotalTax", DefaultText = "Total Tax",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOSupplierInvoiceAndPackingList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.SupplierInvoiceAndPackingList", DefaultText = "Supplier invoice and packing list",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

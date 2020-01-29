@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Email Alert Settings&quot;"
-  Code="&quot;21cc&quot;"
+  Code="&quot;d7b6&quot;"
   Name="&quot;EmailAlertSetting&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -1053,6 +1053,12 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;EmailAlertSetting.O.TableDescription&quot;"
+      DefaultText="&quot;Define the e-mail notifications that will be sent automatically based on different triggers.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

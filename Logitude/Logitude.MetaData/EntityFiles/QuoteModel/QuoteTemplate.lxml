@@ -2511,6 +2511,11 @@
       DefaultText="&quot;Here you can add new Quote template  from Logitude's Quote template list&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;QuoteTemplate.O.TableDescription&quot;"
+      DefaultText="&quot;Create new quote templates and maintain existing ones.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

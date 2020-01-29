@@ -2,6 +2,7 @@ declare var window: any;
 import {SessionLocator} from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
 import { retry } from 'rxjs/operator/retry';
+import { isNullOrUndefined } from 'util';
 
 export class TextCodeTranslator {
 
@@ -100,6 +101,11 @@ export class TextCodeTranslator {
                 }
 
                 window.TextCodesCache.push(translationObject);
+            }
+            else {
+                if (!isNullOrUndefined(value) && value.indexOf(".NewButton") < 0 && value != "No Filter") {
+                    alert("This Code '" + value + "' Not Found!"); 
+                }
             }
         }
 

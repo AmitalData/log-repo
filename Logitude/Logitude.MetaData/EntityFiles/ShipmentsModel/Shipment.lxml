@@ -90266,7 +90266,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Shipment.O.PLTotalTax &quot;"
+      Code="&quot;Shipment.O.PLTotalTax&quot;"
       DefaultText="&quot;Total Tax&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />

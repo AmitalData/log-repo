@@ -2380,6 +2380,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode DocumentTypeTextCode_DocumentTypeOHTMLTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.HTMLTemplates", DefaultText = "Email Message Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode DocumentTypeTextCode_DocumentTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.TableDescription", DefaultText = "Create document types, use the layout designer to build document templates and customize documents.",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
