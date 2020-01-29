@@ -1979,7 +1979,6 @@
     <Compile Include="Migrations\202001270701508_AddCountryForStatisticsToQuote_Samar.Designer.cs">
       <DependentUpon>202001270701508_AddCountryForStatisticsToQuote_Samar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
       <DependentUpon>202001080842531_AbedAddCustomFieldToQuote.cs</DependentUpon>
@@ -2020,7 +2019,6 @@
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.cs" />
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
@@ -3410,33 +3408,14 @@
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
-
     </EmbeddedResource>
-
-    <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.cs" />
-    <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.Designer.cs">
-      <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-
-
-
-    
-
-    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
-      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.resx">
       <DependentUpon>201912221349345_WesamAddNameTextCodeCodeToQueriesTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.resx">
       <DependentUpon>201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.cs</DependentUpon>
     </EmbeddedResource>
-
-    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
-      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
-    </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.resx">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </EmbeddedResource>
@@ -3587,12 +3566,8 @@
     <EmbeddedResource Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.resx">
       <DependentUpon>202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.resx">
       <DependentUpon>202001181132561_GLAccountNameForPrintingChequesMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.resx">
-      <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.resx">
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
