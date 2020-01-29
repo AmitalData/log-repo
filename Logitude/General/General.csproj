@@ -1944,6 +1944,7 @@
     <Content Include="Usefull Scripts\Islam\duplicated Global Contacts Fix.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated user codes.sql" />
     <Content Include="Usefull Scripts\Islam\zombie Global contacts issue fix.sql" />
+    <Content Include="Usefull Scripts\MetaData\MetaDataScripts.sql" />
     <Content Include="Usefull Scripts\Queries\01_Shipments.sql" />
     <Content Include="Usefull Scripts\Queries\02_Quotes.sql" />
     <Content Include="Usefull Scripts\Queries\03_AccountsReceivables.sql" />
