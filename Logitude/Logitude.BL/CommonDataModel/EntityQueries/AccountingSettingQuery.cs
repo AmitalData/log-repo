@@ -77,6 +77,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                RefreshToken=a.RefreshToken,
                                                QBOOAuth=a.QBOOAuth,
+                                               AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                            }).FirstOrDefault();
 
             return account;
@@ -131,6 +132,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                RefreshToken = a.RefreshToken,
                                                QBOOAuth = a.QBOOAuth,
+                                               AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                            }).FirstOrDefault();
 
             if (account != null)
@@ -199,6 +201,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                        RefreshToken = a.RefreshToken,
                                        QBOOAuth = a.QBOOAuth,
+                                       AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                    });
 
                     foreach (var c in systems)
@@ -268,6 +271,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                               RefreshToken = a.RefreshToken,
                               QBOOAuth = a.QBOOAuth,
+                              AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                           }).FirstOrDefault();
             }
 
@@ -323,6 +327,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                             RefreshToken = a.RefreshToken,
                                                             QBOOAuth = a.QBOOAuth,
+                                                            AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                         });
 
             return accounts;
@@ -376,6 +381,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                            RefreshToken = a.RefreshToken,
                                                            QBOOAuth = a.QBOOAuth,
+                                                           AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                        };
             return result;
         }
