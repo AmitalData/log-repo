@@ -88,6 +88,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? FechaPago { get; set; }
 
         public string CreatedByPartner { get; set; }
-
+        public bool IsPaymentNumberManuallySet { get; set; }
     }
 }

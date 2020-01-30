@@ -260,6 +260,11 @@ export class AccountingSettingPM {
     public set QBOOAuth(newValue: number) { if (this.qBOOAuth != newValue) { this.qBOOAuth = newValue; this.MarkAsDirty("QBOOAuth"); } }
        
 	 
+    private allowManualARPaymentNumber: boolean;
+    public get AllowManualARPaymentNumber() { return this.allowManualARPaymentNumber; }
+    public set AllowManualARPaymentNumber(newValue: boolean) { if (this.allowManualARPaymentNumber != newValue) { this.allowManualARPaymentNumber = newValue; this.MarkAsDirty("AllowManualARPaymentNumber"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

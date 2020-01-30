@@ -17343,6 +17343,16 @@
         ScreenName="Accounting Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;Customer&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;Customer.AdditionalFields&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;Overview&quot;"
     ObjectTableName="&quot;Customer&quot;"

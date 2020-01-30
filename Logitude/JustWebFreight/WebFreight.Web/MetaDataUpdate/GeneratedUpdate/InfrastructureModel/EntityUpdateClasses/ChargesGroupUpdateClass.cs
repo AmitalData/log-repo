@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Charge Group",
+			      				    DefaultText =  "Charges Group",
 			      				    Code =  "CARG",
 			      				    Name =  "ChargesGroups",
 			      				    GenerateDomainService =  false,
