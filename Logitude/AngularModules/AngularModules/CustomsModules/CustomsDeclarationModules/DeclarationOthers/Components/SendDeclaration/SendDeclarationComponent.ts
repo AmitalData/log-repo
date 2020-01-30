@@ -79,7 +79,7 @@ export class SendDeclarationComponent implements OnDestroy {
         }
 
         if (this.EntityPM.IsAmendment == true) {
-            this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.TH.SendAmendmentDeclaration");
+            this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.SendAmendmentDeclaration");
         }
         if (this._WorkWithService) {
             this._SendDeclarationService.Run(args);

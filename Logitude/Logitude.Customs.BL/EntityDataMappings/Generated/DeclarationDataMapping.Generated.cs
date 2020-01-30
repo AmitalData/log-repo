@@ -135,8 +135,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentRejectionReason, 
 	         IsAmendment, 
 	         AmendmentOriginalDeclartation, 
-	         AmendmentDontDisplayInList, 
-	         DeclarationType,
+	         IsDiamondDeclaration, 
+	         AmendmentDontDisplayInList,
+	         IsMissMandatoryDiamond, 
+	         DocumentStatusDiamond, 
+	         IsSignDiamond,
 	      }
 
 
@@ -321,8 +324,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierManifestStatusCode, 
 	         CourierPaymentStatusCode, 
 	         IsPendingNotNull, 
+	         IsDiamondDeclaration, 
 	         AmendmentDontDisplayInList, 
-	         DeclarationType,
+	         AmendmentMessage, 
+	         IsAmendmentDisplayOnly, 
+	         IsMissMandatoryDiamond, 
+	         DocumentStatusDiamond, 
+	         IsSignDiamond,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -891,16 +899,30 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondDeclaration))
+            {
+				entityPOCO.IsDiamondDeclaration = entityPM.IsDiamondDeclaration;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
             {
 				entityPOCO.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
 			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMissMandatoryDiamond))
             {
-				entityPOCO.DeclarationType = entityPM.DeclarationType;
+				entityPOCO.IsMissMandatoryDiamond = entityPM.IsMissMandatoryDiamond;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentStatusDiamond))
+            {
+				entityPOCO.DocumentStatusDiamond = entityPM.DocumentStatusDiamond;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSignDiamond))
+            {
+				entityPOCO.IsSignDiamond = entityPM.IsSignDiamond;
+			}
+
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -1472,14 +1494,34 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AmendmentOriginalDeclartation = entityPOCO.AmendmentOriginalDeclartation;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondDeclaration))
+            {
+					entityPM.IsDiamondDeclaration = entityPOCO.IsDiamondDeclaration;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondDeclaration))
+            {
+					entityPM.IsDiamondDeclaration = entityPOCO.IsDiamondDeclaration;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentDontDisplayInList))
             {
 					entityPM.AmendmentDontDisplayInList = entityPOCO.AmendmentDontDisplayInList;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationType))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMissMandatoryDiamond))
             {
-					entityPM.DeclarationType = entityPOCO.DeclarationType;
+					entityPM.IsMissMandatoryDiamond = entityPOCO.IsMissMandatoryDiamond;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentStatusDiamond))
+            {
+					entityPM.DocumentStatusDiamond = entityPOCO.DocumentStatusDiamond;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSignDiamond))
+            {
+					entityPM.IsSignDiamond = entityPOCO.IsSignDiamond;
             }
 
 		}
@@ -2048,16 +2090,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondDeclaration))
+            {
+                oldEntityPM.IsDiamondDeclaration = entityPM.IsDiamondDeclaration;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
             {
                 oldEntityPM.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
             }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationType))
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMissMandatoryDiamond))
             {
-                oldEntityPM.DeclarationType = entityPM.DeclarationType;
+                oldEntityPM.IsMissMandatoryDiamond = entityPM.IsMissMandatoryDiamond;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentStatusDiamond))
+            {
+                oldEntityPM.DocumentStatusDiamond = entityPM.DocumentStatusDiamond;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSignDiamond))
+            {
+                oldEntityPM.IsSignDiamond = entityPM.IsSignDiamond;
+            }
+
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
@@ -2150,6 +2207,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRejectionReason)) //T4 find type == nText 
             {
                 entityPM.AmendmentRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRejectionReason));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DocumentStatusDiamond)) //T4 find type == nText 
+            {
+                entityPM.DocumentStatusDiamond = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DocumentStatusDiamond));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

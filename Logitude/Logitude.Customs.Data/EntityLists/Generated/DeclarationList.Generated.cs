@@ -316,6 +316,12 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsPendingNotNull  { get; set; }
        [DataMember]
        public bool AmendmentDontDisplayInList  { get; set; }
+       [DataMember]
+       public bool IsMissMandatoryDiamond  { get; set; }
+       [DataMember]
+       public string DocumentStatusDiamond  { get; set; }
+       [DataMember]
+       public bool IsSignDiamond  { get; set; }
    }
 
 }

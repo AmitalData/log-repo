@@ -93,6 +93,47 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.AcceptanceStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentStatusName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentMessage);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.IsAmendmentDisplayOnly);
+
+
+            AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(entityPOCO.Tenant);
+            AmendmentStatus amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus);
+            if (amendmentStatus != null)
+            {
+                entityPM.AmendmentStatusName = amendmentStatus.Name;
+
+            }
+
+            DeclarationQueryService declarationQuery = new DeclarationQueryService(entityPOCO.Tenant);
+
+
+            if (entityPOCO.IsAmendment==true && entityPOCO.AmendmentStatus!="2" && entityPOCO.AmendmentStatus != null)
+            {
+                entityPM.AmendmentMessage ="לתצוגה בלבד - " +  TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant,true) + ' ' + entityPM.AmendmentStatusName;
+                entityPM.IsAmendmentDisplayOnly = true;
+            }
+
+            else if (entityPOCO.IsAmendment == true && entityPOCO.AmendmentStatus == "2" )
+                {
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+
+                }
+
+                else if (entityPOCO.IsAmendment!=true)
+               {
+                var declarations = declarationQuery.GetDeclarationAmendmentsById(entityPOCO.Tenant, entityPOCO.Id);
+
+                var declaration = declarations.FirstOrDefault(x => new string[] { "1", "2", "3", "4", "6" }.Contains(x.AmendmentStatus));
+                if (declaration!= null)
+                {
+                    entityPM.AmendmentMessage= TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
+                }
+                //else
+                //{
+                //    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
+                //}
+               }
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
             Card customerCard = CardRepository.GetSingleCard(entityPOCO.CustomerId, entityPOCO.Tenant, true);
@@ -111,14 +152,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                
             }
 
-
-            AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(entityPOCO.Tenant);
-            AmendmentStatus amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus);
-            if (amendmentStatus != null)
-            {
-                entityPM.AmendmentStatusName = amendmentStatus.Name;
-
-            }
 
 
             if (!string.IsNullOrEmpty(entityPOCO.DepartmentId))

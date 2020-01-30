@@ -976,8 +976,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         //get declaration display only
         declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            {
+                this.IsDisplayMessage = true;
+                this.ErrorMessage = this.EntityPM.AmendmentMessage;
+                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+            }
+        }
 
-        if (declarationDisplayOnly) {
+        else if (declarationDisplayOnly) {
             this.IsDisplayOnly = true;
             this.ErrorMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
 
@@ -995,9 +1002,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
         }
-        else {
-            this.InitDisplayOnlyMessage();
-        }
+     
 
         //if is not display only => its not payed , so fill sign data
         if (!this.IsDisplayOnly)
@@ -1018,7 +1023,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
 
             var declarationDisplayOnly2 = displayOnlyCheckResult.IsDisplayOnly ? true : false;
-            if (declarationDisplayOnly2) {
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.ErrorMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+           else if (declarationDisplayOnly2) {
                 this.IsDisplayOnly = true;
                 this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
 
@@ -1031,9 +1045,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
-            else {
-                this.InitDisplayOnlyMessage();
-            }
+         
             //if is not display only => its not payed , so fill sign data
             if (!this.IsDisplayOnly)
                 this.FillSignData();
@@ -1060,51 +1072,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
 
-    InitDisplayOnlyMessage() {
-        if (this.EntityPM.IsAmendment && (this.EntityPM.AmendmentStatus == "2")) {
-            this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.IsAmendment") + ' ' + this.EntityPM.AmendmentStatusName;
-            this.IsDisplayMessage = true;
-        }
-        else if (this.EntityPM.IsAmendment == false) {
-            this.declarationExtendedListService.GetDeclarationAmendmentsById(this.EntityPM.Id).subscribe
-                (data => {
-                    if (data.Result == null || data.Result.length <= 0) return;
-
-                    data.Result = data.Result.sort((obj1, obj2) => {
-                        if (obj1.amendmentissueDate > obj2.amendmentissueDate) {
-                            return 1;
-                        }
-
-                        if (obj1.amendmentissueDate < obj2.amendmentissueDate) {
-                            return -1;
-                        }
-
-                        return 0;
-                    });
-                    var temp = false;
-
-                     data.Result.forEach((item) => {
-                         if ((temp == false) && (item.AmendmentStatus == "3" || item.AmendmentStatus == "1" || item.AmendmentStatus == "6" || item.AmendmentStatus == "4" || item.AmendmentStatus == "2")) {
-                            {
-                                this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + item.AmendmentStatusName;
-                                this.IsDisplayMessage = true;
-                                 temp = true;
-
-                            }
-                        }
-
-                    });
-                    //this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ExistsAmendments") + ' ' + data.Result[0].AmendmentStatusName;
-                    //this.IsDisplayMessage = true;
-
-                }
-
-
-                );
-
-        }
-    }
-
+ 
 
     SetScreenFieldsEditability() {
         var enabled = !this.IsDisplayOnly;

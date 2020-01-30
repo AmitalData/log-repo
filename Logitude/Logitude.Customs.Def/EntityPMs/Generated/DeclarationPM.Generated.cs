@@ -4353,6 +4353,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isDiamondDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDiamondDeclaration  
+	   {
+	    
+	     get
+		{
+		   return isDiamondDeclaration;
+		 }
+		 set
+		 {
+		   if(isDiamondDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDiamondDeclaration",OldValue=isDiamondDeclaration,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isDiamondDeclaration=value;
+		   }
+			
+		 }
+	   }
 	  private bool amendmentDontDisplayInList ;
 	  	  
        
@@ -4376,25 +4399,117 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string declarationType ;
+	  private string amendmentMessage ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DeclarationType  
+       public string AmendmentMessage  
 	   {
 	    
 	     get
 		{
-		   return declarationType;
+		   return amendmentMessage;
 		 }
 		 set
 		 {
-		   if(declarationType != value)
+		   if(amendmentMessage != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationType",OldValue=declarationType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentMessage",OldValue=amendmentMessage,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   declarationType=value;
+		   amendmentMessage=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAmendmentDisplayOnly ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAmendmentDisplayOnly  
+	   {
+	    
+	     get
+		{
+		   return isAmendmentDisplayOnly;
+		 }
+		 set
+		 {
+		   if(isAmendmentDisplayOnly != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAmendmentDisplayOnly",OldValue=isAmendmentDisplayOnly,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAmendmentDisplayOnly=value;
+		   }
+			
+		 }
+	   }
+	  private bool isMissMandatoryDiamond ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsMissMandatoryDiamond  
+	   {
+	    
+	     get
+		{
+		   return isMissMandatoryDiamond;
+		 }
+		 set
+		 {
+		   if(isMissMandatoryDiamond != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMissMandatoryDiamond",OldValue=isMissMandatoryDiamond,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isMissMandatoryDiamond=value;
+		   }
+			
+		 }
+	   }
+	  private string documentStatusDiamond ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentStatusDiamond  
+	   {
+	    
+	     get
+		{
+		   return documentStatusDiamond;
+		 }
+		 set
+		 {
+		   if(documentStatusDiamond != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentStatusDiamond",OldValue=documentStatusDiamond,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentStatusDiamond=value;
+		   }
+			
+		 }
+	   }
+	  private bool isSignDiamond ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSignDiamond  
+	   {
+	    
+	     get
+		{
+		   return isSignDiamond;
+		 }
+		 set
+		 {
+		   if(isSignDiamond != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSignDiamond",OldValue=isSignDiamond,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSignDiamond=value;
 		   }
 			
 		 }
