@@ -5312,6 +5312,7 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\LedgerTransactionReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
