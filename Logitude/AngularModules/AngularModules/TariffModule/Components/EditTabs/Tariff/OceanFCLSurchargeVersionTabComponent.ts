@@ -303,7 +303,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
-                    item.DisplyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
+                    item.DisplyText = iChargeType.Code; //+ " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;                    
                 }
 
