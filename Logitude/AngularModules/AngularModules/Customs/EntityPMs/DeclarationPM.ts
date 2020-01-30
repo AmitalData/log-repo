@@ -1129,6 +1129,16 @@ export class DeclarationPM {
     public set IsValidTicketsDiamond(newValue: boolean) { if (this.isValidTicketsDiamond != newValue) { this.isValidTicketsDiamond = newValue; this.MarkAsDirty("IsValidTicketsDiamond"); } }
        
 	 
+    private customFileAmendment: string;
+    public get CustomFileAmendment() { return this.customFileAmendment; }
+    public set CustomFileAmendment(newValue: string) { if (this.customFileAmendment != newValue) { this.customFileAmendment = newValue; this.MarkAsDirty("CustomFileAmendment"); } }
+       
+	 
+    private declarationNoAmendment: string;
+    public get DeclarationNoAmendment() { return this.declarationNoAmendment; }
+    public set DeclarationNoAmendment(newValue: string) { if (this.declarationNoAmendment != newValue) { this.declarationNoAmendment = newValue; this.MarkAsDirty("DeclarationNoAmendment"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

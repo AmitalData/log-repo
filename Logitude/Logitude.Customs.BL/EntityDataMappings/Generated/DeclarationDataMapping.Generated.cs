@@ -328,7 +328,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentMessage, 
 	         IsAmendmentDisplayOnly, 
 	         IsMissMandatoryDiamond, 
-	         IsValidTicketsDiamond,
+	         IsValidTicketsDiamond, 
+	         CustomFileAmendment, 
+	         DeclarationNoAmendment,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
