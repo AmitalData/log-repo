@@ -1515,7 +1515,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             foreach (var doc in documentTypePMs)
             {
-                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code).ToList();
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code && r.DocumentsFilingId!=null).ToList();
                 if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
                     return true;
             }
