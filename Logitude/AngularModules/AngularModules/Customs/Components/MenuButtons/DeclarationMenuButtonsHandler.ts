@@ -144,6 +144,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         this.MenuButtons = menuButtons;
+        let myMenuButtonPM = new MenuButtonPM(null);
+        myMenuButtonPM.DisplayText = " DCA תרחיש";
+        myMenuButtonPM.EventCode = "SincroSendDCA";
+        menuButtons.push(myMenuButtonPM);
         this.DisplayOnlyCheck();
     }
 
