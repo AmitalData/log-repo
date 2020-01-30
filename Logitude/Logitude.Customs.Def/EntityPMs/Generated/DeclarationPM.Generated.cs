@@ -4468,48 +4468,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string documentStatusDiamond ;
+	  private bool isValidTicketsDiamond ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DocumentStatusDiamond  
+       public bool IsValidTicketsDiamond  
 	   {
 	    
 	     get
 		{
-		   return documentStatusDiamond;
+		   return isValidTicketsDiamond;
 		 }
 		 set
 		 {
-		   if(documentStatusDiamond != value)
+		   if(isValidTicketsDiamond != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentStatusDiamond",OldValue=documentStatusDiamond,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsValidTicketsDiamond",OldValue=isValidTicketsDiamond,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   documentStatusDiamond=value;
-		   }
-			
-		 }
-	   }
-	  private bool isSignDiamond ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSignDiamond  
-	   {
-	    
-	     get
-		{
-		   return isSignDiamond;
-		 }
-		 set
-		 {
-		   if(isSignDiamond != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSignDiamond",OldValue=isSignDiamond,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isSignDiamond=value;
+		   isValidTicketsDiamond=value;
 		   }
 			
 		 }

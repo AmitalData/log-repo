@@ -492,6 +492,10 @@
     <Compile Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.Designer.cs">
       <DependentUpon>202001281508426_ChangeNameIsDiamondManadatory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001300921420_ChangeFieldsDiamonds.cs" />
+    <Compile Include="Migrations\202001300921420_ChangeFieldsDiamonds.Designer.cs">
+      <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -851,6 +855,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.resx">
       <DependentUpon>202001281508426_ChangeNameIsDiamondManadatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001300921420_ChangeFieldsDiamonds.resx">
+      <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
