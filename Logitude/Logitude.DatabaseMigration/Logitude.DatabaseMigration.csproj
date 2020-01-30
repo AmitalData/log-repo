@@ -3409,9 +3409,15 @@
     <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.Designer.cs">
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </Compile>
-    
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
 
-    
+    </EmbeddedResource>
+
+    <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.cs" />
+    <Compile Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.Designer.cs">
+      <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
 
 
 
@@ -3427,7 +3433,9 @@
       <DependentUpon>201912230932565_WesamAddTabNameTextCodeCodeToObjectTableTabs.cs</DependentUpon>
     </EmbeddedResource>
 
-   
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+      <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
 
     <EmbeddedResource Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.resx">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
@@ -3586,7 +3594,9 @@
     <EmbeddedResource Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.resx">
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </EmbeddedResource>
-    
+    <EmbeddedResource Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.resx">
+      <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
