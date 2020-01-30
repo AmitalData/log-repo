@@ -557,72 +557,92 @@
                                     </log-column>
 
                                     <!-- Surcharge1Price -->
-                                    <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge1PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge1PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge2Price -->
-                                    <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge2PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge2PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge3Price -->
-                                    <log-column *ngIf="Surcharge3PriceVisibility" [Alignment]="'center'" [header]="Surcharge3PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge3PriceVisibility" [Alignment]="'center'" [header]="Surcharge3PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge3PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge3PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge4Price -->
-                                    <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge4PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge4PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge5Price -->
-                                    <log-column *ngIf="Surcharge5PriceVisibility" [Alignment]="'center'" [header]="Surcharge5PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge5PriceVisibility" [Alignment]="'center'" [header]="Surcharge5PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge5PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge5PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge6Price -->
-                                    <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge6PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge6PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge7Price -->
-                                    <log-column *ngIf="Surcharge7PriceVisibility" [Alignment]="'center'" [header]="Surcharge7PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge7PriceVisibility" [Alignment]="'center'" [header]="Surcharge7PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge7PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge7PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge8Price -->
-                                    <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge8PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge8PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge9Price -->
-                                    <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge9PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge9PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- Surcharge10Price -->
-                                    <log-column *ngIf="Surcharge10PriceVisibility" [Alignment]="'center'" [header]="Surcharge10PriceLabel" [width]="'180'">
+                                    <log-column *ngIf="Surcharge10PriceVisibility" [Alignment]="'center'" [header]="Surcharge10PriceLabel_FCL" [width]="'180'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.Surcharge10PriceValue}}
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                {{item.Surcharge10PriceValue}}
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 

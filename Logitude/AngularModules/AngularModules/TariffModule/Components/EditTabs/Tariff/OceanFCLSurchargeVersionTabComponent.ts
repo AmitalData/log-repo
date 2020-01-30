@@ -303,7 +303,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
-                    item.DisplyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
+                    item.DisplyText = iChargeType.Code; //+ " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;                    
                 }
 
@@ -567,6 +567,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
     EditTariffButtonClicked(item: OceanFCLSurchargeTariffLineData) {
         var logWindow = new LogitudeWindow();
+        item.BuildContainerPricesItemsSource();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
