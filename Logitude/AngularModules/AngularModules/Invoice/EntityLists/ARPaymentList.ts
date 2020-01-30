@@ -86,5 +86,6 @@ export class ARPaymentList {
 		IsFullAccounting: boolean;
 		FechaPago: Date;
 		CreatedByPartner: string;
+		IsPaymentNumberManuallySet: boolean;
 	
 }
