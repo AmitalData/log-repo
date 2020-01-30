@@ -9778,6 +9778,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
          
             ScreenField CustomerCustomerAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().Id, ScreenId = CustomerAccountingTabScreenScreen2.Id,ScreenCode = CustomerAccountingTabScreenScreen2.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
+	      
+
+	         Screen CustomerAdditionalFieldsScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customer.AdditionalFields", Name = "Additional Fields", ObjectTableId = CustomerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 

@@ -4311,6 +4311,16 @@
         ScreenName="Billing Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;Participant&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;Participant.AdditionalFields&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     ObjectTableName="&quot;Participant&quot;"

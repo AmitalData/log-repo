@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Address",
-			      				    Code =  "9227",
+			      				    Code =  "4c92",
 			      				    Name =  "Address",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -1873,6 +1873,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen AddressAddressHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Address.HeaderScreen", Name = "AddressHeaderScreen", ObjectTableId = AddressObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    AddressObjectTable.HeaderScreenId = AddressAddressHeaderScreenScreen0.Id;
+		    AddressObjectTable.HeaderScreenCode = AddressAddressHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }

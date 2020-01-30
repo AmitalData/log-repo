@@ -2441,6 +2441,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
          
             ScreenField ParticipantParticipantBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = ParticipantBillingTabScreenScreen2.Id,ScreenCode = ParticipantBillingTabScreenScreen2.Code, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
+	      
+
+	         Screen ParticipantAdditionalFieldsScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Participant.AdditionalFields", Name = "Additional Fields", ObjectTableId = ParticipantObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
