@@ -104,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Customs.NewDeclarationControlCommand",
 			      				    LocalDefaultText =  "הצהרות יבוא",
 			      				    DefaultText =  "Declaration",
-			      				    Code =  "dffa",
+			      				    Code =  "1df3",
 			      				    Name =  "Customs.Declaration Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
