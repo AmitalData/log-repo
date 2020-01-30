@@ -160,8 +160,7 @@ export class DeclarationList {
 	IsPendingNotNull: boolean;
 	AmendmentDontDisplayInList: boolean;
 	IsMissMandatoryDiamond: boolean;
-	DocumentStatusDiamond: string;
-	IsSignDiamond: boolean;
+	IsValidTicketsDiamond: boolean;
 	
 }
  
