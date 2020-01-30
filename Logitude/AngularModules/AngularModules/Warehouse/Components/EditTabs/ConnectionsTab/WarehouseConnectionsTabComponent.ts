@@ -114,16 +114,17 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
 
     NewWarehouseReleaseButtonClicked() {
         var windowArgs: any = {};
-       // windowArgs.ShipmentPM = this.EntityPM;
         windowArgs.WarehouseId = this.EntityPM.WarehouseId;
         windowArgs.CustomerId = this.EntityPM.CustomerId;
         windowArgs.FromPortId = this.EntityPM.FromPortId;
         windowArgs.ToPortId = this.EntityPM.ToPortId;
         windowArgs.WarehouseEntryId = this.EntityPM.Id;
-       /// if (this.EntityPM.ShipmentId) {
-         //   windowArgs.ConnectedTo = "Shipment";
-           // windowArgs.ShipmentId = this.EntityPM.ShipmentId;
-       // }
+
+        windowArgs.FromType = "WarehouseEntry";
+       if (this.EntityPM.ShipmentId) {
+            windowArgs.ConnectedTo = "Shipment";
+            windowArgs.ShipmentId = this.EntityPM.ShipmentId;
+        }
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1030;
         logWindow.Height = 620;
