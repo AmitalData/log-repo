@@ -21,12 +21,12 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 {
                     if (this.IsAccepted)
                     {
-                        shipmentPM.INTTRABookingStatusCode = "CD";
+                        shipmentPM.INTTRABookingTransStatusCode = "ACI";
                     }
 
                     else
                     {
-                        shipmentPM.INTTRABookingStatusCode = "RU";
+                        shipmentPM.INTTRABookingTransStatusCode = "RBI";
                     }
                 }
 
