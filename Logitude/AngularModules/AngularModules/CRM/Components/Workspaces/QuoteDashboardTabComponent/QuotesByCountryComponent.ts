@@ -7,7 +7,7 @@ import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dash
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-declare var makeAmBarChart, PieClick, makePieChart, ResetItemPie: any;
+declare var PieClick, makePieChart, ResetItemPie: any;
 
 @Component({
     selector: 'quotes-by-country',
@@ -99,7 +99,7 @@ export class QuotesByCountryComponent implements OnInit {
             });
             if (!flagEmpty) {
 
-                this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId);
+                this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId, 150);
             }
 
             this.NoCountries = false;
@@ -176,7 +176,8 @@ export class QuotesByCountryComponent implements OnInit {
         var myTableName: string = "Quote";
         var filterAgrs: ApiQueryFilters = new ApiQueryFilters();
 
-        filterAgrs.addAdditionalFilter("CountryForStatisticsId", item.CountryId, null, null, "Equals", false, false, false, "String");
+        //if (this.IncludeOthersCountries)
+        filterAgrs.addAdditionalFilter("CountryForStatisticsId", item.CountryId, null, null, "InList", false, false, false, "String");
         filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
         filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
         filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
@@ -196,6 +197,5 @@ export class QuotesByCountryComponent implements OnInit {
                 cmpRef.instance.Run(listArgs);
                 this.CurrentSession.AddMenuReference(cmpRef);
             });
-
     }
 }

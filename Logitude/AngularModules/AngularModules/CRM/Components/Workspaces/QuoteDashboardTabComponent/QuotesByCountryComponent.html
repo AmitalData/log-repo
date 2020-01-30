@@ -1,4 +1,4 @@
-<style type="text/css">    
+<style type="text/css">
     .RatioBox .NumericButton:hover {
         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
         background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
@@ -37,117 +37,119 @@
         -webkit-box-shadow: inset 0 0 3px #AAAAAA;
         box-shadow: inset 0 0 3px #AAAAAA;
         overflow: hidden;
-    }    
+    }
 </style>
 
 <table>
+    <tr class="SectionHeader">
+        <td>Quotes by Country</td>
+    </tr>
+
+    <tr style="height:5px"><td><div></div></td></tr>
+
+    <tr style="height:20px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:120px;">
+                        <TransportsFilter (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                    </td>
+
+                    <td style="width:5px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:140px">
+                        <DirectionsFilter [HideCustomsImport]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width:75px;">
+                        <table>
+                            <tr>
+                                <td style="width:35px">
+                                    <label style="font-size:small">Top:</label>
+                                </td>
+
+                                <td>
+                                    <div class="RatioBox" style="width:40px">
+                                        <table>
+                                            <tr>
+                                                <td style="font-size: 11px; padding-left: 2px;">
+                                                    {{TopCountries}}
+                                                </td>
+
+                                                <td style="width: 15px;">
+                                                    <div class="NumericButton" (mousedown)="CountriesTopValueChanged(true)">
+                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                    </div>
+                                                    <div class="NumericButton" (mousedown)="CountriesTopValueChanged(false)">
+                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:10px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:16px;">
+                        <CheckBox [IsChecked]="IncludeOthersCountries" (Checked)="IncludeOthersCountries = $event"></CheckBox>
+                    </td>
+
+                    <td style="width:5px">
+                        <div></div>
+                    </td>
+
+                    <td style="font:small; width:1px;">
+                        Include Others
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px"><td><div></div></td></tr>
+
     <tr>
         <td>
-            <div>
-                <SectionBox>
-                    <SectionHead>Quotes by Country</SectionHead>
-                    <SectionBody>
-                      <div>
-                          <table>
-                              <tr style="height:20px">
-                                  <td style="vertical-align:top">
-                                      <table style="height:1px">
-                                          <tr>
-                                              <td style="width:140px;min-width:120px">
-                                                  <TransportsFilter (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
-                                              </td>
+            <table>
+                <tr *ngIf="!NoCountries" style="height:1px">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div style="cursor:pointer;" [attr.id]="CountriesDashboardId" class="MediaFill" (click)="ItemClicked()"></div>
+                                </td>
 
-                                              <td style="width:260px;min-width:140px">
-                                                  <DirectionsFilter (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
-                                              </td>
+                                <td style="width:150px;min-width:150px;overflow-y:auto">
+                                    <div class="MediaFill">
+                                        <ScrollViewer [Small]="true">
+                                            <div [attr.id]="CountriesDashboardLegendId" style="position:relative;width:100%;float:left"></div>
+                                        </ScrollViewer>
+                                    </div>
+                                </td>
 
-                                              <td style="min-width:5px;width:5px"><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 
-                                              <td style="width:auto">
-                                                  <table>
-                                                      <tr>
-                                                          <td style="width:35px">
-                                                              <label style="font-size:small">Top: </label>
-                                                          </td>
-
-                                                          <td style="width:10px">
-                                                              <div class="RatioBox" style="width:40px">
-                                                                  <table>
-                                                                      <tr>
-                                                                          <td style="font-size: 11px; padding-left: 2px;">
-                                                                              {{TopCountries}}
-                                                                          </td>
-
-                                                                          <td style="width: 15px;">
-                                                                              <div class="NumericButton" (mousedown)="CountriesTopValueChanged(true)">
-                                                                                  <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
-                                                                              </div>
-                                                                              <div class="NumericButton" (mousedown)="CountriesTopValueChanged(false)">
-                                                                                  <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
-                                                                              </div>
-                                                                          </td>
-                                                                      </tr>
-                                                                  </table>
-                                                              </div>
-                                                          </td>
-                                                      </tr>
-                                                  </table>
-                                              </td>
-
-                                              <td style="min-width:5px;width:5px"><div></div></td>
-
-                                              <td style="width:20px;min-width:20px">
-                                                  <CheckBox [IsChecked]="IncludeOthersCountries" (Checked)="IncludeOthersCountries = $event"></CheckBox>                                                 
-                                              </td>
-
-                                              <td style="min-width:5px;width:5px"><div></div></td>
-
-                                              <td style="font:x-small">
-                                                  <label style="font-size:x-small"> Include Others </label>
-                                              </td>
-
-                                              <td></td>
-                                          </tr>
-                                      </table>
-                                  </td>
-                              </tr>
-
-                              <tr style="height:5px">
-                                  <td></td>
-                              </tr>
-
-                              <tr style="height:200px; width:300px;">
-                                  <td>
-                                      <table>
-                                          <tr>
-                                              <td style="width:300px;">
-                                                  <div style="height:200px; width:300px;" [attr.id]="CountriesDashboardId" (click)="ItemClicked()"></div>
-                                              </td>
-
-                                              <td style="width:100px; overflow-y:auto; padding-right:10px">
-                                                  <div class="MediaFill">
-                                                      <ScrollViewer [Small]="true">
-                                                          <div [attr.id]="CountriesDashboardLegendId" style="position:relative;width:100%;float:left"></div>
-                                                      </ScrollViewer>
-                                                  </div>
-                                              </td>
-                                          </tr>
-
-                                          <tr *ngIf="NoCountries">
-                                              <td colspan="2">
-                                                  <div style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
-                                                      <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Countries</label>
-                                                  </div>
-                                              </td>
-                                          </tr>
-                                      </table>
-                                  </td>
-                              </tr>
-                          </table>
-                      </div>
-                    </SectionBody>
-                </SectionBox>
-            </div>
+                <tr *ngIf="NoCountries">
+                    <td style="font-size:large;text-align:center; vertical-align:top;">
+                        No Countries
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
