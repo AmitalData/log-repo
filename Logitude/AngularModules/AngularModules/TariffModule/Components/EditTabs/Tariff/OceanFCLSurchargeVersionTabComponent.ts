@@ -567,6 +567,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
     EditTariffButtonClicked(item: OceanFCLSurchargeTariffLineData) {
         var logWindow = new LogitudeWindow();
+        item.BuildContainerPricesItemsSource();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
