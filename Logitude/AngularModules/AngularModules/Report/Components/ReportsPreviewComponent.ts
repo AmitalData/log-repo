@@ -368,7 +368,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
-       // filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
+        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
         if (isUsedWorkerRoleAlalways) {
             this.StartBusyIndicator("Generating...");
