@@ -194,6 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -256,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -317,6 +319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -378,6 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -439,6 +443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -501,6 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -563,6 +569,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -626,6 +633,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -690,6 +698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -754,6 +763,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -817,6 +827,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -880,6 +891,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -942,6 +954,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -999,6 +1012,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1060,6 +1074,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1121,6 +1136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1180,6 +1196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1239,6 +1256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1300,6 +1318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1361,6 +1380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1422,6 +1442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1482,6 +1503,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1543,6 +1565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1604,6 +1627,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1665,6 +1689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1726,6 +1751,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1787,6 +1813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1849,6 +1876,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1905,6 +1933,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1919,7 +1948,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup BankDepositQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BNKD", Name = "BankDeposit Query Group" }, queryGroupRepository);
-						QueryGroup BankDepositQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BNKD", Name = "BankDeposit" }, queryGroupRepository);
+						QueryGroup BankDepositQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "aa10", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable BankDepositObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BankDeposit" && d.Tenant == 0).FirstOrDefault();
@@ -1944,91 +1973,91 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllBankDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_0.Id, NameTextCodeCode = BankDepositTextCode_0.Code, Code = "AllBankDeposits",  QueryGroupCode = "8a96", IndexOrder = 0, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_0.Id,FeatureUniqeCode= BankDepositFeature_0.FeatureUniqeCode, DefaultSortName = "DepositNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllBankDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_0.Id, NameTextCodeCode = BankDepositTextCode_0.Code, ObjectTableName = "BankDeposit", Code = "AllBankDeposits",  QueryGroupCode = "8a96", IndexOrder = 0, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_0.Id,FeatureUniqeCode= BankDepositFeature_0.FeatureUniqeCode, DefaultSortName = "DepositNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllBankDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 137 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 137 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 1, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 2, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 3, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 116 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 116 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 4, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 5, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 135 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 135 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 7, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 124 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 124 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 8, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 118 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 118 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 9, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositBankAccountId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositBankAccountId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 147 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositBankAccountId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositBankAccountId" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 147 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id, IndexOrder = 10, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
-			  Query TodayDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_1.Id, NameTextCodeCode = BankDepositTextCode_1.Code, Code = "TodayDeposits",  QueryGroupCode = "BNKD", IndexOrder = 1, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_1.Id,FeatureUniqeCode= BankDepositFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TodayDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_1.Id, NameTextCodeCode = BankDepositTextCode_1.Code, ObjectTableName = "BankDeposit", Code = "TodayDeposits",  QueryGroupCode = "BNKD", IndexOrder = 1, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_1.Id,FeatureUniqeCode= BankDepositFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn TodayDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id, IndexOrder = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id, IndexOrder = 1, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id, IndexOrder = 2, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id, IndexOrder = 3, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id, IndexOrder = 4, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id, IndexOrder = 5, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TodayDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "#today",PredefinedValue2 = "#today", QueryId = TodayDepositsQuery.Id, Tenant = 0,Operator = "Between"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query cashDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_2.Id, NameTextCodeCode = BankDepositTextCode_2.Code, Code = "cashDeposits",  QueryGroupCode = "BNKD", IndexOrder = 2, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_2.Id,FeatureUniqeCode= BankDepositFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn cashDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id, IndexOrder = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id, IndexOrder = 1, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id, IndexOrder = 2, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id, IndexOrder = 3, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id, IndexOrder = 4, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id, IndexOrder = 5, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter cashDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = cashDepositsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "#today",PredefinedValue2 = "#today", QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, Tenant = 0,Operator = "Between"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query chequeDepositQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_3.Id, NameTextCodeCode = BankDepositTextCode_3.Code, Code = "chequeDeposit",  QueryGroupCode = "BNKD", IndexOrder = 3, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_3.Id,FeatureUniqeCode= BankDepositFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query cashDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_2.Id, NameTextCodeCode = BankDepositTextCode_2.Code, ObjectTableName = "BankDeposit", Code = "cashDeposits",  QueryGroupCode = "BNKD", IndexOrder = 2, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_2.Id,FeatureUniqeCode= BankDepositFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn chequeDepositQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id, IndexOrder = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id, IndexOrder = 1, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id, IndexOrder = 2, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id, IndexOrder = 3, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id, IndexOrder = 4, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id, IndexOrder = 5, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter chequeDepositQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = chequeDepositQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter cashDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query chequeDepositQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_3.Id, NameTextCodeCode = BankDepositTextCode_3.Code, ObjectTableName = "BankDeposit", Code = "chequeDeposit",  QueryGroupCode = "BNKD", IndexOrder = 3, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_3.Id,FeatureUniqeCode= BankDepositFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn chequeDepositQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter chequeDepositQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankDepositObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }

@@ -11,10 +11,12 @@ import {ObservableCollection} from '../../../Infrastructure/Utilities/Observable
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
 import {QuotePriceStepsPM} from '../../../Quote/EntityPMs/QuotePriceStepsPM';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     moduleId: module.id,
@@ -388,6 +390,34 @@ export class AddEditLCLChargeComponent {
         });
 
         this.myCloner.RejectChanges();
+    }
+
+    SelectBreaksClicked() {
+        if (this.StepsItemsSource.Length > 0) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show("Can't use default breaks when you have added breaks, please delete first");
+        }
+
+        else {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = "Select Price Breaks";
+            logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/SelectBreaksComponent');
+
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    var steps: string[] = s.split(',');
+
+                    steps.forEach((step: string) => {
+                        var newItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
+                        newItem.Tenant = SessionLocator.Tenant;
+                        newItem.QuoteId = this.EntityPM.Id;
+                        newItem.Step = +step;
+                        newItem.QuoteChargeId = this.EntityPM.Id;
+                        this.StepsItemsSource.Insert(new QuoteStepItem(newItem, this, true));
+                    });
+                }
+            });
+        }
     }
 }
 export class QuoteStepItem extends BaseComponent {

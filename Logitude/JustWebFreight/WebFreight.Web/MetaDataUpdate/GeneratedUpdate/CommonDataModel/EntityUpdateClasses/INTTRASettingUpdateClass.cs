@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "INTTRA Setting",
-			      				    Code =  "d6af",
+			      				    Code =  "0c74",
 			      				    Name =  "INTTRASetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",

@@ -74,7 +74,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
 	         MinimumInterestInvoiceBilling, 
-	         InterestCreditLimit,
+	         InterestCreditLimit, 
+	         NameForPrintingCheques,
 	      }
 
 
@@ -186,7 +187,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
 	         MinimumInterestInvoiceBilling, 
-	         InterestCreditLimit,
+	         InterestCreditLimit, 
+	         NameForPrintingCheques,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -453,6 +455,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCreditLimit))
             {
 				entityPOCO.InterestCreditLimit = entityPM.InterestCreditLimit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
+            {
+				entityPOCO.NameForPrintingCheques = entityPM.NameForPrintingCheques;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -726,6 +733,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InterestCreditLimit = entityPOCO.InterestCreditLimit;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NameForPrintingCheques))
+            {
+					entityPM.NameForPrintingCheques = entityPOCO.NameForPrintingCheques;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -992,6 +1004,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.InterestCreditLimit = entityPM.InterestCreditLimit;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
+            {
+                oldEntityPM.NameForPrintingCheques = entityPM.NameForPrintingCheques;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(GLAccountPM entityPM)
@@ -1016,6 +1033,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Occupation)) //T4 find type == nText 
             {
                 entityPM.Occupation = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Occupation));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NameForPrintingCheques)) //T4 find type == nText 
+            {
+                entityPM.NameForPrintingCheques = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NameForPrintingCheques));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

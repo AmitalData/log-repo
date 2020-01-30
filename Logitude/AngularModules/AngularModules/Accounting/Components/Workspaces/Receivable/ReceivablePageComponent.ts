@@ -228,8 +228,8 @@ export class ReceivablePageComponent {
             var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
             var query = window.Queries.filter(q => q.ObjectTableId == ObjectTable.Id && q.Code == queryCode)[0];
 
-            if (window.PreDefinedFilters.filter(d => d.QueryId == query.Id) != null) {
-                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == query.Id);
+            if (window.PreDefinedFilters.filter(d => d.queryCode == query.Code) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.queryCode == query.Code);
 
                 predefinedFilters.forEach((filter, key) => {
                     var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;

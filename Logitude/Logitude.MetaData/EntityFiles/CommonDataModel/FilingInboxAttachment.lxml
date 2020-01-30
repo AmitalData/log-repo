@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Filing Inbox Attachment&quot;"
-  Code="&quot;f87d&quot;"
+  Code="&quot;5101&quot;"
   Name="&quot;FilingInboxAttachment&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"

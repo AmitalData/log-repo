@@ -997,5 +997,11 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
+
+        public IDbSet<RuleUpdateHistory> RuleUpdateHistories
+        {
+            get;
+            set;
+        }
     }
 }

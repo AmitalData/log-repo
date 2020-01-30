@@ -194,7 +194,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IssuedByUserId",
@@ -256,7 +255,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ExchangeRateDate",
@@ -321,7 +319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DraftNumber",
@@ -385,7 +382,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -450,7 +446,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -515,7 +510,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "MainEntityReference",
@@ -582,7 +576,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AmountDue",
@@ -649,7 +642,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ExpectedPaymentDate",
@@ -712,7 +704,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UnpaidInvoices",
@@ -777,7 +768,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceNumber",
@@ -839,7 +829,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ARInvoiceTypeCode",
@@ -903,7 +892,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ARInvoiceTypeName",
@@ -969,7 +957,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PaymentTermId",
@@ -1036,7 +1023,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "StatusName",
@@ -1103,7 +1089,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AmountDueInLocalCurrency",
@@ -1170,7 +1155,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AmountDueInProfitCurrency",
@@ -1236,7 +1220,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PaymentTermName",
@@ -1302,7 +1285,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BillToId",
@@ -1364,7 +1346,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BillToPartnerId",
@@ -1429,7 +1410,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BillToPartnerName",
@@ -1494,7 +1474,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BillToName",
@@ -1560,7 +1539,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BillToAddressId",
@@ -1626,7 +1604,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "VatNumber",
@@ -1691,7 +1668,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreateDate",
@@ -1758,7 +1734,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceDate",
@@ -1821,7 +1796,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreatedByUserId",
@@ -1885,7 +1859,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreatedByUserName",
@@ -1949,7 +1922,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrintByUserId",
@@ -2013,7 +1985,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrintByUserName",
@@ -2079,7 +2050,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceCurrencyId",
@@ -2147,7 +2117,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsPrinted",
@@ -2210,7 +2179,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ConnectedEntityReferences",
@@ -2278,7 +2246,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdateDate",
@@ -2343,7 +2310,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdatedByUserId",
@@ -2409,7 +2375,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceCurrencyCode",
@@ -2470,7 +2435,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalCurrencyId",
@@ -2536,7 +2500,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceCurrencyExchangeRate",
@@ -2601,7 +2564,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SubTotalInLocalCurrency",
@@ -2666,7 +2628,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SubTotalInInvoiceCurrency",
@@ -2733,7 +2694,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AmountInLocalCurrency",
@@ -2800,7 +2760,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AmountInInvoiceCurrency",
@@ -2862,7 +2821,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "StatusCode",
@@ -2927,7 +2885,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ARInvoiceStatusName",
@@ -2991,7 +2948,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsAutoCredit",
@@ -3055,7 +3011,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsCancelled",
@@ -3117,7 +3072,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CancelledByARInvoiceId",
@@ -3182,7 +3136,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InternalNotes",
@@ -3247,7 +3200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrintNotes",
@@ -3314,7 +3266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DueDate",
@@ -3378,7 +3329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrintDate",
@@ -3444,7 +3394,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3509,7 +3458,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Sent",
@@ -3576,7 +3524,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ReadyForTransfer",
@@ -3640,7 +3587,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DebitAccount",
@@ -3702,7 +3648,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalCurrencyCode",
@@ -3764,7 +3709,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ProfitCurrencyCode",
@@ -3832,7 +3776,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransferError",
@@ -3895,7 +3838,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "NotReadyInvoices",
@@ -3962,7 +3904,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountingExternalCode",
@@ -4029,7 +3970,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HouseNumber",
@@ -4096,7 +4036,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "MasterNumber",
@@ -4160,7 +4099,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransferStatusCode",
@@ -4223,7 +4161,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "MarkedAsBlockedForTransfer",
@@ -4288,7 +4225,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BranchId",
@@ -4351,7 +4287,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ErrorInTransferInvoices",
@@ -4416,7 +4351,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CustomerRef",
@@ -4483,7 +4417,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4546,7 +4479,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ConsolidationInvoiceId",
@@ -4610,7 +4542,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsConsolidationInvoice",
@@ -4673,7 +4604,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "OpenConstituentInvoices",
@@ -4737,7 +4667,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransferTries",
@@ -4801,7 +4730,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsTransferStarted",
@@ -4867,7 +4795,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransferStatusName",
@@ -4934,7 +4861,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BillToCode",
@@ -5001,7 +4927,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ApprovedDate",
@@ -5067,7 +4992,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ApprovedByUserName",
@@ -5131,7 +5055,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ApprovedByUserId",
@@ -5195,7 +5118,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "OperationalDate",
@@ -5259,7 +5181,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DateForVATInterest",
@@ -5322,7 +5243,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SplitJournalByCurrency",
@@ -5385,7 +5305,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsExternalEntity",
@@ -5448,7 +5367,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsGeneralInvoice",
@@ -5511,7 +5429,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DraftGeneralInvoices",
@@ -5574,7 +5491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ApprovalGeneralInvoices",
@@ -5636,7 +5552,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5702,7 +5617,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5767,7 +5681,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "JournalId",
@@ -5833,7 +5746,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "JournalNumber",
@@ -5899,7 +5811,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IssuedByUserName",
@@ -5966,7 +5877,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AmountPaid",
@@ -6034,7 +5944,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransmissionError",
@@ -6101,7 +6010,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "RelatedInvoice",
@@ -6170,7 +6078,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6238,7 +6145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6304,7 +6210,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SATTransferStatusCode",
@@ -6371,7 +6276,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SATInvoiceStatusCode",
@@ -6434,7 +6338,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsMultiCurrency",
@@ -6501,7 +6404,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SalesmanUserId",
@@ -6568,7 +6470,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SalesmanUserName",
@@ -6631,7 +6532,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsCustomsChargesOnly",
@@ -6694,7 +6594,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsCustomsInvoice",
@@ -6758,7 +6657,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BillToAccountManagerName",
@@ -6823,7 +6721,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SATTransferStatusName",
@@ -6888,7 +6785,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SATInvoiceStatusName",
@@ -6952,7 +6848,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Intercompany",
@@ -7019,7 +6914,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BankAccountLiteId",
@@ -7080,7 +6974,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TotalAmountForTaxReport",
@@ -7141,7 +7034,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TotaVatableAmountForTaxReport",
@@ -7202,7 +7094,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TotalVAT",
@@ -7264,7 +7155,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7321,7 +7211,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7381,7 +7270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7441,7 +7329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7498,7 +7385,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7558,7 +7444,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7615,7 +7500,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7672,7 +7556,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7734,7 +7617,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7793,7 +7675,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7853,7 +7734,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7913,7 +7793,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7974,7 +7853,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "BillToGLAccountId",
+					  						OldFieldName =  "BillToGLAccountId",
+					  						ObjectTableName =  "ARInvoice",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "BillToGLAccountId",
+					  						ListPropertyPath =  "BillToGLAccountId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "BillToGLAccountId",
+					  						DefaultText =  "Bill To GLAccount",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8046,341 +7980,341 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_0.Id, NameTextCodeCode = ARInvoiceTextCode_0.Code, Code = "All Invoices",  QueryGroupCode = "INVC", IndexOrder = 0, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_0.Id,FeatureUniqeCode= ARInvoiceFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_0.Id, NameTextCodeCode = ARInvoiceTextCode_0.Code, ObjectTableName = "ARInvoice", Code = "All Invoices",  QueryGroupCode = "INVC", IndexOrder = 0, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_0.Id,FeatureUniqeCode= ARInvoiceFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id,QueryCode = AllInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
-			  Query DraftGeneralInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_1.Id, NameTextCodeCode = ARInvoiceTextCode_1.Code, Code = "Draft General Invoices",  QueryGroupCode = "INVC", IndexOrder = 1, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_1.Id,FeatureUniqeCode= ARInvoiceFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query DraftGeneralInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_1.Id, NameTextCodeCode = ARInvoiceTextCode_1.Code, ObjectTableName = "ARInvoice", Code = "Draft General Invoices",  QueryGroupCode = "INVC", IndexOrder = 1, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_1.Id,FeatureUniqeCode= ARInvoiceFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn DraftGeneralInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftGeneralInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftGeneralInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter DraftGeneralInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DraftGeneralInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DraftGeneralInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftGeneralInvoicesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query ApprovalGeneralInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_2.Id, NameTextCodeCode = ARInvoiceTextCode_2.Code, Code = "Approval General Invoices",  QueryGroupCode = "INVC", IndexOrder = 2, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_2.Id,FeatureUniqeCode= ARInvoiceFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ApprovalGeneralInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter ApprovalGeneralInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ApprovalGeneralInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ApprovalGeneralInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ApprovalGeneralInvoicesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DraftGeneralInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DraftGeneralInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DraftGeneralInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftGeneralInvoicesQuery.Id,QueryCode = DraftGeneralInvoicesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AllGeneralInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_3.Id, NameTextCodeCode = ARInvoiceTextCode_3.Code, Code = "All General Invoices",  QueryGroupCode = "INVC", IndexOrder = 3, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_3.Id,FeatureUniqeCode= ARInvoiceFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ApprovalGeneralInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_2.Id, NameTextCodeCode = ARInvoiceTextCode_2.Code, ObjectTableName = "ARInvoice", Code = "Approval General Invoices",  QueryGroupCode = "INVC", IndexOrder = 2, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_2.Id,FeatureUniqeCode= ARInvoiceFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllGeneralInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllGeneralInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovalGeneralInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllGeneralInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsGeneralInvoice" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsGeneralInvoice" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllGeneralInvoicesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ApprovalGeneralInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ApprovalGeneralInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ApprovalGeneralInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ApprovalGeneralInvoicesQuery.Id,QueryCode = ApprovalGeneralInvoicesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query DraftInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_4.Id, NameTextCodeCode = ARInvoiceTextCode_4.Code, Code = "Draft Invoices",  SpotlightDataTemplate = "ARInvoiceSpotlightDataTemplate",  QueryGroupCode = "INVC", IndexOrder = 4, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_4.Id,FeatureUniqeCode= ARInvoiceFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllGeneralInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_3.Id, NameTextCodeCode = ARInvoiceTextCode_3.Code, ObjectTableName = "ARInvoice", Code = "All General Invoices",  QueryGroupCode = "INVC", IndexOrder = 3, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_3.Id,FeatureUniqeCode= ARInvoiceFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn DraftInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DraftNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DraftNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DraftInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllGeneralInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter DraftInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "DR",PredefinedValue2 = null, QueryId = DraftInvoicesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+			 QueryColumn AllGeneralInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter AllGeneralInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsGeneralInvoice" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsGeneralInvoice" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllGeneralInvoicesQuery.Id,QueryCode = AllGeneralInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query UnpaidInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_5.Id, NameTextCodeCode = ARInvoiceTextCode_5.Code, Code = "Unpaid Invoices",  SpotlightDataTemplate = "ARInvoiceSpotlightDataTemplate",  QueryGroupCode = "INVC", IndexOrder = 5, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_5.Id,FeatureUniqeCode= ARInvoiceFeature_5.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query DraftInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_4.Id, NameTextCodeCode = ARInvoiceTextCode_4.Code, ObjectTableName = "ARInvoice", Code = "Draft Invoices",  SpotlightDataTemplate = "ARInvoiceSpotlightDataTemplate",  QueryGroupCode = "INVC", IndexOrder = 4, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_4.Id,FeatureUniqeCode= ARInvoiceFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn UnpaidInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DraftNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DraftNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ExpectedPaymentDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ExpectedPaymentDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn UnpaidInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter UnpaidInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "UnpaidInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "UnpaidInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnpaidInvoicesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DraftInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "DR",PredefinedValue2 = null, QueryId = DraftInvoicesQuery.Id,QueryCode = DraftInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query NotReadyInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_6.Id, NameTextCodeCode = ARInvoiceTextCode_6.Code, Code = "Not Ready Invoices",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl",
+			  Query UnpaidInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_5.Id, NameTextCodeCode = ARInvoiceTextCode_5.Code, ObjectTableName = "ARInvoice", Code = "Unpaid Invoices",  SpotlightDataTemplate = "ARInvoiceSpotlightDataTemplate",  QueryGroupCode = "INVC", IndexOrder = 5, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_5.Id,FeatureUniqeCode= ARInvoiceFeature_5.FeatureUniqeCode, DefaultSortName = "DueDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn UnpaidInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ExpectedPaymentDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ExpectedPaymentDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn UnpaidInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter UnpaidInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "UnpaidInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "UnpaidInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query NotReadyInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_6.Id, NameTextCodeCode = ARInvoiceTextCode_6.Code, ObjectTableName = "ARInvoice", Code = "Not Ready Invoices",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl",
 			   EditWizardComponentPath = "./InvoiceModules/ARInvoice/Components/NewEntity/ARInvoiceTransferTemplate",
 			   QueryGroupCode = "INVC", IndexOrder = 6, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_6.Id,FeatureUniqeCode= ARInvoiceFeature_6.FeatureUniqeCode, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn NotReadyInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotReadyInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotReadyInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotReadyInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotReadyInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotReadyInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotReadyInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotReadyInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotReadyInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotReadyInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotReadyInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotReadyInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn NotReadyInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotReadyInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter NotReadyInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "NotReadyInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "NotReadyInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = NotReadyInvoicesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter NotReadyInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "NotReadyInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "NotReadyInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query MarkedasblockedfortransferQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_7.Id, NameTextCodeCode = ARInvoiceTextCode_7.Code, Code = "Marked as blocked for transfer",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl",
+			  Query MarkedasblockedfortransferQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_7.Id, NameTextCodeCode = ARInvoiceTextCode_7.Code, ObjectTableName = "ARInvoice", Code = "Marked as blocked for transfer",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl",
 			   EditWizardComponentPath = "./InvoiceModules/ARInvoice/Components/NewEntity/ARInvoiceTransferTemplate",
 			   QueryGroupCode = "INVC", IndexOrder = 7, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_7.Id,FeatureUniqeCode= ARInvoiceFeature_7.FeatureUniqeCode, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn MarkedasblockedfortransferQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MarkedasblockedfortransferQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MarkedasblockedfortransferQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MarkedasblockedfortransferQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MarkedasblockedfortransferQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MarkedasblockedfortransferQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MarkedasblockedfortransferQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MarkedasblockedfortransferQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn MarkedasblockedfortransferQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MarkedasblockedfortransferQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query ErrorInTransferInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_8.Id, NameTextCodeCode = ARInvoiceTextCode_8.Code, Code = "Error In Transfer Invoices",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl",
+			  Query ErrorInTransferInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_8.Id, NameTextCodeCode = ARInvoiceTextCode_8.Code, ObjectTableName = "ARInvoice", Code = "Error In Transfer Invoices",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl",
 			   EditWizardComponentPath = "./InvoiceModules/ARInvoice/Components/NewEntity/ARInvoiceTransferTemplate",
 			   QueryGroupCode = "INVC", IndexOrder = 8, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_8.Id,FeatureUniqeCode= ARInvoiceFeature_8.FeatureUniqeCode, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ErrorInTransferInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ErrorInTransferInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ErrorInTransferInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ErrorInTransferInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ErrorInTransferInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ErrorInTransferInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ErrorInTransferInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ErrorInTransferInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ErrorInTransferInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ErrorInTransferInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ErrorInTransferInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ErrorInTransferInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ErrorInTransferInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ErrorInTransferInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ErrorInTransferInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ErrorInTransferInvoicesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query OpenConstituentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_9.Id, NameTextCodeCode = ARInvoiceTextCode_9.Code, Code = "OpenConstituent",  QueryGroupCode = "INVC", IndexOrder = 9, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_9.Id,FeatureUniqeCode= ARInvoiceFeature_9.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn OpenConstituentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OpenConstituentQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter OpenConstituentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "OpenConstituentInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "OpenConstituentInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenConstituentQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ErrorInTransferInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query InvoicesFailedtoOpeninSATQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_10.Id, NameTextCodeCode = ARInvoiceTextCode_10.Code, Code = "Invoices Failed to Open in SAT",  QueryGroupCode = "INVC", IndexOrder = 10, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_10.Id,FeatureUniqeCode= ARInvoiceFeature_10.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenConstituentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_9.Id, NameTextCodeCode = ARInvoiceTextCode_9.Code, ObjectTableName = "ARInvoice", Code = "OpenConstituent",  QueryGroupCode = "INVC", IndexOrder = 9, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_9.Id,FeatureUniqeCode= ARInvoiceFeature_9.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenConstituentQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InvoicesFailedtoOpeninSATQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = InvoicesFailedtoOpeninSATQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenConstituentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "OpenConstituentInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "OpenConstituentInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenConstituentQuery.Id,QueryCode = OpenConstituentQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query OpenInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_11.Id, NameTextCodeCode = ARInvoiceTextCode_11.Code, Code = "OpenInvoices",  QueryGroupCode = "INVC", IndexOrder = 11, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARInvoiceFeature_11.Id,FeatureUniqeCode= ARInvoiceFeature_11.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InvoicesFailedtoOpeninSATQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_10.Id, NameTextCodeCode = ARInvoiceTextCode_10.Code, ObjectTableName = "ARInvoice", Code = "Invoices Failed to Open in SAT",  QueryGroupCode = "INVC", IndexOrder = 10, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_10.Id,FeatureUniqeCode= ARInvoiceFeature_10.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OpenInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ExpectedPaymentDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ExpectedPaymentDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OpenInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InvoicesFailedtoOpeninSATQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OpenInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "OpenInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "OpenInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenInvoicesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InvoicesFailedtoOpeninSATQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = InvoicesFailedtoOpeninSATQuery.Id,QueryCode = InvoicesFailedtoOpeninSATQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query OpenInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_11.Id, NameTextCodeCode = ARInvoiceTextCode_11.Code, ObjectTableName = "ARInvoice", Code = "OpenInvoices",  QueryGroupCode = "INVC", IndexOrder = 11, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARInvoiceFeature_11.Id,FeatureUniqeCode= ARInvoiceFeature_11.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn OpenInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "ExpectedPaymentDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "ExpectedPaymentDate" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn OpenInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter OpenInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "OpenInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "OpenInvoices" && d.ObjectTableId == ARInvoiceObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenInvoicesQuery.Id,QueryCode = OpenInvoicesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }

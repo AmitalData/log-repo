@@ -2278,5 +2278,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;BLUESNAPPAYMENTREPORT&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Report.Features.BLUESNAPPAYMENTREPORT&quot;"
+      FeatureDefaultText="&quot;Bluesnap Payments Report&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

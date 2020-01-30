@@ -64,6 +64,8 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
 
     }
 
+    WarehouseEntryId: string;
+
     IsStartFilter: boolean = false;
     Start(args) {
 
@@ -71,7 +73,8 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.IsFromFullWarehouseReleaseComponent = args.IsFromFullWarehouseReleaseComponent;
         this.warehouseReleasePM = args.WarehouseReleasePM;
         this.ViewModelTrigger = args.ViewModelTrigger;
- 
+        this.WarehouseEntryId = args.WarehouseEntryId;
+       
         if (this.warehouseReleasePM) {
             this.OldCustomerId = this.warehouseReleasePM.CustomerId;
         }
@@ -175,7 +178,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     IsDisableFilter: boolean = false;
     SetEnableProp() {
         if (this.UIProperties && this.IsLoadPage) {
-            if (this.WarehouseEntryPackagesLists.filter(d => d.IsSelected)[0]) {
+            if (this.WarehouseEntryPackagesLists.filter(d => d.IsSelected)[0] || this.WarehouseEntryId) {
                 this.UIProperties.SetEnabled("TransportModeId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("DirectionId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, false);
@@ -193,6 +196,9 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             }
         }
     }
+
+
+
 
 
     SaveButtonClicked() {
@@ -371,6 +377,10 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             var pmResponse: any = res;
             if (!pmResponse.HasError) {
                 this.AllWarehouseEntryPackagesLists = pmResponse.Result;
+                if (this.AllWarehouseEntryPackagesLists && this.WarehouseEntryId) {
+                    this.AllWarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists.filter(d => d.WarehouseEntryId == this.WarehouseEntryId);
+                }
+
                 this.ViewModelTrigger.AllWarehouseEntryPackagesLists = pmResponse.Result;
                 this.FilterWarehouseEntryPackageList();
             }

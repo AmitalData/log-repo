@@ -1,4 +1,4 @@
-﻿
+
 
 declare var System: any;
 declare var window: any;
@@ -10,8 +10,9 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
-
+import {CodeNameClass} from './CodeNameClass';
 import {AppTool} from '../../../Infrastructure/Tools';
+import { isNullOrUndefined } from 'util';
 @Component({
     moduleId: module.id,
     selector: 'InventoryReportFilterConmponent',
@@ -30,6 +31,12 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
     public ObjectTableName: string = "Report";
     ShipperConsigneeId: string;
     public DataContext: InventoryReportFilterConmponent = this;
+    public DaysinWarehouseFilterItemSource: Array<CodeNameClass>;
+    SelectedItemDaysinWarehouseFilter: CodeNameClass;
+    public DaysInWarehouse: number;
+    public ValidationErrorsList: string[];
+    public IsDaysInWarehouseRequired: boolean = false;
+
     constructor(fb: FormBuilder) {
         super();
         this.myForm = fb.group({});
@@ -38,16 +45,49 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-        this.RunReport(false);
+        //this.RunReport(false);
     }
 
     ngOnInit() {
 
-        
+        this.DaysinWarehouseFilterItemSource = [];
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Empty", ""));
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Equals","Equal to"));
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("NotEquals", "Not Equal to"));
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("GreaterThan", "Greater than"));
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("Lessthan", "Less than"));
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("GreaterThanOREqualTo", "Greater than or equal to"));
+        this.DaysinWarehouseFilterItemSource.push(new CodeNameClass("LessThanOrEqualTo", "Less than or equal to"));
+        this.SelectedItemDaysinWarehouseFilter = this.DaysinWarehouseFilterItemSource.filter(d => d.Code == "Empty")[0];
+        this.ValidationErrorsList = [];
+    }
+
+    onSelectedItemDaysinWarehouseFilterChange(item) {
+        this.SelectedItemDaysinWarehouseFilter = item;
+        if (item.Code == "Empty") {
+            this.IsDaysInWarehouseRequired = false;
+            this.ValidationErrorsList = [];
+        }
+        else {
+            this.IsDaysInWarehouseRequired = true;
+        }
+    }
+
+    onDaysInWarehouseChange(item) {
+        if (isNullOrUndefined(item))
+            this.ValidationErrorsList.push("Days In Warehouse Field Required");
+        else
+            this.ValidationErrorsList = [];
     }
 
 
     RunReport(isloading: boolean) {
+        if (this.IsDaysInWarehouseRequired && isNullOrUndefined(this.DaysInWarehouse)) {
+            this.ValidationErrorsList.push("Days In Warehouse Field Required");
+        }
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
 
         this.queryFilterItems = new Array<QueryFilterItem>();
 
@@ -77,7 +117,20 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
         }
-        
+        if (this.SelectedItemDaysinWarehouseFilter) {
+            if (this.SelectedItemDaysinWarehouseFilter.Code != "Empty") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "DaysInWarehouse";
+                this.queryFilterItem.FieldValue = this.DaysInWarehouse;
+                this.queryFilterItem.Operator = this.SelectedItemDaysinWarehouseFilter.Code;
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+        }
+
+
+       
+
 
 
 

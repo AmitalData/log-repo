@@ -192,6 +192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TTY",
@@ -256,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Registered",
@@ -320,6 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "RegistrationRequested",
@@ -384,6 +387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Website",
@@ -448,6 +452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -512,6 +517,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "English Name",
@@ -576,6 +582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
@@ -638,6 +645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
@@ -702,6 +710,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -766,6 +775,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "VatNumber",
@@ -829,6 +839,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountingCard",
@@ -892,6 +903,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PaymentTermId",
@@ -956,6 +968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PaymentTermEnglishName",
@@ -1021,6 +1034,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -1084,6 +1098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceCurrencyId",
@@ -1147,6 +1162,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "VatTypeId",
@@ -1209,6 +1225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BankName",
@@ -1271,6 +1288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BankAddress",
@@ -1333,6 +1351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Swift",
@@ -1395,6 +1414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountNumber",
@@ -1457,6 +1477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IBANNumber",
@@ -1521,6 +1542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ForwarderTenant",
@@ -1585,6 +1607,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsDirect",
@@ -1651,6 +1674,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CityName",
@@ -1718,6 +1742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryId",
@@ -1783,6 +1808,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryName",
@@ -1845,6 +1871,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FWBNotifyContacts",
@@ -1907,6 +1934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FHLNotifyContacts",
@@ -1969,6 +1997,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FFRNotifyContacts",
@@ -2033,6 +2062,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ReceivablesAccountingCard",
@@ -2097,6 +2127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PayablesAccountingCard",
@@ -2161,6 +2192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactName",
@@ -2225,6 +2257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactEmail",
@@ -2287,6 +2320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactPhone",
@@ -2315,31 +2349,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ParticipantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ParticipantTextCode_0.Id, NameTextCodeCode = ParticipantTextCode_0.Code, Code = "Participants",  QueryGroupCode = "PPCT", IndexOrder = 0, Tenant = 0, ObjectTableId = ParticipantObjectTable.Id, QuerySection = "Participant", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ParticipantFeature_0.Id,FeatureUniqeCode= ParticipantFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ParticipantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ParticipantTextCode_0.Id, NameTextCodeCode = ParticipantTextCode_0.Code, ObjectTableName = "Participant", Code = "Participants",  QueryGroupCode = "PPCT", IndexOrder = 0, Tenant = 0, ObjectTableId = ParticipantObjectTable.Id, QuerySection = "Participant", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ParticipantFeature_0.Id,FeatureUniqeCode= ParticipantFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ParticipantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 0, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 1, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 2, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 3, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "ForwarderTenant" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "ForwarderTenant" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "ForwarderTenant" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "ForwarderTenant" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 4, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 5, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 6, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 7, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 8, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Registered" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "Registered" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Registered" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "Registered" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 9, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "RegistrationRequested" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "RegistrationRequested" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "RegistrationRequested" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "RegistrationRequested" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 10, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id, IndexOrder = 11, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ParticipantObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == ParticipantObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -2527,7 +2561,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ParticipantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Participant" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ParticipantTextCode_ParticipantFSearchFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.F.SearchFields", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

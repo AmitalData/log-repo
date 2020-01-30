@@ -2384,6 +2384,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     private countIsHere = true;
     private oldSearchFields: string;
     private oldQueryId: string;
+    private oldQueryCode: string;
 
     editingCell: any = [];
     focusCell($event, rowIndex, colIndex) {

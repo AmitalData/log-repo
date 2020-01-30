@@ -599,7 +599,7 @@
     FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
-  <EventTypes>
+ <EventTypes>
     <EventType
       Code="&quot;OPEN&quot;"
       ObjectTableName="&quot;AccountingPeriod&quot;"
@@ -722,6 +722,12 @@
       LocalDefaultText="&quot;לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode Code="&quot;AccountingPeriod.O.CantCancelOpenMonth&quot;" DefaultText="&quot;Can’t cancel opened month, There are transactions that already registered for this month&quot;" LocalDefaultText="&quot;לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+
+    <TextCode Code="&quot;AccountingPeriod.O.CantOpenInvoiceMonth&quot;" DefaultText="&quot;Invoice month cannot be opened, The accounting month must first be opened&quot;" LocalDefaultText="&quot;לא ניתן לפתוח חודש חשבונית , יש לפתוח ראשית את החודש החשבונאי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+
+    <TextCode Code="&quot;AccountingPeriod.O.CantCancelInvoiceClosedMonth&quot;" DefaultText="&quot;Cannot open an invoice's closed month which is less than accounting period's closed month.&quot;" LocalDefaultText="&quot;לא ניתן לפתוח חודש חשבונית לתקופה קודמת לחודש חשבונאי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

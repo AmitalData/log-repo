@@ -38,11 +38,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         return textCodeCode;
                     }
                 );
-                JournalValidator.OverrideITextCodeTranslator = textCodeTranslatorFake;
+                JournalValidatorNotStatic.OverrideITextCodeTranslator = textCodeTranslatorFake;
 
 
 
-                JournalValidator.OverrideGetLoggedContactFunc =
+                JournalValidatorNotStatic.OverrideGetLoggedContactFunc =
                     new Func<int, BL.CommonDataModel.EntityPMs.ContactPM>(
                         (tenant) => new BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true }
                      );
@@ -55,7 +55,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     //var actual = Validator.TryValidateObject(entityPM, new ValidationContext(entityPM), validationResults);
 
                     System.ComponentModel.DataAnnotations.ValidationContext validationcontext = new System.ComponentModel.DataAnnotations.ValidationContext(entityPM);
-                    JournalValidator.OverrideGetLoggedContactFunc =
+                    JournalValidatorNotStatic.OverrideGetLoggedContactFunc =
                 new Func<int, BL.CommonDataModel.EntityPMs.ContactPM>(
                     (tenant) => new BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true }
                  );
@@ -73,20 +73,20 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     }
                     finally
                     {
-                        JournalValidator.OverrideGetLoggedContactFunc =
+                        JournalValidatorNotStatic.OverrideGetLoggedContactFunc =
                 null;
                     }
                     
                 }
                 finally
                 {
-                    JournalValidator.OverrideGetLoggedContactFunc = null;
+                    JournalValidatorNotStatic.OverrideGetLoggedContactFunc = null;
 
                 }
             }
             finally
             {
-                JournalValidator.OverrideITextCodeTranslator = null;
+                JournalValidatorNotStatic.OverrideITextCodeTranslator = null;
             }
         }
 

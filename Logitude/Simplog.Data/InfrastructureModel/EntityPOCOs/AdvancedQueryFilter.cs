@@ -9,6 +9,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
+        public string QueryCode { get; set; }
         public int Tenant { get; set; }
         public string QueryId { get; set; }
         public string ObjectFieldId { get; set; }

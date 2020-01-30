@@ -74,10 +74,9 @@ namespace MetaDataGenerator
 				string commdir = dir + "CommonDataModel";
 				d = new DirectoryInfo(commdir);
 				string[] commFiles = d.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+                
 
-
-
-				string modelName = cmbModels.SelectionBoxItem.ToString();
+                string modelName = cmbModels.SelectionBoxItem.ToString();
 				switch (modelName)
 				{
 					case "Shipment":
@@ -125,7 +124,14 @@ namespace MetaDataGenerator
 								  select a).ToList();
 
 						break;
-					default:
+                    case "None":
+                        tables = (from a in rep.context.ObjectTables
+                                  where !a.Name.Contains(".Customs")
+                                  && string.IsNullOrEmpty(a.ClientModuleName)
+                                  select a).ToList();
+
+                        break;
+                    default:
 						tables = (from a in rep.context.ObjectTables
 								  where !a.Name.Contains(".Customs")
 								  && a.ClientModuleName == modelName

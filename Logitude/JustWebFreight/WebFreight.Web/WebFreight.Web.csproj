@@ -1737,6 +1737,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\PriceStepViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\QueueMessageMoreDetailsViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\RatesTableViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\RuleUpdateHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SchedulerProcedureViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SharedLogisticsSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TaskSchedulerHistoryViewsController.Generated.cs" />
@@ -1908,12 +1909,10 @@
     <Compile Include="Controllers\SystemLogsModel\Extended\FileLoggerController.cs" />
     <Compile Include="Controllers\SystemLogsModel\PerformanceLogsController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Extended\TariffVersionExtendedController.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffLinesContainersPriceViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffController.Generated.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffLinesContainersPriceController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffSettingController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
@@ -1966,6 +1965,7 @@
     <Compile Include="Controllers\WebDomainControllers\PartnersDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\GlobalDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuickbooksDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\QuoteDashboardController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ReportsDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ClockTimeGeneralDomainController.cs" />
@@ -2027,6 +2027,7 @@
     <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
+    <Compile Include="DataProviders\BluesnapPaymentsDataProvider.cs" />
     <Compile Include="DataProviders\FlightBookingsManifestDataProvider.cs" />
     <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
@@ -2306,6 +2307,7 @@
     <Compile Include="DataProviders\PickUpDeliveryLine.Shared.cs" />
     <Compile Include="DataProviders\RevenueExpenseDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentAssemblyLine.Shared.cs" />
+    <Compile Include="DataProviders\RacingQuoteDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipperReturnsDataProvider.cs" />
     <Compile Include="DataProviders\UnicargoExportDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentDetailsDataProvider.Shared.cs" />
@@ -2345,6 +2347,7 @@
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerOpenFilesAmountController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
+    <Compile Include="ExternalAPIs\V1\GLAccountMoreDataController.cs" />
     <Compile Include="ExternalAPIs\V1\MasterController.cs" />
     <Compile Include="ExternalAPIs\V1\JournalController.cs" />
     <Compile Include="ExternalAPIs\V1\PODBlobInfoController.cs" />
@@ -2368,6 +2371,7 @@
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
+    <Compile Include="Helpers\AutomationModel\AutomationMetaDataUpdateService.cs" />
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
@@ -2508,6 +2512,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierAreasPortUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierAreaUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargeTypeAccountingUpdateClass.cs" />
@@ -2533,6 +2538,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerDepositionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerFieldsUpdateSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerOpenFilesAmountUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerProductActualDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerProductLocationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerSalesNoteUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerSizeUpdateClass.cs" />
@@ -2605,6 +2612,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RestrictionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RoleUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\SharedLogisticsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\SharedManifestsStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ShippingAgentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ShippingLineUpdateClass.cs" />
@@ -2612,6 +2620,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\SystemDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TarrifChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TarrifFromToTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TarrifFromToUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TarrifHeaderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TarrifStepUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TarrifTypeUpdateClass.cs" />
@@ -2806,6 +2815,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapTransactionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\HelpResourceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\LogitudeLeadUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentChannelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentCurrencyUpdateClass.cs" />
@@ -2818,18 +2828,23 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\TenantTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\WebhookKeysUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\GlobalModelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\APILogsDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\APILogsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\BusinessHoursHolidayUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\BusinessHourUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ChargesGroupUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CounterDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomPickListUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DescriptionOfGoodsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DirectionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWCategoriesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWObjectFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWObjectTableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EmailAlertSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EntityStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EventTypeCategoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EventTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\FollowUpUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\GeneralUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\IATACodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\InboundEmailLineUpdateClass.cs" />
@@ -2838,11 +2853,16 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueueMessageMoreDetailsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RatesTableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RuleUpdateHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerLogsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerProcedureUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SharedLogisticsInvitationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TaskSchedulerHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TasksSchedulerUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TextCodeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TraceEventUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TransportModeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\VolumeUnitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\InfrastructureModelUpdateClass.cs" />
@@ -2890,6 +2910,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\SATPaymentMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\SATTransferStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\InvoiceModelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\BorderTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\MarkUpTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteClosingReasonUpdateClass.cs" />
@@ -2899,12 +2920,20 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuotePriceStepsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteRatingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSaleChargeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSalesTotalUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteStageUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateSectionTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateSectionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateTableDesignUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateTextCodeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateTextDesignUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTotalVATUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteVATsTotalUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\QuoteModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AccountingInformationIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBAdditionalHandlingInfoUpdateClass.cs" />
@@ -2931,6 +2960,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\MessagingStockUsageHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\OBLTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\OtherParticipantIdUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\PickUpDeliveryPackageHarmonizeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\PickUpDeliveryTransportModeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentAssemblyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentAWBPrintOnlyUpdateClass.cs" />
@@ -2940,6 +2970,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomsMessageTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomsTransmissionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentLevelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentOrderPackageUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPackageHarmonizeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPackageItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPayableLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPayableStatusUpdateClass.cs" />
@@ -3030,6 +3063,7 @@
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx" />
+    <Content Include="Monitoring\SATCommunicationWaitingStatus.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
@@ -4450,6 +4484,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\UserIDNumberRequestWcfService.svc" />
     <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
     <Content Include="WcfApi\DepositionRequestWcfService.svc" />
     <Content Include="WcfApi\DocumentInWcfService.svc" />
@@ -5191,6 +5226,13 @@
     <Compile Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx.designer.cs">
       <DependentUpon>ReportExecutionRunTimeMonitoring.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.cs">
+      <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.designer.cs">
+      <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\StorageBackup.aspx.cs">
       <DependentUpon>StorageBackup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5271,6 +5313,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
@@ -5964,6 +6008,9 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\UserIDNumberRequestWcfService.svc.cs">
+      <DependentUpon>UserIDNumberRequestWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\DeclarationApprovalRequestWcfService.svc.cs">
       <DependentUpon>DeclarationApprovalRequestWcfService.svc</DependentUpon>
     </Compile>
@@ -6016,6 +6063,7 @@
     <Compile Include="WcfApi\ICustomerAdditionalServiceDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerCompetitorDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerDWWcfService.cs" />
+    <Compile Include="WcfApi\IUserIDNumberRequestWcfService.cs" />
     <Compile Include="WcfApi\IDeclarationApprovalRequestWcfService.cs" />
     <Compile Include="WcfApi\IDepositionRequestWcfService.cs" />
     <Compile Include="WcfApi\IDocumentInWcfService.cs" />

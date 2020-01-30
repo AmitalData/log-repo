@@ -585,8 +585,17 @@ namespace CommunicationWorkerRole
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoConsulta.Xml);
+
 						CreateSATPaymentDocument(payment, xmlfile, true);
 
+						waitingCommLog.CommunicationStatusTypeCode = "D";
+						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+						communicationLogRep.Update(waitingCommLog);
+						communicationLogRep.SubmitChanges();
+						
 						EventTracer.CreateTraceEvent(new EventTracerArgs()
 						{
 							EntityId = waitingCommLog.EntityId,
@@ -873,7 +882,7 @@ namespace CommunicationWorkerRole
 				//ObjectTableId = arObjectTable.Id,
 				//EntityNumber = invoice.InvoiceNumber,
 				EntityId = invoice.MainEntityId,
-				ObjectTableId = entityObjectTable.Id,
+				//ObjectTableId = entityObjectTable.Id,
 				EntityNumber = invoice.MainEntityReference,
 
 				ChildEntityId = invoice.Id,
@@ -881,6 +890,10 @@ namespace CommunicationWorkerRole
 				ChildEntityReference = invoice.InvoiceNumber,
 
 			};
+			if (!invoice.IsConsolidationInvoice)
+			{
+				extDocPM.ObjectTableId = entityObjectTable.Id;
+			}
 
 			documentsService.Create(extDocPM, fileData, systemUser.Id, false);
 

@@ -672,13 +672,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InboundEmailsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InboundEmailTextCode_0.Id, NameTextCodeCode = InboundEmailTextCode_0.Code, Code = "InboundEmails",  QueryGroupCode = "IEHI", IndexOrder = 0, Tenant = 0, ObjectTableId = InboundEmailObjectTable.Id, QuerySection = "InboundEmail", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InboundEmailFeature_0.Id,FeatureUniqeCode= InboundEmailFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InboundEmailsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InboundEmailTextCode_0.Id, NameTextCodeCode = InboundEmailTextCode_0.Code, ObjectTableName = "InboundEmail", Code = "InboundEmails",  QueryGroupCode = "IEHI", IndexOrder = 0, Tenant = 0, ObjectTableId = InboundEmailObjectTable.Id, QuerySection = "InboundEmail", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InboundEmailFeature_0.Id,FeatureUniqeCode= InboundEmailFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InboundEmailsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id, IndexOrder = 0, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InboundEmailsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InboundEmailsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id, IndexOrder = 1, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InboundEmailsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InboundEmailsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id, IndexOrder = 2, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "ObjectTableName" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "ObjectTableName" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InboundEmailsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "ObjectTableName" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "ObjectTableName" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -772,7 +772,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InboundEmailObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InboundEmail" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InboundEmailTextCode_InboundEmailOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.O.TableDescription", DefaultText = "Inbound Email For Testing!.",LocalDefaultText = null, ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

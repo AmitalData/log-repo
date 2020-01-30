@@ -23,11 +23,18 @@ namespace Logitude.DXMLGenerator.Models
         private int GeneratedPathsCounter = 0;
         private string ErrorsData = "";
 
+        private List<ColumnDefaultValue> ColumnsDefaultValues;
+        private List<Index> Indexes;
+        private List<UniqueConstraint> UniqueConstraints;
+
         public DXMLFilesGenerator(string connectionString, string errorsFileName)
         {
             ConnectionString = connectionString;
             ErrorsFileName = errorsFileName;
             BuildExcludedTablesList();
+            ReadColumnsDefaultValues();
+            ReadIndexes();
+            ReadUniqueConstraints();
         }
 
         public void GenerateDXMLFiles()
@@ -167,6 +174,7 @@ namespace Logitude.DXMLGenerator.Models
                             Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? Convert.ToInt32(reader["Size"].ToString()) : 0,
                             Precision = !String.IsNullOrEmpty(reader["Precision"].ToString()) ? Convert.ToInt32(reader["Precision"].ToString()) : 0,
                             Scale = !String.IsNullOrEmpty(reader["Scale"].ToString()) ? Convert.ToInt32(reader["Scale"].ToString()) : 0,
+                            DefaultValue = GetColumnDefinitionDefaultValue(table.Name, reader["ColumnName"].ToString(), (reader["Nullable"].ToString() == "YES"), GetColumnDefinitionDataType(reader["DataType"].ToString())),
                             Constraints = new ConstraintsDefinition
                             {
                                 Nullable = (reader["Nullable"].ToString() == "YES")
@@ -199,7 +207,9 @@ namespace Logitude.DXMLGenerator.Models
                     Schema = table.Schema,
                     DBType = GetDatabaseType(table.DBName),
                     Columns = columnsDefinitions,
-                    Relations = GetTableRelations(table.Name)
+                    Relations = GetTableRelations(table.Name),
+                    Indexes = GetTableIndexes(table.Name),
+                    UniqueConstraints = GetTableUniqueConstraints(table.Name)
                 };
             }
             catch (Exception)
@@ -481,7 +491,7 @@ namespace Logitude.DXMLGenerator.Models
             try
             {
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                string filePath = Path.Combine(projectDirectory, @"ExcludedTablesMap.txt");
+                string filePath = Path.Combine(projectDirectory, @"Data\ExcludedTablesMap.txt");
                 List<string> excludedTablesList = File.ReadLines(filePath).ToList();
                 if (excludedTablesList.Count() > 0)
                 {
@@ -546,6 +556,127 @@ namespace Logitude.DXMLGenerator.Models
             }
 
             return processedRelations;
+        }
+
+        private string GetColumnDefinitionDefaultValue(string tableName, string columnName, bool nullable, string type)//////
+        {
+            if (nullable)
+            {
+                return null;
+            }
+
+            if(!nullable && type == "bit")
+            {
+                return null;
+            }
+
+            ColumnDefaultValue columnDefaultValue = ColumnsDefaultValues.Where(c => c.TableName == tableName && c.ColumnName == columnName).FirstOrDefault();
+
+            if(columnDefaultValue != null)
+            {
+                return columnDefaultValue.DefaultValue;
+            }
+
+            return null;
+        }
+
+        private void ReadColumnsDefaultValues()
+        {
+            Console.WriteLine("Reading Default Values ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\DefaultValues.csv");
+
+            List<ColumnDefaultValue> columnsDefaultValues = File.ReadAllLines(filePath).Select(l => new ColumnDefaultValue
+            {
+                TableName = l.Split(',')[0],
+                ColumnName = l.Split(',')[1],
+                DefaultValue = FormatDefaultValue(l.Split(',')[2])
+            }).ToList();
+
+            ColumnsDefaultValues = columnsDefaultValues;
+        }
+
+        private string FormatDefaultValue(string defaultValue)
+        {
+            if (String.IsNullOrEmpty(defaultValue))
+            {
+                return null;
+            }
+            if (defaultValue.ToLower().Contains("getdate()"))
+            {
+                return "CurrentDate";
+            }
+            if (defaultValue.Contains("'"))
+            {
+                return "'" + defaultValue.Split('\'')[1] + "'";
+            }
+
+            return defaultValue.Replace("(", String.Empty).Replace(")", String.Empty);
+        }
+
+        private void ReadIndexes()
+        {
+            Console.WriteLine("Reading Indexes ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\Indexes.csv");
+            
+            List<Index> indexes = File.ReadAllLines(filePath).Select(l => new Index
+            {
+                TableName = l.Split(',')[0],
+                Columns = l.Split(',')[1].Replace("; ", ","),
+                IncludedColumns = (String.IsNullOrEmpty(l.Split(',')[2]) || l.Split(',')[2] == "NULL") ? null : l.Split(',')[2].Replace("; ", ",")
+            }).ToList();
+
+            Indexes = indexes;
+        }
+
+        private void ReadUniqueConstraints()
+        {
+            Console.WriteLine("Reading Unique Constraints ...");
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Data\UniqueConstraints.csv");
+
+            List<UniqueConstraint> uniqueConstraints = File.ReadAllLines(filePath).Select(l => new UniqueConstraint
+            {
+                TableName = l.Split(',')[0],
+                Columns = l.Split(',')[1].Replace("; ", ",")
+            }).ToList();
+
+            UniqueConstraints = uniqueConstraints;
+        }
+        
+        private List<IndexDefinition> GetTableIndexes(string tableName)
+        {
+            if(Indexes.Where(i => i.TableName.ToLower() == tableName.ToLower()).Any())
+            {
+                List<IndexDefinition> indexDefinitions = Indexes.Where(i => i.TableName.ToLower() == tableName.ToLower()).Select(i => new IndexDefinition
+                {
+                    Columns = i.Columns,
+                    Include = i.IncludedColumns
+                }).ToList();
+
+                return indexDefinitions;
+            }
+
+            return new List<IndexDefinition>();
+        }
+        
+        private List<UniqueConstraintDefinition> GetTableUniqueConstraints(string tableName)
+        {
+            if (UniqueConstraints.Where(u => u.TableName.ToLower() == tableName.ToLower()).Any())
+            {
+                List<UniqueConstraintDefinition> uniqueConstraintDefinitions = UniqueConstraints.Where(u => u.TableName.ToLower() == tableName.ToLower()).Select(u => new UniqueConstraintDefinition
+                {
+                    Columns = u.Columns
+                }).ToList();
+
+                return uniqueConstraintDefinitions;
+            }
+
+            return new List<UniqueConstraintDefinition>();
         }
 
         private void ExportErrorsData()

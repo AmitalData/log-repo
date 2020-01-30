@@ -628,6 +628,7 @@
     HasDataBaseField="false"
     NoMetaDataField="true" />
   <EventTypes />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

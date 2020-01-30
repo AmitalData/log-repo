@@ -1,8 +1,8 @@
-﻿<div class="TabHolder" style="overflow-x:auto">
+<div class="TabHolder" style="overflow-x:auto">
     <div class="TabControl" style="position: absolute; height: calc(100% - 20px);width: calc(100% - 20px)">
         <div class="TabControlHead">
-            <ul >
-                <li [class.Selected]="SelectedTabCode == 'BCD'" (click)="SelectedTabCode = 'BCD'" >
+            <ul>
+                <li [class.Selected]="SelectedTabCode == 'BCD'" (click)="SelectedTabCode = 'BCD'">
                     <div class="InnerChild">
                         By Create Date
                     </div>
@@ -11,23 +11,30 @@
                 <li [class.Selected]="SelectedTabCode == 'INP'" (click)="SelectedTabCode = 'INP'">
                     <div class="InnerChild">
                         In Progress
-                        <div class="TabSquareIcon" ></div>
+                        <div class="TabSquareIcon"></div>
                     </div>
                 </li>
 
                 <li [class.Selected]="SelectedTabCode == 'COP'" (click)="SelectedTabCode = 'COP'">
                     <div class="InnerChild">
                         Company Performance
-                        <div class="TabSquareIcon" ></div>
+                        <div class="TabSquareIcon"></div>
                     </div>
-                </li>              
+                </li>
+
+                <li [class.Selected]="SelectedTabCode == 'QOT'" (click)="SelectedTabCode = 'QOT'">
+                    <div class="InnerChild">
+                        Quotes
+                        <div class="TabSquareIcon"></div>
+                    </div>
+                </li>
             </ul>
         </div>
 
         <div class="TabControlBody">
 
             <!-- ByCreateDate -->
-            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'BCD'" >
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'BCD'">
                 <div class="LocationDirective" LocationDirective Code="BCD"></div>
             </div>
 
@@ -39,8 +46,12 @@
             <!-- Company Performance -->
             <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'COP'">
                 <div class="LocationDirective" LocationDirective Code="COP"></div>
-            </div>          
+            </div>
 
+            <!-- Quotes -->
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'QOT'">
+                <div class="LocationDirective" LocationDirective Code="QOT"></div>
+            </div>
         </div>
     </div>
 

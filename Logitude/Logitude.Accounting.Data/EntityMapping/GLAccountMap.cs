@@ -148,6 +148,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.MinimumInterestInvoiceBilling).HasColumnName("MinimumInterestInvoiceBilling");
 
             this.Property(t => t.InterestCreditLimit).HasColumnName("InterestCreditLimit").HasPrecision(18, 2);
+
+            this.Property(t => t.NameForPrintingCheques).HasColumnName("NameForPrintingCheques").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

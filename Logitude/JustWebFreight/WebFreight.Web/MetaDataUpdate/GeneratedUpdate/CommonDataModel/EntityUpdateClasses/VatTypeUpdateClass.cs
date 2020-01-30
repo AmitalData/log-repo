@@ -1157,128 +1157,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "PayablesExternalId",
-					  						OldFieldName =  "PayablesExternalId",
-					  						ObjectTableName =  "VatType",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  25,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PayablesExternalId",
-					  						ListPropertyPath =  "PayablesExternalId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "VatType",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PayablesExternalId",
-					  						DefaultText =  "Payables External Id",
-					  						ListFieldLable =  "PayablesExternalIdListLable",
-					  						ListLableDefaultText =  "Payables External Id",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ReceivablesExternalId",
-					  						OldFieldName =  "ReceivablesExternalId",
-					  						ObjectTableName =  "VatType",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  25,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ReceivablesExternalId",
-					  						ListPropertyPath =  "ReceivablesExternalId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "VatType",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ReceivablesExternalId",
-					  						DefaultText =  "Receivables External Id",
-					  						ListFieldLable =  "ReceivablesExternalIdListLable",
-					  						ListLableDefaultText =  "Receivables External Id",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -1300,17 +1178,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query VattypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VatTypeTextCode_0.Id, NameTextCodeCode = VatTypeTextCode_0.Code, Code = "Vat types",  QueryGroupCode = "VATT", IndexOrder = 0, Tenant = 0, ObjectTableId = VatTypeObjectTable.Id, QuerySection = "VatType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VatTypeFeature_0.Id,FeatureUniqeCode= VatTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query VattypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VatTypeTextCode_0.Id, NameTextCodeCode = VatTypeTextCode_0.Code, ObjectTableName = "VatType", Code = "Vat types",  QueryGroupCode = "VATT", IndexOrder = 0, Tenant = 0, ObjectTableId = VatTypeObjectTable.Id, QuerySection = "VatType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VatTypeFeature_0.Id,FeatureUniqeCode= VatTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn VattypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id, IndexOrder = 0, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VattypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id, IndexOrder = 1, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VattypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id, IndexOrder = 2, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VattypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id, IndexOrder = 3, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VattypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id, IndexOrder = 4, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = VatTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VatTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VatTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 

@@ -1028,15 +1028,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query BankAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankAccountLiteTextCode_0.Id, NameTextCodeCode = BankAccountLiteTextCode_0.Code, Code = "Bank Accounts",  QueryGroupCode = "BALT", IndexOrder = 0, Tenant = 0, ObjectTableId = BankAccountLiteObjectTable.Id, QuerySection = "BankAccountLite", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankAccountLiteFeature_0.Id,FeatureUniqeCode= BankAccountLiteFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query BankAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankAccountLiteTextCode_0.Id, NameTextCodeCode = BankAccountLiteTextCode_0.Code, ObjectTableName = "BankAccountLite", Code = "Bank Accounts",  QueryGroupCode = "BALT", IndexOrder = 0, Tenant = 0, ObjectTableId = BankAccountLiteObjectTable.Id, QuerySection = "BankAccountLite", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankAccountLiteFeature_0.Id,FeatureUniqeCode= BankAccountLiteFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn BankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = BankAccountLiteObjectFields.Where(d => d.FieldName == "AccountNumber" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountLiteObjectFields.Where(d => d.FieldName == "AccountNumber" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BankAccountLiteObjectFields.Where(d => d.FieldName == "AccountNumber" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountLiteObjectFields.Where(d => d.FieldName == "AccountNumber" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id, IndexOrder = 1, ObjectFieldId = BankAccountLiteObjectFields.Where(d => d.FieldName == "BankCode" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountLiteObjectFields.Where(d => d.FieldName == "BankCode" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BankAccountLiteObjectFields.Where(d => d.FieldName == "BankCode" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountLiteObjectFields.Where(d => d.FieldName == "BankCode" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id, IndexOrder = 2, ObjectFieldId = BankAccountLiteObjectFields.Where(d => d.FieldName == "BranchNumber" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountLiteObjectFields.Where(d => d.FieldName == "BranchNumber" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BankAccountLiteObjectFields.Where(d => d.FieldName == "BranchNumber" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountLiteObjectFields.Where(d => d.FieldName == "BranchNumber" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id, IndexOrder = 3, ObjectFieldId = BankAccountLiteObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountLiteObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = BankAccountLiteObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountLiteObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == BankAccountLiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1183,14 +1183,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   ObjectTable BankAccountLiteObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankAccountLite" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode BankAccountLiteTextCode_GeneralMCACCBankAccountLites = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.BankAccountLites", DefaultText = "Bank Accounts",LocalDefaultText = null, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+	
+		   TextCode BankAccountLiteTextCode_BankAccountLiteOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccountLiteDescription", DefaultText = "Manage your business Bank Accounts", LocalDefaultText = null, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
 
-    
 
-   }
+
+		}
+
+
+
+	}
     
 }
 	 

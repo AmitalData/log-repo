@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Filing Inbox Attachment",
-			      				    Code =  "f87d",
+			      				    Code =  "5101",
 			      				    Name =  "FilingInboxAttachment",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",

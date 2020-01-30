@@ -937,14 +937,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CustomerTenantAccessCardObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccessCard" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CustomerTenantAccessCardTextCode_CustomerTenantAccessCardTipNewCardTip = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessCard.Tip.NewCardTip", DefaultText = " Press ''+'' button to connect a customer to that request.",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessCardObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
 	    
 }
 

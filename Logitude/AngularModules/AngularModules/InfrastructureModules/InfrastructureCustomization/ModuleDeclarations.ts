@@ -1,4 +1,4 @@
-﻿import {RulesMainComponent} from './Components/Customization/RulesComponents/RulesMainComponent';
+import {RulesMainComponent} from './Components/Customization/RulesComponents/RulesMainComponent';
 import {AddEditRuleComponent} from './Components/Customization/RulesComponents/AddEditRuleComponent';
 import {ObjectFieldsSearchComponent} from './Components/Customization/RulesComponents/ObjectFieldsSearchComponent';
 import {AddRuleFieldComponent} from './Components/Customization/RulesComponents/AddRuleFieldComponent';
@@ -15,6 +15,7 @@ import {TranslationComponent} from './Components/Translations/TranslationCompone
 import {DefaultTranslationComponent} from './Components/Translations/DefaultTranslationComponent';
 import {ScreenLayoutComponent} from './Components/Customization/ScreenLayoutComponent';
 import {LanguageSettingsComponent} from './Components/LanguageSettings/LanguageSettingsComponent';
+import { RuleUpdateHistoryComponent } from './Components/Customization/RulesComponents/RuleUpdateHistoryComponent';
 
 export const Components =
     [
@@ -34,6 +35,7 @@ export const Components =
         ObjectFieldsSearchComponent,
         AddRuleFieldComponent,
         LanguageSettingsComponent,
+        RuleUpdateHistoryComponent,
 
     ];
 export const ControlsComponents =
@@ -64,6 +66,7 @@ export class ModuleDeclarations {
             case "AddRuleFieldComponent": { myResult = AddRuleFieldComponent; break; }
             case "ScreenLayoutComponent": { myResult = ScreenLayoutComponent; break; }
             case "LanguageSettingsComponent": { myResult = LanguageSettingsComponent; break; }
+            case "RuleUpdateHistoryComponent": { myResult = RuleUpdateHistoryComponent; break; }
 
         }
 

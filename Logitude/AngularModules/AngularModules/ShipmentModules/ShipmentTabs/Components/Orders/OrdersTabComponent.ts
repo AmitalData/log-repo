@@ -186,7 +186,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
 
         else {
             this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.WtMsrUnitCode.Short");
-            this.BookingChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.BookingChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
 

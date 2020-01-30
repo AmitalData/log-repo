@@ -1,0 +1,278 @@
+﻿Translations,Tenant,NULL
+TransportModes,AutomaticLastUpdateDate,NULL
+DocumentsFilings,EntityId,NULL
+DocumentsFilings,Tenant; EntityId; IsRequested,NULL
+DocumentsFilings,Tenant; EntityId; IsDeleted,NULL
+Journals,IsLedgerCreated,NULL
+ShipmentCarrierStatuses,ShipmentId,NULL
+Contacts,Tenant,NULL
+Contacts,Tenant; Email,NULL
+Contacts,AutomaticLastUpdateDate,NULL
+ShipmentComputedFields,AutomaticLastUpdateDate,NULL
+ContactsUnseenEntities,Tenant; ContactId; ObjectTableId,NULL
+ContactsUnseenEntities,Tenant; ContactId; ObjectTableId; EntityId,NULL
+SupplierInvoiceItemVehicleAdds,DeclarationId; InvoiceCounterKey; InvoiceItemLineNumber; LineNumber,NULL
+Queries,OriginalQueryId,NULL
+ShipmentLevels,AutomaticLastUpdateDate,NULL
+LogitudeMessagesTransmissionLogs,AWBNumber; SentDate; Tenant,NULL
+DWHSettings,AutomaticLastUpdateDate,NULL
+ShipmentMasterDatas,Tenant; Master; InterlineId,NULL
+ShipmentMasterDatas,Master; InterlineId,NULL
+ShipmentMasterDatas,AutomaticLastUpdateDate,NULL
+QueryColumns,ObjectFieldId,NULL
+QueryColumns,QueryId,NULL
+QueryColumns,Tenant,NULL
+QueryColumns,Tenant,NULL
+QueryColumns,Tenant; UserId,NULL
+DocumentTypes,Tenant,NULL
+Users,FreelancerId,NULL
+Users,AutomaticLastUpdateDate,NULL
+SharedLogisticsContactLastLogins,ContactId,NULL
+ShipmentPayables,VendorId,NULL
+ShipmentPayables,ChargesTypeId,NULL
+ShipmentPayables,CurrencyId,NULL
+ShipmentPayables,DueTypeCode,NULL
+ShipmentPayables,MeasurementId,NULL
+ShipmentPayables,ShipmentPayableLineStatusCode,NULL
+ShipmentPayables,PrepaidCollectId,NULL
+ShipmentPayables,ShipmentId,NULL
+ShipmentPayables,UpdateByUserId,NULL
+QueueMessageMoreDetails,Field1,NULL
+QueueMessageMoreDetails,Field2,NULL
+QueueMessageMoreDetails,CreateDateTime,NULL
+QueueMessageMoreDetails,CreateDateTime,NULL
+Countries,AutomaticLastUpdateDate,NULL
+Vessels,AutomaticLastUpdateDate,NULL
+BankDeposits,CashBookId,NULL
+BankDeposits,CreatedByUserId,NULL
+BankDeposits,DepositBankAccountId,NULL
+BankDeposits,DepositCurrencyId,NULL
+BankDeposits,UpdatedByUserId,NULL
+MoveTypes,AutomaticLastUpdateDate,NULL
+EntityLastActivities,EntityId,NULL
+EntityLastActivities,Tenant; UserId; ObjectTableId,NULL
+ObjectFieldModifications,ObjectFieldId,NULL
+Shipments,MasterShipmentDataId,NULL
+Shipments,Tenant; CustomFileId,NULL
+Shipments,Tenant; CustomFileNumber,NULL
+Shipments,Tenant; IsOperationalClosed,NULL
+Shipments,Tenant; CreateDateTime,NULL
+Shipments,Tenant; TransportModeId; DirectionId; IsCancelled; ShipmentLevelCode,Id; StatusId; MasterShipmentDataId
+Shipments,Tenant; IsCancelled; CarrierLastStatusDate,NULL
+Shipments,StatusDate,NULL
+Shipments,QuoteId,NULL
+Shipments,AutomaticLastUpdateDate,NULL
+Shipments,Tenant; ShipmentNumber,NULL
+Shipments,ForwardingPartnerId,NULL
+Shipments,SecurityKey; Tenant; IsCancelled,NULL
+ObjectFields,ListTextCodeId,NULL
+ObjectFields,ShortNameTextCodeId,NULL
+ObjectFields,HelpTextCodeId,NULL
+ObjectFields,FullNameTextCodeId,NULL
+ObjectFields,Tenant,NULL
+ObjectFields,Tenant; ObjectTableId,NULL
+ObjectFields,AutomaticLastUpdateDate,NULL
+ObjectFields,FieldCode,NULL
+Currencies,AutomaticLastUpdateDate,NULL
+EntityStatus,AutomaticLastUpdateDate,NULL
+ShipmentTypes,AutomaticLastUpdateDate,NULL
+CustomerAccountManagerByProducts,Tenant; CustomerId,NULL
+Quotes,Tenant; OpenDate,NULL
+Quotes,OpportunityId,NULL
+CustomerActualDataHistory,Tenant,NULL
+CustomerActualDataHistory,Tenant; StartDateTime,NULL
+ObjectTableLastUpdates,Tenant; LastUpdateDate,NULL
+EventTypes,Tenant,NULL
+EventTypes,Tenant; Code; ObjectTableId,NULL
+EventTypes,Tenant; Code; ObjectTableId,NULL
+ObjectTableRules,TriggerFieldId,NULL
+Bookings,Tenant; BookingStatusCode,NULL
+Addresses,Tenant; ExternalId,NULL
+Addresses,AutomaticLastUpdateDate,NULL
+ObjectTables,DescriptionTextCodeId,NULL
+ObjectTables,HeaderScreenId,NULL
+AdvancedQueryFilters,QueryId,NULL
+SpecialServicesTypes,AutomaticLastUpdateDate,NULL
+Branches,AutomaticLastUpdateDate,NULL
+AirlineMessagingRules,RuleFieldId,NULL
+Features,FeatureUniqeCode,NULL
+States,AutomaticLastUpdateDate,NULL
+AirlineStatistics,Tenant; BookingId,NULL
+AirlineStatistics,Tenant; ShipmentId,NULL
+DocumentTypeCustomsDatas,CustomsDoucumentTypeCode,NULL
+APILogs,Tenant; BatchNumber; CreateDate,NULL
+APILogs,Tenant; BatchNumber; CreateDate; CustomerId,NULL
+APILogs,Tenant; CorrelationId,NULL
+APILogs,CreateDate,NULL
+APILogs,Id,NULL
+CustomerFieldsUpdateSettings,ObjectFieldId,NULL
+APILogsData,Id,NULL
+Customers,Tenant,NULL
+Customers,Tenant; LastShipmentDate,NULL
+Customers,AutomaticLastUpdateDate,NULL
+APInvoiceEntities,EntityId,NULL
+CourierMasters,GatewayPortCode,NULL
+CourierMasters,OriginPortCode,NULL
+CourierMasters,AirlineId,NULL
+CourierMasters,WeightValueCode,NULL
+CustomerSalesmanByProducts,Tenant; CustomerId,NULL
+CardExternalCodeByCurrencies,CurrencyId,NULL
+APInvoiceLines,EntityId,NULL
+APInvoiceLines,Tenant; EntityPayableId,NULL
+FlightsSchedulesRequests,RequestDetails,NULL
+Cards,Tenant; CreateDate,NULL
+Cards,Tenant; InActive; PartnerTypeId; EnglishName,NULL
+Cards,Tenant; InActive; PartnerTypeId; IsCustomer,NULL
+Cards,Code,NULL
+Cards,AutomaticLastUpdateDate,NULL
+Ranks,AutomaticLastUpdateDate,NULL
+CustomerSizes,AutomaticLastUpdateDate,NULL
+APInvoices,MainEntityId,NULL
+APInvoices,Tenant; StatusCode,NULL
+TaskSchedulerHistory,StartDateTime,NULL
+TaskSchedulerHistory,EndDateTime,NULL
+Tenants,AutomaticLastUpdateDate,NULL
+APPayments,PaymentMethodId,NULL
+PackageFeatures,FeatureId,NULL
+Regions,AutomaticLastUpdateDate,NULL
+CustomPickLists,AutomaticLastUpdateDate,NULL
+ARInvoiceEntities,EntityId,NULL
+PackageTypes,Tenant,NULL
+Claims,AccountCountryCode,NULL
+Claims,AccountCurrencyTypeCode,NULL
+Claims,BankTypeCode,NULL
+Claims,BeneficiaryActivityTypeCode,NULL
+Claims,ClaimSubmiterTypeCode,NULL
+Claims,ClientId,NULL
+Claims,ImporterClaimTypeCode,NULL
+Claims,PassportCountryTypeCode,NULL
+Claims,PassportTypeCode,NULL
+TMEmployeeTimes,ProjectId,NULL
+GLAccounts,Tenant; InternalNumber,NULL
+GLAccounts,DisplayNumber,NULL
+ClaimsRelatedEntities,CustomsBranchCode,NULL
+ClaimsRelatedEntities,SeconderyClaimEntityCode,NULL
+ClaimsRelatedEntities,WarehouseTypeCode,NULL
+ClaimsRelatedEntities,DecisionCode,NULL
+TextCodes,Tenant,NULL
+ClaimsRelatedEntitiesAmounts,PaymentTypeCode,NULL
+ChargesTypes,Tenant,NULL
+ChargesTypes,ChargesGroupCode,NULL
+ChargesTypes,MeasurementId,NULL
+ChargesTypes,ContainerMeasurementId,NULL
+Restrictions,ObjectFieldId,NULL
+PartnerTypes,AutomaticLastUpdateDate,NULL
+ARInvoices,MainEntityId,NULL
+ARInvoices,Tenant; InvoiceDate,NULL
+ARInvoices,Tenant; IsClosed; IsCancelled; StatusCode,NULL
+Departments,AutomaticLastUpdateDate,NULL
+RoleFeatures,FeatureId,NULL
+DeclarationConsAcceptances,PackageTypeCode,NULL
+Directions,AutomaticLastUpdateDate,NULL
+CommunicationLogs,CreateDateUTC,NULL
+CommunicationLogs,EntityId,NULL
+CommunicationLogs,ObjectTableId,NULL
+CommunicationLogs,CreateDate,NULL
+CommunicationLogs,CreateDateUTC; CommunicationStatusTypeCode,NULL
+DWObjectFields,DWObjectTableCode,NULL
+DWObjectFields,DimensionTableCode,NULL
+Ports,Tenant; InActive; IsAir; EnglishName,NULL
+Ports,AutomaticLastUpdateDate,NULL
+WaterMarks,TableName,NULL
+WaterMarks,LastUpdateDate,NULL
+PrivateWaterMarks,TableName,NULL
+PrivateWaterMarks,LastUpdateDate,NULL
+PrivateWaterMarks,PrivateTenant,NULL
+ScreenFields,ObjectFieldId,NULL
+ScreenFields,ScreenId,NULL
+ScreenFields,Tenant,NULL
+Tips,ShortTextCode,NULL
+ScreenModifications,ScreenId,NULL
+SharedUserQueries,QueryId,NULL
+Declarations,CourierSuspentionCode,NULL
+Screens,ObjectTableId,NULL
+Incoterms,AutomaticLastUpdateDate,NULL
+CustomsDocumentsDefinitions,DocumentTypeCode,NULL
+CustomsDocumentsDefinitions,TransportationTypeCode,NULL
+CustomsDocumentsDefinitions,ProcessTypeCode,NULL
+CustomsDocumentsDefinitions,CargoTypeCode,NULL
+SharedFollowedShipments,Tenant; ContactId; ShipmentId,NULL
+Industries,AutomaticLastUpdateDate,NULL
+DocumentOuts,IssuedByUserId,NULL
+TraceEvents,Tenant; EntityId,NULL
+TraceEvents,Tenant; LogDateTime,NULL
+TraceEvents,Tenant; ExternalId,NULL
+NotificationReplies,NotificationId,NULL
+Documents,Tenant,NULL
+dw_Incoterms,Id,NULL
+dw_Incoterms,AutomaticLastUpdateDate,NULL
+dw_Currencies,Id,NULL
+dw_Currencies,AutomaticLastUpdateDate,NULL
+dw_WaterMarks,TableName,NULL
+dw_WaterMarks,LastUpdateDate,NULL
+DIM_Directions,Code,NULL
+DIM_TransportModes,Code,NULL
+DIM_Levels,Code,NULL
+DIM_Types,Code,NULL
+DIM_Branches,Id,NULL
+DIM_ShipmentStatuses,Id,NULL
+DIM_Partners,Id,NULL
+DIM_Ports,Id,NULL
+DIM_Users,Id,NULL
+DIM_Departments,Id,NULL
+DIM_Incoterms,Id,NULL
+DIM_Currencies,Id,NULL
+Fact_Shipments,Id,NULL
+AnalyzeQueues,CreateDate,NULL
+AnalyzeQueues,CreateDate; Tenant,NULL
+AnalyzeQueues,CreateDate; Tenant; Status,NULL
+WaterMarks,TableName,NULL
+WaterMarks,LastUpdateDate,NULL
+dw_DWHSettings,Tenant,NULL
+dw_DWHSettings,AutomaticLastUpdateDate,NULL
+MobileNotificationLogs,Email; IsDelete; CreateDate,NULL
+dw_Addresses,Id,NULL
+dw_Addresses,AutomaticLastUpdateDate,NULL
+dw_Countries,Id,NULL
+dw_Countries,AutomaticLastUpdateDate,NULL
+dw_States,Id,NULL
+dw_States,AutomaticLastUpdateDate,NULL
+dw_PartnerTypes,Id,NULL
+dw_PartnerTypes,AutomaticLastUpdateDate,NULL
+dw_Directions,Id,NULL
+dw_Directions,AutomaticLastUpdateDate,NULL
+dw_TransportModes,Id,NULL
+dw_TransportModes,AutomaticLastUpdateDate,NULL
+dw_Levels,Code,NULL
+dw_Levels,AutomaticLastUpdateDate,NULL
+dw_Types,Id,NULL
+dw_Types,AutomaticLastUpdateDate,NULL
+dw_Branches,Id,NULL
+dw_Branches,AutomaticLastUpdateDate,NULL
+dw_ShipmentStatuses,Id,NULL
+dw_ShipmentStatuses,AutomaticLastUpdateDate,NULL
+dw_Ranks,Id,NULL
+dw_Ranks,AutomaticLastUpdateDate,NULL
+dw_Shipments,Id,NULL
+dw_Shipments,AutomaticLastUpdateDate,Id; Tenant; ShipmentNumber; House; BranchId; IncotermId; SalesmanUserId; DepartmentId; ShipmentTypeId; ShipperId; ConsigneeId; TransportModeId; DirectionId; AgentId; IsOperationalClosed; ChargeableWeightInKG; GrossWeightInKG; VolumeInCBM; NumberOfContainers; NumberOfPackages; StatusId; IsAccountingClosed; AccountedReceivablesInLocalCurrency; ProfitInLocalCurrency; CustomerId; ProfitCurrencyId; ProfitInProfitCurrency; AccountedReceivablesInProfitCurrency; MasterShipmentDataId; FromPortId; ToPortId; ShipmentLevelCode; AccountedPayablesInLocalCurrency; AccountedPayablesInProfitCurrency; FinalArrivalDate; AccountManagerUserId; StatusLocation; CustomsClearanceDate; ForwarderPartnerId; CustomAgentExportId; CustomAgentImportId; ValueOfGoodsCurrencyId; WarehouseLegWarehouseId
+dw_Shipments,AutomaticLastUpdateDate,NULL
+PerformanceLogs,LogDateTimeGMT,NULL
+dw_ShipmentMasterDatas,Id,NULL
+dw_ShipmentMasterDatas,AutomaticLastUpdateDate,NULL
+dw_Partners,Id,NULL
+dw_Partners,AutomaticLastUpdateDate,NULL
+dw_Ports,Id,NULL
+dw_Ports,AutomaticLastUpdateDate,NULL
+dw_Users,Id,NULL
+dw_Users,AutomaticLastUpdateDate,NULL
+dw_Contacts,Id,NULL
+dw_Contacts,AutomaticLastUpdateDate,NULL
+dw_Customers,Id,NULL
+dw_Customers,AutomaticLastUpdateDate,NULL
+dw_Tenants,Id,NULL
+dw_Tenants,AutomaticLastUpdateDate,NULL
+dw_Departments,Id,NULL
+dw_Departments,AutomaticLastUpdateDate,NULL
+FailedLoginLogs,GMTDateTime,NULL
+FailedTokenLogs,GMTDateTime,NULL
+ErrorLogs,LogDate,NULL

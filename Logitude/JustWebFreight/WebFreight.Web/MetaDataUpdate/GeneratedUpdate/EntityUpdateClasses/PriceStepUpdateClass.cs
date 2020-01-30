@@ -195,6 +195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -256,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -316,6 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -377,6 +380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -436,6 +440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -496,6 +501,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -556,6 +562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -616,6 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -676,6 +684,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -736,6 +745,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -763,21 +773,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllPricesStepsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PriceStepTextCode_0.Id, NameTextCodeCode = PriceStepTextCode_0.Code, Code = "AllPricesSteps",  QueryGroupCode = "ff18", IndexOrder = 0, Tenant = 0, ObjectTableId = PriceStepObjectTable.Id, QuerySection = "PriceSteps", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PriceStepFeature_0.Id,FeatureUniqeCode= PriceStepFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllPricesStepsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PriceStepTextCode_0.Id, NameTextCodeCode = PriceStepTextCode_0.Code, ObjectTableName = "PriceStep", Code = "AllPricesSteps",  QueryGroupCode = "ff18", IndexOrder = 0, Tenant = 0, ObjectTableId = PriceStepObjectTable.Id, QuerySection = "PriceSteps", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PriceStepFeature_0.Id,FeatureUniqeCode= PriceStepFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllPricesStepsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id, IndexOrder = 0, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPricesStepsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id,QueryCode = AllPricesStepsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllPricesStepsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id, IndexOrder = 1, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Steps" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Steps" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPricesStepsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id,QueryCode = AllPricesStepsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Steps" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Steps" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllPricesStepsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id, IndexOrder = 2, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPricesStepsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id,QueryCode = AllPricesStepsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllPricesStepsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id, IndexOrder = 3, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPricesStepsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id,QueryCode = AllPricesStepsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllPricesStepsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id, IndexOrder = 4, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPricesStepsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id,QueryCode = AllPricesStepsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllPricesStepsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id, IndexOrder = 5, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPricesStepsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id,QueryCode = AllPricesStepsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllPricesStepsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id, IndexOrder = 6, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPricesStepsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id,QueryCode = AllPricesStepsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PriceStepObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PriceStepObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == PriceStepObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -807,11 +817,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable PriceStepObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PriceStep" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode PriceStepGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PriceSteps.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = PriceStepObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode PriceStepGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PriceStep.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = PriceStepObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature PriceStepGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PriceStep.Tab.General", ObjectTableId = PriceStepObjectTable.Id, Tenant = 0, NameTextCodeCode = "PriceStepFeatures.PSGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode PriceStepEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PriceSteps.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = PriceStepObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode PriceStepEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PriceStep.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = PriceStepObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature PriceStepEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PriceStep.Tab.Events", ObjectTableId = PriceStepObjectTable.Id, Tenant = 0, NameTextCodeCode = "PriceStepFeatures.PSEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();

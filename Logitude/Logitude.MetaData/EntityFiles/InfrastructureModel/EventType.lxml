@@ -2465,6 +2465,12 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;EventType.O.TableDescription&quot;"
+      DefaultText="&quot;Maintain event types for the activities you want Logitude to log, specify event types for follow-up and those that can be entered manually.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

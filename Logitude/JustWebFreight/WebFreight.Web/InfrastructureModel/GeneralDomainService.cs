@@ -1630,12 +1630,12 @@ namespace WebFreight.Web.InfrastructureModel
             return objectFieldsQuery.GetFilteredObjectFields(tenant, tenant).ToList();
         }
 
-        public List<ObjectFieldPM> GetAdvanceFilterObjectFields(int tenant, string queryId)
+        public List<ObjectFieldPM> GetAdvanceFilterObjectFields(int tenant, string queryCode)
         {
             ObjectFieldsRepository = new ObjectFieldRepository(tenant);
             this.ChangeConnectionString(tenant);
             objectFieldsQuery = new ObjectFieldQuery(ObjectFieldsRepository);
-            return objectFieldsQuery.GetAdvanceFilteredObjectFields(tenant, queryId, tenant).ToList();
+            return objectFieldsQuery.GetAdvanceFilteredObjectFields(tenant, queryCode, tenant).ToList();
         }
 
         //public List<ObjectFieldPM> GetFixedFilterObjectFields(int tenant, string queryId)
@@ -4346,6 +4346,7 @@ namespace WebFreight.Web.InfrastructureModel
                 ObjectTableId = query.ObjectTableId,
                 ObjectTableName = query.ObjectTable.Name,
                 OriginalQueryId = query.OriginalQueryId,
+                OriginalQueryCode = query.OriginalQueryCode,
                 SystemLevel = query.SystemLevel,
                 Tenant = query.Tenant,
                 TenantLevel = query.TenantLevel,
@@ -4371,6 +4372,7 @@ namespace WebFreight.Web.InfrastructureModel
                              ObjectTableId = a.ObjectTableId,
                              ObjectTableName = a.ObjectTable.Name,
                              OriginalQueryId = a.OriginalQueryId,
+                             OriginalQueryCode=a.OriginalQueryCode,
                              SystemLevel = a.SystemLevel,
                              Tenant = a.Tenant,
                              TenantLevel = a.TenantLevel,
@@ -4415,10 +4417,14 @@ namespace WebFreight.Web.InfrastructureModel
             this.ChangeConnectionString(entity.Tenant);
             Query query = QueriesRepository.GetSingleQuery(entity.Id);
            
-            List<Query> coppiedQueries = QueriesRepository.GetQueriesByOrigionalQueryTenant(query.Id, query.Tenant).ToList();
+            List<Query> coppiedQueries = QueriesRepository.GetQueriesByOrigionalQueryTenant(query.Code, query.Tenant).ToList();
 
             foreach (var q in coppiedQueries)
+            {
                 q.OriginalQueryId = null;
+                q.OriginalQueryCode = null;
+
+            }
 
             QueriesRepository.Remove(query);
             QueriesRepository.SubmitChanges();
@@ -4462,11 +4468,11 @@ namespace WebFreight.Web.InfrastructureModel
             return advancedQueryFilterQuery.GetAdvancedQueryFiltersByTenantAndNoUser(tenant);
         }
 
-        public IQueryable<AdvancedQueryFilterPM> GetAdvancedQueryFiltersByQueryId(int tenant, string queryId)
+        public IQueryable<AdvancedQueryFilterPM> GetAdvancedQueryFiltersByQueryCode(int tenant, string queryCode)
         {
             advancedQueryFilterQuery = new AdvancedQueryFilterQuery(tenant);
             this.ChangeConnectionString(tenant);
-            return advancedQueryFilterQuery.GetAdvancedQueryFiltersByQueryId(tenant, queryId);
+            return advancedQueryFilterQuery.GetAdvancedQueryFiltersByQueryCode(tenant, queryCode);
         }
 
         //public void MapAdvancedQueryFilterPMAdvancedQueryFilter(AdvancedQueryFilterPM advancedQueryFilterPM, AdvancedQueryFilter advancedQueryFilter)
@@ -4575,12 +4581,12 @@ namespace WebFreight.Web.InfrastructureModel
             return queryColumnQuery.GetQueryColumns(tenant, userId);
         }
 
-        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryIdAndUser(int tenant, string userId,string queryId)
+        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCodeAndUser(int tenant, string userId,string queryCode)
         {
             QueryColumnsRepository = new QueryColumnRepository(tenant);
             this.ChangeConnectionString(tenant);
             queryColumnQuery = new QueryColumnQuery(QueryColumnsRepository);
-            return queryColumnQuery.GetQueryColumnsByQueryIdAndUser(tenant, userId, queryId);
+            return queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userId, queryCode);
         }
 
         public IQueryable<QueryColumnPM> GetQueryColumnsByQueryTenant(int tenant, string queryName)

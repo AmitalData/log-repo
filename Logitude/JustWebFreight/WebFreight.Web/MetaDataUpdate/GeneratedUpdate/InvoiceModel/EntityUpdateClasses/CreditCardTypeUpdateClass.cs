@@ -480,13 +480,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, NameTextCodeCode = CreditCardTypeTextCode_0.Code, Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id,FeatureUniqeCode= CreditCardTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, NameTextCodeCode = CreditCardTypeTextCode_0.Code, ObjectTableName = "CreditCardType", Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id,FeatureUniqeCode= CreditCardTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllCreditCardTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id, IndexOrder = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCreditCardTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCreditCardTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id, IndexOrder = 1, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCreditCardTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCreditCardTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id, IndexOrder = 2, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCreditCardTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -602,13 +602,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
+		{    
+			//--------------> Additional TextCodes <--------------\\
 
-    
+			ObjectTable CreditCardTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditCardType" && d.Tenant == 0).FirstOrDefault();
 
-   }
+			TextCode CreditCardTypeTextCode_CreditCardTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.O.TableDescription", DefaultText = "Maintain Credit Cards information.", LocalDefaultText = null, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+
+
+		}
+
+
+
+	}
     
 }
 	 

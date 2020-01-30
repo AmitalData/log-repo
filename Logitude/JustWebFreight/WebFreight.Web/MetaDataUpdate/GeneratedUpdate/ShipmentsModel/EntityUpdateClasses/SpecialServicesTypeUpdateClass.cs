@@ -436,15 +436,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllSpecialServicesTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SpecialServicesTypeTextCode_0.Id, NameTextCodeCode = SpecialServicesTypeTextCode_0.Code, Code = "All Special Services Types",  QueryGroupCode = "STQG", IndexOrder = 0, Tenant = 0, ObjectTableId = SpecialServicesTypeObjectTable.Id, QuerySection = "SpecialServicesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SpecialServicesTypeFeature_0.Id,FeatureUniqeCode= SpecialServicesTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllSpecialServicesTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SpecialServicesTypeTextCode_0.Id, NameTextCodeCode = SpecialServicesTypeTextCode_0.Code, ObjectTableName = "SpecialServicesType", Code = "All Special Services Types",  QueryGroupCode = "STQG", IndexOrder = 0, Tenant = 0, ObjectTableId = SpecialServicesTypeObjectTable.Id, QuerySection = "SpecialServicesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SpecialServicesTypeFeature_0.Id,FeatureUniqeCode= SpecialServicesTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllSpecialServicesTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id, IndexOrder = 0, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSpecialServicesTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllSpecialServicesTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id, IndexOrder = 1, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSpecialServicesTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllSpecialServicesTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id, IndexOrder = 2, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSpecialServicesTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllSpecialServicesTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id, IndexOrder = 3, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSpecialServicesTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -562,13 +562,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
+	    {
+			//--------------> Additional TextCodes <--------------\\
 
-    
+			ObjectTable SpecialServicesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();
 
-   }
+			TextCode SpecialServicesTypeTextCode_SpecialServicesTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.O.TableDescription", DefaultText = "Define the special services you want to use in your shipments.", LocalDefaultText = null, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+		}
+
+
+
+	}
     
 }
 	 

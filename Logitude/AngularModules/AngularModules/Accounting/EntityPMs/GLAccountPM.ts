@@ -624,6 +624,11 @@ export class GLAccountPM {
     public set InterestCreditLimit(newValue: number) { if (this.interestCreditLimit != newValue) { this.interestCreditLimit = newValue; this.MarkAsDirty("InterestCreditLimit"); } }
        
 	 
+    private nameForPrintingCheques: string;
+    public get NameForPrintingCheques() { return this.nameForPrintingCheques; }
+    public set NameForPrintingCheques(newValue: string) { if (this.nameForPrintingCheques != newValue) { this.nameForPrintingCheques = newValue; this.MarkAsDirty("NameForPrintingCheques"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

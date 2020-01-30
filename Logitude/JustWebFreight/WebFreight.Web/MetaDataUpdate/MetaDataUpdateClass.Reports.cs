@@ -156,8 +156,19 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature quotesFeature = tenantFeatures.Where(d => d.Code == "QUOTESSTATISTICS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature shipmentProfitVSQuoteEstimateFeature = tenantFeatures.Where(d => d.Code == "Report.Features.ShipmentProfitVSQuoteEstimate" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
+            Feature RacingReportFeature = tenantFeatures.Where(d => d.Code == "RCRF" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
             AddReports.AddReport(new ReportDetails() { Code = "RQUO", Description = "Quotes Statistics", Name = "Quotes Statistics", FilterControlName = "QuotesFilterControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = quotesFeature.Id, FeatureUniqeCode = quotesFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/QuotesFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "SPQS", Description = "Shipment Profit vs. Quote Estimate", Name = "Shipment Profit vs. Quote Estimate", FilterControlName = "ShipmentProfitVSQuoteEstimateFilterControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = shipmentProfitVSQuoteEstimateFeature.Id, FeatureUniqeCode = shipmentProfitVSQuoteEstimateFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/ShipmentProfitVSQuoteEstimateComponent" }, reportRepository, tenantReports);
+
+
+            
+
+            AddReports.AddReport(new ReportDetails() { Code = "RQUO", Description = "Quotes Statistics", Name = "Quotes Statistics", FilterControlName = "QuotesFilterControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = quotesFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/QuotesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SPQS", Description = "Shipment Profit vs. Quote Estimate", Name = "Shipment Profit vs. Quote Estimate", FilterControlName = "ShipmentProfitVSQuoteEstimateFilterControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = shipmentProfitVSQuoteEstimateFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/ShipmentProfitVSQuoteEstimateComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RCRF", Description = "Racing - Quotes", Name = "Racing - Quotes", FilterControlName = "RacingReportControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = RacingReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/RacingQuotesComponent" }, reportRepository, tenantReports);
+
+
         }
         private void LoadReports_CRM(ReportGroup cRMGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {
@@ -169,7 +180,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature opportunitiesAdditionalServicesReportFeature = tenantFeatures.Where(d => d.Code == "OPPORTUNITIESSERVICES" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature stageChangingReportFeature = tenantFeatures.Where(d => d.Code == "STAGECHANGINGREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature prarentTenantReportFeature = tenantFeatures.Where(d => d.Code == "PARENTTENANT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
-            Feature usersByTenantReportFeature = tenantFeatures.Where(d => d.Code == "USERSBYTENANTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();            
+            Feature usersByTenantReportFeature = tenantFeatures.Where(d => d.Code == "USERSBYTENANTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature bluesnapPaymentsReportFeature = tenantFeatures.Where(d => d.Code == "BLUESNAPPAYMENTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
             AddReports.AddReport(new ReportDetails() { Code = "APOP", Description = "Approved Opportunities: Potential vs. Actual", Name = "Approved Opportunities", FilterControlName = "ApprovedOpportunitiesFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = approvedOpportunitiesReportFeature.Id, FeatureUniqeCode = approvedOpportunitiesReportFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ApprovedOpportunitiesFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "CUAD", Description = "Customer Additional Services", Name = "Customer Additional Services", FilterControlName = "CustomerAdditionalServicesFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = customerAdditionalServicesReportFeature.Id, FeatureUniqeCode = customerAdditionalServicesReportFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CustomerAdditionalServicesFilterComponent" }, reportRepository, tenantReports);
@@ -180,6 +192,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "OPSC", Description = "Stage Changing Report", Name = "Stage Changing Report", FilterControlName = "StageChangingFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = stageChangingReportFeature.Id, FeatureUniqeCode = stageChangingReportFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/StageChangingFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "PTVC", Description = "Parent vs. Child Tenants", Name = "Parent vs. Child Tenants", FilterControlName = "ParentVsChildTenantsFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = prarentTenantReportFeature.Id, FeatureUniqeCode = prarentTenantReportFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/ParentVsChildTenantsComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "UPTR", Description = "Users by Tenant Report", Name = "Users by Tenant Report", FilterControlName = "UsersByTenantReportFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = usersByTenantReportFeature.Id, FeatureUniqeCode = usersByTenantReportFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/UsersByTenantReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "BSPR", Description = "Bluesnap Payments Report", Name = "Bluesnap Payments Report", FilterControlName = "BluesnapPaymentsReportFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = bluesnapPaymentsReportFeature.Id, FeatureUniqeCode = bluesnapPaymentsReportFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/BluesnapPaymentsReportFilterComponent" }, reportRepository, tenantReports);
+
         }
         private void LoadReports_TFS(ReportGroup tfsGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {

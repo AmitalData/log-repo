@@ -2256,7 +2256,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     // Insert Journal Lines 
                     // [Credit-Vendor]
-                    GLAccountPM glAccount = getCreditGLAccount(theEntityPm.VendorId, theEntityPm.Tenant);
+                    GLAccountPM glAccount = GetInvoiceGLAccount(theEntityPm);
                     JournalLinePM journalLine = new JournalLinePM();
                     journalLine.Tenant = tenant;
                     journalLine.JournalId = journal.Id;
@@ -2298,7 +2298,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
-                                                            LocalAmount = (decimal)g.Sum(a => a.VatRecognizedPercentage == null ? a.LocalCurrencyAmount : (a.LocalCurrencyAmount + ((a.VatPercentage / 100) * ((1 - a.VatRecognizedPercentage) * a.LocalCurrencyAmount)))),
+
+                                                            LocalAmount = ((decimal)g.Sum(a => 
+                                                            a.VatRecognizedPercentage == null ? a.LocalCurrencyAmount :
+                                                                (MethodHelper.Round( (a.LocalCurrencyAmount + ((a.VatPercentage / 100) * ((1 - a.VatRecognizedPercentage) * a.LocalCurrencyAmount))), 2)))),
+
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
                                                             ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
                                                             ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
@@ -2359,6 +2363,34 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM glaAccount = null;
             CardRepository cardRep = new CardRepository(tenant);
             Card card = cardRep.GetSingleCard(vendorId, tenant);
+            if (card != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+            }
+
+            return glaAccount;
+        }
+        private static GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM)
+        {
+            GLAccountPM glAccount;
+            if (invoicePM.VendorGLAccountId != null)
+                glAccount = GetGLAccountById(invoicePM.VendorGLAccountId, invoicePM.Tenant);
+            else
+                glAccount = GetGLAccountByCardId(invoicePM.VendorId, invoicePM.Tenant);
+            return glAccount;
+        }
+        private static GLAccountPM GetGLAccountById(string glaccountId, int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM glaAccount = glAccountQuery.GetSingleGLAccountPM(glaccountId, tenant);
+            return glaAccount;
+        }
+        private static GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
+        {
+            GLAccountPM glaAccount = null;
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(cardId, tenant);
             if (card != null)
             {
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;

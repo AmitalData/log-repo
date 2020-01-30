@@ -49,7 +49,7 @@ export class FeaturePackageTypeListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
-				
+				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FeaturePackageType", "GetSingleList", 'code=' + code); 
 
@@ -85,7 +85,7 @@ export class FeaturePackageTypeListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;  
-			
+				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FeaturePackageType", "GetAll", ""); 
 
@@ -152,7 +152,7 @@ export class FeaturePackageTypeListService {
                 }   
 
                 serviceResponse.Result = _mappedListsArray;      
-		      
+		        serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FeaturePackageType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  				
@@ -177,6 +177,7 @@ export class FeaturePackageTypeListService {
             return Observable.defer(() => {
 
                 var filteredData = FeaturePackageTypeListService.CachedData.filter(a => a.Code === code)[0];
+				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
 
@@ -201,7 +202,7 @@ export class FeaturePackageTypeListService {
 
                 var filteredData = FeaturePackageTypeListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.Result = filteredData; 
-				
+				serviceResponse.CallTime = callTime;
 			     
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "FeaturePackageType", "GetSingleListFromCache", 'code=' + code); 
 
@@ -243,6 +244,7 @@ export class FeaturePackageTypeListService {
 				{
 					var filteredData = InfraGenericFilter.GetFilteredArray(FeaturePackageTypeListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
 				}
                 return Observable.of(serviceResponse);
 
@@ -280,6 +282,7 @@ export class FeaturePackageTypeListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "FeaturePackageType", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 					serviceResponse.Result = _mappedListsArray; 
+					serviceResponse.CallTime = callTime;
 				}
                 return serviceResponse;
 

@@ -21,6 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 query.IndexOrder = queryDetails.IndexOrder;
                 query.IsAddNewEntityEnabled = queryDetails.IsAddNewEntityEnabled;
                 query.OriginalQueryId = queryDetails.OriginalQueryId;
+                query.OriginalQueryCode = queryDetails.OriginalQueryCode;
                 query.QueryGroupCode = queryDetails.QueryGroupCode;
                 query.QuerySection = queryDetails.QuerySection;
                 query.SystemLevel = queryDetails.SystemLevel;
@@ -41,6 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 query.Perspective = queryDetails.Perspective;
                 query.IsHiddenFromView = queryDetails.IsHiddenFromView;
                 query.IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly;
+                query.UniqueCode = queryDetails.Tenant!=0? queryDetails.ObjectTableName+"."+ queryDetails.UserId+ "." + queryDetails.Code: queryDetails.ObjectTableName +"." + queryDetails.Code;
                 query.FeatureUniqeCode = queryDetails.FeatureUniqeCode;
                 queryRepository.Update(query);
                 return query;
@@ -56,6 +58,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     QuerySection = queryDetails.QuerySection,
                     QueryGroupCode = queryDetails.QueryGroupCode,
                     OriginalQueryId = queryDetails.OriginalQueryId,
+                    OriginalQueryCode = queryDetails.OriginalQueryCode,
                     ObjectTableId = queryDetails.ObjectTableId,
                     IsAddNewEntityEnabled = queryDetails.IsAddNewEntityEnabled,
                     IndexOrder = queryDetails.IndexOrder,
@@ -76,9 +79,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Perspective = queryDetails.Perspective,
                     IsHiddenFromView = queryDetails.IsHiddenFromView,
                     IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly,
-                    FeatureUniqeCode = queryDetails.FeatureUniqeCode,
+                    UniqueCode = queryDetails.Tenant != 0 ? queryDetails.ObjectTableName + "." + queryDetails.UserId + "." + queryDetails.Code : queryDetails.ObjectTableName + "." + queryDetails.Code,
 
-                }; ;
+
+                FeatureUniqeCode = queryDetails.FeatureUniqeCode,
+
+                }; 
                 queryRepository.Add(newQuery);
                 return newQuery;
             }
@@ -86,9 +92,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static QueryColumn AddQueryColumn(QueryColumnDetails queryColumnDetails, QueryColumnRepository queryColumnRepository, Dictionary<string, QueryColumn> tenantQueryColumn)
         {
-            if (tenantQueryColumn.Keys.Contains(queryColumnDetails.QueryId + queryColumnDetails.ObjectFieldCode))
+            if (tenantQueryColumn.Keys.Contains(queryColumnDetails.QueryCode + queryColumnDetails.ObjectFieldCode))
             {
-                QueryColumn queryColumn = tenantQueryColumn[queryColumnDetails.QueryId + queryColumnDetails.ObjectFieldCode];
+                QueryColumn queryColumn = tenantQueryColumn[queryColumnDetails.QueryCode + queryColumnDetails.ObjectFieldCode];
                 queryColumn.ColumnWidth = queryColumnDetails.ColumnWidth;
                 queryColumn.IndexOrder = queryColumnDetails.IndexOrder;
                 queryColumn.Tenant = queryColumnDetails.Tenant;
@@ -106,6 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     ColumnWidth = queryColumnDetails.ColumnWidth,
                     Id = IdCounter.GetNumber("QueryColumn",queryColumnDetails.Tenant).ToString(),
                     QueryId = queryColumnDetails.QueryId,
+                    QueryCode = queryColumnDetails.QueryCode,
                     ObjectFieldCode = queryColumnDetails.ObjectFieldCode,
                 };
                 queryColumnRepository.Add(newQureyColumn);
@@ -117,9 +124,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static AdvancedQueryFilter AddAdvancedQueryFilter(AdvancedFilterDetails advancedQueryFilterDetails, AdvancedQueryFilterRepository advancedQueryFilterRepository, Dictionary<string, AdvancedQueryFilter> tenantAdvancedQueryFilter)
         {
-            if (tenantAdvancedQueryFilter.Keys.Contains(advancedQueryFilterDetails.QueryId + advancedQueryFilterDetails.ObjectFieldCode))
+            if (tenantAdvancedQueryFilter.Keys.Contains(advancedQueryFilterDetails.QueryCode + advancedQueryFilterDetails.ObjectFieldCode))
             {
-                AdvancedQueryFilter advancedQueryFilter = tenantAdvancedQueryFilter[advancedQueryFilterDetails.QueryId + advancedQueryFilterDetails.ObjectFieldCode];
+                AdvancedQueryFilter advancedQueryFilter = tenantAdvancedQueryFilter[advancedQueryFilterDetails.QueryCode + advancedQueryFilterDetails.ObjectFieldCode];
 
                 advancedQueryFilter.IndexOrder = advancedQueryFilterDetails.IndexOrder;
                 advancedQueryFilter.IsPredefined = advancedQueryFilterDetails.IsPredefined;
@@ -144,6 +151,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2,
                     Id = IdCounter.GetNumber("AdvancedQueryFilter",advancedQueryFilterDetails.Tenant).ToString(),
                     QueryId = advancedQueryFilterDetails.QueryId,
+                    QueryCode = advancedQueryFilterDetails.QueryCode,
                     ObjectFieldCode = advancedQueryFilterDetails.ObjectFieldCode,
                 };
                 advancedQueryFilterRepository.Add(newAdvancedQueryFilter);

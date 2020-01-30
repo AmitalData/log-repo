@@ -35,7 +35,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.RecipientValue)
         
-            .HasMaxLength(15)
+            .HasMaxLength(200)
             .IsUnicode(false);
 
             // Table & Column Mappings

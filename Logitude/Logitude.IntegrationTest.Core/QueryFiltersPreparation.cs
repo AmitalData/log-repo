@@ -27,7 +27,7 @@ namespace Logitude.IntegrationTest.Core
             return obj.GetType().GetProperties();
         }
 
-        private static ApiQueryFilters InitializeAPIQueryFilters(string searchKey)
+        public static ApiQueryFilters InitializeAPIQueryFilters(string searchKey)
         {
             ApiQueryFilters filters = new ApiQueryFilters();
             filters.Filter1Name = "SearchFields";

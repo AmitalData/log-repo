@@ -5,7 +5,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { TariffDomainService} from '../../../TariffModule/Services/TariffDomainService';
-import { TariffSearchSummary } from '../../../TariffModule/Services/TariffDomainService';
+import { TariffSearchSummary, TariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
@@ -17,6 +17,8 @@ import {  ShipmentGenerator } from '../../../Shipment/Tools';
 import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+
 
 @Component({
     moduleId: module.id,
@@ -37,7 +39,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private myChargesTypeListService: ChargesTypeListService;
     private dimenstionShipment: ShipmentPM;
     public IsPickedFromWizard: boolean = false;
-    private TariffType: string;
+    public TariffType: string;
     public FreightLabel: string;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
@@ -69,7 +71,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
     }
     SetPortsDependencyFilterValue() {
-        if (this.TariffType == "OLC") {
+        if (this.TariffType == "OLC" || this.TariffType == "OFC") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
         }
@@ -142,6 +144,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.FreightLabel = "Air Freight";
         if (this.TariffType == "OLC") {
             this.FreightLabel = "Ocean Freight";
+        }
+        else if (this.TariffType == "OFC") {
+            this.FreightLabel = "Ocean FCL";
         }
     }
 
@@ -422,6 +427,29 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
     }
 
+    ContainerType1Id: string;
+    ContainerType2Id: string;
+    ContainerType3Id: string;
+    ContainerType4Id: string;
+    ContainerType5Id: string;
+    FillContainersClicked() {
+        var logeWindow = new LogitudeWindow();
+        logeWindow.Title = "Fill Containers";
+        logeWindow.WindowArgs = { ContainerType1Id: this.ContainerType1Id, ContainerType2Id: this.ContainerType2Id, ContainerType3Id: this.ContainerType3Id, ContainerType4Id: this.ContainerType4Id, ContainerType5Id: this.ContainerType5Id };
+        logeWindow.Show("./TariffModule/Components/Workspaces/AddTariffContainersComponent");
+        logeWindow.ComponentLoaded.subscribe(s => {
+            logeWindow.WindowClosed.subscribe(d => {
+                if (d == "ok") {
+                    this.ContainerType1Id = s.ContainerType1Id;
+                    this.ContainerType2Id = s.ContainerType2Id;
+                    this.ContainerType3Id = s.ContainerType3Id;
+                    this.ContainerType4Id = s.ContainerType4Id;
+                    this.ContainerType5Id = s.ContainerType5Id;
+                }
+            });
+        });
+    }
+
     ComputeVolumetricWeight() {
         //this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
         this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
@@ -456,6 +484,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.ValidationErrorsList.push("Chargeable Weight unit is required");
         }
 
+        if (this.TariffType == "OFC") { // validate the containers
+            if (AppTool.IsNullOrEmpty(this.ContainerType1Id) && AppTool.IsNullOrEmpty(this.ContainerType2Id) && AppTool.IsNullOrEmpty(this.ContainerType3Id) && AppTool.IsNullOrEmpty(this.ContainerType4Id) && AppTool.IsNullOrEmpty(this.ContainerType5Id)) {
+                this.ValidationErrorsList.push("You have to fill at least one Container type");
+            }
+        }
+
         if (this.ValidationErrorsList.length == 0) {
             if (AppTool.IsNullOrEmpty(this.GrossWeight)) {
                 this.GrossWeight = this.Weight;
@@ -466,7 +500,25 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
 
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode, this.CurrencyId, this.TariffType).subscribe(res => {
+            var tariffSearchArgs = new TariffSearchArgs();
+            tariffSearchArgs.OriginPortId = this.OriginPortId;
+            tariffSearchArgs.DestinationPortId = this.DestinationPortId;
+            tariffSearchArgs.Date = ServiceHelper.GetDateString(this.Date);
+            tariffSearchArgs.Weight = this.Weight;
+            tariffSearchArgs.WeightCode = this.WeightCode;
+            tariffSearchArgs.GrossWeight = this.GrossWeight;
+            tariffSearchArgs.GrossWeightCode = this.GrossWeightCode;
+            tariffSearchArgs.Volume = this.Volume;
+            tariffSearchArgs.VolumeUnitCode = this.VolumeUnitCode;
+            tariffSearchArgs.CurrencyId = this.CurrencyId;
+            tariffSearchArgs.TariffType = this.TariffType;
+            tariffSearchArgs.ContainerType1Id = this.ContainerType1Id;
+            tariffSearchArgs.ContainerType2Id = this.ContainerType2Id;
+            tariffSearchArgs.ContainerType3Id = this.ContainerType3Id;
+            tariffSearchArgs.ContainerType4Id = this.ContainerType4Id;
+            tariffSearchArgs.ContainerType5Id = this.ContainerType5Id;
+
+            this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe(res => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;

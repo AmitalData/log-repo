@@ -194,6 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -257,6 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -320,6 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -382,6 +385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -445,6 +449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -508,6 +513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -570,6 +576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -632,6 +639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -694,6 +702,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -756,6 +765,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -818,6 +828,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -880,6 +891,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -942,6 +954,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -999,6 +1012,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1061,6 +1075,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1124,6 +1139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1186,6 +1202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1249,6 +1266,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1311,6 +1329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1373,6 +1392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1435,6 +1455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1496,6 +1517,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1559,6 +1581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1622,6 +1645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1684,6 +1708,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1746,6 +1771,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1808,6 +1834,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1869,6 +1896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1931,6 +1959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1993,6 +2022,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2053,6 +2083,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2111,6 +2142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2169,6 +2201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2227,6 +2260,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2285,6 +2319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2342,6 +2377,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2398,6 +2434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2454,6 +2491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2511,6 +2549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2567,6 +2606,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2610,114 +2650,114 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ExternalJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_0.Id, NameTextCodeCode = JournalTextCode_0.Code, Code = "External Journals",  QueryGroupCode = "JNAC", IndexOrder = 0, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_0.Id,FeatureUniqeCode= JournalFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ExternalJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_0.Id, NameTextCodeCode = JournalTextCode_0.Code, ObjectTableName = "Journal", Code = "External Journals",  QueryGroupCode = "JNAC", IndexOrder = 0, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_0.Id,FeatureUniqeCode= JournalFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ExternalJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExternalJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExternalJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExternalJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExternalJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExternalJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExternalJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExternalJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExternalJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExternalJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExternalJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExternalJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExternalJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExternalJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ExternalJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ExternalJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ExternalJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = ExternalJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ExternalJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AllJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_1.Id, NameTextCodeCode = JournalTextCode_1.Code, Code = "All Journals",  QueryGroupCode = "JNAC", IndexOrder = 1, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_1.Id,FeatureUniqeCode= JournalFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_1.Id, NameTextCodeCode = JournalTextCode_1.Code, ObjectTableName = "Journal", Code = "All Journals",  QueryGroupCode = "JNAC", IndexOrder = 1, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_1.Id,FeatureUniqeCode= JournalFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id,QueryCode = AllJournalsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id,QueryCode = AllJournalsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id,QueryCode = AllJournalsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id,QueryCode = AllJournalsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id,QueryCode = AllJournalsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id,QueryCode = AllJournalsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id,QueryCode = AllJournalsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJournalsQuery.Id,QueryCode = AllJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
-			  Query ApprovedJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_2.Id, NameTextCodeCode = JournalTextCode_2.Code, Code = "Approved Journals",  QueryGroupCode = "JNAC", IndexOrder = 2, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_2.Id,FeatureUniqeCode= JournalFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ApprovedJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_2.Id, NameTextCodeCode = JournalTextCode_2.Code, ObjectTableName = "Journal", Code = "Approved Journals",  QueryGroupCode = "JNAC", IndexOrder = 2, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_2.Id,FeatureUniqeCode= JournalFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ApprovedJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovedJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ApprovedJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovedJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ApprovedJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovedJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ApprovedJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovedJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ApprovedJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovedJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ApprovedJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovedJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ApprovedJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovedJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ApprovedJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApprovedJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ApprovedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = ApprovedJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query DraftJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_3.Id, NameTextCodeCode = JournalTextCode_3.Code, Code = "Draft Journals",  QueryGroupCode = "JNAC", IndexOrder = 3, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_3.Id,FeatureUniqeCode= JournalFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn DraftJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn DraftJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn DraftJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn DraftJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn DraftJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn DraftJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn DraftJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn DraftJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter DraftJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DraftJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ApprovedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query SavedJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_4.Id, NameTextCodeCode = JournalTextCode_4.Code, Code = "Saved Journals",  QueryGroupCode = "JNAC", IndexOrder = 4, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_4.Id,FeatureUniqeCode= JournalFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query DraftJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_3.Id, NameTextCodeCode = JournalTextCode_3.Code, ObjectTableName = "Journal", Code = "Draft Journals",  QueryGroupCode = "JNAC", IndexOrder = 3, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_3.Id,FeatureUniqeCode= JournalFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn SavedJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SavedJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SavedJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SavedJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SavedJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SavedJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SavedJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn SavedJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DraftJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter SavedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = SavedJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DraftJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query SavedJournalsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalTextCode_4.Id, NameTextCodeCode = JournalTextCode_4.Code, ObjectTableName = "Journal", Code = "Saved Journals",  QueryGroupCode = "JNAC", IndexOrder = 4, Tenant = 0, ObjectTableId = JournalObjectTable.Id, QuerySection = "Journal", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalFeature_4.Id,FeatureUniqeCode= JournalFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn SavedJournalsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SavedJournalsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SavedJournalsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SavedJournalsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingDate" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SavedJournalsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SavedJournalsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SavedJournalsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn SavedJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter SavedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -2963,18 +3003,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable JournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Journal" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature JournalFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalSaveAsDraft", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.SaveAsDraft", NameTextCodeDefaultText = "Save As Draft", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature JournalFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalSaveAsDraft", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.SaveAsDraft", NameTextCodeDefaultText = "Save As Draft", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
       
     
-			   Feature JournalFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalSave", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.WaitingForApproval", NameTextCodeDefaultText = "Waiting For Approval", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature JournalFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalSave", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.WaitingForApproval", NameTextCodeDefaultText = "Waiting For Approval", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
       
     
-			   Feature JournalFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalApprove", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Approve", NameTextCodeDefaultText = "Approve", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature JournalFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalApprove", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Approve", NameTextCodeDefaultText = "Approve", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-			   Feature JournalFeature_MB30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalVoid", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature JournalFeature_MB31 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalPrint", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature JournalFeature_MB30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalVoid", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature JournalFeature_MB31 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalPrint", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -3097,7 +3137,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable JournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Journal" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode JournalTextCode_JournalOQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Queries", DefaultText = "Journal Queries",LocalDefaultText = @"שאילתות פקודות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalORevelations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Revelations", DefaultText = "Revelations",LocalDefaultText = @"שערוך", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalORecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Recent", DefaultText = "Recent Journals",LocalDefaultText = @"פקודות אחרונים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

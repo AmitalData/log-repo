@@ -3632,6 +3632,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
 
         #region Infrastructure Generated
+
+        public IDbSet<RuleUpdateHistory> RuleUpdateHistories
+        {
+            get;
+            set;
+
+        }
         public IDbSet<Toggle> Toggles
         {
             get;
@@ -3739,6 +3746,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new RuleUpdateHistoryMap());
             #region Social
             modelBuilder.Configurations.Add(new ConversationHeaderMap());
             modelBuilder.Configurations.Add(new ConversationHeaderMessageMap());
