@@ -321,7 +321,7 @@ namespace Logitude.DBMigrations.Models
             }
             createTableScript += ");" + "\n\n";
 
-            string createTableWithHistoryScript = createTableScript + GetInsertScriptForMigrationsHistory("Create Table", tableName, createTableScript);
+            string createTableWithHistoryScript = createTableScript + GetInsertScriptForMigrationsHistory("Create Table", tableName, null, createTableScript);
 
             return createTableWithHistoryScript;
         }
@@ -579,7 +579,7 @@ namespace Logitude.DBMigrations.Models
                 renameTableScript += "RENAME \"" + TableMigrations.CurrentTableName.ToUpper() + "\" TO \"" + newTableName + "\"";
                 renameTableScript += ";\n\n";
 
-                string renameTableWithHistoryScript = dropRelationsScript + renameTableScript + GetInsertScriptForMigrationsHistory("Rename Table", TableMigrations.CurrentTableName.ToUpper(), renameTableScript);
+                string renameTableWithHistoryScript = dropRelationsScript + renameTableScript + GetInsertScriptForMigrationsHistory("Rename Table", TableMigrations.CurrentTableName.ToUpper(), null, renameTableScript);
 
                 return renameTableWithHistoryScript;
             }
@@ -600,7 +600,7 @@ namespace Logitude.DBMigrations.Models
             addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
             addScript += ";\n\n";
 
-            string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", tableName, addScript);
+            string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", tableName, columnName, addScript);
 
             return addWithHistoryScript;
         }
@@ -614,7 +614,7 @@ namespace Logitude.DBMigrations.Models
             renameScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnMigration.CurrentColumn.Name.ToUpper() + "\" TO \"" + newColumnName + "\"";
             renameScript += ";\n\n";
 
-            string renameWithHistoryScript = renameScript + GetInsertScriptForMigrationsHistory("Rename Column", tableName, renameScript);
+            string renameWithHistoryScript = renameScript + GetInsertScriptForMigrationsHistory("Rename Column", tableName, columnMigration.CurrentColumn.Name.ToUpper(), renameScript);
 
             return renameWithHistoryScript;
         }
@@ -627,7 +627,7 @@ namespace Logitude.DBMigrations.Models
             dropScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnMigration.CurrentColumn.Name.ToUpper() + "\" TO \"" + FormatNameLength("Drop_" + columnMigration.CurrentColumn.Name, null).ToUpper() + "\"";
             dropScript += ";\n\n";
 
-            string dropWithHistoryScript = dropScript + GetInsertScriptForMigrationsHistory("Drop Column", tableName, dropScript);
+            string dropWithHistoryScript = dropScript + GetInsertScriptForMigrationsHistory("Drop Column", tableName, columnMigration.CurrentColumn.Name.ToUpper(), dropScript);
 
             return dropWithHistoryScript;
         }
@@ -652,7 +652,7 @@ namespace Logitude.DBMigrations.Models
             alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? 1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             alterTypeScript += ";\n\n";
 
-            string alterTypeWithHistoryScript = dropRelationsScript + alterTypeScript + GetInsertScriptForMigrationsHistory("Alter Column Type", tableName, alterTypeScript);
+            string alterTypeWithHistoryScript = dropRelationsScript + alterTypeScript + GetInsertScriptForMigrationsHistory("Alter Column Type", tableName, columnMigration.CurrentColumn.Name.ToUpper(), alterTypeScript);
 
             return alterTypeWithHistoryScript;
         }
@@ -678,7 +678,7 @@ namespace Logitude.DBMigrations.Models
             alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size, 0, 0);
             alterSizeScript += ";\n\n";
 
-            string alterSizeWithHistoryScript = dropRelationsScript + alterSizeScript + GetInsertScriptForMigrationsHistory("Alter Column Size", tableName, alterSizeScript);
+            string alterSizeWithHistoryScript = dropRelationsScript + alterSizeScript + GetInsertScriptForMigrationsHistory("Alter Column Size", tableName, columnMigration.CurrentColumn.Name.ToUpper(), alterSizeScript);
 
             return alterSizeWithHistoryScript;
         }
@@ -696,7 +696,7 @@ namespace Logitude.DBMigrations.Models
                 addPrimaryKeyScript += "ALTER TABLE \"" + tableName + "\" ADD CONSTRAINT \"" + primaryKeyConstraintName + "\" PRIMARY KEY (" + primaryKeyColumns + ")";
                 addPrimaryKeyScript += ";\n\n";
 
-                string addPrimaryKeyWithHistoryScript = addPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Add Primary Key", tableName, addPrimaryKeyScript);
+                string addPrimaryKeyWithHistoryScript = addPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Add Primary Key", tableName, primaryKeyColumns.Replace("\"", String.Empty), addPrimaryKeyScript);
 
                 return addPrimaryKeyWithHistoryScript;
             }
@@ -724,7 +724,7 @@ namespace Logitude.DBMigrations.Models
             dropPrimaryKeyScript += "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + primaryKeyConstraintName + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"'; END IF; END";
             dropPrimaryKeyScript += ";\n\n";
 
-            string dropPrimaryKeyWithHistoryScript = dropRelationsScript + dropPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Drop Primary Key", tableName, dropPrimaryKeyScript);
+            string dropPrimaryKeyWithHistoryScript = dropRelationsScript + dropPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Drop Primary Key", tableName, null, dropPrimaryKeyScript);
 
             return dropPrimaryKeyWithHistoryScript;
         }
@@ -743,7 +743,7 @@ namespace Logitude.DBMigrations.Models
             setNullableScript += " NULL";
             setNullableScript += ";\n\n";
 
-            string setNullableWithHistoryScript = setNullableScript + GetInsertScriptForMigrationsHistory("Set Column Nullable", tableName, setNullableScript);
+            string setNullableWithHistoryScript = setNullableScript + GetInsertScriptForMigrationsHistory("Set Column Nullable", tableName, columnMigration.CurrentColumn.Name.ToUpper(), setNullableScript);
 
             return setNullableWithHistoryScript;
         }
@@ -762,7 +762,7 @@ namespace Logitude.DBMigrations.Models
             unsetNullableScript += " NOT NULL";
             unsetNullableScript += ";\n\n";
 
-            string unsetNullableWithHistoryScript = unsetNullableScript + GetInsertScriptForMigrationsHistory("Unset Column Nullable", tableName, unsetNullableScript);
+            string unsetNullableWithHistoryScript = unsetNullableScript + GetInsertScriptForMigrationsHistory("Unset Column Nullable", tableName, columnMigration.CurrentColumn.Name.ToUpper(), unsetNullableScript);
 
             return unsetNullableWithHistoryScript;
         }
@@ -787,7 +787,7 @@ namespace Logitude.DBMigrations.Models
             alterPrecisionAndScaleScript += GetDataTypeScript(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             alterPrecisionAndScaleScript += ";\n\n";
 
-            string alterPrecisionAndScaleWithHistoryScript = dropRelationsScript + alterPrecisionAndScaleScript + GetInsertScriptForMigrationsHistory("Alter Column Precision And Scale", tableName, alterPrecisionAndScaleScript);
+            string alterPrecisionAndScaleWithHistoryScript = dropRelationsScript + alterPrecisionAndScaleScript + GetInsertScriptForMigrationsHistory("Alter Column Precision And Scale", tableName, columnMigration.CurrentColumn.Name.ToUpper(), alterPrecisionAndScaleScript);
 
             return alterPrecisionAndScaleWithHistoryScript;
         }
@@ -814,7 +814,7 @@ namespace Logitude.DBMigrations.Models
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
 
             string dropPrimaryKeyConstraintScript = "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + primaryKeyConstraintName + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"'; END IF; END;";
-            return dropPrimaryKeyConstraintScript + "\n\n" + GetInsertScriptForMigrationsHistory("Drop Primary Key Constraint", tableName, dropPrimaryKeyConstraintScript).Replace(";\n\n", ";");
+            return dropPrimaryKeyConstraintScript + "\n\n" + GetInsertScriptForMigrationsHistory("Drop Primary Key Constraint", tableName, null, dropPrimaryKeyConstraintScript).Replace(";\n\n", ";");
         }
         
         protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
@@ -823,7 +823,7 @@ namespace Logitude.DBMigrations.Models
 
             string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + FormatNameLength(c.Name, c.ShortName).ToUpper() + "\"").ToArray());
             string addPrimaryKeyConstraintScript = "ALTER TABLE \"" + tableName + "\" ADD CONSTRAINT \"" + primaryKeyConstraintName + "\" PRIMARY KEY (" + primaryKeyColumns + ");";
-            return addPrimaryKeyConstraintScript + "\n\n" + GetInsertScriptForMigrationsHistory("Add Primary Key Constraint", tableName, addPrimaryKeyConstraintScript).Replace(";\n\n", ";");
+            return addPrimaryKeyConstraintScript + "\n\n" + GetInsertScriptForMigrationsHistory("Add Primary Key Constraint", tableName, primaryKeyColumns.Replace("\"", String.Empty), addPrimaryKeyConstraintScript).Replace(";\n\n", ";");
         }
 
         protected override string GetCreateRelationScript(RelationDefinition relation)
@@ -836,7 +836,7 @@ namespace Logitude.DBMigrations.Models
             createRelationScript += "ALTER TABLE " + "\"" + parentTable + "\"" + " ADD FOREIGN KEY(" + foreignKeyColumns + ") REFERENCES " + "\"" + referencedTable + "\"" + "(" + referencedColumns + ")";
             createRelationScript += ";\n\n";
 
-            string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", parentTable, createRelationScript);
+            string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", parentTable, foreignKeyColumns.Replace("\"", String.Empty), createRelationScript);
 
             return createRelationWithHistoryScript;
         }
@@ -847,16 +847,16 @@ namespace Logitude.DBMigrations.Models
             dropRelationScript += "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + relation.ForeignKeyConstraintName.ToUpper() + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + relation.ParentTable.ToUpper() + "\" DROP CONSTRAINT \"" + relation.ForeignKeyConstraintName.ToUpper() + "\"'; END IF; END";
             dropRelationScript += ";\n\n";
 
-            string dropRelationWithHistoryScript = dropRelationScript + GetInsertScriptForMigrationsHistory("Drop Relation", relation.ParentTable.ToUpper(), dropRelationScript);
+            string dropRelationWithHistoryScript = dropRelationScript + GetInsertScriptForMigrationsHistory("Drop Relation", relation.ParentTable.ToUpper(), null, dropRelationScript);
 
             return dropRelationWithHistoryScript;
         }
 
-        protected override string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string script)
+        protected override string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string columnName, string script)
         {
             if (!String.IsNullOrEmpty(script))
             {
-                string insertScript = "DECLARE ScriptText NCLOB; BEGIN ScriptText := '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "'; INSERT INTO \"DBMIGRATIONSHISTORY\"(\"MIGRATIONTYPE\", \"DATE\", \"TABLENAME\", \"SCRIPT\")VALUES('" + migrationType + "', SYSDATE, '" + tableName + "', ScriptText); END;" + "\n\n";
+                string insertScript = "DECLARE ScriptText NCLOB; BEGIN ScriptText := '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "'; INSERT INTO \"DBMIGRATIONSHISTORY\"(\"DXMLFILENAME\", \"TABLENAME\", \"COLUMNNAME\", \"MIGRATIONTYPE\", \"EXECUTIONDATE\", \"MIGRATIONSCRIPT\")VALUES('" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', SYSDATE, ScriptText); END;" + "\n\n";
                 return insertScript;
             }
 
@@ -896,7 +896,7 @@ namespace Logitude.DBMigrations.Models
             addDefaultScript += "ALTER TABLE " + "\"" + tableName + "\"" + " MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " DEFAULT " + (columnMigration.NewColumn.DefaultValue.ToLower() == "CurrentDate".ToLower() ? "SYSDATE" : columnMigration.NewColumn.DefaultValue);
             addDefaultScript += ";\n\n";
 
-            string addDefaultWithHistoryScript = addDefaultScript + GetInsertScriptForMigrationsHistory("Add Default Value", tableName, addDefaultScript);
+            string addDefaultWithHistoryScript = addDefaultScript + GetInsertScriptForMigrationsHistory("Add Default Value", tableName, columnMigration.CurrentColumn.Name.ToUpper(), addDefaultScript);
 
             return addDefaultWithHistoryScript;
         }
@@ -909,7 +909,7 @@ namespace Logitude.DBMigrations.Models
             dropDefaultScript += "ALTER TABLE " + "\"" + tableName + "\"" + " MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " DEFAULT NULL";
             dropDefaultScript += ";\n\n";
 
-            string dropDefaultWithHistoryScript = dropDefaultScript + GetInsertScriptForMigrationsHistory("Drop Default Value", tableName, dropDefaultScript);
+            string dropDefaultWithHistoryScript = dropDefaultScript + GetInsertScriptForMigrationsHistory("Drop Default Value", tableName, columnMigration.CurrentColumn.Name.ToUpper(), dropDefaultScript);
 
             return dropDefaultWithHistoryScript;
         }
@@ -925,7 +925,7 @@ namespace Logitude.DBMigrations.Models
             createIndexScript += "CREATE INDEX " + "\"" + indexName + "\"" + " ON " + "\"" + tableName + "\"" + "(" + indexColumns + ")";
             createIndexScript += ";\n\n";
 
-            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, createIndexScript);
+            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, indexColumns.Replace("\"", String.Empty), createIndexScript);
 
             return addIndexWithHistoryScript;
         }
@@ -940,7 +940,7 @@ namespace Logitude.DBMigrations.Models
             createUniqueConstraintScript += "ALTER TABLE \"" + tableName + "\" ADD CONSTRAINT \"" + uniqueConstraintName + "\" UNIQUE(" + uniqueConstraintColumns + ")";
             createUniqueConstraintScript += ";\n\n";
 
-            string createUniqueConstraintWithHistoryScript = createUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Create Unique Constraint", tableName, createUniqueConstraintScript);
+            string createUniqueConstraintWithHistoryScript = createUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Create Unique Constraint", tableName, uniqueConstraintColumns.Replace("\"", String.Empty), createUniqueConstraintScript);
 
             return createUniqueConstraintWithHistoryScript;
         }
@@ -952,7 +952,7 @@ namespace Logitude.DBMigrations.Models
             dropUniqueConstraintScript += "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + uniqueConstraint.ConstraintName + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" DROP CONSTRAINT \"" + uniqueConstraint.ConstraintName + "\"'; END IF; END";
             dropUniqueConstraintScript += ";\n\n";
 
-            string dropUniqueConstraintWithHistoryScript = dropUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Drop Unique Constraint", tableName, dropUniqueConstraintScript);
+            string dropUniqueConstraintWithHistoryScript = dropUniqueConstraintScript + GetInsertScriptForMigrationsHistory("Drop Unique Constraint", tableName, null, dropUniqueConstraintScript);
 
             return dropUniqueConstraintWithHistoryScript;
         }
