@@ -104,14 +104,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Customs.NewDeclarationControlCommand",
 			      				    LocalDefaultText =  "הצהרות יבוא",
 			      				    DefaultText =  "Declaration",
-			      				    Code =  "dffa",
+			      				    Code =  "33c9",
 			      				    Name =  "Customs.Declaration Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewDeclarationComponent",
 			      				    NoTS =  false,
-			      				    ////NoDefaultFeatures =  false,
+			      				    //NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    Code1 =  "e527",
@@ -12396,6 +12396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "תיקון נפתח עי",
 					  						ListFieldLable =  "AmendmentCorrectedByUserNameListLable",
 					  						ListLableDefaultText =  "Amendment Corrected By ",
+					  						ListLocalDefaultText =  "תיקון נפתח עי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -13082,6 +13083,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomFileAmendment",
+					  						OldFieldName =  "CustomFileAmendment",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -13105,6 +13107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomFileAmendment",
 					  						ListPropertyPath =  "CustomFileAmendment",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -13149,6 +13152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationNoAmendment",
+					  						OldFieldName =  "DeclarationNoAmendment",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -13171,6 +13175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "DeclarationNoAmendment",
 					  						ListPropertyPath =  "DeclarationNoAmendment",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -13213,7 +13218,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup DeclarationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "33c9", Name = "Customs.Declaration Query Group" }, queryGroupRepository);
+	        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable DeclarationObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.Declaration" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> DeclarationObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.Declaration").ToList();   
+
+			   TextCode DeclarationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.DeclarationAmendments", DefaultText = "Declaration Amendments In Process",LocalDefaultText = "תיקוני הצהרה בתהליך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.DeclarationAmendments", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationAmendments", NameTextCodeDefaultText = "DeclarationAmendments", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query DeclarationAmendmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_0.Id, Code = "DeclarationAmendments",  QueryGroupCode = "33c9", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_0.Id, DefaultSortName = "AmendmentissueDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+	
+			 QueryColumn DeclarationAmendmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 0, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "AmendmentissueDate" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+            QueryColumn DeclarationAmendmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 6, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "DeclarationOfficeName" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+            QueryColumn DeclarationAmendmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 2, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "CustomFileAmendment" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeclarationAmendmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 3, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "DeclarationNoAmendment" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeclarationAmendmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 4, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeclarationAmendmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 5, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "ProcedureCurrentName" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeclarationAmendmentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 7, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "AmendmentRequestNumber" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DeclarationAmendmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 8, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "AmendmentCorrectedByUserName" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter DeclarationAmendmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "IsAmendment" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "True", QueryId = DeclarationAmendmentsQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+
+             AdvancedQueryFilter DeclarationAmendmentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "AmendmentStatus" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1", QueryId = DeclarationAmendmentsQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

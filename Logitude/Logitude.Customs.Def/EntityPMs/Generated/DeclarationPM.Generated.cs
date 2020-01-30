@@ -4445,52 +4445,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string customFileAmendment ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomFileAmendment  
-	   {
-	    
-	     get
-		{
-		   return customFileAmendment;
-		 }
-		 set
-		 {
-		   if(customFileAmendment != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomFileAmendment",OldValue=customFileAmendment,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   customFileAmendment=value;
-		   }
-			
-		 }
-	   }
-	  private string declarationNoAmendment ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DeclarationNoAmendment  
-	   {
-	    
-	     get
-		{
-		   return declarationNoAmendment;
-		 }
-		 set
-		 {
-		   if(declarationNoAmendment != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNoAmendment",OldValue=declarationNoAmendment,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   declarationNoAmendment=value;
-		   }
-			
-		 }
-	   }
 	  private bool isMissMandatoryDiamond ;
 	  	  
        
@@ -4533,6 +4487,52 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsValidTicketsDiamond",OldValue=isValidTicketsDiamond,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   isValidTicketsDiamond=value;
+		   }
+			
+		 }
+	   }
+	  private string customFileAmendment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomFileAmendment  
+	   {
+	    
+	     get
+		{
+		   return customFileAmendment;
+		 }
+		 set
+		 {
+		   if(customFileAmendment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomFileAmendment",OldValue=customFileAmendment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customFileAmendment=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationNoAmendment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationNoAmendment  
+	   {
+	    
+	     get
+		{
+		   return declarationNoAmendment;
+		 }
+		 set
+		 {
+		   if(declarationNoAmendment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNoAmendment",OldValue=declarationNoAmendment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationNoAmendment=value;
 		   }
 			
 		 }
