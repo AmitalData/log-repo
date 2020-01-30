@@ -448,20 +448,53 @@
     <Compile Include="Migrations\202001081021093_AddDWHSettingP.Designer.cs">
       <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001151307414_AddMigrationSealCompletenes.cs" />
     <Compile Include="Migrations\202001151307414_AddMigrationSealCompletenes.Designer.cs">
       <DependentUpon>202001151307414_AddMigrationSealCompletenes.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.cs" />
     <Compile Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.Designer.cs">
       <DependentUpon>202001131439222_AddAmendmentDontDisplayInList.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202001160629471_removeDWHSetting.cs" />
     <Compile Include="Migrations\202001160629471_removeDWHSetting.Designer.cs">
       <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001191215152_AddMigrationSealType.cs" />
+    <Compile Include="Migrations\202001191215152_AddMigrationSealType.Designer.cs">
+      <DependentUpon>202001191215152_AddMigrationSealType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001211530095_AddLastMileStatusNameField.cs" />
+    <Compile Include="Migrations\202001211530095_AddLastMileStatusNameField.Designer.cs">
+      <DependentUpon>202001211530095_AddLastMileStatusNameField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001231129242_AddIsManadatory_DeclarationType.cs" />
+    <Compile Include="Migrations\202001231129242_AddIsManadatory_DeclarationType.Designer.cs">
+      <DependentUpon>202001231129242_AddIsManadatory_DeclarationType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001271324155_AddmigrationCargoSeal.cs" />
+    <Compile Include="Migrations\202001271324155_AddmigrationCargoSeal.Designer.cs">
+      <DependentUpon>202001271324155_AddmigrationCargoSeal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001280927543_SealReasonAndAmendmentType.cs" />
+    <Compile Include="Migrations\202001280927543_SealReasonAndAmendmentType.Designer.cs">
+      <DependentUpon>202001280927543_SealReasonAndAmendmentType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.cs" />
+    <Compile Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.Designer.cs">
+      <DependentUpon>202001281231348_ChangeIsDiamonDeclarationField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001281456089_AddFieldsToDiamond.cs" />
+    <Compile Include="Migrations\202001281456089_AddFieldsToDiamond.Designer.cs">
+      <DependentUpon>202001281456089_AddFieldsToDiamond.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.cs" />
+    <Compile Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.Designer.cs">
+      <DependentUpon>202001281508426_ChangeNameIsDiamondManadatory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001300921420_ChangeFieldsDiamonds.cs" />
+    <Compile Include="Migrations\202001300921420_ChangeFieldsDiamonds.Designer.cs">
+      <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -790,17 +823,41 @@
     <EmbeddedResource Include="Migrations\202001081021093_AddDWHSettingP.resx">
       <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001151307414_AddMigrationSealCompletenes.resx">
       <DependentUpon>202001151307414_AddMigrationSealCompletenes.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.resx">
       <DependentUpon>202001131439222_AddAmendmentDontDisplayInList.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202001160629471_removeDWHSetting.resx">
       <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001191215152_AddMigrationSealType.resx">
+      <DependentUpon>202001191215152_AddMigrationSealType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001211530095_AddLastMileStatusNameField.resx">
+      <DependentUpon>202001211530095_AddLastMileStatusNameField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001231129242_AddIsManadatory_DeclarationType.resx">
+      <DependentUpon>202001231129242_AddIsManadatory_DeclarationType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271324155_AddmigrationCargoSeal.resx">
+      <DependentUpon>202001271324155_AddmigrationCargoSeal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001280927543_SealReasonAndAmendmentType.resx">
+      <DependentUpon>202001280927543_SealReasonAndAmendmentType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.resx">
+      <DependentUpon>202001281231348_ChangeIsDiamonDeclarationField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281456089_AddFieldsToDiamond.resx">
+      <DependentUpon>202001281456089_AddFieldsToDiamond.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.resx">
+      <DependentUpon>202001281508426_ChangeNameIsDiamondManadatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001300921420_ChangeFieldsDiamonds.resx">
+      <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

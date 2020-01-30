@@ -174,7 +174,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                             Header="מספר הצהרת יבוא",
                              length=110,
                               PropName ="DeclarationID",
-                               GridColumnType  = GridColumnTypeEnum.Object
+                               GridColumnType  = GridColumnTypeEnum.Text
                       },
                       new XLSExport.GridColumnMetaData()
                       {

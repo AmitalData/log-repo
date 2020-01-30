@@ -440,8 +440,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
         
         
-        if (this.EntityPM.IsCourierDeclaration) {//Task 57181: מספר יבואן - תצוגת מסך
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) { //Task 45507: (בלדרות) שינויים בלוגיקה של שדה מספר יבואן 
+        if (this.EntityPM.IsCourierDeclaration) {//Task 57181: מספר יבוםן - תצוגת מסך
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) { //Task 45507: (בלדרות) שינויים בלוגיקה של שדה מספר יבוםן 
                 this.CalculatedImporterName = this.EntityPM.ImporterName;
             }
         } else {
@@ -664,7 +664,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.ImporterCode = item;
             if (item.length < 9) {
                 valid = false;
-                errorMessage = "מספר יבואן קצר מידיי";
+                errorMessage = "מספר יבוםן קצר מידיי";
                 //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
             }
             else if (item.length > 9) {
@@ -1162,7 +1162,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     DisplayOnlyCheck() {
          this.DrawMe = true;
         this.IsDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-         if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+
+          if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
              {
              this.IsDisplayMessage = true;
 
@@ -1178,7 +1179,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         }
         else if (this.EntityPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+            this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
          
    
@@ -1201,7 +1202,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+                this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
 
           

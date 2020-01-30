@@ -158,6 +158,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   TerminalSuspentionNumber = a.TerminalSuspentionNumber,
                                                                   LastMileStatusCode = a.LastMileStatusCode,
                                                                   LastMileStatusDate = a.LastMileStatusDate,
+                                                                  LastMileStatusName = a.LastMileStatusName,
                                                                   LastMileStatusRemarks = a.LastMileStatusRemarks,
                                                                   StorageSiteStatusCode = a.StorageSiteStatusCode,
                                                                   StorageSiteStatusName = a.MamanStatus != null ? a.MamanStatus.LocalName : null,

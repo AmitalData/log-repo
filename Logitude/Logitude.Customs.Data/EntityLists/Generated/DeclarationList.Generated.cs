@@ -317,6 +317,10 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool AmendmentDontDisplayInList  { get; set; }
        [DataMember]
+       public bool IsMissMandatoryDiamond  { get; set; }
+       [DataMember]
+       public bool IsValidTicketsDiamond  { get; set; }
+       [DataMember]
        public string CustomFileAmendment  { get; set; }
        [DataMember]
        public string DeclarationNoAmendment  { get; set; }

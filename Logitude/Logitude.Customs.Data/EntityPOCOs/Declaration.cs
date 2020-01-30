@@ -344,8 +344,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? IsAmendment { get; set; }
         [Column("AmendmentOriginalDeclartation")]
 	    public string AmendmentOriginalDeclartation { get; set; }
+        [Column("IsDiamondDeclaration")]
+	    public bool IsDiamondDeclaration { get; set; }
         [Column("AmendmentDontDisplayInList")]
 	    public bool AmendmentDontDisplayInList { get; set; }
+        [Column("IsMissMandatoryDiamond")]
+	    public bool IsMissMandatoryDiamond { get; set; }
+        [Column("IsValidTicketsDiamond")]
+	    public bool IsValidTicketsDiamond { get; set; }
     }
 }
 	 

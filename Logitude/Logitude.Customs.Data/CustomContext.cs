@@ -82,6 +82,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
 	
+            modelBuilder.Configurations.Add(new AmendmentTypeMap());
+	
             modelBuilder.Configurations.Add(new ApprovedProfessionMap());
 	
             modelBuilder.Configurations.Add(new AssigneeNotificationTypeMap());
@@ -99,6 +101,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CargoIdentifireTypeMap());
 	
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
+	
+            modelBuilder.Configurations.Add(new CargoSealMap());
+	
+            modelBuilder.Configurations.Add(new CargoSealIdentifierMap());
 	
             modelBuilder.Configurations.Add(new CargoSplitRequestStatusMap());
 	
@@ -553,6 +559,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SalesTaxExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new SealCompletenesMap());
+	
+            modelBuilder.Configurations.Add(new SealTypeMap());
+	
+            modelBuilder.Configurations.Add(new SealUpdateReasonTypeMap());
 	
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
 	
@@ -1163,6 +1173,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<AmendmentType> AmendmentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ApprovedProfession> ApprovedProfessions 
 	 {
 	      get; set;
@@ -1212,6 +1228,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoSeal> CargoSeals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoSealIdentifier> CargoSealIdentifiers 
 	 {
 	      get; set;
 	 
@@ -2574,6 +2602,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SealCompletenes> SealCompleteness 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealType> SealTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes 
 	 {
 	      get; set;
 	 

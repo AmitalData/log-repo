@@ -936,7 +936,13 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<DeficitDecision> DeficitDecision { get; set; }
 
         public IDbSet<SealCompletenes> SealCompletenes { get; set; }
+
+        public IDbSet<SealType> SealType { get; set; }
+
+        public IDbSet<CargoSealIdentifier> CargoSealIdentifier { get; set; }
         #endregion
+
+        public IDbSet<CargoSeal> CargoSeal { get; set; }
 
         #region Webfreight Context
 
@@ -2925,6 +2931,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<CertificatesStatus> CertificatesStatuses { get; set; }
         public IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; set; }
         public IDbSet<AmendmentStatus> AmendmentStatuses {get; set;}
+        public IDbSet<AmendmentType> AmendmentTypes  { get; set; }
+        public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes { get; set; }
         public IDbSet<DeclarationStatementType> DeclarationStatementTypes { get; set; }
         public IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; set; }
         public IDbSet<VendorCommission> VendorCommissions { get; set; }
@@ -4048,6 +4056,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CertificatesStatusMap());
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
+            modelBuilder.Configurations.Add(new AmendmentTypeMap());
+            modelBuilder.Configurations.Add(new SealUpdateReasonTypeMap());
             modelBuilder.Configurations.Add(new AmendmentFieldReasonTypeMap());
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
             modelBuilder.Configurations.Add(new SupplierInvoiceItemVehicleAddMap());
@@ -4095,6 +4105,9 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new RequestTypeMap());
             modelBuilder.Configurations.Add(new DeficitDecisionMap());
             modelBuilder.Configurations.Add(new SealCompletenesMap());
+            modelBuilder.Configurations.Add(new SealTypeMap());
+            modelBuilder.Configurations.Add(new CargoSealIdentifierMap());
+            modelBuilder.Configurations.Add(new CargoSealMap());
 
             #endregion
 

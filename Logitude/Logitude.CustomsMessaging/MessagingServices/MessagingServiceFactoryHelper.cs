@@ -465,6 +465,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DF_MSG2892_ImportDeclarationAmendmentMessagingService>
                 ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                SE_6001_SealUpdateMessagingService>
+                ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {

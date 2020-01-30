@@ -1099,6 +1099,11 @@ export class DeclarationPM {
     public set IsPendingNotNull(newValue: boolean) { if (this.isPendingNotNull != newValue) { this.isPendingNotNull = newValue; this.MarkAsDirty("IsPendingNotNull"); } }
        
 	 
+    private isDiamondDeclaration: boolean;
+    public get IsDiamondDeclaration() { return this.isDiamondDeclaration; }
+    public set IsDiamondDeclaration(newValue: boolean) { if (this.isDiamondDeclaration != newValue) { this.isDiamondDeclaration = newValue; this.MarkAsDirty("IsDiamondDeclaration"); } }
+       
+	 
     private amendmentDontDisplayInList: boolean;
     public get AmendmentDontDisplayInList() { return this.amendmentDontDisplayInList; }
     public set AmendmentDontDisplayInList(newValue: boolean) { if (this.amendmentDontDisplayInList != newValue) { this.amendmentDontDisplayInList = newValue; this.MarkAsDirty("AmendmentDontDisplayInList"); } }
@@ -1112,6 +1117,16 @@ export class DeclarationPM {
     private isAmendmentDisplayOnly: boolean;
     public get IsAmendmentDisplayOnly() { return this.isAmendmentDisplayOnly; }
     public set IsAmendmentDisplayOnly(newValue: boolean) { if (this.isAmendmentDisplayOnly != newValue) { this.isAmendmentDisplayOnly = newValue; this.MarkAsDirty("IsAmendmentDisplayOnly"); } }
+       
+	 
+    private isMissMandatoryDiamond: boolean;
+    public get IsMissMandatoryDiamond() { return this.isMissMandatoryDiamond; }
+    public set IsMissMandatoryDiamond(newValue: boolean) { if (this.isMissMandatoryDiamond != newValue) { this.isMissMandatoryDiamond = newValue; this.MarkAsDirty("IsMissMandatoryDiamond"); } }
+       
+	 
+    private isValidTicketsDiamond: boolean;
+    public get IsValidTicketsDiamond() { return this.isValidTicketsDiamond; }
+    public set IsValidTicketsDiamond(newValue: boolean) { if (this.isValidTicketsDiamond != newValue) { this.isValidTicketsDiamond = newValue; this.MarkAsDirty("IsValidTicketsDiamond"); } }
        
 	 
     private customFileAmendment: string;

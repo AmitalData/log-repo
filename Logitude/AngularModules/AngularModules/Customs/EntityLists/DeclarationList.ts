@@ -161,6 +161,8 @@ export class DeclarationList {
 	AmendmentDontDisplayInList: boolean;
 	CustomFileAmendment: string;
 	DeclarationNoAmendment: string;
+	IsMissMandatoryDiamond: boolean;
+	IsValidTicketsDiamond: boolean;
 	
 }
  

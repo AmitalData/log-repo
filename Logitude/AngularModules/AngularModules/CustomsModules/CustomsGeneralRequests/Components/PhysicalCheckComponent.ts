@@ -29,13 +29,16 @@ export class PhysicalCheckComponent
     public ObjectTableName: string = "Customs.PhysicalCheck";
     public openDate: string;
     public limitDate: string;
-    private EntityResourceService: EntityResourceService = new EntityResourceService();
     public id: string;
+    _IsReady: boolean = false;
 
     _PhysicalCheckPMService: PhysicalCheckExtendedPMService = new PhysicalCheckExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession; 
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(private EntityResourceService: EntityResourceService) {
         super();
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => {
+            this._IsReady = true;
+        });
     }
 
     @ViewChild(CustomMessageWrapperComponent)
@@ -54,7 +57,6 @@ export class PhysicalCheckComponent
     OnMassageDisplayMethod() {
 
         if (this.MyCommunicationLogId != null) {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => { });
             this.getData(this.MyCommunicationLogId, this.MyCustomsMenuItem.MainInterfaceCode);
         }
     }
@@ -80,13 +82,6 @@ export class PhysicalCheckComponent
                     var myFormats = DateTool.GetDateFormats(this.EntityPM.LimitDate);
                     this.limitDate = myFormats.DateString + " " + myFormats.ShortTimeString;
                 }
-              /*  if (this.CurrentSession != null && this.CurrentSession.CurrentWindow != null) {
-                    setTimeout(() => {
-                        this.CurrentSession.CurrentWindow.Title = "ddddddd";
-                        this.CD.detectChanges();
-                        console.log("CurrentSession.CurrentWindow");
-                    }, 20000);
-                }*/
             });  
     }
 
