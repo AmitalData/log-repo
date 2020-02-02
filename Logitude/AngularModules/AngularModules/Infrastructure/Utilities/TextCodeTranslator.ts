@@ -103,7 +103,7 @@ export class TextCodeTranslator {
                 window.TextCodesCache.push(translationObject);
             }
             else {
-                if (!isNullOrUndefined(value) && value.indexOf(".NewButton") < 0 && value != "No Filter") {
+                if (!isNullOrUndefined(value) && value.indexOf(".NewButton") < 0 && value != "No Filter" && value != "undefined") {
                     alert("This Code '" + value + "' Not Found!"); 
                 }
             }
