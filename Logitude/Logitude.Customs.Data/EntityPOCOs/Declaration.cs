@@ -352,6 +352,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsMissMandatoryDiamond { get; set; }
         [Column("IsValidTicketsDiamond")]
 	    public bool IsValidTicketsDiamond { get; set; }
+        [Column("AvailabilityDate")]
+	    public DateTime AvailabilityDate { get; set; }
     }
 }
 	 

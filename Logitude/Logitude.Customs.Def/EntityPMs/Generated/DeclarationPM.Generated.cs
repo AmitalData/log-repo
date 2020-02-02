@@ -4537,6 +4537,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime availabilityDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime AvailabilityDate  
+	   {
+	    
+	     get
+		{
+		   return availabilityDate;
+		 }
+		 set
+		 {
+		   if(availabilityDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailabilityDate",OldValue=availabilityDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   availabilityDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

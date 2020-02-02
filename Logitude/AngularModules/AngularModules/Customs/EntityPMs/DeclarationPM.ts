@@ -1139,6 +1139,11 @@ export class DeclarationPM {
     public set DeclarationNoAmendment(newValue: string) { if (this.declarationNoAmendment != newValue) { this.declarationNoAmendment = newValue; this.MarkAsDirty("DeclarationNoAmendment"); } }
        
 	 
+    private availabilityDate: Date;
+    public get AvailabilityDate() { return this.availabilityDate; }
+    public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
