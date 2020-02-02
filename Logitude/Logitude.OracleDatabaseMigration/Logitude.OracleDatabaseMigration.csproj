@@ -496,6 +496,10 @@
     <Compile Include="Migrations\202001300921420_ChangeFieldsDiamonds.Designer.cs">
       <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002021133564_AddedAutomaticPaymentFields.cs" />
+    <Compile Include="Migrations\202002021133564_AddedAutomaticPaymentFields.Designer.cs">
+      <DependentUpon>202002021133564_AddedAutomaticPaymentFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -858,6 +862,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001300921420_ChangeFieldsDiamonds.resx">
       <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002021133564_AddedAutomaticPaymentFields.resx">
+      <DependentUpon>202002021133564_AddedAutomaticPaymentFields.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
