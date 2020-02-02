@@ -95,11 +95,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.IsStartFilter = true;
         this.FilterWarehouseEntryPackageList();
 
-        //if (this.IsFromFullWarehouseReleaseComponent) {
-
-        //    this.LoadWarehouseEntryPackageListsByCustomerId();
-        //}
-
+  
         this.SetValue();
         this.IsLoadPage = true;
 
@@ -358,7 +354,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             this.toPortId = newValue;
             this.ViewModelTrigger.ToPortId = newValue;
             this.FilterWarehouseEntryPackageList();
-     
+
         }
     }
 

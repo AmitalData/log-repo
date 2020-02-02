@@ -47,5 +47,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public string CBSA { get; set; }
         public string CAAT { get; set; }
+        public string StateName { get; set; }
     }
 }

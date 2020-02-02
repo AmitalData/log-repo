@@ -8,6 +8,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
 import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDashboardArguments';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 declare var makeChart, FunnelClick, ResetItemFunnel;
 @Component({
     selector: 'open-quote-by-stage',
@@ -88,27 +89,13 @@ export class OpenQuotesByStageComponent implements OnInit {
 
             var filterAgrs: ApiQueryFilters = new ApiQueryFilters();
             var listArgs = new ListComponentArgs();
-            var myOwnerId = null;
-            var myBusinessUnitId = null;
-            var myFilterCode = null;
-
-            if (this.FunnelData[item.index].OwnerId != null && this.FunnelData[item.index].OwnerId != "") {
-                myOwnerId = this.FunnelData[item.index].OwnerId;
-            }
-
-            if (this.FunnelData[item.index].BusinessUnitId != null && this.FunnelData[item.index].BusinessUnitId != "") {
-                myBusinessUnitId = this.FunnelData[item.index].BusinessUnitId;
-            }
-
-            if (this.FunnelData[item.index].DataTypeCode != null && this.FunnelData[item.index].DataTypeCode != "") {
-                myFilterCode = this.FunnelData[item.index].DataTypeCode;
-            }
 
             filterAgrs.addAdditionalFilter("StageId", this.FunnelData[item.index].GroupedId, null, null, "Equals", true, false, false, "Boolean");
             filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
             filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
-            filterAgrs.addAdditionalFilter("BusinessUnitId", myBusinessUnitId, null, null, "Equals", true, false, false, "string");
-          
+            filterAgrs.addAdditionalFilter("BusinessUnitId", this.funnelArgs.BusinessUnitId, null, null, "Equals", true, false, false, "string");
+            filterAgrs.addAdditionalFilter("CreatedByUserId", this.funnelArgs.OwnerId, null, null, "Equal", false, false, false, "string");
+            filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
 
             listArgs.Filters = filterAgrs;
             listArgs.QueryCode = queryCode;
@@ -130,13 +117,11 @@ export class OpenQuotesByStageComponent implements OnInit {
     private Wizard: QuoteDashboardComponent;
     InitTab(wizard: QuoteDashboardComponent) {
         this.Wizard = wizard;
-        console.log("Init Tab");
     }
 
     RefreshTab(wizard: QuoteDashboardComponent) {
         this.Wizard = wizard;
         this.FillFunnelArgs();
         this.LoadFunnelData();
-        console.log("Refresh Tab");
     }
 }

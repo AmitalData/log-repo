@@ -55,14 +55,20 @@ export class FieldsHelper {
     ItemsPresent(Id: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.presenceOf(element(by.id(Id))), 100000000).then(a => function () {
-
+            browser.wait(EC.visibilityOf(element(by.id(Id))), 100000000)
+        }).then(function () {
+            browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000000).then(a => function () {
+            });
         });
-    }
+            }
 
     ItemsPresentforCSS(CSS: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.presenceOf(element(by.css(CSS))), 100000000).then(a => function () {
-
+            browser.wait(EC.visibilityOf(element(by.css(CSS))), 100000000)
+        }).then(function () {
+            browser.wait(EC.elementToBeClickable(element(by.css(CSS))), 100000000).then(a => function () {
+            });
         });
     }
 

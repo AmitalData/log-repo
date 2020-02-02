@@ -629,8 +629,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  PrimaryContactName = a.PrimaryContactName,
                                                  PrimaryContactEmail = a.PrimaryContactEmail,
                                                  PrimaryContactPhone = a.PrimaryContactPhone,
+                                                 StateName = a.Card.StateName,
                                              };
-
             return result;
         }
     }

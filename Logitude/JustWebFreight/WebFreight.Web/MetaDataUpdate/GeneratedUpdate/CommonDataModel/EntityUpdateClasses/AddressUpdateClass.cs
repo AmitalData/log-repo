@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Address",
-			      				    Code =  "9227",
+			      				    Code =  "5cec",
 			      				    Name =  "Address",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -1873,7 +1873,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	         Screen AddressAddressHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Address.HeaderScreen", Name = "AddressHeaderScreen", ObjectTableId = AddressObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
 		    AddressObjectTable.HeaderScreenId = AddressAddressHeaderScreenScreen0.Id;
+		    AddressObjectTable.HeaderScreenCode = AddressAddressHeaderScreenScreen0.Code;
+
 	   		  
+	      
+
+	         Screen AddressMainAddressScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customers.Addresses.MainAddress", Name = "Main Address", ObjectTableId = AddressObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+            ScreenField AddressCustomersAddressesMainAddressScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "CardEnglishName").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "CardEnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "Address1").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "Address1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "Address2").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "Address2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "City").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "City").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "StateId").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "StateId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "ZipCode").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "ZipCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "PhoneNumber").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "PhoneNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "FaxNumber").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "FaxNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "ATTN").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "ATTN").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+           
 
 	    }
 

@@ -42,7 +42,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 {
                     bool IsReconciled =this._Param.IsReconciled.GetValueOrDefault();
                     myLedgerTransactionBalanceService.Response.MyLedgerTransactionList = myLedgerTransactionBalanceService.Response.MyLedgerTransactionList
-                        .Where(r => r.IsReconciled = IsReconciled).ToList();
+                        .Where(r => r.IsReconciled == IsReconciled).ToList();
                 }
                 myLedgerTransactionBalanceService.Response.GLAccountId = currGLAccountId;
                 CardIndexs.Add(myLedgerTransactionBalanceService.Response);

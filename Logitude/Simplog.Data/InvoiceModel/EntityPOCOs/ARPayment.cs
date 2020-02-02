@@ -141,6 +141,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool IsFullAccounting { get; set; }
         public bool IsExternalEntity { get; set; }
         public string CreatedByPartner { get; set; }
-
+        public bool IsPaymentNumberManuallySet { get; set; }
     }
 }

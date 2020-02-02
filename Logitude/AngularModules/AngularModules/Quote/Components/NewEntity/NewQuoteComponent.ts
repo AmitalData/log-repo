@@ -2026,7 +2026,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Quote.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Quote.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
     private SetUnits() {

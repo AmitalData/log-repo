@@ -5,19 +5,27 @@
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
 
+  <Column Name="DxmlFileName" Type="varchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="TableName" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="ColumnName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+
   <Column Name="MigrationType" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
   
-  <Column Name="Date" Type="datetime">
+  <Column Name="ExecutionDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
   
-  <Column Name="TableName" Type="varchar" Size="100">
-    <Constraints Nullable="false" />
-  </Column>
-  
-  <Column Name="Script" Type="nvarchar" Size="-1">
+  <Column Name="MigrationScript" Type="nvarchar" Size="-1">
     <Constraints Nullable="false" />
   </Column>
 

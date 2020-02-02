@@ -584,7 +584,12 @@ export class ARPaymentPM {
         }
     }
 	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
- 
+     private isPaymentNumberManuallySet: boolean;
+    public get IsPaymentNumberManuallySet() { return this.isPaymentNumberManuallySet; }
+    public set IsPaymentNumberManuallySet(newValue: boolean) { if (this.isPaymentNumberManuallySet != newValue) { this.isPaymentNumberManuallySet = newValue; this.MarkAsDirty("IsPaymentNumberManuallySet"); } }
+       
+	 
+
     public OldEntityPM: ARPaymentPM;
 		
     public IsDirty: boolean;

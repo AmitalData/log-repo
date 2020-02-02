@@ -144,6 +144,21 @@
                                         </td>
                                     </tr>
 
+                                    <!-- AllowManualARPaymentNumber -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'AllowManualARPaymentNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'AllowManualARPaymentNumber'" [Checked]="DataContext.AllowManualARPaymentNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
                                     <tr>
                                         <td colspan="3">
                                             <div></div>
