@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -12,6 +12,7 @@ import {CustomsSettingList} from '../../EntityLists/CustomsSettingList';
 
 
 export class CustomsSettingExtendedListService {
+   
 
     private _http: Http;
     private _apiUrl: string;
@@ -42,7 +43,23 @@ export class CustomsSettingExtendedListService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    GetSincroOption(tenant: number, SincroScreen: string): any {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSincroOption/?SincroScreen=' + SincroScreen.toString() + '&tenant=' + tenant.toString() , { headers: authHeader })
+                .map(response => {
+                    var obj = response.json();
+
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = obj;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     GetAmitalRestrictOwnerModel(getFromCache: boolean) {
 

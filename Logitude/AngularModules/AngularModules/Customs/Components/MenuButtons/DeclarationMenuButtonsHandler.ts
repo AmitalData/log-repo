@@ -34,6 +34,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { DeclarationEventManager } from '../../Utilities/DeclarationEventManager';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
+import { MenuButtonsComponent } from '../../../Infrastructure/Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponent';
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
@@ -144,10 +145,31 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         this.MenuButtons = menuButtons;
-        let myMenuButtonPM = new MenuButtonPM(null);
-        myMenuButtonPM.DisplayText = " DCA תרחיש";
-        myMenuButtonPM.EventCode = "SincroSendDCA";
-        menuButtons.push(myMenuButtonPM);
+        if (SessionLocator.TenantPM.IsTestTenant) {
+            
+            
+            let myMenuButtonDeclarationsStatusRequest = this.MenuButtons.filter(r => r.EventCode == "DeclarationsStatusRequest").slice(0)[0];
+            //let myMenuButtonPM: MenuButtonPM= (JSON.parse(JSON.stringify(myMenuButtonDeclarationsStatusRequest))) ;
+            let myMenuButtonPM = new MenuButtonPM(null);
+            for (var attribut in myMenuButtonDeclarationsStatusRequest) {
+                if (typeof this[attribut] === "object") {
+                    //cloneObj[attribut] = this.clone();
+                } else {
+                    myMenuButtonPM[attribut] = myMenuButtonDeclarationsStatusRequest[attribut];
+                }
+            }
+            //myMenuButtonPM.MenuButtonGroupId = myMenuButtonDeclarationsStatusRequest.
+            myMenuButtonPM.Id = "SincroSendDeclarationDCA";
+            myMenuButtonPM.LabelTextCodeCode = null;
+            myMenuButtonPM.LabelTextCodeId = null;
+            myMenuButtonPM.DisplayText = " DCA תרחיש";
+            myMenuButtonPM.EventCode = "SincroSendDeclarationDCA";
+            myMenuButtonPM.ShowMenuButton = true;
+            myMenuButtonPM.IsHidden = false;
+
+            myMenuButtonPM.Index=1000
+            menuButtons.push(myMenuButtonPM);
+        }
         this.DisplayOnlyCheck();
     }
 
@@ -392,6 +414,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         if (true) {//this.isValid) { this is also for testing temp of course
             switch (this.MenuButtonCode) {
+                case "SincroSendDeclarationDCA":
+                    {
+                        this.SincroSendDeclarationDCA();
+                        break;
+                    }
                 case "SendDeclaration":
                     {
                         ////SendDeclaration();
@@ -526,6 +553,33 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
             }
         }
+    }
+    SincroSendDeclarationDCA(): any {
+        
+        let windowArgs = { "SincroScreen": "SincroSendDeclarationDCA" };
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = "תרחשי הצהרה";
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(res => {
+                if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+
+                    //this._SendDeclarationService._TestCase = new TestCase();
+                    //this._SendDeclarationService._TestCase.Code = comp._ScenarioCode;
+                    //this._SendDeclarationService._TestCase.Param1 = comp.Param1;
+                    //this._SendDeclarationService._TestCase.Param2 = comp.Param2;
+                    //this._SendDeclarationService.OnCustomSendOptionsButtonClick(event)
+                }
+            });
+        });
+
+        logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+
     }
 
     DisplayDeclarationVehicleModificationsMethod() {

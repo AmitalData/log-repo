@@ -118,7 +118,8 @@ export class SendDeclarationComponent implements OnDestroy {
         this._SendDeclarationService._TestCase = null;
         if (event.TestCase) {
             
-            let windowArgs = {};
+            let windowArgs = { "SincroScreen": "SincroSendDeclaration"};
+            
             var logWindow = new LogitudeWindow();
             logWindow.Width = 600;
             logWindow.Height = 400;

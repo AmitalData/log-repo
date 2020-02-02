@@ -4,6 +4,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { KeyValuePair } from '../../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
+import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 
@@ -24,6 +26,7 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     SelectedItemScenario: KeyValuePair;
     ValidationErrorsList: any[] = [];
     private _Param1: string;
+    SincroTestCaseDetailList: SincroTestCaseDetail[];
     public get Param1() { return this._Param1; }
     public set Param1(newValue: string) {
         this._Param1 = newValue;
@@ -40,11 +43,26 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     constructor() {
         super();
         //CurrentSession.StartBusyIndicator("");
-        this.ScenarioCodes.push(new KeyValuePair("1", "עיר"));
-        this.ScenarioCodes.push(new KeyValuePair("2", "טלפון"));
     }
     SetWindowArgs(windowArgs) {
-        this.Loaded = true;
+
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        
+        myCustomsSettingExtendedListService.GetSincroOption(SessionLocator.Tenant, windowArgs.SincroScreen)
+            .subscribe(response => {
+                //this.CurrentSession.StopBusyIndicator();
+                if (!response.HasError && response.Result != null ) {
+                    
+                    this.SincroTestCaseDetailList = response.Result.SincroTestCaseDetailList;
+                    if (this.SincroTestCaseDetailList != null) {
+                        this.SincroTestCaseDetailList.forEach(r => {
+                            this.ScenarioCodes.push(new KeyValuePair(r.Code, r.Name));
+                        });
+                    }
+                    
+                }
+                this.Loaded = true;
+            });
     }
 
     OkButtonClicked() {
@@ -73,5 +91,17 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
     public _ScenarioCode: String;
     ScenarioCodeClicked(evKey) {
         this._ScenarioCode = evKey;
+        let detail = this.SincroTestCaseDetailList.filter(r => r.Code == this._ScenarioCode)[0];
+        this.Param1 = detail.Param1;
+        this.Param2 = detail.Param2;
     }
+}
+
+export class SincroTestCaseDetail {
+    Code: string
+    Name: string
+    Entity: string
+    IsDCA: boolean
+    Param1: string
+    Param2: string
 }
