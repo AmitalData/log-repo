@@ -41,6 +41,7 @@ namespace Logitude.Accounting.BL.DataContract
         public List<TaxDeductionReportLine> deductionLines;
         int? ReportYear;
         List<CardList> transactionsVendors;
+        List<Address> addresses;
         public TaxDeductionReportDataProvider(int? reportYear,int tenant)
         {
             Tenant = tenant;
@@ -52,6 +53,7 @@ namespace Logitude.Accounting.BL.DataContract
             accountingContext = AccountingContext.GetContext(tenant);
             vendors = new List<CardList>();
             gLAccounts = new List<GLAccountList>();
+            addresses = new List<Address>();
         }
         public TaxDeductionReportData GetTaxDeductionReportData()
         {            
@@ -142,6 +144,7 @@ namespace Logitude.Accounting.BL.DataContract
         public List<CardList> GetVendorsByIds(List<APPayment> payments)
         {
             List<string> vendorIds = payments.Select(d => d.VendorId).ToList();
+            addresses = addresses.Concat(GetVendorsAddresses(vendorIds)).ToList();
             List<CardList> vendors= (from a in commoncontext.Cards
                     where vendorIds.Contains(a.Id) && a.CountryCode == "IL"
                     && a.Tenant == Tenant
@@ -181,7 +184,17 @@ namespace Logitude.Accounting.BL.DataContract
                                           LocalName = a.LocalName
 
                                       }).ToList();
+            List<string> vendorIds = vendors.Select(d => d.Id).ToList();
+            addresses =addresses.Concat(GetVendorsAddresses(vendorIds)).ToList();
             return vendors;
+
+        }
+        List<Address> GetVendorsAddresses(List<string> vendorsIds)
+        {
+            return (from a in commoncontext.Addresses
+                    where a.Tenant == Tenant && vendorsIds.Contains(a.CardId)
+                    && a.AddressTypeId == "M" select a).ToList();
+
 
         }
         public List<GLAccountList> GetVendorsGLAccounts(List<CardList> vendors)
@@ -306,8 +319,10 @@ namespace Logitude.Accounting.BL.DataContract
                     }
                     groupedbyVendor.VATNumber = selectedVendor.VatNumber;
                     groupedbyVendor.VendorName = selectedVendor.EnglishName;
-                    groupedbyVendor.VendorAddress = selectedVendor.MainAddressId;
-                    groupedbyVendor.VendorCity = selectedVendor.CityName;
+                    Address address = addresses.Where(d => d.CardId == selectedVendor.Id).FirstOrDefault();
+
+                    groupedbyVendor.VendorAddress = address != null ? address.Name : null;
+                    groupedbyVendor.VendorCity = address != null ? address.City : null;// selectedVendor.CityName;
                     groupedbyVendor.IsAutonomy = selectedVendor.IsAutonomy;
                     groupedbyVendor.IsInternationlPartner = selectedVendor.IsInternationalPartner;
                     groupedbyVendor.VendorLocalName = selectedVendor.LocalName;
