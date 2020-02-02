@@ -406,7 +406,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DepositionStatusCode = a.DepositionStatusCode,
                                                      //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
                                                      //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
-
+                                                     AmendmentDontDisplayInList =a.AmendmentDontDisplayInList,
 
 
 
