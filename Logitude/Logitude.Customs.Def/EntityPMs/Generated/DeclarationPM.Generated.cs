@@ -4468,48 +4468,71 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string documentStatusDiamond ;
+	  private bool isValidTicketsDiamond ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DocumentStatusDiamond  
+       public bool IsValidTicketsDiamond  
 	   {
 	    
 	     get
 		{
-		   return documentStatusDiamond;
+		   return isValidTicketsDiamond;
 		 }
 		 set
 		 {
-		   if(documentStatusDiamond != value)
+		   if(isValidTicketsDiamond != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentStatusDiamond",OldValue=documentStatusDiamond,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsValidTicketsDiamond",OldValue=isValidTicketsDiamond,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   documentStatusDiamond=value;
+		   isValidTicketsDiamond=value;
 		   }
 			
 		 }
 	   }
-	  private bool isSignDiamond ;
+	  private string customFileAmendment ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool IsSignDiamond  
+       public string CustomFileAmendment  
 	   {
 	    
 	     get
 		{
-		   return isSignDiamond;
+		   return customFileAmendment;
 		 }
 		 set
 		 {
-		   if(isSignDiamond != value)
+		   if(customFileAmendment != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSignDiamond",OldValue=isSignDiamond,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomFileAmendment",OldValue=customFileAmendment,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   isSignDiamond=value;
+		   customFileAmendment=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationNoAmendment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationNoAmendment  
+	   {
+	    
+	     get
+		{
+		   return declarationNoAmendment;
+		 }
+		 set
+		 {
+		   if(declarationNoAmendment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNoAmendment",OldValue=declarationNoAmendment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationNoAmendment=value;
 		   }
 			
 		 }

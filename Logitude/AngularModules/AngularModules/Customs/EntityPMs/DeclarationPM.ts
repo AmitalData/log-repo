@@ -1124,14 +1124,19 @@ export class DeclarationPM {
     public set IsMissMandatoryDiamond(newValue: boolean) { if (this.isMissMandatoryDiamond != newValue) { this.isMissMandatoryDiamond = newValue; this.MarkAsDirty("IsMissMandatoryDiamond"); } }
        
 	 
-    private documentStatusDiamond: string;
-    public get DocumentStatusDiamond() { return this.documentStatusDiamond; }
-    public set DocumentStatusDiamond(newValue: string) { if (this.documentStatusDiamond != newValue) { this.documentStatusDiamond = newValue; this.MarkAsDirty("DocumentStatusDiamond"); } }
+    private isValidTicketsDiamond: boolean;
+    public get IsValidTicketsDiamond() { return this.isValidTicketsDiamond; }
+    public set IsValidTicketsDiamond(newValue: boolean) { if (this.isValidTicketsDiamond != newValue) { this.isValidTicketsDiamond = newValue; this.MarkAsDirty("IsValidTicketsDiamond"); } }
        
 	 
-    private isSignDiamond: boolean;
-    public get IsSignDiamond() { return this.isSignDiamond; }
-    public set IsSignDiamond(newValue: boolean) { if (this.isSignDiamond != newValue) { this.isSignDiamond = newValue; this.MarkAsDirty("IsSignDiamond"); } }
+    private customFileAmendment: string;
+    public get CustomFileAmendment() { return this.customFileAmendment; }
+    public set CustomFileAmendment(newValue: string) { if (this.customFileAmendment != newValue) { this.customFileAmendment = newValue; this.MarkAsDirty("CustomFileAmendment"); } }
+       
+	 
+    private declarationNoAmendment: string;
+    public get DeclarationNoAmendment() { return this.declarationNoAmendment; }
+    public set DeclarationNoAmendment(newValue: string) { if (this.declarationNoAmendment != newValue) { this.declarationNoAmendment = newValue; this.MarkAsDirty("DeclarationNoAmendment"); } }
        
 	 
 
