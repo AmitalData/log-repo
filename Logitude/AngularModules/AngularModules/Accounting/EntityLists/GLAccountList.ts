@@ -107,6 +107,7 @@ export class GLAccountList {
 	MinimumInterestInvoiceBilling: number;
 	InterestCreditLimit: number;
 	NameForPrintingCheques: string;
+	Smallcashbook: boolean;
 	
 }
  

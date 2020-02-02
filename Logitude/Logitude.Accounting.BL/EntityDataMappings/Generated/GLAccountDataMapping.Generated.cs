@@ -75,7 +75,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterestCreditInvoice, 
 	         MinimumInterestInvoiceBilling, 
 	         InterestCreditLimit, 
-	         NameForPrintingCheques,
+	         NameForPrintingCheques, 
+	         Smallcashbook,
 	      }
 
 
@@ -188,7 +189,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterestCreditInvoice, 
 	         MinimumInterestInvoiceBilling, 
 	         InterestCreditLimit, 
-	         NameForPrintingCheques,
+	         NameForPrintingCheques, 
+	         Smallcashbook,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -460,6 +462,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
             {
 				entityPOCO.NameForPrintingCheques = entityPM.NameForPrintingCheques;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Smallcashbook))
+            {
+				entityPOCO.Smallcashbook = entityPM.Smallcashbook;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -738,6 +745,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.NameForPrintingCheques = entityPOCO.NameForPrintingCheques;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Smallcashbook))
+            {
+					entityPM.Smallcashbook = entityPOCO.Smallcashbook;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -1007,6 +1019,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
             {
                 oldEntityPM.NameForPrintingCheques = entityPM.NameForPrintingCheques;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Smallcashbook))
+            {
+                oldEntityPM.Smallcashbook = entityPM.Smallcashbook;
             }
 			
 		}
