@@ -613,7 +613,7 @@
                                     </log-column>
 
                                     <!-- ForiegnExchangeRate -->
-                                    <log-column [header]="'ARInvoiceLine.CH.ForiegnExchangeRate' | TextCodeTranslationPipe" [width]="RateColumnWidth + ''" [Editable]="false" [Alignment]="'center'">
+                                    <log-column [header]="'ARInvoiceLine.CH.ForiegnExchangeRateListLable' | TextCodeTranslationPipe" [width]="RateColumnWidth + ''" [Editable]="false" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%; height: 100%;">
                                                 <span>{{item.ForiegnExchangeRate | NumbersPipe:'N5'}}</span>
@@ -623,7 +623,7 @@
                                     </log-column>
 
                                     <!-- VatType -->
-                                    <log-column [header]="'ARInvoiceLine.CH.VatTypeId' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-column [header]="'ARInvoiceLine.CH.VatTypeIdListLable' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div class="MediaFill">
                                                 <table>

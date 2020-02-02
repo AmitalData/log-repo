@@ -726,7 +726,7 @@
                                     </log-column>
 
                                     <!-- AmountPaid (invoice) -->
-                                    <log-column [width]="'100'" [header]="'APPayment.CH.AmountToPayListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
+                                    <log-column [width]="'100'" [header]="'APPayment.CH.AmountToPay' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                             <div style="width: 100%;">
                                                 <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>

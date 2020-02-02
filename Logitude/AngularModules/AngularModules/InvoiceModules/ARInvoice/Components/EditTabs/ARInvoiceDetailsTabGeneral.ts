@@ -132,7 +132,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public VATColumnWidth: number = 100;
     public RateColumnWidth: number = 100;
     SetGridColumns() {
-        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmount").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
+        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmountListLable").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
 
         var invoiceAmountHeader = null;
         var isInvoiceAmountHeaderVisible = false;
