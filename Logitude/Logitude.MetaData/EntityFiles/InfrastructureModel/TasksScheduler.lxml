@@ -2786,15 +2786,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;TasksSchedulerHeaderScreen&quot;"
-    ObjectTableName="&quot;TasksScheduler&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
