@@ -63,7 +63,6 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImportelTel" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterContact" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterCountry" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="IsDiamondsDeclaration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -120,5 +119,4 @@
   <xs:element name="CasualImportelTel" type="xs:string" />
   <xs:element name="CasualImporterContact" type="xs:string" />
   <xs:element name="CasualImporterCountry" type="xs:string" />
-  <xs:element name="IsDiamondsDeclaration" type="xs:string" />
 </xs:schema>
