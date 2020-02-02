@@ -41,11 +41,11 @@ namespace Logitude.Customs.BL.CloseTables
                 },
                                   new SincroTestCaseDetail()
                 {
-                    Code = "5117SincroCancell",
+                    Code = "5117SincroCancel",
                     Name = "הצהרת בטל5117 ",
                     IsDCA= true,
                     Entity="Declaration",
-                    Param1= @"{ ""cancell"":""AAA"" }"
+                    Param1= @"{ ""cancel"":""AAA"" }"
                 }
 
 
