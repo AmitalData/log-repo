@@ -1969,6 +1969,12 @@
       LocalDefaultText="&quot;לקוח לא מוגדר לריבית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.NewInterestBases&quot;"
+      DefaultText="&quot;New Interest Bases&quot;"
+      LocalDefaultText="&quot;חדש  בסיס ריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
