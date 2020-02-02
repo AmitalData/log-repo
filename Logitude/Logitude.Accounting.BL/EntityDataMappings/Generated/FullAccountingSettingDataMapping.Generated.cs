@@ -48,7 +48,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         SoftwareVersion, 
 	         IsPaymentChequesActivated, 
 	         GLAccounterCounterLength, 
-	         PaymentChequesLogoId,
+	         PaymentChequesLogoId, 
+	         NumberOfAgingMonths,
 	      }
 
 
@@ -98,7 +99,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         SoftwareVersion, 
 	         IsPaymentChequesActivated, 
 	         GLAccounterCounterLength, 
-	         PaymentChequesLogoId,
+	         PaymentChequesLogoId, 
+	         NumberOfAgingMonths,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -235,6 +237,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentChequesLogoId))
             {
 				entityPOCO.PaymentChequesLogoId = entityPM.PaymentChequesLogoId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfAgingMonths))
+            {
+				entityPOCO.NumberOfAgingMonths = entityPM.NumberOfAgingMonths;
 			}
 			}
 
@@ -376,6 +383,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.PaymentChequesLogoId = entityPOCO.PaymentChequesLogoId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberOfAgingMonths))
+            {
+					entityPM.NumberOfAgingMonths = entityPOCO.NumberOfAgingMonths;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -510,6 +522,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentChequesLogoId))
             {
                 oldEntityPM.PaymentChequesLogoId = entityPM.PaymentChequesLogoId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfAgingMonths))
+            {
+                oldEntityPM.NumberOfAgingMonths = entityPM.NumberOfAgingMonths;
             }
 			
 		}
