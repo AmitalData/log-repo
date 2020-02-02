@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Address&quot;"
-  Code="&quot;4c92&quot;"
+  Code="&quot;5cec&quot;"
   Name="&quot;Address&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -3322,6 +3322,67 @@
     NumberOfColumns="2"
     NumberOfRows="1">
     <ScreenFields />
+  </Screen>
+  <Screen
+    Name="&quot;Main Address&quot;"
+    ObjectTableName="&quot;Address&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;Customers.Addresses.MainAddress&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="7">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;CardEnglishName&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;Address1&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;Address2&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;City&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;CountryId&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="0"
+        Row="5"
+        ObjectFieldName="&quot;StateId&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;ZipCode&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;PhoneNumber&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;FaxNumber&quot;"
+        ScreenName="Main Address" />
+      <ScreenField
+        Column="1"
+        Row="2"
+        ObjectFieldName="&quot;ATTN&quot;"
+        ScreenName="Main Address" />
+    </ScreenFields>
   </Screen>
   <EventTypes>
     <EventType
