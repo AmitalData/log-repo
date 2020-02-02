@@ -4491,6 +4491,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string customFileAmendment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomFileAmendment  
+	   {
+	    
+	     get
+		{
+		   return customFileAmendment;
+		 }
+		 set
+		 {
+		   if(customFileAmendment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomFileAmendment",OldValue=customFileAmendment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customFileAmendment=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationNoAmendment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationNoAmendment  
+	   {
+	    
+	     get
+		{
+		   return declarationNoAmendment;
+		 }
+		 set
+		 {
+		   if(declarationNoAmendment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNoAmendment",OldValue=declarationNoAmendment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationNoAmendment=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime availabilityDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime AvailabilityDate  
+	   {
+	    
+	     get
+		{
+		   return availabilityDate;
+		 }
+		 set
+		 {
+		   if(availabilityDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailabilityDate",OldValue=availabilityDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   availabilityDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

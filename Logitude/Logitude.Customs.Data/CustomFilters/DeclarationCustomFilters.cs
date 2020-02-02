@@ -35,7 +35,7 @@ namespace Logitude.Customs.Data.CustomFilters
                {
                    queryableData = queryableData.Where(d => (d.PaymentDate != null) && (d.HatraDate == null));
                }
-                queryableData = queryableData.Where(d => (d.AmendmentDontDisplayInList == false));
+           //     queryableData = queryableData.Where(d => (d.AmendmentDontDisplayInList == false));
 
             }
 
