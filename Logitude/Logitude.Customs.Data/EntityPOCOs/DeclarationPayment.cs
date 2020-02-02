@@ -43,6 +43,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ConcurrencyGUID { get; set; }
         [Column("FuturePaymentDateTime")]
 	    public DateTime? FuturePaymentDateTime { get; set; }
+        [Column("AutomaticPayment")]
+	    public int AutomaticPayment { get; set; }
     }
 }
 	 
