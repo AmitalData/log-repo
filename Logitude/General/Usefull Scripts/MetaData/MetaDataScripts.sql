@@ -56,10 +56,10 @@
 ----ObjectFields
 ----alter table advancedqueryfilters drop constraint FK_ObjectFieldAdvancedQueryFilter
 --delete from objectfields where tenant = 0 and (FieldCode not like 'customs.%' or FieldCode is null)
---delete from querycolumns where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null)
---delete from ScreenFields where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null)
---delete from AdvancedQueryFilters where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null)
---delete from RuleConditionFields where tenant = 0  and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null)
+--delete from querycolumns where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and userid is null
+--delete from ScreenFields where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) 
+--delete from AdvancedQueryFilters where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and userid is null
+--delete from RuleConditionFields where tenant = 0  and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and systemlevel = 1
 --delete from ObjectTableRuleFields where tenant = 0 and (ObjectFieldCode not like 'customs.%' or ObjectFieldCode is null) and systemlevel = 1
 --delete from ObjectTableRules where tenant = 0 and (TriggerFieldCode not like 'customs.%' or TriggerFieldCode is null) and systemlevel = 1
 
@@ -67,7 +67,7 @@
 --delete from screens where tenant = 0 and (Code not like 'customs.%' or Code is null)
 
 ----Queries
---delete from Queries where tenant = 0 and (Code not like 'customs.%' or Code is null)
+--delete from Queries where tenant = 0 and (Code not like 'customs.%' or Code is null) and userid is null
 
 ----TextCodes
 --delete from MenuButtons where tenant = 0 and (LabelTextCodeCode not like 'customs.%' or LabelTextCodeCode is null)
@@ -115,19 +115,19 @@
 --update SharedUserQueries set QueryId = (select Id from Queries where UniqueCode = SharedUserQueries.QueryCode)
 
 ----TextCodes
---update Queries set NameTextCodeId = (select Id from TextCodes where Code=Queries.NameTextCodeCode)
---update ObjectTables set DescriptionTextCodeId = (select Id from TextCodes where Code=ObjectTables.DescriptionTextCodeCode)
+--update Queries set NameTextCodeId = (select Id from TextCodes where Code=Queries.NameTextCodeCode and tenant = Queries.Tenant)
+--update ObjectTables set DescriptionTextCodeId = (select Id from TextCodes where Code=ObjectTables.DescriptionTextCodeCode and tenant = ObjectTables.Tenant)
 --update ObjectTables set NewButtonTextCodeId = (select Id from TextCodes where Code=ObjectTables.NewButtonTextCodeCode)
---update Features set NameTextCodeId = (select Id from TextCodes where Code=Features.NameTextCodeCode)
+--update Features set NameTextCodeId = (select Id from TextCodes where Code=Features.NameTextCodeCode and tenant = Features.Tenant)
 --update Tips set ShortTextCode = (select Id from TextCodes where Code=Tips.ShortTextCodeCode)
---update ObjectTableTabs set TabNameTextCodeId = (select Id from TextCodes where Code=ObjectTableTabs.TabNameTextCodeCode)
+--update ObjectTableTabs set TabNameTextCodeId = (select Id from TextCodes where Code=ObjectTableTabs.TabNameTextCodeCode and tenant = ObjectTableTabs.Tenant)
 --update MenuButtons set LabelTextCodeId = (select Id from TextCodes where Code=MenuButtons.LabelTextCodeCode)
 --update ObjectFields set FullNameTextCodeId = (select Id from TextCodes where Code=ObjectFields.FullNameTextCodeCode and tenant = ObjectFields.Tenant) 
 --update ObjectFields set HelpTextCodeId = (select Id from TextCodes where Code=ObjectFields.HelpTextCodeCode and tenant = ObjectFields.Tenant)
 --update ObjectFields set ShortNameTextCodeId = (select Id from TextCodes where Code=ObjectFields.ShortNameTextCodeCode and tenant = ObjectFields.Tenant)
 --update ObjectFields set ListTextCodeId = (select Id from TextCodes where Code=ObjectFields.ListTextCodeCode and tenant = ObjectFields.Tenant)
 ----delete from Translations where TextCodeCode not in (select code from TextCodes)
---update Translations set TextCodeId = (select Id from TextCodes where Code=Translations.TextCodeCode)
+--update Translations set TextCodeId = (select Id from TextCodes where Code=Translations.TextCodeCode and (tenant =  Translations.Tenant or tenant = 0)) where TextCodeCode in (select code from textcodes)
 
 ----Features
 --update MenusTables set FeatureId = (select Id from features where FeatureUniqeCode=MenusTables.FeatureUniqeCode)
