@@ -25,11 +25,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("OrderNumber")]
 	    public string OrderNumber { get; set; }
-        [ForeignKey("Vendor")]
+        [ForeignKey("CustomsVendor")]
         [Column("VendorId")]
 	    public string VendorId { get; set; }
 	      
-        public virtual CustomsVendor Vendor { get; set; }
+        public virtual CustomsVendor CustomsVendor { get; set; }
         [Column("ArrivalDate")]
 	    public DateTime ArrivalDate { get; set; }
         [Column("EstimatedArrivalDate")]

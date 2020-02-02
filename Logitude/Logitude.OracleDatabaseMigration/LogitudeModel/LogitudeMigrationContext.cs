@@ -3797,6 +3797,9 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new DeclarationPendingMap());
 
+            modelBuilder.Configurations.Add(new DeclarationReferantDataMap());
+
+
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
 
             modelBuilder.Configurations.Add(new DeclarationTaxMap());
@@ -4202,6 +4205,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.GoodsItemLineNumber).HasPrecision(16, 5);
 
             modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.AmountInDispute).HasPrecision(16, 2);
+
+            modelBuilder.Entity<DeclarationReferantData>().Property(x => x.Weight).HasPrecision(15, 3);
 
             modelBuilder.Entity<DeficitConnFileParagraphType>().Property(x => x.Amount).HasPrecision(16, 2);
 
