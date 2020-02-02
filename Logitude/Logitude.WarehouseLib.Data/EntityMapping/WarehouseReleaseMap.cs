@@ -114,6 +114,8 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.ToAddressCity).HasColumnName("ToAddressCity").HasMaxLength(25).IsUnicode(true);
 
             this.Property(t => t.ToAddressCountryId).HasColumnName("ToAddressCountryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsUsed).HasColumnName("IsUsed");
         }
     }
 }

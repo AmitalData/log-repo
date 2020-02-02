@@ -298,7 +298,31 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         }
 
 
+        public List<WarehouseReleasePM> GetWarehouseReleaseListsByCustomerIdAndWarehouseId(string customerId, string warehouseId, int tenant)
+        {
+            List<WarehouseReleasePM> myResult = (from a in context.WarehouseReleases.Include("ToPort").Include("ToAddress.Country").Include("ToAddressCountry")
+                                                 where a.WarehouseId == warehouseId && a.CustomerId == customerId && a.Tenant == tenant && !a.IsUsed
+                                                 select new WarehouseReleasePM()
+                                                 {
+                                                     Id = a.Id,
+                                                     ReleaseNumber = a.ReleaseNumber,
+                                                     ActualReleaseDate = a.ActualReleaseDate,
+                                                     ReleaseBy = a.ReleaseBy,
+                                                     StatusName = a.WarehouseReleaseStatus != null ? a.WarehouseReleaseStatus.Name : "",
+                                                     ExpectedReleaseDate = a.ExpectedReleaseDate,
+                                                     CreateDate = a.CreateDate,
+                                                     ShipmentId = a.ShipmentId,
+                                                     References = a.CustomerRef1 + (!string.IsNullOrEmpty(a.CustomerRef1) && !string.IsNullOrEmpty(a.CustomerRef1) ? "," : "") + a.CustomerRef2,
+                                                     Destination = a.ToTypeCode == "PORT" ? a.ToPort!=null? a.ToPort.Code:"" : a.ToTypeCode == "PART" ? (a.ToAddress!=null?a.ToAddress.City + " " :"") +  (a.ToAddress != null && a.ToAddress.Country!=null ? a.ToAddress.Country.EnglishName : "") : a.ToTypeCode == "CASL" ? (a.ToAddressCity) + " " + (a.ToAddressCountry != null ? a.ToAddressCountry.EnglishName : "") : "",
+                                                 }).ToList();
+            WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(tenant);
+            foreach (WarehouseReleasePM item in myResult)
+            {
+                item.WarehouseReleasePackages = warehouseReleasePackageQueryService.GetWarehouseReleasePackagePMListsByWarehouseReleaseId(item.Id, tenant);
 
+            }
+            return myResult;
+        }
 
     }
 }

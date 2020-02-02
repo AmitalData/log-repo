@@ -848,29 +848,6 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
-	  private bool isUsed ;
-	  	  
-       
-	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsUsed  
-	   {
-	    
-	     get
-		{
-		   return isUsed;
-		 }
-		 set
-		 {
-		   if(isUsed != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUsed",OldValue=isUsed,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isUsed=value;
-		   }
-			
-		 }
-	   }
 	  private string shipmentId ;
 	  	  
        

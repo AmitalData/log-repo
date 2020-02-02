@@ -25,7 +25,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         public List<WarehouseReleasePackagePM> GetWarehouseReleasePackagePMListsByWarehouseReleaseId(string WarehouseReleaseId, int tenant)
         {
 
-            List<WarehouseReleasePackagePM> myResult = (from a in context.WarehouseReleasePackages.Include("WarehouseRelease")
+            List<WarehouseReleasePackagePM> myResult = (from a in context.WarehouseReleasePackages
                                                         where a.Tenant == tenant && a.WarehouseRelease.Id == WarehouseReleaseId
                                                         select new WarehouseReleasePackagePM()
                                                         {
@@ -125,7 +125,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                                   Quantity = a.Quantity,
                                                                   Weight = a.Weight,
                                                                   IsContainer = a.IsContainer,
-                                                                  IsUsed = a.IsUsed,
                                                                   ShipmentId = a.WarehouseRelease.ShipmentId,
                                                                   ReleaseNumber = a.WarehouseRelease.ReleaseNumber,
                                                                   ReleaseStatus = a.WarehouseRelease.WarehouseReleaseStatus!=null ? a.WarehouseRelease.WarehouseReleaseStatus.Name : null,

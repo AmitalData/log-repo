@@ -5,13 +5,13 @@ import {Guid} from '../../Infrastructure/Utilities/Guid';
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
-
+import {WarehouseReleasePM} from '../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {WarehouseReleasePackagePM} from '../../Warehouse/EntityPMs/WarehouseReleasePackagePM';
 
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import {WarehouseReleasePackagePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseReleasePackagePMExtendedService';
+import {WarehouseReleasePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 @Component({
     moduleId: module.id,
     selector: 'ChoosePackagesFromWarehousePackageReleasesComponent',
@@ -23,30 +23,32 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     ObjectTableName: string = "WarehouseRelelasePackage";
-    //public ValidationErrorsList: string[];
-    WarehouseReleasePackagePMLists: WarehouseReleasePackageClass[] = [];
-    AllWarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
-    WarehouseReleasePackagePMExtendedService: WarehouseReleasePackagePMExtendedService;
+    WarehouseReleasePMLists: WarehouseReleasePM[] = [];
+    WarehouseReleaseGroupLists: WarehouseReleaseGroup[]=[];
+    AllWarehouseReleaseGroupLists: WarehouseReleaseGroup[] = [];
+
+
+    warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     DataContext: any = this;
-
-
+    private CurrentSession = SessionLocator.SelectedSession;
+    ViewModelTrigger: any;
     IsLoadPage: boolean = false;
-    IsContainerShipment: boolean = false;
     VolumeLabel: string;
     GrossWeightLabel: string;
     DimensionsUnitCode: string;
-
-    private CurrentSession = SessionLocator.SelectedSession;
-    IsStartFilter: boolean = false;
-    ViewModelTrigger: any;
+    VolumetricWeightLabel: string;
+    IsContainerShipment: boolean = false;
+    IsShowMessageNoWarehouseRelease: boolean = false;
+    IsShowConnectedToOtherShipments: boolean = false;
     constructor() {
         super();
+
+        this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
     }
 
     ngOnInit(
 
     ) {
-
 
     }
 
@@ -58,30 +60,23 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
     }
 
-
     Initialize(args) {
-
-        this.WarehouseReleasePackagePMLists = [];
-
-        this.IsContainerShipment = args.IsContainer;
         this.ViewModelTrigger = args.ViewModelTrigger;
-        this.Shipment = this.ViewModelTrigger ? this.ViewModelTrigger.EntityPM:null;
+        this.Shipment = this.ViewModelTrigger ? this.ViewModelTrigger.EntityPM : null;
+
+        this.UIProperties.SetRequired("CustomerId", "WarehouseRelease", true);
+        this.UIProperties.SetRequired("Warehouseid", "WarehouseRelease", true);
 
         if (this.Shipment) {
-            this.transportModeId = this.Shipment.TransportModeId ? this.Shipment.TransportModeId : "All";
-            this.DirectionId = this.Shipment.DirectionId ? this.Shipment.DirectionId : "All";
             this.CustomerId = this.Shipment.CustomerId;
-            this.FromPortId = this.Shipment.MainCarriageFromPortId ? this.Shipment.MainCarriageFromPortId : this.Shipment.FromPortId;
-            this.ToPortId = this.Shipment.ShipmentLevelCode == "H" ? this.Shipment.MainCarriageFinalDestinationPortId : this.Shipment.FinalDistenationPortId;
+            this.WarehouseId = this.Shipment.WarehouseLegWarehouseId;
         }
 
         this.SetHeaderLable();
 
-        if (!this.CustomerId) this.LoadWarehouseReleasePackage();
-
-
+   
     }
-    VolumetricWeightLabel: string;
+
     SetHeaderLable() {
         this.VolumeLabel = "Volume (" + SessionLocator.TenantPM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + SessionLocator.TenantPM.GrossWeightUnitCode + ")";
@@ -91,181 +86,102 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
     }
     IsShowMessageNoResult: boolean = false;
-    FilterWarehouseReleasePackageList() {
-        if (this.IsStartFilter) {
-            this.WarehouseReleasePackagePMLists = [];
-            if (this.IsContainerShipment) {
-                this.AllWarehouseReleasePackagesLists.filter(d => d.IsContainer).forEach((item) => {
-                    this.WarehouseReleasePackagePMLists.push(new WarehouseReleasePackageClass(item, this.Shipment));
-                });
-            }
-            else {
-                this.AllWarehouseReleasePackagesLists.filter(d => !d.IsContainer).forEach((item) => {
-                    this.WarehouseReleasePackagePMLists.push(new WarehouseReleasePackageClass(item, this.Shipment));
-                });
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.TransportModeId) && this.TransportModeId != "All") {
-                this.WarehouseReleasePackagePMLists = this.WarehouseReleasePackagePMLists.filter(d => d.TransportModeId == this.TransportModeId);
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.DirectionId) && this.DirectionId != "All") {
-                this.WarehouseReleasePackagePMLists = this.WarehouseReleasePackagePMLists.filter(d => d.DirectionId == this.DirectionId);
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.FromPortId)) {
-                this.WarehouseReleasePackagePMLists = this.WarehouseReleasePackagePMLists.filter(d => d.FromPortId == this.FromPortId);
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.ToPortId)) {
-                this.WarehouseReleasePackagePMLists = this.WarehouseReleasePackagePMLists.filter(d => d.ToPortId == this.ToPortId);
-            }
-
-
-
-            if (this.WarehouseReleasePackagePMLists.length == 0) {
-                this.IsShowMessageNoResult = true;
-            } else this.IsShowMessageNoResult = false;
-
-            //if (this.ViewModelTrigger && this.ViewModelTrigger.WarehouseReleasePackagesLists.length > 0) {
-            //    this.WarehouseReleasePackagePMLists.forEach((item) => {
-            //        var temp = this.ViewModelTrigger.WarehouseReleasePackagesLists.filter(d => d.Id == item.Id)[0];
-            //        if (temp) item.IsSelected = true;
-            //    });
-            //}
-
-        }
-
-    }
 
     CloseButtonClicked() {
  
-        //this.ViewModelTrigger.CustomerId = this.warehouseReleasePM.CustomerId = this.OldCustomerId;
-
-
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    IsDisableFilter: boolean = false;
-    SetEnableProp() {
-        if (this.UIProperties && this.IsLoadPage) {
-            if (this.WarehouseReleasePackagePMLists.filter(d => d.IsSelected)[0]) {
-                this.UIProperties.SetEnabled("TransportModeId", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("DirectionId", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
-                this.IsDisableFilter = true;
+
+    HideWarehouseReleaseGroup(warehouseReleaseGroup: WarehouseReleaseGroup) {
+        warehouseReleaseGroup.IsHide = !warehouseReleaseGroup.IsHide;
+
+        if (warehouseReleaseGroup.IsHide) {
+            warehouseReleaseGroup.WarehouseReleasePMLists = [];
+        } else {
+
+            var warehouseReleasePMLists = this.AllWarehouseReleaseGroupLists.filter(d => d.Title == warehouseReleaseGroup.Title)[0].WarehouseReleasePMLists;
+            if (warehouseReleasePMLists) {
+                warehouseReleasePMLists.forEach((item) => {
+                    warehouseReleaseGroup.WarehouseReleasePMLists.push(item);
+                });
             }
-            else {
-                this.UIProperties.SetEnabled("TransportModeId", this.ObjectTableName, true);
-                this.UIProperties.SetEnabled("DirectionId", this.ObjectTableName, true);
-                this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, true);
-                this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, true);
-                this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, true);
-                this.IsDisableFilter = false;
-            }
+
         }
     }
 
-    LoadWarehouseReleasePackage() {
+    LoadWarehouseReleasePackages() {
+        this.WarehouseReleaseGroupLists = [];
+        this.AllWarehouseReleaseGroupLists = [];
+        
+        if (this.CustomerId && this.WarehouseId) {
+            this.warehouseReleasePMExtendedService.GetWarehouseReleaseByCstomerIdIdAndwarehouseId(this.customerId, this.WarehouseId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    if (myResponse.Result && myResponse.Result.length > 0) {
+                        this.WarehouseReleasePMLists = myResponse.Result;
+                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => AppTool.IsNullOrEmpty(d.ShipmentId)), "Not Connected"));
+                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId == this.Shipment.Id), "Connected to my Shipment"));
+                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId != this.Shipment.Id), "Connected to other Shipments"));
 
-        var warehouseReleasePackagePMExtendedService: WarehouseReleasePackagePMExtendedService = new WarehouseReleasePackagePMExtendedService();
-        warehouseReleasePackagePMExtendedService.GetWarehouseReleasePackagePMThatNotUsedForAnyEntityLists().subscribe((myResponse: ServiceResponse) => {
-            this.IsStartFilter = true;
-            if (!myResponse.HasError) {
-                var releasePackages: any = myResponse.Result;
-                this.AllWarehouseReleasePackagesLists = releasePackages;
-                this.FilterWarehouseReleasePackageList();
 
-            }
+                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => AppTool.IsNullOrEmpty(d.ShipmentId)), "Not Connected"));
+                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId == this.Shipment.Id), "Connected to my Shipment"));
+                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId != this.Shipment.Id), "Connected to other Shipments"));
 
-            this.IsLoadPage = true;
+                    } else this.IsShowMessageNoResult = true;
+                }
+                this.IsLoadPage = true;
 
-        }); 
+            });
+        } else this.IsLoadPage = true;
     }
+
+
+   
+
+
+
     SaveButtonClicked() {
 
-        var list = [];
-        this.WarehouseReleasePackagePMLists.filter(d => d.IsSelected == true).forEach((item) => {
-            list.push(item);
-        });
+        //var list = [];
+        //this.WarehouseReleasePackagePMLists.filter(d => d.IsSelected == true).forEach((item) => {
+        //    list.push(item);
+        //});
 
 
-        this.ViewModelTrigger.GeneratePackagesFromWarehouseReleasesPackages(list);
+        //this.ViewModelTrigger.GeneratePackagesFromWarehouseReleasesPackages(list);
         this.CloseButtonClicked();
     }
 
 
 
-    private transportModeId: string = "All";
-    get TransportModeId() {
-        this.SetEnableProp();
-        return this.transportModeId;
-
-
-    }
-    set TransportModeId(newValue: string) {
-
-        if (this.transportModeId != newValue) {
-            this.transportModeId = newValue;
-            this.FilterWarehouseReleasePackageList();
-        }
-
-    }
-
-    private directionId: string = "All";
-    get DirectionId() { return this.directionId; }
-    set DirectionId(newValue: string) {
-
-        if (this.directionId != newValue) {
-            this.directionId = newValue;
-            this.FilterWarehouseReleasePackageList();
-        }
-
-    }
-
-
 
     private customerId: string;
     get CustomerId() {
-
-
-
         return this.customerId;
 
     }
     set CustomerId(newValue: string) {
         if (this.customerId != newValue) {
             this.customerId = newValue;
-            this.LoadWarehouseReleasePackage();
-        }
-    }
-
-    private fromPortId: string;
-    get FromPortId() { return this.fromPortId; }
-    set FromPortId(newValue: string) {
-
-        if (this.fromPortId != newValue) {
-            this.fromPortId = newValue;
-            this.FilterWarehouseReleasePackageList();
-
-        }
-    }
-
-    private toPortId: string;
-    get ToPortId() { return this.toPortId; }
-    set ToPortId(newValue: string) {
-
-        if (this.toPortId != newValue) {
-            this.toPortId = newValue;
-            this.FilterWarehouseReleasePackageList();
-
+            this.LoadWarehouseReleasePackages();
         }
     }
 
 
-    ViewReleaseClicked(item: WarehouseReleasePackageClass) {
+    private warehouseId: string;
+    get WarehouseId() {
+        return this.warehouseId;
+
+    }
+    set WarehouseId(newValue: string) {
+        if (this.warehouseId != newValue) {
+            this.warehouseId = newValue;
+            this.LoadWarehouseReleasePackages();
+        }
+    }
+
+    ViewReleaseClicked(item: WarehouseReleasePM) {
 
         var myBackButtonLabel = "Choose Packages";
 
@@ -279,64 +195,20 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
 }
 
-export class WarehouseReleasePackageClass extends BaseComponent {
-
-    Id: string;
-    IsContainer: boolean;
-    PackageTypeName: string;
-    ContainerNumberWarning: string;
-    ContainerNumber: string;
-    Dimensions: string;
-    Quantity: number;
-    Volume: number;
-    Weight: number;
-    Description: string;
-
-    IsConnectedToShipment: boolean = false;
-    VolumetricWeight: number;
-    TransportModeId: string;
-    DirectionId: string;
-    FromPortId: string;
-    ToPortId: string;
-    CustomerId: string;
-    Height: number;
-    Width: number;
-    Length: number;
-     IsSelected: boolean;
-     ReleaseNumber: string;
-     ReleaseStatus: string;
-    constructor(entityPM: WarehouseReleasePackagePM , shipment:any) {
-        super();
-        this.Id = entityPM.Id;
-        this.PackageTypeName = entityPM.PackageTypeName;
-        this.ContainerNumberWarning = entityPM.ContainerNumberWarning;
-        this.ContainerNumber = entityPM.ContainerNumber;
-        this.Dimensions = entityPM.Dimensions;
-        this.Quantity = entityPM.Quantity;
-        this.Volume = entityPM.Volume;
-        this.Weight = entityPM.Weight;
-        this.VolumetricWeight = entityPM.VolumetricWeight;
-        this.Height = entityPM.Height;
-        this.Width = entityPM.Width;
-        this.Length = entityPM.Length;
-        this.ReleaseNumber = entityPM.ReleaseNumber;
-        this.ReleaseStatus = entityPM.ReleaseStatus;
-        this.Description = entityPM.Description;
-        this.IsContainer = entityPM.IsContainer;
-        this.EntityPM = entityPM
-        this.IsConnectedToShipment = entityPM.ShipmentId ? true : false;
-        if (shipment != null) {
-            this.TransportModeId = shipment.TransportModeId;
-            this.DirectionId = shipment.DirectionId;
-            this.FromPortId = shipment.FromPortId;
-            this.ToPortId = shipment.ToPortId;
-            this.CustomerId = shipment.CustomerId;
-        }
+class WarehouseReleaseGroup {
+    WarehouseReleasePMLists: WarehouseReleasePM[] = [];
+    Title: string;
+    IsHide: boolean = false;
+    constructor(warehouseReleasePMLists: WarehouseReleasePM[] , title:string ) {
+        this.WarehouseReleasePMLists = warehouseReleasePMLists;
+        this.Title = title;
+    }
 
 
-     }
-
-
-    
+    private haveWarehouseReleasePackages: boolean;
+    get HaveWarehouseReleasePackages() {
+        return ((this.WarehouseReleasePMLists && this.WarehouseReleasePMLists.length > 0) || this.IsHide ? true : false);
+    }
 
 }
+
