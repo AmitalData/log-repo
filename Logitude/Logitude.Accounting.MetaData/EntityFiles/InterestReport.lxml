@@ -1901,7 +1901,7 @@
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;InterestReportStatusName&quot;"
+        ObjectFieldName="&quot;InterestReportStatusLocalName&quot;"
         ScreenName="InterestReportHeaderScreen" />
       <ScreenField
         Column="1"
