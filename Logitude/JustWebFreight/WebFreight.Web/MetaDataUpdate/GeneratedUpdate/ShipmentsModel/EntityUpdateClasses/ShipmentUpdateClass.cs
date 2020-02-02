@@ -40925,6 +40925,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen ShipmentCustomsAdditionalFieldsScreen6 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Shipment.CustomsAdditionalFields", Name = "Customs Additional Fields", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
         
+	      
+
+	         Screen ShipmentSharedManifestAdditionalFieldsScreen7 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SharedManifestAdditionalScreen", Name = "Shared Manifest Additional Fields", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
