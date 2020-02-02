@@ -119,9 +119,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.ChangeSetOp = ChangeSetOperation.Update;
                 this.Update(entityPM, true);
 
-                TaxDeductionReportService.Create856FileInBatch(entityPM.Id, entityPM.Tenant);
-
-                
+                TaxDeductionReportService.Create856File(entityPM.Id, entityPM.Tenant);// Create856FileInBatch(entityPM.Id, entityPM.Tenant);
+           
             }
 
         }

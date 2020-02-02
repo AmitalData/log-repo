@@ -19,7 +19,7 @@ namespace Logitude.Accounting.BL.DataContract
         public int? TaxYear { get; set; }
         public List<ByMonthList> ByMonthList { get; set; }
         public List<ByVendorList> ByVendorList { get; set; }
-        public List<TotalForCompany> TotalForCompany { get; set; }
+
         public List<DBVendorsList> DBVendorsList { get; set; }
         public double? TotalAmountInLocalCurrency { get; set; }
         public decimal? TotalDeductionInLocalCurrency { get; set; }
@@ -85,14 +85,7 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal? EndYearBalance { get; set; }
         public string VendorLocalName { get; set; }
     }
-
-    public class TotalForCompany
-    {
-        public string CompanyName { get; set; }
-        public string DeductionFileNumber { get; set; }
-        public double? TotalPayments { get; set; }
-        public decimal? TotalDeductions { get; set; }
-    }
+    
 
     public class TaxDeductionReportLine
     {

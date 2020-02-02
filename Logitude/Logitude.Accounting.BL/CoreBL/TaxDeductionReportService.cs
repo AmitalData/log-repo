@@ -9,6 +9,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -44,10 +45,11 @@ namespace Logitude.Accounting.BL.CoreBL
             TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(taxDeductionReportId, false, false);
 
             List<string> linesArray = new List<string>();
-          
-            GLAccountQueryService queryService = new GLAccountQueryService(tenant);
-            TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
-
+            //GLAccountQueryService queryService = new GLAccountQueryService(tenant);
+            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM.TaxYear,tenant);
+            TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
+            //TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
+            string xml = LogitudeXmlSerializer.SerializeObjectToXmlString(data);
             StringBuilder myStringBuilder = new StringBuilder();
 
 
@@ -524,10 +526,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
-
+         
 
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, setting.DeductionFileNumber, taxDeductionReportPM);
-
+          
             return docOut;
 
 
