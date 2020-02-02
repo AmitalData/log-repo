@@ -456,6 +456,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.UpdateShipmentOrderPackagesCollection();
                     this.UpdateShipmentPackagesCollection();
+           
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
                     this.UpdateShipmentPayablesCollection();
@@ -1699,6 +1700,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         default: { break; }
                     }
                 }
+                this.UpdateIsUsedPackagesFromWarehouseReleases();
             }
         }
         private void UpdateShipmentPickUpsCollection()
@@ -5122,10 +5124,34 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
+         
+
             calculateProfit = true;
             calculatePayables = true;
             calculateReceivables = true;
         }
+
+        private void UpdateIsUsedPackagesFromWarehouseReleases()
+        {
+            if (!string.IsNullOrEmpty(entityPM.WarehouseReleasesIds))
+            {
+                List<string> warehouseReleasesIdLists = entityPM.WarehouseReleasesIds.Split(',').ToList();
+                if (warehouseReleasesIdLists.Count > 0)
+                {
+                    WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
+                    List<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetAll(entityPM.Tenant).Where(d => warehouseReleasesIdLists.Contains(d.Id)).ToList();
+                    foreach (WarehouseRelease item in warehouseReleases)
+                    {
+                        item.IsUsed = true;
+                        if(string.IsNullOrEmpty(item.ShipmentId)) item.ShipmentId = entityPM.Id;
+                        warehouseReleaseRepository.Update(item);
+                    }
+                    warehouseReleaseRepository.SubmitChanges();
+                }
+            }
+            entityPM.WarehouseReleasesIds = null;
+        }
+
         private void UpdateShipmentPackage(ShipmentPackagePM itemPM)
         {
             ShipmentPackage itemPoco = shipmentPackageRepository.GetSingleShipmentPackage(itemPM.Id, tenant);
@@ -5228,35 +5254,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
-            if (itemPM.ShipmentPackageHarmonizesChangeSet != null)
-            {
-                foreach (ShipmentPackageHarmonizePM itemHarmonizePM in itemPM.ShipmentPackageHarmonizesChangeSet)
-                {
-                    switch (itemHarmonizePM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateShipmentPackageHarmonize(itemHarmonizePM, itemPM.Id);
-                                break;
-                            }
+          
 
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateShipmentPackageHarmonize(itemHarmonizePM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteShipmentPackageHarmonize(itemHarmonizePM);
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-            }
-
+            UpdateIsUsedPackagesFromWarehouseReleases();
             calculateProfit = true;
             calculatePayables = true;
             calculateReceivables = true;

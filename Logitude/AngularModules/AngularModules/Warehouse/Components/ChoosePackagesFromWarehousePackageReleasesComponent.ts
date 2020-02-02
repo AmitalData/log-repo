@@ -12,6 +12,7 @@ import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {WarehouseReleasePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
+import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 @Component({
     moduleId: module.id,
     selector: 'ChoosePackagesFromWarehousePackageReleasesComponent',
@@ -22,9 +23,9 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
-    ObjectTableName: string = "WarehouseRelelasePackage";
+    ObjectTableName: string = "WarehouseRelease";
     WarehouseReleasePMLists: WarehouseReleasePM[] = [];
-    WarehouseReleaseGroupLists: WarehouseReleaseGroup[]=[];
+    WarehouseReleaseGroupLists: WarehouseReleaseGroup[] = [];
     AllWarehouseReleaseGroupLists: WarehouseReleaseGroup[] = [];
 
 
@@ -38,11 +39,12 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
     DimensionsUnitCode: string;
     VolumetricWeightLabel: string;
     IsContainerShipment: boolean = false;
-    IsShowMessageNoWarehouseRelease: boolean = false;
-    IsShowConnectedToOtherShipments: boolean = false;
+    IsShowMessageNoResult: boolean = false;
+
     constructor() {
         super();
-
+        //this.UIProperties.SetRequired("CustomerId", this.ObjectTableName, true);
+        //this.UIProperties.SetRequired("WarehouseId", this.ObjectTableName, true);
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
     }
 
@@ -64,8 +66,7 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
         this.ViewModelTrigger = args.ViewModelTrigger;
         this.Shipment = this.ViewModelTrigger ? this.ViewModelTrigger.EntityPM : null;
 
-        this.UIProperties.SetRequired("CustomerId", "WarehouseRelease", true);
-        this.UIProperties.SetRequired("Warehouseid", "WarehouseRelease", true);
+        this.IsContainerShipment = args.IsContainer;
 
         if (this.Shipment) {
             this.CustomerId = this.Shipment.CustomerId;
@@ -74,7 +75,7 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
         this.SetHeaderLable();
 
-   
+
     }
 
     SetHeaderLable() {
@@ -85,12 +86,12 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
 
     }
-    IsShowMessageNoResult: boolean = false;
 
     CloseButtonClicked() {
- 
+
         this.CurrentSession.CloseCurrentWindow();
     }
+
 
 
     HideWarehouseReleaseGroup(warehouseReleaseGroup: WarehouseReleaseGroup) {
@@ -110,25 +111,60 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
         }
     }
 
+
+    GetWarehouseReleasePMLists(title: string) {
+        var warehouseRelease: any = [];
+        if (this.WarehouseReleasePMLists) {
+            if (title == "Not Connected") {
+                warehouseRelease = this.WarehouseReleasePMLists.filter(d => AppTool.IsNullOrEmpty(d.ShipmentId));
+
+            } else if (title == "Connected to my Shipment") {
+                warehouseRelease = this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId == this.Shipment.Id);
+            }
+
+            else if (title == "Connected to other Shipments") {
+                warehouseRelease = this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId != this.Shipment.Id);
+            }
+        }
+        return warehouseRelease;
+    }
+
     LoadWarehouseReleasePackages() {
         this.WarehouseReleaseGroupLists = [];
         this.AllWarehouseReleaseGroupLists = [];
-        
+        this.IsShowMessageNoResult = false;
         if (this.CustomerId && this.WarehouseId) {
+
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.warehouseReleasePMExtendedService.GetWarehouseReleaseByCstomerIdIdAndwarehouseId(this.customerId, this.WarehouseId).subscribe((myResponse: ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     if (myResponse.Result && myResponse.Result.length > 0) {
                         this.WarehouseReleasePMLists = myResponse.Result;
-                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => AppTool.IsNullOrEmpty(d.ShipmentId)), "Not Connected"));
-                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId == this.Shipment.Id), "Connected to my Shipment"));
-                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId != this.Shipment.Id), "Connected to other Shipments"));
 
 
-                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => AppTool.IsNullOrEmpty(d.ShipmentId)), "Not Connected"));
-                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId == this.Shipment.Id), "Connected to my Shipment"));
-                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.WarehouseReleasePMLists.filter(d => !AppTool.IsNullOrEmpty(d.ShipmentId) && d.ShipmentId != this.Shipment.Id), "Connected to other Shipments"));
+                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.GetWarehouseReleasePMLists("Not Connected"), "Not Connected", this));
+                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.GetWarehouseReleasePMLists("Connected to my Shipment"), "Connected to my Shipment", this));
+                        this.AllWarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.GetWarehouseReleasePMLists("Connected to other Shipments"), "Connected to other Shipments", this));
+
+                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.GetWarehouseReleasePMLists("Not Connected"), "Not Connected", this));
+                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.GetWarehouseReleasePMLists("Connected to my Shipment"), "Connected to my Shipment", this));
+
+                        if (this.isShowConnectedToOtherShipments) {
+                            this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(this.GetWarehouseReleasePMLists("Connected to other Shipmentst"), "Connected to other Shipments", this));
+                        } else {
+                            if (this.WarehouseReleaseGroupLists.filter(d => d.ReleasePackageCount != 0 && d.Title != "Connected to other Shipments").length == 0) {
+                                this.IsShowMessageNoResult = true;
+                            }
+                        }
+
+
 
                     } else this.IsShowMessageNoResult = true;
+                }
+                else if (myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
+                    var messageWindow: MessageWindow = new MessageWindow();
+                    messageWindow.Show(myResponse.ErrorsArray[0]);
                 }
                 this.IsLoadPage = true;
 
@@ -137,20 +173,39 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
     }
 
 
-   
+
 
 
 
     SaveButtonClicked() {
 
-        //var list = [];
-        //this.WarehouseReleasePackagePMLists.filter(d => d.IsSelected == true).forEach((item) => {
-        //    list.push(item);
-        //});
 
+        var warehouseReleasePackagePMLists = [];
+        var warehouseReleasesIds: string = "";
+        this.WarehouseReleaseGroupLists.forEach((warehouseReleaseGroup) => {
+            if (warehouseReleaseGroup.WarehouseReleasePMLists) {
+                warehouseReleaseGroup.WarehouseReleasePMLists.filter(d => d.IsUsed).forEach((warehouseReleasePM) => {
+                    if (warehouseReleasePM.WarehouseReleasePackages) {
+                        warehouseReleasePM.WarehouseReleasePackages.forEach((warehouseReleasePackagePM) => {
+                            warehouseReleasePackagePMLists.push(warehouseReleasePackagePM);
+                        });
 
-        //this.ViewModelTrigger.GeneratePackagesFromWarehouseReleasesPackages(list);
+                        warehouseReleasesIds += warehouseReleasePM.Id + ",";
+                    }
+
+                });
+            }
+        });
+
+        if (warehouseReleasesIds && this.ViewModelTrigger.EntityPM) {
+            warehouseReleasesIds += ")";
+            warehouseReleasesIds = warehouseReleasesIds.replace(",)", "");
+            this.ViewModelTrigger.EntityPM.WarehouseReleasesIds = warehouseReleasesIds;
+        }
+
+        this.ViewModelTrigger.GeneratePackagesFromWarehouseReleasesPackages(warehouseReleasePackagePMLists);
         this.CloseButtonClicked();
+
     }
 
 
@@ -181,15 +236,53 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
         }
     }
 
-    ViewReleaseClicked(item: WarehouseReleasePM) {
+
+
+
+
+
+
+
+    private isShowConnectedToOtherShipments: boolean;
+    get IsShowConnectedToOtherShipments() {
+        return this.isShowConnectedToOtherShipments;
+
+    }
+    set IsShowConnectedToOtherShipments(newValue: boolean) {
+        if (this.isShowConnectedToOtherShipments != newValue) {
+            this.isShowConnectedToOtherShipments = newValue;
+            if (this.isShowConnectedToOtherShipments) {
+
+                if (!this.WarehouseReleaseGroupLists.filter(d => d.Title == "Connected to other Shipments")[0]) {
+
+                    var warehouseReleasePMLists = this.GetWarehouseReleasePMLists("Connected to other Shipments");
+                    if (this.WarehouseReleasePMLists && this.WarehouseReleasePMLists.length > 0) {
+                        this.WarehouseReleaseGroupLists.push(new WarehouseReleaseGroup(warehouseReleasePMLists, "Connected to other Shipments", this));
+                    }
+                }
+            } else {
+                if (this.WarehouseReleaseGroupLists && this.WarehouseReleaseGroupLists.length > 0) {
+                    this.WarehouseReleaseGroupLists = this.WarehouseReleaseGroupLists.filter(d => d.Title != "Connected to other Shipments");
+                }
+            }
+
+        }
+    }
+
+
+
+
+
+
+    ViewReleaseClicked(warehouseReleaseItem) {
 
         var myBackButtonLabel = "Choose Packages";
 
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: item.Id, ObjectTableName: "WarehouseRelease", BackButtonLabel: myBackButtonLabel });
-          
+                cmpRef.instance.Run({ EntityId: warehouseReleaseItem.Id, ObjectTableName: "WarehouseRelease", BackButtonLabel: myBackButtonLabel });
+
             });
     }
 
@@ -198,10 +291,30 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 class WarehouseReleaseGroup {
     WarehouseReleasePMLists: WarehouseReleasePM[] = [];
     Title: string;
-    IsHide: boolean = false;
-    constructor(warehouseReleasePMLists: WarehouseReleasePM[] , title:string ) {
+    IsHide: boolean = true;
+    ReleasePackageCount: number = 0;
+    constructor(warehouseReleasePMLists: WarehouseReleasePM[], title: string, viewModel: ChoosePackagesFromWarehousePackageReleasesComponent) {
         this.WarehouseReleasePMLists = warehouseReleasePMLists;
         this.Title = title;
+
+        if (viewModel.IsContainerShipment) {
+            this.WarehouseReleasePMLists.forEach((item) => {
+                if (item.WarehouseReleasePackages && item.WarehouseReleasePackages.length > 0) {
+                    item.WarehouseReleasePackages = item.WarehouseReleasePackages.filter(d => d.IsContainer);
+                }
+            });
+
+            this.WarehouseReleasePMLists = this.WarehouseReleasePMLists.filter(d => d.WarehouseReleasePackages && d.WarehouseReleasePackages.length > 0);
+
+        }
+
+        if (this.WarehouseReleasePMLists && this.WarehouseReleasePMLists.length > 0) {
+            this.IsHide = false;
+            this.ReleasePackageCount = this.WarehouseReleasePMLists.length;
+        }
+
+
+
     }
 
 

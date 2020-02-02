@@ -319,7 +319,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             foreach (WarehouseReleasePM item in myResult)
             {
                 item.WarehouseReleasePackages = warehouseReleasePackageQueryService.GetWarehouseReleasePackagePMListsByWarehouseReleaseId(item.Id, tenant);
-
+                
             }
             return myResult;
         }

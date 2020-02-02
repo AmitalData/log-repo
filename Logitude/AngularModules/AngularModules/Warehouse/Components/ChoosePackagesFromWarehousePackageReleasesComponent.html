@@ -5,9 +5,16 @@
             <table>
                 <tr>
                     <td style="width:15px"></td>
-                    <td style="width:70px">
-                        <LogLabel [HideColumns]="true" [DataContext]="DataContext" [Text]="'Customer'"></LogLabel>
 
+
+                    <td  *ngIf="IsLoadPage && !CustomerId" style="width: 10px;">
+                        <div style="width: 10px;">
+                            <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;" *ngIf="!CustomerId"></div>
+                   
+                        </div>
+                    </td>
+                    <td style="width:70px">
+                        <LogLabel  [HideColumns]="true" [DataContext]="DataContext" [Text]="'Customer'"></LogLabel>
                     </td>
                     <td style="width:165px">
                         <LogLov [ObjectFieldName]="'CustomerId'"
@@ -20,8 +27,16 @@
                     </td>
                     <td style="width:70px"></td>
 
+
+
+                    <td *ngIf="IsLoadPage && !WarehouseId" style="width: 10px;">
+                        <div style="width: 10px;">
+                            <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;" *ngIf="!WarehouseId"></div>
+
+                        </div>
+                    </td>
                     <td style="width:70px">
-                        <LogLabel [HideColumns]="true" [DataContext]="DataContext" [Text]="'Warehouse'"></LogLabel>
+                        <LogLabel  [HideColumns]="true" [DataContext]="DataContext" [Text]="'Warehouse'"></LogLabel>
 
                     </td>
                     <td style="width:165px">
@@ -47,15 +62,26 @@
         </td>
     </tr>
 
-    <!--<tr *ngIf="IsShowConnectedToOtherShipments" style="height:20px">
-        <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;vertical-align:central">
-            <div style="width: 30px;">
-                <CheckBox style="width:16px" class="CenterCenter" [IsChecked]="warehouseReleaseItem.IsUsed" (Checked)="warehouseReleaseItem.IsUsed=$event"></CheckBox>
+    <tr style="height:20px">
+     
+        <td>
+            <table>
+                <tr>
+                    <td style="width:15px"></td>
+                    <td style="width:260px"><LogLabel  [HideColumns]="true" [DataContext]="DataContext" [Text]="'Show Releases Connected To Other Shipments'"></LogLabel></td>
+                    <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;vertical-align:central">
+                        <div style="width: 30px;">
+                            <CheckBox style="margin-top:-2px"  class="CenterCenter" [IsChecked]="IsShowConnectedToOtherShipments" (Checked)="IsShowConnectedToOtherShipments=$event"></CheckBox>
 
-            </div>
+                        </div>
 
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
         </td>
-    </tr>-->
+      
+    </tr>
 
 
 
@@ -110,8 +136,8 @@
                                                 </table>
                                             </div>
 
-                                            <div *ngIf="IsShowMessageNoWarehouseRelease" class="SimpleGridViewBody" style="vertical-align:top;text-align:center;margin-top:5px;height:50px;"><span style="font-size:15px;color:gray;margin-top:10px">No Data Found</span></div>
-                                            <div *ngIf="!IsShowMessageNoWarehouseRelease" class="SimpleGridViewBody">
+                                            <div *ngIf="IsShowMessageNoResult" class="SimpleGridViewBody" style="vertical-align:top;text-align:center;margin-top:5px;height:50px;"><span style="font-size:15px;color:gray;margin-top:10px">No Data Found</span></div>
+                                            <div *ngIf="!IsShowMessageNoResult" class="SimpleGridViewBody">
                                                 <table>
                                                     <tr style="height: 1px;">
                                                         <td>
@@ -141,8 +167,9 @@
                                                                             </tr>
                                                                             <tr style="height:30px;" *ngIf="!WarehouseReleaseGroup.HaveWarehouseReleasePackages">
                                                                                 <td>
-                                                                                    <div  style="vertical-align:top;margin-left:25px"><span style="font-size:12px;color:gray;margin-top:10px">No Data Found</span></div>
+                                                                                    <div  style="vertical-align:top;margin-left:25px"><div style="font-size:12px;text-align:center;color:gray;">No Releases Connected</div></div>
                                                                                 </td>
+                                             
                                                                             </tr>
 
                                                                             <tr   *ngFor="let warehouseReleaseItem of WarehouseReleaseGroup.WarehouseReleasePMLists">
@@ -169,7 +196,7 @@
                                                                                                                     <td style="width:200px">
                                                                                                                         <div style="width:200px">
                                                                                                                             <span style="font-size:13px;">Release</span>
-                                                                                                                            <span class="hyperlink" (click)="ViewEntity(item)">{{warehouseReleaseItem.ReleaseNumber}}</span>
+                                                                                                                            <span class="hyperlink" (click)="ViewReleaseClicked(warehouseReleaseItem)">{{warehouseReleaseItem.ReleaseNumber}}</span>
                                                                                                                         </div>
 
                                                                                                                     </td>

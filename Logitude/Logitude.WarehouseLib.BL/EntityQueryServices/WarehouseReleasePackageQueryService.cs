@@ -48,10 +48,23 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                             IsContainer = a.IsContainer,
                                                         }).ToList();
 
+            myResult = FullContainerNumberWarning(myResult);
+
             return myResult;
         }
 
-
+        private List<WarehouseReleasePackagePM> FullContainerNumberWarning(List<WarehouseReleasePackagePM> warehouseReleasePackagePMLists)
+        {
+            List<WarehouseReleasePackagePM> result = warehouseReleasePackagePMLists;
+            foreach (WarehouseReleasePackagePM warehouseReleasePackagePM in result)
+            {
+                if (!string.IsNullOrEmpty(warehouseReleasePackagePM.ContainerNumber))
+                {
+                    warehouseReleasePackagePM.ContainerNumberWarning = ContainerNumberWarehouseValidator.Validate(warehouseReleasePackagePM.ContainerNumber);
+                }
+            }
+            return result;
+        }
 
         public List<WarehouseReleasePackageList> GetWarehouseReleasePackageListsByWarehouseReleaseIds(List<string> warehouseReleaseIds, int tenant)
         {

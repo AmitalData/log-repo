@@ -846,28 +846,31 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     GeneratePackagesfromCrossDockReleasesButtonClicked() {
 
-        //if (!this.IsLCLEntity) {
-        //    var confirmWindow = new ConfirmWindow();
-        //    confirmWindow.Show("Only Container Packages can be added to your shipment packages");
-        //    confirmWindow.NoButtonText = "Cancel";
-        //    confirmWindow.YesButtonText = "Add";
-        //    confirmWindow.WindowClosed.subscribe((event: any) => {
-        //        if (confirmWindow.Yes) {
-        //            this.GetWarehouseReleasePackageLists(true);
-        //        }
-        //    });
+        if (!this.IsLCLEntity) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Only Container Packages can be added to your shipment packages");
+            confirmWindow.NoButtonText = "Cancel";
+            confirmWindow.YesButtonText = "Add";
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.GeneratePackagesfromCrossDockReleases();
+                }
+            });
 
-        //} else this.GetWarehouseReleasePackageLists();
+        } else this.GeneratePackagesfromCrossDockReleases();
+
+    
+
+    }
+
+    GeneratePackagesfromCrossDockReleases() {
 
         if (this.EntityPM.IsDirty) {
             this.chooseShipmentPackageFromWarehouseReleasePackages = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
         else this.OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow();
-
     }
-
-
 
     OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow() {
 
