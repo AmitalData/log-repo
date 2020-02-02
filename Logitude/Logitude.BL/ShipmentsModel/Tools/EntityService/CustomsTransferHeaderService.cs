@@ -117,6 +117,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.InitializeComponent();
             this.UpdateTransferLines();
+            this.FillShipmentNumberField();
 
             CustomsTransferHeaderTracing.Trace(entityPM, entityPoco, isNewEntity);
             CustomsTransferHeaderMapping.MapEntity(entityPM, entityPoco, isNewEntity);
@@ -141,11 +142,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.InitializeComponent();
             this.UpdateTransferLines();
-
+            this.FillShipmentNumberField();
             CustomsTransferHeaderMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
+        }
+
+        private void FillShipmentNumberField()
+        {
+            StringBuilder shipmentNumberStr = new StringBuilder();
+            if (entityPM.CustomsTransferLines != null)
+            {
+                foreach (CustomsTransferLinePM itemPM in entityPM.CustomsTransferLines)
+                {
+                    if (itemPM.ChangeSetOp != ChangeSetOperation.Delete)
+                        shipmentNumberStr.Append(itemPM.ShipmentNumber + ", ");
+                }
+                shipmentNumberStr.Remove(shipmentNumberStr.Length - 2, 1);
+                entityPM.ShipmentNumber = shipmentNumberStr.ToString();
+            }
+            else
+            {
+                entityPM.ShipmentNumber = "";
+            }
         }
 
         private void InitializeComponent()
