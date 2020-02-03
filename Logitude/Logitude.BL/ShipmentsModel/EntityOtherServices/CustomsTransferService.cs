@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.EntityOtherServices
@@ -416,36 +417,15 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[3] = item.MainCarriageFromPortName;
                     row[4] = item.MainCarriageFinalDestinationPortCode;
                     row[5] = item.MainCarriageFinalDestinationPortName;
-                                        
+                    
                     if (!string.IsNullOrEmpty(item.House))
                     {
-                        if (item.House.Contains('-'))
-                        {
-                            string[] houseArray = item.House.Split('-');
+                        string house = item.House.Trim();
+                        house = Regex.Replace(item.House, @"[^0-9a-zA-Z.,+]+", "");
 
-                            string house = "";
-                            for(int i = 0; i < houseArray.Length; i++)
-                            {
-                                if(string.IsNullOrEmpty(house))
-                                {
-                                    house = houseArray[i];
-                                }
-
-                                else
-                                {
-                                    house = house + houseArray[i];
-                                }
-                            }
-
-                            row[6] = house;
-                        }
-
-                        else
-                        {
-                            row[6] = item.House;
-                        }                       
+                        row[6] = house;
                     }
-                    
+                                        
                     if (!string.IsNullOrEmpty(item.ValueOfGoodsCurrencyId))
                     {
                         Currency currency = CurrencyRepository.GetSingleCurrency(item.ValueOfGoodsCurrencyId, tenant, true);
