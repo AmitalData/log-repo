@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Address",
-			      				    Code =  "b2c4",
+			      				    Code =  "01c1",
 			      				    Name =  "Address",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -145,7 +145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Address",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -153,7 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
@@ -1974,7 +1974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode AddressTextCode_AddressOAddAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.AddAddress", DefaultText = "Add Address",LocalDefaultText = @"הוסף כתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode AddressTextCode_AddressOEditAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.EditAddress", DefaultText = "Edit Address",LocalDefaultText = @"לערוך את הכתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AddressTextCode_AddressOEditAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.EditAddress", DefaultText = "Edit Address",LocalDefaultText = @"לערוך םת הכתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AddressTextCode_AddressOAddresses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.Addresses", DefaultText = "Addresses",LocalDefaultText = @"כתובות", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
