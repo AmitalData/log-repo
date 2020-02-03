@@ -104,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Custom Document Type",
-			      				    Code =  "4a64",
+			      				    Code =  "d3da",
 			      				    Name =  "Customs.CustomDocumentType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -829,7 +829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CustomDocumentTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomDocumentType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CustomDocumentTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CustomDocumentTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomDocumentType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CustomDocumentTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = true }, screensRepository, tenantScreens);
       
             ScreenField CustomDocumentTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -840,6 +840,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField CustomDocumentTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField CustomDocumentTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsCourierManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomDocumentTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsDiamondManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
