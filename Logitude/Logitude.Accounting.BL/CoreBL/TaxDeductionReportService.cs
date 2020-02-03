@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.CoreBL
             string xml = LogitudeXmlSerializer.SerializeObjectToXmlString(data);
             StringBuilder myStringBuilder = new StringBuilder();
             string a = null;
-            if (taxDeductionReportPM.IsAdditionalReportExist)
+            if (taxDeductionReportPM.Email == "sumaya@logitudeworld.com")
             {
                 a = "a";
             }
