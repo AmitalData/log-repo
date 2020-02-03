@@ -230,7 +230,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  select a
                  );
 
-
+            var qOriginalDeclarations = context.Declarations.Where(x =>  x.IsAmendment !=true);
+                                     
 
 
             bool test = false;
@@ -279,11 +280,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  on a.Id equals recConsignment.DeclarationId into qjoinConsignments
                                                  from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
-                                                 /*
-                                                 join pr in qCourierPendingReasonLocalName
-                                                 on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
-                                                 from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
-                                                 */
+
+                                                 join recOriginalDeclarations in qOriginalDeclarations
+                                                 on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
+                                                 into originalDeclarations
+                                                 from myJoinOriginalDeclaration  in originalDeclarations.DefaultIfEmpty()
+
+                                                     /*
+                                                     join pr in qCourierPendingReasonLocalName
+                                                     on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
+                                                     from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
+                                                     */
 
                                                  select new DeclarationList()
                                                  {
@@ -399,7 +406,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DepositionStatusCode = a.DepositionStatusCode,
                                                      //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
                                                      //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
-
+                                                     AmendmentDontDisplayInList =a.AmendmentDontDisplayInList,
 
 
 
@@ -420,6 +427,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
                                                      IsPaymentProtested = a.IsPaymentProtested,
+                                                     DeclarationNoAmendment= myJoinOriginalDeclaration.DeclarationNumber,
+                                                     CustomFileAmendment = myJoinOriginalDeclaration.CustomFileNo,
+                                                     AmendmentStatus= a.AmendmentStatus,
+                                                     AmendmentRequestNumber=a.AmendmentRequestNumber,
+                                                     AmendmentCorrectedByUserName = a.AmendmentCorrectedByUser != null ? a.AmendmentCorrectedByUser.Code :null,
+                                                     AmendmentissueDate = a.AmendmentissueDate
                                                  });
 
 

@@ -109,7 +109,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
-			      				    //NoDefaultFeatures =  false,
+			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    Code1 =  "06a2",
