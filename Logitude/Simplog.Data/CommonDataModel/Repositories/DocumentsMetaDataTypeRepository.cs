@@ -49,6 +49,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
+        public DocumentsMetaDataType GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode(string code, int tenant)
+        {
+            DocumentsMetaDataType d = (from a in context.DocumentsMetaDataTypes
+                                       where a.CustomsMetaDataCode == code && a.Tenant == tenant
+                                       select a).FirstOrDefault();
+            return d;
+        }
 
         public void Add(DocumentsMetaDataType entity)
         {
