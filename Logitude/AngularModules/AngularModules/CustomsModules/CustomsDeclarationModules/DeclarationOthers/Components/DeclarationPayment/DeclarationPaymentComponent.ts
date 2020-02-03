@@ -1305,6 +1305,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     //myStoreViewUnifreightInstructionController.DisposeUnifreightMassaging();
 
                 });
+            SessionLocator.SelectedSession.StartBusyIndicator("");
             myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_STORE");
         }
         else {
