@@ -260,7 +260,7 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td style="width: 200px; " [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'" >
+                                <td style="width: 200px; " [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
                                     <LogLov [ObjectFieldName]="'Category1Id'"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
@@ -355,8 +355,20 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                <CheckBox [IsChecked]="RevaluationEnabled" (Checked)="RevaluationEnabled = $event"></CheckBox>
-                                    </td>
+                                    <CheckBox [IsChecked]="RevaluationEnabled" (Checked)="RevaluationEnabled = $event"></CheckBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- Smallcashbook -->
+                            <tr *ngIf="ChartOfAccountsTypeCode=='4'" class="FormFieldRow">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'Smallcashbook'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <CheckBox [IsChecked]="Smallcashbook" (Checked)="Smallcashbook = $event"></CheckBox>
+                                </td>
                                 <td><div></div></td>
                             </tr>
 

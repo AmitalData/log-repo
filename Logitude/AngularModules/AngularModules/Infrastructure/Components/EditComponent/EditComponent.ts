@@ -581,9 +581,9 @@ export class EditComponent implements OnDestroy {
                     this.HeaderScreenRowHeight = 20;
                 }
 
-                var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == SessionLocator.Tenant);
+                var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == SessionLocator.Tenant);
                 if (myScreenFields.length == 0) {
-                    myScreenFields = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == 0);
+                    myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == 0);
                 }
 
                 var widthOfColumn: number = 0;

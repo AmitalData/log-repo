@@ -716,12 +716,7 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;AccountingPeriod.O.CantCancelOpenMonth&quot;"
-      DefaultText="&quot;Can’t cancel opened month, There are transactions that already registered for this month&quot;"
-      LocalDefaultText="&quot;לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
+
     <TextCode Code="&quot;AccountingPeriod.O.CantCancelOpenMonth&quot;" DefaultText="&quot;Can’t cancel opened month, There are transactions that already registered for this month&quot;" LocalDefaultText="&quot;לא ניתן לבטל את פתיחת החודש משום שנרשמו תנועות עליו&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
 
     <TextCode Code="&quot;AccountingPeriod.O.CantOpenInvoiceMonth&quot;" DefaultText="&quot;Invoice month cannot be opened, The accounting month must first be opened&quot;" LocalDefaultText="&quot;לא ניתן לפתוח חודש חשבונית , יש לפתוח ראשית את החודש החשבונאי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

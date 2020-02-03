@@ -408,6 +408,18 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
+
+                                            <!-- Smallcashbook -->
+                                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'Smallcashbook'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox [IsChecked]="Smallcashbook" (Checked)="Smallcashbook = $event"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
                                             <tr><td><div></div></td></tr>
                                         </table>
                                     </td>

@@ -1100,6 +1100,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     });
                 }
 
+                if (entityPM.Smallcashbook != entityPOCO.Smallcashbook)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "SCBC",
+                    });
+                }
+
                 if (entityPM.ActiveForInterest != entityPOCO.ActiveForInterest && entityPM.ActiveForInterest == false)
                 {
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
