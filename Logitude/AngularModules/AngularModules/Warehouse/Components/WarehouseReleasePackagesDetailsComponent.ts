@@ -103,13 +103,19 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.VolumeLabel = "Volume (" + SessionLocator.TenantPM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + SessionLocator.TenantPM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.DimensionsUnitCode + ")";
-        this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
+        this.PackageTypeColumnHeader = "Package Type";
         if (this.warehouseReleasePM) {
-            this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.warehouseReleasePM.GrossWeightUnitCode);
-            this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.warehouseReleasePM.DimensionsUnitCode);
-            this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.warehouseReleasePM.ChargeableWeightUnitCode);
-     
+
+            this.WeightColumnHeader = "Gross Weight (" + this.warehouseReleasePM.GrossWeightUnitCode + ")";
+            this.DimensionsColumnHeader = "Dim(L-W-H) (" + this.warehouseReleasePM.DimensionsUnitCode + ")";
+            this.VolumetricWeightColumnHeader = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
+
             this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
+
+
+
+
+
         }
 
 
