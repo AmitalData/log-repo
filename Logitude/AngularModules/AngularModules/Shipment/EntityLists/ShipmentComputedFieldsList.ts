@@ -45,5 +45,6 @@ export class ShipmentComputedFieldsList {
 		DeliveryTo: string;
 		PickupFrom: string;
 		PickupTo: string;
+        OperationallyClosedByUserName: string;
 	
 }

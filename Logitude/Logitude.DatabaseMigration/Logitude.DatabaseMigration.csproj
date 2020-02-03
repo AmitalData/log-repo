@@ -1987,7 +1987,10 @@
     <Compile Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.Designer.cs">
       <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202001241017569_addShipmentComputedFieldColumn.cs" />
+    <Compile Include="Migrations\202001241017569_addShipmentComputedFieldColumn.Designer.cs">
+      <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.cs" />
     <Compile Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.Designer.cs">
       <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
@@ -3606,7 +3609,9 @@
     <EmbeddedResource Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.resx">
       <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202001241017569_addShipmentComputedFieldColumn.resx">
+      <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

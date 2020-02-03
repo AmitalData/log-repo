@@ -50,7 +50,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string DeliveryTo { get; set; }
         public string PickupFrom { get; set; }
         public string PickupTo { get; set; }
-
+        public string OperationallyClosedByUserName { get; set; }
         public virtual User OperationallyClosedByUser { get; set; }
         public virtual Port DeliveryToPort { get; set; }
     }
