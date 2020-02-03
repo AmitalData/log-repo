@@ -17,8 +17,11 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<CargoSeal> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            CargoSealIdentifierKeys cargoSealIdentifierKeys = entityKeys as CargoSealIdentifierKeys;
+
+            return (from a in context.CargoSeals
+                    where a.CargoSealIdentifierId == cargoSealIdentifierKeys.Id
+                    select a).ToList();
         }
 
    }
