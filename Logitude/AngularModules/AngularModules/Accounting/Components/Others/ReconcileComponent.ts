@@ -439,14 +439,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInSelectedLines"));
         }
 
-        //multiple payment check
-        var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
-        if (paymentsCount > 1)
-        {
-            errors.push(TextCodeTranslator.Translate("Accounting.O.CantIncludeTwoOrMorePayment"));
-            this.ValidationErrorsList = errors;
-            return;
-        }
+        // //multiple payment check
+        // var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
+        // if (paymentsCount > 1)
+        // {
+        //     errors.push(TextCodeTranslator.Translate("Accounting.O.CantIncludeTwoOrMorePayment"));
+        //     this.ValidationErrorsList = errors;
+        //     return;
+        // }
 
 
         this.ValidationErrorsList = errors;
