@@ -137,6 +137,7 @@
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
+    <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AcceptanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ApprovedProfessionDetails.Generated.cs" />
