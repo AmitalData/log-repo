@@ -207,6 +207,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntReasonExpComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\NewEntity\NewClaimComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
+    <Content Include="CustomsModules\CustomsControls\Components\TestCase\SendDeclarationTastCaseComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
@@ -798,6 +799,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsClient\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCollateral\ModuleCustomsCollateral.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCollateral\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsControls\Components\TestCase\SendDeclarationTastCaseComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleCustomsControls.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.ts" />
@@ -915,6 +917,7 @@
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\PhysicalCheckResponseData.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ApprovedProfessionList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CargoSealIdentifierList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContinuousRequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CourierCustomStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CourierPendingReasonList.ts" />
@@ -939,6 +942,8 @@
     <TypeScriptCompile Include="Customs\EntityLists\UpdateCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ApprovedProfessionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CargoSealIdentifierPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CargoSealPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesRefundPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesSeizurePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ConsignmentPackDangerPM.ts" />
@@ -979,6 +984,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ApprovedProfessionListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CargoSealIdentifierListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContinuousRequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierCustomStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPaymentStatusListService.ts" />
@@ -1003,6 +1009,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureMethodTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransferCargoMethodTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\UpdateCodeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CargoSealIdentifierPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />

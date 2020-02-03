@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {CargoSealPM} from './CargoSealPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -89,7 +90,41 @@ export class CargoSealIdentifierPM {
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
        
 	 
+     
+	private cargoSeals: CargoSealPM[];
+    get  CargoSeals() {
+        if (this.cargoSeals == null) {
+            this.cargoSeals = [];
+        }
 
+        return this.cargoSeals;
+    }
+    set  CargoSeals(newValue: CargoSealPM[]) {
+        if (this.cargoSeals != newValue) {
+            this.cargoSeals = newValue;
+        }
+    }
+    public AddCargoSeal(item: CargoSealPM) {
+        if (item != null) {
+            var index = this. CargoSeals.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. CargoSeals.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveCargoSeal(item: CargoSealPM) {
+        if (item != null) {
+            var index = this. CargoSeals.indexOf(item);
+            if (index > -1) {
+                this. CargoSeals.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public CargoSeals: Array<CargoSealPM>= [];
+ 
     public OldEntityPM: CargoSealIdentifierPM;
 		
     public IsDirty: boolean;

@@ -305,7 +305,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
-                    if (GetCustomsFileImportType(declarationPM) == "4")
+                    if (declarationPM.IsDiamondDeclaration)
                     {
                         //CGG_DEC_DOC_CLT
                         var amitalContext = AmitalContext.GetContext(tenant);
