@@ -388,6 +388,11 @@ namespace Logitude.Customs.BL.BL
                         case "3":
                             myDeclarationCourierStatusPM.CourierManifestStatusCode = "X";
                             break;
+
+
+                        case "4":// sana + eitan (+itzik !!) ----> R - While Send Failed !!-- Ready 2 send (again)
+                            myDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
+                            break;
                         default:
                             myDeclarationCourierStatusPM.CourierManifestStatusCode = "";
                             break;
