@@ -860,7 +860,7 @@ namespace Logitude.DBMigrations.Models
                 return insertScript;
             }
 
-            return null;
+            return "";
         }
 
         protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
