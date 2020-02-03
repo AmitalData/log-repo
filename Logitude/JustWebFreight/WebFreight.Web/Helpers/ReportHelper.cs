@@ -1215,7 +1215,15 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
-
+                case "CSSR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(CustomerStatusDataProvider));
+                        CustomerStatusDataProvider reportDataProvider = (CustomerStatusDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "CSSR", Name = "CustomerStatusDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
                 case "OSBC":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(OpenShipmentsByCustomerDataProvider));
@@ -1839,7 +1847,11 @@ namespace WebFreight.Web.Helpers
                         dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
                         break;
                     }
-
+                case "CSSR":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadCustomerStatusDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
                 case "OSBC":
                     {
                         dataProvider = logitudeReportsWebService.LoadOpenShipmentsByCustomerDataProvider(filters, reportFliter.tenant);
@@ -1983,6 +1995,7 @@ namespace WebFreight.Web.Helpers
                     case "PTVC":
                     case "LICM":
                     case "LTRP":
+                    case "CSSR":
 
                         return true;
 

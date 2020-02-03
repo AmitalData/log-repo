@@ -125,6 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature feature_DetailedShipmentCharges = tenantFeatures.Where(d => d.Code == "Report.Features.DetailedShipmentCharges" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature feature_LTReport = tenantFeatures.Where(d => d.Code == "Report.Features.LTReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature feature_AutomationTestReport = tenantFeatures.Where(d => d.Code == "ATRE" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature feature_CSStatusReport = tenantFeatures.Where(d => d.Code == "Report.Features.CSStatusReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
 
 
@@ -149,6 +150,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "LTRP", Description = "Ledger Transactions Report", Name = "GL Account Transactions Report", LocalName= "דוח כרטסת", FilterControlName = "LedgerTransactionsFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_LTReport.Id, FeatureUniqeCode = feature_LTReport.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/LedgerTransactionsFilterControl" }, reportRepository, tenantReports);
 
             AddReports.AddReport(new ReportDetails() { Code = "ATRE", Description = "Automation Test Report", Name = "Automation Test Report", LocalName = "Automation Test Report", FilterControlName = "AutomationTestReportFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_AutomationTestReport.Id, FeatureUniqeCode = feature_AutomationTestReport.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AutomationTestReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "CSSR", Description = "Customer Status Report", Name = "Customer Status Report", LocalName = "דוח מצב לקוח", FilterControlName = "CustomerStatusReportFilterComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_CSStatusReport.Id, FeatureUniqeCode = feature_CSStatusReport.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/CustomerStatusReportFilterComponent" }, reportRepository, tenantReports);
 
         }
         private void LoadReports_Quotes(ReportGroup quotesGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)

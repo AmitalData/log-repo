@@ -4100,7 +4100,12 @@ User/Pass",
             thread.Start();
         }
 
-     
+        private void button49_Click(object sender, EventArgs e)
+        {
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadDefaultReports();
+
+        }
     }
 
     public class TenantMailBox
