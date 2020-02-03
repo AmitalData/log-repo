@@ -43,6 +43,7 @@ using System.Xml;
 using System.IO;
 using Logitude.CustomsMessaging.ResponseServices;
 
+
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class DeclarationWebServiceController : ApiController
@@ -1810,6 +1811,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage PostSendCargoSealsRequest(CargoSealsRequestParams requestParamsData)
+        {
+            try
+            {
+                CustomItemLegalDemandsResponseData responseData = null;
+
+                // use messageing service
+                var service = new SE_6001_SealUpdateMessagingService();
+                responseData = service.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
         }
     }
     
