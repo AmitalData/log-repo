@@ -42,6 +42,7 @@ namespace Logitude.Accounting.BL.DataContract
         int? ReportYear;
         List<CardList> transactionsVendors;
         List<Address> addresses;
+        List<GLAccountList> transactionsGLAccounts;
         public TaxDeductionReportDataProvider(int? reportYear,int tenant)
         {
             Tenant = tenant;
@@ -54,6 +55,7 @@ namespace Logitude.Accounting.BL.DataContract
             vendors = new List<CardList>();
             gLAccounts = new List<GLAccountList>();
             addresses = new List<Address>();
+            transactionsGLAccounts = new List<GLAccountList>();
         }
         public TaxDeductionReportData GetTaxDeductionReportData()
         {            
@@ -254,7 +256,7 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
             transactions = GetTransactions();
-            List<GLAccountList> transactionsGLAccounts = GetTransactionsGLAccounts(transactions);
+            transactionsGLAccounts = GetTransactionsGLAccounts(transactions);
             foreach (LedgerTransaction transaction in transactions)
             {
                 TaxDeductionReportLine taxDeductionReportLine = new TaxDeductionReportLine();
@@ -299,6 +301,7 @@ namespace Logitude.Accounting.BL.DataContract
             List<ByVendorList> byVendorList = new List<ByVendorList>();
             List<TaxDeductionReportLine> groupeddeductionLines = GroupDeductionLinesByVendorAndPercentage(deductionLines);
             vendors = vendors.Concat(transactionsVendors).ToList();
+            gLAccounts = gLAccounts.Concat(transactionsGLAccounts).ToList();
             foreach (TaxDeductionReportLine item in groupeddeductionLines)
             {
                 ByVendorList groupedbyVendor = new ByVendorList()
@@ -366,7 +369,7 @@ namespace Logitude.Accounting.BL.DataContract
             groupedbyVendor.DisplayNumber = gLAccount.DisplayNumber;
 
             groupedbyVendor.Occupation = gLAccount.Occupation;
-            groupedbyVendor.GLAccountLocalName = gLAccount.LocalName;
+            groupedbyVendor.GLAccountLocalName = gLAccount.DeductionFileTypeCode =="08" ?  gLAccount.EnglishName.ToUpper(): gLAccount.LocalName;
             groupedbyVendor.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
             groupedbyVendor.AssessingOfficerName = gLAccount.AssessingOfficeName;
             groupedbyVendor.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
