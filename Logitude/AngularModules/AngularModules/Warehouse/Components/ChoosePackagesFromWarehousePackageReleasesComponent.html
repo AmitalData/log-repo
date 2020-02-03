@@ -183,8 +183,7 @@
                                                                                                     <tr>
                                                                                                         <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;vertical-align:central">
                                                                                                             <div style="width: 30px;">
-                                                                                                                <CheckBox style="width:16px" class="CenterCenter" [IsChecked]="warehouseReleaseItem.IsUsed" (Checked)="warehouseReleaseItem.IsUsed=$event"></CheckBox>
-
+                                                                                                                <CheckBox *ngIf="WarehouseReleaseGroup.Title!='Connected to other Shipments'" style="width:16px" class="CenterCenter" [IsChecked]="warehouseReleaseItem.IsUsed" (Checked)="warehouseReleaseItem.IsUsed=$event"></CheckBox>
                                                                                                             </div>
 
                                                                                                         </td>
@@ -298,7 +297,7 @@
 
                                                                                                         <td class="CellStretched" style="width:  100%; min-width: 100%; max-width:  100%; position: relative;">
 
-                                                                                                            <div style="width:125px;max-width:125px">{{item.Description}}</div>
+                                                                                                            <div style="width:300px;max-width:300px;min-width:300px">{{item.Description}}</div>
 
 
                                                                                                         </td>
