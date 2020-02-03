@@ -358,6 +358,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationPendingMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationReferantDataMap());
+	
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
 	
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
@@ -740,6 +742,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.GoodsItemLineNumber).HasPrecision(16, 5);
 				
 			modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.AmountInDispute).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeclarationReferantData>().Property(x => x.Weight).HasPrecision(15, 3);
 				
 			modelBuilder.Entity<DeclarationTax>().Property(x => x.TotalAmount).HasPrecision(16, 2);
 				
@@ -1996,6 +2000,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationPending> DeclarationPendings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationReferantData> DeclarationReferantDatas 
 	 {
 	      get; set;
 	 

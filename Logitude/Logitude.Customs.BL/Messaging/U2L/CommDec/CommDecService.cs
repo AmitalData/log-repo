@@ -376,7 +376,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
-            if(this._MyDeclarationPM.ProcedureCurrentCode == "4000010")
+            if(this._MyDeclarationPM.ProcedureCurrentCode == "4000020")
             {
                 this._MyDeclarationPM.ExcludeConsignment = true;
             }

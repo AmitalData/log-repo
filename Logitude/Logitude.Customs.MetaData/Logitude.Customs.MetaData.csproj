@@ -119,6 +119,7 @@
     <None Include="EntityFiles\DBMigration.lxml" />
     <None Include="EntityFiles\DBMigrationLine.lxml" />
     <None Include="EntityFiles\DecDangersContacts.lxml" />
+    <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\HazardousSubstance.lxml" />
     <None Include="EntityFiles\RequestType.lxml">
       <SubType>Designer</SubType>
