@@ -10021,19 +10021,19 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;APPayment.CH.OtherPayments&quot;"
+      Code="&quot;APInvoice.CH.OtherPayments&quot;"
       DefaultText="&quot;Other Payments&quot;"
       LocalDefaultText="&quot;קבלות אחרות&quot;"
       TextCodeTypeCode="&quot;CH&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;APPayment.CH.ShipmentNo&quot;"
+      Code="&quot;APInvoice.CH.ShipmentNo&quot;"
       DefaultText="&quot;Shipment #&quot;"
       LocalDefaultText="&quot;משלוח&quot;"
       TextCodeTypeCode="&quot;CH&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;APPayment.CH.AmountToPay&quot;"
+      Code="&quot;APInvoice.CH.AmountToPay&quot;"
       DefaultText="&quot;Amount To Pay&quot;"
       LocalDefaultText="&quot;סכום שהותאם&quot;"
       TextCodeTypeCode="&quot;CH&quot;"
