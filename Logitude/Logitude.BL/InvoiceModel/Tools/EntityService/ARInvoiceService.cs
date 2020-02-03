@@ -1582,7 +1582,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 string ExternalCodeError = "External Code is missing";
                 string paymentTermError = "Payment Term External Id is missing";
                 string vatError = "External VAT Card is missing";
-                string linesError = " Charge type Receivable Credit Account is missing";
+                string linesError = " Charge Type Receivable Credit Account is missing";
 
                 if (FieldIsEmpty(entityPM.DebitAccount))
                 {
