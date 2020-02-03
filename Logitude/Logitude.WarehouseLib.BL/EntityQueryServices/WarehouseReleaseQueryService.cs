@@ -301,7 +301,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         public List<WarehouseReleasePM> GetWarehouseReleaseListsByCustomerIdAndWarehouseId(string customerId, string warehouseId, int tenant)
         {
             List<WarehouseReleasePM> myResult = (from a in context.WarehouseReleases.Include("ToPort").Include("ToAddress.Country").Include("ToAddressCountry")
-                                                 where a.WarehouseId == warehouseId && a.CustomerId == customerId && a.Tenant == tenant && !a.IsUsed
+                                                 where a.WarehouseId == warehouseId && a.CustomerId == customerId && a.Tenant == tenant && !a.IsUsed && a.StatusCode == "CREA"
                                                  select new WarehouseReleasePM()
                                                  {
                                                      Id = a.Id,
