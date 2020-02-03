@@ -576,7 +576,7 @@ export class EditComponent implements OnDestroy {
                     this.HeaderScreenRowHeight = 25;
                 }
 
-                else if (HeaderScreen.NumberOfRows >= 3) {
+                else if (HeaderScreen.NumberOfRows == 3) {
                     this.HeaderScreenHeight = 75;
                     this.HeaderScreenRowHeight = 20;
                 }
