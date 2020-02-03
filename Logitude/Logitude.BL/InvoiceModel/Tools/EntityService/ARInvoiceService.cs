@@ -1582,7 +1582,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 string ExternalCodeError = "External Code is missing";
                 string paymentTermError = "Payment Term External Id is missing";
                 string vatError = "External VAT Card is missing";
-                string linesError = "Credit Account is missing";
+                string linesError = " Charge type Receivable Credit Account is missing";
 
                 if (FieldIsEmpty(entityPM.DebitAccount))
                 {
@@ -1635,10 +1635,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    if (myLines.Where(d => d.CreditAccount == null || (d.CreditAccount != null && string.IsNullOrEmpty(d.CreditAccount.Trim()))).Any())
+                    List <ARInvoiceLinePM> arInvoiceLines_CreditError = myLines.Where(d => d.CreditAccount == null || (d.CreditAccount != null && string.IsNullOrEmpty(d.CreditAccount.Trim()))).ToList();
+                    if (arInvoiceLines_CreditError != null && arInvoiceLines_CreditError.Count() > 0)
                     {
                         isReady = false;
-                        myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
+                        foreach (ARInvoiceLinePM item in arInvoiceLines_CreditError)
+                        {
+                            ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
+                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : "";
+                            myError = string.IsNullOrEmpty(myError) ? myChargesTypeName  + linesError : myError + "," + myChargesTypeName + linesError; 
+                        }
                     }
 
                     var myGroup = (from a in myLines
