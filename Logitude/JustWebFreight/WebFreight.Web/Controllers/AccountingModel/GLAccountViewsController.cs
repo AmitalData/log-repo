@@ -142,7 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+        //http://localhost:9996/api/GLAccountViews/GetCheckBalanceByAccountDisplayNumber?tenant=62&accountDisplayNumber=70270&totalDateType=1&theDate=2020-02-04T09:15:03.1085624
         public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate)
         {
             try
@@ -157,11 +157,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
-                var qs = new GLAccountQueryService(1);
+                var qs = new GLAccountQueryService(tenant);
                 var list=qs.GetByDisplayNumber(accountDisplayNumber, tenant);
                 var pm =list.First();
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, pm.Id, null);
-                ac.ReSetAccountList(false, false);
+                ac.ReSetAccountList(false, true);
                 bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
                 ac.CalculateBalance(
                     openBalancePlease_ReCalcYearTransfer,
