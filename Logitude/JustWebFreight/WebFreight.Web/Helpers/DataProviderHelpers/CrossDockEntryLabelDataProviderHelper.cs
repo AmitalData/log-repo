@@ -40,10 +40,9 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             CrossDockEntryDataProvider crossDockEntryDataProvider = crossDockEntryDataProviderHelper.LoadCrossDockEntryDataProvider(entityId, tenant);
             if (!string.IsNullOrEmpty(crossDockEntryDataProvider.EntryNumber))
             {
-                int quantity = crossDockEntryDataProvider.EntryPackages != null ? crossDockEntryDataProvider.EntryPackages.Count() : 0;
-                for (int counter = 1; counter <= quantity; counter++)
+                for (int counter = 1; counter <= crossDockEntryDataProvider.NumberOfPackages; counter++)
                 {
-                    CrossDockEntryDataProvider newlabel = crossDockEntryDataProvider.DeepCopy();
+                    CrossDockEntryDataProvider newlabel = crossDockEntryDataProvider.ShallowCopy();
                     newlabel.BarCode = crossDockEntryDataProvider.BarCode + String.Format("{0:00000}", counter);
                     myResult.Add(newlabel);
                 }

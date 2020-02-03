@@ -42,19 +42,15 @@ namespace WebFreight.Web.DataProviders
         public string Trucker { get; set; }
         public string BarCode { get; set; }
         public List<EntryPackage> EntryPackages { get; set; }
+        public int NumberOfPackages { get; set; }
 
-     
-        public CrossDockEntryDataProvider DeepCopy()
+
+
+        public CrossDockEntryDataProvider ShallowCopy()
         {
-            CrossDockEntryDataProvider crossDockEntryDataProvider = (CrossDockEntryDataProvider)this.MemberwiseClone();
-            crossDockEntryDataProvider.EntryPackages = new List<EntryPackage>();
-            foreach (EntryPackage entryPackage in EntryPackages)
-            {
-                EntryPackage newEntryPackage = entryPackage.ShallowCopy();
-                crossDockEntryDataProvider.EntryPackages.Add(entryPackage);
-            }
-            return crossDockEntryDataProvider;
+            return (CrossDockEntryDataProvider)this.MemberwiseClone();
         }
+
 
     }
 
@@ -81,9 +77,5 @@ namespace WebFreight.Web.DataProviders
         public string RegistrationNumber { get; set; }
         public string CountryName { get; set; }
         public int InStock { get; set; }
-        public EntryPackage ShallowCopy()
-        {
-            return (EntryPackage)this.MemberwiseClone();
-        }
     }
 }
