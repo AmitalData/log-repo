@@ -436,6 +436,8 @@ export class EditComponent implements OnDestroy {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
             else {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.HeaderScreen")[0];
+
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
@@ -488,6 +490,7 @@ export class EditComponent implements OnDestroy {
             }
 
             else {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.HeaderScreen")[0];
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
