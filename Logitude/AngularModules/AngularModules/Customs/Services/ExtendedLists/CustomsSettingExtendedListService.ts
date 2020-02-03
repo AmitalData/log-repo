@@ -9,6 +9,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomsSettingList} from '../../EntityLists/CustomsSettingList';
+import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
 
 
 export class CustomsSettingExtendedListService {
@@ -59,6 +60,30 @@ export class CustomsSettingExtendedListService {
                     return serviceResponse;
                 }).catch(ServiceHelper.HandleServiceError);
         });
+    }
+    PostSincroOption(genericRequestParams: GenericRequestParams) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(genericRequestParams);
+            return this._http.post(
+                this._apiUrl + '/PostSincroOption/',
+                JSON.stringify(genericRequestParams),
+                { headers: authHeader }).map((res) => {
+
+                    serviceResponse.Result = res.json();
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
     }
 
     GetAmitalRestrictOwnerModel(getFromCache: boolean) {

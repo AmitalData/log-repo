@@ -19,6 +19,8 @@ using Unifreight.Data.AmitalModel;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.Customs.BL.CloseTables;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.Common.ResponseData;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -281,6 +283,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
+        }
+
+
+
+        public HttpResponseMessage PostSincroOption(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData;
+                
+                return Request.CreateResponse(HttpStatusCode.OK, new { Success = true });
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
         }
     }
 }

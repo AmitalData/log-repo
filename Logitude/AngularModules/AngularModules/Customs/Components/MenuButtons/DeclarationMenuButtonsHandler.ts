@@ -35,6 +35,9 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { DeclarationEventManager } from '../../Utilities/DeclarationEventManager';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { MenuButtonsComponent } from '../../../Infrastructure/Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponent';
+import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
+import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
+import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
@@ -569,12 +572,34 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.WindowClosed.subscribe(res => {
                 if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
 
-                    //this._SendDeclarationService._TestCase = new TestCase();
-                    //this._SendDeclarationService._TestCase.Code = comp._ScenarioCode;
-                    //this._SendDeclarationService._TestCase.Param1 = comp.Param1;
-                    //this._SendDeclarationService._TestCase.Param2 = comp.Param2;
-                    //this._SendDeclarationService.OnCustomSendOptionsButtonClick(event)
-                }
+
+                    this.CurrentSession.StartBusyIndicatorCreating();
+                    var searchParams: GenericRequestParams = new GenericRequestParams();
+                    searchParams.Tenant = SessionLocator.Tenant;
+                    searchParams.AppicationId = this.EntityPM.Id;
+                    searchParams.LoggingEnabled = true;
+                    searchParams.LoggingEntityId = this.EntityPM.Id;
+                    searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+                    ///searchParams.LoggingObjectTableId = this.ObjectTable.Id;
+                    searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+                    //searchParams.RequestName = "Declaration Request";
+                    //searchParams.ResponseName = "Declaration Response";
+                    //searchParams.RequestVIA = this.RequestVIA;
+                    //searchParams.ForcePersonalSign = this.ForcePersonalSign;
+                    
+
+                    searchParams.TestCase =new TestCase();
+                    searchParams.TestCase.Code = comp._ScenarioCode;
+                    searchParams.TestCase.Param1 = comp.Param1;
+                    searchParams.TestCase.Param2 = comp.Param2;
+                    let srv = new CustomsSettingExtendedListService();
+                    srv.PostSincroOption(searchParams)
+                    .subscribe((response: ServiceResponse) => {
+                        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.StopBusyIndicator();
+                    });
+                    
+                } 
             });
         });
 
