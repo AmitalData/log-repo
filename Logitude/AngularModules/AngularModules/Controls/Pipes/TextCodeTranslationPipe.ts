@@ -11,7 +11,7 @@ export class TextCodeTranslationPipe {
         if (translation != null) {
             translation = translation.trim();
         }
-        if (translation == "" && !isUndefined(translation)) {
+        if (translation == "" && !isNullOrUndefined(translation)) {
             alert("This code:'" + value + "' Not Found!");
         }
         return translation;
