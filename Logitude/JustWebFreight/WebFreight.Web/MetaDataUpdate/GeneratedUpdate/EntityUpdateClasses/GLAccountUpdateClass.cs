@@ -6909,6 +6909,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NameForPrintingCheques",
+					  						OldFieldName =  "NameForPrintingCheques",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6928,6 +6929,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "NameForPrintingCheques",
 					  						ListPropertyPath =  "NameForPrintingCheques",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8508,6 +8510,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLaccountODebtAbove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.DebtAbove", DefaultText = "Debt Above",LocalDefaultText = @"חוב מעל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Balance", DefaultText = "Balance",LocalDefaultText = @"יתרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOIsCreditLimitSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.IsCreditLimitSet", DefaultText = "Credit Limit Is Set",LocalDefaultText = @"מוגדר מסגרת אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"מיון לפי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

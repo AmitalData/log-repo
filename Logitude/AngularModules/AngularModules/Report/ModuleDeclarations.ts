@@ -1,3 +1,4 @@
+import { CustomerStatusReportFilterComponent } from './Components/FiltersComponent/Accounting/CustomerStatusReportFilterComponent';
 import { ReportComponent } from './Components/Workspaces/ReportComponent';
 import { MainReportsWorkspace } from './Components/Workspaces/MainReportsWorkspace';
 import { BIReportComponent } from './Components/Workspaces/BIReportComponent';
@@ -127,6 +128,7 @@ export const Components =
         ShipmentProfitVSQuoteEstimateComponent,
         ArchivoExportadoComponent,
         AgingFilterComponent,
+        CustomerStatusReportFilterComponent,
         LedgerTransactionsFilterControl,
         InventoryReportFilterConmponent,
         InvoicesRoutingsFilterComponent,
@@ -202,6 +204,7 @@ export class ModuleDeclarations {
             case "ShipmentProfitVSQuoteEstimateComponent": { myResult = ShipmentProfitVSQuoteEstimateComponent; break; }
             case "ArchivoExportadoComponent": { myResult = ArchivoExportadoComponent; break; }
             case "AgingFilterComponent": { myResult = AgingFilterComponent; break; }
+            case "CustomerStatusReportFilterComponent": { myResult = CustomerStatusReportFilterComponent; break; }
             case "LedgerTransactionsFilterControl": { myResult = LedgerTransactionsFilterControl; break; }
             case "InventoryReportFilterConmponent": { myResult = InventoryReportFilterConmponent; break; }
             case "InvoicesRoutingsFilterComponent": { myResult = InvoicesRoutingsFilterComponent; break; }
@@ -221,8 +224,8 @@ export class ModuleDeclarations {
             case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
             case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }
             case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }
-            case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }   
-            case "ShipmentsEventsListFilterComponent": { myResult = ShipmentsEventsListFilterComponent; break; }   
+            case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }
+            case "ShipmentsEventsListFilterComponent": { myResult = ShipmentsEventsListFilterComponent; break; }
             case "AutomationTestReportFilterComponent": { myResult = AutomationTestReportFilterComponent; break; }
             case "ShipperReturnsReportFilterComponent": { myResult = ShipperReturnsReportFilterComponent; break; }
             case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; }

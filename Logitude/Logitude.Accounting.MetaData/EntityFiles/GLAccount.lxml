@@ -114,7 +114,7 @@
   <field Id="&quot;2396f5fc-dfed-442b-af32-fb4cfc0de09a&quot;" FieldName="&quot;MinimumInterestInvoiceBilling&quot;" OldFieldName="&quot;MinimumInterestInvoiceBilling&quot;" IsNew="true" IsChecked="true" IsDeleted="false" ObjectTableName="&quot;GLAccount&quot;" FieldsDataType="&quot;Integer&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;MinimumInterestInvoiceBilling&quot;" ListPropertyPath="&quot;MinimumInterestInvoiceBilling&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" NumberOfDigits="5" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;MinimumInterestInvoiceBilling&quot;" DefaultText="&quot;Minimum Interest Invoice billing&quot;" FullLocalDefaultText="&quot;מינימום חיוב בחשבונית ריבית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
   <field Id="&quot;5f031a2e-d413-4ac9-8dc5-1a101190497b&quot;" FieldName="&quot;GLAccountInterestPeriods&quot;" OldFieldName="&quot;GLAccountInterestPeriods&quot;" IsNew="true" IsChecked="true" IsDeleted="false" ObjectTableName="&quot;GLAccount&quot;" FieldsDataType="&quot;List&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;GLAccountInterestPeriods&quot;" ListPropertyPath="&quot;GLAccountInterestPeriods&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="true" MultiTableName="&quot;GLAccountInterestPeriod&quot;" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;GLAccountInterestPeriods&quot;" DefaultText="&quot;GLAccount Interest Periods&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="false" HasPMField="true" ThisKey="&quot;Id&quot;" OtherKey="&quot;GLAccountId&quot;" AssociationName="&quot;GLAccountInterestPeriodGLAccount&quot;" IsComposition="true" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
   <field Id="&quot;5d4cc807-48cf-42b4-bf1d-2af0a7918b79&quot;" FieldName="&quot;InterestCreditLimit&quot;" OldFieldName="&quot;InterestCreditLimit&quot;" IsNew="true" IsChecked="true" IsDeleted="false" ObjectTableName="&quot;GLAccount&quot;" FieldsDataType="&quot;Decimal&quot;" MinLength="0" MaxLength="0" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;InterestCreditLimit&quot;" ListPropertyPath="&quot;InterestCreditLimit&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" NumberOfDigits="18" DigitsAfterPoint="2" InActive="false" DisplayLongName="false" FullFieldLable="&quot;InterestCreditLimit&quot;" DefaultText="&quot;Interest Credit&quot;" FullLocalDefaultText="&quot;אשראי לריבית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
-  <field Id="&quot;8da7e52e-e43b-40a7-a444-f3e8c03bc0e2&quot;" FieldName="&quot;NameForPrintingCheques&quot;" IsNew="true" IsChecked="true" IsDeleted="false" ObjectTableName="&quot;GLAccount&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;NameForPrintingCheques&quot;" ListPropertyPath="&quot;NameForPrintingCheques&quot;" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;NameForPrintingCheques&quot;" DefaultText="&quot;Name for printing cheques&quot;" FullLocalDefaultText="&quot;שם להדפסה בשקים&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
+  <field Id="&quot;8da7e52e-e43b-40a7-a444-f3e8c03bc0e2&quot;" FieldName="&quot;NameForPrintingCheques&quot;" OldFieldName="&quot;NameForPrintingCheques&quot;" IsNew="true" IsChecked="true" IsDeleted="false" ObjectTableName="&quot;GLAccount&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" CopyToDW="false" DisplayOnLookUp="false" DisplayOnLookUpLocal="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;NameForPrintingCheques&quot;" ListPropertyPath="&quot;NameForPrintingCheques&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DependencyFilter3IsList="false" IsRestrictable="false" DisplayInEntityVariables="false" AllowedInCustomerFieldsSettings="false" DisplayInSearchWindowFilters="false" DisplayInSearchWindowFiltersIndex="0" DisplayInDocumentReferences="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;NameForPrintingCheques&quot;" DefaultText="&quot;Name for printing cheques&quot;" FullLocalDefaultText="&quot;שם להדפסה בשקים&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" HasTemplate="false" IsCustom="false" IsSpellCheckedFullFieldLable="false" IsSpellCheckedHelpLocalDefaultText="false" IsSpellCheckedShortLocalDefaultText="false" IsSpellCheckedListLocalDefaultText="false" EnableFullscreenTextBox="false" />
   <Query Code="&quot;General Ledger Accounts&quot;" TextCode="&quot;General Ledger Accounts&quot;" LocalTextCode="&quot;חשבונות&quot;" QueryGroupCode="&quot;GLAC&quot;" IndexOrder="0" ObjectTableName="&quot;GLAccount&quot;" QuerySection="&quot;GLAccount&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" QueryGroupName="&quot;GLAccount&quot;" TextCodeCode="&quot;GLAccounts.Q.GLAccounts&quot;" FeatureCode="&quot;GLACCOUNTS&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.GLAccounts&quot;" FeatureDefaultText="&quot;General Ledger Accounts&quot;" IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn QueryCode="&quot;General Ledger Accounts&quot;" IndexOrder="0" ObjectFieldName="&quot;DisplayNumber&quot;" ColumnWidth="73" />
@@ -545,112 +545,28 @@
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;GLAccount.O.NoCreditDefined&quot;"
-      DefaultText="&quot;Credit balance not defined&quot;"
-      LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.CreditStatus &quot;"
-      DefaultText="&quot;Credit Status&quot;"
-      LocalDefaultText="&quot;מצב אשראי&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.Queries&quot;"
-      DefaultText="&quot;GL Accounts Queries&quot;"
-      LocalDefaultText="&quot;שאילתות כרטיסים&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.CounterIsntDefined&quot;"
-      DefaultText="&quot;Counter is not defined, please check accounting settings &quot;"
-      LocalDefaultText="&quot;מונה כרטיס לא הוגדר , אנא בדוק הגדרות הנהח''ש&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.Connect2ExistingCard&quot;"
-      DefaultText="&quot;Connect to an existing card&quot;"
-      LocalDefaultText="&quot;חיבור לכרטיס קיים&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.ThisGLAccountConnected&quot;"
-      DefaultText="&quot;This GL Account is already connected to card (#cards). GL Account cannot be linked to two clients card.&quot;"
-      LocalDefaultText="&quot;שים לב כי הכרטיס כבר מקושר לכרטיס תפעולי (#cards), לא ניתן לקשר כרטיס לשני לקוחות.&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.ThisGLAccountConnectedContinue&quot;"
-      DefaultText="&quot;This GL Account is already connected to cards (#cards), Do you want to continue?&quot;"
-      LocalDefaultText="&quot;שים לב כי הכרטסת כבר מקושרת לכרטיס תפעולי (#cards), האם ברצונך להמשיך?&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.ExternalAdjust&quot;"
-      DefaultText="&quot;External Adjust&quot;"
-      LocalDefaultText="&quot;התאם חיצונית&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.NewExternalTransaction&quot;"
-      DefaultText="&quot;New External Transaction&quot;"
-      LocalDefaultText="&quot;דף חיצוני חדש&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.ExternalTransaction&quot;"
-      DefaultText="&quot;External Transaction&quot;"
-      LocalDefaultText="&quot;תנועות חיצוניות&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.DeleteExistInterestperiods&quot;"
-      DefaultText="&quot;You must delete the Interest periods record before Deactivating the customer&quot;"
-      LocalDefaultText="&quot;יש למחוק הגדרת תקופות ריבית לפני חסימת לקוח&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.LineDateExist&quot;"
-      DefaultText="&quot;Line with the same date already exist&quot;"
-      LocalDefaultText="&quot;קיימת כבר שורה עם תאריך זהה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.FieldInterestCalculationStartDateismandatory&quot;"
-      DefaultText="&quot;Field Interest Calculation Start Date is mandatory&quot;"
-      LocalDefaultText="&quot;שדה תאריך הוא חובה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired&quot;"
-      DefaultText="&quot;At least one GLAccount Interest Periods record is required&quot;"
-      LocalDefaultText="&quot;חובה להזין לפחות רשומה אחת של תקופת ריבית&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.Customer&quot;"
-      DefaultText="&quot;Customer&quot;"
-      LocalDefaultText="&quot;לקוחות&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.Vendor&quot;"
-      DefaultText="&quot;Vendor&quot;"
-      LocalDefaultText="&quot;ספקים&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.GroupByDate&quot;"
-      DefaultText="&quot;Group By Date:&quot;"
-      LocalDefaultText="&quot;לפי תאריך&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-      <TextCode Code="&quot;GLAccount.O.DebtorsOnly&quot;" DefaultText="&quot;Debtors only&quot;" LocalDefaultText="&quot;רק בעלי חוב&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.NoCreditDefined&quot;" DefaultText="&quot;Credit balance not defined&quot;" LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.CreditStatus &quot;" DefaultText="&quot;Credit Status&quot;" LocalDefaultText="&quot;מצב אשראי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.Queries&quot;" DefaultText="&quot;GL Accounts Queries&quot;" LocalDefaultText="&quot;שאילתות כרטיסים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.CounterIsntDefined&quot;" DefaultText="&quot;Counter is not defined, please check accounting settings &quot;" LocalDefaultText="&quot;מונה כרטיס לא הוגדר , אנא בדוק הגדרות הנהח''ש&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.Connect2ExistingCard&quot;" DefaultText="&quot;Connect to an existing card&quot;" LocalDefaultText="&quot;חיבור לכרטיס קיים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.ThisGLAccountConnected&quot;" DefaultText="&quot;This GL Account is already connected to card (#cards). GL Account cannot be linked to two clients card.&quot;" LocalDefaultText="&quot;שים לב כי הכרטיס כבר מקושר לכרטיס תפעולי (#cards), לא ניתן לקשר כרטיס לשני לקוחות.&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.ThisGLAccountConnectedContinue&quot;" DefaultText="&quot;This GL Account is already connected to cards (#cards), Do you want to continue?&quot;" LocalDefaultText="&quot;שים לב כי הכרטסת כבר מקושרת לכרטיס תפעולי (#cards), האם ברצונך להמשיך?&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.ExternalAdjust&quot;" DefaultText="&quot;External Adjust&quot;" LocalDefaultText="&quot;התאם חיצונית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.NewExternalTransaction&quot;" DefaultText="&quot;New External Transaction&quot;" LocalDefaultText="&quot;דף חיצוני חדש&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.ExternalTransaction&quot;" DefaultText="&quot;External Transaction&quot;" LocalDefaultText="&quot;תנועות חיצוניות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.DeleteExistInterestperiods&quot;" DefaultText="&quot;You must delete the Interest periods record before Deactivating the customer&quot;" LocalDefaultText="&quot;יש למחוק הגדרת תקופות ריבית לפני חסימת לקוח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.LineDateExist&quot;" DefaultText="&quot;Line with the same date already exist&quot;" LocalDefaultText="&quot;קיימת כבר שורה עם תאריך זהה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.FieldInterestCalculationStartDateismandatory&quot;" DefaultText="&quot;Field Interest Calculation Start Date is mandatory&quot;" LocalDefaultText="&quot;שדה תאריך הוא חובה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired&quot;" DefaultText="&quot;At least one GLAccount Interest Periods record is required&quot;" LocalDefaultText="&quot;חובה להזין לפחות רשומה אחת של תקופת ריבית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.Customer&quot;" DefaultText="&quot;Customer&quot;" LocalDefaultText="&quot;לקוחות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.Vendor&quot;" DefaultText="&quot;Vendor&quot;" LocalDefaultText="&quot;ספקים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.GroupByDate&quot;" DefaultText="&quot;Group By Date:&quot;" LocalDefaultText="&quot;לפי תאריך&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.DebtorsOnly&quot;" DefaultText="&quot;Debtors only&quot;" LocalDefaultText="&quot;רק בעלי חוב&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;GLaccount.O.DebtAbove&quot;" DefaultText="&quot;Debt Above&quot;" LocalDefaultText="&quot;חוב מעל&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;GLAccount.O.Balance&quot;" DefaultText="&quot;Balance&quot;" LocalDefaultText="&quot;יתרה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-  
+    <TextCode Code="&quot;GLAccount.O.IsCreditLimitSet&quot;" DefaultText="&quot;Credit Limit Is Set&quot;" LocalDefaultText="&quot;מוגדר מסגרת אשראי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.SortBy&quot;" DefaultText="&quot;Sort By&quot;" LocalDefaultText="&quot;מיון לפי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
