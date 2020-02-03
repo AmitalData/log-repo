@@ -144,3 +144,5 @@
 --update RoleFeatures set FeatureId = (select Id from features where FeatureUniqeCode=RoleFeatures.FeatureUniqeCode)
 
 -------------
+--delete from Screens where code='Customs.AccountingPartner.HeaderScreen'
+--update ScreenModifications set NumberOfRows=3 where NumberOfRows>3 and ScreenCode like '%headerscreen%'
