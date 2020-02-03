@@ -36,7 +36,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
         }
 
-       private CrossDockEntryDataProvider LoadCrossDockEntryDataProvider(string entityId, int tenant)
+       public CrossDockEntryDataProvider LoadCrossDockEntryDataProvider(string entityId, int tenant)
         {
             CrossDockEntryDataProvider dataProvider = new CrossDockEntryDataProvider();
             WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(tenant);
@@ -237,5 +237,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
            
             return result;
         }
+
     }
 }
