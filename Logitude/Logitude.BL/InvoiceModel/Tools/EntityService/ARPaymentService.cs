@@ -608,15 +608,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (tenantPOCO != null && tenantPOCO.AccountingActivated && payment.BillToPartnerTypeId == "CS")
             {
                 DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
-            InterestTransactionPM interestTransaction = new InterestTransactionPM()
-            {
-                InterestEntityTypeCode = "2",
-                EntityId = payment.Id,
-                OriginalEntityLineNumber = ++lineNumber,
-                LocalAmount = (decimal)payment.AmountInLocalCurrency,
-                ForeignAmount = (decimal?)payment.AmountInPaymentCurrency,
-                InterestValueDate = (DateTime)dateForInterest,
-                Tenant = entityPM.Tenant,
+                InterestTransactionPM interestTransaction = new InterestTransactionPM()
+                {
+                    InterestEntityTypeCode = "2",
+                    EntityId = payment.Id,
+                    OriginalEntityLineNumber = ++lineNumber,
+                    LocalAmount = (decimal)payment.AmountInLocalCurrency,
+                    ForeignAmount = (decimal?)payment.AmountInPaymentCurrency,
+                    InterestValueDate = (DateTime)dateForInterest,
+                    Tenant = entityPM.Tenant,
+                    GLAccountId = payment.GLAccountId,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
             };
