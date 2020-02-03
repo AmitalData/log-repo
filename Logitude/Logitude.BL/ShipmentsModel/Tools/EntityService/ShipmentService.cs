@@ -2877,6 +2877,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                 }
+                IntializeWarehouseStorageFreeDays();
                 #endregion
             }
 
@@ -3027,6 +3028,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             this.GetCounterShipmentNumber();
                         }
                     }
+                    entityPoco.WarehouseStorageFreeDays = entityPM.WarehouseStorageFreeDays;
                 }
 
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
@@ -3166,6 +3168,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
                     //shipmentAdditionalCloudDataRepository.SubmitChanges();
                 }
+
                 #endregion
             }
 
@@ -3219,6 +3222,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
 
+        }
+
+        private void IntializeWarehouseStorageFreeDays()
+        {
+            Card consigneeCard = CardRepository.GetSingleCard(entityPM.ConsigneeId, tenant, true);
+            entityPM.WarehouseStorageFreeDays = consigneeCard.StorageFreeDays;
         }
 
         private void GetCounterShipmentNumber()

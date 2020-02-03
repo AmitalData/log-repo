@@ -1100,6 +1100,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         }
     }
 
+    get StorageFreeDays() { return this.EntityPM.StorageFreeDays; }
+    set StorageFreeDays(newValue: number) {
+        if (this.EntityPM.StorageFreeDays != newValue) {
+            this.EntityPM.StorageFreeDays = newValue;
+        }
+    }
+
     // More Button
     public IsMoreButtonVisible_AccountManager: boolean = false;
     public IsMoreButtonVisible_Salesman: boolean = false;

@@ -694,6 +694,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipmentCustomerTypeCode = shipment.ShipmentCustomerTypeCode;
             shipmentPM.ConsigneeAddressOneTime = shipment.ConsigneeAddressOneTime;
             shipmentPM.ShipperAddressOneTime = shipment.ShipperAddressOneTime;
+            shipmentPM.WarehouseStorageFreeDays = shipment.WarehouseStorageFreeDays;
 
             CardRepository cardRepository = new CardRepository(myCommonContext);
 

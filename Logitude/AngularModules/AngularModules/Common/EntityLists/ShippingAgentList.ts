@@ -41,5 +41,6 @@ export class ShippingAgentList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
+		StateName: string;
 	
 }

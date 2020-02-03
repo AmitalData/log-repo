@@ -2442,5 +2442,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? UserIdNumberUpdateDate { get; set; }
         public string UserIdNumberXMLData { get; set; }
         public string UserIdNumber { get; set; }
+        public int? WarehouseStorageFreeDays { get; set; }
     }
 }

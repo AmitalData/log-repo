@@ -1987,6 +1987,14 @@
     <Compile Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.Designer.cs">
       <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002030954195_AddWarehouseStorageFreeDaysColumns.cs" />
+    <Compile Include="Migrations\202002030954195_AddWarehouseStorageFreeDaysColumns.Designer.cs">
+      <DependentUpon>202002030954195_AddWarehouseStorageFreeDaysColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002031129352_UpdateStorageFreeDaysColumns.cs" />
+    <Compile Include="Migrations\202002031129352_UpdateStorageFreeDaysColumns.Designer.cs">
+      <DependentUpon>202002031129352_UpdateStorageFreeDaysColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3586,6 +3594,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.resx">
       <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002030954195_AddWarehouseStorageFreeDaysColumns.resx">
+      <DependentUpon>202002030954195_AddWarehouseStorageFreeDaysColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002031129352_UpdateStorageFreeDaysColumns.resx">
+      <DependentUpon>202002031129352_UpdateStorageFreeDaysColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
