@@ -342,7 +342,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     TotalDaysWithoutIncludingInnerDouble = item.TotalMinutes,
                     IsVisisble = true,
                 };
-                this.CalculateCategoryTotals(item);
+                this.CalculateCategoryTotals(item, gategoryLines);
                 this.FillProjectData(item);
                 this.FillCategoryData(item);
                 this.FillOwnerData(item);
@@ -423,7 +423,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             }
         }
 
-        private void CalculateCategoryTotals(WorkDaysPerGategoryData item)
+        private void CalculateCategoryTotals(WorkDaysPerGategoryData item, List<WorkDaysPerGategoryData> gategoryLines)
         {
             var listOfCategoryInnerProjects = this.iQueryable_AllProjects.Where(d => d.ProjectNumber.StartsWith(item.ProjectNumber + "-") || d.ProjectNumber == item.ProjectNumber);
             var daysOfListCategoryInnerProjects = (from EmployeeTimes in iQueryable_AllEmployeeTimes
@@ -446,7 +446,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             var isCategoryFirstRow = iWorkDaysPerGategoryDataList.Where(a => a.CategoryId == item.CategoryId && a.TotalGategoryDays != null).FirstOrDefault();
             if (isCategoryFirstRow == null)
             {
-                itemRecord.TotalGategoryDaysDouble = itemRecord.TotalDaysIncludingInnerDouble;
+                itemRecord.TotalGategoryDaysDouble = gategoryLines.Sum(s => s.TotalMinutes);
                 itemRecord.TotalGategoryDays = this.GetDaysFormatFromMinutes(itemRecord.TotalGategoryDaysDouble);
             }
         }

@@ -447,7 +447,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Master.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Master.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
     SetUnits() {
