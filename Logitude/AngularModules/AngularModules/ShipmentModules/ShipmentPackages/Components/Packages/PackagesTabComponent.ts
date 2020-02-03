@@ -273,7 +273,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.WtMsrUnitCode.Short");
+            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeightUnitCode.Short");
         }
 
         if (this.IsLCLEntity) {
