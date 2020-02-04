@@ -677,6 +677,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 MyGenericResponseObj.Stage = "Updating ";
                 _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
 
+                if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsDiamondsDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsDiamondsDeclaration) && _AmitalCustomsFile.IsDiamondsDeclaration.ToLower() != "true"))
+                {
+                    _MyDeclarationPM.IsDiamondDeclaration = false;
+
+                }
+                else
+                {
+                    _MyDeclarationPM.IsDiamondDeclaration = true;
+                }
+
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
                     _MyDeclarationPM.IsCourierDeclaration = false;
