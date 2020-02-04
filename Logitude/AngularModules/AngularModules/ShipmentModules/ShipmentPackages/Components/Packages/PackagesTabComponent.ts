@@ -1411,6 +1411,27 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.EntityPM.RemovePackage(itemComponent.EntityPM);
                 this.ItemsSource.Remove(itemComponent);
 
+
+
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.WarehouseReleasesIds) && !AppTool.IsNullOrEmpty(itemComponent.EntityPM.WarehouseReleaseId)) {
+                    var warehouseReleasesIds = "";
+                    this.EntityPM.WarehouseReleasesIds.split(',').forEach(item => {
+                        if (!AppTool.IsNullOrEmpty(item)) {
+                            var packageitem = this.EntityPM.ShipmentPackages.filter(d => d.WarehouseReleaseId == item)[0];
+                            if (packageitem) {
+                                warehouseReleasesIds +=  (item + ",");
+                            }
+
+                        }
+                    });
+                    if (!AppTool.IsNullOrEmpty(warehouseReleasesIds)) {
+                        warehouseReleasesIds += ")";
+                        warehouseReleasesIds.replace(",)", "")
+                    }
+                    this.EntityPM.WarehouseReleasesIds = warehouseReleasesIds;
+                }
+
+
                 this.ComputeTotals();
                 this.SetUIProperties();
                 this.SetGenerateData();
