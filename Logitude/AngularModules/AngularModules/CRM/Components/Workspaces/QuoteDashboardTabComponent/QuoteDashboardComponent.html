@@ -1,6 +1,6 @@
 
-    <div class="TabHolder" style="overflow-x:auto;overflow-y:auto;padding-right:10px">
-        <table style="min-width:1060px;min-height:720px">
+<div class="TabHolder" style="overflow-x:auto;overflow-y:auto;padding-right:10px">
+    <table style="min-width:1060px;min-height:720px">
         <tr style="height:40px;">
             <td>
                 <table>
@@ -33,14 +33,14 @@
                                         <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ToDate" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
                                     </td>
                                     <td style="width:3px"></td>
-
-
                                 </tr>
                             </table>
                         </td>
+
                         <td style="width:5px;">
                             <div></div>
                         </td>
+
                         <td style="width:150px;">
                             <ComboBox [ItemsSource]="BusinessUnitFilterList" [Binding]="'Name'" [SelectedItem]="SelectedBusinessUnitFilter" (SelectedItemChanged)="SelectedBusinessUnitFilter = $event"></ComboBox>
                         </td>
@@ -102,9 +102,7 @@
 
                         <td width="10px;">
                             <div></div>
-                        </td>
-
-                <td>
+                        </td>                        
 
                         <td style="width:33%;">
                             <div class="LocationDirective" LocationDirective Code="TFS"></div>
@@ -112,9 +110,7 @@
 
                         <td width="10px;">
                             <div></div>
-                        </td>
-
-                <td>
+                        </td>                        
 
                         <td style="width:33%;">
                             <div class="LocationDirective" LocationDirective Code="KPI"></div>
