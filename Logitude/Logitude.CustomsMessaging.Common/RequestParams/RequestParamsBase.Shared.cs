@@ -96,5 +96,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string Type { get; set; }
         public string Group { get; set; }
         public int IndexOrder { get; set; }
+        
     }
 }
