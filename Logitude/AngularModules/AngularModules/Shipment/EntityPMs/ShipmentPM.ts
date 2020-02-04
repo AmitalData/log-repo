@@ -4135,6 +4135,15 @@ export class ShipmentPM {
         }
     }
 
+    private warehouseStorageFreeDays: number;
+    public get WarehouseStorageFreeDays() { return this.warehouseStorageFreeDays; }
+    public set WarehouseStorageFreeDays(newValue: string) {
+        if (this.warehouseStorageFreeDays != newValue) {
+            this.warehouseStorageFreeDays = newValue;
+            this.MarkAsDirty("WarehouseStorageFreeDays");
+        }
+    }
+
     private shipperNotExporterReference: string;
     public get ShipperNotExporterReference() { return this.shipperNotExporterReference; }
     public set ShipperNotExporterReference(newValue: string) {
