@@ -233,7 +233,7 @@ export class LoginComponent implements OnInit {
             SessionInfo.WebTokenLifeTimeInMinutes = userData.WebTokenLifeTimeInMinutes;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
             SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
-
+            this.FillProtractorEmails();
 
 
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = userData.AmitalBrowserInUse;
@@ -276,6 +276,22 @@ export class LoginComponent implements OnInit {
         }
         window.sessionStorage.setItem("userdata", "");
     }
+
+    FillProtractorEmails() {
+        SessionLocator.ProtractorEmails.push("razantest@protractor.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("protractor@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("ahmadb@logbox.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("ahmadb@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("raghad@protractor.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sgautomation@pro.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sumaya@cloud.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sumaya@automation.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sg1209@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("lana3@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("protractor2@test.com".toLowerCase());
+
+    }
+
     OneUsePasswordMethod() {
         this.loginService.GetOneUsePassword().subscribe(userData => {
 
