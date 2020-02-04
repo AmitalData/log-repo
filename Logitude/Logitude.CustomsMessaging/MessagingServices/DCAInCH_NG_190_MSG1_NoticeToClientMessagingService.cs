@@ -25,7 +25,53 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get { return "190"; }
         }
-        
+        protected override CH_NG_190_MSG1_NoticeToClient GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
+
+            return new CH_NG_190_MSG1_NoticeToClient()
+            {
+                RequestContentHeader = new RequestContentHeader()
+                {
+                    TransmitionDateTime = DateTime.Now
+                },
+                NoticeToClient = new CH_NG_190_MSG1_NoticeToClientNoticeToClient()
+                {
+                    operationCode = 1,
+                    statusMessage = 2,
+                    checkId = 2369229,
+                    entityType = 5,
+                    customsAgent = 1111,
+                    importerNumber = 111,
+                    storageSiteNumber = "ILMMN",
+                    checkSiteNumber = "10470",
+                    openDate = DateTime.Now,
+                    CheckType = 1,
+                    declarationID = requestParamsData.AppicationId,///change to number 
+
+
+                },
+                CheckEntity = new CH_NG_190_MSG1_NoticeToClientCheckEntity()
+                {
+                    cargoIdentifier = new cargoIdentifier()
+                    {
+                        cargoIdentifierKey1 = "22",
+                        cargoIdentifierType = 1
+                    }
+
+                },
+                SplitCargoIdentifier = new CH_NG_190_MSG1_NoticeToClientSplitCargoIdentifier[]{
+                      new CH_NG_190_MSG1_NoticeToClientSplitCargoIdentifier()
+                  {
+                       cargoIdentifier= new cargoIdentifier()
+                       {
+                            cargoIdentifierType= 27 ,
+                             cargoIdentifierKey1= "50497355"
+                       }
+                  }
+                  }
+
+            };
+        }
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(CH_NG_190_MSG1_NoticeToClient customsResponse)
         {
             var tableName="Customs.PhysicalCheck";

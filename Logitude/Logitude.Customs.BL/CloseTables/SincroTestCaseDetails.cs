@@ -17,6 +17,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Valid",
                     Name = "הצהרת יבוא תקינה",
                     Entity="Declaration",
+                    
                 },
                 new SincroTestCaseDetail()
                 {
@@ -37,15 +38,31 @@ namespace Logitude.Customs.BL.CloseTables
                     Name = "הצהרת תקן5117 ",
                     IsDCA= true,
                     Entity="Declaration",
-                    Param1= @"{ ""Fix"":""AAA"" }"
+                    Param1= @"{ ""Fix"":""AAA"" }",
+                    MainInterfaceCode="5117",
                 },
-                                  new SincroTestCaseDetail()
+                                  
+                new SincroTestCaseDetail()
                 {
                     Code = "5117SincroCancel",
                     Name = "הצהרת בטל5117 ",
                     IsDCA= true,
                     Entity="Declaration",
-                    Param1= @"{ ""cancel"":""AAA"" }"
+                    Param1= @"{ ""cancel"":""AAA"" }",
+                    MainInterfaceCode="5117",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "190Sincro",
+                    Name = "בדיקות פיזיות	",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" , ""rr"" : ""true"" }",
+                    Param2= @"{ ""availability"":""2020-02-04T09:15:03.1085624"" }",
+
+                    MainInterfaceCode="190",
+
+
                 }
 
 
@@ -62,5 +79,11 @@ namespace Logitude.Customs.BL.CloseTables
         public bool IsDCA { get; set; }
         public string Param1 { get; set; }
         public string Param2 { get; set; }
+        //public FakeServiceEnum FakeService { get; internal set; }
+        public string MainInterfaceCode { get; internal set; }
+    }
+    public enum FakeServiceEnum
+    {
+        DCA190SincroService
     }
 }
