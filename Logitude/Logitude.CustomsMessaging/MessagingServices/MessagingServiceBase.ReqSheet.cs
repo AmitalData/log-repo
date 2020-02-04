@@ -38,6 +38,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using System.Linq;
 using System.Configuration;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.CustomsMessaging.Testers.Messages;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -1516,6 +1517,81 @@ Exception:" + ee.Message
                 .Replace(']', '>')
                 ;
             return sb.ToString();
+        }
+
+        public string CreateFakeDCA(GenericRequestParams requestParamsData)
+        {
+            string uniComm = null;
+            string fileName = null;
+            var transmitionDateTime = DateTime.Now;
+            string xmlESBResponseXmlClass = null;
+
+
+
+            TCustomsResponse customsResponse = GetFakeCustomsResponse(requestParamsData);
+
+            var body = XmlGenericUtil<TCustomsResponse>.SerializeObject(customsResponse);
+            //
+            body = body.Substring(body.IndexOf(Environment.NewLine));
+            var myESBResponseXmlClass = new ESBResponseXmlClass();
+            var extrenalId = "62833ff7-1cd3-4faa-85a6-a4312ae4797a";
+            extrenalId = uniComm ?? Guid.NewGuid().ToString();
+            xmlESBResponseXmlClass = myESBResponseXmlClass.Get(Guid.NewGuid().ToString(), extrenalId, body);
+            var transTime = "2016-04-19_13-35-13-481";
+
+            transTime = transmitionDateTime.ToString("s").Replace("T", "_").Replace(":", "-");
+            transTime += "-";
+            transTime += transmitionDateTime.Millisecond.ToString();
+
+            fileName = "DcaPrefixName.IL941079089FAKEFAKEFAKE." + transTime + "." + extrenalId + ".PLT.xml";
+
+            var ourRef = "";
+            using (var trans = TransactionFactory.GetNewTransaction())
+            {
+                try
+                {
+
+                    
+
+                    var InterfaceManagementQS = new InterfaceManagementQueryService(requestParamsData.Tenant);
+                    var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
+                        this.MainInterfaceCode, requestParamsData.Tenant);
+                    fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
+                    ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, requestParamsData.Tenant, new Customs.BL.Utils.DCAFileModel()
+                    {
+                        SelectedFileDownload = fileName,
+                        TimStamp = transmitionDateTime
+
+                    }, xmlESBResponseXmlClass);
+
+
+
+                    trans.Complete();
+                    return "המסר נבנה בהצלחה וישלח בתהליך רקע";
+                }
+                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+                {
+                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                    {
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCB1170 SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
+
+
+                    }
+                    else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
+                    {
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB1170 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
+                    }
+                    return "קיים מסר זהה בתהליך";
+                    //throw;
+                }
+            }
+
+        }
+        
+        virtual protected TCustomsResponse GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
+            
+            throw new NotImplementedException("TCustomsResponse GetFakeCustomsResponse(GenericRequestParams requestParamsData):" + this.GetType().FullName);
         }
 
         public string DcaReceivedCustomResponseCorrelation(

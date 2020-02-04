@@ -142,11 +142,13 @@
     <Compile Include="CustomsBook\CustomsItemDetailsHistoryImport.cs" />
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
+    <Compile Include="FakeMessagingServices\DCASincroService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_SumbitPayment.cs" />
     <Compile Include="FakeMessagingServices\FakeResponseBase.cs" />
     <Compile Include="FakeMessagingServices\Fake_5117_MSG14003_AmendmentReplyMsg.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DCAInCH_NG_190_MSG1_NoticeToClient_Service.cs" />
     <Compile Include="FakeMessagingServices\Fake_ImportDeclaration_Response.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />

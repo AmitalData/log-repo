@@ -137,6 +137,7 @@
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
+    <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AcceptanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ApprovedProfessionDetails.Generated.cs" />
@@ -885,6 +886,7 @@
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\CargoSealIdentifierQueryService.cs" />
     <Compile Include="EntityQueryServices\CityQueryService.cs" />
     <Compile Include="EntityQueryServices\ClaimImporterDeclarsPage3QueryService.cs" />
     <Compile Include="EntityQueryServices\ClaimQueryService.cs" />
@@ -1302,6 +1304,7 @@
     <Compile Include="EntityQueryServices\TradeAgreementQueryService.cs" />
     <Compile Include="EntityQueryServices\VehicleQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
+    <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsP3LoiUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsPage3AUpdateService.cs" />

@@ -1,21 +1,4 @@
-<!-- SpecialActivityRequestComponent view  -->
-<style type="text/css">
-    .NotesTextArea {
-        padding: 2px;
-        padding-left: 4px;
-        text-indent: 0px;
-        font-size: 14px;
-        color: black;
-        text-align: right;
-        border: 1px solid gray;
-        border-radius: 3px;
-        -moz-border-radius: 2px;
-        -webkit-border-radius: 2px;
-        -webkit-box-shadow: 0px 0px 5px 3px #C8C8C8;
-        -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
-        box-shadow: 0px 0px 5px 3px #C8C8C8;
-    }
-</style>
+<!-- CargoSealsQueryComponent view  -->
 
 <div>
 
@@ -24,7 +7,7 @@
 
         <!-- Request -->
         <div class="class-request-content">
-            <table style="width: 860px;height: 560px; padding-top: 10px;">
+            <table *ngIf="_IsReady" style="width: 750px;height: 400px; padding-top: 10px;">
 
                 <!-- Request Fields -->
                 <tr class="FormFieldRow" style="vertical-align: top">
@@ -51,21 +34,22 @@
 
                             <tr class="FormFieldRow">
                                 <td style="width: 90px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.CargoTypeCode'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierTypeCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
                                     <LogLov [ObjectFieldName]="'CargoIdentifierTypeCode'"
                                             [SelectedValue]="CargoIdentifierTypeCode"
-                                            [ObjectTableName]="'Customs.Consignment'"
+                                            [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.SealUpdateReasonType'"
+                                            [LookUpTableName]="'Customs.CargoIdentifireType'"
                                             [HideLastColumn]="true"
                                             [HideColumns]="true">
                                     </LogLov>
                                 </td>
 
                                 <td style="width: 90px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ManifestNumber'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
                                     <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'"
@@ -76,7 +60,7 @@
                                 </td>
 
                                 <td style="width: 90px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.SecondCargoID'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
                                     <LogTextBox [ObjectFieldName]="'SecondCargoID'"
@@ -90,7 +74,7 @@
 
                             <tr class="FormFieldRow">
                                 <td style="width: 90px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ThirdCargoID'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
                                     <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'"
@@ -102,60 +86,233 @@
                                 </td>
 
                                 <td style="width: 90px;">
-                                    <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ThirdCargoID'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'CargoRowNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
-                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'"
+                                    <LogTextBox [ObjectFieldName]="'CargoRowNumber'"
                                                 [InputType]="text"
                                                 [DataContext]="DataContext"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true"
-                                                [Text]="CargoIdentifierKey3"></LogTextBox>
+                                                [Text]="CargoRowNumber"></LogTextBox>
+                                </td>
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'ContainerNumber'"
+                                                [InputType]="text"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="ContainerNumber"></LogTextBox>
                                 </td>
                             </tr>
 
-                            <!-- IsRePackingApproval = 5-->
-                            <tr class="FormFieldRow" *ngIf="IsRePackingApproval">
-                                <!-- Repacking Site Number -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'RepackingSiteNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.SiteNumber'"></LogLabel>
+                            <tr class="FormFieldRow">
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'UpdateDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td style="width: 130px;">
-                                    <LogLov [ObjectFieldName]="'RepackingSiteNumber'"
-                                            [SelectedValue]="RepackingSiteNumber"
-                                            [ObjectTableName]="'Customs.SiteLookup'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.SiteLookup'"
-                                            [HideLastColumn]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Approval Date -->
-                                <td style="width: 140px;">
-                                    <LogLabel [ObjectFieldName]="'ApprovalDate'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApprovalDate'"> </LogLabel>
-                                </td>
-                                <td style="width: 160px;">
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ApprovalDate'" [ObjectTableName]="ObjectTableName"
+                                <td style="width: 120px;">
+                                    <LogDatePicker [ObjectFieldName]="'UpdateDate'" [ObjectTableName]="ObjectTableName"
                                                    [InputType]="'date'" [DataContext]="DataContext"
                                                    [HideColumns]="true"></LogDatePicker>
                                 </td>
 
-                                <td style="width: 3px;"><div></div></td>
-                                <td style="width: 3px;"><div></div></td>
-
-                                <!-- Approval Name -->
-                                <td style="width: 130px;">
-                                    <LogLabel [ObjectFieldName]="'ApprovalName'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApprovalName'"></LogLabel>
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'ImporterNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ImporterNumber'"> </LogLabel>
                                 </td>
-                                <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'ApprovalName'" [Text]="ApprovalName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                <td style="width: 120px;">
+                                    <SearchBox [ObjectTableName]="'Client'"
+                                               [IsQuickSearch]="true"
+                                               [DropDownWidth]="143"
+                                               [DisplayMember]="'ImporterNumber'"
+                                               [DisplayText]="ImporterNumber"
+                                               [Watermark]="''"
+                                               [UseTimer]="false"
+                                               [IsImporterDetails]="true"
+                                               [ItemHeight]="36"
+                                               [HideIcons]="true"
+                                               [HasFilters]="true"
+                                               (LostFocus)="ImporterNumberLostFocus($event)"
+                                               (TextChanged)="ImporterNumberTextChanged($event)"
+                                               (ItemClicked)="ImporterNumberClicked($event)"></SearchBox>
                                 </td>
+                            </tr>
 
-                                <td><div></div></td>
+                            <!-- Cargo Seal -->
+                            <tr style="height: 200px; width: 80%;">
+                                <td colspan="8">
+                                    <div>
+                                        <table>
+                                            <tr style="height: 30px">
+                                                <td class="TabTitleRow" style="width:150px">
+                                                    {{'Customs.Claim.O.PaymentDetails'| TextCodeTranslationPipe}}
+                                                </td>
+                                                <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                                    <div>
+                                                        <IconButton [IsSmall]="true"
+                                                                    [Name]="'Add'"
+                                                                    (click)="AddCargoSealCommand()"
+                                                                    style="float:left;"></IconButton>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 200px; overflow: auto;">
+                                                <td colspan="6">
+                                                    <div class="CellContent">
+                                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                                            [ItemSource]="CargoSealObslist">
+
+                                                            <!-- SealNumber -->
+                                                            <log-column [header]="'Customs.CargoSeal.F.SealNumber' | TextCodeTranslationPipe"
+                                                                        [binding]="'SealNumber'" [width]="'100'" [Alignment]="'right'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.SealNumber}}</span>
+                                                                    </div>
+                                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogTextBox [ObjectFieldName]="'SealNumber'" [DataContext]="item" 
+                                                                                    [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                    [Text]="item.SealNumber" [HideColumns]="true"></LogTextBox>
+
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- SealTypeCode -->
+                                                            <log-column [header]="'Customs.CargoSeal.F.SealTypeCode' | TextCodeTranslationPipe"
+                                                                        [width]="'100'" [Alignment]="'right'" [binding]="'SealTypeCode'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.SealTypeName}}</span>
+                                                                    </div>
+                                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogLov [ObjectFieldName]="'SealTypeCode'"
+                                                                                [ObjectTableName]="'Customs.SealType'"
+                                                                                [DataContext]="item"
+                                                                                [LookUpTableName]="'Customs.SealType'"
+                                                                                (SelectedItemChanged)="item.SetLocalName($event,'SealTypeName')"
+                                                                                [HideColumns]="true"
+                                                                                [FocusOnMe]="true"
+                                                                                [SelectedValue]="item.SealTypeCode">
+                                                                        </LogLov>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- SealCompletenessStateCode -->
+                                                            <log-column [header]="'Customs.CargoSeal.F.SealCompletenessStateCode' | TextCodeTranslationPipe"
+                                                                        [width]="'100'" [Alignment]="'right'" [binding]="'SealCompletenessStateCode'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.SealCompletenessStateName}}</span>
+                                                                    </div>
+                                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogLov [ObjectFieldName]="'SealCompletenessStateCode'"
+                                                                                [ObjectTableName]="'Customs.SealCompletenes'"
+                                                                                [DataContext]="item"
+                                                                                [LookUpTableName]="'Customs.SealCompletenes'"
+                                                                                (SelectedItemChanged)="item.SetLocalName($event,'SealCompletenessStateName')"
+                                                                                [HideColumns]="true"
+                                                                                [FocusOnMe]="true"
+                                                                                [SelectedValue]="item.SealCompletenessStateCode">
+                                                                        </LogLov>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- UpdateReasonCode -->
+                                                            <log-column [header]="'Customs.CargoSeal.F.UpdateReasonCode' | TextCodeTranslationPipe"
+                                                                        [width]="'100'" [Alignment]="'right'" [binding]="'UpdateReasonCode'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.UpdateReasonName}}</span>
+                                                                    </div>
+                                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogLov [ObjectFieldName]="'UpdateReasonCode'"
+                                                                                [ObjectTableName]="'Customs.SealUpdateReasonType'"
+                                                                                [DataContext]="item"
+                                                                                [LookUpTableName]="'Customs.SealUpdateReasonType'"
+                                                                                (SelectedItemChanged)="item.SetLocalName($event,'UpdateReasonName')"
+                                                                                [HideColumns]="true"
+                                                                                [FocusOnMe]="true"
+                                                                                [SelectedValue]="item.UpdateReasonCode">
+                                                                        </LogLov>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- UpdateTypeCode -->
+                                                            <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
+                                                                        [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.UpdateTypeName}}</span>
+                                                                    </div>
+                                                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogLov [ObjectFieldName]="'UpdateTypeCode'"
+                                                                                [ObjectTableName]="'Customs.AmendmentType'"
+                                                                                [DataContext]="item"
+                                                                                [LookUpTableName]="'Customs.AmendmentType'"
+                                                                                (SelectedItemChanged)="item.SetLocalName($event,'UpdateTypeName')"
+                                                                                [HideColumns]="true"
+                                                                                [FocusOnMe]="true"
+                                                                                [SelectedValue]="item.UpdateTypeCode">
+                                                                        </LogLov>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- Remarks -->
+                                                            <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
+                                                                        [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <!--<div class="TextTrimming" style="text-align:right">
+                                                                        <span>{{item.Remarks}}</span>
+                                                                    </div>-->
+                                                                    <div style="width:100%;height:100%; white-space: nowrap;">
+                                                                        <a title="Show Remarks Description" href="#" (click)="ShowMore(item.Remarks)">
+                                                                            {{item.Remarks }}
+                                                                        </a>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!--<log-column [width]="'150'" [visibility]="'visibile'" [Alignment]="'left'">
+                                                                <log-cell-template template="let item">
+                                   
+                                                                    <span class="CellSeparator"></span>
+                                                                    <button class="Button"
+                                                                            style="width:45px"
+                                                                            (click)="ViewLogMethod(item)">
+                                                                        {{'Customs.CargoSeal.F.Remarks' |   TextCodeTranslationPipe }}
+                                                                    </button>
+                                                                </log-cell-template>
+                                                            </log-column>-->
+
+                                                            <!-- Delete Button-->
+                                                            <log-column [width]="'70'" [Alignment]="'right'">
+                                                                <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteCargoSealCommand(item)"
+                                                                                style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                        </logitude-edit-grid>
+                                                    </div>
+                                                </td>
+
+                                                <td> <div></div> </td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </div>
+                                </td>
                             </tr>
 
                         </table>

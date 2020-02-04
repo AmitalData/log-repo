@@ -319,7 +319,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<CargoSealPM> cargoSeals;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("CargoSeals", "Id","CargoSealIdentifierId")]
+	   [DataMember]
+	   public virtual List<CargoSealPM> CargoSeals  
+	   {
+	        get
+             {
+                 if (cargoSeals == null)
+                 {
+                     cargoSeals = new List<CargoSealPM>();
+                 }
+                 return cargoSeals;
+              }
+             set { cargoSeals = value; }
+	    }
+		   
+	   private List<CargoSealPM>  deletedCargoSeals;
+	   public virtual List<CargoSealPM> DeletedCargoSeals  
+	   {
+	        get
+             {
+                 if ( deletedCargoSeals == null)
+                 {
+                      deletedCargoSeals = new List<CargoSealPM>();
+                 }
+                 return  deletedCargoSeals;
+              }
+             set {  deletedCargoSeals = value; }
+	    }
+	     }
    
 }
 	 
