@@ -660,5 +660,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
                 }
             }
         }
+
+
+        public DateTime? RequestDate { get; set; }
     }
 }
