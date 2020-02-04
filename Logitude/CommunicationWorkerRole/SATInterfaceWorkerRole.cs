@@ -756,9 +756,9 @@ namespace CommunicationWorkerRole
                         arpaymentRep.SubmitChanges();
                     }
                 }
-           // }
+			// }
 
-            SaveCommunicationLogAsFailed(waitingCommLog, communicationLogRep, transError);
+			SaveCommunicationLogAsDoneWithSATError(waitingCommLog, communicationLogRep, transError);
 
         }
 
@@ -776,10 +776,25 @@ namespace CommunicationWorkerRole
 				}
 			//}
 
-            SaveCommunicationLogAsFailed(waitingCommLog, communicationLogRep, transError);
+			SaveCommunicationLogAsDoneWithSATError(waitingCommLog, communicationLogRep, transError);
         }
 
-        private void SaveCommunicationLogAsFailed(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
+		private void SaveCommunicationLogAsDoneWithSATError(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
+		{
+			string exceptionMessage = "Done, with SAT Error: " + transError;
+			waitingCommLog.CommunicationStatusTypeCode = "D";
+			waitingCommLog.ExceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 7000);
+			waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+
+			if (context != null)
+			{
+				communicationLogRep.Update(waitingCommLog);
+				communicationLogRep.SubmitChanges();
+			}
+
+			queueservice.Complete();
+		}
+		private void SaveCommunicationLogAsFailed(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
         {
             string exceptionMessage = "Failed," + transError;
             waitingCommLog.CommunicationStatusTypeCode = "F";
