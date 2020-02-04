@@ -660,5 +660,11 @@ namespace Logitude.BL.QuoteModel.EntityPMs
                 }
             }
         }
+
+
+        public DateTime? RequestDate { get; set; }
+
+        public bool IsCreatedFromTicket { get; set; }
+        public DateTime? TicketCreateDate { get; set; }
     }
 }

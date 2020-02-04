@@ -1273,6 +1273,11 @@ export class QuotePM {
     public set Field20(newValue: CustomFieldClass) {  this.field20 = newValue; this.MarkAsDirty("Field20");  }
        
 	 
+    private countryForStatisticsId: string;
+    public get CountryForStatisticsId() { return this.countryForStatisticsId; }
+    public set CountryForStatisticsId(newValue: string) { if (this.countryForStatisticsId != newValue) { this.countryForStatisticsId = newValue; this.MarkAsDirty("CountryForStatisticsId"); } }
+       
+	 
      
 	private quoteCharges: QuoteChargePM[];
     get  QuoteCharges() {
@@ -1543,7 +1548,22 @@ export class QuotePM {
         }
     }
 	    //public TotalVATs: Array<QuoteTotalVATPMPM>= [];
- 
+     private requestDate: Date;
+    public get RequestDate() { return this.requestDate; }
+    public set RequestDate(newValue: Date) { if (this.requestDate != newValue) { this.requestDate = newValue; this.MarkAsDirty("RequestDate"); } }
+       
+	 
+    private isCreatedFromTicket: boolean;
+    public get IsCreatedFromTicket() { return this.isCreatedFromTicket; }
+    public set IsCreatedFromTicket(newValue: boolean) { if (this.isCreatedFromTicket != newValue) { this.isCreatedFromTicket = newValue; this.MarkAsDirty("IsCreatedFromTicket"); } }
+       
+	 
+    private ticketCreateDate: Date;
+    public get TicketCreateDate() { return this.ticketCreateDate; }
+    public set TicketCreateDate(newValue: Date) { if (this.ticketCreateDate != newValue) { this.ticketCreateDate = newValue; this.MarkAsDirty("TicketCreateDate"); } }
+       
+	 
+
     public OldEntityPM: QuotePM;
 		
     public IsDirty: boolean;

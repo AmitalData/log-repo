@@ -273,6 +273,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                Field18 = f.Field18,
                                                Field19 = f.Field19,
                                                Field20 = f.Field20,
+                                               RequestDate = f.RequestDate,
                                            };
             return result;
         }
@@ -490,6 +491,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         Field18 = f.Field18,
                         Field19 = f.Field19,
                         Field20 = f.Field20,
+                        RequestDate = f.RequestDate,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -1327,6 +1329,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Field18 = new CustomFieldClass("Field18", "Quote", entityPOCO.Field18),
                 Field19 = new CustomFieldClass("Field19", "Quote", entityPOCO.Field19),
                 Field20 = new CustomFieldClass("Field20", "Quote", entityPOCO.Field20),
+
+                RequestDate = entityPOCO.RequestDate,
             };
 
             int tenant = entityPOCO.Tenant;
