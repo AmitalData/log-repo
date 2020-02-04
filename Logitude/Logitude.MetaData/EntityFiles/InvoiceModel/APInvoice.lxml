@@ -1250,7 +1250,7 @@
     DefaultText="&quot;Exchange Rate&quot;"
     FullLocalDefaultText="&quot;שער&quot;"
     ListFieldLable="&quot;InvoiceCurrencyExchangeRateListLable&quot;"
-    ListLableDefaultText="&quot;Exchange Rate&quot;"
+    ListLableDefaultText="&quot;Invoice Currency Exchange Rate&quot;"
     ListLocalDefaultText="&quot;שער&quot;"
     IsNullable="true"
     IsForeignKey="false"

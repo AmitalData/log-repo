@@ -850,7 +850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DefaultText =  "Exchange Rate",
 					  						FullLocalDefaultText =  "שער",
 					  						ListFieldLable =  "InvoiceCurrencyExchangeRateListLable",
-					  						ListLableDefaultText =  "Exchange Rate",
+					  						ListLableDefaultText =  "Invoice Currency Exchange Rate",
 					  						ListLocalDefaultText =  "שער",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
