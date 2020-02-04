@@ -671,7 +671,7 @@ export class ShipmentPackagePM {
     public set WarehouseReleaseId(newValue: string) { if (this.warehouseReleaseId != newValue) { this.warehouseReleaseId = newValue; this.MarkAsDirty("WarehouseReleaseId"); } }
 
 
-
+     
 
 
     public OldEntityPM: ShipmentPackagePM;

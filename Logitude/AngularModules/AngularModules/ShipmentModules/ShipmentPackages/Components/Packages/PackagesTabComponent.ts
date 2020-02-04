@@ -1031,6 +1031,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 newPackage.Volume = item.Volume;
                 newPackage.Weight = item.Weight;
                 newPackage.Width = item.Width;
+                newPackage.WarehouseReleaseId = item.WarehouseReleaseId;
                 this.EntityPM.AddPackage(newPackage);
             });
 
@@ -1426,7 +1427,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     });
                     if (!AppTool.IsNullOrEmpty(warehouseReleasesIds)) {
                         warehouseReleasesIds += ")";
-                        warehouseReleasesIds.replace(",)", "")
+                        warehouseReleasesIds = warehouseReleasesIds.replace(",)", "")
                     }
                     this.EntityPM.WarehouseReleasesIds = warehouseReleasesIds;
                 }
