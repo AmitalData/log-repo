@@ -1995,12 +1995,10 @@
     <Compile Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.Designer.cs">
       <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs" />
     <Compile Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.Designer.cs">
       <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3601,11 +3599,9 @@
     <EmbeddedResource Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.resx">
       <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.resx">
       <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.resx">
       <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
