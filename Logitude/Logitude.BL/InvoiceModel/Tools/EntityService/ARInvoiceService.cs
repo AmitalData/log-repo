@@ -2262,9 +2262,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
                         if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId=="CS")
                         {
-                            string gLAccountId = null;
-                            gLAccountId = myDataLines != null && myDataLines.Count > 0 ? gLAccountId = myDataLines[0].GLAccountId : gLAccountId = null;
-                            CreateInterestTransactionLine(null, record, gLAccountId);
+                           CreateInterestTransactionLine(null, record);
                         }
                     }
 
@@ -2862,23 +2860,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         int invoiceLineNumber = 0;
         DateTime? dateForInterest;
-        private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat,string GlAccountId=null)
+        private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat)
         {
             ++invoiceLineNumber;
              dateForInterest = entityPM.DateForInterest == null ? DateTime.Now : entityPM.DateForInterest;
+            GLAccountPM account = GetGLAccount(entityPM);
             InterestTransactionPM interestTransaction = new InterestTransactionPM();
             if (invoiceLine != null) {
 
-                interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine);
+                interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine, account);
             }
             if (invoiceTotalVat != null)
             {
-                interestTransaction= CreateInterestTransactionLineForVatLine(invoiceTotalVat, GlAccountId);
+                interestTransaction= CreateInterestTransactionLineForVatLine(invoiceTotalVat, account);
             }
             IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
             interestTransactionUpdateService.Create(interestTransaction);
         }
-        private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat,string GlAccountId=null)
+        private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat,GLAccountPM account)
         {
             InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
             {
@@ -2890,14 +2889,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
                 InterestValueDate = (DateTime)dateForInterest,
                 Tenant = entityPM.Tenant,
-                GLAccountId = GlAccountId,
+                GLAccountId = account != null? account.Id : null,
                 CurrencyId = entityPM.InvoiceCurrencyId,
                 ChangeSetOp = ChangeSetOperation.Insert,
             };
             return InterestTransactionVatLine;
         }
 
-        private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
+        private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine, GLAccountPM account)
         {
             dateForInterest = invoiceLine.DateForInterest == null ? DateTime.Now : invoiceLine.DateForInterest;
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
@@ -2906,7 +2905,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 EntityId = invoiceLine.ARInvoiceId,
                 OriginalEntityLineNumber = invoiceLine.LineNumber,
                 LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
-                GLAccountId = invoiceLine.GLAccountId,
+                GLAccountId = account != null? account.Id:null,
                 ForeignAmount = (decimal?)invoiceLine.ForiegnCurrencyAmount,
                 InterestValueDate = (DateTime)dateForInterest,//(DateTime)invoiceLine.DateForInterest == null? DateTime.Now : (DateTime)invoiceLine.DateForInterest ,
                 Tenant = invoiceLine.Tenant,

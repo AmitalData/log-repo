@@ -605,6 +605,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         int lineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentPM payment)
         {
+            GLAccountPM account = getGLAccount(payment.BillToId, payment.Tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated && payment.BillToPartnerTypeId == "CS")
             {
                 DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
@@ -617,7 +618,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     ForeignAmount = (decimal?)payment.AmountInPaymentCurrency,
                     InterestValueDate = (DateTime)dateForInterest,
                     Tenant = entityPM.Tenant,
-                    GLAccountId = payment.GLAccountId,
+                    GLAccountId = account!= null? account.Id:null,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
             };
