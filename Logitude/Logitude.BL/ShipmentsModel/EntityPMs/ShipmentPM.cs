@@ -2172,6 +2172,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? GrossWeightPerTon { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? GrossWeightPerStorageDays { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstOperationalCloseDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
