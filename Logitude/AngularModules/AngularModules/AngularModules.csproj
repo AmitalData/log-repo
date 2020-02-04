@@ -2327,6 +2327,7 @@
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\TimeSheetWorkspaceComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\VacationsComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\WeeklyTimeSheetComponent.html" />
+    <Content Include="Warehouse\Components\ChoosePackagesFromWarehousePackageReleasesComponent.html" />
     <Content Include="Warehouse\Components\CopyFromReleasesPackagesComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\DocsIn\WarehouseDocsInTabComponent.html" />
@@ -6801,6 +6802,7 @@
     <TypeScriptCompile Include="Warehouse\Components\AddEditWarehouseEntryPackagesAndContainers.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CutsomerTenantAccessManagementComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\DataContracts\CustomerTenantAccessRequestStatusCount.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\ChoosePackagesFromWarehousePackageReleasesComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\CopyFromReleasesPackagesComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\DocsIn\WarehouseDocsInTabComponent.ts" />

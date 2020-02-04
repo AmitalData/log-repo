@@ -319,6 +319,16 @@ export class WarehouseReleasePM {
     public set ToAddressCountryId(newValue: string) { if (this.toAddressCountryId != newValue) { this.toAddressCountryId = newValue; this.MarkAsDirty("ToAddressCountryId"); } }
        
 	 
+    private isUsed: boolean;
+    public get IsUsed() { return this.isUsed; }
+    public set IsUsed(newValue: boolean) { if (this.isUsed != newValue) { this.isUsed = newValue; this.MarkAsDirty("IsUsed"); } }
+       
+	 
+    private destination: string;
+    public get Destination() { return this.destination; }
+    public set Destination(newValue: string) { if (this.destination != newValue) { this.destination = newValue; this.MarkAsDirty("Destination"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		

@@ -67,7 +67,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToAddressId, 
 	         ToAddressZipCode, 
 	         ToAddressCity, 
-	         ToAddressCountryId,
+	         ToAddressCountryId, 
+	         IsUsed,
 	      }
 
 
@@ -125,7 +126,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToAddressId, 
 	         ToAddressZipCode, 
 	         ToAddressCity, 
-	         ToAddressCountryId,
+	         ToAddressCountryId, 
+	         IsUsed, 
+	         Destination,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -357,6 +360,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
             {
 				entityPOCO.ToAddressCountryId = entityPM.ToAddressCountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
+            {
+				entityPOCO.IsUsed = entityPM.IsUsed;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -595,6 +603,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ToAddressCountryId = entityPOCO.ToAddressCountryId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsUsed))
+            {
+					entityPM.IsUsed = entityPOCO.IsUsed;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -824,6 +837,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
             {
                 oldEntityPM.ToAddressCountryId = entityPM.ToAddressCountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
+            {
+                oldEntityPM.IsUsed = entityPM.IsUsed;
             }
 			
 		}
