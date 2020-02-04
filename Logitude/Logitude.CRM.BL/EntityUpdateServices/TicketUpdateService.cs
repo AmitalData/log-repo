@@ -303,7 +303,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
             {
                 this.UpdateQuotesRequestDate(entityPOCO.QuoteId, null, entityPOCO.Tenant);
-                this.UpdateQuotesRequestDate(entityPM.QuoteId, null, entityPM.Tenant);
             }
             if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
             {
