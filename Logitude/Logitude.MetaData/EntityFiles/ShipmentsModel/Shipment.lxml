@@ -83144,19 +83144,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Events&quot;"
-    ObjectTableName="&quot;Shipment&quot;"
-    Code="&quot;SHEV&quot;"
-    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
-    TextCode="&quot;Shipment.TH.Events&quot;"
-    IsPackagable="false"
-    IndexOrder="15"
-    FeatureCode="&quot;EVENTS&quot;"
-    FeatureTextCodeCode="&quot;Shipment.Features.Events&quot;"
-    FeatureDefaultText="&quot;Events&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Master&quot;"
     ObjectTableName="&quot;Shipment&quot;"
     Code="&quot;SHMS&quot;"
@@ -83169,6 +83156,19 @@
     FeatureCode="&quot;MASTER&quot;"
     FeatureTextCodeCode="&quot;Shipment.Features.Master&quot;"
     FeatureDefaultText="&quot;Master&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    Code="&quot;SHEV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;Shipment.TH.Events&quot;"
+    IsPackagable="false"
+    IndexOrder="15"
+    FeatureCode="&quot;EVENTS&quot;"
+    FeatureTextCodeCode="&quot;Shipment.Features.Events&quot;"
+    FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
