@@ -36,6 +36,7 @@ import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Service
 import { GITITEMDto } from '../../../../../Customs/EntityPMs/Extended/GITITEMDto';
 import { GITITEMExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/GITITEMExtendedPMService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     moduleId: module.id,
@@ -62,7 +63,8 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     SInvoiceTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    IsDisplayMessage: boolean;
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.PreceduralFilterItems = new ApiQueryFilters();
         this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
@@ -640,7 +642,16 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     
         this.DrawMe = true;
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.IsDisplayOnly) {
+        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            {
+            this.IsDisplayMessage = true;
+
+                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+            }
+        }
+
+        else if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -650,21 +661,35 @@ export class DeclarationClassificationComponent extends BaseComponent implements
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
+    
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
+        
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
+
+
+ 
     _CargoDescription;
     public get CargoDescription() { return this._CargoDescription; }
     public set CargoDescription(value) {

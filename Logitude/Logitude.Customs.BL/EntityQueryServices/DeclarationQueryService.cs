@@ -279,6 +279,61 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetIdByDeclarationNumber(declarationNumber, tenant);
         }
 
+
+        public DeclarationPM GetDeclarationByfunctionalReferenceID(string declarationNumber, string functionalReferenceID,  int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationNumber)) return null;
+            if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
+
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(declarationNumber, functionalReferenceID);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+        }
+
+
+        public DeclarationPM GetDeclarationNotAmendmentDontDisplayInList(string id, string amendmentOriginalDeclartation, int tenant)
+        {
+  
+            var declaration = repository.GetDeclarationNotAmendmentDontDisplayInList(id, amendmentOriginalDeclartation,  tenant);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+        }
+
+
+        public DeclarationPM GetAcceptDeclarationAmendment(string id, int tenant)
+        {
+
+            var declaration = repository.GetAcceptDeclarationAmendment(id, tenant);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+
+        }
+
+
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
@@ -1459,6 +1514,86 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
+        public bool IsValidTickets(DeclarationPM declarationPM)
+        {
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
+            bool ticketValidStatus = true;
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
+            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
+            {
+
+                var DocumentsFilingIdList = new List<string>();
+                foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                    {
+                        DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                    }
+                }
+                var customsDocumentPMList = new List<CustomsDocumentPM>();
+                if (DocumentsFilingIdList != null)
+                {
+                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
+                    customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
+                }
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+
+                {
+                    foreach (var customsDocumentPM in customsDocumentPMList)
+                    {
+                        if (customsDocumentPM.DocumentStatusCode != "1")
+                        {
+                            ticketValidStatus = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (IsDocumentMissing(declarationPM))
+            {
+                ticketValidStatus = false;
+
+            }
+
+
+            return ticketValidStatus;
+        }
+
+
+        public bool IsDocumentMissing(DeclarationPM myDeclarationPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+
+            List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
+
+            foreach (var doc in documentTypePMs)
+            {
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code).ToList();
+                if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+                    return true;
+            }
+
+            return false;
+
+        }
+
+
+        public bool IsMissingMandatoryFields(DeclarationPM declarationPM)
+        {
+            bool isMissingMandatoryFields = true;
+            CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
+            if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
+            {
+                isMissingMandatoryFields = false;
+            }
+            return isMissingMandatoryFields;
+        }
+
+
         public List<CustomsDocumentsTicketPM> GetDeclarationMandatoryTicket(string declarationId, int tenant)
         {
 
@@ -1583,7 +1718,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return isFreight;
         }
 
-        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id)
+        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById=false)
         {
  
             List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant , id);
@@ -1613,8 +1748,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
  
                 declarationLists.Add(declarationList);
             }
+            if(orderById)
+            {
+                return declarationLists.OrderBy(x => x.AmendmentRequestNumber).ToList();
 
-            return declarationLists;
+
+            }
+            return declarationLists.OrderByDescending(x=>x.AmendmentissueDate).ToList();
         }
 
     }

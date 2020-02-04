@@ -84,13 +84,17 @@ namespace Unifreight.Data.AmitalModel
 
 
 
-        public AmitalContext(DbConnection conn,int tenantSeed)
-           : base(conn, true)
+        //public AmitalContext(DbConnection conn,int tenantSeed)
+        //   : base(conn, true)
+        //{
+        //    InitConfiguration();
+        //    _TenantSeed = tenantSeed;
+        //}
+
+        private void InitConfiguration()
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
-            
-            
             //config.QueryOptions.CaseInsensitiveComparison = true;
             //config.QueryOptions.CaseInsensitiveLike = true;
 
@@ -100,54 +104,56 @@ namespace Unifreight.Data.AmitalModel
             //{
             //    var state = myStateChangeEventArgs.CurrentState;
             //};
-            _TenantSeed = tenantSeed;
         }
 
-        
+
 
         //public static  void SetOracleMonitor()
         //{
         //    Devart.Data.Oracle.OracleMonitor monitor = new Devart.Data.Oracle.OracleMonitor() { IsActive = true };
         //}
-        public static AmitalContext GetContext(int tenant)
+        public static AmitalContext GetContext(int tenantSeed)
         {
+            
             string dbConnectionInfo = null;
-            if (DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn )
+            //if (DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn )
             {
                 GlobalDB currentDb;
-                currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+                currentDb = GlobalDbHelper.GetGlobalDB(tenantSeed);
                 dbConnectionInfo = currentDb.DBConnection;
                 DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-                var context = new AmitalContext(connection, tenant);
+
+
+                var context = Create(tenantSeed, connection);//new AmitalContext(connection, tenantSeed);
                 return context;
             }
-            else
-            {
-                if (LogitudeSettings.GetLogitudeCustomsSettingsMInject== null)
-                {
-                    throw new Exception("LogitudeSettings.GetdbConnectionInfoFromTenantInject is null ,Please Init ");
-                }
-                var myFuncGetConn = LogitudeSettings.GetLogitudeCustomsSettingsMInject;
-                dbConnectionInfo = myFuncGetConn(tenant).UnfConnectionString;
-                return GetContextByDBInfo(dbConnectionInfo, tenant);
-            }
+            //else
+            //{
+            //    if (LogitudeSettings.GetLogitudeCustomsSettingsMInject== null)
+            //    {
+            //        throw new Exception("LogitudeSettings.GetdbConnectionInfoFromTenantInject is null ,Please Init ");
+            //    }
+            //    var myFuncGetConn = LogitudeSettings.GetLogitudeCustomsSettingsMInject;
+            //    dbConnectionInfo = myFuncGetConn(tenantSeed).UnfConnectionString;
+            //    return GetContextByDBInfo(dbConnectionInfo, tenantSeed);
+            //}
             
 
 
             
         }
-        public static AmitalContext GetContextByDBInfo(string dbConnectionInfo, int tenantSeed)
-        {
-            OracleConnectionStringBuilder oraCSB = DbContextBaseUtil.GetOracleConStrBuilder(dbConnectionInfo);
-            OracleConnection myConnection = new OracleConnection(oraCSB.ConnectionString);
-            //config.Workarounds.DisableQuoting = true;
+        //public static AmitalContext GetContextByDBInfo(string dbConnectionInfo, int tenantSeed)
+        //{
+        //    OracleConnectionStringBuilder oraCSB = DbContextBaseUtil.GetOracleConStrBuilder(dbConnectionInfo);
+        //    OracleConnection myConnection = new OracleConnection(oraCSB.ConnectionString);
+        //    //config.Workarounds.DisableQuoting = true;
 
-            //DbConnection con = new Devart.Data.Oracle.OracleConnection("Data Source=srv64bit;User Id=devart;Password=devart;");
+        //    //DbConnection con = new Devart.Data.Oracle.OracleConnection("Data Source=srv64bit;User Id=devart;Password=devart;");
 
 
-            var context = new AmitalContext(myConnection,tenantSeed);
-            return context;
-        }
+        //    var context = new AmitalContext(myConnection,tenantSeed);
+        //    return context;
+        //}
 
     
 #if false

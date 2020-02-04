@@ -264,6 +264,7 @@
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deficit\DeficitDecisionComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deposit\BankAccountToRefundComponent.html" />
+    <Content Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.js" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleGeneralComponent.html" />
@@ -871,6 +872,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleProceduralFault.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\ModuleCustomsRequests.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVehicle\Components\Documents\VehicleCustomsDocumentsController.ts" />
@@ -906,6 +908,7 @@
     <TypeScriptCompile Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.ts" />
     <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSealsRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendALLStorageSiteRequestParams.ts" />
@@ -930,6 +933,8 @@
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RefundCustomerActivityTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RequestTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\SealCompletenesList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\SealTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SeizureFactorTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SeizureMethodTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransferCargoMethodTypeList.ts" />
@@ -959,6 +964,8 @@
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RequestTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SealCompletenesPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SealTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureFactorTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
@@ -979,6 +986,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPaymentStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPendingReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAirlineListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAutonomyKeywordListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
@@ -991,6 +999,8 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RefundCustomerActivityTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RequestTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\SealCompletenesListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\SealTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureFactorTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureMethodTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransferCargoMethodTypeListService.ts" />

@@ -187,6 +187,22 @@ export class DeclarationValidator {
         return errors;
     }
 
+    //Check if declaration was amendment  with status !=2 
+    public IsAmendment() {
+        var errorMessage: string = "";
+
+        if (this._DeclarationPM != null) {
+            if (this._DeclarationPM.IsAmendment && this._DeclarationPM.AmendmentStatus != "2" && (!AppTool.IsNullOrEmpty(this._DeclarationPM.AmendmentStatus))) {
+                errorMessage = "Customs.Declaration.O.IsAmendment";
+                if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                    this.ValidationErrorMessageCodes.push(errorMessage);
+                    return ' - ' +  this._DeclarationPM.AmendmentStatusName;
+                }
+            }
+        }
+
+        return "";
+    }
 
     //Check if declaration was already paid
     public PaymentDateCheck() {
@@ -467,12 +483,15 @@ export class DeclarationValidator {
     //<--- Yuval Chalup 18.11.2014 TASK-4240
     //Checks for opening Declaration view as 'Display Only'
     public DeclarationViewDisplayOnlyChecks() {
+        //var error = "";
+        //error= this.IsAmendment();
         this.PaymentDateCheck();
         this.ConstraintsInProgressCheck();
         this.FuturePaymentDoneCheck();
         //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
         this.CheckIsConvertedDeclaration(); // Mirit 02/12/15 Task 18508
         this.CheckIsCloseDeclaration();
+       // return error;
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
 

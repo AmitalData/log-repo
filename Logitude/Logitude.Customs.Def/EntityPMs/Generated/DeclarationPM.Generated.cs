@@ -4353,6 +4353,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isDiamondDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDiamondDeclaration  
+	   {
+	    
+	     get
+		{
+		   return isDiamondDeclaration;
+		 }
+		 set
+		 {
+		   if(isDiamondDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDiamondDeclaration",OldValue=isDiamondDeclaration,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isDiamondDeclaration=value;
+		   }
+			
+		 }
+	   }
 	  private bool amendmentDontDisplayInList ;
 	  	  
        
@@ -4372,6 +4395,167 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentDontDisplayInList",OldValue=amendmentDontDisplayInList,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   amendmentDontDisplayInList=value;
+		   }
+			
+		 }
+	   }
+	  private string amendmentMessage ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AmendmentMessage  
+	   {
+	    
+	     get
+		{
+		   return amendmentMessage;
+		 }
+		 set
+		 {
+		   if(amendmentMessage != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmendmentMessage",OldValue=amendmentMessage,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   amendmentMessage=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAmendmentDisplayOnly ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAmendmentDisplayOnly  
+	   {
+	    
+	     get
+		{
+		   return isAmendmentDisplayOnly;
+		 }
+		 set
+		 {
+		   if(isAmendmentDisplayOnly != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAmendmentDisplayOnly",OldValue=isAmendmentDisplayOnly,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAmendmentDisplayOnly=value;
+		   }
+			
+		 }
+	   }
+	  private bool isMissMandatoryDiamond ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsMissMandatoryDiamond  
+	   {
+	    
+	     get
+		{
+		   return isMissMandatoryDiamond;
+		 }
+		 set
+		 {
+		   if(isMissMandatoryDiamond != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMissMandatoryDiamond",OldValue=isMissMandatoryDiamond,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isMissMandatoryDiamond=value;
+		   }
+			
+		 }
+	   }
+	  private bool isValidTicketsDiamond ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsValidTicketsDiamond  
+	   {
+	    
+	     get
+		{
+		   return isValidTicketsDiamond;
+		 }
+		 set
+		 {
+		   if(isValidTicketsDiamond != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsValidTicketsDiamond",OldValue=isValidTicketsDiamond,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isValidTicketsDiamond=value;
+		   }
+			
+		 }
+	   }
+	  private string customFileAmendment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomFileAmendment  
+	   {
+	    
+	     get
+		{
+		   return customFileAmendment;
+		 }
+		 set
+		 {
+		   if(customFileAmendment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomFileAmendment",OldValue=customFileAmendment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customFileAmendment=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationNoAmendment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationNoAmendment  
+	   {
+	    
+	     get
+		{
+		   return declarationNoAmendment;
+		 }
+		 set
+		 {
+		   if(declarationNoAmendment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNoAmendment",OldValue=declarationNoAmendment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationNoAmendment=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime availabilityDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime AvailabilityDate  
+	   {
+	    
+	     get
+		{
+		   return availabilityDate;
+		 }
+		 set
+		 {
+		   if(availabilityDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailabilityDate",OldValue=availabilityDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   availabilityDate=value;
 		   }
 			
 		 }

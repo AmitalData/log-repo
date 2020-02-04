@@ -34,9 +34,12 @@ import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsAnswersComponent.html',
+    providers: [DeclarationExtendedListService]
+
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
@@ -60,6 +63,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllCount: string = "";
     SystemMessageDescribtion: string;
     IsCourierDeclaration: boolean = false;
+    IsDisplayMessage: boolean;
     
     public get DepositionStatusCode(): string {
         if (this.EntityPM == null) return null; 
@@ -88,7 +92,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     //#endregion
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
@@ -221,7 +225,16 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.IsDisplayOnly) {
+        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            {
+            this.IsDisplayMessage = true;
+
+                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+            }
+        }
+
+        else if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -231,22 +244,35 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
+        
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
+       
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
 
+
+ 
     //#region Filter Methods
     IsErrorsVisible: boolean = true;
     IsConstraintsVisible: boolean = true;

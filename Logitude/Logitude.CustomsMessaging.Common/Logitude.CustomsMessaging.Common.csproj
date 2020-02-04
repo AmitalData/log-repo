@@ -59,6 +59,7 @@
     <Compile Include="Gen\LuhnAlgorithm.Shared.cs" />
     <Compile Include="Gen\SubscribeSignServer.Shared.cs" />
     <Compile Include="RequestParams\AddAddressContactForClient.Shared.cs" />
+    <Compile Include="RequestParams\CargoSealsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CargoSplitRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CLAIM_2340_ClaimRequestRequestParams.Shared.cs" />
     <Compile Include="RequestParams\ContinuousRequestOnClaimFileRequestParams.Shared.cs" />

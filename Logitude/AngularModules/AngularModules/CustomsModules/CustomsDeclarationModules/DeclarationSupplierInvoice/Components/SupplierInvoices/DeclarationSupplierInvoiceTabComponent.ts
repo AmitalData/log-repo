@@ -23,13 +23,15 @@ import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 declare var window: any;
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 
 @Component({
     selector: 'DeclarationSupplierInvoiceTabComponent',
     moduleId: module.id,
     templateUrl: './DeclarationSupplierInvoiceTabComponent.html',
-})
+    providers: [DeclarationExtendedListService]
+ })
 
 export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implements OnInit{
 
@@ -55,7 +57,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     NumberOfLoadedItems: number = 500;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+    IsDisplayMessage: boolean;
+    constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
        // this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
         this.customsDocumentPointerService = new CustomsDocumentPointerService();
@@ -676,7 +679,16 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.IsDisplayOnly) {
+        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            {
+            this.IsDisplayMessage = true;
+
+                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+            }
+        }
+
+      else  if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             //DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -691,17 +703,27 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
-        var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
+         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
+            
             if (this.EntityPM.SupplierInvoices != null) {
                 for (var i = 0; i < this.EntityPM.SupplierInvoices.length; i++) {
                     this.EntityPM.SupplierInvoices[i].UIProperties.SetEnabled("IsPrimarySupplierInvoice", "Customs.SupplierInvoice", !this.IsDisplayOnly);
@@ -715,7 +737,10 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         this.SelectedRow2 = CurrentRow.rowData;
         
     }
-}
+
+ }
+
+
 
 //export class SupplierInvoiceLine extends BaseComponent {
 //    public SupplierInvoicePM: SupplierInvoicePM = null;

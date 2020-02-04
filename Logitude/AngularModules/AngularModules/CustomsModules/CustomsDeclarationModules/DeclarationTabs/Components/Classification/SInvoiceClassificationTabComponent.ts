@@ -53,12 +53,14 @@ import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Service
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { QuantityTypeMessageService } from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 
 @Component({
     selector: 'SInvoiceClassificationTabContent',
     moduleId: module.id,
     templateUrl: './SInvoiceClassificationTabComponent.html',
+    providers: [DeclarationExtendedListService]
 })
 
 export class SInvoiceClassificationTabComponent
@@ -104,7 +106,8 @@ export class SInvoiceClassificationTabComponent
     //    logCell.IsEditMode = true;
     //}
     public CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
+    IsDisplayMessage: boolean;
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         //this.ConsimentPackages = new ObservableCollection([]);
         this.ItemsSource = new ObservableCollection([]);
@@ -176,14 +179,16 @@ export class SInvoiceClassificationTabComponent
     DisplayOnlyCheck() {
         if (this.CurrentSession.CurrentEditComponent.EditComponentController) {
             this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-            if (this.IsDisplayOnly) {
+                   if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
                 this.SetScreenFieldsEditability();
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
                 return;
             }
+            
 
         }
+        
     
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: any) => {
@@ -192,11 +197,15 @@ export class SInvoiceClassificationTabComponent
             if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
+           
             
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
+
+
+ 
     SetTabArgs(args: any) {
         this.EntityPM = args.EntityPM;
         this.Tab = args.Tab;

@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmitalModel\AmitalContext.cs" />
+    <Compile Include="AmitalModel\AmitalContext.DbModelBuilder.cs" />
     <Compile Include="AmitalModel\AmitalContext.Template.cs" />
     <None Include="AmitalModel\AmitalContext.Views.cs" />
     <Compile Include="AmitalModel\EntityKeys\ATBPTILKeys.cs" />

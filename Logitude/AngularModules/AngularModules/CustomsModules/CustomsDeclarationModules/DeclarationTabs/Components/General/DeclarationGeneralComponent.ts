@@ -30,10 +30,12 @@ import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataC
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     moduleId: module.id,
     templateUrl: './DeclarationGeneralComponent.html',
+    providers: [DeclarationExtendedListService],
 })
 
 export class DeclarationGeneralComponent extends BaseComponent implements AfterViewInit, OnDestroy {
@@ -42,6 +44,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public DataContext: any = this;
     public CurrentEditComponentId: string;
     public IsDisplayOnly: boolean = false;
+    public IsDisplayMessage: boolean = false;
+
     public IsGetTableName: boolean = true;
 
     public IsImporerCodeEnabled: boolean = true;
@@ -56,7 +60,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     ConsigmentTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
 
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
@@ -436,8 +440,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
         
         
-        if (this.EntityPM.IsCourierDeclaration) {//Task 57181: מספר יבואן - תצוגת מסך
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) { //Task 45507: (בלדרות) שינויים בלוגיקה של שדה מספר יבואן 
+        if (this.EntityPM.IsCourierDeclaration) {//Task 57181: מספר יבוםן - תצוגת מסך
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) { //Task 45507: (בלדרות) שינויים בלוגיקה של שדה מספר יבוםן 
                 this.CalculatedImporterName = this.EntityPM.ImporterName;
             }
         } else {
@@ -660,7 +664,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.ImporterCode = item;
             if (item.length < 9) {
                 valid = false;
-                errorMessage = "מספר יבואן קצר מידיי";
+                errorMessage = "מספר יבוםן קצר מידיי";
                 //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
             }
             else if (item.length > 9) {
@@ -1156,9 +1160,18 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
     DisplayOnlyCheck() {
-        this.DrawMe = true;
+         this.DrawMe = true;
         this.IsDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.IsDisplayOnly) {
+
+          if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+             {
+             this.IsDisplayMessage = true;
+
+                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+            }
+        }
+      else if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -1166,24 +1179,39 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         }
         else if (this.EntityPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+            this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
+         
+   
+      
+
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.IsDisplayOnly) {
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly)   this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
+            }      
+            else if (this.IsDisplayOnly) {
                 this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+                this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
+
+          
+
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
-
+ 
     BuildConsignments() {
         this.ConsigmentTabs = [];
         for (let item of this.EntityPM.Consignments) {

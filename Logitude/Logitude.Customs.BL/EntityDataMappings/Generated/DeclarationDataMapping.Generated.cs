@@ -135,7 +135,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentRejectionReason, 
 	         IsAmendment, 
 	         AmendmentOriginalDeclartation, 
-	         AmendmentDontDisplayInList,
+	         IsDiamondDeclaration, 
+	         AmendmentDontDisplayInList, 
+	         IsMissMandatoryDiamond, 
+	         IsValidTicketsDiamond, 
+	         AvailabilityDate,
 	      }
 
 
@@ -320,7 +324,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierManifestStatusCode, 
 	         CourierPaymentStatusCode, 
 	         IsPendingNotNull, 
-	         AmendmentDontDisplayInList,
+	         IsDiamondDeclaration, 
+	         AmendmentDontDisplayInList, 
+	         AmendmentMessage, 
+	         IsAmendmentDisplayOnly, 
+	         IsMissMandatoryDiamond, 
+	         IsValidTicketsDiamond, 
+	         CustomFileAmendment, 
+	         DeclarationNoAmendment, 
+	         AvailabilityDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -889,9 +901,29 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondDeclaration))
+            {
+				entityPOCO.IsDiamondDeclaration = entityPM.IsDiamondDeclaration;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
             {
 				entityPOCO.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMissMandatoryDiamond))
+            {
+				entityPOCO.IsMissMandatoryDiamond = entityPM.IsMissMandatoryDiamond;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
+            {
+				entityPOCO.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
+            {
+				entityPOCO.AvailabilityDate = entityPM.AvailabilityDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1465,9 +1497,29 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AmendmentOriginalDeclartation = entityPOCO.AmendmentOriginalDeclartation;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondDeclaration))
+            {
+					entityPM.IsDiamondDeclaration = entityPOCO.IsDiamondDeclaration;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentDontDisplayInList))
             {
 					entityPM.AmendmentDontDisplayInList = entityPOCO.AmendmentDontDisplayInList;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMissMandatoryDiamond))
+            {
+					entityPM.IsMissMandatoryDiamond = entityPOCO.IsMissMandatoryDiamond;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsValidTicketsDiamond))
+            {
+					entityPM.IsValidTicketsDiamond = entityPOCO.IsValidTicketsDiamond;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AvailabilityDate))
+            {
+					entityPM.AvailabilityDate = entityPOCO.AvailabilityDate;
             }
 
 		}
@@ -2036,9 +2088,29 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.AmendmentOriginalDeclartation = entityPM.AmendmentOriginalDeclartation;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondDeclaration))
+            {
+                oldEntityPM.IsDiamondDeclaration = entityPM.IsDiamondDeclaration;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentDontDisplayInList))
             {
                 oldEntityPM.AmendmentDontDisplayInList = entityPM.AmendmentDontDisplayInList;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMissMandatoryDiamond))
+            {
+                oldEntityPM.IsMissMandatoryDiamond = entityPM.IsMissMandatoryDiamond;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsValidTicketsDiamond))
+            {
+                oldEntityPM.IsValidTicketsDiamond = entityPM.IsValidTicketsDiamond;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AvailabilityDate))
+            {
+                oldEntityPM.AvailabilityDate = entityPM.AvailabilityDate;
             }
 			
 		}

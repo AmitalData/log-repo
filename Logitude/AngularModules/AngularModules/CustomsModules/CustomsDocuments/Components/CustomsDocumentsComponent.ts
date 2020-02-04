@@ -443,13 +443,15 @@ export class CustomsDocumentsComponent
     }
 
     DisplayOnlyCheck() {
-        this.iCustomsDocumentsController.DisplayOnlyCheck().subscribe((resp: ServiceResponse) => {
+         this.iCustomsDocumentsController.DisplayOnlyCheck().subscribe((resp: ServiceResponse) => {
 
             this.IsDisplayOnly = resp.Result.IsDisplayOnly;
             this.DisplayOnlyMessage = resp.Result.DisplayOnlyMessage;
         });
     }
 
+
+ 
     AddCustomsDocumentsTicket() {
         this.CurrentSession.StartBusyIndicatorLoading();
         var windowArgs: any = {};

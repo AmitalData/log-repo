@@ -7923,6 +7923,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn Declaration6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsDeclarationQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "ProcedureCurrentName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn Declaration7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsDeclarationQuery.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter Declaration_AdvancedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = CustomsDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            AdvancedQueryFilter Declaration_AdvancedFilter2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AmendmentDontDisplayInList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = CustomsDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
 
             #endregion
             #region Declaration Without Release  query
@@ -7938,6 +7939,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn WithoutReleaseDeclarationQueryColumn7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutReleaseDeclarationQuery.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter WithoutReleaseDeclarationQuery_AdvancedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = WithoutReleaseDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             AdvancedQueryFilter WithoutReleaseDeclarationQuery_AdvancedFilter2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationWithoutRelease" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "1", QueryId = WithoutReleaseDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            AdvancedQueryFilter WithoutReleaseDeclarationQuery_AdvancedFilter3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AmendmentDontDisplayInList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = WithoutReleaseDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
 
             #endregion
 
@@ -7954,7 +7956,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn DeclarationInConstraintQueryColumn7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter DeclarationInConstraintQuery_AdvancedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = DeclarationInConstraintQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             AdvancedQueryFilter DeclarationInConstraintQuery_AdvancedFilter2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationStatusTypeCode" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "11", QueryId = DeclarationInConstraintQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-
+            AdvancedQueryFilter DeclarationInConstraintQuery_AdvancedFilter3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AmendmentDontDisplayInList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = DeclarationInConstraintQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            
             #endregion
 
             #region Paid Declaration wihout release  query
@@ -7970,6 +7973,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn PaidDeclarationWithouReleaseQueryColumn7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationWithouReleaseQuery.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter PaidDeclarationWithouReleaseQuery_AdvancedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = PaidDeclarationWithouReleaseQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             AdvancedQueryFilter PaidDeclarationWithouReleaseQuery_AdvancedFilter2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "PaidDeclarationWithoutRelease" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "", QueryId = PaidDeclarationWithouReleaseQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            AdvancedQueryFilter PaidDeclarationWithouReleaseQuery_AdvancedFilter3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AmendmentDontDisplayInList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = PaidDeclarationWithouReleaseQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
 
             #endregion
 
@@ -13788,6 +13792,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.WeightValue", DefaultText = "Payment Terms", LocalDefaultText = "תנאי תשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CustomsBookQuery", DefaultText = "Customs Book Update", LocalDefaultText = "עדכון ספר סיווג", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CargoSealsQuery", DefaultText = "Cargo Seals", LocalDefaultText = "עדכון סגרים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.CreateDateFrom", DefaultText = "Create Date From:", LocalDefaultText = "מ - תאריך בקשה:", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.CreateDateTo", DefaultText = "Create Date To:", LocalDefaultText = "עד - תאריך בקשה:", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -13990,6 +13995,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RequestedDocument", DefaultText = "Requested Document", LocalDefaultText = "מסמך נדרש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendAmendmentDeclaration", DefaultText = "Send Amendment", LocalDefaultText = "שלח תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeAmendment", DefaultText = "Change Amendment", LocalDefaultText = "החלפת בקשה לתיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details", LocalDefaultText = "פרטי יבואן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -14118,6 +14126,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DifferentTotals", DefaultText = "Tax to pay is different than File taxes , screen is display only", LocalDefaultText = "המס לתשלום שונה מהמיסים לתיק , המסך לתצוגה בלבד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclaration", DefaultText = "Declaration was already paid , screen is display only", LocalDefaultText = "הצהרה כבר שולמה , המסך לתצוגה בלבד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.WaitingApproval", DefaultText = "Declaration Paid , waiting for constraint approval", LocalDefaultText = "טיוטה הוגשה , ממתינה לאילוץ הגשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAmendmentDontDisplay", DefaultText = "Amendment Declaration , screen is display only", LocalDefaultText = "לתצוגה בלבד - הצהרת תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsAmendment", DefaultText = "Amendment Declaration", LocalDefaultText = "הצהרת תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FuturePayment", DefaultText = "Future payment was done", LocalDefaultText = "בוצעה הגשה עתידית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclaration", DefaultText = "Declaration data was changed , please send again before trying to pay", LocalDefaultText = "בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשת תשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -14235,8 +14245,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionGeneral", DefaultText = "General Data", LocalDefaultText = "תיקון הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionStatement", DefaultText = "Statement", LocalDefaultText = "נתוני תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Amendments", DefaultText = "Amendments", LocalDefaultText = "שינויים שבוצעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Date", DefaultText = "Date", LocalDefaultText = "תאריח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistsAmendments", DefaultText = "Exists declaration amendment in status ", LocalDefaultText = "קיים תיקון הצהרה בסטטוס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Date", DefaultText = "Date", LocalDefaultText = "תאריח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Time", DefaultText = "Time", LocalDefaultText = "שעה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Version", DefaultText = "Version", LocalDefaultText = "גרסה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Statement", DefaultText = "Statement", LocalDefaultText = "תיאור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -17470,6 +17481,55 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             }, EventTypesRepository, tenantEventTypes);
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMA",
+                EnglishName = "Declaration Amendment Approved",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה אושרה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMP",
+                EnglishName = "Declaration Amendment Partial Approval",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה אושרה חלקית",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMD",
+                EnglishName = "Declaration Amendment Denial",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה נדחתה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DMC",
+                EnglishName = "Declaration Amendment Cancelled",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "תיקון הצהרה בוטלה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
             EventTypesRepository.SubmitChanges();
         }
 

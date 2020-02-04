@@ -60,6 +60,8 @@
 
         private string lastMileStatusField;
 
+        private string lastMileStatusNameField;
+
         private string lastMileStatusDateField;
 
         private string lastMileStatusRemarksField;
@@ -104,6 +106,20 @@
                 this.lastMileStatusField = value;
             }
         }
+
+
+        public string LastMileStatusName
+        {
+            get
+            {
+                return this.lastMileStatusNameField;
+            }
+            set
+            {
+                this.lastMileStatusNameField = value;
+            }
+        }
+
 
         /// <remarks/>
         public string LastMileStatusDate

@@ -627,6 +627,35 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "A",
             });
 
+            all.Add(new NotificationDefinitionDetails()  
+            {
+                Code = "5117A",
+                EnglishName = "Declaration Amendment Approved",
+                LocalName = "תיקון הצהרה אושרה",
+                AssigneeNotificationTypeCode = "I",
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117P",
+                EnglishName = "Declaration Amendment Partial Approval",
+                LocalName = "תיקון הצהרה אושרה חלקית",
+                AssigneeNotificationTypeCode = "I",
+            });
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117D",
+                EnglishName = "Declaration Amendment Denial",
+                LocalName = "תיקון הצהרה נדחתה",
+                AssigneeNotificationTypeCode = "I",
+            });
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117C",
+                EnglishName = "Declaration Amendment Cancelled",
+                LocalName = "תיקון הצהרה בוטלה",
+                AssigneeNotificationTypeCode = "I",
+            });
             return all;
         }
 

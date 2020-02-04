@@ -79,7 +79,7 @@ export class SendDeclarationComponent implements OnDestroy {
         }
 
         if (this.EntityPM.IsAmendment == true) {
-            this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.TH.SendAmendmentDeclaration");
+            this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.SendAmendmentDeclaration");
         }
         if (this._WorkWithService) {
             this._SendDeclarationService.Run(args);
@@ -297,10 +297,11 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     CheckRequiredFields() {
+       
         this.DeclarationService.GetRequiredFieldsForDeclaration(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             //List < CustomsRequiredFieldsErrorItem > errorsList = requiredFieldsErrors.RequiredFields;
             var errorsList = response.Result.RequiredFields;
-            if (errorsList.length == 0) {
+            if (errorsList.length == 0 || this.EntityPM.IsAmendment) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
                     this.InstructionSendToMehes();//this.ConfirmB4TaxationDateTimeCheck();
                     return;

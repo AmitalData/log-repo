@@ -59,11 +59,13 @@ import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
 import { DeclarationCourierStatusList } from '../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 
 @Component({
     moduleId: module.id,
     templateUrl: './DeclarationPaymentComponent.html',
+    providers : [DeclarationExtendedListService]
 })
 
 export class DeclarationPaymentComponent extends BaseComponent implements OnInit {
@@ -97,7 +99,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _2LogBankList: boolean = false;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
-    constructor() {
+    IsDisplayMessage: boolean;
+    constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
         this.PaymentProtestsList = new ObservableCollection([]);
@@ -973,8 +976,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         //get declaration display only
         declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            {
+                this.IsDisplayMessage = true;
+                this.ErrorMessage = this.EntityPM.AmendmentMessage;
+                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+            }
+        }
 
-        if (declarationDisplayOnly) {
+        else if (declarationDisplayOnly) {
             this.IsDisplayOnly = true;
             this.ErrorMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
 
@@ -992,6 +1002,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
         }
+     
 
         //if is not display only => its not payed , so fill sign data
         if (!this.IsDisplayOnly)
@@ -1012,7 +1023,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
 
             var declarationDisplayOnly2 = displayOnlyCheckResult.IsDisplayOnly ? true : false;
-            if (declarationDisplayOnly2) {
+            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                this.IsDisplayMessage = true;
+
+                    this.ErrorMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
+            }
+
+           else if (declarationDisplayOnly2) {
                 this.IsDisplayOnly = true;
                 this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
 
@@ -1025,7 +1045,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
-
+         
             //if is not display only => its not payed , so fill sign data
             if (!this.IsDisplayOnly)
                 this.FillSignData();
@@ -1050,6 +1070,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
     }
+
+
+ 
 
     SetScreenFieldsEditability() {
         var enabled = !this.IsDisplayOnly;

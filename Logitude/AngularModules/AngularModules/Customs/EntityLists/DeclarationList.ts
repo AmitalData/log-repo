@@ -159,6 +159,10 @@ export class DeclarationList {
 	AmendmentStatusName: string;
 	IsPendingNotNull: boolean;
 	AmendmentDontDisplayInList: boolean;
+	IsMissMandatoryDiamond: boolean;
+	IsValidTicketsDiamond: boolean;
+	CustomFileAmendment: string;
+	DeclarationNoAmendment: string;
 	
 }
  
