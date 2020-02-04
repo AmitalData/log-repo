@@ -4137,7 +4137,7 @@ export class ShipmentPM {
 
     private warehouseStorageFreeDays: number;
     public get WarehouseStorageFreeDays() { return this.warehouseStorageFreeDays; }
-    public set WarehouseStorageFreeDays(newValue: string) {
+    public set WarehouseStorageFreeDays(newValue: number) {
         if (this.warehouseStorageFreeDays != newValue) {
             this.warehouseStorageFreeDays = newValue;
             this.MarkAsDirty("WarehouseStorageFreeDays");
