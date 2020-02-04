@@ -65,6 +65,11 @@ export class ConsoleShipmentPM {
     public get GrossWeightInKG() { return this.grossWeightInKG; }
     public set GrossWeightInKG(newValue: number) { this.grossWeightInKG = newValue; this.MarkAsDirty(); } 
 
+    private grossWeightPerStorageDays: number;
+    public get GrossWeightPerStorageDays() { return this.grossWeightPerStorageDays; }
+    public set GrossWeightPerStorageDays(newValue: number) { if (this.grossWeightPerStorageDays != newValue) { this.grossWeightPerStorageDays = newValue; this.MarkAsDirty("GrossWeightPerStorageDays"); } }
+
+
     private grossWeightPerTon: number;
     public get GrossWeightPerTon() { return this.grossWeightPerTon; }
     public set GrossWeightPerTon(newValue: number) { this.grossWeightPerTon = newValue; this.MarkAsDirty(); } 
