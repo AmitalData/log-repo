@@ -425,11 +425,11 @@ export class EditComponent implements OnDestroy {
         }
 
         else if (this.ObjectTableName == "ARInvoice") {
+            var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
+            var myObjectTableId = myObjectTable.Id;
 
             //get f. acc. Settings
             if (SessionLocator.TenantPM.AccountingActivated) {
-                var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
-                var myObjectTableId = myObjectTable.Id;
 
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);

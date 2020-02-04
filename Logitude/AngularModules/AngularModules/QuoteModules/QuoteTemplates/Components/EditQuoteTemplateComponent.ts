@@ -1010,7 +1010,7 @@ export class QuoteTemplateSectionViewModel {
 
         else if (sectionTypeCode == "PB") {
             textCode = "QuoteTemplate.B.PageBreak";
-            textCodeToolTip = "";
+            textCodeToolTip = null;//To avoid alert missing textcode
         }
 
         this.DisplayName = TextCodeTranslator.Translate(textCode);
