@@ -635,7 +635,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode TraceEventTextCode_TraceEventOAddEvent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TraceEvent.O.AddEvent", DefaultText = "Add Event",LocalDefaultText = @"הוסף אירוע", ObjectTableId = TraceEventObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TraceEventTextCode_TraceEventOSearchByHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TraceEvent.O.SearchByHelpText", DefaultText = " Code  Name  User  Notes",LocalDefaultText = null, ObjectTableId = TraceEventObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TraceEventTextCode_TraceEventOSearchByHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TraceEvent.O.SearchByHelpText", DefaultText = "\n Code\n Name\n User\n Notes",LocalDefaultText = null, ObjectTableId = TraceEventObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

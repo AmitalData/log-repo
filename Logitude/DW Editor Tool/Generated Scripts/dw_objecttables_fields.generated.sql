@@ -1080,3 +1080,21 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsEstimatedProfitLocalNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsEstimatedProfitLocalNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsEstimatedProfitLocalNewId,0,'Fact_Shipments','[Estimated Profit (Local)]','Estimated Profit (Local)','Decimal','false',0,0,'false','true','SUM','true','Money','false','false','false')  
+declare @Fact_ShipmentsConsigneeNotImporterNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsConsigneeNotImporterNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsConsigneeNotImporterNewId,0,'Fact_Shipments','[Consignee Not Importer]','Consignee Not Importer','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
+declare @Fact_ShipmentsIssuingCarrierAgentNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsIssuingCarrierAgentNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsIssuingCarrierAgentNewId,0,'Fact_Shipments','[Issuing Carrier Agent]','Issuing Carrier Agent','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
+declare @Fact_ShipmentsOrderConfirmationNotesNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsOrderConfirmationNotesNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsOrderConfirmationNotesNewId,0,'Fact_Shipments','[Order Confirmation Notes]','Order Confirmation Notes','nText','false',0,250,'false','false','true','Operational','false','false','false')  
+declare @Fact_ShipmentsOrderConfirmedByNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsOrderConfirmedByNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsOrderConfirmedByNewId,0,'Fact_Shipments','[Order Confirmed By]','Order Confirmed By','Text','false',0,40,'false','false','true','Operational','false','false','false')  
+declare @Fact_ShipmentsOnCarriageTransportModeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsOnCarriageTransportModeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,Category2,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsOnCarriageTransportModeNewId,0,'Fact_Shipments','[On Carriage Transport Mode]','On Carriage Transport Mode','Dimension','false',0,13,'DIM_TransportModes','false','false','true','General','Operational','true','false','false')  
+declare @Fact_ShipmentsFirstARInvoiceApprovalDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsFirstARInvoiceApprovalDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,Category2,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsFirstARInvoiceApprovalDateNewId,0,'Fact_Shipments','[First AR Invoice Approval Date]','First AR Invoice Approval Date','DateTime','false',0,0,'false','false','true','Dates','Operational','false','false','false')  

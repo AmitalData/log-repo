@@ -2408,7 +2408,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.SAT.CadenaOriginal = additionalFields.CadenaOriginal;
                         if (!string.IsNullOrEmpty(additionalFields.QRImage))
                         {
-                            invoicedataprovider.SAT.QRImage = Image.FromStream(new MemoryStream(Convert.FromBase64String(additionalFields.QRImage)));
+                            //invoicedataprovider.SAT.QRImage = Image.FromStream(new MemoryStream(Convert.FromBase64String(additionalFields.QRImage)));
                         }
 
                         //if (!string.IsNullOrEmpty(additionalFields.QRImage))

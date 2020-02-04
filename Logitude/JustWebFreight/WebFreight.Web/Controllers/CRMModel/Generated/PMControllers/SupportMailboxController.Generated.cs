@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("SupportMailbox", "READ", authToken.Tenant);
+	                
                 ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 SupportMailboxQueryService supportMailboxQuery = new SupportMailboxQueryService(MyContext);
 				supportMailboxQuery.InitializeSettings();
@@ -91,7 +92,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("SupportMailbox", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("SupportMailbox", entityPM.Tenant, authToken.Tenant);
+	                    
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         SupportMailboxUpdateService service = new SupportMailboxUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -137,7 +140,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("SupportMailbox", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("SupportMailbox", entityPM.Tenant, authToken.Tenant);
+	
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         SupportMailboxUpdateService service = new SupportMailboxUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

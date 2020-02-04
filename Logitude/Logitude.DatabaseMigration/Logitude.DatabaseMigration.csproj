@@ -1938,6 +1938,10 @@
     <Compile Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.Designer.cs">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001191342198_AbedAddIsUsedToWarehouseReleasePackage.cs" />
+    <Compile Include="Migrations\202001191342198_AbedAddIsUsedToWarehouseReleasePackage.Designer.cs">
+      <DependentUpon>202001191342198_AbedAddIsUsedToWarehouseReleasePackage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202001161000397_AddToShipmentComputedFields_Samar.cs" />
     <Compile Include="Migrations\202001161000397_AddToShipmentComputedFields_Samar.Designer.cs">
       <DependentUpon>202001161000397_AddToShipmentComputedFields_Samar.cs</DependentUpon>
@@ -1979,6 +1983,10 @@
     <Compile Include="Migrations\202001270701508_AddCountryForStatisticsToQuote_Samar.Designer.cs">
       <DependentUpon>202001270701508_AddCountryForStatisticsToQuote_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001300747234_AbedAddIsUsedToWarehouseRelease.cs" />
+    <Compile Include="Migrations\202001300747234_AbedAddIsUsedToWarehouseRelease.Designer.cs">
+      <DependentUpon>202001300747234_AbedAddIsUsedToWarehouseRelease.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.cs" />
     <Compile Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.Designer.cs">
       <DependentUpon>202001261238055_AddFieldIsPaymentNumberManuallySet.cs</DependentUpon>
@@ -1987,7 +1995,10 @@
     <Compile Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.Designer.cs">
       <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202001241017569_addShipmentComputedFieldColumn.cs" />
+    <Compile Include="Migrations\202001241017569_addShipmentComputedFieldColumn.Designer.cs">
+      <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.cs" />
     <Compile Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.Designer.cs">
       <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
@@ -1996,6 +2007,10 @@
     <Compile Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs" />
     <Compile Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.Designer.cs">
       <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.cs" />
+    <Compile Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.Designer.cs">
+      <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
     </Compile>
 
     <Compile Include="Migrations\Configuration.cs" />
@@ -3428,6 +3443,8 @@
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.resx">
@@ -3538,6 +3555,9 @@
     <EmbeddedResource Include="Migrations\202001051231095_Add_SearchField_To_InterestReport.resx">
       <DependentUpon>202001051231095_Add_SearchField_To_InterestReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001191342198_AbedAddIsUsedToWarehouseReleasePackage.resx">
+      <DependentUpon>202001191342198_AbedAddIsUsedToWarehouseReleasePackage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001161000397_AddToShipmentComputedFields_Samar.resx">
       <DependentUpon>202001161000397_AddToShipmentComputedFields_Samar.cs</DependentUpon>
     </EmbeddedResource>
@@ -3592,6 +3612,9 @@
     <EmbeddedResource Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.resx">
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001300747234_AbedAddIsUsedToWarehouseRelease.resx">
+      <DependentUpon>202001300747234_AbedAddIsUsedToWarehouseRelease.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.resx">
       <DependentUpon>202001261238055_AddFieldIsPaymentNumberManuallySet.cs</DependentUpon>
     </EmbeddedResource>
@@ -3606,7 +3629,12 @@
     <EmbeddedResource Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.resx">
       <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202001241017569_addShipmentComputedFieldColumn.resx">
+      <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.resx">
+      <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

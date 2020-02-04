@@ -30,7 +30,7 @@ export class UploadLogoComponent implements AfterViewInit {
     SharedLogisticsLogoFileHtmlId: string = Guid.NewRandomString();
 
     LogoFileHtmlId: string = Guid.NewRandomString();
-    LogoHelpText: string = TextCodeTranslator.Translate("Tenant.LogoHelpText");
+    LogoHelpText: string = TextCodeTranslator.Translate("Tenant.O.LogoHelpText");
     DemoMessageVisibility: boolean;
     ShowUploadSharedLogisLogo: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
