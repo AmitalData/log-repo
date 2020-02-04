@@ -82,27 +82,46 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         if (this.customer != value) {
             this.customer = value;
 
-            if (value) {
-                this.IsCategoryDisabled = true;
-            }
-            else
-                this.IsCategoryDisabled = false;
+            this.DimAndResetCategoryFields(value);
 
         }
     }
 
     private chartOfAccount: string;
+    private DimAndResetCategoryFields(value: string)
+    {
+        if (value) {
+            this.IsCategoryDisabled = true;
+            this.Category1 = null;
+            this.Category2 = null;
+            this.Category3 = null;
+            this.Category4 = null;
+            this.Category5 = null;
+        }
+        else
+            this.IsCategoryDisabled = false;
+    }
+    private DimAndResetCustomerFields(value: string)
+    {
+        if (value) {
+            this.UIProperties.SetEnabled("Customer", "GLAccount", false);
+            this.UIProperties.SetEnabled("ChartOfAccount", "GLAccount", false);
+            this.Customer = null;
+            this.ChartOfAccount = null;
+        }
+        else {
+            this.UIProperties.SetEnabled("Customer", "GLAccount", false);
+            this.UIProperties.SetEnabled("ChartOfAccount", "GLAccount", false);
+            this.IsCategoryDisabled = false;
+        }
+    }
+
     public get ChartOfAccount() { return this.chartOfAccount; }
     public set ChartOfAccount(value: string) {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
 
-            if (value) {
-                this.IsCategoryDisabled = true;
-            }
-            else
-                this.IsCategoryDisabled = false;
-
+            this.DimAndResetCategoryFields(value);
 
         }
     }
@@ -165,6 +184,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public set Category1(value: string) {
         if (this.category1 != value) {
             this.category1 = value;
+            this.DimAndResetCustomerFields(value);
         }
     }
 
@@ -174,6 +194,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public set Category2(value: string) {
         if (this.category2 != value) {
             this.category2 = value;
+            this.DimAndResetCustomerFields(value);
         }
     }
 
@@ -182,6 +203,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public set Category3(value: string) {
         if (this.category3 != value) {
             this.category3 = value;
+            this.DimAndResetCustomerFields(value);
         }
     }
 
@@ -190,6 +212,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public set Category4(value: string) {
         if (this.category4 != value) {
             this.category4 = value;
+            this.DimAndResetCustomerFields(value);
         }
     }
 
@@ -199,6 +222,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public set Category5(value: string) {
         if (this.category5 != value) {
             this.category5 = value;
+            this.DimAndResetCustomerFields(value);
         }
     }
 
