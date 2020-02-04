@@ -976,11 +976,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         //get declaration display only
         declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+        if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
             {
                 this.IsDisplayMessage = true;
-                this.ErrorMessage = this.EntityPM.AmendmentMessage;
-                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                this.ErrorMessage = this.DeclarationPM.AmendmentMessage;
+                if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
             }
         }
 
@@ -1023,12 +1023,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
 
             var declarationDisplayOnly2 = displayOnlyCheckResult.IsDisplayOnly ? true : false;
-            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+            if (this.DeclarationPM.AmendmentMessage != null && this.DeclarationPM.AmendmentMessage != "") {
                 {
                 this.IsDisplayMessage = true;
 
-                    this.ErrorMessage = this.EntityPM.AmendmentMessage;
-                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                    this.ErrorMessage = this.DeclarationPM.AmendmentMessage;
+                    if (this.DeclarationPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.DeclarationPM.IsAmendmentDisplayOnly;
                 }
             }
 
