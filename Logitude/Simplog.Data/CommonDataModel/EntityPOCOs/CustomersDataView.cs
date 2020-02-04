@@ -136,6 +136,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ActivationRequestedByUserName { get; set; }
         public string LeadSourceName { get; set; }
         public string CreatedByPartner { get; set; }
-
+        public string StateName { get; set; }
     }
 }

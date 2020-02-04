@@ -1,5 +1,6 @@
 import {Pipe} from '@angular/core';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { isNullOrUndefined, isUndefined } from 'util';
 
 @Pipe({ name: 'TextCodeTranslationPipe' })
 
@@ -10,7 +11,7 @@ export class TextCodeTranslationPipe {
         if (translation != null) {
             translation = translation.trim();
         }
-        if (translation == "") {
+        if (translation == "" && !isNullOrUndefined(translation)) {
             alert("This code:'" + value + "' Not Found!");
         }
         return translation;

@@ -7420,6 +7420,24 @@
       LocalDefaultText="&quot;ביטול תשלום&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.O.OtherPayments&quot;"
+      DefaultText="&quot;Other Payments&quot;"
+      LocalDefaultText="&quot;קבלות אחרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.O.AmountToPay&quot;"
+      DefaultText="&quot;APPayment.CH.AmountToPay&quot;"
+      LocalDefaultText="&quot;סכום שהותאם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.O.ShipmentNo&quot;"
+      DefaultText="&quot;Shipment #&quot;"
+      LocalDefaultText="&quot;משלוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -299,7 +299,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxReportLine.LineTypeCode = "P";
                     }
 
-                    else if (journal.LineCreditAccountTypeCode != "3")
+                    else if (journal.LineCreditAccountTypeCode != "3" || (journal.LineCreditAccountTypeCode == "3" && gLAccountPM.Smallcashbook==true))
                     {
                         taxReportLine.LineTypeCode = "K";
                     }

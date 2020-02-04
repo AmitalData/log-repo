@@ -2403,6 +2403,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   SetAsInactiveByName = customer.SetAsInactiveByName,
                                                   ActivationRequestedByUserName = customer.ActivationRequestedByUserName,
                                                   CreatedByPartner = customer.CreatedByPartner,
+                                                  StateName = customer.StateName,
                                               };
 
             return result;

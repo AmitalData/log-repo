@@ -71,6 +71,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 InterestReportStatuseRepository interestReportStatuseRepository = new InterestReportStatuseRepository(entityPM.Tenant);
                 InterestReportStatuse interestReportStatuse = interestReportStatuseRepository.GetSingle(entityPOCO.InterestReportStatusCode);
                 entityPM.InterestReportStatusName = showLocals ? interestReportStatuse.LocalName:interestReportStatuse.EnglishName;
+                entityPM.InterestReportStatusLocalName = showLocals ? interestReportStatuse.LocalName : interestReportStatuse.EnglishName;
             }
         }
 

@@ -57,7 +57,7 @@ namespace Logitude.BL.Helpers
                             string email = "system@tenant" + shipmentComputedFields.Tenant.ToString() + ".com"; //SecurityUtility.GetAuthenticatedUser(shipmentComputedFields.Tenant);
                             IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
                             ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, email);
-                            shipmentService.entityComputedFields = shipmentComputedFields;
+                            shipmentService.UpdatedShipmentComputedFields = shipmentComputedFields;
                             shipmentService.Update();
                             isSaveShipmentComputedFields = true;
                         }

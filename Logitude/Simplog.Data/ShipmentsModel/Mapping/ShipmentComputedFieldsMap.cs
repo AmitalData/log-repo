@@ -35,6 +35,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DeliveryTo).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.PickupFrom).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.PickupTo).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.OperationallyClosedByUserName).HasMaxLength(100).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentComputedFields");
@@ -76,6 +77,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DeliveryTo).HasColumnName("DeliveryTo");
             this.Property(t => t.PickupFrom).HasColumnName("PickupFrom");
             this.Property(t => t.PickupTo).HasColumnName("PickupTo");
+            this.Property(t => t.OperationallyClosedByUserName).HasColumnName("OperationallyClosedByUserName");
 
             this.HasRequired(t => t.Shipment);
             this.HasOptional(t => t.OperationallyClosedByUser).WithMany().HasForeignKey(d => d.OperationallyClosedByUserId);

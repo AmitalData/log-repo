@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Address",
-			      				    Code =  "4c92",
+			      				    Code =  "01c1",
 			      				    Name =  "Address",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -145,7 +145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Address",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -153,7 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
@@ -1197,9 +1197,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Address1",
-					  						DefaultText =  "Address1",
+					  						DefaultText =  "Address 1",
 					  						ListFieldLable =  "Address1ListLable",
-					  						ListLableDefaultText =  "Address1",
+					  						ListLableDefaultText =  "Address 1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1261,7 +1261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Address2",
-					  						DefaultText =  "Address2",
+					  						DefaultText =  "Address 2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1876,6 +1876,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		    AddressObjectTable.HeaderScreenCode = AddressAddressHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen AddressMainAddressScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customers.Addresses.MainAddress", Name = "Main Address", ObjectTableId = AddressObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+            ScreenField AddressCustomersAddressesMainAddressScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "CardEnglishName").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "CardEnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "Address1").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "Address1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "Address2").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "Address2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "City").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "City").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "StateId").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "StateId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "ZipCode").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "ZipCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "PhoneNumber").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "PhoneNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "FaxNumber").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "FaxNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AddressCustomersAddressesMainAddressScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = AddressObjectFields.Where(d => d.FieldName == "ATTN").FirstOrDefault().Id, ScreenId = AddressMainAddressScreen1.Id,ScreenCode = AddressMainAddressScreen1.Code, ObjectFieldCode = AddressObjectFields.Where(d => d.FieldName == "ATTN").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+           
 
 	    }
 
@@ -1950,7 +1974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode AddressTextCode_AddressOAddAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.AddAddress", DefaultText = "Add Address",LocalDefaultText = @"הוסף כתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode AddressTextCode_AddressOEditAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.EditAddress", DefaultText = "Edit Address",LocalDefaultText = @"לערוך את הכתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AddressTextCode_AddressOEditAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.EditAddress", DefaultText = "Edit Address",LocalDefaultText = @"לערוך םת הכתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AddressTextCode_AddressOAddresses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.Addresses", DefaultText = "Addresses",LocalDefaultText = @"כתובות", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

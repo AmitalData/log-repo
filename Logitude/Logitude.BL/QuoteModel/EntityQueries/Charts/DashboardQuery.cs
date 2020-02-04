@@ -1,4 +1,4 @@
-﻿using CHAMP17;
+﻿//using CHAMP17;
 using Logitude.BL.DataContracts;
 using Logitude.BL.QuoteModel.BusinessUnitFilters;
 using Simplog.Data.QuoteModel;

@@ -435,11 +435,11 @@ namespace Logitude.DBMigrations.Models
 
             BuildAlterSizeMigration(currentTableColumn, dxmlTableColumn);
 
+            BuildAlterDefaultMigration(currentTableColumn, dxmlTableColumn);
+
             BuildUnsetNullableMigration(currentTableColumn, dxmlTableColumn);
 
             BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
-
-            BuildAlterDefaultMigration(currentTableColumn, dxmlTableColumn);
 
             BuildRenameMigration(currentTableColumn, dxmlTableColumn);
 

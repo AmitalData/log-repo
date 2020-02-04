@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Invoice Line",
-			      				    Code =  "bd66",
+			      				    Code =  "29b2",
 			      				    Name =  "APInvoiceLine",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -1815,7 +1815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APInvoiceLineTextCode_APInvoiceLineOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.Vendor", DefaultText = "Vendor",LocalDefaultText = @"ספק", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APInvoiceLineTextCode_APInvoiceLineOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.Currency", DefaultText = "Currency",LocalDefaultText = null, ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.Currency", DefaultText = "Currency",LocalDefaultText = @"מטבע", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceLineTextCode_APInvoiceLineOExpectedAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.ExpectedAmount", DefaultText = "ExpectedAmount",LocalDefaultText = @"סכום צפוי", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

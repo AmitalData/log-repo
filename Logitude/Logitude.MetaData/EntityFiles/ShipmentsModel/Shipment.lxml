@@ -82899,6 +82899,16 @@
     NumberOfRows="1">
     <ScreenFields />
   </Screen>
+  <Screen
+    Name="&quot;Shared Manifest Additional Fields&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;SharedManifestAdditionalScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;Overview&quot;"
     ObjectTableName="&quot;Shipment&quot;"
@@ -83134,19 +83144,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Events&quot;"
-    ObjectTableName="&quot;Shipment&quot;"
-    Code="&quot;SHEV&quot;"
-    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
-    TextCode="&quot;Shipment.TH.Events&quot;"
-    IsPackagable="false"
-    IndexOrder="15"
-    FeatureCode="&quot;EVENTS&quot;"
-    FeatureTextCodeCode="&quot;Shipment.Features.Events&quot;"
-    FeatureDefaultText="&quot;Events&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Master&quot;"
     ObjectTableName="&quot;Shipment&quot;"
     Code="&quot;SHMS&quot;"
@@ -83159,6 +83156,19 @@
     FeatureCode="&quot;MASTER&quot;"
     FeatureTextCodeCode="&quot;Shipment.Features.Master&quot;"
     FeatureDefaultText="&quot;Master&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    Code="&quot;SHEV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;Shipment.TH.Events&quot;"
+    IsPackagable="false"
+    IndexOrder="15"
+    FeatureCode="&quot;EVENTS&quot;"
+    FeatureTextCodeCode="&quot;Shipment.Features.Events&quot;"
+    FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
@@ -90356,13 +90366,13 @@
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Shipment.TH.FreightCharge&quot;"
-      DefaultText="&quot;Freight Charge&quot;"
+      Code="&quot;Shipment.TH.FreightCharges&quot;"
+      DefaultText="&quot;Freight Charges&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Shipment.TH.OtherCharge&quot;"
-      DefaultText="&quot;Other Charge&quot;"
+      Code="&quot;Shipment.TH.OtherCharges&quot;"
+      DefaultText="&quot;Other Charges&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
     <TextCode

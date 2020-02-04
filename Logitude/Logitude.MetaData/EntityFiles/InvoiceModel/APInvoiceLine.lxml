@@ -35,7 +35,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="APInvoice"
   DefaultText="&quot;A/P Invoice Line&quot;"
-  Code="&quot;bd66&quot;"
+  Code="&quot;29b2&quot;"
   Name="&quot;APInvoiceLine&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -3751,6 +3751,7 @@
     <TextCode
       Code="&quot;APInvoiceLine.O.Currency&quot;"
       DefaultText="&quot;Currency&quot;"
+      LocalDefaultText="&quot;מטבע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
