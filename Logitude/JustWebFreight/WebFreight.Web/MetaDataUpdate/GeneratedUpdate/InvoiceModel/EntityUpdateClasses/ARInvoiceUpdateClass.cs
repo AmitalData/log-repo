@@ -8031,6 +8031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9472,6 +9473,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceOCanNotCreditCardIsNotExempt = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.CanNotCreditCardIsNotExempt", DefaultText = "Can not credit card that is not exempt VAT if the amount is exempt.",LocalDefaultText = @"לא ניתן לזכות כרטיס חייב בסכום פטור", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOMissingDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.MissingDocument", DefaultText = "Invoice Document is missing",LocalDefaultText = @"המסמך שקשור לחשבונית לא נמצא", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceFPartnerType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.F.PartnerType", DefaultText = "Partner Type",LocalDefaultText = @"סוג שותף", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

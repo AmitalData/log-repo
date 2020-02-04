@@ -90366,13 +90366,13 @@
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Shipment.TH.FreightCharge&quot;"
-      DefaultText="&quot;Freight Charge&quot;"
+      Code="&quot;Shipment.TH.FreightCharges&quot;"
+      DefaultText="&quot;Freight Charges&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Shipment.TH.OtherCharge&quot;"
-      DefaultText="&quot;Other Charge&quot;"
+      Code="&quot;Shipment.TH.OtherCharges&quot;"
+      DefaultText="&quot;Other Charges&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
     <TextCode

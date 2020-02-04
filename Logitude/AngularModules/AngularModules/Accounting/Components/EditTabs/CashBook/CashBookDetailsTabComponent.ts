@@ -200,7 +200,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         if (this.FilterSelectedValue == 'cash')
             filters.addAdditionalFilter("DueDate", today, null, null, "LessThanOrEqual", false, false, false, "DateTime");
         else if (this.FilterSelectedValue == 'postdated')
-            filters.addAdditionalFilter("DueDate", today, null, null, "Larger", false, false, false, "DateTime");
+            filters.addAdditionalFilter("DueDate", today, null, null, "LargerThan", false, false, false, "DateTime");
 
          filters.addAdditionalFilter("ARPChequeStatusCode", "5", null, null, "NotEqual", false, false, false, "string");
          filters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", false, false, false, "Boolean");

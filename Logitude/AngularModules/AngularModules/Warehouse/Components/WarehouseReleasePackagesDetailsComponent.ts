@@ -86,7 +86,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
         var shipment = this.ViewModelTrigger ? this.ViewModelTrigger.ShipmentPM : this.ShipmentPM;
 
-        if (shipment) {
+        if (shipment && this.ViewModelTrigger.FromType!="WarehouseEntry") {
             this.FromPortId = shipment ? shipment.MainCarriageFromPortId ? shipment.MainCarriageFromPortId : shipment.FromPortId : "";
             this.ToPortId = shipment.ShipmentLevelCode == "H" ? shipment.MainCarriageFinalDestinationPortId : shipment.FinalDistenationPortId;
             if (!this.ToPortId) {
@@ -103,7 +103,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.VolumeLabel = "Volume (" + SessionLocator.TenantPM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + SessionLocator.TenantPM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.DimensionsUnitCode + ")";
-        this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
+        //this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
         if (this.warehouseReleasePM) {
             this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.warehouseReleasePM.GrossWeightUnitCode);
             this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.warehouseReleasePM.DimensionsUnitCode);
@@ -226,6 +226,9 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         windowArgs.WarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists;
         windowArgs.ViewModelTrigger = this;
         windowArgs.WarehouseEntryId = this.WarehouseEntryId;
+        windowArgs.UsingFilterPorts = this.ViewModelTrigger.IsHaveShipmentPM ? false : true;
+        
+
         windowArgs.PackageType = packageType;
         var logWindow = new LogitudeWindow();
         if (this.IsFromFullWarehouseReleaseComponent) {

@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -324,15 +324,15 @@
                                                     <div></div>
                                                 </td>
 
-                                                <td style="min-width: 250px;">{{'ARInvoiceLine.CH.Description' | TextCodeTranslationPipe}}</td>
+                                                <td style="min-width: 250px;">{{'ARInvoiceLine.CH.DescriptionListLable' | TextCodeTranslationPipe}}</td>
 
-                                                <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">{{'ARInvoiceLine.CH.MeasurementId' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 35px; min-width: 35px; max-width: 35px; text-align: center;">{{'ARInvoiceLine.CH.PrepaidCollectId' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 90px; min-width: 90px; max-width: 90px;text-align: center;">{{'ARInvoiceLine.CH.Quantity' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 90px; min-width: 90px; max-width: 90px;text-align: center;">{{'ARInvoiceLine.CH.UnitPrice' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: center;">{{'ARInvoiceLine.CH.Amount' | TextCodeTranslationPipe}}</td>
-                                                <td style="text-align: center;" [style.width.px]="RateColumnWidth" [style.min-width.px]="RateColumnWidth" [style.max-width.px]="RateColumnWidth">{{'ARInvoiceLine.CH.ForiegnExchangeRate' | TextCodeTranslationPipe}}</td>
-                                                <td style="text-align: center;" [style.width.px]="VATColumnWidth" [style.min-width.px]="VATColumnWidth" [style.max-width.px]="VATColumnWidth">{{'ARInvoiceLine.CH.VatTypeId' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">{{'ARInvoiceLine.CH.MeasurementIdListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 35px; min-width: 35px; max-width: 35px; text-align: center;">{{'ARInvoiceLine.CH.PrepaidCollectIdListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 90px; min-width: 90px; max-width: 90px;text-align: center;">{{'ARInvoiceLine.CH.QuantityListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 90px; min-width: 90px; max-width: 90px;text-align: center;">{{'ARInvoiceLine.CH.UnitPriceListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: center;">{{'ARInvoiceLine.CH.AmountListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="text-align: center;" [style.width.px]="RateColumnWidth" [style.min-width.px]="RateColumnWidth" [style.max-width.px]="RateColumnWidth">{{'ARInvoiceLine.CH.ForiegnExchangeRateListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="text-align: center;" [style.width.px]="VATColumnWidth" [style.min-width.px]="VATColumnWidth" [style.max-width.px]="VATColumnWidth">{{'ARInvoiceLine.CH.VatTypeIdListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: center;">{{LocalAmountHeader}}</td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: center;" *ngIf="IsInvoiceAmountHeaderVisible">{{InvoiceAmountHeader}}</td>
                                                 <td class="LastChild" style="width: 25px; min-width: 25px; max-width: 25px;">
@@ -469,7 +469,7 @@
                                     </log-column>
 
                                     <!-- Description -->
-                                    <log-column [header]="'ARInvoiceLine.CH.Description' | TextCodeTranslationPipe" [width]="'250'" [Editable]="false" [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-column [header]="'ARInvoiceLine.CH.DescriptionListLable' | TextCodeTranslationPipe" [width]="'250'" [Editable]="false" [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div [style.text-align]="isRTL ? 'right' : 'left'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
                                                 {{item.Description}}
@@ -487,7 +487,7 @@
                                     </log-column>
 
                                     <!-- MeasurementCode -->
-                                    <log-column [header]="'ARInvoiceLine.CH.MeasurementId' | TextCodeTranslationPipe" [width]="'50'" [Editable]="false" [Alignment]="'center'">
+                                    <log-column [header]="'ARInvoiceLine.CH.MeasurementIdListLable' | TextCodeTranslationPipe" [width]="'50'" [Editable]="false" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div style="width: 100%; height: 100%; text-align: center;" [ngStyle]="{background: item.CellBackground}">
                                                 {{item.MeasurementCode}}
@@ -496,7 +496,7 @@
                                     </log-column>
 
                                     <!-- PrepaidCollectId -->
-                                    <log-column [header]="'ARInvoiceLine.CH.PrepaidCollectId' | TextCodeTranslationPipe" [width]="'35'" [Editable]="false" [Alignment]="'center'">
+                                    <log-column [header]="'ARInvoiceLine.CH.PrepaidCollectIdListLable' | TextCodeTranslationPipe" [width]="'35'" [Editable]="false" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div style="width: 100%; height: 100%; text-align: center; position: relative;" [ngStyle]="{background: item.CellBackground}">
                                                 <div class="CenterCenter" style="width: 25px; height: 20px; line-height: 20px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{background: item.IsMatched ? 'transparent' : 'rgba(255, 171, 3, 0.6)', color: item.IsMatched ? '#282E30' : 'rgba(255, 94, 0, 1)'}">
@@ -507,7 +507,7 @@
                                     </log-column>
 
                                     <!-- Quantity -->
-                                    <log-column [header]="'ARInvoiceLine.CH.Quantity' | TextCodeTranslationPipe" [width]="'90'" [Editable]="false" [Alignment]="isRTL ? 'left' : 'right'">
+                                    <log-column [header]="'ARInvoiceLine.CH.QuantityListLable' | TextCodeTranslationPipe" [width]="'90'" [Editable]="false" [Alignment]="isRTL ? 'left' : 'right'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
                                                 {{item.Quantity | NumbersPipe:'N2'}}
@@ -516,7 +516,7 @@
                                     </log-column>
 
                                     <!-- UnitPrice -->
-                                    <log-column [header]="'ARInvoiceLine.CH.UnitPrice' | TextCodeTranslationPipe" [width]="'90'" [Editable]="false" [Alignment]="isRTL ? 'left' : 'right'">
+                                    <log-column [header]="'ARInvoiceLine.CH.UnitPriceListLable' | TextCodeTranslationPipe" [width]="'90'" [Editable]="false" [Alignment]="isRTL ? 'left' : 'right'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%; height: 100%;" [ngStyle]="{background: item.CellBackground}">
                                                 <table>
@@ -539,7 +539,7 @@
                                     </log-column>
 
                                     <!-- ForiegnCurrencyAmount -->
-                                    <log-column [header]="'ARInvoiceLine.CH.Amount' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
+                                    <log-column [header]="'ARInvoiceLine.CH.AmountListLable' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
                                                 <span>{{item.ForiegnCurrencyAmount | NumbersPipe:'N2'}}</span>
@@ -549,7 +549,7 @@
                                     </log-column>
 
                                     <!-- ForiegnExchangeRate -->
-                                    <log-column [header]="'ARInvoiceLine.CH.ForiegnExchangeRate' | TextCodeTranslationPipe" [width]="RateColumnWidth + ''" [Editable]="false" [Alignment]="'center'">
+                                    <log-column [header]="'ARInvoiceLine.CH.ForiegnExchangeRateListLable' | TextCodeTranslationPipe" [width]="RateColumnWidth + ''" [Editable]="false" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
                                                 <span>{{item.ForiegnExchangeRate | NumbersPipe:'N5'}}</span>
@@ -559,7 +559,7 @@
                                     </log-column>
 
                                     <!-- VatType -->
-                                    <log-column [header]="'ARInvoiceLine.CH.VatTypeId' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-column [header]="'ARInvoiceLine.CH.VatTypeIdListLable' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div style="width: 100%; height: 100%; text-align: right;" [ngStyle]="{background: item.CellBackground}">
                                                 <table>

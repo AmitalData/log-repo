@@ -20,6 +20,7 @@ namespace Logitude.DBMigrations.Models
         private List<TableDefinition> DXMLTables;
         private List<DXMLHash> DXMLHashes;
         private string ScriptSemicolonCode = "|(;)|";
+        private string MissingIndexesWarnings = "";
 
         public MigrationTool(string[] args)
         {
@@ -63,6 +64,7 @@ namespace Logitude.DBMigrations.Models
                     }
 
                     ExportPerformanceData();
+                    PrintMissingIndexesWarnings();
                 }
                 else
                 {
@@ -135,6 +137,7 @@ namespace Logitude.DBMigrations.Models
                         string tableScript = databaseMigrations.GetScript();
                         string tableRelationsScript = databaseMigrations.GetRelationsScript();
                         string tableIndexesScript = databaseMigrations.GetIndexesScript();
+                        string tableMissingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
                         string tableUniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
 
                         if (!String.IsNullOrEmpty(tableScript))
@@ -145,6 +148,11 @@ namespace Logitude.DBMigrations.Models
                         if (!String.IsNullOrEmpty(tableIndexesScript))
                         {
                             generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
+                        }
+
+                        if (!String.IsNullOrEmpty(tableMissingIndexesWarnings))
+                        {
+                            MissingIndexesWarnings += tableMissingIndexesWarnings;
                         }
 
                         if (!String.IsNullOrEmpty(tableUniqueConstraintsScript))
@@ -165,6 +173,7 @@ namespace Logitude.DBMigrations.Models
                     string tableScript = databaseMigrations.GetScript();
                     string tableRelationsScript = databaseMigrations.GetRelationsScript();
                     string tableIndexesScript = databaseMigrations.GetIndexesScript();
+                    string tableMissingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
                     string tableUniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
 
                     if (!String.IsNullOrEmpty(tableScript))
@@ -175,6 +184,11 @@ namespace Logitude.DBMigrations.Models
                     if (!String.IsNullOrEmpty(tableIndexesScript))
                     {
                         generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
+                    }
+
+                    if (!String.IsNullOrEmpty(tableMissingIndexesWarnings))
+                    {
+                        MissingIndexesWarnings += tableMissingIndexesWarnings;
                     }
 
                     if (!String.IsNullOrEmpty(tableUniqueConstraintsScript))
@@ -342,6 +356,14 @@ namespace Logitude.DBMigrations.Models
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string csvFilePath = Path.Combine(projectDirectory, @"Reports\DBMigrationsPerformance.csv");
             File.WriteAllText(csvFilePath, PerformanceData);
+        }
+
+        private void PrintMissingIndexesWarnings()
+        {
+            if (!String.IsNullOrEmpty(MissingIndexesWarnings))
+            {
+                Console.WriteLine(MissingIndexesWarnings.TrimEnd('\n'));
+            }
         }
 
         private string GetConnectionString(string dbType)

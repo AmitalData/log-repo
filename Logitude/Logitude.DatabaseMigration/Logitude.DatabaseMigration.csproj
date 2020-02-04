@@ -1958,6 +1958,18 @@
     <Compile Include="Migrations\202001151002313_RuleUpdateHistory_table.Designer.cs">
       <DependentUpon>202001151002313_RuleUpdateHistory_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001271154236_Mutaz_Re_FillUniqueCodeInQuery.cs" />
+    <Compile Include="Migrations\202001271154236_Mutaz_Re_FillUniqueCodeInQuery.Designer.cs">
+      <DependentUpon>202001271154236_Mutaz_Re_FillUniqueCodeInQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.cs" />
+    <Compile Include="Migrations\202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.Designer.cs">
+      <DependentUpon>202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs" />
+    <Compile Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.Designer.cs">
+      <DependentUpon>202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202001181129036_GLAccountNameForPrinting\chequesMigration.cs" />
     <Compile Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.cs" />
     <Compile Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.Designer.cs">
@@ -1967,6 +1979,28 @@
     <Compile Include="Migrations\202001270701508_AddCountryForStatisticsToQuote_Samar.Designer.cs">
       <DependentUpon>202001270701508_AddCountryForStatisticsToQuote_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.cs" />
+    <Compile Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.Designer.cs">
+      <DependentUpon>202001261238055_AddFieldIsPaymentNumberManuallySet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.cs" />
+    <Compile Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.Designer.cs">
+      <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001241017569_addShipmentComputedFieldColumn.cs" />
+    <Compile Include="Migrations\202001241017569_addShipmentComputedFieldColumn.Designer.cs">
+      <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.cs" />
+    <Compile Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.Designer.cs">
+      <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs" />
+    <Compile Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.Designer.cs">
+      <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -2008,7 +2042,6 @@
     <Compile Include="Migrations\201912291412080_ARInvoiceDocumentFilingMigration1.Designer.cs">
       <DependentUpon>201912291412080_ARInvoiceDocumentFilingMigration1.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.cs" />
     <Compile Include="Migrations\201912301250257_AddFeatureUniqeCode_Rabaia.Designer.cs">
       <DependentUpon>201912301250257_AddFeatureUniqeCode_Rabaia.cs</DependentUpon>
@@ -3398,13 +3431,6 @@
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
-
-    </EmbeddedResource>
-
-
-    
-
-    <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221349345_WesamAddNameTextCodeCodeToQueriesTable.resx">
@@ -3554,11 +3580,37 @@
     <EmbeddedResource Include="Migrations\202001270701508_AddCountryForStatisticsToQuote_Samar.resx">
       <DependentUpon>202001270701508_AddCountryForStatisticsToQuote_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271154236_Mutaz_Re_FillUniqueCodeInQuery.resx">
+      <DependentUpon>202001271154236_Mutaz_Re_FillUniqueCodeInQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.resx">
+      <DependentUpon>202001271204262_Mutaz_UpdateAllQueryCodeRelatedofquery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.resx">
+      <DependentUpon>202001271225318_Mutaz_AddConstrientForQuery_Uniqe_ObjectTbalename_UserId_Code.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001181132561_GLAccountNameForPrintingChequesMigration.resx">
       <DependentUpon>202001181132561_GLAccountNameForPrintingChequesMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001151252518_ARinvoiceBillToGLAccountIdMigration.resx">
       <DependentUpon>202001151252518_ARinvoiceBillToGLAccountIdMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001261238055_AddFieldIsPaymentNumberManuallySet.resx">
+      <DependentUpon>202001261238055_AddFieldIsPaymentNumberManuallySet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.resx">
+      <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.resx">
+      <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.resx">
+      <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001241017569_addShipmentComputedFieldColumn.resx">
+      <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

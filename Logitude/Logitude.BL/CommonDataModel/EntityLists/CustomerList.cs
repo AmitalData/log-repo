@@ -416,5 +416,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public string CreatedByPartner { get; set; }
 
+        [DataMember]
+        public string StateName { get; set; }
     }
 }

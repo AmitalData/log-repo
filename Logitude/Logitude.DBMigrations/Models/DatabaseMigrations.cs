@@ -19,6 +19,8 @@ namespace Logitude.DBMigrations.Models
         protected bool PrimaryKeyColumnAdded = false;
 
         protected string DXMLFileName;
+
+        protected string MissingIndexesWarnings = "";
         
         public string GetScript()
         {
@@ -99,7 +101,7 @@ namespace Logitude.DBMigrations.Models
                 {
                     if (!IsIndexInDXMLTable(index))
                     {
-                        ExitDatabaseMigrations("Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File");
+                        MissingIndexesWarnings += "Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File\n";
                     }
                 }
 
@@ -113,6 +115,11 @@ namespace Logitude.DBMigrations.Models
             }
 
             return tableIndexesScript;
+        }
+
+        public string GetMissingIndexesWarnings()
+        {
+            return MissingIndexesWarnings;
         }
 
         public string GetUniqueConstraintsScript()
@@ -428,11 +435,11 @@ namespace Logitude.DBMigrations.Models
 
             BuildAlterSizeMigration(currentTableColumn, dxmlTableColumn);
 
+            BuildAlterDefaultMigration(currentTableColumn, dxmlTableColumn);
+
             BuildUnsetNullableMigration(currentTableColumn, dxmlTableColumn);
 
             BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
-
-            BuildAlterDefaultMigration(currentTableColumn, dxmlTableColumn);
 
             BuildRenameMigration(currentTableColumn, dxmlTableColumn);
 
@@ -607,7 +614,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string GenerateRandomString()
         {
-            return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();//21 chars
+            return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
         }
 
         protected string FormatNameLength(string name, string shortName)
@@ -912,8 +919,6 @@ namespace Logitude.DBMigrations.Models
         }
 
 
-
-        //abstract methods
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
@@ -992,7 +997,7 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation);
 
-        protected abstract string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string script);
+        protected abstract string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string columnName, string script);
 
         protected abstract string GetDefaultValueScript(bool nullable, string type, string defaultValue);
         

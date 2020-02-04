@@ -41,7 +41,7 @@
     declare @CreditLimitOpenBalance as float 
 	DECLARE PartnersCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Partners.Id,dw_Partners.Code, dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant,dw_Countries.Code,dw_Contacts.Email , dw_Partners.ReceivablesAccountingCard,dw_Partners.address1,dw_Partners.address2, dw_Partners.Phone
+	SELECT dw_Partners.Id,dw_Partners.Code, dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , '' , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant,dw_Countries.Code,dw_Contacts.Email , dw_Partners.ReceivablesAccountingCard,dw_Partners.address1,dw_Partners.address2, dw_Partners.Phone
 	 ,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber ,dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance
 	From dw_Partners
 
@@ -55,8 +55,8 @@
 	left join dw_CustomerSizes  on dw_Customers.CustomerSizeId=dw_CustomerSizes.Id
 	left join dw_Industries  on dw_Customers.IndustryId=dw_Industries.Id
 
-	left join dw_Addresses  on dw_Partners.Id = dw_Addresses.CardId and dw_Addresses.AddressTypeId = 'M'
-	left join dw_States  on dw_Addresses.StateId = dw_States.Id
+	--left join dw_Addresses  on dw_Partners.Id = dw_Addresses.CardId and dw_Addresses.AddressTypeId = 'M'
+	--left join dw_States  on dw_Addresses.StateId = dw_States.Id
 	inner join dw_PartnerTypes  on dw_Partners.PartnerTypeId=dw_PartnerTypes.Id
 	inner JOIN dw_DWHSettings ON dw_Partners.Tenant = dw_DWHSettings.Tenant
 	inner JOIN dw_Countries ON dw_Partners.CountryId = dw_Countries.Id

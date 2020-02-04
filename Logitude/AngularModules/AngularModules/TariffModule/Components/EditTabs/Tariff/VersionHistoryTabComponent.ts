@@ -253,6 +253,17 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public Surcharge9PriceLabel: string;
     public Surcharge10PriceLabel: string;
 
+    public Surcharge1PriceLabel_FCL: string;
+    public Surcharge2PriceLabel_FCL: string;
+    public Surcharge3PriceLabel_FCL: string;
+    public Surcharge4PriceLabel_FCL: string;
+    public Surcharge5PriceLabel_FCL: string;
+    public Surcharge6PriceLabel_FCL: string;
+    public Surcharge7PriceLabel_FCL: string;
+    public Surcharge8PriceLabel_FCL: string;
+    public Surcharge9PriceLabel_FCL: string;
+    public Surcharge10PriceLabel_FCL: string;
+
     public Surcharge1MinPriceLabel: string;
     public Surcharge2MinPriceLabel: string;
     public Surcharge3MinPriceLabel: string;
@@ -302,7 +313,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
         if (!AppTool.IsNullOrEmpty(iChargeTypeId)) {
             var iChargeType: ChargesTypeList = this.AllChargesTypes.filter(a => a.Id == iChargeTypeId)[0];
             if (iChargeType) {
-                var displyText: string = iChargeType.Code;               
+                var displyText: string = iChargeType.Code;
+                var chargeCode: string = iChargeType.Code;
                 var isFixed = false;
 
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
@@ -315,6 +327,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 }
 
                 this['Surcharge' + index + 'PriceLabel'] = displyText;
+                this['Surcharge' + index + 'PriceLabel_FCL'] = chargeCode;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
                 this['Surcharge' + index + 'MinPriceVisibility'] = !isFixed;
                 this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;

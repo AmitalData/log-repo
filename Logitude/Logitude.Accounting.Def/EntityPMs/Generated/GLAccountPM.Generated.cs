@@ -2528,31 +2528,53 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
-        private string nameForPrintingCheques;
-       [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-       [DataMember]
-       public string NameForPrintingCheques
-        {
-
-            get
-            {
-                return nameForPrintingCheques;
-            }
-            set
-            {
-                if (nameForPrintingCheques != value)
-                {
-                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "NameForPrintingCheques", OldValue = nameForPrintingCheques, NewValue = value, PropertyType = "string" };
-                    NotifyPropertyChanged(values);
-                    nameForPrintingCheques = value;
-                }
-
-            }
-        }
-
-
-    }
-
+	  private string nameForPrintingCheques ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NameForPrintingCheques  
+	   {
+	    
+	     get
+		{
+		   return nameForPrintingCheques;
+		 }
+		 set
+		 {
+		   if(nameForPrintingCheques != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NameForPrintingCheques",OldValue=nameForPrintingCheques,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   nameForPrintingCheques=value;
+		   }
+			
+		 }
+	   }
+	  private bool smallcashbook ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Smallcashbook  
+	   {
+	    
+	     get
+		{
+		   return smallcashbook;
+		 }
+		 set
+		 {
+		   if(smallcashbook != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Smallcashbook",OldValue=smallcashbook,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   smallcashbook=value;
+		   }
+			
+		 }
+	   }
+   }
+   
 }
 	 

@@ -174,7 +174,7 @@ namespace Logitude.DXMLGenerator.Models
                             Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? Convert.ToInt32(reader["Size"].ToString()) : 0,
                             Precision = !String.IsNullOrEmpty(reader["Precision"].ToString()) ? Convert.ToInt32(reader["Precision"].ToString()) : 0,
                             Scale = !String.IsNullOrEmpty(reader["Scale"].ToString()) ? Convert.ToInt32(reader["Scale"].ToString()) : 0,
-                            DefaultValue = GetColumnDefinitionDefaultValue(table.Name, reader["ColumnName"].ToString(), (reader["Nullable"].ToString() == "YES")),
+                            DefaultValue = GetColumnDefinitionDefaultValue(table.Name, reader["ColumnName"].ToString(), (reader["Nullable"].ToString() == "YES"), GetColumnDefinitionDataType(reader["DataType"].ToString())),
                             Constraints = new ConstraintsDefinition
                             {
                                 Nullable = (reader["Nullable"].ToString() == "YES")
@@ -558,9 +558,14 @@ namespace Logitude.DXMLGenerator.Models
             return processedRelations;
         }
 
-        private string GetColumnDefinitionDefaultValue(string tableName, string columnName, bool nullable)
+        private string GetColumnDefinitionDefaultValue(string tableName, string columnName, bool nullable, string type)//////
         {
             if (nullable)
+            {
+                return null;
+            }
+
+            if(!nullable && type == "bit")
             {
                 return null;
             }

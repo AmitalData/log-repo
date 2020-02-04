@@ -109,7 +109,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             InitializeComponent();
 
-            ARPaymentValidator.Validate(_arpaymentPM, cashBook);
+            ARPaymentValidator.Validate(_arpaymentPM, objectContext, cashBook);
             ARPaymentTracing.Trace(_arpaymentPM, newPayment, isNewEntity);
 
 
@@ -294,7 +294,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            ARPaymentValidator.Validate(theEntityPm, cashBook);
+            ARPaymentValidator.Validate(theEntityPm, objectContext, cashBook);
             ARPaymentTracing.Trace(theEntityPm, newPayment, isNewEntity);
 
             if (mapComposition)
@@ -497,20 +497,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region InitializeComponent
         private void InitializeComponent()
         {
+            if (entityPM.IsPaymentNumberManuallySet)
+            {
+                entityPM.PaymentNo = MethodHelper.Trim(entityPM.PaymentNo);
+            }
+
             if (string.IsNullOrEmpty(entityPM.Id))
             {
                 entityPM.Id = IdCounter.GetNumber("ARPayment", entityPM.Tenant).ToString();
             }
 
-            if (!entityPM.IsExternalEntity && string.IsNullOrEmpty(entityPM.PaymentNo))
+            if (!entityPM.IsPaymentNumberManuallySet)
             {
-                entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "ARPT", "DR", null).ToString();
+                if (!entityPM.IsExternalEntity && string.IsNullOrEmpty(entityPM.PaymentNo))
+                {
+                    entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "ARPT", "DR", null).ToString();
+                }
             }
 
             if (entityPM.SetApproved)
             {
                 if (entityPM.StatusCode != "AD")
-
                 {
                     entityPM.StatusCode = "AD";
                     entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);

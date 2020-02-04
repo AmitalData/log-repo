@@ -74,9 +74,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
 	         MinimumInterestInvoiceBilling, 
-	         InterestCreditLimit,
-             NameForPrintingCheques,
-        }
+	         InterestCreditLimit, 
+	         NameForPrintingCheques, 
+	         Smallcashbook,
+	      }
 
 
 	      public enum PMPropertyNames
@@ -187,9 +188,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
 	         MinimumInterestInvoiceBilling, 
-	         InterestCreditLimit,
-             NameForPrintingCheques,
-        }
+	         InterestCreditLimit, 
+	         NameForPrintingCheques, 
+	         Smallcashbook,
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -456,11 +458,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.InterestCreditLimit = entityPM.InterestCreditLimit;
 			}
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
             {
-                entityPOCO.NameForPrintingCheques = entityPM.NameForPrintingCheques;
-            }
-            BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+				entityPOCO.NameForPrintingCheques = entityPM.NameForPrintingCheques;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Smallcashbook))
+            {
+				entityPOCO.Smallcashbook = entityPM.Smallcashbook;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
 		public void POCOToPM(GLAccountPM entityPM, GLAccount entityPOCO)
@@ -730,14 +739,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.InterestCreditLimit = entityPOCO.InterestCreditLimit;
             }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.NameForPrintingCheques))
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NameForPrintingCheques))
             {
-                entityPM.NameForPrintingCheques = entityPOCO.NameForPrintingCheques;
+					entityPM.NameForPrintingCheques = entityPOCO.NameForPrintingCheques;
             }
 
-        }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Smallcashbook))
+            {
+					entityPM.Smallcashbook = entityPOCO.Smallcashbook;
+            }
 
-        public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
+		}
+
+		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -1000,11 +1015,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.InterestCreditLimit = entityPM.InterestCreditLimit;
             }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
             {
                 oldEntityPM.NameForPrintingCheques = entityPM.NameForPrintingCheques;
             }
-        }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Smallcashbook))
+            {
+                oldEntityPM.Smallcashbook = entityPM.Smallcashbook;
+            }
+			
+		}
 
 	    public void EncodeBase64NVARCHARFields(GLAccountPM entityPM)
         {
@@ -1028,6 +1050,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Occupation)) //T4 find type == nText 
             {
                 entityPM.Occupation = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Occupation));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NameForPrintingCheques)) //T4 find type == nText 
+            {
+                entityPM.NameForPrintingCheques = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NameForPrintingCheques));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

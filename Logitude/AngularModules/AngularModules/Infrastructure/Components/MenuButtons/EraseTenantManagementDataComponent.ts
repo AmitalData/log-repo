@@ -135,6 +135,8 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
                 
                 if (bteList.StatusCode == "D")
                 {
+                    this.ValidationErrorsList = [];
+
                     this.GetCounts();
 
                     switch (this.type) {

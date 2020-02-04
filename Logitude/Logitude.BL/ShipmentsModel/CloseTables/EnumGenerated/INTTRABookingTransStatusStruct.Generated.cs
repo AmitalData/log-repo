@@ -20,6 +20,8 @@ namespace Logitude.BL.ShipmentsModel.CloseTables
        public const string CancellationRequestSent = "CRS";  
        public const string CancellationConfirmed = "CCD";  
        public const string CancellationRequestRejected = "CRR";  
+       public const string AcceptedbyINTTRA = "ACI";  
+       public const string RejectedbyINTTRA = "RBI";  
     }
 }
 

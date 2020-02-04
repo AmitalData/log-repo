@@ -44757,9 +44757,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentTHHAWBs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.HAWBs", DefaultText = "HAWB's",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentTHFreightCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.FreightCharge", DefaultText = "Freight Charge",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentTHFreightCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.FreightCharges", DefaultText = "Freight Charges",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentTHOtherCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.OtherCharge", DefaultText = "Other Charge",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentTHOtherCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.OtherCharges", DefaultText = "Other Charges",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentTHGeneralDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.GeneralDetails", DefaultText = "General Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

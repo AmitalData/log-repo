@@ -1122,7 +1122,7 @@ namespace WarehouseData.Helper
 
                         try
                         {
-
+                     
                             bulkCopy.EnableStreaming = true;
                             bulkCopy.BatchSize = 100000;
                             if (Control != null && Table != null)
@@ -1436,8 +1436,8 @@ namespace WarehouseData.Helper
 
             try
             {
+                com.CommandTimeout = (int)this.timeOut;
                 con.Open();
-
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
                     reader.Read();

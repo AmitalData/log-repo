@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Invoice Line",
-			      				    Code =  "1e89",
+			      				    Code =  "29b2",
 			      				    Name =  "APInvoiceLine",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -1813,15 +1813,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APInvoiceLineTextCode_APInvoiceLineOEditInvoiceLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.EditInvoiceLine", DefaultText = "Edit Invoice Line",LocalDefaultText = @"ערוך שורת חשבונית", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APInvoiceLineTextCode_APInvoiceLineOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.Vendor", DefaultText = "Vendor",LocalDefaultText = null, ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.Vendor", DefaultText = "Vendor",LocalDefaultText = @"ספק", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APInvoiceLineTextCode_APInvoiceLineOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.Currency", DefaultText = "Currency",LocalDefaultText = null, ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.Currency", DefaultText = "Currency",LocalDefaultText = @"מטבע", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APInvoiceLineTextCode_APInvoiceLineOExpectedAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.ExpectedAmount", DefaultText = "ExpectedAmount",LocalDefaultText = null, ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineOExpectedAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.ExpectedAmount", DefaultText = "ExpectedAmount",LocalDefaultText = @"סכום צפוי", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APInvoiceLineTextCode_APInvoiceLineOOtherInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.OtherInvoices", DefaultText = "OtherInvoices",LocalDefaultText = null, ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineOOtherInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.OtherInvoices", DefaultText = "OtherInvoices",LocalDefaultText = @"חשבוניות אחרות", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APInvoiceLineTextCode_APInvoiceLineOOpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.OpenAmount", DefaultText = "OpenAmount",LocalDefaultText = null, ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineOOpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.OpenAmount", DefaultText = "OpenAmount",LocalDefaultText = @"סכום פתוח", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineCHCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.CH.Code", DefaultText = "Code",LocalDefaultText = @"קוד", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineOName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.Name", DefaultText = "Name",LocalDefaultText = @"שם", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -102,7 +102,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             "Procedure: " + ex.Errors[i].Procedure + "\n");                        
                     }
 
-                    this.UpdateErrorMessage(errorMessages.ToString(), batchTaskId, parameterArgs.EntityId);
+                    throw new Exception(errorMessages.ToString());
                 }
 
                 finally
@@ -111,23 +111,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
             }
         }
-        private void UpdateErrorMessage(string errorMessage, string batchTaskExecutionId, int tenant)
-        {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                //BatchTaskExecutionRepository iRepository = new BatchTaskExecutionRepository(tenant);
-                //BatchTaskExecution iBatchTaskExecution = iRepository.GetSingle(batchTaskExecutionId, tenant);
-                //if (iBatchTaskExecution != null)
-                //{
-                //BatchTaskExecution.StatusCode = "F";
-                BatchTaskExecution.ErrorLog = errorMessage;
-                    //iRepository.Update(iBatchTaskExecution);
-                    //iRepository.SubmitChanges();
-                //}
-
-                scope.Complete();
-            }
-        }
+        
         public string GetConnection(int tenant)
         {
             GlobalDB currentDb;

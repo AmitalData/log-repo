@@ -104,8 +104,12 @@ namespace Logitude.DBMigrations.Models
 
             if (duplicatedDxmlFiles.Any())
             {
-                error = "Error: Duplicate DXML File Name " + duplicatedDxmlFiles.First();
-                return error;
+                error = "Error: Duplicate DXML Files:\n";
+                foreach(var dxmlFile in DXMLFiles.Where(d => d.Contains(@"\" + duplicatedDxmlFiles.First())).ToList())
+                {
+                    error += dxmlFile + "\n";
+                }
+                return error.TrimEnd('\n');
             }
 
             return error;
