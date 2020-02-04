@@ -827,7 +827,7 @@ namespace Logitude.DBMigrations.Models
                     "IF (TableCount = 0) " +
                     "THEN " +
                     "EXECUTE IMMEDIATE 'CREATE TABLE \"DXMLMIGRATIONHASHES\"( " +
-                    "\"FILENAME\" VARCHAR2(300 CHAR) NOT NULL, " +
+                    "\"FILENAME\" VARCHAR2(200 CHAR) NOT NULL, " +
                     "\"HASHSTRING\" NCLOB NOT NULL, " +
                     "PRIMARY KEY(\"FILENAME\"))'; " +
                     "END IF; " +
@@ -855,7 +855,7 @@ namespace Logitude.DBMigrations.Models
                 string queryString = "EXEC('IF (OBJECT_ID(''[dbo].[DXMLMigrationHashes]'', ''U'') IS NULL) " +
                                      "BEGIN " +
                                      "CREATE TABLE [dbo].[DXMLMigrationHashes]( " +
-                                     "[FileName] VARCHAR(300) NOT NULL, " +
+                                     "[FileName] VARCHAR(200) NOT NULL, " +
                                      "[HashString] NVARCHAR(MAX) NOT NULL, " +
                                      "PRIMARY KEY([FileName]) " +
                                      ") " +
