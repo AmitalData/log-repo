@@ -17,6 +17,8 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -174,10 +176,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
-            {
-
-            }
         }
 
         protected override void OnUpdating(EntityPMs.TicketPM entityPM, Ticket entityPOCO)
@@ -290,7 +288,34 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
 
                 this.UpdateDates(entityPM);
+                this.CheckQuoteRequestDateUpdate(entityPM, entityPOCO);
             }
+        }
+
+        private void CheckQuoteRequestDateUpdate(TicketPM entityPM, Ticket entityPOCO)
+        {
+            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber) && entityPOCO.QuoteNumber != entityPM.QuoteNumber)
+            {
+                this.UpdateQuotesRequestDate(entityPOCO.QuoteId, null, entityPOCO.Tenant);
+                this.UpdateQuotesRequestDate(entityPM.QuoteId, entityPM.CreateDate, entityPM.Tenant);
+            }
+            if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            {
+                this.UpdateQuotesRequestDate(entityPOCO.QuoteId, null, entityPOCO.Tenant);
+                this.UpdateQuotesRequestDate(entityPM.QuoteId, null, entityPM.Tenant);
+            }
+            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            {
+                this.UpdateQuotesRequestDate(entityPM.QuoteId, entityPM.CreateDate, entityPM.Tenant);
+            }
+        }
+
+        private void UpdateQuotesRequestDate(string quoteId, DateTime? requestDate, int tenant)
+        {
+            QuoteRepository quoteRepository = new QuoteRepository(tenant);
+            Quote quote = quoteRepository.GetSingleQuote(quoteId, tenant);
+            quote.RequestDate = requestDate == null ? quote.OpenDate : requestDate;
+            quoteRepository.Update(quote);
         }
 
         protected override void UpdateComposition(TicketPM entityPM)

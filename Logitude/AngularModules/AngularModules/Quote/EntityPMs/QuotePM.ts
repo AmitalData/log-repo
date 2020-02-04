@@ -1553,6 +1553,16 @@ export class QuotePM {
     public set RequestDate(newValue: Date) { if (this.requestDate != newValue) { this.requestDate = newValue; this.MarkAsDirty("RequestDate"); } }
        
 	 
+    private isCreatedFromTicket: boolean;
+    public get IsCreatedFromTicket() { return this.isCreatedFromTicket; }
+    public set IsCreatedFromTicket(newValue: boolean) { if (this.isCreatedFromTicket != newValue) { this.isCreatedFromTicket = newValue; this.MarkAsDirty("IsCreatedFromTicket"); } }
+       
+	 
+    private ticketCreateDate: Date;
+    public get TicketCreateDate() { return this.ticketCreateDate; }
+    public set TicketCreateDate(newValue: Date) { if (this.ticketCreateDate != newValue) { this.ticketCreateDate = newValue; this.MarkAsDirty("TicketCreateDate"); } }
+       
+	 
 
     public OldEntityPM: QuotePM;
 		
