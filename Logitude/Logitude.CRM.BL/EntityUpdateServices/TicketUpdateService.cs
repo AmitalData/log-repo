@@ -288,6 +288,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
 
                 this.UpdateDates(entityPM);
+
                 this.CheckQuoteRequestDateUpdate(entityPM, entityPOCO);
             }
         }
@@ -316,6 +317,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             Quote quote = quoteRepository.GetSingleQuote(quoteId, tenant);
             quote.RequestDate = requestDate == null ? quote.OpenDate : requestDate;
             quoteRepository.Update(quote);
+            quoteRepository.SubmitChanges();
         }
 
         protected override void UpdateComposition(TicketPM entityPM)
