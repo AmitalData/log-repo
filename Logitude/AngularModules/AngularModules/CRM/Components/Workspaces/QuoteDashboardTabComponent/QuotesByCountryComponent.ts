@@ -7,7 +7,7 @@ import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dash
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-declare var makeAmBarChart, PieClick, makePieChart, ResetItemPie: any;
+declare var PieClick, makePieChart, ResetItemPie: any;
 
 @Component({
     selector: 'quotes-by-country',
@@ -23,7 +23,7 @@ export class QuotesByCountryComponent implements OnInit {
     private dashboardService: DashboardService;
 
     constructor(private _entityResourceService: EntityResourceService) {
-        this.CountriesDashboardId = "CountriesDashboardId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");    
+        this.CountriesDashboardId = "CountriesDashboardId_" + this.CurrentSession.GetNewId("CountriesDashboardId");    
         this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");    
     }
 
@@ -69,7 +69,7 @@ export class QuotesByCountryComponent implements OnInit {
         });
     }
 
-    public quotesList: Array<any> = [];
+    public QuoteList: Array<any> = [];
     private CurrentCountriesChart: any;
     public NoCountries: boolean = false;
     FillDashboardData(data: ChartingDataClass[]) {
@@ -81,35 +81,27 @@ export class QuotesByCountryComponent implements OnInit {
         }
         catch (er) { }
 
-        if (data != null && data.length > 0) {
-            var pieChartLabels = [];
-            var pieChartData = [];
-            var fullData = [];
-            this.quotesList = data;
-            data.forEach(element => {
-                fullData.push({ label: element.CountryName, data: element.Total })
-                pieChartLabels.push(element.CountryName);
-                pieChartData.push(element.Total);
-
-            });
-            var flagEmpty = true;
-            pieChartData.forEach(p => {
-                if (p != "0")
-                    flagEmpty = false;
-            });
-            if (!flagEmpty) {
-
-                this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId);
-            }
-
-            this.NoCountries = false;
+        if (data.length == 0) {
+            this.NoCountries = true;
         }
 
         else {
-            this.NoCountries = true;
-        }
+            this.DrawPieChart(data);
+        }        
     }
-    
+
+    DrawPieChart(data: ChartingDataClass[]) {
+        var fullData = [];
+        this.QuoteList = data;
+
+        data.forEach(element => {
+            fullData.push({ label: element.CountryName, data: element.Total });
+        });
+        
+        this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId, 150);
+        this.NoCountries = false;
+    }
+
     private selectedTransportFilter: string = "All";
     get SelectedTransportFilter() { return this.selectedTransportFilter; }
     set SelectedTransportFilter(newValue: string) {
@@ -171,16 +163,15 @@ export class QuotesByCountryComponent implements OnInit {
         }
     }
     OnDashboardItemClick(e) {
-        var item = this.quotesList[e.index];
+        var item = this.QuoteList[e.index];
         var myQueryCode: string = "All Quotes";
         var myTableName: string = "Quote";
         var filterAgrs: ApiQueryFilters = new ApiQueryFilters();
-
-        filterAgrs.addAdditionalFilter("CountryForStatisticsId", item.CountryId, null, null, "Equals", false, false, false, "String");
+        
+        filterAgrs.addAdditionalFilter("CountryForStatisticsId", item.CountryId, null, null, "InList", false, false, false, "String");
         filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
         filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
         filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
-        //filterAgrs.addAdditionalFilter("BusinessUnitId", this.Wizard., null, null, "Equals", true, false, false, "string");
 
         var listArgs = new ListComponentArgs();
         listArgs.Filters = filterAgrs;
@@ -196,6 +187,5 @@ export class QuotesByCountryComponent implements OnInit {
                 cmpRef.instance.Run(listArgs);
                 this.CurrentSession.AddMenuReference(cmpRef);
             });
-
     }
 }
