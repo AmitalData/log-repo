@@ -27,6 +27,14 @@ namespace Logitude.Customs.BL.CloseTables
                 },
                 new SincroTestCaseDetail()
                 {
+                    Code = "2755Payment",
+                    Name = "  ללא חתימה הגשת תשלום",
+                    Entity="DeclarationPayment",
+                    AvoidSign= true
+                },
+
+                new SincroTestCaseDetail()
+                {
                     Code = "2754Constraint",
                     Name = "הצהרת יבוא אילוץ",
                     Entity="Declaration",
@@ -81,6 +89,7 @@ namespace Logitude.Customs.BL.CloseTables
         public string Param2 { get; set; }
         //public FakeServiceEnum FakeService { get; internal set; }
         public string MainInterfaceCode { get; internal set; }
+        public bool AvoidSign { get; internal set; }
     }
     public enum FakeServiceEnum
     {
