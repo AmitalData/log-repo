@@ -46,12 +46,68 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             CustomerStatusDataProvider dataProvider = new CustomerStatusDataProvider();
 
+            List<IGrouping<string, PeriodMExtended>> customersPeriod = resultedPeriods.GroupBy(d => d.AccountId).ToList();
+
+
+            foreach (IGrouping<string, PeriodMExtended> customer in customersPeriod)
+            {
+                var periodsByDate = customer.GroupBy(r => r.PeriodName).ToList();
+
+                CustomerStatus customerStatus = new CustomerStatus()
+                {
+                    CustomerName = customer.First().AccountEnglishName,
+                    AccountingBalance = customer.Sum(d => d.Total),
+                    Periods = GetStatusPeriods(periodsByDate)
+                };
+
+                dataProvider.CustomersStatuses.Add(customerStatus);
+            }
 
             return dataProvider;
         }
+        private List<StatusPeriod> GetStatusPeriods(List<IGrouping<string, PeriodMExtended>> customerDatePeriods)
+        {
+            List<StatusPeriod> ssss = new List<StatusPeriod>();
+            foreach (var datePeriod in customerDatePeriods)
+            {
+                List<PeriodMExtended> currencyPeriods = datePeriod.ToList();
+                StatusPeriod statusPeriod = new StatusPeriod()
+                {
+                    PeriodName = ResharpPeriodName(currencyPeriods.First().PeriodName),
+                    PeriodTotal = currencyPeriods.Sum(d => d.Total),
+                    PeriodCurrenciesSummaries = GetCurrencyPeriodsSummaries(currencyPeriods)
+                };
 
+                ssss.Add(statusPeriod);
+            }
 
+            return ssss;
+        }
 
+        private static List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
+        {
+            var ssss = new List<PeriodCurrencySummary>();
+
+            foreach (PeriodMExtended currencyPeriod in currencyPeriods)
+            {
+                PeriodCurrencySummary summary = new PeriodCurrencySummary()
+                {
+                    CurrencyId = currencyPeriod.CurrencyId,
+                    TotalCredit = currencyPeriod.OpenCredit,
+                    TotalDebit = currencyPeriod.OpenDebit,
+                    CurrencyCode = currencyPeriod.CurrencyCode
+                };
+                ssss.Add(summary);
+            }
+
+            return ssss;
+        }
+        private string ResharpPeriodName(string name)
+        {
+            if (name.Contains("b4"))
+                name = name.Replace("b4", showLocals ? "לפני" : "Before");
+            return name;
+        }
         private void SetReportCategoryParameters(AgingReportParam reportParameters)
         {
             string category1Id = null;
@@ -86,22 +142,31 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private AgingReportParam BuildReportParameters()
         {
             AgingReportParam reportParameters = InitiateAgingReportParameters();
+            uint monthsBackwards = GetAgingReportMonthsBackwards();
 
             reportParameters.Tenant = tenant;
             reportParameters.AgingForDate = GetFilterValue<DateTime>("AgingForDate");
-            reportParameters.NumberOfmonthsbackwards = Convert.ToUInt32(GetFilterValue<Int64>("NumberOfMonths"));
+            reportParameters.NumberOfmonthsbackwards = monthsBackwards;
             reportParameters.VendorCustomerId = GetFilterValue<string>("CustomerId");
             reportParameters.CollectorId = GetFilterValue<string>("CollectoId");
             reportParameters.SalesmanId = GetFilterValue<string>("SalesmanId");
             reportParameters.AggregateByGLAccountCurrencies = GetFilterValue<bool>("Detailed");
 
-            reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
-            reportParameters.AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString();
+            reportParameters.GroupByDate = AgingReportParam.DateEnum.DueDate;
+            reportParameters.AgingMethod = AgingReportParam.MethodEnum.TotalByMonthMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
 
             SetReportCategoryParameters(reportParameters);
 
             return reportParameters;
+        }
+
+        private uint GetAgingReportMonthsBackwards()
+        {
+            FullAccountingSettingRepository settingRepository = new FullAccountingSettingRepository(tenant);
+            FullAccountingSetting settings = settingRepository.GetSingleFullAccountingSetting(tenant);
+            var monthsBackwards = settings.NumberOfAgingMonths ?? 0;
+            return (uint)monthsBackwards;
         }
 
         private AgingReportParam InitiateAgingReportParameters()

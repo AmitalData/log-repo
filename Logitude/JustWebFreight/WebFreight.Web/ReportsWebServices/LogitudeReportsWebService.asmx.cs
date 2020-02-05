@@ -10761,12 +10761,9 @@ namespace WebFreight.Web.ReportsWebServices
         }
         private CustomerStatusDataProvider GetCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
         {
+            CustomerStatusDataProviderLoader customerStatusDataProvider = new CustomerStatusDataProviderLoader(tenant);
 
-            //AgingReportDataProviderLoader agingReportLoader = new AgingReportDataProviderLoader(tenant);
-
-            //return agingReportLoader.LoadFromXML(xmlFilters);
-
-            return null;
+            return customerStatusDataProvider.LoadFromXML(xmlFilters);
 
         }
         #endregion

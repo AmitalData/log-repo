@@ -254,9 +254,9 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         this.ValidationErrorsList = [];
 
         //#region requierd fields
-        if (!this.AgingForDate) { errors.push("Aging for date field is requierd"); }
+        // if (!this.AgingForDate) { errors.push("Aging for date field is requierd"); }
         //if (!this.Customer) { errors.push("Customer field is requierd"); }
-        if (!this.NumberOfMonths) { errors.push("Number of months field is requierd"); }
+        // if (!this.NumberOfMonths) { errors.push("Number of months field is requierd"); }
         //#endregion
 
         //#region Date validation
@@ -277,17 +277,17 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             }
 
             var myFilterItems: QueryFilterItem[] = [];
-            // myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
-            // myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
-            // myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
-            // myFilterItems.push(new QueryFilterItem("NumberOfMonths", this.NumberOfMonths, "Number"));
-            // myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
-            // myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
-            // myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
+            myFilterItems.push(new QueryFilterItem("AgingForDate", new Date(), "Date"));
+            myFilterItems.push(new QueryFilterItem("GLAccountType", "2"));
+            myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
+            myFilterItems.push(new QueryFilterItem("NumberOfMonths", 5, "Number"));
+            myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
+            myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
+            myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
 
-            // myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
-            // myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
-            // myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
+            myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
+            myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+            myFilterItems.push(new QueryFilterItem("GroupByDate", ""));
 
             // myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_","")));
             // myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0));

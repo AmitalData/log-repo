@@ -18,6 +18,9 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
@@ -416,8 +419,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
                 IQueryable<GLAccountList> accountsList = accountQS.GetByIds(accountsIds,_Param.Tenant);
 
+                CurrencyQuery currencyQuery = new CurrencyQuery(_Param.Tenant);
+                IQueryable <CurrencyPM> currencies = currencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
+
                 List<PeriodMExtended> namedPeriods = (from line in reportList
                                     join account in accountsList on line.AccountId equals account.Id
+                                    join currency in currencies on line.CurrencyId equals currency.Id
                                     select new PeriodMExtended()
                                     {
                                         OrderDate = line.OrderDate,
@@ -427,6 +434,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                         Total = line.Total,
                                         AccountEnglishName = account.EnglishName,
                                         AccountLocalName = account.LocalName,
+                                        OpenCredit = line.OpenCredit,
+                                        OpenDebit = line.OpenDebit,
+                                        CurrencyCode = currency.Code
+                                        
+                                        
                                     }).ToList();
                 //
 
@@ -1079,6 +1091,7 @@ Period	Acc	Currency	Total
     {
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
+        public string CurrencyCode { get; set; }
     }
 
     public class AgingReportParam
