@@ -51,15 +51,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 throw new ApplicationException("Ratio must be between 1-10");
             }
-
-            ValidateFromPort(entityPM, loggedTenant);
-            ValidateToPort(entityPM, loggedTenant);
-            ValidateCarrierPrefix(entityPM);
-            ValidateAirlineRestriction(entityPM);
-            ValidateMasterNumber(entityPM);
-            ValidateShipmentBookingFields(entityPM, isNewEntity);
-            ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
-            ValidateConvertShipmentType(entityPM);
+            if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+            {
+                ValidateFromPort(entityPM, loggedTenant);
+                ValidateToPort(entityPM, loggedTenant);
+                ValidateCarrierPrefix(entityPM);
+                ValidateAirlineRestriction(entityPM);
+                ValidateMasterNumber(entityPM);
+                ValidateShipmentBookingFields(entityPM, isNewEntity);
+                ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
+                ValidateConvertShipmentType(entityPM);
+            }
            
             //ValidateMultiVatPercentages(entityPM, myCommonContext);
 
