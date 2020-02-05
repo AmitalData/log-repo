@@ -37,6 +37,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL.CloseTables;
 
 //using Simplog.Infrastructure.SimplogUtilities;
 
@@ -136,6 +137,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     {
                         _RequestParams.ForcePersonalSign = false;
                     }
+                }
+                if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
+                {
+                    var detail = (new SincroTestCaseDetails()).GetAllSincroTestCaseDetails()
+                        .First(r => r.Code == _RequestParams.TestCase.Code);
+                    if (detail.AvoidSign)
+                    {
+                        avoidSign = true;
+                    }
+
+
                 }
 
                 MessageController.BuildRealSteps(InterfaceTenantDefinitionManagement, ref requestVIA, _RequestParams.ForcePersonalSign, avoidSign);
@@ -295,7 +307,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             try
             {
-
                 if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
 

@@ -21,6 +21,7 @@ using WebFreight.Web.Security;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -237,6 +238,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         List<SincroTestCaseDetail> mySincroTestCaseDetailList = null;
                         switch (SincroScreen)
                         {
+                            case "SincroSendDeclarationPayment":
+                                {
+                                    mySincroTestCaseDetailList =
+                                    queryService.GetAllSincroTestCaseDetails()
+                                        .Where(r => r.Entity == "DeclarationPayment")
+                                        .Where(r => !r.IsDCA)
+                                        .ToList();
+                                }
+                                break;
+
                             case "SincroSendDeclaration":
                                 {
                                     mySincroTestCaseDetailList=
@@ -291,9 +302,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             try
             {
-                INF_MSG_GenericResponseData responseData;
                 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Success = true });
+                var myDCASincroService = new DCASincroService();
+                string message =myDCASincroService.BuildDCAMessage(requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Success = true , Message= message });
             }
             catch (Exception ex)
             {
