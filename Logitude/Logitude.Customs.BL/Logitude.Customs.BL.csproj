@@ -864,8 +864,7 @@
     <Compile Include="EntityQueryServices\ClientAddressQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientDrivingLicenseQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientQueryService.cs" />
-	    <Compile Include="EntityQueryServices\CustomDocumentTypeQueryService.cs" />
-
+    <Compile Include="EntityQueryServices\CustomDocumentTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsAutonomyKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
@@ -1817,6 +1816,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0003_QueueMessagesShrink.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0004_DeleteQMessWhenDone.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0006_QueueMessagesShrinkTk2.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0008_Diamonds.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0007_AutonomyKeywords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
