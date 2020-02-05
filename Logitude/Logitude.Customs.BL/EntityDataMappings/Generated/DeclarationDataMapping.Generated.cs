@@ -1322,24 +1322,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.IsDiamondDeclaration = entityPOCO.IsDiamondDeclaration;
             }
-        }
+        
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentOriginalDeclartation))
-            {
-					entityPM.AmendmentOriginalDeclartation = entityPOCO.AmendmentOriginalDeclartation;
-            }
+	 
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentDontDisplayInList))
-            {
-					entityPM.AmendmentDontDisplayInList = entityPOCO.AmendmentDontDisplayInList;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationType))
-            {
-					entityPM.DeclarationType = entityPOCO.DeclarationType;
-            }
-
-    	if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondDeclaration))
+    	   if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondDeclaration))
             {
 					entityPM.IsDiamondDeclaration = entityPOCO.IsDiamondDeclaration;
             }

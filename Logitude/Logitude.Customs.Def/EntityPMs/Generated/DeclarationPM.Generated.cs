@@ -3701,24 +3701,25 @@ namespace Logitude.Customs.Def.EntityPMs
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CourierMasterId  
-	   {
-	    
-	     get
-		{
-		   return courierMasterId;
-		 }
-		 set
-		 {
-		   if(courierMasterId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierMasterId",OldValue=courierMasterId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   courierMasterId=value;
-		   }
-			
-		 }
+        [DataMember]
+        public string CourierMasterId
+        {
+
+            get
+            {
+                return courierMasterId;
+            }
+            set
+            {
+                if (courierMasterId != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CourierMasterId", OldValue = courierMasterId, NewValue = value, PropertyType = "string" };
+                    NotifyPropertyChanged(values);
+                    courierMasterId = value;
+                }
+
+            }
+        }
 
             private bool isDiamondDeclaration;
 
@@ -3746,5 +3747,5 @@ namespace Logitude.Customs.Def.EntityPMs
     }
    }
    
-}
+ 
 	 
