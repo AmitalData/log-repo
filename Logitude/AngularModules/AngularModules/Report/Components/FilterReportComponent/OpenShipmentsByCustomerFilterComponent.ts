@@ -4,7 +4,7 @@ import {Component, OnInit}  from '@angular/core';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-
+import {AppTool} from '../../../Infrastructure/Tools';
 @Component({
     moduleId: module.id,
     selector: 'OpenShipmentsByCustomerFilterComponent',
@@ -56,6 +56,9 @@ export class OpenShipmentsByCustomerFilterComponent extends BaseComponent implem
             reportFliter.ProcessType = "GenerateReport";
             
             this.ReportsPreview.GenerateReport(reportFliter, isloading);
+
+            this.ReportsPreview.CleanPartnersObslist();
+            if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
         }
     }
 }
