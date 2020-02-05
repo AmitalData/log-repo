@@ -28,28 +28,19 @@ export class EndPhysicalCheckComponent
     public EntityPM: PhysicalCheckPM;
     public ObjectTableName: string = "Customs.PhysicalCheck";
     public endDate: string;
-    private EntityResourceService: EntityResourceService = new EntityResourceService();
-
- 
+    _IsReady: boolean = false;
     public id: string;
 
     _PhysicalCheckPMService: PhysicalCheckExtendedPMService = new PhysicalCheckExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession; 
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(private EntityResourceService: EntityResourceService) {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => { });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => {
+            this._IsReady = true;
+        });
     }
 
-    @ViewChild(CustomMessageWrapperComponent)
-    SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
-    ngAfterViewInit() {
-            this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
-            this.subscribeWrapperComponent()
 
-
- 
-    }
-  
     OnMassageDisplayMethod() {
 
         if (this.MyCommunicationLogId != null) {
@@ -61,7 +52,7 @@ export class EndPhysicalCheckComponent
         this.CurrentSession.StartBusyIndicator("");
         var ary = [20, 30];
         var suppressHugeDataFeature: boolean = true;
-        this._PhysicalCheckPMService.GetPhysicalCheckRequest(
+        this._PhysicalCheckPMService.GetClosedPhysicalCheck(
             InterfaceTypeCode,
             id, SessionLocator.Tenant,
             ary,  
@@ -74,9 +65,9 @@ export class EndPhysicalCheckComponent
                     var myFormats = DateTool.GetDateFormats(this.EntityPM.EndDate);
                     this.endDate = myFormats.DateString + " " + myFormats.ShortTimeString;
                 }   
-});
+}); 
     }
-    
+      
  
     get CheckId() { return this.EntityPM ? this.EntityPM.CheckId : null; }
     set CheckId(value: string) {
@@ -94,7 +85,7 @@ export class EndPhysicalCheckComponent
     set CargoTypeCode(value: string) {
         if (this.EntityPM.CargoTypeCode != value) {
             this.EntityPM.CargoTypeCode = value;
-        }
+        } 
     } 
     get DeclarationNo() { return this.EntityPM ? this.EntityPM.DeclarationId : null; }
     set DeclarationNo(value: string) {

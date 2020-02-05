@@ -289,7 +289,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.CustomFileNo = physicalCheckQueryService.GetCustomFileNoByCheckId(entityPM.DeclarationId, entityPM.Tenant);
 
             }
-            if (data.generalDetails.entityType != null)
+            if (data.generalDetails.entityType != null && data.generalDetails.entityType!= "0")
             {
                 CheckEntityTypeQueryService cargoIdentifireTypeQueryService = new CheckEntityTypeQueryService(entityPM.Tenant);
                 CheckEntityTypePM checkEntityType = cargoIdentifireTypeQueryService.GetSingle(Convert.ToString(data.generalDetails.entityType), false, true);
@@ -305,7 +305,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (data.CheckEntity.cargoIdentifier.cargoIdentifierType != null)
             {
                 CargoIdentifireTypeQueryService cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPM.Tenant);
-                CargoIdentifireTypePM cargoIdentifireType = cargoIdentifireTypeQueryService.GetSingle(Convert.ToString(data.CheckEntity.generalDetails.cargoIdentifierType), false, true);
+                CargoIdentifireTypePM cargoIdentifireType = cargoIdentifireTypeQueryService.GetSingle(Convert.ToString(data.CheckEntity.cargoIdentifier.cargoIdentifierType), false, true);
                 entityPM.CargoIdentifierTypeName = cargoIdentifireType.LocalName;
             }
             if (data.CheckEntity.cargoIdentifier.cargoIdentifierKey1 != null)

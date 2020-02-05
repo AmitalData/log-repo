@@ -12,13 +12,13 @@
         color: #1B90CB;
     }
 </style>
-
+<div>
 <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
                         [IsShowCustomResponseContent]="false"
                         [IsShowCustomToolBar]="false">
 
     <div class="class-request-content">
-        <table style="width: 850px; height:330px;">
+        <table *ngIf="_IsReady" style="width: 850px; height:330px;">
             <tr style="height: 30px">
                 <td>
                     <table>
@@ -32,27 +32,172 @@
                                 {{'Customs.PhysicalCheck.O.GeneralDetails'| TextCodeTranslationPipe}}
                             </td>
                         </tr>
+                    </table>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
                         <tr>
                             <td>
-                                <LogLabel [ObjectFieldName]="'checkId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogLabel [ObjectFieldName]="'CheckId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
                             <td class="FormFieldRow">
-                                <LogTextBox [ObjectFieldName]="'checkId'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                <LogTextBox [ObjectFieldName]="'CheckId'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
-                                            [Text]="checkId"></LogTextBox>
+                                            [Text]="CheckId"></LogTextBox>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <LogLabel [ObjectFieldName]="'endDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogLabel [ObjectFieldName]="'EndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
-                            <td class="FormFieldRow">
-                                <LogTextBox [ObjectFieldName]="'endDate'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                            <td class="FormFieldRow">       
+                                <LogTextBox [ObjectFieldName]="'EndDate'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
                                             [Text]="endDate"></LogTextBox>
                             </td>
                         </tr>
-                    </table>            
+                        <tr>
+                            <td>
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'ImporterNumber'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.PhysicalCheck.O.ImporterNumber'">
+
+                                </LogLabel>
+                            </td>
+                            <td class="FormFieldRow">
+                                <LogTextBox [ObjectFieldName]="'CustomerName'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Text]="CustomerName"></LogTextBox>
+                            </td>
+                            <td>
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'CargoTypeCode'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.PhysicalCheck.O.CargoTypeCode'">
+
+                                </LogLabel>
+                            </td>
+                            <td class="FormFieldRow">
+                                <LogTextBox [ObjectFieldName]="'CargoTypeCode'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Text]="CargoTypeCode"></LogTextBox>
+                            </td>
+                            <td>
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'CheckSiteNumber'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.PhysicalCheck.O.CheckSiteNumber'">
+
+                                </LogLabel>
+                            </td>
+                            <td class="FormFieldRow">
+                                <LogTextBox [ObjectFieldName]="'CheckSiteName'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Text]="CheckSiteName"></LogTextBox>
+                            </td>
+                            <td style="visibility:hidden">
+                                <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td style="visibility:hidden">
+                                <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                        </tr>
+                        <tr style="width: 100%; height:15px;">
+                            <td colspan="4" style="width: 300px; top:40px;" class="LabelStyle">
+                                {{'Customs.PhysicalCheck.O.CargoIdentifier'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                    <LogLabel [ObjectFieldName]="'CargoIdentifierTypeName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                            <td class="FormFieldRow">
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierTypeName'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierTypeName"></LogTextBox>
+                            </td>
+                            <td>
+                                    <LogLabel [NoObjectField]="true"
+                                              [ObjectFieldName]="'CargoIdentifierKey1'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PhysicalCheck.O.CargoIdentifierKey1'">
+    
+                                    </LogLabel>
+                            </td>
+                            <td class="FormFieldRow">
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierKey1"></LogTextBox>
+                            </td>
+                            <td class="physicallabel">
+                                    <LogLabel [NoObjectField]="true"
+                                              [ObjectFieldName]="'CargoIdentifierKey2'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PhysicalCheck.O.CargoIdentifierKey2'">
+    
+                                    </LogLabel>
+                            </td>
+                            <td class="FormFieldRow">
+                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="CargoIdentifierKey2"></LogTextBox>
+                            </td>
+                            <td class="physicallabel">
+                                    <LogLabel [ObjectFieldName]="'ContainerNubmer'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td class="FormFieldRow">
+                                    <LogTextBox [ObjectFieldName]="'ContainerNubmer'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [Text]="ContainerNubmer"></LogTextBox>
+                            </td>
+                        </tr>
+                        <tr style="width: 100%; height:25px;">
+                            <td colspan="4" style="width: 300px; top:200px;" class="LabelStyle">
+                                {{'Customs.PhysicalCheck.O.ConnectedEntity'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <LogLabel [ObjectFieldName]="'DeclarationNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td class="FormFieldRow">
+                                <LogTextBox [ObjectFieldName]="'DeclarationNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Text]="DeclarationNo"></LogTextBox>
+                            </td>
+                            <td>
+                                <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td class="FormFieldRow">
+                                <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Text]="CustomFileNo"></LogTextBox>
+                            </td>
+                            <td style="visibility:hidden">
+                                <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td style="visibility:hidden">
+                                <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td style="visibility:hidden">
+                                <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td style="visibility:hidden">
+                                <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
         </table>
     </div>
     <div class="class-response-ToolBar" style="height:22px;">
@@ -61,4 +206,4 @@
         </div>
     </div>
 </custom-message-wrapper>
-
+</div>
