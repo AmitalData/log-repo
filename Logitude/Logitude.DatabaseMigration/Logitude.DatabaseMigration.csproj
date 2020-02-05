@@ -2003,7 +2003,6 @@
     <Compile Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.Designer.cs">
       <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs" />
     <Compile Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.Designer.cs">
       <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
@@ -2012,7 +2011,10 @@
     <Compile Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.Designer.cs">
       <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.cs" />
+    <Compile Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.Designer.cs">
+      <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.cs" />
     <Compile Include="Migrations\202001080842531_AbedAddCustomFieldToQuote.Designer.cs">
@@ -3621,20 +3623,24 @@
     <EmbeddedResource Include="Migrations\202001261847007_AddFieldAllowManualARPaymentNumber.resx">
       <DependentUpon>202001261847007_AddFieldAllowManualARPaymentNumber.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002030929521_Update_InterestReportHeaderScreen.resx">
       <DependentUpon>202002030929521_Update_InterestReportHeaderScreen.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.resx">
       <DependentUpon>202002021225269_Mutaz_Add_Smallcashbook_Field_To_GLAccount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001241017569_addShipmentComputedFieldColumn.resx">
       <DependentUpon>202001241017569_addShipmentComputedFieldColumn.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202002031310173_AddRequestDateToQuoteTable_Maheera.resx">
       <DependentUpon>202002031310173_AddRequestDateToQuoteTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202002041504529_Mutaz_Fix_QueryOriginalCode.resx">
+      <DependentUpon>202002041504529_Mutaz_Fix_QueryOriginalCode.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

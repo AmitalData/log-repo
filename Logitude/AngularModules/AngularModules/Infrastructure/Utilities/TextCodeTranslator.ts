@@ -104,7 +104,9 @@ export class TextCodeTranslator {
             }
             else {
                 if (!isNullOrUndefined(value) && value.indexOf(".NewButton") < 0 && value != "No Filter") {
-                    alert("This Code '" + value + "' Not Found!"); 
+                    if (!SessionLocator.ProtractorEmails.find(userEmail => userEmail == SessionLocator.LoggedUserPM.Email.toLowerCase())) {
+                        alert("This Code '" + value + "' Not Found!");
+                    }
                 }
             }
         }
